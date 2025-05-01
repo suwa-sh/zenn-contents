@@ -1,6 +1,6 @@
 ---
 title: "ITコストの透明性向上とビジネス価値最大化に向けた第一歩：TBM Template"
-emoji: "🔖"
+emoji: "📊"
 type: "tech"
 topics: [TBM, ITコスト管理, IT投資対効果, ITマネジメント, DX]
 published: true
