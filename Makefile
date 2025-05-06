@@ -13,3 +13,10 @@ preview-down:
 		kill `cat .zenn-preview.pid` || true; \
 		rm .zenn-preview.pid; \
 	fi
+
+
+push:
+	git add .
+	git commit -m "chore"
+	git pull origin
+	git push origin main
