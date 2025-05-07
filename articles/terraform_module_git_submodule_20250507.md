@@ -1,9 +1,9 @@
 ---
-title: "git submoduleで複数appから共通で利用するterraform module"
+title: "技術調査 - git submoduleで複数appから共通で利用するterraform module"
 emoji: "🧰"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [terraform, git submodule, IaC, terraform module]
-published: false
+topics: [terraform, git, IaC, module]
+published: true
 publish_at: 2025-05-07
 ---
 
