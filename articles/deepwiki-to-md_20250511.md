@@ -12,6 +12,8 @@ DeepWikiすごいですね！OSSを使いはじめるときの取っ掛かりは
 
 そこで「`deepwiki-to-md`」を公開しました。この記事では、`deepwiki-to-md`の魅力と使い方をご紹介します。
 
+https://github.com/suwa-sh/deepwiki-to-md
+
 ### `deepwiki-to-md`とは？
 
 `deepwiki-to-md`は、DeepWikiのコンテンツをMarkdown形式でローカル環境に簡単にエクスポートし、管理・活用できるようにするためのCLIツールです。
@@ -116,3 +118,5 @@ DeepWikiすごいですね！OSSを使いはじめるときの取っ掛かりは
 ### おわりに
 
 `deepwiki-to-md` を利用することで、DeepWikiのわかりやすい情報を手軽にローカル環境へエクスポートできるようになります。バックアップとしてはもちろん、オフラインでの閲覧や他のドキュメントへの再利用など、様々な活用が考えられます。ぜひ一度お試しください。
+
+https://github.com/suwa-sh/deepwiki-to-md
