@@ -3,7 +3,7 @@ title: "Terraformベストプラクティス"
 emoji: "🏛️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [terraform, best-practice, ]
-published: false
+published: true
 published_at: 2025-05-07
 ---
 
