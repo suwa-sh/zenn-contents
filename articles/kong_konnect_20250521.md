@@ -311,3 +311,6 @@ Kong Konnect は主にウェブベースの UI と CLI (Command Line Interface) 
 
   - [About Gateway Manager | Kong Docs](https://docs.konghq.com/konnect/gateway-manager/)
   - [Backup and restore | Kong Docs](https://docs.konghq.com/gateway/latest/upgrade/backup-and-restore/)
+
+
+この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
