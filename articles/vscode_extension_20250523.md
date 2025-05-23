@@ -1,5 +1,5 @@
 ---
-title: "VSCode拡張機能のつくりかた"
+title: "VSCode拡張機能のつくり方"
 emoji: "🔌"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [VSCode, 拡張機能, API, TypeScript, チュートリアル]
