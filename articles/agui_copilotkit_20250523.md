@@ -144,8 +144,9 @@ AG-UIプロトコル仕様に準拠したアプリケーションを開発する
     ```python
     from fastapi import FastAPI
     from fastapi.responses import StreamingResponse
-    # from ag_ui.types import RunAgentInput, RunStartedEvent, TextMessageStartEvent, TextMessageContentEvent, TextMessageEndEvent, RunFinishedEvent # 実際にはSDKからimport
-    # from ag_ui.encode import EventEncoder # 実際にはSDKからimport
+    # 実際にはSDKからimport
+    from ag_ui.types import RunAgentInput, RunStartedEvent, TextMessageStartEvent, TextMessageContentEvent, TextMessageEndEvent, RunFinishedEvent
+    from ag_ui.encode import EventEncoder
     import uuid
     import json # SSE形式でのエンコードに利用
 
@@ -219,7 +220,7 @@ AG-UIプロトコル仕様に準拠したアプリケーションを開発する
           <YourMainContent />
           <CopilotChat />
         </CopilotKit>
-        <div> {/* CopilotKitのセットアップ例 (コメントアウト解除して使用) */} </div>
+        <div> {/* CopilotKitのセットアップ */} </div>
       );
     }
 
@@ -227,7 +228,7 @@ AG-UIプロトコル仕様に準拠したアプリケーションを開発する
       const { state, isLoading } = useCoAgent({ name: "myAgUiAgent" });
       // stateはAG-UIのSTATE_DELTAイベントによって更新される
       // UIは 'state' と 'isLoading' に基づいて更新される
-      return (<div> {/* AG-UIエージェントと連携するメインコンテンツ (コメントアウト解除して使用) */} </div>);
+      return (<div> {/* AG-UIエージェントと連携するメインコンテンツ */} </div>);
     }
     ```
 
