@@ -42,17 +42,17 @@ Apache Flink Kubernetes Operatorは、Kubernetes上でFlinkアプリケーショ
 
 ### ●Apache Beam
 
-[https://zenn.dev/suwash/articles/apache\_beam\_20250522](https://zenn.dev/suwash/articles/apache_beam_20250522)
+https://zenn.dev/suwash/articles/apache_beam_20250522
 
 ### ●Apache Flink
 
-[https://zenn.dev/suwash/articles/apache\_flink\_20250522](https://zenn.dev/suwash/articles/apache_flink_20250522)
+https://zenn.dev/suwash/articles/apache_flink_20250522
 
-[https://zenn.dev/suwash/articles/apache\_beam\_flink\_20250523](https://zenn.dev/suwash/articles/apache_beam_flink_20250523)
+https://zenn.dev/suwash/articles/apache_beam_flink_20250523
 
 ### ●Kubernetes (k8s)
 
-[https://zenn.dev/suwash/articles/apache\_beam\_flink\_k8s\_20250526](https://zenn.dev/suwash/articles/apache_beam_flink_k8s_20250526)
+https://zenn.dev/suwash/articles/apache_beam_flink_k8s_20250526
 
 ### ●ArgoCD
 
