@@ -149,7 +149,7 @@ graph LR
 
     subgraph dbt_Fusion [dbt Fusion（Rustベース）]
         direction TB
-        Fusion_Input[dbt Project<br/>（SQL, YAML）] --> Fusion_Parse_Understand[1.Rust Parser & SDF<br/>（SQL理解・意味解析）]
+        Fusion_Input[dbt Project<br/>（SQL, YAML）] --> Fusion_Parse_Understand[1.Rust Parser x SDF<br/>（SQL理解・意味解析）]
         Fusion_Parse_Understand --> Fusion_Optimize_Compile[2.論理プラン生成<br/>高度な最適化・コンパイル]
         Fusion_Optimize_Compile --> Fusion_Run[3.DWHへSQL実行<br/>（Adapter経由・効率化）]
         Fusion_Run --> Fusion_Output[Optimized SQL / Results<br/>+Rich Metadata]
