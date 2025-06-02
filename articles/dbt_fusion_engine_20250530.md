@@ -152,7 +152,7 @@ graph LR
         Fusion_Input[dbt Project<br/>（SQL, YAML）] --> Fusion_Parse_Understand[1.Rust Parser & SDF<br/>（SQL理解・意味解析）]
         Fusion_Parse_Understand --> Fusion_Optimize_Compile[2.論理プラン生成<br/>高度な最適化・コンパイル]
         Fusion_Optimize_Compile --> Fusion_Run[3.DWHへSQL実行<br/>（Adapter経由・効率化）]
-        Fusion_Run --> Fusion_Output[Optimized SQL / Results<br/>+ Rich Metadata]
+        Fusion_Run --> Fusion_Output[Optimized SQL / Results<br/>+Rich Metadata]
         style Fusion_Parse_Understand fill:#C8E6C9,stroke:#4CAF50
         style Fusion_Optimize_Compile fill:#C8E6C9,stroke:#4CAF50
         style Fusion_Run fill:#C8E6C9,stroke:#4CAF50
