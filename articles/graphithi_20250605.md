@@ -300,7 +300,7 @@ Graphitiの基本的な利用手順と主要な機能について説明します
   doc_text = "Apple Inc. announced the new iPhone 15 in Cupertino. Tim Cook presented the features."
   graph.add_document(doc_id="news_article_01", text=doc_text, metadata={"source": "web"})
   ```
-  ドキュメント追加時に、内部でチャンキング、エンティティ抽出、関係性抽出、埋め込み生成が行われます。
+  ドキュメント追加時に、内部でエンティティ抽出、関係性抽出、埋め込み生成が行われます。
 - **エピソード（時系列セグメント）の追加:** ポッドキャストのトランスクリプトなど、時間情報を持つセグメントデータに適しています。
   ```python
   from graphiti.domain import Segment
