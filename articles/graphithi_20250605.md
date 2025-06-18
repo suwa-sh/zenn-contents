@@ -107,6 +107,70 @@ graph TD
 | Embedder Client | テキストの埋め込みベクトル生成 |
 | LLM Client | 自然言語処理タスクの実行 |
 
+### 統合検索の処理フロー
+
+Graphitiの統合検索（Unified Search）の処理フローを図解します。これは`search()`関数を中心とした複数の検索手法を組み合わせたハイブリッド検索システムです。
+
+```mermaid
+graph TD
+    subgraph "検索エントリーポイント"
+        SEARCH["search()"]
+        QUERY_VECTOR["クエリベクトル化"]
+    end
+    
+    subgraph "並列検索実行"
+        EDGE_SEARCH["edge_search()"]
+        NODE_SEARCH["node_search()"]
+        EPISODE_SEARCH["episode_search()"]
+        COMMUNITY_SEARCH["community_search()"]
+    end
+    
+    subgraph "検索手法（各エンティティタイプ）"
+        FULLTEXT["フルテキスト検索<br/>BM25/Lucene"]
+        SIMILARITY["ベクトル類似度検索<br/>コサイン類似度"]
+        BFS["幅優先探索<br/>グラフトラバーサル"]
+    end
+    
+    subgraph "リランキング戦略"
+        RRF["RRF<br/>相互ランク融合"]
+        MMR["MMR<br/>最大限界関連性"]
+        CROSS_ENCODER["CrossEncoder<br/>ニューラルリランキング"]
+        NODE_DISTANCE["ノード距離<br/>リランキング"]
+    end
+    
+    subgraph "結果統合"
+        SEARCH_RESULTS["SearchResults"]
+        CONTEXT_STRING["コンテキスト文字列化"]
+    end
+    
+    SEARCH --> QUERY_VECTOR
+    QUERY_VECTOR --> EDGE_SEARCH
+    QUERY_VECTOR --> NODE_SEARCH
+    QUERY_VECTOR --> EPISODE_SEARCH
+    QUERY_VECTOR --> COMMUNITY_SEARCH
+    
+    EDGE_SEARCH --> FULLTEXT
+    EDGE_SEARCH --> SIMILARITY
+    EDGE_SEARCH --> BFS
+    
+    FULLTEXT --> RRF
+    SIMILARITY --> MMR
+    BFS --> CROSS_ENCODER
+    
+    RRF --> SEARCH_RESULTS
+    MMR --> SEARCH_RESULTS
+    CROSS_ENCODER --> SEARCH_RESULTS
+    NODE_DISTANCE --> SEARCH_RESULTS
+    
+    SEARCH_RESULTS --> CONTEXT_STRING
+```
+
+統合検索は`search()`関数で開始され、以下の手順で実行されます：
+
+1. **クエリベクトル化**: 入力クエリを埋め込みベクトルに変換
+2. **並列検索実行**: `semaphore_gather()`を使用して4つの検索タイプを同時実行
+3. **結果統合**: `SearchResults`オブジェクトに統合
+
 ## 情報モデル
 
 ### 概念モデル
@@ -193,6 +257,77 @@ classDiagram
     Graphiti --|> EpisodicNode : manages
     Graphiti --|> EntityNode : manages
     Graphiti --|> EntityEdge : manages
+```
+
+### エピソード、エンティティ、ファクト、コミュニティの関係
+
+## 基本的な関係構造
+
+```mermaid
+graph TD
+    subgraph "データ階層"
+        Episode["EpisodicNode<br/>エピソード"]
+        Entity["EntityNode<br/>エンティティ"]
+        Fact["EntityEdge<br/>ファクト"]
+        Community["CommunityNode<br/>コミュニティ"]
+    end
+    
+    subgraph "関係性"
+        Episode -->|"MENTIONS<br/>言及"| Entity
+        Entity -->|"RELATES_TO<br/>関係"| Entity
+        Community -->|"HAS_MEMBER<br/>メンバー"| Entity
+        Fact -.->|"fact属性で記述"| Entity
+    end
+    
+    subgraph "時間的側面"
+        ValidAt["valid_at<br/>有効開始時刻"]
+        InvalidAt["invalid_at<br/>無効化時刻"]
+        ExpiredAt["expired_at<br/>期限切れ時刻"]
+    end
+    
+    Fact --> ValidAt
+    Fact --> InvalidAt
+    Fact --> ExpiredAt
+```
+
+## データモデルの詳細
+
+### エピソード（EpisodicNode）
+
+エピソードは情報の入力単位で、生のコンテンツを保持します。
+
+### エンティティ（EntityNode）
+
+エンティティは実世界の概念（人、場所、組織など）を表現し、名前の埋め込みベクトルとサマリーを持ちます。
+
+### ファクト（EntityEdge）
+
+ファクトはエンティティ間の関係を自然言語で記述し、時間的な有効性情報を含みます。
+
+### コミュニティ（CommunityNode）
+
+コミュニティは関連するエンティティのクラスターを表現し、グラフクラスタリングアルゴリズムによって自動生成されます。
+
+## 処理フロー
+
+```mermaid
+flowchart TD
+    Input["エピソード入力"] --> Extract["エンティティ・ファクト抽出"]
+    Extract --> Resolve["重複解決・時間的検証"]
+    Resolve --> Store["グラフデータベース保存"]
+    Store --> Community["コミュニティ検出"]
+    
+    subgraph "データベース層"
+        EpisodicSave["EPISODIC_NODE_SAVE"]
+        EntitySave["ENTITY_NODE_SAVE"]
+        EdgeSave["ENTITY_EDGE_SAVE"]
+        CommunitySave["COMMUNITY_NODE_SAVE"]
+    end
+    
+    Store --> EpisodicSave
+    Store --> EntitySave
+    Store --> EdgeSave
+    Community --> CommunitySave
 ```
 
 ## 構築方法
