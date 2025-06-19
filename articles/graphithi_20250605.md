@@ -7,7 +7,7 @@ published: true
 published_at: 2025-06-05
 ---
 
-## 概要
+## ■概要
 
 Graphitiは、AIエージェント向けの時間認識型ナレッジグラフを構築し、クエリを実行するためのフレームワークです。
 
@@ -18,7 +18,7 @@ Graphitiは、リアルタイムなデータ更新と時間的コンテキスト
 
 https://github.com/getzep/graphiti
 
-## 特徴
+## ■特徴
 
 - **リアルタイム増分更新**:
   - バッチ処理での再計算をせず、新しいデータエピソードを即時に統合
@@ -31,9 +31,9 @@ https://github.com/getzep/graphiti
 - **スケーラビリティ**:
   - 並列処理により大規模なデータセットを効率的に管理し、エンタープライズ環境へ適用可能
 
-## システム構造
+## ■システム構造
 
-### システムコンテキスト図
+### ●システムコンテキスト図
 
 ```mermaid
 graph TD
@@ -51,7 +51,7 @@ graph TD
 | Neo4j | グラフデータベースとして使用する外部システム |
 | OpenAI | LLM推論と埋め込み生成に使用する外部システム |
 
-### コンテナ図
+### ●コンテナ図
 
 ```mermaid
 graph TD
@@ -80,7 +80,7 @@ graph TD
 | Neo4j Database | グラフデータを永続的に保管するストレージ |
 | LLM Provider | 自然言語処理タスクを実行する言語モデルプロバイダー |
 
-### コンポーネント図
+### ●コンポーネント図
 
 ```mermaid
 graph TD
@@ -110,7 +110,7 @@ graph TD
 | Embedder Client | テキストの埋め込みベクトル生成 |
 | LLM Client | 自然言語処理タスクの実行 |
 
-### 統合検索の処理フロー
+### ●統合検索の処理フロー
 
 Graphitiの統合検索（Unified Search）の処理フローを図解します。これは`search()`関数を中心とした複数の検索手法を組み合わせたハイブリッド検索システムです。
 
@@ -174,9 +174,9 @@ graph TD
 2. **並列検索実行**: `semaphore_gather()`を使用して4つの検索タイプを同時実行
 3. **結果統合**: `SearchResults`オブジェクトに統合
 
-## 情報モデル
+## ■情報
 
-### 概念モデル
+### ●概念モデル
 
 ```mermaid
 graph TD
@@ -207,7 +207,7 @@ graph TD
     EpisodicEdge --> EpisodicNode
 ```
 
-### データモデル
+### ●情報モデル
 
 ```mermaid
 classDiagram
@@ -262,7 +262,7 @@ classDiagram
     Graphiti --|> EntityEdge : manages
 ```
 
-### エピソード、エンティティ、ファクト、コミュニティの関係
+### ●主要な概念の関係
 
 ```mermaid
 graph TD
@@ -291,8 +291,6 @@ graph TD
     Fact --> ExpiredAt
 ```
 
-#### データモデルの詳細
-
 - **エピソード（EpisodicNode）**
     - エピソードは情報の入力単位で、生のコンテンツを保持します。
 - **エンティティ（EntityNode）**
@@ -302,7 +300,7 @@ graph TD
 - **コミュニティ（CommunityNode）**
     - コミュニティは関連するエンティティのクラスターを表現し、グラフクラスタリングアルゴリズムによって自動生成されます。
 
-#### 登録の処理フロー
+### ●主要な概念の登録処理フロー
 
 ```mermaid
 flowchart TD
