@@ -128,7 +128,7 @@ graph TD
         COMMUNITY_SEARCH["community_search()"]
     end
     
-    subgraph "検索手法（各エンティティタイプ）"
+    subgraph "検索手法"
         FULLTEXT["フルテキスト検索<br/>BM25/Lucene"]
         SIMILARITY["ベクトル類似度検索<br/>コサイン類似度"]
         BFS["幅優先探索<br/>グラフトラバーサル"]
@@ -139,6 +139,7 @@ graph TD
         MMR["MMR<br/>最大限界関連性"]
         CROSS_ENCODER["CrossEncoder<br/>ニューラルリランキング"]
         NODE_DISTANCE["ノード距離<br/>リランキング"]
+        EPISODE_MENTIONS["メンション数<br/>リランキング"]
     end
     
     subgraph "結果統合"
@@ -147,24 +148,12 @@ graph TD
     end
     
     SEARCH --> QUERY_VECTOR
-    QUERY_VECTOR --> EDGE_SEARCH
-    QUERY_VECTOR --> NODE_SEARCH
-    QUERY_VECTOR --> EPISODE_SEARCH
-    QUERY_VECTOR --> COMMUNITY_SEARCH
-    
-    EDGE_SEARCH --> FULLTEXT
-    EDGE_SEARCH --> SIMILARITY
-    EDGE_SEARCH --> BFS
-    
-    FULLTEXT --> RRF
-    SIMILARITY --> MMR
-    BFS --> CROSS_ENCODER
-    
-    RRF --> SEARCH_RESULTS
-    MMR --> SEARCH_RESULTS
-    CROSS_ENCODER --> SEARCH_RESULTS
-    NODE_DISTANCE --> SEARCH_RESULTS
-    
+
+    QUERY_VECTOR --> 並列検索実行
+    並列検索実行 --> 検索手法
+    検索手法 --> リランキング戦略
+    リランキング戦略 --> SEARCH_RESULTS
+
     SEARCH_RESULTS --> CONTEXT_STRING
 ```
 

@@ -92,44 +92,40 @@ https://zenn.dev/suwash/articles/graphithi_20250605
 
 `mcp server`がエントリーポイントとなり、以下の3つの検索を並行実行。さらに、グラフDBに格納されたドキュメント間の関係性や時系列を用いて検索結果をリランキングすることで、**単一の検索手法では見つけられなかった、文脈的に真に関連性の高い情報**を特定します。
 
+* **ハイブリッド検索**
   * **ベクトル検索**: 意味の類似性に基づき、関連性の高い情報を探し出します。
   * **グラフ検索**: データ間の「関係性」を辿り、隠れた繋がりを発見します。
   * **全文検索**: キーワードで情報を網羅的にスキャンします。
+* **リランキング**
+  * **RRF**: 複数の検索結果を、検索順位から再評価します。
+  * **MMR**: 検索結果を、関連性と多様性のバランスで再評価します。
+  * **Cross-Encoder**: 検索結果を、文脈での関連性で再評価します。
+  * **ノード距離**: 検索結果を、中心ノードからの距離で再評価します。
+  * **メンション数**: 検索結果を、原文での言及回数で再評価します。
 
-
-**graphitiでの検索**
+**graphitiでの検索フロー**
 
 ```mermaid
 graph TD
     SEARCH["search()"]
     
-    subgraph "検索"
+    subgraph PHASE_SEARCH["検索"]
         FULLTEXT["全文検索検索"]
         SIMILARITY["ベクトル検索"]
         BFS["グラフ検索"]
     end
     
-    subgraph "リランキング"
+    subgraph PHASE_RERANK["リランキング"]
         RRF["RRF<br/>相互ランク融合"]
         MMR["MMR<br/>最大限界関連性"]
-        CROSS_ENCODER["CrossEncoder<br/>ニューラルリランキング"]
+        CROSS_ENCODER["Cross-Encoder<br/>ニューラルリランキング"]
         NODE_DISTANCE["ノード距離<br/>リランキング"]
+        EPISODE_MENTIONS["メンション数<br/>リランキング"]
     end
-    
-    SEARCH_RESULTS["SearchResults"]
-    
-    SEARCH --> FULLTEXT
-    SEARCH --> SIMILARITY
-    SEARCH --> BFS
-    
-    FULLTEXT --> RRF
-    SIMILARITY --> MMR
-    BFS --> CROSS_ENCODER
-    
-    RRF --> SEARCH_RESULTS
-    MMR --> SEARCH_RESULTS
-    CROSS_ENCODER --> SEARCH_RESULTS
-    NODE_DISTANCE --> SEARCH_RESULTS
+
+    SEARCH --> PHASE_SEARCH
+    PHASE_SEARCH --> PHASE_RERANK
+    PHASE_RERANK --> SEARCH_RESULTS["SearchResults"]
 ```
 
 
@@ -234,7 +230,7 @@ docker compose run --rm ingest
 
 ### 連携例: n8nワークフローへの組み込み
 
-例えば、ノーコードでワークフローを構築できるツール「n8n」をお使いの場合、既存のワークフローにmcp serverを呼び出す「AI Agent」ノードを挟むだけで、簡単に連携できます。`path/to/RAG/data/input/`のファイル検知トリガーで、ドキュメント登録をきどうすれば、ファイルを配置するだけですぐに登録され、検索できるようになります。
+例えば、ノーコードでワークフローを構築できるツール「n8n」をお使いの場合、既存のワークフローにmcp serverを呼び出す「AI Agent」ノードを挟むだけで、簡単に連携できます。`path/to/RAG/data/input/`のファイル検知トリガーで、ドキュメント登録を起動すれば、ファイルを配置するだけですぐに登録され、検索できるようになります。
 
 ![](https://share.cleanshot.com/LjCr2KD8+)
 
