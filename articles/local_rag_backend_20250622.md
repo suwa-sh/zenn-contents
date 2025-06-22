@@ -1,5 +1,5 @@
 ---
-title: "RAGの精度が出ないは卒業。グラフDBで 文脈の時系列 を捉える高機能RAGバックエンド「local-RAG-backend」"
+title: "RAGの精度が出ない...は卒業。グラフDBで 文脈の時系列 を捉える高機能RAGバックエンド「local-RAG-backend」"
 emoji: "🚀"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["RAG", "LLM", "Neo4j", "AI", "Docker"]
