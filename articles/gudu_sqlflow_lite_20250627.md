@@ -3,8 +3,8 @@ title: "技術調査 - Gudu SQLFlow Lite"
 emoji: "🌊"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["DataLineage", "SQL", "Python", "Java", "ETL"]
-published: true
-published_at: 2025-06-27
+published: false
+published_at: 2025-06-28
 ---
 
 データエンジニアやデータアナリストにとって、複雑に絡み合ったSQLが「どのテーブルのどのカラムからデータを取得し、どこへ流しているのか」を正確に追跡する「データリネージ」は、データ品質の保証や影響範囲の調査に不可欠です。しかし、手作業での追跡はしばしば悪夢のような作業になりがちです。
