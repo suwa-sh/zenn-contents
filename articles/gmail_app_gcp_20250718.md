@@ -90,8 +90,8 @@ graph TD
         CS[Cloud Scheduler]
     end
 
-    subgraph Google
-        GS[Google System - Gmail API]
+    subgraph Gmail
+        GS[Gmail API]
     end
 
     U[エンドユーザー] -- "1 OAuth同意" --> SB
@@ -119,16 +119,13 @@ graph TD
 graph TD
     subgraph Gmail
         A[Gmailイベント発生]
+        GS[Gmail API]
     end
 
-    subgraph "SaaS Backend (Google Cloud)"
+    subgraph "SaaS Backend"
+        PS[Cloud Pub/Sub]
         CR[Cloud Run]
         DB[Database]
-    end
-
-    subgraph Google
-        GS[Gmail API]
-        PS[Cloud Pub/Sub]
     end
 
     A -- "1 イベント通知" --> PS
@@ -160,7 +157,7 @@ graph TD
         DB[Database]
     end
 
-    subgraph Google
+    subgraph Gmail
         GS[Gmail API]
     end
 
