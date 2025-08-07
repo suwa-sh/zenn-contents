@@ -3,7 +3,8 @@ title: "技術調査 - Serena MCP"
 emoji: "🤖"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["LLM", "AI", "コーディング", "Python", "LSP"]
-published: false
+published: true
+published_at: 2025-08-08
 ---
 
 ## ■概要
