@@ -5,15 +5,30 @@ book:
 	npx zenn new:book
 
 preview:
-	npx zenn preview & echo $$! > .zenn-preview.pid
-	open http://localhost:8000
-
-preview-down:
-	if [ -f .zenn-preview.pid ]; then \
-		kill `cat .zenn-preview.pid` || true; \
-		rm .zenn-preview.pid; \
+	@if [ -f .zenn-preview.pid ] && kill -0 `cat .zenn-preview.pid` 2>/dev/null; then \
+		echo "⚠️  Preview is already running (PID: `cat .zenn-preview.pid`)"; \
+		exit 1; \
 	fi
 
+	@if lsof -i :8000 >/dev/null 2>&1; then \
+		echo "⚠️  Port 8000 is already in use"; \
+		echo "   Run 'make preview-restart' to force restart"; \
+		exit 1; \
+	fi
+	@echo "✅ Starting preview server..."
+	@npx zenn preview & echo $$! > .zenn-preview.pid
+	@sleep 2
+	@open http://localhost:8000
+
+preview-down:
+	@if [ -f .zenn-preview.pid ]; then \
+		echo "🛑 Stopping preview server (PID: `cat .zenn-preview.pid`)..."; \
+		kill `cat .zenn-preview.pid` 2>/dev/null || true; \
+		rm .zenn-preview.pid; \
+		echo "✅ Preview server stopped"; \
+	else \
+		echo "ℹ️ preview server is NOT running"; \
+	fi
 
 push:
 	git add .
