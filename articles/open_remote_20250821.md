@@ -1,6 +1,6 @@
 ---
 title: "技術調査 - OpenRemote"
-emoji: ""
+emoji: "🚀"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["IoT", "OpenRemote", "OSS", "Architecture", "Python"]
 published: true
