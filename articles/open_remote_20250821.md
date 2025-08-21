@@ -164,7 +164,7 @@ graph TD
         User
         Rule
         Agent
-        subgraph "Asset-資産"
+        subgraph Asset["Asset-資産"]
             Attribute-属性
         end
     end
