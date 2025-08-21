@@ -152,7 +152,7 @@ graph TD
 | **ShellExecutor** | `execute_shell_command`ツールを実装し、任意のシェルコマンドを実行 |
 | **MemoryTool** | メモリの作成、読み取り、削除を行うツールを実装 |
 
-## ■情報
+## ■データ
 
 Serena MCPが内部で扱うデータ構造を、概念モデルと情報モデルで解説します。
 

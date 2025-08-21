@@ -113,7 +113,7 @@ graph TD
 | document_to_element_list関数 | Element構造への変換処理 |
 | chunk_elements関数 | チャンキング処理機能 |
 
-## ■情報
+## ■データ
 
 ### ●概念モデル
 

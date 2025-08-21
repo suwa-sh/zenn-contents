@@ -150,7 +150,7 @@ graph TD
 | Security Group Driver (iptables/nftables) | iptablesやnftablesを利用してセキュリティグループのルールを適用します。                                               |
 | OVS Bridge Manager                        | Open vSwitchのブリッジ（br-int, br-tunなど）の作成やポート接続などを管理します。                                   |
 
-## ■情報
+## ■データ
 
 ### ●概念モデル
 
