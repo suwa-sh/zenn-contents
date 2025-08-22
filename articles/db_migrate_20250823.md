@@ -3,7 +3,7 @@ title: "OSSデータベースマイグレーションツール選定ガイド【
 emoji: "🗃️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["DB", "マイグレーション", "Liquibase", "Atlas", "DevOps"]
-published: false
+published: true
 published_at: 2025-08-23
 ---
 
