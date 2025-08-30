@@ -16,7 +16,7 @@ published_at: 2025-08-30
 ### 1.1. プロセスフロー
 
 ```mermaid
-graph TB
+graph TD
     subgraph プロジェクト期間
         A[1.リスクの特定] --> B[2.リスクの分析・評価];
         B --> C[3.対応計画の策定];
