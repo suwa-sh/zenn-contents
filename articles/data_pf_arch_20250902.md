@@ -48,21 +48,23 @@ graph TD
                 Star[Star Schema]
                 Daifukucho[大福帳]
             end
+            subgraph Reporting
+                Mart1[Sales Mart]
+                Mart2[Marketing Mart]
+                Mart3[Finance Mart]
+            end
         end
 
         subgraph SML[Semantic Layer]
-            Semantic[ビジネス用語]
+            Semantic[ビジネス指標・定義]
         end
     end
 
     subgraph CONS[Consumption]
-        Mart1[Sales Mart]
-        Mart2[Marketing Mart]
-        Mart3[CS Mart]
-        Mart4[Finance Mart]
+        Business[業務システム・EUC]
         DS[Data Science]
-        BI[BI Tools]
-        AI[AI / LLM Apps]
+        BI[BIツール]
+        AI[AI / LLMアプリ]
     end
 
     A -- Ingest --> Bronze_A
@@ -74,14 +76,15 @@ graph TD
     Bronze_C -- Transform --> DV
     Bronze_D -- Transform --> DV
     DV -- Transform --> Gold_Models
-    Gold_Models --> Semantic
-    Semantic --> Mart1
-    Semantic --> Mart2
-    Semantic --> Mart3
-    Semantic --> Mart4
+    Star --> Reporting
+    Star ---> Semantic
+    Daifukucho --> DS
     Semantic --> DS
-    Semantic --> BI
     Semantic --> AI
+    Semantic --> BI
+
+    Star  --> Business
+    Reporting --> Business
 
     style BL fill:#CD7F32,stroke:#333,stroke-width:2px
     style SL fill:#C0C0C0,stroke:#333,stroke-width:2px
