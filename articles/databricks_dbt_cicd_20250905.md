@@ -631,7 +631,7 @@ sequenceDiagram
     note right of DWH: デプロイ前のテーブルバージョンは vN
     
     Runner->>DWH: 4. dbt build --target prod を実行
-    note right of DWH: 5. 本番テーブルが更新され、<br/>新しいバージョン vN+1 が作成される [1, 2]
+    note right of DWH: 5. 本番テーブルが更新され、<br/>新しいバージョン vN+1 が作成される
     
     DWH-->>Runner: 6. デプロイ完了 (vN+1がライブ状態)
     
@@ -639,7 +639,7 @@ sequenceDiagram
     
     alt 問題が検知された場合 (ロールバック)
         Monitor->>Runner: 8a. ロールバックをトリガー
-        Runner->>DWH: 9a. `RESTORE TABLE... TO VERSION AS OF vN` を実行 [1, 2]
+        Runner->>DWH: 9a. `RESTORE TABLE... TO VERSION AS OF vN` を実行
         DWH-->>Runner: 10a. テーブルがデプロイ前の状態 (vN) に復元される
         Runner->>Developer: 11a. ロールバック完了を通知
     else デプロイ成功
