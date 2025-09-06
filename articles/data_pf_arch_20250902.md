@@ -2,7 +2,7 @@
 title: "スケーラビリティとアジリティを両立するデータ基盤のアーキテクチャ"
 emoji: "🏗️"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["DataArchitecture", "DataVault", "Medallion", "dbt", "SemanticLayer"]
+topics: ["DataArchitecture", "DataVault", "Medallion", "dbt", "zennfes2025infra"]
 published: true
 published_at: 2025-09-02
 ---

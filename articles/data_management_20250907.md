@@ -2,7 +2,7 @@
 title: "データマネジメントの三位一体：DMBOK、MDS、実践的戦略の統合"
 emoji: "🧭"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["DataManagement", "DMBOK", "ModernDataStack", "dbt", "DataEngineering"]
+topics: ["DataManagement", "DMBOK", "dbt", "DataEngineering", "zennfes2025free"]
 published: true
 publieshed_at: 2025-09-07
 ---
