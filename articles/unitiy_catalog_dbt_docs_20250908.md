@@ -4,7 +4,7 @@ emoji: "🤝"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["dbt", "Databricks", "UnityCatalog", "DataGovernance"]
 published: true
-published_at: 2025-09-06
+published_at: 2025-09-08
 ---
 
 Databricksとdbtを導入したものの、「両者の豊富なガバナンス機能をどう使い分ければ良いのか？」と悩んでいませんか？
