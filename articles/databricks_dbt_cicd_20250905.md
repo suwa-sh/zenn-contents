@@ -355,6 +355,29 @@ jobs:
           fi
 ```
 
+```mermaid
+sequenceDiagram
+    actor Developer
+    participant GitRepo as Gitリポジトリ
+    participant Runner as GitHub Actionsランナー
+    participant ArtifactStore as 成果物ストレージ
+    participant DWH as データウェアハウス (Databricks)
+
+    Developer->>GitRepo: 1. プルリクエスト (PR) を作成
+    GitRepo->>Runner: 2. CIワークフローをトリガー
+    
+    Runner->>GitRepo: 3. PRのコードをチェックアウト
+    Runner->>ArtifactStore: 4. 最新の本番manifest.jsonを取得
+    ArtifactStore-->>Runner: 5. manifest.jsonを返す
+    
+    Runner->>DWH: 6. `dbt build --select state:modified+ --defer...` を実行
+    note right of DWH: 7. 一時スキーマに変更モデルをビルド。<br/>本番スキーマから未変更モデルを読み込む (`--defer`) [3, 4]
+    DWH-->>Runner: 8. ビルドとテストの結果を返す
+    
+    Runner->>GitRepo: 9. PRにステータス (成功/失敗) を報告
+    GitRepo-->>Developer: 10. PR上で結果を確認
+```
+
 ##### 3.3.2 最新のアプローチ: Databricks Asset BundlesによるCI
 
 DABsを利用すると、CIパイプラインの役割は、`databricks bundle`コマンドを実行することに変わります。dbtの実行ロジックは`databricks.yml`内にカプセル化され、パイプラインの定義が簡素化されます。
@@ -385,6 +408,32 @@ jobs:
         run: databricks bundle deploy -t ci | xargs databricks bundle run -j
 ```
 
+```mermaid
+sequenceDiagram
+    actor Developer
+    participant GitRepo as Gitリポジトリ
+    participant Runner as GitHub Actionsランナー
+    participant Databricks as Databricksコントロールプレーン
+
+    Developer->>GitRepo: 1. プルリクエスト (PR) を作成
+    GitRepo->>Runner: 2. CIワークフローをトリガー
+    
+    Runner->>GitRepo: 3. PRのコード (databricks.ymlを含む) をチェックアウト
+    
+    Runner->>Databricks: 4. `databricks bundle validate` を実行
+    Databricks-->>Runner: 5. 検証結果を返す
+    
+    Runner->>Databricks: 6. `databricks bundle deploy -t ci` を実行
+    note right of Databricks: 7. バンドル定義に基づき、<br/>一時的なCIジョブを作成/更新
+    Databricks-->>Runner: 8. デプロイ完了
+    
+    Runner->>Databricks: 9. `databricks bundle run` を実行
+    note right of Databricks: 10. CIジョブを実行 (内部でdbtが動作)
+    Databricks-->>Runner: 11. ジョブ実行結果を返す
+    
+    Runner->>GitRepo: 12. PRにステータス (成功/失敗) を報告
+    GitRepo-->>Developer: 13. PR上で結果を確認
+```
 
 ### 第IV部 継続的デプロイメント（CD）の自動化
 
@@ -425,6 +474,30 @@ jobs:
           path: ./target/manifest.json
 ```
 
+```mermaid
+sequenceDiagram
+    actor Developer
+    participant GitRepo as Gitリポジトリ
+    participant Runner as GitHub Actionsランナー
+    participant DWH as データウェアハウス (Databricks)
+    participant ArtifactStore as 成果物ストレージ
+
+    Developer->>GitRepo: 1. PRをmainブランチにマージ
+    GitRepo->>Runner: 2. CDワークフローをトリガー
+    
+    Runner->>GitRepo: 3. mainブランチのコードをチェックアウト
+    
+    Runner->>DWH: 4. `dbt build --target prod` を実行
+    DWH-->>Runner: 5. 本番環境でのビルドとテストが完了
+    
+    note over Runner: 6. 成功後、新しい `target/manifest.json` が生成される
+    
+    Runner->>ArtifactStore: 7. 新しい manifest.json をアップロードし、<br/>次回のCI実行用に保存する
+    ArtifactStore-->>Runner: 8. アップロード完了
+    
+    Runner->>Developer: 9. (任意) Slackなどでデプロイ完了を通知
+```
+
 ##### 4.2.2 最新のアプローチ: Databricks Asset BundlesによるCD
 
 DABsを使用する場合、CDパイプラインは`databricks bundle deploy`コマンドを実行し、`databricks.yml`で定義された本番用ジョブをDatabricksワークスペースに適用するだけです。実際のdbtの実行は、Databricks側で定義されたスケジュールに従います。
@@ -453,6 +526,29 @@ jobs:
         run: databricks bundle deploy -t prod
 ```
 
+```mermaid
+sequenceDiagram
+    actor Developer
+    participant GitRepo as Gitリポジトリ
+    participant Runner as GitHub Actionsランナー
+    participant Databricks as Databricksコントロールプレーン
+    participant DWH as データウェアハウス (Databricks)
+
+    Developer->>GitRepo: 1. PRをmainブランチにマージ
+    GitRepo->>Runner: 2. CDワークフローをトリガー
+    
+    Runner->>GitRepo: 3. mainブランチのコード (databricks.ymlを含む) をチェックアウト
+    
+    Runner->>Databricks: 4. `databricks bundle deploy -t prod` を実行
+    note right of Databricks: 5. 受信したバンドル定義に基づき、<br/>本番用ジョブの定義 (スケジュール等) を作成/更新する
+    Databricks-->>Runner: 6. ジョブ定義のデプロイ完了
+    
+    Runner->>Developer: 7. (任意) Slackなどでデプロイ完了を通知
+    
+    loop Databricks内のスケジュール実行
+        Databricks->>DWH: 8. 定義されたスケジュールに基づき、`dbt build` を実行
+    end
+```
 
 ### 第V部 多層的な自動テストフレームワーク
 
@@ -519,6 +615,38 @@ dbtのPythonモデルなど、PySparkで記述されたロジックには`pytest
 
 このアプローチは、ストレージのオーバーヘッドと運用の複雑さを大幅に削減します。
 
+
+```mermaid
+sequenceDiagram
+    actor Developer
+    participant GitRepo as Gitリポジトリ (GitHub/GitLab)
+    participant Runner as CI/CDランナー
+    participant DWH as データウェアハウス (Delta Lake)
+    actor Monitor as 自動監視
+
+    Developer->>GitRepo: 1. PRをmainブランチにマージ
+    GitRepo->>Runner: 2. CDワークフローをトリガー
+    
+    Runner->>GitRepo: 3. mainブランチのコードをチェックアウト
+    note right of DWH: デプロイ前のテーブルバージョンは vN
+    
+    Runner->>DWH: 4. dbt build --target prod を実行
+    note right of DWH: 5. 本番テーブルが更新され、<br/>新しいバージョン vN+1 が作成される [1, 2]
+    
+    DWH-->>Runner: 6. デプロイ完了 (vN+1がライブ状態)
+    
+    Monitor->>DWH: 7. デプロイ後のデータを監視
+    
+    alt 問題が検知された場合 (ロールバック)
+        Monitor->>Runner: 8a. ロールバックをトリガー
+        Runner->>DWH: 9a. `RESTORE TABLE... TO VERSION AS OF vN` を実行 [1, 2]
+        DWH-->>Runner: 10a. テーブルがデプロイ前の状態 (vN) に復元される
+        Runner->>Developer: 11a. ロールバック完了を通知
+    else デプロイ成功
+        Runner->>Developer: 8b. デプロイ成功を通知
+    end
+```
+
 #### 6.2 データパイプラインへのCanaryリリースの適用
 
 変更を一部のユーザーに先行展開し、問題を監視する手法です。
@@ -532,6 +660,40 @@ dbtのPythonモデルなど、PySparkで記述されたロジックには`pytest
 4.  **プロモーション**
       * 成功と判断されれば、Canaryモデルのロジックを本番モデルにマージし、Canaryモデルを廃止します。
 
+
+```mermaid
+sequenceDiagram
+    actor Developer
+    participant GitRepo as Gitリポジトリ (GitHub/GitLab)
+    participant Runner as CI/CDランナー
+    participant DWH as データウェアハウス
+    participant BITool as BIツール / 下流コンシューマ
+    actor User as ユーザー / 監視チーム
+
+    Developer->>GitRepo: 1. カナリアモデル (`fct_orders_canary`) を含むPRをマージ
+    GitRepo->>Runner: 2. カナリアCDワークフローをトリガー
+    
+    Runner->>GitRepo: 3. mainブランチのコードをチェックアウト
+    
+    Runner->>DWH: 4. dbt build を実行
+    note right of DWH: 5. 既存モデル (`fct_orders`) と<br/>カナリアモデル (`fct_orders_canary`) の両方をビルド/更新
+    DWH-->>Runner: 6. ビルド完了
+    
+    Runner->>BITool: 7. 一部のダッシュボード/ユーザーの参照先を<br/>`fct_orders_canary` に変更する
+    
+    User->>BITool: 8. ダッシュボードを閲覧
+    BITool->>DWH: 9. `fct_orders_canary` テーブルをクエリ
+    DWH-->>BITool: 10. カナリア版のデータを返す
+    BITool-->>User: 11. カナリア版データでダッシュボードを表示
+    
+    User->>User: 12. パフォーマンスやデータの正確性を監視
+    
+    alt カナリア成功
+        Developer->>GitRepo: 13a. カナリアのロジックを本番モデルにマージするPRを作成
+    else カナリア失敗
+        Runner->>BITool: 13b. 参照先を元の `fct_orders` に戻す
+    end
+```
 
 ### 第VII部 ガバナンスと可観測性の強化
 
