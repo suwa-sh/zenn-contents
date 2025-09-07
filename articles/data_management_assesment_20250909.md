@@ -4,7 +4,7 @@ emoji: "🗺️"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["DataManagement", "DataGovernance", "DMBOK", "DataStrategy"]
 published: true
-published_at: 2025-09-08
+published_at: 2025-09-09
 ---
 
 組織のデータ活用を次のレベルへ引き上げたい、しかしどこから手をつければ良いかわからない。そんな課題を抱えるリーダーや実務者のために、体系的な「データマネジメント成熟度アセスメント」を用意しました。
