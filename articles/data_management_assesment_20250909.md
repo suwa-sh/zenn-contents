@@ -2,7 +2,7 @@
 title: "データマネジメント成熟度アセスメント"
 emoji: "🗺️"
 type: "idea" # tech: 技術記事 / idea: アイデア
-topics: ["DataManagement", "DataGovernance", "DMBOK", "DataStrategy"]
+topics: ["DataManagement", "DataGovernance", "DMBOK", "DataStrategy", "zennfes2025free"]
 published: true
 published_at: 2025-09-09
 ---
