@@ -261,7 +261,7 @@ graph TD
 この新しいモデルでは、中央の専門家チームが各事業ドメインを「支援（イネーブルメント）」する形へと構造が変化します。
 
 ```mermaid
-graph LR
+graph TD
     subgraph Manage[全社的な監督]
         direction LR
         A[データリーダー CDO]
