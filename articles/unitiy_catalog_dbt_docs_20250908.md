@@ -19,11 +19,11 @@ graph LR
     A("Modern Data Governance")
 
     subgraph "Databricks Unity Catalog"
-        B("<b>竣工図</b><br>集中管理型<br>ランタイムガバナンス")
+        B("竣工図<br>集中管理型<br>ランタイムガバナンス")
     end
 
     subgraph "dbt Ecosystem"
-        C("<b>設計図</b><br>分散型<br>Governance as Code")
+        C("設計図<br>分散型<br>Governance as Code")
     end
 
     A --> B
