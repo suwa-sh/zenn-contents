@@ -278,7 +278,7 @@ flowchart TB
   %% Sources
   subgraph SRC["Sources"]
     OPS["業務DB"]
-    IOT[IoT Sensors]
+    IOT[IoT Gateway]
     RAG["RAG DB (VectorDB/GraphDB)"]
   end
 
