@@ -3,7 +3,8 @@ title: "メダリオンアーキテクチャ2.0：次世代データプラット
 emoji: "💎"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["DataArchitecture", "DataBricks", "MedallionArchitecture", "DataMesh", "ETL"]
-published: false
+published: true
+published_at: 2025-09-11
 ---
 
 
