@@ -484,6 +484,236 @@ spec:
   * **メトリクスの計測**: DevOpsの健全性を示す**Four Keys**（デプロイの頻度、変更のリードタイム、変更障害率、サービス復元時間）を計測します。本戦略は、自動化によってデプロイ頻度とリードタイムを改善し、段階的リリースによって変更障害率とサービス復元時間を改善することを目指します。
   * **実行時間の可視化**: パイプラインの各ジョブの実行時間をダッシュボードで可視化し、ボトルネックとなっている箇所を特定・改善します。
 
+### ●Gitタグによるバージョンの同期
+
+本番リリースとソースコードのコミットを正確に紐付けることは、障害調査やロールバックの確実性を高める上で極めて重要です。ここでは、`config repo`のリリースと各`app repo`のコミットを**同一のGitタグで同期させる**、高度な自動化戦略を紹介します。
+
+この戦略のゴールは、「**`config repo`のタグ`v20250912.1400`を見れば、その時点でリリースされたサービス`front`のコードも、同じタグ`v20250912.1400`で正確に特定できる**」状態を実現することです。
+
+```mermaid
+sequenceDiagram
+    participant CD as Config Repo CD
+    participant CRepo as Config Repo (Git)
+    participant Cron as App Repo Cron
+    participant ARepo as App Repo (Git)
+
+    autonumber
+
+    Note over CD: Prodデプロイ & Smoke Test 成功
+    CD->>CRepo: 自身に日時タグを付与 & Push (例: v20250912.1402)
+
+    loop 定期的な監視 (例: 30分ごと)
+        Cron->>CRepo: 新しいリリースタグがないか確認 (git ls-remote)
+        alt 新規タグ (v20250912.1402) を発見
+            Cron->>ARepo: 自リポジトリに同名タグが存在しないか確認
+            opt タグが存在しない場合
+                Cron->>CRepo: タグ時点のマニフェストを取得 (git clone --branch)
+                Note right of Cron: マニフェストを解析し、<br>自アプリのコミットハッシュ<br>(例: a1b2c3d) を特定
+                Cron->>ARepo: 該当コミット(a1b2c3d)に<br>同じタグ(v20250912.1402)を付与 & Push
+            end
+        end
+    end
+```
+
+#### Step 1: 前提 - Component CIでのコミットハッシュ利用
+
+まず前提として、各`app repo`のComponent CIは、ビルドしたコンテナイメージのタグとして、自身の**コミットハッシュ**を使用します。このコミットハッシュ付きのイメージタグが、後続のCDプロセスのために`config repo`内のKubernetesマニフェスト（例: Kustomization.yamlやHelmのvalues.yaml）に設定されます。
+
+```yaml
+# config repo内のkustomization.yamlの例
+# ...
+images:
+  - name: your-registry/front
+    newTag: a1b2c3d  # ← app repo "front" のコミットハッシュ
+  - name: your-registry/bff
+    newTag: e4f5g6h  # ← app repo "bff" のコミットハッシュ
+# ...
+```
+
+#### Step 2: リリースのマーキング (`config repo`側)
+
+`prod`環境へのCDパイプラインがデプロイとSmoke Testを成功させたら、その時点の`config repo`の`prod`ブランチに対して、**リリースバージョンを示す日時ベースのタグ**を自動で付与します。
+
+これは、`config repo`のCDワークフローに、以下のようなジョブを追加することで実現できます。
+
+**`.github/workflows/cd.yml` (`config repo`側) に追記するジョブの例**
+
+```yaml
+# ... (stgからprodへのPRをマージするまでのジョブ)
+
+jobs:
+  # ...
+  
+  release-on-prod:
+    if: github.ref == 'refs/heads/prod'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout config repo
+        uses: actions/checkout@v4
+
+      - name: Run Smoke Test on Production
+        run: |
+          echo "Running smoke tests on production environment..."
+          # ここに実際のテストスクリプトを記述
+          # 成功したら exit 0, 失敗したら exit 1 となるように実装
+          exit 0
+
+      - name: Tag Release on Config Repo
+        if: success() # Smoke Testが成功した場合のみ実行
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 日本時間 (JST) でタグを生成 (例: v20250912.1400)
+          RELEASE_TAG="v$(TZ=Asia/Tokyo date +'%Y%m%d.%H%M')"
+          echo "Creating release tag on config repo: $RELEASE_TAG"
+          
+          git tag $RELEASE_TAG
+          git push origin $RELEASE_TAG
+```
+
+#### Step 3: タグの伝播と同期 (`app repo`側)
+
+次に、各`app repo`は`config repo`に新しいリリースタグが作成されたことを検知し、自リポジトリ内の適切なコミットに同じ名前のタグを付けに行きます。この「検知とタグ付け」の処理は、各`app repo`に配置した専用のワークフローによって自律的に実行されます。
+
+検知方法にはWebhookなどもありますが、ここではシンプルで堅牢な **定期実行（ポーリング）** による実装例を示します。
+
+**`.github/workflows/sync-release-tag.yml` (各`app repo`に配置)**
+
+```yaml
+name: Sync Release Tag from Config Repo
+
+on:
+  schedule:
+    # 30分に1回など、プロジェクトに適した頻度で実行
+    - cron: '*/30 * * * *'
+  workflow_dispatch: # 手動実行も可能にする
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout App Repo code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # タグ付けのために全履歴を取得
+
+      - name: Get latest release tag from Config Repo
+        id: get_tag
+        run: |
+          # config repoのリモートタグ一覧から、"v"で始まる最新のタグを取得
+          LATEST_TAG=$(git ls-remote --tags --sort="v:refname" https://github.com/your-org/config.git "v*" | tail -n1 | awk '{print $2}' | sed 's|refs/tags/||')
+          if [ -z "$LATEST_TAG" ]; then
+            echo "No release tags found in config repo."
+            exit 1
+          fi
+          echo "Latest config repo tag: $LATEST_TAG"
+          echo "latest_config_tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+
+      - name: Check if tag already exists in this App Repo
+        id: check_local_tag
+        run: |
+          # このリポジトリに同じタグが既に存在するか確認
+          if git rev-parse -q --verify "refs/tags/${{ steps.get_tag.outputs.latest_config_tag }}"; then
+            echo "Tag ${{ steps.get_tag.outputs.latest_config_tag }} already processed. Skipping."
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "New tag found. Proceeding to sync."
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Find corresponding commit hash from Config Repo
+        if: steps.check_local_tag.outputs.exists == 'false'
+        id: find_commit
+        env:
+          CONFIG_REPO_URL: "https://github.com/your-org/config.git"
+          # このリポジトリでビルドされるコンテナイメージ名
+          APP_IMAGE_NAME: "your-registry/front" 
+        run: |
+          # config repoを、取得した最新タグの状態でクローン
+          git clone --depth 1 --branch ${{ steps.get_tag.outputs.latest_config_tag }} $CONFIG_REPO_URL config-repo
+          
+          # マニフェストファイルから、自アプリのイメージに設定されたコミットハッシュを抽出
+          # 抽出方法は、Kustomize, Helmなど利用ツールに応じて調整が必要です
+          # 以下はgrepを使った簡易的な例
+          COMMIT_HASH=$(grep -r "${APP_IMAGE_NAME}" ./config-repo | head -n 1 | sed -n 's/.*:\([0-9a-f]\{7,40\}\).*/\1/p')
+          
+          if [ -z "$COMMIT_HASH" ]; then
+            echo "This app's commit hash not found in config repo at tag ${{ steps.get_tag.outputs.latest_config_tag }}. Skipping."
+            # このリリースに自アプリの変更が含まれていない場合は正常終了
+            exit 0
+          fi
+          echo "Found corresponding commit hash: $COMMIT_HASH"
+          echo "commit_hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
+
+      - name: Create Git Tag on App Repo
+        if: steps.check_local_tag.outputs.exists == 'false' && steps.find_commit.outputs.commit_hash != ''
+        run: |
+          echo "Tagging commit ${{ steps.find_commit.outputs.commit_hash }} with tag ${{ steps.get_tag.outputs.latest_config_tag }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git tag ${{ steps.get_tag.outputs.latest_config_tag }} ${{ steps.find_commit.outputs.commit_hash }}
+          git push origin ${{ steps.get_tag.outputs.latest_config_tag }}
+```
+
+この連携により、リリース管理の自動化と追跡性の担保を極めて高いレベルで両立させることが可能になります。
+
+### ●Hotfix（緊急修正）フロー
+
+本番環境で障害が発生し、通常のリリースサイクルを待てない緊急の修正が必要な場合、以下のHotfixフローを実行します。このフローの目的は、**安全性を最低限確保しつつ、最速で本番環境に修正を届けること**です。
+
+```mermaid
+flowchart TD
+    subgraph "App Repo: 修正作業"
+        A[本番障害発生] --> B(1.本番タグから<br>hotfixブランチ作成);
+        B --> C(2.修正コードをPush);
+        C --> D[3.Hotfix用 Component CI];
+    end
+
+    subgraph "Config Repo: 緊急リリース"
+        E[4.auto-testブランチへ<br>PRを自動作成 & マージ];
+        E --> F[5.System CI実行];
+        F -- 成功 --> G(6.dev向け自動PRを<br>手動でClose);
+        G --> H(7.prod向けPRを<br>手動で作成);
+        H --> I(8.PRをレビュー & 承認);
+        I --> J[9.本番環境へリリース];
+    end
+
+    subgraph "App Repo: 事後処理"
+         K(10.リリース成功後<br>mainにマージ);
+    end
+
+    D --> E;
+    J --> K;
+
+    %% スタイル定義: 手動作業をオレンジ、最終リリースを緑でハイライト
+    style B fill:#FFE4B5,stroke:#333,stroke-width:2px
+    style C fill:#FFE4B5,stroke:#333,stroke-width:2px
+    style G fill:#FFE4B5,stroke:#333,stroke-width:2px
+    style H fill:#FFE4B5,stroke:#333,stroke-width:2px
+    style I fill:#FFE4B5,stroke:#333,stroke-width:2px
+    style J fill:#D4EDDA,stroke:#333,stroke-width:2px
+    style K fill:#C9DAF8,stroke:#333,stroke-width:2px
+```
+
+#### 1. 修正対応 (アプリケーションリポジトリ)
+
+1.  **Hotfixブランチの作成**: `main`ブランチからではなく、現在本番環境で稼働しているバージョンに対応する **Gitタグ（またはコミット）** から`hotfix/issue-name`のような名前でブランチを作成します。
+2.  **修正とプッシュ**: 修正コードをコミットし、リモートリポジトリにプッシュします。
+3.  **Hotfixビルドパイプラインの実行**: `hotfix/*`ブランチへのプッシュをトリガーとする専用のCIパイプラインが実行されます。このパイプラインは、通常のComponent CIと同様にビルド、テスト、コンテナイメージ作成を行いますが、最終的に`config`リポジトリの`auto-test`ブランチに対して直接プルリクエストを作成し、自動マージします。
+
+#### 2. 緊急リリース (設定リポジトリ)
+
+1.  **`auto-test`環境での検証**: Hotfixの変更は、まず自動テスト環境にデプロイされ、システム全体のE2Eテスト（System CI）が実行されます。これにより、緊急修正が新たな重大なバグを引き起こさないことを最低限保証します。
+2.  **通常プロモーションの停止**: System CIが成功すると、`dev`ブランチへのPRが自動作成される場合がありますが、今回は緊急事態のため、この**PRは手動でClose**します。
+3.  **本番環境への手動プロモーション**: `auto-test`ブランチから`prod`ブランチ（または必要に応じて`stg`ブランチ）に対して、**手動でプルリクエストを作成**します。PRの概要欄には、緊急修正である旨と関連する障害チケットの情報を明記します。
+4.  **承認とマージ**: SREやチームリードなど、指定された承認者がレビューを行い、承認・マージすることでHotfixが本番環境へリリースされます。
+
+#### 3. 開発本流への反映 (事後処理)
+
+リリースが完了し、問題が解決したことを確認した後、**必ずHotfixブランチの変更内容を`main`ブランチにマージ**します。この作業を怠ると、次回の通常リリース時に修正内容が失われ、同じ障害が再発する（先祖返りする）原因となります。
+
 ## ■この戦略が適しているケース
 
 この戦略は、特に以下のような特徴を持つプロジェクトやチームで効果を発揮します。
