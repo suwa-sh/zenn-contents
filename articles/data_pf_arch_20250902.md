@@ -245,8 +245,8 @@ graph TD
 
     subgraph Business_Vault [Business Vault]
         direction TB
-        PIT_Customer["PIT: 顧客<br>[日付 | Hubキー | Satキー]<br>'2024-04-01 | C01 | Sat_v1'<br>'2025-01-10 | C01 | Sat_v2'"]
-        Bridge_Order["Bridge: 注文<br>[顧客キー | 商品キー | 注文キー]"]
+        PIT_Customer["PIT: 顧客<br>[日付 | Hubキー | Satキー]<br>2024-04-01 | C01 | Sat_v1<br>2025-01-10 | C01 | Sat_v2"]
+        Bridge_Order["Bridge: 注文<br>[顧客キー | 商品キー | 注文キー]<br>C01 | P11 | O22<br>C01 | P31 | O22"]
     end
 
     %% Transformation Flow
