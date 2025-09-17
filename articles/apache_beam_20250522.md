@@ -53,7 +53,7 @@ graph TD
 
 ```mermaid
 graph TD
-    subgraph SA [Apache Beamベースのシステム]
+    subgraph SA [Apache Beamシステム]
         SDK[Beam SDK]
         MDL[Beam Model]
         RUN[Beam Runner]
@@ -65,8 +65,8 @@ graph TD
     SDK -- IO処理を委譲 --> IO
     MDL -- 実行指示 --> RUN
     RUN -- 実行エンジンと連携 --> E[実行エンジン]
-    IO -- データ読み書き --> C[外部データソース]
-    IO -- データ読み書き --> D[外部データシンク]
+    IO -- データ読み書き ---> C[外部データソース]
+    IO -- データ読み書き ---> D[外部データシンク]
 
 ```
 
@@ -111,7 +111,7 @@ graph TD
     PTransform -- データ書き込みに利用 --> SinkAPI
     SourceAPI -- 外部データソースと連携 --> ExtSrc[外部データソース]
     SinkAPI -- 外部データシンクと連携 --> ExtSnk[外部データシンク]
-    Options -- Runner選択など --> Runner[Beam Runner]
+    Options -- Runner選択など ---> Runner[Beam Runner]
 
 ```
 

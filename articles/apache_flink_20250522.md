@@ -100,49 +100,31 @@ graph TD
 
 ```mermaid
 graph TD
-    subgraph "Flinkアプリケーション"
-        JobGraph
-        subgraph "実行グラフ"
-            ExecutionGraph
-            subgraph "タスク"
-                Task
-                subgraph "オペレータ"
-                    Operator
-                    subgraph "状態"
-                        State
-                    end
-                end
-                subgraph "データストリーム"
-                    DataStream
-                    subgraph "レコード"
-                        StreamRecord
-                    end
-                end
+    JobGraph
+    subgraph "ExecutionGraph"
+        subgraph "Task"
+            subgraph "Operator"
+                State
+            end
+            subgraph "DataStream"
+                StreamRecord
             end
         end
     end
 
     JobGraph --> ExecutionGraph
-    ExecutionGraph --> Task
-    Task --> Operator
-    Task --> DataStream
-    DataStream --> StreamRecord
     Operator -- reads/writes --> DataStream
-    Operator -- access --> State
 ```
 
 | 要素名                | 説明                                                                                      |
 | --------------------- | ----------------------------------------------------------------------------------------- |
-| Flinkアプリケーション | ユーザーが定義したデータ処理ロジック全体です。                                            |
 | JobGraph              | Flinkアプリケーションをクラスタで実行可能な形式に変換した論理的なデータフローグラフです。 |
-| 実行グラフ            | JobGraphを物理的な実行計画に変換したもので、並列度やリソース割り当てなどが考慮されます。  |
-| ExecutionGraph        | JobGraphを並列実行可能な形に展開した物理的な実行グラフです。                              |
-| タスク                | TaskManager上で実行される処理の最小単位です。                                             |
+| ExecutionGraph        | JobGraphを物理的な実行計画に変換したもので、並列度やリソース割り当てなどが考慮されます。  |
+| Task                  | TaskManager上で実行される処理の最小単位です。                                             |
 | Operator              | 個々のデータ変換処理（Map、Filterなど）を表します。                                       |
-| 状態                  | オペレータが処理中に保持する情報です。                                                    |
-| データストリーム      | 連続的に流れるデータのシーケンスです。                                                    |
-| レコード              | データストリームを構成する個々のデータ要素です。                                          |
-| StreamRecord          | データストリーム内の個々のデータ要素です。                                                |
+| State                 | オペレータが処理中に保持する情報です。                                                    |
+| DataStream            | 連続的に流れるデータのシーケンスです。                                                    |
+| StreamRecord          | データストリームを構成する個々のデータ要素です。                                          |
 
 ### ●情報モデル
 
