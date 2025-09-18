@@ -173,29 +173,225 @@ PCollection<KV<String, Long>> wordCounts = lines.apply("Count Words", new CountW
 
 `Coder`は、`PCollection`の要素をバイト列表現に変換（シリアライズ・デシリアライズ）する役割を担います。この変換処理は、ワーカー間のデータシャッフル時や、中間データの永続化時に頻繁に発生するため、`Coder`の選択はパイプライン全体のパフォーマンス（特にネットワーク帯域、ディスクI/O、CPU使用率）に絶大な影響を与えます。
 
-  * **ベストプラクティス**
-      * デフォルトのJavaシリアライゼーションは避け、`AvroCoder`や`ProtoCoder`のような効率的なCoderを使用します。
-      * 特に、Beam Schemaと`@DefaultSchema`アノテーションを使用すると、Beamが非常に効率的な`RowCoder`を自動生成するため、最善の選択肢となります。
+* **ベストプラクティス**
+    * デフォルトのJavaシリアライゼーションは避け、`AvroCoder`や`ProtoCoder`のような効率的なCoderを使用します。
+    * 特に、Beam Schemaと`@DefaultSchema`アノテーションを使用すると、Beamが非常に効率的な`RowCoder`を自動生成するため、最善の選択肢となります。
+
+    | 特徴 | `@DefaultSchema` (RowCoder) | `AvroCoder` | `ProtoCoder` |
+    | :--- | :--- | :--- | :--- |
+    | **主な用途** | **Beamパイプライン内部**の処理 | データレイク、スキーマ進化、Kafka連携 | RPC、パフォーマンス重視、gRPC連携 |
+    | **手軽さ** | ◎ (アノテーションのみ) | ◯ (スキーマ定義ファイルが必要) | ◯ (スキーマ定義とコード生成が必要) |
+    | **エコシステム** | **Beamネイティブ** | Hadoop, Spark, Kafka | gRPC, マイクロサービス |
+    | **パフォーマンス** | ◎ (Beam内部で最適化) | ◯ (高速) | ◎ (非常に高速) |
+
+
+* **`@DefaultSchema` と `RowCoder` の仕組み**
+  * **Schemaの自動推論**: Beamは`@DefaultSchema`が付いたクラス（POJO）から、フィールド名や型などのスキーマ情報を自動で推論します。
+  *  **`RowCoder`の自動適用**: 推論したスキーマ情報をもとに、Beamはそのクラス専用の非常に効率的な`Coder`である **`RowCoder`** を生成し、対象の`PCollection`に自動で適用します。
+  *  **自動的な変換**: この`RowCoder`が、パイプラインの内部でデータがワーカー間を移動（シャッフル）する際に、シリアライズ（Javaオブジェクト → `Row` → バイト列）と **デシリアライズ（バイト列 → `Row` → Javaオブジェクト）** の全ての処理を裏側で担当します。
+
+* **サンプル**
+
+  ```java
+  import org.apache.beam.sdk.schemas.JavaBeanSchema;
+  import org.apache.beam.sdk.schemas.annotations.DefaultSchema;
+  import java.io.Serializable;
+
+  /** ユーザーイベントを表すPOJO */
+  @DefaultSchema(JavaBeanSchema.class)
+  public class UserEvent implements Serializable {
+    private String userId;
+    private String eventType;
+    private long eventTimestamp;
+
+    // publicなデフォルトコンストラクタと、各フィールドのgetter/setterが必須
+    public UserEvent() {}
+
+    // getters and setters...
+  }
+  ```
+
+  ```java
+  // PCollection<UserEvent>を処理するDoFn
+  public class ProcessUserEventFn extends DoFn<UserEvent, String> {
+
+    @ProcessElement
+    public void processElement(@Element UserEvent event, OutputReceiver<String> out) {
+      // このメソッドが呼ばれる時点で、'event'は完全にデシリアライズされた
+      // UserEventオブジェクトになっています。
+      
+      // あとは通常のJavaオブジェクトとしてプロパティにアクセスするだけです。
+      String summary = String.format(
+          "User %s did '%s' at %d",
+          event.getUserId(),
+          event.getEventType(),
+          event.getEventTimestamp()
+      );
+      
+      out.output(summary);
+    }
+  }
+  ```
+
 
 #### 3.2 データスキューとホットキーの緩和
 
 データスキュー（データの偏り）は、分散処理における深刻なパフォーマンスキラーです。`GroupByKey`のような集約処理において、特定のキーにデータが極端に集中すると、そのキーを担当する単一のワーカーに処理が偏り、パイプライン全体がそのワーカーの処理完了を待つ「ホットキー」問題を引き起こします。
 
-  * **解決策: `Combine.PerKey.withHotKeyFanout`**
-    この変換は、ホットキーを複数のサブキーに分割して事前集約を行い、負荷を分散させます。これにより、開発者が手動でキーにソルトを追加するような複雑な回避策を実装することなく、データスキュー問題を堅牢に解決できます。
+* **解決策: `Combine.PerKey.withHotKeyFanout`**
+  この変換は、ホットキーを複数のサブキーに分割して事前集約を行い、負荷を分散させます。これにより、開発者が手動でキーにソルトを追加するような複雑な回避策を実装することなく、データスキュー問題を堅牢に解決できます。
+* **サンプル**
+
+  ```java
+  public class HotKeyFanoutExample {
+
+    public static void main(String[] args) {
+      // --- 1. セットアップ ---
+      PipelineOptions options = PipelineOptionsFactory.create();
+      Pipeline p = Pipeline.create(options);
+
+      // --- 2. スキューのあるテストデータを作成 ---
+      // "hotkey" という単語が10,000回出現し、他の単語は1回だけ。
+      // これにより、"hotkey" が集計処理のボトルネック（ホットキー）になる状況を再現。
+      final List<String> skewedData = new ArrayList<>();
+      skewedData.addAll(Collections.nCopies(10_000, "hotkey"));
+      skewedData.addAll(Arrays.asList("normal", "regular", "common"));
+
+      // --- 3. パイプラインの構築 ---
+      p.apply("CreateSkewedData", Create.of(skewedData))
+      
+      // 各単語を (単語, 1) のKVペアに変換する
+      .apply("MapToKV", MapElements
+          .into(TypeDescriptors.kvs(TypeDescriptors.strings(), TypeDescriptors.longs()))
+          .via(word -> KV.of(word, 1L)))
+      
+      // --- ここが重要：withHotKeyFanout を使った集計 ---
+      // Sum.ofLongs() は、キーごとの値を合計するCombineFn（集計関数）。
+      .apply("CombineWithHotKeyFanout", Combine.<String, Long, Long>perKey(new Sum.OfLongs())
+          // ホットキーが検出された場合、最大4つのサブキーに分割して並列処理する
+          .withHotKeyFanout(4))
+
+      // 結果をコンソールに出力
+      .apply("FormatAndPrint", MapElements
+          .into(TypeDescriptors.strings())
+          .via(kv -> kv.getKey() + ": " + kv.getValue()))
+      .apply("PrintToConsole", MapElements.into(TypeDescriptors.voids()).via(output -> {
+        System.out.println(output);
+        return null;
+      }));
+
+      // --- 4. パイプラインの実行 ---
+      p.run().waitUntilFinish();
+    }
+  ```
 
 #### 3.3 外部システムとの効率的な連携
 
 ナイーブな実装では、各要素に対してRPCコールを行い、外部サービスを簡単に過負荷状態にしてしまいます。
 
-  * **解決策: DoFnライフサイクル内でのバッチ処理**
-    `@StartBundle`でバッチ用のコレクションを初期化し、`@ProcessElement`で要素をバッチに追加します。そして、`@FinishBundle`でバッチを単一のRPCコールとして外部サービスに送信します。これにより、RPCコールのコストが償却され、外部システムへの負荷が劇的に削減されます。
+* **解決策: DoFnライフサイクル内でのバッチ処理**
+  `@StartBundle`でバッチ用のコレクションを初期化し、`@ProcessElement`で要素をバッチに追加します。そして、`@FinishBundle`でバッチを単一のRPCコールとして外部サービスに送信します。これにより、RPCコールのコストが償却され、外部システムへの負荷が劇的に削減されます。
+* **サンプル**
+
+  ```java
+  public class BundleLifecycleExample {
+    // --- バンドルライフサイクルアノテーションを利用したDoFn ---
+    public static class BatchApiWriterFn extends DoFn<String, Void> {
+
+      // DoFnと一緒にシリアライズされないようにtransientで宣言
+      private transient ApiClient client;
+      
+      // 現在のバンドルのレコードを保持するバッファ
+      private List<String> batch;
+
+      // メモリを使いすぎないようにバッチサイズを定義
+      private static final int BATCH_SIZE = 100;
+
+      @Setup
+      public void setup() {
+        // DoFnインスタンスごとに1回だけ呼ばれる。シリアライズ不可能なフィールドの初期化に適している
+        client = new ApiClient();
+      }
+
+      @StartBundle
+      public void startBundle() {
+        // 要素のバンドル処理を開始する直前に呼ばれる
+        // ここでバッチバッファを初期化する
+        batch = new ArrayList<>();
+        System.out.println("--- バンドル開始。バッチを初期化しました。 ---");
+      }
+
+      @ProcessElement
+      public void processElement(@Element String element) {
+        // バンドル内の各要素に対して呼ばれる
+        // 要素をバッチバッファに追加するだけ
+        batch.add(element);
+
+        // バッチが最大サイズに達したら、すぐに書き出す
+        // これにより、バッファがメモリ内で大きくなりすぎるのを防ぐ
+        if (batch.size() >= BATCH_SIZE) {
+          flushBatch();
+        }
+      }
+
+      @FinishBundle
+      public void finishBundle() {
+        // バンドル内のすべての要素が処理された後に呼ばれる
+        // バッファに残っている要素を処理する最後のチャンス
+        flushBatch();
+        System.out.println("--- バンドル終了。 ---");
+      }
+      
+      @Teardown
+      public void teardown() {
+        // DoFnインスタンスが破棄される直前に1回だけ呼ばれる
+        // コネクションのクローズなど、リソースの解放に適している
+        client.close();
+      }
+      
+      private void flushBatch() {
+          // 外部サービスにバッチを送信するヘルパーメソッド
+          if (!batch.isEmpty()) {
+              client.writeBatch(batch);
+              batch.clear(); // 書き込み後にバッチをクリア
+          }
+      }
+    }
+
+
+    public static void main(String[] args) {
+      PipelineOptions options = PipelineOptionsFactory.create();
+      Pipeline p = Pipeline.create(options);
+
+      // 処理対象の250件のレコードを作成
+      // Beamランナーは、これをいくつかのバンドルに分割する可能性が高い
+      List<String> data = IntStream.range(1, 251)
+                                  .mapToObj(i -> "Record-" + i)
+                                  .collect(Collectors.toList());
+
+      p.apply("CreateData", Create.of(data))
+      .apply("BatchWriteToApi", ParDo.of(new BatchApiWriterFn()));
+
+      p.run().waitUntilFinish();
+      // 正確な出力はBeamランナーのバンドル分割方法に依存しますが、おおよそ以下のようになります。
+      // 
+      // > client 初期化
+      // --- バンドル開始。バッチを初期化しました。 ---
+      // > client.writeBatch: 100件
+      // > client.writeBatch: 100件
+      // > client.writeBatch: 50件
+      // --- バンドル終了。 ---
+      // > client.close
+    }
+  }
+  ```
+
 
 #### 3.4 パフォーマンス最適化技術のまとめ
 
 | ボトルネック/問題 | 説明 | 主要なApache Beamソリューション |
 | :--- | :--- | :--- |
-| **シリアライゼーションのオーバーヘッド** | 非効率なデータ表現による、シャッフル中の過剰なCPU/ネットワーク使用 | `@DefaultCoder(AvroCoder.class)`、Beam SchemaとRowCoderの使用 |
+| **シリアライゼーションのオーバーヘッド** | 非効率なデータ表現による、シャッフル中の過剰なCPU/ネットワーク使用 | `@DefaultSchema`、Beam SchemaとRowCoderの使用 |
 | **ホットキー / データスキュー** | GroupByKeyやCombine操作中に単一のワーカーが過負荷になる状態 | `Combine.PerKey.withHotKeyFanout()` |
 | **外部サービスの過負荷** | 大量の書き込みによるAPIレート制限やDB接続プールの枯渇 | `@StartBundle`と`@FinishBundle`を使用したRPCコールのバッチ処理 |
 
@@ -207,10 +403,117 @@ PCollection<KV<String, Long>> wordCounts = lines.apply("Count Words", new CountW
 
 処理不可能なレコードが一つでもあると、バンドル全体が失敗し、パイプラインが停止する可能性があります。
 
-  * **解決策**
-    デッドレターキューパターンは、処理に失敗したレコードをメインのデータフローから分離し、別の`PCollection`に出力する手法です。これにより、パイプライン本体は正常なデータの処理を継続できます。`DoFn`内でtry-catchブロックとタグ付き出力（`TupleTag`）を使用して実装するのが一般的です。
+* **解決策**
+  デッドレターキューパターンは、処理に失敗したレコードをメインのデータフローから分離し、別の`PCollection`に出力する手法です。これにより、パイプライン本体は正常なデータの処理を継続できます。`DoFn`内でtry-catchブロックとタグ付き出力（`TupleTag`）を使用して実装するのが一般的です。
 
 このパターンは、入力データが不完全であっても、パイプラインが有効なデータを時間通りに処理するというSLA（Service Level Agreement）の達成を可能にします。
+
+* **サンプル**
+
+  ```java
+  public class DlqPatternExample {
+
+    // --- 1. TupleTagの定義 ---
+    // 処理成功データの出力先タグ (POJOクラスの型を指定)
+    static final TupleTag<ParsedEvent> mainOutputTag = new TupleTag<ParsedEvent>(){};
+    // 処理失敗データの出力先タグ (今回は元の文字列をそのまま流すのでString型)
+    static final TupleTag<String> deadLetterTag = new TupleTag<String>(){};
+
+
+    // JSONパース後のデータ形式を定義するPOJO
+    public static class ParsedEvent implements Serializable {
+      String eventId;
+      String payload;
+
+      @Override
+      public String toString() {
+        return "ParsedEvent{" + "eventId='" + eventId + '\'' + ", payload='" + payload + '\'' + '}';
+      }
+    }
+
+    // --- 2. try-catchとタグ付き出力を持つDoFnの実装 ---
+    public static class JsonParsingFn extends DoFn<String, ParsedEvent> {
+      
+      // Gsonインスタンスはシリアライズ可能なので、transientにする必要はない
+      private final Gson gson = new Gson();
+
+      @ProcessElement
+      public void processElement(@Element String json, MultiOutputReceiver out) {
+        try {
+          // JSON文字列をPOJOにパースしてみる
+          ParsedEvent event = gson.fromJson(json, ParsedEvent.class);
+          
+          // 成功したら、メインの出力タグへデータを送る
+          out.get(mainOutputTag).output(event);
+
+        } catch (JsonSyntaxException e) {
+          // パースに失敗したら(JsonSyntaxExceptionなど)、
+          // 元のJSON文字列をDLQ用のタグへ送る
+          out.get(deadLetterTag).output(json);
+        }
+      }
+    }
+
+    public static void main(String[] args) {
+      Pipeline p = Pipeline.create(PipelineOptionsFactory.create());
+
+      // 正しいJSONと、不正なJSONが混在したテストデータ
+      final List<String> jsonData = Arrays.asList(
+          "{\"eventId\": \"id-001\", \"payload\": \"hello world\"}",
+          "{\"eventId\": \"id-002\", \"payload\": \"beam pipeline\"}",
+          "this is not a valid json", // 不正なデータ
+          "{\"eventId\": \"id-003\", \"payload\": \"dlq example\"}",
+          "{\"broken_json\": true" // 不正なデータ
+      );
+
+      // --- 3. パイプラインの構築 ---
+      // タグをDoFnに知らせるために`.withOutputTags()`を使用する
+      PCollectionTuple outputs = p.apply("CreateJsonData", Create.of(jsonData))
+                                  .apply("ParseJson", ParDo.of(new JsonParsingFn())
+                                      .withOutputTags(mainOutputTag, // メインの出力タグ
+                                                      TupleTag.of(deadLetterTag))); // 副次的な出力タグ(DLQ)
+
+      // PCollectionTupleから、それぞれのタグに対応するPCollectionを取り出す
+      PCollection<ParsedEvent> successCollection = outputs.get(mainOutputTag);
+      PCollection<String> failureCollection = outputs.get(deadLetterTag);
+
+      // 処理成功データの後続処理（今回はコンソール出力）
+      successCollection.apply("PrintSuccesses", MapElements.into(TypeDescriptors.voids())
+          .via(event -> {
+            System.out.println("[SUCCESS] " + event);
+            return null;
+          }));
+
+      // 処理失敗データ（DLQ）の後続処理（今回はエラーログとしてコンソール出力）
+      failureCollection.apply("PrintFailures", MapElements.into(TypeDescriptors.voids())
+          .via(json -> {
+            System.out.println("[FAILURE-DLQ] Failed to parse: " + json);
+            return null;
+          }));
+
+      p.run().waitUntilFinish();
+      // [SUCCESS] ParsedEvent{eventId='id-001', payload='hello world'}
+      // [SUCCESS] ParsedEvent{eventId='id-002', payload='beam pipeline'}
+      // [FAILURE-DLQ] Failed to parse: this is not a valid json
+      // [SUCCESS] ParsedEvent{eventId='id-003', payload='dlq example'}
+      // [FAILURE-DLQ] Failed to parse: {"broken_json": true
+    }
+  }
+  ```
+
+  * **`TupleTag`の定義**
+    * `TupleTag<T>`は、複数の出力`PCollection`を区別するための、型付けされた一意なキーです。
+    * `new TupleTag<ParsedEvent>(){}`のように、匿名クラスの構文（`{}`）を使うことで、Javaの型消去後もジェネリクスの型情報（この場合は`ParsedEvent`）を保持できます。
+  * **`DoFn`の実装**
+    * `@ProcessElement`メソッドの引数に、通常の`OutputReceiver`ではなく`MultiOutputReceiver`を使います。
+    * `try`ブロック内で正常な処理を行い、成功した場合は`out.get(mainOutputTag).output(data)`のようにしてメインのタグにデータを出力します。
+    * `catch`ブロックで想定される例外を捕捉し、失敗した場合は`out.get(deadLetterTag).output(originalData)`のようにしてDLQ用のタグにデータを出力します。
+  * **パイプラインの構築**
+    * `ParDo.of(...)`の後ろに`.withOutputTags(mainTag, sideTags)`メソッドを呼び出します。
+    * 第1引数にメインの出力タグ、第2引数に`TupleTag.of(...)`でラップした副次的な出力タグのリストを指定します。
+    * この`ParDo`変換の戻り値は、単一の`PCollection`ではなく、複数の`PCollection`を格納した`PCollectionTuple`になります。
+    * `outputs.get(someTag)`とすることで、`PCollectionTuple`から目的の`PCollection`を取り出し、それぞれに後続の処理を繋げていきます。
+
 
 #### 4.2 冪等性とランナーのリトライの理解
 
@@ -230,7 +533,7 @@ PCollection<KV<String, Long>> wordCounts = lines.apply("Count Words", new CountW
 
     2.  **Sink側のデータベース機能で重複を排除する**: 書き込み先のデータベースが持つ制約やアトミックな操作を利用するのが最も効率的で安全です。単純な「`SELECT`して`INSERT`」では、競合状態により重複が発生する可能性があります。
         * **ユニークキー制約を利用**: 冪等キーを持つカラムに`UNIQUE`制約を設定しておきます。`INSERT`時に重複エラーが発生したら、それを「処理済み」として正常に扱います。PostgreSQLの`ON CONFLICT DO NOTHING`のように、重複を無視する構文を利用するのが最もシンプルです。
-        * **UPSERT操作を利用**: データベースの`MERGE`文や`INSERT ... ON CONGLISH DO UPDATE`構文を使い、キーが存在すれば更新、なければ挿入というアトミックな操作を行います。
+        * **UPSERT操作を利用**: データベースの`MERGE`文や`INSERT ... ON CONFLICT DO UPDATE`構文を使い、キーが存在すれば更新、なければ挿入というアトミックな操作を行います。
 
 この設計により、Beamランナーが処理を何回リトライしても、最終的な副作用は一度だけの実行と等価になり、データの整合性が保証されます。
 
