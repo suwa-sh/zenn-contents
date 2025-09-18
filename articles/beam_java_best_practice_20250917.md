@@ -391,7 +391,7 @@ PCollection<KV<String, Long>> wordCounts = lines.apply("Count Words", new CountW
 
 | ボトルネック/問題 | 説明 | 主要なApache Beamソリューション |
 | :--- | :--- | :--- |
-| **シリアライゼーションのオーバーヘッド** | 非効率なデータ表現による、シャッフル中の過剰なCPU/ネットワーク使用 | `@DefaultSchema`、Beam SchemaとRowCoderの使用 |
+| **シリアライゼーションのオーバーヘッド** | 非効率なデータ表現による、シャッフル中の過剰なCPU/ネットワーク使用 | `@DefaultSchema`とRowCoderの使用 |
 | **ホットキー / データスキュー** | GroupByKeyやCombine操作中に単一のワーカーが過負荷になる状態 | `Combine.PerKey.withHotKeyFanout()` |
 | **外部サービスの過負荷** | 大量の書き込みによるAPIレート制限やDB接続プールの枯渇 | `@StartBundle`と`@FinishBundle`を使用したRPCコールのバッチ処理 |
 
