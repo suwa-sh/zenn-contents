@@ -1,6 +1,6 @@
 ---
 title: "マルチステージCIとGitOpsで実現するマイクロサービスのCI/CD戦略"
-emoji: "🚀"
+emoji: "🏗️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["CICD", "GitOps", "Microservices", "ブランチ戦略", "DevSecOps"]
 published: true
@@ -742,6 +742,14 @@ flowchart TD
 この戦略は堅牢な出発点ですが、最も重要なのは、この記事を参考にしつつも、自身のプロジェクトの規模やチームの成熟度に応じてカスタマイズし、進化させていくことです。この記事が、皆さんのチームに合った最適なCI/CDパイプラインを構築するための一助となれば幸いです。
 
 この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
+
+
+## ■関連リンク
+
+実行環境がKubernetesではない場合でも、GitOpsライクな運用を取り入れてこの戦略を実現できます。
+
+https://zenn.dev/suwash/articles/gitops_without_kubernetes_20250920
+
 
 -----
 
