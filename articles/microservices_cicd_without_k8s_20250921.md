@@ -1,5 +1,5 @@
 ---
-title: "続・マルチステージCIとGitOps：その戦略をKubernetes以外の環境へ適用するための実践ガイド"
+title: "マルチステージCIとGitOpsで実現するマイクロサービスのCI/CD戦略 - Kubernetes以外の環境への適用"
 emoji: "🏗️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["CICD", "GitOps", "Microservices", "ブランチ戦略", "DevSecOps"]
@@ -12,8 +12,9 @@ published_at: 2025-09-21
 
 先日公開した2つの記事では、マイクロサービス開発におけるCI/CD戦略と、Kubernetesを使わないGitOpsライクな運用について解説しました。
 
-  * **[マルチステージCIとGitOpsで実現するマイクロサービスのCI/CD戦略](https://zenn.dev/suwash/articles/microservices_cicd_20250912)**
-  * **[Kubernetesを使わないGitOpsライクな運用](https://zenn.dev/suwash/articles/gitops_without_kubernetes_20250920)**
+https://zenn.dev/suwash/articles/microservices_cicd_20250912
+
+https://zenn.dev/suwash/articles/gitops_without_kubernetes_20250920
 
 最初の記事では、Argo CDやFluxといったKubernetesネイティブなGitOpsツールを前提とした、CI/CDの責務分離モデルを提案しました。しかし、オンプレミスのVMや、AWS ECS/Lambdaといった非Kubernetes環境で、モダンなデプロイ戦略を模索している開発・運用チームも数多く存在します。
 
@@ -188,19 +189,17 @@ jobs:
 
 ## ■まとめ
 
-元記事で提案したマルチステージCIとGitOpsの戦略は、特定のプラットフォームに縛られない強力な設計思想です。
-
-Kubernetes以外の環境へ適用する際は、本記事で解説した**4つの差分**を正しく理解し、
+マルチステージCIとGitOpsの戦略は、特定のプラットフォームに縛られない強力な設計思想です。Kubernetes以外の環境へ適用する場合、以下の加味することで、その恩恵を最大限に享受することができます。
 
 1.  **ドリフト監査パイプライン**で構成ドリフトを検知する仕組みを補い、
 2.  **CDパイプライン内**でデプロイ後のテストを確実に実行し、
 3.  **OIDC連携**などで安全な認証を実現する
 
-といった実装上の工夫を加えることで、その恩恵を最大限に享受することができます。これにより、皆さんのチームは、実行環境の制約を超えて、迅速で信頼性の高いソフトウェアデリバリーを実現できるはずです。
+これにより、皆さんのチームは、実行環境の制約を超えて、迅速で信頼性の高いソフトウェアデリバリーを実現できるはずです。
 
 この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
 
 ## ■関連リンク
 
-  * **[マルチステージCIとGitOpsで実現するマイクロサービスのCI/CD戦略 - zenn](https://zenn.dev/suwash/articles/microservices_cicd_20250912)**
-  * **[Kubernetesを使わないGitOpsライクな運用 - zenn](https://zenn.dev/suwash/articles/gitops_without_kubernetes_20250920)**
+  * [マルチステージCIとGitOpsで実現するマイクロサービスのCI/CD戦略 - zenn](https://zenn.dev/suwash/articles/microservices_cicd_20250912)
+  * [Kubernetesを使わないGitOpsライクな運用 - zenn](https://zenn.dev/suwash/articles/gitops_without_kubernetes_20250920)
