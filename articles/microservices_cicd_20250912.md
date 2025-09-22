@@ -680,7 +680,7 @@ flowchart TD
         E --> F[5.System CI実行];
         F -- 成功 --> G(6.dev向け自動PRを<br>手動でClose);
         G --> H(7.prod向けPRを<br>手動で作成);
-        H --> I(8.PRをレビュー & 承認);
+        H --> I(8.PRをレビュー ＆ 承認);
         I --> J[9.本番環境へリリース];
     end
 
