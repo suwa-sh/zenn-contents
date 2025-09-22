@@ -676,7 +676,7 @@ flowchart TD
     end
 
     subgraph "Config Repo: 緊急リリース"
-        E[4.auto-testブランチへ<br>PRを自動作成 & マージ];
+        E[4.auto-testブランチへ<br>PRを自動作成 ＆ マージ];
         E --> F[5.System CI実行];
         F -- 成功 --> G(6.dev向け自動PRを<br>手動でClose);
         G --> H(7.prod向けPRを<br>手動で作成);
