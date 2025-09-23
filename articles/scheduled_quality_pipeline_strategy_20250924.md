@@ -2,7 +2,7 @@
 title: "マルチステージCI x GitOpsを加速させるスケジュールベースの品質監視パイプライン戦略"
 emoji: "🏗️"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["DevOps", "CICD", "GitOps", "Testing", "SRE"]
+topics: ["DevOps", "CICD", "GitOps", "Testing", "zennfes2025free"]
 published: true
 published_at: 2025-09-24
 ---

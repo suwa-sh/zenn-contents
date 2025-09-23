@@ -2,7 +2,7 @@
 title: "マルチステージCIとGitOpsで実現するマイクロサービスのCI/CD戦略"
 emoji: "🏗️"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["CICD", "GitOps", "Microservices", "ブランチ戦略", "DevSecOps"]
+topics: ["CICD", "GitOps", "ブランチ戦略", "DevOps", "zennfes2025free"]
 published: true
 published_at: 2025-09-12
 ---

@@ -2,7 +2,7 @@
 title: "速さと深さを両立させるパイプライン設計 - CIとナイトリービルドの関係"
 emoji: "🏗️"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["CI", "DevOps", "Testing", "CICD", "NightlyBuild"]
+topics: ["CICD", "DevOps", "Testing", "NightlyBuild", "zennfes2025free"]
 published: true
 published_at: 2025-09-23
 ---
