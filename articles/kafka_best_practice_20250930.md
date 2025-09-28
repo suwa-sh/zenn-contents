@@ -3,8 +3,8 @@ title: "Apache Kafka ベストプラクティスガイド"
 emoji: "⚡️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [Kafka, 分散システム, イベントストリーミング, PubSub, ベストプラクティス]
-published: true
-published_at: 2025-09-29
+published: false
+published_at: 2025-09-30
 ---
 
 
