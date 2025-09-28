@@ -16,7 +16,7 @@ preview:
 		exit 1; \
 	fi
 	@echo "✅ Starting preview server..."
-	@npx zenn preview & echo $$! > .zenn-preview.pid
+	@npx zenn preview --host 0.0.0.0 & echo $$! > .zenn-preview.pid
 	@sleep 2
 	@open http://localhost:8000
 
