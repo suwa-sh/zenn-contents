@@ -364,6 +364,63 @@ graph TD
 
 スキーマ更新時の互換性ルールとして、 **`BACKWARD`（後方互換性）** を推奨します。これにより、プロデューサーより先にコンシューマーを安全にアップグレードできます。
 
+`BACKWARD`互換性を維持するためには、主に以下の2つの変更が許容されます。
+
+1.  **フィールドの削除 (Deleting a field)**
+
+      * 既存のフィールドをスキーマから削除する。新しいスキーマを使うコンシューマーは、古いデータに含まれる（削除されたはずの）フィールドを単純に無視するため、エラーにはなりません。
+
+2.  **デフォルト値を持つ新しいフィールドの追加 (Adding a new field with a default value)**
+
+      * 新しいフィールドを追加する場合、そのフィールドに必ず**デフォルト値**を指定する必要があります。これは最も重要なルールです。なぜなら、新しいスキーマを使うコンシューマーが、この新しいフィールドを含まない古いデータを読み取った際に、スキーマに定義されたデフォルト値を使ってそのフィールドを補完するためです。これにより、データの欠損によるエラーを防ぎます。
+
+**サンプル**
+
+最初に、あるサービスが以下の`v1`スキーマでユーザー情報をKafkaトピックに送信しているとします。
+
+```json: schema.v1.json
+{
+  "type": "record",
+  "name": "User",
+  "namespace": "com.example",
+  "fields": [
+    { "name": "user_id", "type": "string" },
+    { "name": "full_name", "type": "string" }
+  ]
+}
+```
+
+ビジネス要件の変更により、スキーマを以下のように`v2`へ更新する必要が出てきました。
+
+  * `full_name` フィールドを削除する。
+  * 新たに `email` フィールドを追加する。
+
+`BACKWARD`互換性を維持するため、`v2`スキーマは次のようになります。
+
+```json: schema.v2.json
+{
+  "type": "record",
+  "name": "User",
+  "namespace": "com.example",
+  "fields": [
+    { "name": "user_id", "type": "string" },
+    { "name": "email", "type": "string", "default": "N/A" }
+  ]
+}
+```
+
+
+1.  **コンシューマーが受け取るデータ（`v1`形式）:**
+    `{"user_id": "123", "full_name": "Taro Yamada"}`
+
+2.  **コンシューマーが期待するスキーマ（`v2`形式）:**
+    `user_id` と `email` のフィールドを期待しています。
+
+3.  **アプリケーションが受け取るデータオブジェクト:**
+    コンシューマーアプリケーションは、エラーを起こすことなく、以下のような構造のオブジェクトを受け取ります。
+    `User{ user_id: "123", email: "N/A" }`
+
+
 #### 4.2. セキュリティ
 
 Kafkaのセキュリティはデフォルトで無効です。 **「暗号化」「認証」「認可」** の3つの柱を意図的に設定する必要があります。
@@ -373,19 +430,13 @@ graph TD
     Client[クライアント]
     Broker[ブローカー]
 
-    subgraph "1.暗号化 (TLS/SSL)"
-        Client -- Encrypted Channel --> Broker
-    end
+    Client -- 1.暗号化: Encrypted Channel --> Broker
 
-    subgraph "2.認証 (SASL or mTLS)"
-        Client -- Credentials --> Broker
-        Broker -- Authenticate --> Broker
-    end
+    Client -- 2.認証: Credentials --> Broker
+    Broker -- 2.認証: Authenticate --> Broker
 
-    subgraph "3.認可 (ACL)"
-        Broker -- Check Permissions --> Broker
-        Broker -- Grant/Deny Access --> Client
-    end
+    Broker -- 3.認可: Check Permissions --> Broker
+    Broker -- 3.認可: Grant/Deny Access --> Client
 ```
 
 | 要素名 | 説明 |
