@@ -150,21 +150,20 @@ graph TD
 | **単一コンシューマーのスループット**| 10万件/s | コンシューマーの1インスタンス（またはスレッド）がKafkaからデータを読み込み、ビジネスロジックを処理できる秒間データ量。通常、DBへの書き込みなど複雑な処理を伴うため、プロデューサーより遅いことが多いです。 |
 
 1.  **プロデューサー側で必要な並列数（パーティション数）を計算**
-    $$
-    \frac{100 \text{万件/s}}{20 \text{万件/s}} = 5
-    $$
+
+    $$\frac{100 \text{万件/s}}{20 \text{万件/s}} = 5$$
+
     目標の書き込みスループットを達成するには、最低でも5つのプロデューサーインスタンスが並列で書き込める環境が必要。
 
 2.  **コンシューマー側で必要な並列数（パーティション数）を計算**
-    $$
-    \frac{100 \text{万件/s}}{10 \text{万件/s}} = 10
-    $$
+
+    $$\frac{100 \text{万件/s}}{10 \text{万件/s}} = 10$$
+
     目標の読み込み・処理スループットを達成するには、最低でも10のコンシューマーインスタンスが並列で処理できる環境が必要。
 
 3.  **両者を比較し、最大値を選択**
-    $$
-    \text{パーティション数} = \max(5, 10) = 10
-    $$
+
+    $$\text{パーティション数} = \max(5, 10) = 10$$
 
 ##### レプリケーション設定
 
@@ -213,6 +212,67 @@ Kafkaとデータをやり取りするクライアント（プロデューサー
 
   * **べき等プロデューサー (`enable.idempotence=true`)**: プロデューサーのリトライによるメッセージ重複を防ぎます。
   * **トランザクションプロデューサー (`transactional.id`)**: 複数のトピックやパーティションにまたがる一連の書き込みをアトミックに実行します。
+
+**サンプル**
+
+```java
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.KafkaException;
+import org.apache.kafka.common.serialization.StringSerializer;
+
+import java.util.Properties;
+import java.util.UUID;
+
+public class TransactionalProducerExample {
+    public static void main(String args) {
+        Properties props = new Properties();
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "your-kafka-broker:9092");
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+
+        // --- トランザクションプロデューサーを有効にする ---
+        // 1. べき等性を有効にする（transactional.id設定時に自動で有効化）
+        props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true");
+        // 2. ユニークなトランザクションIDを設定する
+        props.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "my-unique-transactional-id-" + UUID.randomUUID());
+
+        Producer<String, String> producer = new KafkaProducer<>(props);
+
+        // トランザクションを開始する前に初期化が必要
+        producer.initTransactions();
+
+        try {
+            // トランザクションを開始
+            producer.beginTransaction();
+
+            // --- このブロック内の送信はすべてアトミックに行われる ---
+            System.out.println("Sending messages within a transaction...");
+            producer.send(new ProducerRecord<>("topic-A", "key1", "transactional message 1"));
+            producer.send(new ProducerRecord<>("topic-B", "key2", "transactional message 2"));
+
+            // 例: ここでエラーが発生したと仮定する
+            // if (true) {
+            //     throw new RuntimeException("Something went wrong!");
+            // }
+
+            // すべての送信が成功したらトランザクションをコミット
+            producer.commitTransaction();
+            System.out.println("Transaction committed successfully.");
+
+        } catch (KafkaException e) {
+            // エラーが発生した場合はトランザクションをアボート（中止）
+            // アボートされたトランザクション内のメッセージはコンシューマーから見えなくなる
+            producer.abortTransaction();
+            System.err.println("Transaction aborted due to an error: " + e.getMessage());
+        } finally {
+            producer.close();
+        }
+    }
+}
+```
 
 #### 2.2. 回復力のあるコンシューマー
 
