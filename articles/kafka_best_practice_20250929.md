@@ -177,7 +177,7 @@ $$
 \text{min.insync.replicas} = \text{replication.factor} − 1
 $$
 
-**mreplication.factor = 5 の場合でのサンプル**
+**replication.factor = 5 の場合でのサンプル**
 
 | `min.insync.replicas` の値 | 特徴 | メリット | デメリット |
 | :--- | :--- | :--- | :--- |
