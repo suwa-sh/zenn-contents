@@ -801,6 +801,23 @@ Apache Beam on FlinkアプリケーションをGradleで構築し、本番デプ
 
 -----
 
+### 関連リンク
+
+https://zenn.dev/suwash/articles/apache_beam_20250522
+
+https://zenn.dev/suwash/articles/apache_flink_20250522
+
+https://zenn.dev/suwash/articles/apache_beam_flink_20250523
+
+https://zenn.dev/suwash/articles/beam_java_best_practice_20250917
+
+これらの記事を読み込ませたNotebookLMを公開しています
+
+https://notebooklm.google.com/notebook/bf316077-e909-40c5-89c7-2f5a841439eb
+
+
+-----
+
 ## 参考リンク
 
   * **Beam/Flink入門・概要**
