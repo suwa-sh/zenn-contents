@@ -10,15 +10,15 @@ preview:
 		exit 1; \
 	fi
 
-	@if lsof -i :8000 >/dev/null 2>&1; then \
-		echo "⚠️  Port 8000 is already in use"; \
+	@if lsof -i :18000 >/dev/null 2>&1; then \
+		echo "⚠️  Port 18000 is already in use"; \
 		echo "   Run 'make preview-restart' to force restart"; \
 		exit 1; \
 	fi
 	@echo "✅ Starting preview server..."
-	@npx zenn preview --host 0.0.0.0 & echo $$! > .zenn-preview.pid
+	@npx zenn preview --host 0.0.0.0 --port 18000 & echo $$! > .zenn-preview.pid
 	@sleep 2
-	@open http://localhost:8000
+	@open http://localhost:18000
 
 preview-down:
 	@if [ -f .zenn-preview.pid ]; then \
