@@ -4,7 +4,7 @@ emoji: "🏗️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [dbt, BigQuery, DataEngineering, Architecture, DataModeling]
 published: true
-published_at: 2025-10-26
+published_at: 2025-10-27
 ---
 
 ## はじめに
