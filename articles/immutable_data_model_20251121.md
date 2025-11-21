@@ -384,8 +384,6 @@ export class Order {
 2.  ドメインロジック `reconstruct` を通して最新状態のオブジェクトを生成する。
 3.  生成されたオブジェクトで `order_snapshots` を強制的に上書き（UPSERT）する。
 
-<!-- end list -->
-
 ```ts
 // Infrastructure/OrderReplay.ts  
 import { Pool } from 'pg';  
@@ -395,7 +393,7 @@ export class OrderReplay {
     // ...
 
     /** 指定されたOrder IDのスナップショットをイベントログから完全再構築する */  
-    async replayOrder(orderId: string): Promise<void> {  
+    async execute(orderId: string): Promise<void> {  
         const client = await this.db.connect();  
         try {  
             await client.query('BEGIN');
