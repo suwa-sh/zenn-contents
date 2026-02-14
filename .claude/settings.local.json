@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(md-mermaid-lint:*)"
+      "Bash(md-mermaid-lint:*)",
+      "git(push:*)"
     ],
     "deny": [],
     "ask": []
