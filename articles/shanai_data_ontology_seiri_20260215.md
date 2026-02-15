@@ -145,6 +145,8 @@ graph TD
 
 アプリケーション層は R2RML などのマッピング言語を使って、上位のドメインオントロジーにリンクさせます。
 
+https://zenn.dev/suwash/articles/semantic_arts_gist_ontorojii_taikeika_20260216
+
 ### 表現言語の選択と使い分け
 
 目的に応じて適切な W3C 標準言語を選択します。これらは相互排他的ではなく、補完的に使用します。
