@@ -3,7 +3,8 @@ title: "Agent Lightning 完全ガイド: アーキテクチャから実装・運
 emoji: "⚡"
 type: "tech"
 topics: ["AgentLightning", "AIAgent", "ReinforcementLearning", "LLM", "Microsoft"]
-published: false
+published: true
+published_at: 2026-02-19
 ---
 
 ## はじめに
