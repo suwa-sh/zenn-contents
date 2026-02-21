@@ -321,6 +321,23 @@ server.startStdio();
 - **TCPモードでのサービスホスティング**
   ポート番号を指定したTCPモードでエージェントプロセスを常駐させ、同一ネットワーク内の複数のクライアントからリモート接続を受け付けるサーバー環境を構築します。
 
+以下は、主要なCLIエージェントを呼び出すコマンドの例です。
+各ツールは、Agent Client Protocolに準拠したインターフェースを提供します。
+
+```bash
+# Claude Code の呼び出し
+claude-code --acp-stdio
+
+# Gemini CLI の呼び出し
+gemini-cli agent --protocol acp
+
+# Codex CLI の呼び出し
+codex-cli start --acp
+
+# GitHub Copilot CLI の呼び出し
+github-copilot-cli acp-server
+```
+
 ## 運用
 
 ### パフォーマンス監視とリソース管理
