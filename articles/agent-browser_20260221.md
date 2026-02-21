@@ -172,9 +172,24 @@ pnpm build
 
 ### AIアシスタント環境への統合
 
+AIエージェントからagent-browserを利用できるようにするには、スキルディレクトリへの登録やMCPサーバーの設定を行います。
+
 - Claude CodeやOpenCodeなどのAIエージェントのスキルディレクトリへのツール登録
 - スキル定義ファイル（SKILL.md）の配置
 - カスタムMCPサーバーを利用する構成でのJSON設定ファイルへの呼び出し経路追記
+
+例えば、MCPサーバーの設定ファイル（`mcp.json`など）には以下のように追記します。
+
+```json
+{
+  "mcpServers": {
+    "agent-browser": {
+      "command": "npx",
+      "args": ["-y", "@vercel/agent-browser", "mcp"]
+    }
+  }
+}
+```
 
 ## 利用方法
 
