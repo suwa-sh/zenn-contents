@@ -172,9 +172,9 @@ pnpm build
 
 ### AIアシスタント環境への統合
 
-利用するAIエージェントの仕様に合わせて、**スキル（SKILL.md）**または**MCP（Model Context Protocol）**のいずれかの方法で統合します。
+利用するAIエージェントの仕様に合わせて、**Agent Skills** または **MCP** のいずれかの方法で統合します。
 
-#### 方法A: スキルとしての統合（Claude Code / OpenCodeなど）
+#### 方法A: Agent Skillsとしての統合（Claude Code / OpenCodeなど）
 
 AIエージェントがスキルディレクトリをサポートしている場合、公式リポジトリからスキル定義ファイル（`SKILL.md`）をダウンロードして配置します。
 
