@@ -133,23 +133,42 @@ classDiagram
 
 ## 構築方法
 
+agent-browserの導入には、パッケージマネージャーを利用したインストールと、ソースコードからのビルドの2つの方法があります。
+
 ### 前提環境の構築
+
+いずれの導入方法でも、以下の環境が必要です。
 
 - Node.jsバージョン22以降の準備
 - npmまたはpnpmの利用設定
 - Chromiumなどのブラウザエンジンが正常に起動するOS環境の構築
 
-### パッケージのインストール
+### 導入方法1: パッケージのインストール
 
-- npmを利用したグローバルインストール
-- 依存するブラウザバイナリを同時に導入する場合の`--with-deps`オプション付与
-- インストール完了後のヘルプコマンド実行によるパスの疎通とバージョン情報の確認
+npmを利用してグローバルにインストールします。依存するブラウザバイナリを同時に導入する場合は`--with-deps`オプションを付与します。
 
-### ソースコードからのビルド
+```bash
+npm install -g @vercel/agent-browser
+# またはブラウザバイナリも同時にインストールする場合
+npm install -g @vercel/agent-browser --with-deps
+```
 
-- GitHubリポジトリからのソースコードクローン
-- pnpmを使用した依存関係のダウンロードおよびリンク
-- ビルドスクリプト実行によるRust CLI層およびNode.jsフォールバック層の実行可能ファイル生成
+インストール完了後、ヘルプコマンドを実行してパスの疎通とバージョン情報を確認します。
+
+```bash
+agent-browser --help
+```
+
+### 導入方法2: ソースコードからのビルド
+
+GitHubリポジトリからソースコードをクローンし、ビルドスクリプトを実行してRust CLI層およびNode.jsフォールバック層の実行可能ファイルを生成します。
+
+```bash
+git clone https://github.com/vercel-labs/agent-browser.git
+cd agent-browser
+pnpm install
+pnpm build
+```
 
 ### AIアシスタント環境への統合
 
@@ -211,11 +230,22 @@ classDiagram
 
 ### 外部ブラウザとの連携接続
 
-- 既存ユーザープロファイル情報を利用する場合のChromeブラウザリモートデバッグモード手動起動
-- `--cdp`オプションと対象ポート番号を指定したCLIコマンド実行による起動済みブラウザへのアタッチ
-- Windows環境におけるIPv6とIPv4のバインディング問題を回避するための`127.0.0.1`明示的利用
+既存のユーザープロファイル情報を利用する場合、Chromeブラウザをリモートデバッグモードで手動起動し、agent-browserからアタッチします。
 
-## 引用文献
+1. Chromeをリモートデバッグモードで起動します（ポート9222の例）。
+
+```bash
+# macOSの例
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222
+```
+
+2. `--cdp`オプションで対象ポート番号を指定し、起動済みブラウザにアタッチして操作を続行します。Windows環境におけるIPv6とIPv4のバインディング問題を回避するため、接続先ホスト指定には明示的に`127.0.0.1`を利用します。
+
+```bash
+agent-browser open https://example.com --cdp http://127.0.0.1:9222
+```
+
+## 参考リンク
 
 - 公式ドキュメント
   - [OpenClaw (Clawdbot) - Vercel](https://vercel.com/docs/ai-gateway/chat-platforms/openclaw)
