@@ -172,13 +172,21 @@ pnpm build
 
 ### AIアシスタント環境への統合
 
-AIエージェントからagent-browserを利用できるようにするには、スキルディレクトリへの登録やMCPサーバーの設定を行います。
+利用するAIエージェントの仕様に合わせて、**スキル（SKILL.md）**または**MCP（Model Context Protocol）**のいずれかの方法で統合します。
 
-- Claude CodeやOpenCodeなどのAIエージェントのスキルディレクトリへのツール登録
-- スキル定義ファイル（SKILL.md）の配置
-- カスタムMCPサーバーを利用する構成でのJSON設定ファイルへの呼び出し経路追記
+#### 方法A: スキルとしての統合（Claude Code / OpenCodeなど）
 
-例えば、MCPサーバーの設定ファイル（`mcp.json`など）には以下のように追記します。
+AIエージェントがスキルディレクトリをサポートしている場合、公式リポジトリからスキル定義ファイル（`SKILL.md`）をダウンロードして配置します。
+
+```bash
+# 例: Claude Codeのスキルディレクトリに配置する場合
+mkdir -p .claude/skills/agent-browser
+curl -sL https://raw.githubusercontent.com/vercel-labs/agent-browser/main/skills/agent-browser/SKILL.md -o .claude/skills/agent-browser/SKILL.md
+```
+
+#### 方法B: MCPサーバーとしての統合（Cursor / Clineなど）
+
+MCPをサポートするクライアントを利用する場合は、設定ファイル（`mcp.json`や`cline_mcp_settings.json`など）に以下のように追記してサーバーとして登録します。
 
 ```json
 {
