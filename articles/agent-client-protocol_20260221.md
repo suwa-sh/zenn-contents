@@ -229,6 +229,39 @@ classDiagram
   ファイルの削除やシステム設定の変更など、重大な影響を及ぼすツールを実行する直前に権限要求メソッドを発行します。
   承認済みの応答を受信した後にのみ実際の処理を進行し、キャンセルされた場合は安全に処理を中断します。
 
+以下は、TypeScript SDKを用いて、初期化からプロンプトの受信、ストリーミング応答までを行うエージェントプロセスの基本的な実装例です。
+
+```typescript
+import { AgentServer } from "@agentclientprotocol/sdk";
+
+// エージェントの初期化と能力の提示
+const server = new AgentServer({
+  name: "my-custom-agent",
+  version: "1.0.0",
+  capabilities: {
+    prompts: true,
+    tools: true
+  }
+});
+
+// プロンプトの受信とストリーミング応答
+server.onPrompt(async (request, response) => {
+  const userMessage = request.messages[0].content;
+  
+  // ストリーミング応答の開始
+  response.stream({
+    type: "text",
+    text: `Received: ${userMessage}. Processing...`
+  });
+  
+  // 処理完了
+  response.finish();
+});
+
+// stdioモードで起動
+server.startStdio();
+```
+
 ### クライアントインターフェースの構築手順
 - **エージェントのプロセス管理**
   エディタのバックグラウンドタスクとしてエージェントの実行ファイルをサブプロセスとして起動します。
@@ -251,6 +284,24 @@ classDiagram
 - **認証情報と環境変数の注入**
   大規模言語モデルへのアクセスに必要なAPIキーや、組織固有のプロキシ設定などを設定ファイルの環境変数ブロックに登録します。
   設定された値はエージェントプロセスの起動時に安全に引き継がれます。
+
+以下は、エディタ（例：ZedやJetBrains IDE）にカスタムエージェントを登録するための設定ファイル（`agents.json`）の例です。
+この設定により、エディタは指定されたコマンドでエージェントプロセスを起動し、環境変数を渡すことができます。
+
+```json
+{
+  "agents": [
+    {
+      "name": "My Custom Agent",
+      "command": "node",
+      "args": ["/path/to/agent/dist/index.js"],
+      "env": {
+        "OPENAI_API_KEY": "sk-..."
+      }
+    }
+  ]
+}
+```
 
 ### 統合環境でのワークフロー実行
 - **対話セッションの開始**
@@ -287,6 +338,33 @@ classDiagram
 - **起動失敗時の原因特定**
   エージェントがリストに表示されない、または起動直後に終了する事象に直面した際は、設定ファイルのJSON構文エラーや実行ファイルのアクセス権限不足を真っ先に疑います。
   ターミナル上で単独でのプロセス起動をテストし、出力されるエラーメッセージを確認します。
+
+以下は、通信レイヤーで記録されるJSON-RPCログの例です。
+クライアントからのリクエストとエージェントからのレスポンスの構造を突き合わせることで、プロトコル違反やパラメータの不整合を特定できます。
+
+```json
+// クライアントからのリクエスト例
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "prompt/create",
+  "params": {
+    "sessionId": "sess-123",
+    "messages": [
+      { "role": "user", "content": "Hello, Agent!" }
+    ]
+  }
+}
+
+// エージェントからの応答例
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "status": "success"
+  }
+}
+```
 
 ### セキュリティポリシーの維持と更新
 - **アクセス制御の定期的な監査**
