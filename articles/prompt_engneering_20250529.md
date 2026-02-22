@@ -4,7 +4,7 @@ emoji: "🚀"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AI", "LLM", "プロンプトエンジニアリング", "RAG", "AIエージェント"]
 published: true
-publish_at: 2025-05-29
+published_at: 2025-05-29
 ---
 
 ## 1. はじめに

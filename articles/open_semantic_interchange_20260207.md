@@ -4,7 +4,7 @@ emoji: "🌐"
 type: "tech"
 topics: ["osi", "snowflake", "salesforce", "dbt", "dataengineering"]
 published: true
-published_at: "2026-02-07"
+published_at: 2026-02-07
 ---
 
 Open Semantic Interchange (OSI) は、データエンジニアリングとビジネスインテリジェンス（BI）の分野における重要なイニシアチブです。Snowflake、Salesforce、dbt Labsなどが共同で推進しており、データの「意味」を統一することを目的としています。本記事では、OSIの構造、データモデル、そして特に**AIエージェントがどのようにデータを理解するか**という観点から、その革新性を解説します。

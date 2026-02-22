@@ -4,7 +4,7 @@ emoji: "🧭"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["DataManagement", "DMBOK", "dbt", "DataEngineering", "zennfes2025free"]
 published: true
-publieshed_at: 2025-09-07
+published_at: 2025-09-07
 ---
 
 

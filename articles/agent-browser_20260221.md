@@ -4,7 +4,7 @@ emoji: "🌐"
 type: "tech"
 topics: ["agentbrowser", "Vercel", "AI", "Automation", "CLI"]
 published: true
-published_at: "2026-02-25"
+published_at: 2026-02-25
 ---
 
 ## 概要

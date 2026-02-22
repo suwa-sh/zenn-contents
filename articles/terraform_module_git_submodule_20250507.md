@@ -4,7 +4,7 @@ emoji: "🧰"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [terraform, git, IaC, module]
 published: true
-publish_at: 2025-05-07
+published_at: 2025-05-07
 ---
 
 ## ■概要

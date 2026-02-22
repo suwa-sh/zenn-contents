@@ -4,7 +4,7 @@ emoji: "🚀"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["dbt", "DataEngineering", "AnalyticsEngineering", "Rust", "dbtFusion"]
 published: true
-publish_at: 2025-05-30
+published_at: 2025-05-30
 ---
 
 ## はじめに

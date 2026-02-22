@@ -4,7 +4,7 @@ emoji: "⚙️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [ApacheFlink, Kubernetests, ArgoCD, GitOps, FlinkOperator]
 published: true
-publish_at: 2025-05-27
+published_at: 2025-05-27
 ---
 
 ## ■はじめに
