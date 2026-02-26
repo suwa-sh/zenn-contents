@@ -1,7 +1,7 @@
 ---
 title: "技術調査 - 1Password CLI"
 emoji: "🔐"
-type: "idea"
+type: "tech"
 topics: ["1Password", "CLI", "SecretManagement", "DevOps", "Security"]
 published: true
 published_at: 2026-02-26
