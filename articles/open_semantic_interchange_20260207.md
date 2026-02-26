@@ -220,7 +220,9 @@ Open Semantic Interchange (OSI) は、データの意味をサイロから解放
 
 従来のBIツールの限界を超え、AIと人間が共通の言葉で会話できる未来を作るための第一歩です。
 
-## 引用文献
+この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
+
+## 参考リンク
 
 - 公式ドキュメント
   - [Open Semantic Interchange (OSI) - The Universal Standard for Data](https://opensemanticinterchange.org/)

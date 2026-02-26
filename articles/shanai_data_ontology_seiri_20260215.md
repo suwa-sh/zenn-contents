@@ -324,7 +324,9 @@ graph LR
 5. 実データでクエリを実行し、問いに回答できることを確認したか
 :::
 
-## 引用リンク
+この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
+
+## ■参考リンク
 
 - 公式ドキュメント
   - [Generating an ontology from a semantic model - Microsoft Fabric](https://learn.microsoft.com/en-us/fabric/iq/ontology/concepts-generate)
