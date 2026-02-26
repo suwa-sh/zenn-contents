@@ -3,7 +3,8 @@ title: "技術調査 - EclipseEDC"
 emoji: "🔗"
 type: "tech"
 topics: ["EclipseEDC", "DataSpace", "IDSA", "DataSovereignty", "Java"]
-published: false
+published: true
+published_at: 2026-02-28
 ---
 
 ## 概要
