@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles (95)
+## Articles (97)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-02-27 | [🔍 技術調査 - Entire.io](articles/entireio_20260226.md) | Entire, Git, AIAgent, VersionControl, DeveloperTools |
+| 2026-02-26 | [🔐 技術調査 - 1Password CLI](articles/1password_cli_20260225.md) | 1Password, CLI, SecretManagement, DevOps, Security |
 | 2026-02-25 | [🌐 技術調査 - agent-browser](articles/agent-browser_20260221.md) | agentbrowser, Vercel, AI, Automation, CLI |
 | 2026-02-24 | [🎬 技術調査 - Remotion](articles/remotion_20260221.md) | Remotion, React, Video, AWSLambda, TypeScript |
 | 2026-02-23 | [🔌 技術調査 - Agent Client Protocol](articles/agent-client-protocol_20260221.md) | AgentClientProtocol, AI, IDE, LSP, JSONRPC |
