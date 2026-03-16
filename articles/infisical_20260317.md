@@ -3,7 +3,8 @@ title: "技術調査 - Infisical"
 emoji: "🔐"
 type: "tech"
 topics: ["Infisical", "SecretManagement", "Kubernetes", "PKI", "Security"]
-published: false
+published: true
+published_at: 2026-03-17
 ---
 
 ## 概要
