@@ -3,7 +3,8 @@ title: "技術調査 - Google Workspace CLI"
 emoji: "🔧"
 type: "tech"
 topics: ["GoogleWorkspace", "CLI", "Rust", "MCP", "AIAgent"]
-published: false
+published: true
+published_at: 2026-03-19
 ---
 
 ## 概要
