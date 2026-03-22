@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles (100)
+## Articles (102)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-03-20 | [🔐 技術調査 - OneCLI](articles/onecli_20260317.md) | OneCLI, AIAgent, CredentialManagement, Rust, Security |
+| 2026-03-19 | [🔧 技術調査 - Google Workspace CLI](articles/google_workspace_cli_20260317.md) | GoogleWorkspace, CLI, Rust, MCP, AIAgent |
 | 2026-03-17 | [🔐 技術調査 - Infisical](articles/infisical_20260317.md) | Infisical, SecretManagement, Kubernetes, PKI, Security |
 | 2026-03-07 | [🧩 技術調査 - TanStack](articles/tanstack_20260307.md) | TanStack, React, TypeScript, TanStackQuery, TanStackRouter |
 | 2026-02-28 | [🔗 技術調査 - EclipseEDC](articles/eclipseedc_20260227.md) | EclipseEDC, DataSpace, IDSA, DataSovereignty, Java |
@@ -112,11 +114,10 @@
 | 2025-05-01 | [⚙️ 技術調査 - dlt](articles/dlt_20250501.md) | dlt, ELT, ETL, データパイプライン, データ基盤 |
 | 2025-05-01 | [📊 ITコストの透明性向上とビジネス価値最大化に向けた第一歩：tbm-template](articles/tbm-template_20250501.md) | TBM, ITコスト管理, IT投資対効果, ITマネジメント, DX |
 
-## 下書き (4)
+## 下書き (3)
 
 | date | title | topics |
 |------|-------|--------|
-|  | [🔧 技術調査 - Google Workspace CLI](articles/google_workspace_cli_20260317.md) | GoogleWorkspace, CLI, Rust, MCP, AIAgent |
-|  | [🔐 技術調査 - OneCLI](articles/onecli_20260317.md) | OneCLI, AIAgent, CredentialManagement, Rust, Security |
+|  | [🌐 技術調査 - Browser Use CLI 2.0](articles/browser_use_cli_2.0_20260322.md) | BrowserUse, CLI, BrowserAutomation, AIAgent, MCP |
 |  | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 |  | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
