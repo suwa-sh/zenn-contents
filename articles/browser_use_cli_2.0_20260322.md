@@ -3,7 +3,8 @@ title: "技術調査 - Browser Use CLI 2.0"
 emoji: "🌐"
 type: "tech"
 topics: ["BrowserUse", "CLI", "BrowserAutomation", "AIAgent", "MCP"]
-published: false
+published: true
+published_at: 2026-03-22
 ---
 
 ## 概要
