@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles (104)
+## Articles (105)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-03-26 | [📝 技術調査 - spec駆動開発](articles/sdd_20260325.md) | SDD, SpecDrivenDevelopment, AI, Kiro, SpecKit |
 | 2026-03-25 | [📋 技術調査 - USDM × XDDP](articles/usdm_xddp_20260325.md) | USDM, XDDP, 要件定義, 派生開発, CodingAgent |
 | 2026-03-22 | [🌐 技術調査 - Browser Use CLI 2.0](articles/browser_use_cli_20_20260322.md) | BrowserUse, CLI, BrowserAutomation, AIAgent, MCP |
 | 2026-03-20 | [🔐 技術調査 - OneCLI](articles/onecli_20260317.md) | OneCLI, AIAgent, CredentialManagement, Rust, Security |
