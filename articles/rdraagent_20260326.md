@@ -1,5 +1,5 @@
 ---
-title: "技術調査 - RDRAAgent Phase1にUSDMを適用して精度を上げる"
+title: "RDRAAgent Phase1にUSDMを適用して精度を上げる"
 emoji: "🔗"
 type: "tech"
 topics: ["RDRA", "USDM", "RequirementsEngineering", "CodingAgent", "SpecDrivenDevelopment"]
