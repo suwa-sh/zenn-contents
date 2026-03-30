@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles (108)
+## Articles (109)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-03-30 | [🏃 技術調査 - Runn](articles/runn_20260330.md) | Runn, Go, APIテスト, シナリオテスト, CI |
 | 2026-03-29 | [☁️ 技術調査 - multi-cloud-lifecycle-skills](articles/multi-cloud-lifecycle-skills_20260328.md) | MultiCloud, ClaudeCode, InfrastructureAsCode, AWS, Azure |
 | 2026-03-28 | [📋 技術調査 - 非機能要求グレード](articles/hikinou_youkyu_grade_20260327.md) | NonFunctionalRequirements, IPA, RequirementsEngineering, SystemDesign, QualityAssurance |
 | 2026-03-27 | [🔗 RDRAAgent Phase1にUSDMを適用して精度を上げる](articles/rdraagent_20260326.md) | RDRA, USDM, RequirementsEngineering, CodingAgent, SpecDrivenDevelopment |
