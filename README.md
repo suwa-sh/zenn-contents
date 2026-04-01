@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles (111)
+## Articles (112)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-04-03 | [🔌 技術調査 - codex-plugin-cc](articles/codex-plugin-cc_20260402.md) | ClaudeCode, OpenAI, Codex, AICodeReview, Plugin |
 | 2026-04-02 | [🔧 技術調査 - CLI-Anything](articles/cli-anything_20260401.md) | CLIAnything, AIAgent, CLI, Python, Automation |
 | 2026-04-01 | [🐳 技術調査 - k3d](articles/k3d_20260401.md) | k3d, k3s, Kubernetes, Docker, LocalDevelopment |
 | 2026-03-30 | [🏃 技術調査 - Runn](articles/runn_20260330.md) | Runn, Go, APIテスト, シナリオテスト, CI |
