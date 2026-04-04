@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles (113)
+## Articles (114)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-04-05 | [🔐 技術調査 - ReBAC x Clean Architecture](articles/rebac-x-clean-architecture_20260404.md) | ReBAC, CleanArchitecture, OpenFGA, SpiceDB, Authorization |
 | 2026-04-04 | [🔍 技術調査 - Jina Reader](articles/jina-reader_20260403.md) | JinaAI, RAG, LLM, WebScraping, MCP |
 | 2026-04-03 | [🔌 技術調査 - codex-plugin-cc](articles/codex-plugin-cc_20260402.md) | ClaudeCode, OpenAI, Codex, AICodeReview, Plugin |
 | 2026-04-02 | [🔧 技術調査 - CLI-Anything](articles/cli-anything_20260401.md) | CLIAnything, AIAgent, CLI, Python, Automation |
