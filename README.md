@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles (116)
+## Articles (117)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-04-08 | [🔐 技術調査 - kong-plugin-oidc](articles/kong-plugin-oidc_20260406.md) | Kong, OIDC, OpenIDConnect, APIGateway, Lua |
 | 2026-04-07 | [🕸️ 技術調査 - GitNexus](articles/gitnexus_20260406.md) | GitNexus, KnowledgeGraph, MCP, AIAgent, CodeIntelligence |
 | 2026-04-06 | [🔐 Keycloak + OpenFGA + Kong による OIDC 認証・認可アーキテクチャ](articles/keycloak-oidc-kong-openfga-react-spa_20260404.md) | Keycloak, OpenFGA, Kong, OpenIDConnect, React |
 | 2026-04-05 | [🔐 技術調査 - ReBAC x Clean Architecture](articles/rebac-x-clean-architecture_20260404.md) | ReBAC, CleanArchitecture, OpenFGA, SpiceDB, Authorization |
