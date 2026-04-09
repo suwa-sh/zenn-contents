@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles (118)
+## Articles (119)
 
 | date | title | topics |
 |------|-------|--------|
 | 2026-04-11 | [🏹 技術調査 - Ark UI](articles/ark-ui_20260409.md) | ArkUI, React, Vue, Svelte, Headless |
+| 2026-04-10 | [🐛 技術調査 - GlitchTip](articles/glitchtip_20260410.md) | GlitchTip, Sentry, ErrorTracking, Django, SelfHosted |
 | 2026-04-08 | [🔐 技術調査 - kong-plugin-oidc](articles/kong-plugin-oidc_20260406.md) | Kong, OIDC, OpenIDConnect, APIGateway, Lua |
 | 2026-04-07 | [🕸️ 技術調査 - GitNexus](articles/gitnexus_20260406.md) | GitNexus, KnowledgeGraph, MCP, AIAgent, CodeIntelligence |
 | 2026-04-06 | [🔐 Keycloak + OpenFGA + Kong による OIDC 認証・認可アーキテクチャ](articles/keycloak-oidc-kong-openfga-react-spa_20260404.md) | Keycloak, OpenFGA, Kong, OpenIDConnect, React |
@@ -134,7 +135,7 @@
 
 | date | title | topics |
 |------|-------|--------|
-|  | [🐛 技術調査 - GlitchTip](articles/glitchtip_20260410.md) | GlitchTip, Sentry, ErrorTracking, Django, SelfHosted |
+|  | [📝 技術調査 - markitdown](articles/markitdown_20260410.md) | markitdown, LLM, RAG, MCP, Python |
 |  | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 |  | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🐦 技術調査 - xmcp](articles/xmcp_20260409.md) | xmcp, MCP, XAPI, FastMCP, OAuth |
