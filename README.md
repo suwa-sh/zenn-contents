@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles (122)
+## Articles (123)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-04-20 | [🐙 技術調査 - gh skill](articles/gh-skill_20260420.md) | GitHub, GitHubCLI, AgentSkills, Copilot, ClaudeCode |
 | 2026-04-14 | [📐 要件モデルから「実装可能な精度」で見積もりを出す - RDRA×SFP実践ガイド](articles/rdra_20260414.md) | RDRA, SFP, FunctionPoint, 見積もり, 要件定義 |
 | 2026-04-13 | [📝 技術調査 - markitdown](articles/markitdown_20260410.md) | markitdown, LLM, RAG, MCP, Python |
 | 2026-04-12 | [🐦 技術調査 - xmcp](articles/xmcp_20260409.md) | xmcp, MCP, XAPI, FastMCP, OAuth |
