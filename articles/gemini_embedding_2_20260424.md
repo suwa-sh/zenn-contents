@@ -1,5 +1,5 @@
 ---
-title: "Gemini Embedding 2 調査まとめ: 仕様・ベンチマーク・採用判断"
+title: "Gemini Embedding 2 仕様・ベンチマーク・採用判断"
 emoji: "🧭"
 type: "tech"
 topics: ["GeminiEmbedding", "RAG", "Embedding", "MachineLearning", "GoogleCloud"]
