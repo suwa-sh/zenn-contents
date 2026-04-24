@@ -11,11 +11,11 @@
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-04-22 | [🐦 技術調査 - xmcp](articles/xmcp_20260409.md) | xmcp, MCP, XAPI, FastMCP, OAuth |
 | 2026-04-21 | [🦾 技術調査 - harness](articles/harness_20260420.md) | ClaudeCode, Agent, Skill, LLM, Orchestration |
 | 2026-04-20 | [🐙 技術調査 - gh skill](articles/gh-skill_20260420.md) | GitHub, GitHubCLI, AgentSkills, Copilot, ClaudeCode |
 | 2026-04-14 | [📐 要件モデルから「実装可能な精度」で見積もりを出す - RDRA×SFP実践ガイド](articles/rdra_20260414.md) | RDRA, SFP, FunctionPoint, 見積もり, 要件定義 |
 | 2026-04-13 | [📝 技術調査 - markitdown](articles/markitdown_20260410.md) | markitdown, LLM, RAG, MCP, Python |
-| 2026-04-12 | [🐦 技術調査 - xmcp](articles/xmcp_20260409.md) | xmcp, MCP, XAPI, FastMCP, OAuth |
 | 2026-04-11 | [🏹 技術調査 - Ark UI](articles/ark-ui_20260409.md) | ArkUI, React, Vue, Svelte, Headless |
 | 2026-04-10 | [🐛 技術調査 - GlitchTip](articles/glitchtip_20260410.md) | GlitchTip, Sentry, ErrorTracking, Django, SelfHosted |
 | 2026-04-08 | [🔐 技術調査 - kong-plugin-oidc](articles/kong-plugin-oidc_20260406.md) | Kong, OIDC, OpenIDConnect, APIGateway, Lua |
@@ -136,9 +136,10 @@
 | 2025-05-01 | [⚙️ 技術調査 - dlt](articles/dlt_20250501.md) | dlt, ELT, ETL, データパイプライン, データ基盤 |
 | 2025-05-01 | [📊 ITコストの透明性向上とビジネス価値最大化に向けた第一歩：tbm-template](articles/tbm-template_20250501.md) | TBM, ITコスト管理, IT投資対効果, ITマネジメント, DX |
 
-## 下書き (2)
+## 下書き (3)
 
 | date | title | topics |
 |------|-------|--------|
+|  | [🧭 Gemini Embedding 2 調査まとめ: 仕様・ベンチマーク・採用判断](articles/gemini_embedding_2_20260424.md) | GeminiEmbedding, RAG, Embedding, MachineLearning, GoogleCloud |
 |  | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 |  | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
