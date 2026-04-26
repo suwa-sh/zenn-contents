@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles (124)
+## Articles (125)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-04-25 | [🧭 Gemini Embedding 2 仕様・ベンチマーク・採用判断](articles/gemini_embedding_2_20260424.md) | GeminiEmbedding, RAG, Embedding, MachineLearning, GoogleCloud |
 | 2026-04-22 | [🐦 技術調査 - xmcp](articles/xmcp_20260409.md) | xmcp, MCP, XAPI, FastMCP, OAuth |
 | 2026-04-21 | [🦾 技術調査 - harness](articles/harness_20260420.md) | ClaudeCode, Agent, Skill, LLM, Orchestration |
 | 2026-04-20 | [🐙 技術調査 - gh skill](articles/gh-skill_20260420.md) | GitHub, GitHubCLI, AgentSkills, Copilot, ClaudeCode |
@@ -140,6 +141,6 @@
 
 | date | title | topics |
 |------|-------|--------|
-|  | [🧭 Gemini Embedding 2 調査まとめ: 仕様・ベンチマーク・採用判断](articles/gemini_embedding_2_20260424.md) | GeminiEmbedding, RAG, Embedding, MachineLearning, GoogleCloud |
+|  | [🛡️ 技術調査 - open-appsec](articles/open-appsec_20260427.md) | openappsec, WAF, MachineLearning, Security, Kubernetes |
 |  | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 |  | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
