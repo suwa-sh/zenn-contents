@@ -3,7 +3,8 @@ title: "技術調査 - open-appsec"
 emoji: "🛡️"
 type: "tech"
 topics: ["openappsec", "WAF", "MachineLearning", "Security", "Kubernetes"]
-published: false
+published: true
+published_at: 2026-04-27 02:31
 ---
 
 ## 概要
