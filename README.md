@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles (125)
+## Articles (127)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-05-02 | [🎯 技術調査 - Codex /goal](articles/codex_goal_20260502.md) | Codex, OpenAI, AICoding, Rust, SQLite |
+| 2026-04-27 | [🛡️ 技術調査 - open-appsec](articles/open-appsec_20260427.md) | openappsec, WAF, MachineLearning, Security, Kubernetes |
 | 2026-04-25 | [🧭 Gemini Embedding 2 仕様・ベンチマーク・採用判断](articles/gemini_embedding_2_20260424.md) | GeminiEmbedding, RAG, Embedding, MachineLearning, GoogleCloud |
 | 2026-04-22 | [🐦 技術調査 - xmcp](articles/xmcp_20260409.md) | xmcp, MCP, XAPI, FastMCP, OAuth |
 | 2026-04-21 | [🦾 技術調査 - harness](articles/harness_20260420.md) | ClaudeCode, Agent, Skill, LLM, Orchestration |
@@ -137,10 +139,9 @@
 | 2025-05-01 | [⚙️ 技術調査 - dlt](articles/dlt_20250501.md) | dlt, ELT, ETL, データパイプライン, データ基盤 |
 | 2025-05-01 | [📊 ITコストの透明性向上とビジネス価値最大化に向けた第一歩：tbm-template](articles/tbm-template_20250501.md) | TBM, ITコスト管理, IT投資対効果, ITマネジメント, DX |
 
-## 下書き (3)
+## 下書き (2)
 
 | date | title | topics |
 |------|-------|--------|
-|  | [🛡️ 技術調査 - open-appsec](articles/open-appsec_20260427.md) | openappsec, WAF, MachineLearning, Security, Kubernetes |
 |  | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 |  | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
