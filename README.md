@@ -139,9 +139,10 @@
 | 2025-05-01 | [⚙️ 技術調査 - dlt](articles/dlt_20250501.md) | dlt, ELT, ETL, データパイプライン, データ基盤 |
 | 2025-05-01 | [📊 ITコストの透明性向上とビジネス価値最大化に向けた第一歩：tbm-template](articles/tbm-template_20250501.md) | TBM, ITコスト管理, IT投資対効果, ITマネジメント, DX |
 
-## 下書き (2)
+## 下書き (3)
 
 | date | title | topics |
 |------|-------|--------|
 |  | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
+|  | [🚦 ホスト型 LLM のサイレント更新を CI/CD でゲートする - Test-Before-You-Deploy フレームワーク実践ガイド](articles/test-before-you-deploy_20260502.md) | LLM, LLMOps, MLOps, GitHubActions, テスト |
 |  | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
