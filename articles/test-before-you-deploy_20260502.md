@@ -4,7 +4,7 @@ emoji: "🚦"
 type: "idea"
 topics: ["LLM", "LLMOps", "MLOps", "GitHubActions", "テスト"]
 published: true
-published_at: 2026-05-03 00:57
+published_at: 2026-05-04
 ---
 
 ## ■概要
