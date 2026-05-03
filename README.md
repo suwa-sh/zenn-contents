@@ -11,8 +11,8 @@
 
 | date | title | topics |
 |------|-------|--------|
-| 2026-05-04 | [☁️ 技術調査 - Cloudflare Dynamic Workflows](articles/cloudflare-dynamic-workflows_20260503.md) | Cloudflare, Workflows, DurableExecution, Multitenant, AIAgent |
-| 2026-05-03 | [🚦 ホスト型 LLM のサイレント更新を CI/CD でゲートする - Test-Before-You-Deploy フレームワーク実践ガイド](articles/test-before-you-deploy_20260502.md) | LLM, LLMOps, MLOps, GitHubActions, テスト |
+| 2026-05-06 | [☁️ 技術調査 - Cloudflare Dynamic Workflows](articles/cloudflare-dynamic-workflows_20260503.md) | Cloudflare, Workflows, DurableExecution, Multitenant, AIAgent |
+| 2026-05-05 | [🚦 ホスト型 LLM のサイレント更新を CI/CD でゲートする - Test-Before-You-Deploy フレームワーク実践ガイド](articles/test-before-you-deploy_20260502.md) | LLM, LLMOps, MLOps, GitHubActions, テスト |
 | 2026-05-02 | [🎯 技術調査 - Codex /goal](articles/codex_goal_20260502.md) | Codex, OpenAI, AICoding, Rust, SQLite |
 | 2026-04-27 | [🛡️ 技術調査 - open-appsec](articles/open-appsec_20260427.md) | openappsec, WAF, MachineLearning, Security, Kubernetes |
 | 2026-04-25 | [🧭 Gemini Embedding 2 仕様・ベンチマーク・採用判断](articles/gemini_embedding_2_20260424.md) | GeminiEmbedding, RAG, Embedding, MachineLearning, GoogleCloud |
