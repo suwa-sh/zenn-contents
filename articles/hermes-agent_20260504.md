@@ -8,14 +8,6 @@ published: false
 
 > **検証日**: 2026-05-04 / **対象バージョン**: v0.12.0 系。Hermes Agent は更新が速いため、本記事の数値は時点情報として参照してください。
 
-## この記事の要点
-
-- Nous Research が 2026 年初頭に公開した OSS（MIT ライセンス）の自律型 AI エージェント。
-- セッション横断の永続メモリ（SQLite + FTS5）と、自動生成・自己改善されるスキルを内蔵。
-- 単一の `hermes` CLI エントリポイントで CLI / Web UI / 18 以上のメッセージングプラットフォームに常駐。
-- ターミナル実行を 7 種類のバックエンドから選択可能（local / Docker / SSH / Daytona / Singularity / Modal / Vercel Sandbox）。
-- $5 VPS から GPU クラスター・サーバーレスまで広い実行環境に対応。
-
 ## 概要
 
 Hermes Agent は、Nous Research が 2026 年初頭に公開したオープンソース（MIT ライセンス）の自律型 AI エージェントです。公式 README では "the only agent with a built-in learning loop"（学習ループを内蔵した唯一のエージェント）と表現しており、「IDE に縛られたコーディングコパイロット」や「API ラッパーのチャットボット」とは一線を画します。
