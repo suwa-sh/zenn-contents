@@ -35,20 +35,20 @@ Gartner レポートでは agentic AI プロジェクトの評価・ROI・リス
 
 ```mermaid
 graph TD
-    AD[Agent Developer エージェント開発者]
-    SR[SRE 信頼性エンジニア]
-    BM[Benchmark Maintainer ベンチマーク管理者]
-    CEL[Claw-Eval-Live ライブエージェントベンチマーク]
-    DS[ClawHub Top-500 需要シグナル源]
-    MS[模擬業務サービス群 CRM 金融 メール HR]
-    LM[評価対象 LLM 各モデル]
+    AD["Agent Developer<br/>エージェント開発者"]
+    SR["SRE<br/>信頼性エンジニア"]
+    BM["Benchmark Maintainer<br/>ベンチマーク管理者"]
+    CEL["Claw-Eval-Live<br/>ライブエージェント<br/>ベンチマーク"]
+    DS["ClawHub Top-500<br/>需要シグナル源"]
+    MS["模擬業務サービス群<br/>CRM 金融 メール HR"]
+    LM["評価対象 LLM<br/>各モデル"]
 
     AD -->|ベンチマーク実行| CEL
     SR -->|スナップショット管理| CEL
     BM -->|タスクセット保守| CEL
     DS -->|需要起点タスク供給| CEL
     CEL -->|タスク実行指示| MS
-    MS -->|状態 監査ログ アーティファクト返却| CEL
+    MS -->|状態 監査ログ<br/>アーティファクト返却| CEL
     CEL -->|プロンプト送信| LM
     LM -->|ツール呼び出し 応答| CEL
 ```
@@ -66,16 +66,16 @@ graph TD
 
 ```mermaid
 graph TD
-    RSL[Refreshable Signal Layer 需要起点タスク生成]
-    RRS[Reproducible Release Snapshot 再現性確保]
-    TR[Task Runner タスク実行制御]
-    R4S[4-Signal Recorder state trace audit log artifact]
-    SC[Scorer 採点エンジン]
-    LB[Leaderboard スコア集計 公開]
+    RSL["Refreshable<br/>Signal Layer<br/>需要起点タスク生成"]
+    RRS["Reproducible<br/>Release Snapshot<br/>再現性確保"]
+    TR["Task Runner<br/>タスク実行制御"]
+    R4S["4-Signal Recorder<br/>state / trace<br/>audit log / artifact"]
+    SC["Scorer<br/>採点エンジン"]
+    LB["Leaderboard<br/>スコア集計・公開"]
 
     RSL -->|タスクセット供給| RRS
     RRS -->|固定スナップショット展開| TR
-    TR -->|エージェント実行 環境操作| R4S
+    TR -->|エージェント実行<br/>環境操作| R4S
     R4S -->|4 シグナル送付| SC
     SC -->|採点結果| LB
 ```
@@ -93,13 +93,13 @@ graph TD
 
 ```mermaid
 graph TD
-    IN[入力 4シグナル state trace audit log artifact]
-    PR[採点パターン分岐 Pattern Router]
-    DC[Deterministic Checker 決定論的検証]
-    LJ[Structured LLM Judge 構造化 LLM 判定]
-    DW[重み付き集計 取得15-20% 精度40-60% アクション10-20%]
-    PT[Pass しきい値適用 τ 0.80]
-    OS[Overall Score 算出]
+    IN["入力<br/>4シグナル<br/>state / trace<br/>audit log / artifact"]
+    PR["採点パターン分岐<br/>Pattern Router"]
+    DC["Deterministic Checker<br/>決定論的検証"]
+    LJ["Structured LLM Judge<br/>構造化 LLM 判定"]
+    DW["重み付き集計<br/>取得 15-20%<br/>精度 40-60%<br/>アクション 10-20%"]
+    PT["Pass しきい値適用<br/>τ = 0.80"]
+    OS["Overall Score 算出"]
 
     IN --> PR
     PR -->|分析型| DC
@@ -110,8 +110,8 @@ graph TD
     DC --> DW
     LJ --> DW
     DW --> PT
-    PT -->|スコア >= 0.80 Pass| OS
-    PT -->|スコア < 0.80 Fail| OS
+    PT -->|スコア >= 0.80<br/>Pass| OS
+    PT -->|スコア < 0.80<br/>Fail| OS
 ```
 
 | コンポーネント | 説明 |
@@ -129,17 +129,17 @@ graph TD
 
 ```mermaid
 graph TD
-    SL[SignalLayer demand_source ClawHub Top-500]
-    SS[Snapshot release_version timestamp]
-    TF[TaskFamily Dev Terminal HR People MGMT Productivity CRM Finance Email Calendar]
-    ESW[ExecutionSurface Service-assisted Workflow 87 tasks]
-    EWR[ExecutionSurface Workspace Repair 18 tasks]
-    SIG[4 Signal Stack State Trace AuditLog Artifact]
-    SP[ScoringPattern Analytical Operational Script-first]
-    PR[PassRate threshold τ 0.80]
-    OV[OverallScore 0-100]
-    EB[EvidenceBreakdown data_acquisition data_accuracy action_verification]
-    ER[EvaluationRun model snapshot scores]
+    SL["SignalLayer<br/>demand_source<br/>ClawHub Top-500"]
+    SS["Snapshot<br/>release_version<br/>timestamp"]
+    TF["TaskFamily<br/>Dev / Terminal / HR<br/>People / MGMT<br/>Productivity / CRM<br/>Finance / Email / Calendar"]
+    ESW["ExecutionSurface<br/>Service-assisted<br/>Workflow 87 tasks"]
+    EWR["ExecutionSurface<br/>Workspace Repair<br/>18 tasks"]
+    SIG["4 Signal Stack<br/>State / Trace<br/>AuditLog / Artifact"]
+    SP["ScoringPattern<br/>Analytical<br/>Operational<br/>Script-first"]
+    PR["PassRate<br/>threshold τ = 0.80"]
+    OV["OverallScore<br/>0-100"]
+    EB["EvidenceBreakdown<br/>data_acquisition<br/>data_accuracy<br/>action_verification"]
+    ER["EvaluationRun<br/>model / snapshot / scores"]
 
     SL -->|継続生成| SS
     SS -->|contains| TF
