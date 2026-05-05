@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles (129)
+## Articles (130)
 
 | date | title | topics |
 |------|-------|--------|
-| 2026-05-06 | [☁️ 技術調査 - Cloudflare Dynamic Workflows](articles/cloudflare-dynamic-workflows_20260503.md) | Cloudflare, Workflows, DurableExecution, Multitenant, AIAgent |
+| 2026-05-11 | [🤖 技術調査 - Hermes Agent](articles/hermes-agent_20260504.md) | HermesAgent, AIAgent, NousResearch, OSS, LLM |
+| 2026-05-08 | [☁️ 技術調査 - Cloudflare Dynamic Workflows](articles/cloudflare-dynamic-workflows_20260503.md) | Cloudflare, Workflows, DurableExecution, Multitenant, AIAgent |
 | 2026-05-05 | [🚦 ホスト型 LLM のサイレント更新を CI/CD でゲートする - Test-Before-You-Deploy フレームワーク実践ガイド](articles/test-before-you-deploy_20260502.md) | LLM, LLMOps, MLOps, GitHubActions, テスト |
 | 2026-05-02 | [🎯 技術調査 - Codex /goal](articles/codex_goal_20260502.md) | Codex, OpenAI, AICoding, Rust, SQLite |
 | 2026-04-27 | [🛡️ 技術調査 - open-appsec](articles/open-appsec_20260427.md) | openappsec, WAF, MachineLearning, Security, Kubernetes |
@@ -145,7 +146,7 @@
 
 | date | title | topics |
 |------|-------|--------|
-|  | [🤖 技術調査 - Hermes Agent](articles/hermes-agent_20260504.md) | HermesAgent, AIAgent, NousResearch, OSS, LLM |
+|  | [🧪 業務エージェント評価を 4 シグナル採点で組み直す: Claw-Eval-Live を実務に落とす](articles/claw-eval-live_20260505.md) | LLMOps, AIAgent, Benchmark, Evaluation, SRE |
 |  | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 |  | [🧰 技術調査 - vercel-labs/skills](articles/vercel-labs-skills_20260503.md) | AgentSkills, Vercel, ClaudeCode, Cursor, MCP |
 |  | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
