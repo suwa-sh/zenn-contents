@@ -30,7 +30,10 @@ preview-down:
 		echo "ℹ️ preview server is NOT running"; \
 	fi
 
-push:
+readme:
+	python3 scripts/generate-zenn-readme.py
+
+push: readme
 	git add .
 	git commit -m "chore"
 	git pull origin
