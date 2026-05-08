@@ -142,7 +142,7 @@
 | 2025-05-01 | [⚙️ 技術調査 - dlt](articles/dlt_20250501.md) | dlt, ELT, ETL, データパイプライン, データ基盤 |
 | 2025-05-01 | [📊 ITコストの透明性向上とビジネス価値最大化に向けた第一歩：tbm-template](articles/tbm-template_20250501.md) | TBM, ITコスト管理, IT投資対効果, ITマネジメント, DX |
 
-## 下書き (7)
+## 下書き (8)
 
 | date | title | topics |
 |------|-------|--------|
@@ -150,6 +150,7 @@
 |  | [☁️ 技術調査 - AWS MCP Server](articles/aws-mcp-server_20260507.md) | AWS, MCP, IAM, AIエージェント, CloudTrail |
 |  | [🧪 業務エージェント評価を 4 シグナル採点で組み直す: Claw-Eval-Live を実務に落とす](articles/claw-eval-live_20260505.md) | LLMOps, AIAgent, Benchmark, Evaluation, SRE |
 |  | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
+|  | [🧪 非決定的な AI エージェントの検証 - PTA + Dominator で Trust Layer を構築する](articles/validating-agentic-behavior_20260508.md) | LLM, AIAgent, Testing, CICD, Evaluation |
 |  | [🧰 技術調査 - vercel-labs/skills](articles/vercel-labs-skills_20260503.md) | AgentSkills, Vercel, ClaudeCode, Cursor, MCP |
 |  | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🖥️ 技術調査 - Amazon WorkSpaces for AI Agents (preview)](articles/workspaces-for-ai-agents_20260506.md) | AWS, WorkSpaces, AppStream, MCP, AIAgent |
