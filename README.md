@@ -7,7 +7,21 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles (130)
+## Articles: 下書き (9)
+
+| create date | title | topics |
+|-------------|-------|--------|
+| 2026-05-09 | [🛡️ OpenAI Codex を社内で安全に動かす — sandbox / Guardian / 監査ログのガードレール設計と反証](articles/codex-safe-operation_20260509.md) | Codex, OpenAI, Security, MCP, Sandbox |
+| 2026-05-08 | [🧪 非決定的な AI エージェントの検証 - PTA + Dominator で Trust Layer を構築する](articles/validating-agentic-behavior_20260508.md) | LLM, AIAgent, Testing, CICD, Evaluation |
+| 2026-05-07 | [🛡️ 技術調査 - Google Cloud Agent Stack](articles/agent-iam-runtime-defense_20260507.md) | GoogleCloud, IAM, AIエージェント, SPIFFE, Security |
+| 2026-05-07 | [☁️ 技術調査 - AWS MCP Server](articles/aws-mcp-server_20260507.md) | AWS, MCP, IAM, AIエージェント, CloudTrail |
+| 2026-05-06 | [🖥️ 技術調査 - Amazon WorkSpaces for AI Agents (preview)](articles/workspaces-for-ai-agents_20260506.md) | AWS, WorkSpaces, AppStream, MCP, AIAgent |
+| 2026-05-05 | [🧪 業務エージェント評価を 4 シグナル採点で組み直す: Claw-Eval-Live を実務に落とす](articles/claw-eval-live_20260505.md) | LLMOps, AIAgent, Benchmark, Evaluation, SRE |
+| 2026-05-03 | [🧰 技術調査 - vercel-labs/skills](articles/vercel-labs-skills_20260503.md) | AgentSkills, Vercel, ClaudeCode, Cursor, MCP |
+| 2025-05-30 | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
+| 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
+
+## Articles: 公開済み (130)
 
 | date | title | topics |
 |------|-------|--------|
@@ -141,16 +155,3 @@
 | 2025-05-06 | [🤖 技術調査 - Mastra](articles/mastra_20250503.md) | Mastra, AI Agent, TypeScript, AI Workflow, RAG |
 | 2025-05-01 | [⚙️ 技術調査 - dlt](articles/dlt_20250501.md) | dlt, ELT, ETL, データパイプライン, データ基盤 |
 | 2025-05-01 | [📊 ITコストの透明性向上とビジネス価値最大化に向けた第一歩：tbm-template](articles/tbm-template_20250501.md) | TBM, ITコスト管理, IT投資対効果, ITマネジメント, DX |
-
-## 下書き (8)
-
-| date | title | topics |
-|------|-------|--------|
-|  | [🛡️ 技術調査 - Google Cloud Agent Stack](articles/agent-iam-runtime-defense_20260507.md) | GoogleCloud, IAM, AIエージェント, SPIFFE, Security |
-|  | [☁️ 技術調査 - AWS MCP Server](articles/aws-mcp-server_20260507.md) | AWS, MCP, IAM, AIエージェント, CloudTrail |
-|  | [🧪 業務エージェント評価を 4 シグナル採点で組み直す: Claw-Eval-Live を実務に落とす](articles/claw-eval-live_20260505.md) | LLMOps, AIAgent, Benchmark, Evaluation, SRE |
-|  | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
-|  | [🧪 非決定的な AI エージェントの検証 - PTA + Dominator で Trust Layer を構築する](articles/validating-agentic-behavior_20260508.md) | LLM, AIAgent, Testing, CICD, Evaluation |
-|  | [🧰 技術調査 - vercel-labs/skills](articles/vercel-labs-skills_20260503.md) | AgentSkills, Vercel, ClaudeCode, Cursor, MCP |
-|  | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
-|  | [🖥️ 技術調査 - Amazon WorkSpaces for AI Agents (preview)](articles/workspaces-for-ai-agents_20260506.md) | AWS, WorkSpaces, AppStream, MCP, AIAgent |

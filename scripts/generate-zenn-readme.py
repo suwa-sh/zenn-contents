@@ -70,6 +70,13 @@ def parse_frontmatter(filepath):
     if pm:
         published = pm.group(1).lower() != "false"
 
+    # ファイル名末尾の _YYYYMMDD から日付を抽出
+    filename_date = ""
+    fdm = re.search(r"_(\d{8})\.", filepath.name)
+    if fdm:
+        raw = fdm.group(1)
+        filename_date = f"{raw[:4]}-{raw[4:6]}-{raw[6:8]}"
+
     return {
         "title": title,
         "date": date,
@@ -78,6 +85,7 @@ def parse_frontmatter(filepath):
         "topics": topics,
         "published": published,
         "filename": filepath.name,
+        "filename_date": filename_date,
     }
 
 
@@ -175,7 +183,10 @@ def generate_readme(zenn_dir):
             else:
                 draft_articles.append(a)
 
-    def append_article_table(article_list):
+    # 下書きはファイル名の日付で降順ソート
+    draft_articles.sort(key=lambda e: e.get("filename_date", ""), reverse=True)
+
+    def append_published_table(article_list):
         lines.append("| date | title | topics |")
         lines.append("|------|-------|--------|")
         for a in article_list:
@@ -190,15 +201,30 @@ def generate_readme(zenn_dir):
             )
         lines.append("")
 
-    if published_articles:
-        lines.append(f"## Articles ({len(published_articles)})")
+    def append_draft_table(article_list):
+        lines.append("| create date | title | topics |")
+        lines.append("|-------------|-------|--------|")
+        for a in article_list:
+            title = a.get("title", "").replace("|", "\\|")
+            emoji = a.get("emoji", "")
+            create_date = a.get("filename_date", "")
+            topics = ", ".join(a.get("topics", []))
+            filename = a.get("filename", "")
+            display = f"{emoji} {title}" if emoji else title
+            lines.append(
+                f"| {create_date} | [{display}](articles/{filename}) | {topics} |"
+            )
         lines.append("")
-        append_article_table(published_articles)
 
     if draft_articles:
-        lines.append(f"## 下書き ({len(draft_articles)})")
+        lines.append(f"## Articles: 下書き ({len(draft_articles)})")
         lines.append("")
-        append_article_table(draft_articles)
+        append_draft_table(draft_articles)
+
+    if published_articles:
+        lines.append(f"## Articles: 公開済み ({len(published_articles)})")
+        lines.append("")
+        append_published_table(published_articles)
 
     readme_path = zenn_dir / "README.md"
     readme_path.write_text("\n".join(lines), encoding="utf-8")
