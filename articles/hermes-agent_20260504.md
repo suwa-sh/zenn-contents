@@ -3,8 +3,7 @@ title: "技術調査 - Hermes Agent"
 emoji: "🤖"
 type: "tech"
 topics: ["HermesAgent", "AIAgent", "NousResearch", "OSS", "LLM"]
-published: true
-published_at: 2026-05-15
+published: false
 ---
 
 > **検証日**: 2026-05-04 / **対象バージョン**: v0.12.0 系。Hermes Agent は更新が速いため、本記事の数値は時点情報として参照してください。
