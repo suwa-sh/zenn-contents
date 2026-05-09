@@ -3,7 +3,8 @@ title: "非決定的な AI エージェントの検証 - PTA + Dominator で Tru
 emoji: "🧪"
 type: "tech"
 topics: ["LLM", "AIAgent", "Testing", "CICD", "Evaluation"]
-published: false
+published: true
+published_at: 2026-05-12
 ---
 
 > 対象: arXiv 2605.03159 "Learning Correct Behavior from Examples: Validating Sequential Execution in Autonomous Agents" (Sharma (University of Washington / Microsoft Code|AI インターン), Mittal, Hu (Microsoft Redmond), 2026-05-04) と GitHub Blog 紹介記事 (2026-05-06)

@@ -1,0 +1,30 @@
+# Zenn 公開コンテンツの方針 (dr-to-zenn skill と analytics agent との契約点)
+# - dr-to-zenn の Step 3 (front matter) と Step 4 (評価ループ) で読み込まれる
+# - analytics agent (週次バッチ) が反応データから topics/emoji/閾値を更新する想定
+# - スキーマと不変条件は notes/zenn/README.md を参照
+# 更新時は updated_at と updated_by を必ず書き換えること
+
+version: 1
+updated_at: 2026-05-09
+updated_by: default
+
+# Zenn topics 選定方針
+topics:
+  preferred: []                 # 過去 like/PV 上位 topic (analytics で埋める)
+  avoid: []                     # 反応の薄い汎用ワード
+  max_count: 5
+  min_count: 2
+  case: CamelCase               # 不変。Zenn 規約
+
+# 評価ループの閾値
+evaluation:
+  pass_total: 64                # /80。analytics で 60〜68 で調整可
+  min_per_axis: 0               # 各軸の最低点を上げる場合に使用
+  max_iterations: 3
+
+# emoji 方針
+emoji:
+  preferred_categories: []      # 例: ["tools", "abstract"]
+  avoid: []                     # 例: ["🔥", "💯"]
+
+analytics_notes: []

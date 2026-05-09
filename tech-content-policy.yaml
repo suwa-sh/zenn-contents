@@ -1,0 +1,46 @@
+# Zenn 技術調査記事の方針 (tech-dr-to-zenn skill と analytics agent との契約点)
+# - tech-dr-to-zenn の Step 3 (title/type 決定) / Step 4 (評価ループ) / Step 4.5 (Codex レビュー) で参照
+# - analytics agent (週次バッチ) が反応データから title/topics/閾値を更新する想定
+# - スキーマと不変条件は notes/zenn/README.md を参照
+# 更新時は updated_at と updated_by を必ず書き換えること
+
+version: 1
+updated_at: 2026-05-09
+updated_by: default
+
+# タイトル方針 (Step 3)
+title:
+  max_chars: 70                       # 不変 (Zenn の制限)
+  default_prefix: "技術調査 - "
+  preferred_patterns:                 # analytics で増やしていく型
+    - "技術調査 - {target}"
+  avoid_patterns: []                  # 反応低かった型
+
+# topics (CamelCase, max 5)
+topics:
+  preferred: []                       # 過去 like/PV 上位 (analytics で埋める)
+  avoid: []
+  max_count: 5
+  min_count: 2
+  case: CamelCase
+
+# type 振分け基準 (Step 3)
+type_routing:
+  default: tech                       # tech = 事実/構造/仕様
+  idea_signals:                       # 自然文ヒントでなくキーワード化
+    - "実践ガイド"
+    - "落とし穴"
+    - "比較"
+    - "考察"
+
+# 評価ループ
+evaluation:
+  pass_total: 64                      # /80
+  max_iterations: 3
+  codex_review_required: true         # Step 4.5 を ON/OFF
+  codex_review_focus:
+    - "統計値の正確性"
+    - "用語の整合"
+    - "他記事との差別化"
+
+analytics_notes: []
