@@ -3,8 +3,7 @@ title: "ホスト型 LLM のサイレント更新を CI/CD でゲートする - 
 emoji: "🚦"
 type: "idea"
 topics: ["LLM", "LLMOps", "MLOps", "GitHubActions", "テスト"]
-published: true
-published_at: 2026-05-05
+published: false
 ---
 
 ## ■概要
