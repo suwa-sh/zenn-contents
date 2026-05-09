@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (11)
+## Articles: 下書き (12)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-05-09 | [🛡️ OpenAI Codex を社内で安全に動かす — sandbox / Guardian / 監査ログのガードレール設計と反証](articles/codex-safe-operation_20260509.md) | Codex, OpenAI, Security, MCP, Sandbox |
 | 2026-05-09 | [🧰 技術調査 - DADL (Dunkel API Description Language)](articles/dadl_20260509.md) | MCP, LLM, DADL, Anthropic, OpenFGA |
+| 2026-05-08 | [🧪 非決定的な AI エージェントの検証 - PTA + Dominator で Trust Layer を構築する](articles/validating-agentic-behavior_20260508.md) | LLM, AIAgent, Testing, CICD, Evaluation |
 | 2026-05-07 | [🛡️ 技術調査 - Google Cloud Agent Stack](articles/agent-iam-runtime-defense_20260507.md) | GoogleCloud, IAM, AIエージェント, SPIFFE, Security |
 | 2026-05-07 | [☁️ 技術調査 - AWS MCP Server](articles/aws-mcp-server_20260507.md) | AWS, MCP, IAM, AIエージェント, CloudTrail |
 | 2026-05-06 | [🖥️ 技術調査 - Amazon WorkSpaces for AI Agents (preview)](articles/workspaces-for-ai-agents_20260506.md) | AWS, WorkSpaces, AppStream, MCP, AIAgent |
@@ -23,11 +24,10 @@
 | 2025-05-30 | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 
-## Articles: 公開済み (129)
+## Articles: 公開済み (128)
 
 | date | title | topics |
 |------|-------|--------|
-| 2026-05-12 | [🧪 非決定的な AI エージェントの検証 - PTA + Dominator で Trust Layer を構築する](articles/validating-agentic-behavior_20260508.md) | LLM, AIAgent, Testing, CICD, Evaluation |
 | 2026-05-08 | [☁️ 技術調査 - Cloudflare Dynamic Workflows](articles/cloudflare-dynamic-workflows_20260503.md) | Cloudflare, Workflows, DurableExecution, Multitenant, AIAgent |
 | 2026-05-02 | [🎯 技術調査 - Codex /goal](articles/codex_goal_20260502.md) | Codex, OpenAI, AICoding, Rust, SQLite |
 | 2026-04-27 | [🛡️ 技術調査 - open-appsec](articles/open-appsec_20260427.md) | openappsec, WAF, MachineLearning, Security, Kubernetes |
