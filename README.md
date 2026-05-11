@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (13)
+## Articles: 下書き (14)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-05-11 | [🔍 技術調査 - Kubernetes-RAG-Agent-Benchmark](articles/kubernetes-rag-agent-benchmark_20260511.md) | Kubernetes, RAG, AIAgent, Benchmark, CNCF |
 | 2026-05-10 | [🛑 技術調査 - Stop Authority 設計 (AIエージェントの停止権限)](articles/stop-authority-design_20260510.md) | AIAgent, Governance, LangGraph, ClaudeCode, Compliance |
 | 2026-05-09 | [🛡️ OpenAI Codex を社内で安全に動かす — sandbox / Guardian / 監査ログのガードレール設計と反証](articles/codex-safe-operation_20260509.md) | Codex, OpenAI, Security, MCP, Sandbox |
 | 2026-05-09 | [🧰 技術調査 - DADL (Dunkel API Description Language)](articles/dadl_20260509.md) | MCP, LLM, DADL, Anthropic, OpenFGA |
