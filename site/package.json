@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && pagefind --site dist",
+    "gen-ogp": "node scripts/gen-ogp.mjs",
+    "build": "node scripts/gen-ogp.mjs && astro build && pagefind --site dist",
     "preview": "astro preview"
   },
   "dependencies": {
@@ -16,6 +17,9 @@
     "zenn-markdown-html": "^0.1.158"
   },
   "devDependencies": {
-    "pagefind": "^1.1.1"
+    "@resvg/resvg-js": "^2.6.2",
+    "pagefind": "^1.1.1",
+    "satori": "^0.26.0",
+    "satori-html": "^0.3.2"
   }
 }
