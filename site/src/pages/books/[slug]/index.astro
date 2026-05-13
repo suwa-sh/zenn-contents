@@ -10,7 +10,7 @@ export async function getStaticPaths() {
 const { book } = Astro.props;
 const base = import.meta.env.BASE_URL;
 ---
-<Layout title={book.title}>
+<Layout title={book.title} description={book.summary}>
   <p style="color:var(--muted)"><a href={`${base}books/`}>← Books</a></p>
 
   {!book.published && <p class="draft-badge">⚠️ 非公開（zenn 未公開）</p>}

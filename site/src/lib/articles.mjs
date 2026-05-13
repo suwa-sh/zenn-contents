@@ -21,6 +21,15 @@ export function loadArticles() {
       const slug = f.replace(/\.md$/, '');
       const { html, needsClientMermaid, toc } = renderMarkdown(content);
       const publishedAt = normalizeDate(data.published_at) || extractDateFromSlug(slug);
+      const description = content
+        .replace(/^---[\s\S]*?---/, '')
+        .replace(/```[\s\S]*?```/g, '')
+        .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+        .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+        .replace(/[#>*_`~|\-]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 140);
       return {
         slug,
         title: data.title ?? slug,
@@ -29,6 +38,7 @@ export function loadArticles() {
         topics: data.topics || [],
         published: data.published !== false,
         publishedAt,
+        description,
         html,
         needsClientMermaid,
         toc,

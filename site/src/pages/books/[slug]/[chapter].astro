@@ -22,7 +22,7 @@ export async function getStaticPaths() {
 const { book, chapter, prev, next } = Astro.props;
 const base = import.meta.env.BASE_URL;
 ---
-<Layout title={`${chapter.title} - ${book.title}`} wide>
+<Layout title={`${chapter.title} - ${book.title}`} description={book.summary} wide>
   <div class="article-layout">
     <div class="article-main" data-pagefind-body>
       <p style="color:var(--muted)">
