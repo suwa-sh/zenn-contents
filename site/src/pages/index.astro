@@ -7,7 +7,7 @@ const published = articles.filter((a) => a.published);
 const drafts = articles.filter((a) => !a.published);
 const base = import.meta.env.BASE_URL;
 ---
-<Layout title="zenn-contents">
+<Layout title="suwa-sh / zenn-contents">
   <h1>Articles</h1>
   <p style="color:var(--muted)">
     zenn 用 Markdown を GitHub Pages で公開しているミラーです。zenn 本体の rate limit を回避するため、非公開記事も含めて全件公開しています。
@@ -16,17 +16,6 @@ const base = import.meta.env.BASE_URL;
     <a href={`${base}books/`}>📚 Books</a> ·
     <a href={`${base}tags/`}>🏷️ Topics</a>
   </p>
-
-  <h2 class="section-title">公開済み ({published.length})</h2>
-  <ul class="article-list">
-    {published.map((a) => (
-      <li>
-        <span class="emoji">{a.emoji}</span>
-        <a href={`${base}articles/${a.slug}/`}>{a.title}</a>
-        {a.publishedAt && <span class="date">{a.publishedAt}</span>}
-      </li>
-    ))}
-  </ul>
 
   {drafts.length > 0 && (
     <>
@@ -42,4 +31,15 @@ const base = import.meta.env.BASE_URL;
       </ul>
     </>
   )}
+
+  <h2 class="section-title">公開済み ({published.length})</h2>
+  <ul class="article-list">
+    {published.map((a) => (
+      <li>
+        <span class="emoji">{a.emoji}</span>
+        <a href={`${base}articles/${a.slug}/`}>{a.title}</a>
+        {a.publishedAt && <span class="date">{a.publishedAt}</span>}
+      </li>
+    ))}
+  </ul>
 </Layout>

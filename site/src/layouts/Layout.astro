@@ -1,7 +1,9 @@
 ---
 import 'zenn-content-css';
-const { title, wide = false } = Astro.props;
+const { title, wide = false, description = 'zenn 用 Markdown を GitHub Pages で公開しているミラーサイト' } = Astro.props;
 const base = import.meta.env.BASE_URL;
+const siteUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : Astro.url.pathname;
+const ogImage = new URL(`${base}og-image.png`, Astro.site ?? 'https://suwa-sh.github.io').toString();
 ---
 <!doctype html>
 <html lang="ja">
@@ -9,6 +11,19 @@ const base = import.meta.env.BASE_URL;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href={`${base}favicon.png`} />
+    <link rel="apple-touch-icon" href={`${base}favicon.png`} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="suwa-sh / zenn-contents" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-6ELSGHB3W7"></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
@@ -298,7 +313,7 @@ const base = import.meta.env.BASE_URL;
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href={base}>📚 zenn-contents</a>
+      <a class="brand" href={base}>📚 suwa-sh / zenn-contents</a>
       <nav>
         <a href={`${base}books/`}>Books</a>
         <a href={`${base}tags/`}>Topics</a>
