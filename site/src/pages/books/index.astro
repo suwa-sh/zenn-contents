@@ -1,0 +1,53 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { loadBooks } from '../../lib/books.mjs';
+
+const books = loadBooks();
+const published = books.filter((b) => b.published);
+const drafts = books.filter((b) => !b.published);
+const base = import.meta.env.BASE_URL;
+---
+<Layout title="Books">
+  <p style="color:var(--muted)"><a href={base}>← 一覧に戻る</a></p>
+  <h1>Books</h1>
+  <p style="color:var(--muted)">{books.length} 冊</p>
+
+  <h2 class="section-title">公開済み ({published.length})</h2>
+  <ul class="book-list">
+    {published.map((b) => (
+      <li>
+        {b.cover && <a href={`${base}books/${b.slug}/`}><img src={b.cover} alt="" loading="lazy" /></a>}
+        <div class="book-info">
+          <a class="book-title" href={`${base}books/${b.slug}/`}>{b.title}</a>
+          <p class="book-summary">{b.summary}</p>
+          <div class="book-meta">
+            {b.publishedAt && <span class="date">{b.publishedAt}</span>}
+            <span>{b.chapters.length} 章</span>
+            {b.price > 0 && <span>¥{b.price}</span>}
+          </div>
+        </div>
+      </li>
+    ))}
+  </ul>
+
+  {drafts.length > 0 && (
+    <>
+      <h2 class="section-title">非公開 ({drafts.length})</h2>
+      <ul class="book-list">
+        {drafts.map((b) => (
+          <li>
+            {b.cover && <a href={`${base}books/${b.slug}/`}><img src={b.cover} alt="" loading="lazy" /></a>}
+            <div class="book-info">
+              <a class="book-title" href={`${base}books/${b.slug}/`}>{b.title}</a>
+              <p class="book-summary">{b.summary}</p>
+              <div class="book-meta">
+                {b.publishedAt && <span class="date">{b.publishedAt}</span>}
+                <span>{b.chapters.length} 章</span>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </>
+  )}
+</Layout>

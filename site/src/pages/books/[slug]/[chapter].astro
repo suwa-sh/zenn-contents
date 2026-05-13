@@ -1,0 +1,72 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { loadBooks } from '../../../lib/books.mjs';
+
+export async function getStaticPaths() {
+  const books = loadBooks();
+  const paths = [];
+  for (const book of books) {
+    for (let i = 0; i < book.chapters.length; i++) {
+      const chapter = book.chapters[i];
+      const prev = book.chapters[i - 1] || null;
+      const next = book.chapters[i + 1] || null;
+      paths.push({
+        params: { slug: book.slug, chapter: chapter.slug },
+        props: { book, chapter, prev, next },
+      });
+    }
+  }
+  return paths;
+}
+
+const { book, chapter, prev, next } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+<Layout title={`${chapter.title} - ${book.title}`} wide>
+  <div class="article-layout">
+    <div class="article-main" data-pagefind-body>
+      <p style="color:var(--muted)">
+        <a href={`${base}books/${book.slug}/`}>← {book.title}</a>
+      </p>
+      {!book.published && <p class="draft-badge">⚠️ 非公開（zenn 未公開）</p>}
+      <h1>{chapter.title}</h1>
+      <article class="znc" set:html={chapter.html}></article>
+
+      <nav class="chapter-nav">
+        {prev ? (
+          <a href={`${base}books/${book.slug}/${prev.slug}/`} class="prev">
+            ← {prev.title}
+          </a>
+        ) : <span />}
+        {next ? (
+          <a href={`${base}books/${book.slug}/${next.slug}/`} class="next">
+            {next.title} →
+          </a>
+        ) : <span />}
+      </nav>
+    </div>
+
+    {chapter.toc.length > 0 && (
+      <aside class="toc">
+        <div class="toc-inner">
+          <p class="toc-title">目次</p>
+          <ul>
+            {chapter.toc.map((h) => (
+              <li class={`toc-l${h.level}`}>
+                <a href={`#${h.id}`}>{h.text}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    )}
+  </div>
+
+  {chapter.needsClientMermaid && (
+    <script type="module" is:inline>
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: false, theme: 'default', securityLevel: 'loose' });
+      await mermaid.run({ querySelector: 'pre.mermaid' });
+    </script>
+  )}
+</Layout>

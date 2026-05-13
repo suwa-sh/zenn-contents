@@ -1,0 +1,54 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { loadArticles } from '../../lib/articles.mjs';
+
+export async function getStaticPaths() {
+  const articles = loadArticles();
+  return articles.map((a) => ({ params: { slug: a.slug }, props: { article: a } }));
+}
+
+const { article } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+<Layout title={article.title} wide>
+  <div class="article-layout">
+    <div class="article-main" data-pagefind-body>
+      {!article.published && <p class="draft-badge">⚠️ 非公開（zenn 未公開）</p>}
+      <h1>{article.emoji} {article.title}</h1>
+      <div class="article-meta">
+        {article.publishedAt && <span>{article.publishedAt}</span>}
+        {article.topics?.length > 0 && (
+          <ul class="topic-list">
+            {article.topics.map((t) => (
+              <li><a href={`${base}tags/${encodeURIComponent(t)}/`}>#{t}</a></li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <article class="znc" set:html={article.html}></article>
+    </div>
+
+    {article.toc.length > 0 && (
+      <aside class="toc">
+        <div class="toc-inner">
+          <p class="toc-title">目次</p>
+          <ul>
+            {article.toc.map((h) => (
+              <li class={`toc-l${h.level}`}>
+                <a href={`#${h.id}`}>{h.text}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    )}
+  </div>
+
+  {article.needsClientMermaid && (
+    <script type="module" is:inline>
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: false, theme: 'default', securityLevel: 'loose' });
+      await mermaid.run({ querySelector: 'pre.mermaid' });
+    </script>
+  )}
+</Layout>

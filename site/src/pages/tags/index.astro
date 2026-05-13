@@ -1,0 +1,35 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { loadArticles } from '../../lib/articles.mjs';
+import { loadBooks } from '../../lib/books.mjs';
+
+const articles = loadArticles();
+const books = loadBooks();
+const counts = new Map();
+for (const a of articles) {
+  for (const t of a.topics || []) {
+    counts.set(t, (counts.get(t) || 0) + 1);
+  }
+}
+for (const b of books) {
+  for (const t of b.topics || []) {
+    counts.set(t, (counts.get(t) || 0) + 1);
+  }
+}
+const tags = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+const base = import.meta.env.BASE_URL;
+---
+<Layout title="タグ一覧">
+  <p style="color:var(--muted)"><a href={base}>← 一覧に戻る</a></p>
+  <h1>タグ一覧</h1>
+  <p style="color:var(--muted)">{tags.length} タグ</p>
+  <ul class="tag-cloud">
+    {tags.map(([t, n]) => (
+      <li>
+        <a href={`${base}tags/${encodeURIComponent(t)}/`}>
+          #{t} <span class="count">{n}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</Layout>

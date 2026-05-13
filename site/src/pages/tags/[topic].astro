@@ -1,0 +1,44 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { loadArticles } from '../../lib/articles.mjs';
+import { loadBooks } from '../../lib/books.mjs';
+
+export async function getStaticPaths() {
+  const articles = loadArticles();
+  const books = loadBooks();
+  const tagMap = new Map();
+  for (const a of articles) {
+    for (const t of a.topics || []) {
+      if (!tagMap.has(t)) tagMap.set(t, []);
+      tagMap.get(t).push({ kind: 'article', ...a });
+    }
+  }
+  for (const b of books) {
+    for (const t of b.topics || []) {
+      if (!tagMap.has(t)) tagMap.set(t, []);
+      tagMap.get(t).push({ kind: 'book', slug: b.slug, title: b.title, emoji: '📚', publishedAt: b.publishedAt });
+    }
+  }
+  return [...tagMap.entries()].map(([topic, items]) => ({
+    params: { topic },
+    props: { topic, items },
+  }));
+}
+
+const { topic, items } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+<Layout title={`#${topic} のArticles`}>
+  <p style="color:var(--muted)"><a href={base}>← 一覧に戻る</a></p>
+  <h1>#{topic}</h1>
+  <p style="color:var(--muted)">{items.length} 件</p>
+  <ul class="article-list">
+    {items.map((a) => (
+      <li>
+        <span class="emoji">{a.emoji}</span>
+        <a href={a.kind === 'book' ? `${base}books/${a.slug}/` : `${base}articles/${a.slug}/`}>{a.title}</a>
+        {a.publishedAt && <span class="date">{a.publishedAt}</span>}
+      </li>
+    ))}
+  </ul>
+</Layout>
