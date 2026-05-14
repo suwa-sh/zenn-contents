@@ -3,7 +3,8 @@ title: "技術調査 - Claude Code /goal コマンド"
 emoji: "🎯"
 type: "tech"
 topics: ["ClaudeCode", "Anthropic", "AIAgent", "Automation", "DevTools"]
-published: false
+published: true
+published_at: 2026-05-15
 ---
 
 > 調査日: 2026-05-14 / 対象バージョン: Claude Code v2.1.139 (GitHub Releases 表示: 2026-05-11 UTC / JST: 2026-05-12)

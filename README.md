@@ -7,11 +7,10 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (19)
+## Articles: 下書き (18)
 
 | create date | title | topics |
 |-------------|-------|--------|
-| 2026-05-14 | [🎯 技術調査 - Claude Code /goal コマンド](articles/claude-code-goal-command_20260514.md) | ClaudeCode, Anthropic, AIAgent, Automation, DevTools |
 | 2026-05-14 | [🔌 技術調査 - Codex App Server](articles/codex-app-server_20260514.md) | Codex, OpenAI, JSONRPC, LLM, VSCode |
 | 2026-05-12 | [🏢 技術調査 - OpenAI Deployment Company](articles/openai-deployment-company_20260512.md) | OpenAI, EnterpriseAI, ForwardDeployedEngineer, Palantir, AIOps |
 | 2026-05-12 | [🛡️ 技術調査 - Unsafe by Flow / MCP-BiFlow](articles/unsafe-by-flow-mcp_20260512.md) | MCP, Security, StaticAnalysis, TaintAnalysis, LLM |
@@ -31,10 +30,11 @@
 | 2025-05-30 | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 
-## Articles: 公開済み (129)
+## Articles: 公開済み (130)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-05-15 | [🎯 技術調査 - Claude Code /goal コマンド](articles/claude-code-goal-command_20260514.md) | ClaudeCode, Anthropic, AIAgent, Automation, DevTools |
 | 2026-05-13 | [🧠 技術調査 - Personal AI Infrastructure (PAI)](articles/pai_20260513.md) | PAI, ClaudeCode, AIAgent, PersonalAI, LifeOS |
 | 2026-05-08 | [☁️ 技術調査 - Cloudflare Dynamic Workflows](articles/cloudflare-dynamic-workflows_20260503.md) | Cloudflare, Workflows, DurableExecution, Multitenant, AIAgent |
 | 2026-05-02 | [🎯 技術調査 - Codex /goal](articles/codex_goal_20260502.md) | Codex, OpenAI, AICoding, Rust, SQLite |
