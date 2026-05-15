@@ -7,7 +7,9 @@ published: false
 ---
 
 
-> 対象論文: Zhong, H., & Zhu, S. (2026). *AI Harness Engineering: A Runtime Substrate for Foundation-Model Software Agents*. arXiv:2605.13357v1 (2026-05-13, cs.SE, CC BY 4.0, **preprint・未査読**)
+:::message alert
+**本記事は arXiv の preprint を解説したものです**。Zhong, H., & Zhu, S. (2026). *AI Harness Engineering: A Runtime Substrate for Foundation-Model Software Agents*. arXiv:2605.13357v1 (2026-05-13 投稿、cs.SE、CC BY 4.0、**未査読・被引用ゼロ** [本記事執筆時点])。実証は単一の controlled task のみで、population-level の数値は報告されていません。
+:::
 
 調査日: 2026-05-15
 
