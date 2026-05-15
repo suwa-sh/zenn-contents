@@ -7,13 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (21)
+## Articles: 下書き (22)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-05-15 | [🪢 技術調査 - AI Harness Engineering](articles/ai-harness-engineering_20260515.md) | AIエージェント, ClaudeCode, Codex, Observability, SoftwareEngineering |
 | 2026-05-15 | [📱 技術調査 - Codex 非同期開発基盤 (Mobile / Remote SSH / Hooks / PAT)](articles/codex-async-dev-platform_20260515.md) | OpenAI, Codex, AIAgent, DevOps, Security |
 | 2026-05-15 | [🛡️ 技術調査 - Codex-Windows-Sandbox](articles/codex-windows-sandbox_20260515.md) | OpenAI, Codex, Windows, Sandbox, Security |
+| 2026-05-15 | [🧰 技術調査 - SkillOps](articles/skillops_20260515.md) | SkillOps, LLMAgent, AgentSkills, MLOps, TechnicalDebt |
 | 2026-05-14 | [🔌 技術調査 - Codex App Server](articles/codex-app-server_20260514.md) | Codex, OpenAI, JSONRPC, LLM, VSCode |
 | 2026-05-12 | [🏢 技術調査 - OpenAI Deployment Company](articles/openai-deployment-company_20260512.md) | OpenAI, EnterpriseAI, ForwardDeployedEngineer, Palantir, AIOps |
 | 2026-05-12 | [🛡️ 技術調査 - Unsafe by Flow / MCP-BiFlow](articles/unsafe-by-flow-mcp_20260512.md) | MCP, Security, StaticAnalysis, TaintAnalysis, LLM |
