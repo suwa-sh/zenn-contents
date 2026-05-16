@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (22)
+## Articles: 下書き (23)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-05-16 | [🛰️ 技術調査 - Codex Work from anywhere](articles/codex-work-from-anywhere_20260516.md) | Codex, OpenAI, DevOps, Security, AI |
 | 2026-05-15 | [🪢 技術調査 - AI Harness Engineering](articles/ai-harness-engineering_20260515.md) | AIエージェント, ClaudeCode, Codex, Observability, SoftwareEngineering |
 | 2026-05-15 | [📱 技術調査 - Codex 非同期開発基盤 (Mobile / Remote SSH / Hooks / PAT)](articles/codex-async-dev-platform_20260515.md) | OpenAI, Codex, AIAgent, DevOps, Security |
 | 2026-05-15 | [🛡️ 技術調査 - Codex-Windows-Sandbox](articles/codex-windows-sandbox_20260515.md) | OpenAI, Codex, Windows, Sandbox, Security |
