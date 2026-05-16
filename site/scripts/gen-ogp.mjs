@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
@@ -12,6 +13,7 @@ const REPO_ROOT = path.resolve(SITE_DIR, '..');
 const OUT_DIR = path.resolve(SITE_DIR, 'public/og');
 const FAVICON = path.resolve(SITE_DIR, 'public/favicon.png');
 const SELF = fileURLToPath(import.meta.url);
+const MANIFEST = path.resolve(OUT_DIR, '.manifest.json');
 
 const FONT_REGULAR_URL =
   'https://github.com/notofonts/noto-cjk/raw/main/Sans/OTF/Japanese/NotoSansCJKjp-Regular.otf';
@@ -140,7 +142,7 @@ async function main() {
 
   const articles = loadArticles();
   const books = loadBooks();
-  const selfMtime = fs.statSync(SELF).mtimeMs;
+  const selfHash = crypto.createHash('sha256').update(fs.readFileSync(SELF)).digest('hex');
 
   const targets = [
     ...articles.map((a) => ({
@@ -157,26 +159,34 @@ async function main() {
     }),
   ];
 
+  const prevManifest = fs.existsSync(MANIFEST)
+    ? JSON.parse(fs.readFileSync(MANIFEST, 'utf8'))
+    : {};
+  const nextManifest = {};
+
   let generated = 0;
   let skipped = 0;
   for (const t of targets) {
     const outPath = path.join(OUT_DIR, `${t.key}.png`);
-    if (fs.existsSync(outPath)) {
-      const outMtime = fs.statSync(outPath).mtimeMs;
-      const srcMtime = Math.max(
-        selfMtime,
-        ...t.sources.filter((p) => fs.existsSync(p)).map((p) => fs.statSync(p).mtimeMs),
-      );
-      if (outMtime >= srcMtime) {
-        skipped++;
-        continue;
-      }
+    const h = crypto.createHash('sha256');
+    h.update(selfHash);
+    h.update(t.title);
+    for (const s of t.sources) {
+      if (fs.existsSync(s)) h.update(fs.readFileSync(s));
+    }
+    const hash = h.digest('hex');
+    nextManifest[t.key] = hash;
+
+    if (fs.existsSync(outPath) && prevManifest[t.key] === hash) {
+      skipped++;
+      continue;
     }
     const png = await renderPng({ title: t.title, fonts, avatar });
     fs.writeFileSync(outPath, png);
     console.log(`[ogp] ${path.relative(SITE_DIR, outPath)}`);
     generated++;
   }
+  fs.writeFileSync(MANIFEST, JSON.stringify(nextManifest, null, 2));
   console.log(`[ogp] generated ${generated}, skipped ${skipped} (up-to-date)`);
 }
 
