@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (26)
+## Articles: 下書き (27)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-05-18 | [📊 技術調査 - OfficeQA Pro / 企業文書エージェント評価ハーネス](articles/officeqa-pro-eval-harness_20260518.md) | OfficeQA, LLMOps, Databricks, OpenAI, RAG |
 | 2026-05-17 | [🦀 技術調査 - agentgateway / kgateway による AI Gateway 拡張](articles/agentgateway-kgateway-rust_20260517.md) | AgentGateway, Kgateway, Rust, Envoy, CNCF |
 | 2026-05-17 | [📑 技術調査 - OpenAI×Databricks 企業文書エージェント評価ハーネス設計](articles/openai-databricks-document-agent_20260517.md) | OpenAI, Databricks, LLMOps, DocumentAI, Evaluation |
 | 2026-05-16 | [💡 技術調査 - Bedrock Advanced Prompt Optimization & Migration](articles/bedrock-prompt-optimization-migration_20260516.md) | AmazonBedrock, PromptEngineering, LLMOps, AWS, PromptOps |
