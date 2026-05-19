@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (28)
+## Articles: 下書き (27)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -17,7 +17,6 @@
 | 2026-05-17 | [📑 技術調査 - OpenAI×Databricks 企業文書エージェント評価ハーネス設計](articles/openai-databricks-document-agent_20260517.md) | OpenAI, Databricks, LLMOps, DocumentAI, Evaluation |
 | 2026-05-16 | [💡 技術調査 - Bedrock Advanced Prompt Optimization & Migration](articles/bedrock-prompt-optimization-migration_20260516.md) | AmazonBedrock, PromptEngineering, LLMOps, AWS, PromptOps |
 | 2026-05-16 | [🛰️ 技術調査 - Codex Work from anywhere](articles/codex-work-from-anywhere_20260516.md) | Codex, OpenAI, DevOps, Security, AI |
-| 2026-05-15 | [🪢 技術調査 - AI Harness Engineering](articles/ai-harness-engineering_20260515.md) | AIエージェント, ClaudeCode, Codex, Observability, SoftwareEngineering |
 | 2026-05-15 | [📱 技術調査 - Codex 非同期開発基盤 (Mobile / Remote SSH / Hooks / PAT)](articles/codex-async-dev-platform_20260515.md) | OpenAI, Codex, AIAgent, DevOps, Security |
 | 2026-05-15 | [🛡️ 技術調査 - Codex-Windows-Sandbox](articles/codex-windows-sandbox_20260515.md) | OpenAI, Codex, Windows, Sandbox, Security |
 | 2026-05-15 | [🧰 技術調査 - SkillOps](articles/skillops_20260515.md) | SkillOps, LLMAgent, AgentSkills, MLOps, TechnicalDebt |
@@ -40,10 +39,11 @@
 | 2025-05-30 | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 
-## Articles: 公開済み (130)
+## Articles: 公開済み (131)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-05-19 | [🪢 技術調査 - AI Harness Engineering](articles/ai-harness-engineering_20260515.md) | AIエージェント, ClaudeCode, Codex, Observability, SoftwareEngineering |
 | 2026-05-15 | [🎯 技術調査 - Claude Code /goal コマンド](articles/claude-code-goal-command_20260514.md) | ClaudeCode, Anthropic, AIAgent, Automation, DevTools |
 | 2026-05-13 | [🧠 技術調査 - Personal AI Infrastructure (PAI)](articles/pai_20260513.md) | PAI, ClaudeCode, AIAgent, PersonalAI, LifeOS |
 | 2026-05-08 | [☁️ 技術調査 - Cloudflare Dynamic Workflows](articles/cloudflare-dynamic-workflows_20260503.md) | Cloudflare, Workflows, DurableExecution, Multitenant, AIAgent |
