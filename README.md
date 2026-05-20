@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (28)
+## Articles: 下書き (29)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-05-20 | [🧱 技術調査 - dbt の Semantic Layer × MCP × Agent Skills 3層スタック](articles/dbt-semantic-layer-mcp-agent-skills_20260520.md) | dbt, MCP, AgentSkills, SemanticLayer, LLMOps |
 | 2026-05-20 | [🏛️ 技術調査 - Reversa](articles/reversa_20260520.md) | Reversa, LegacyModernization, AIAgent, ReverseEngineering, COBOL |
 | 2026-05-19 | [🧭 技術調査 - Google Cloud の Agentic Data Layer 5 シナリオ](articles/agentic-data-layer-gcp_20260519.md) | GoogleCloud, BigQuery, MCP, AgenticAI, LLMOps |
 | 2026-05-18 | [📊 技術調査 - OfficeQA Pro / 企業文書エージェント評価ハーネス](articles/officeqa-pro-eval-harness_20260518.md) | OfficeQA, LLMOps, Databricks, OpenAI, RAG |
