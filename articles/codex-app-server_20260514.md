@@ -3,7 +3,8 @@ title: "技術調査 - Codex App Server"
 emoji: "🔌"
 type: "tech"
 topics: ["Codex", "OpenAI", "JSONRPC", "LLM", "VSCode"]
-published: false
+published: true
+published_at: 2026-05-21
 ---
 
 > 検証日: 2026-05-14 / 主要ソース: `codex-rs/app-server` README (main)
