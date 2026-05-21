@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (29)
+## Articles: 下書き (30)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-05-21 | [🛡️ 技術調査 - GitHub 内部リポジトリ不正アクセス事案 (2026-05)](articles/github-internal-repo-breach_20260521.md) | GitHub, Security, SupplyChain, VSCode, DevSecOps |
 | 2026-05-21 | [🛡️ 技術調査 - Prempti](articles/prempti_20260521.md) | Prempti, Falco, CNCF, ClaudeCode, Security |
 | 2026-05-20 | [🧱 技術調査 - dbt の Semantic Layer × MCP × Agent Skills 3層スタック](articles/dbt-semantic-layer-mcp-agent-skills_20260520.md) | dbt, MCP, AgentSkills, SemanticLayer, LLMOps |
 | 2026-05-20 | [🏛️ 技術調査 - Reversa](articles/reversa_20260520.md) | Reversa, LegacyModernization, AIAgent, ReverseEngineering, COBOL |
