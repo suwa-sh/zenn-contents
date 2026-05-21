@@ -5,8 +5,8 @@
 # 更新時は updated_at と updated_by を必ず書き換えること
 
 version: 1
-updated_at: 2026-05-09
-updated_by: default
+updated_at: 2026-05-21
+updated_by: tech-dr-to-zenn-learning
 
 # タイトル方針 (Step 3)
 title:
@@ -23,6 +23,10 @@ topics:
   max_count: 5
   min_count: 2
   case: CamelCase
+  # preferred が空のときの時流シグナル由来タグの扱い
+  # enabled: floor(max_count / 2) 件まで許可 (analytics 未稼働時の救済)
+  # strict : 厳格モード (時流由来 ≤ preferred 由来、preferred 空なら時流由来も 0)
+  trends_when_preferred_empty: enabled
 
 # type 振分け基準 (Step 3)
 type_routing:
