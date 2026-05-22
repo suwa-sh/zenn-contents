@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (33)
+## Articles: 下書き (34)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-05-22 | [🛡️ 技術調査 - Cloudflare CASB × Claude Enterprise 統合](articles/cloudflare-casb-claude-enterprise_20260522.md) | Cloudflare, Anthropic, Claude, CASB, AIGovernance |
+| 2026-05-22 | [📦 技術調査 - GKE Agent Sandbox](articles/gke-agent-sandbox_20260522.md) | GKE, Kubernetes, GoogleCloud, gVisor, AIエージェント |
 | 2026-05-22 | [📡 技術調査 - OpenTelemetry CNCF Graduated](articles/opentelemetry-cncf-graduated_20260522.md) | OpenTelemetry, CNCF, Observability, AIObservability, LLMOps |
 | 2026-05-21 | [🥃 技術調査 - distillery](articles/distillery_20260521.md) | ClaudeCode, Claude, Distillery, RDRA, USDM |
 | 2026-05-21 | [🛡️ 技術調査 - GitHub 内部リポジトリ不正アクセス事案 (2026-05)](articles/github-internal-repo-breach_20260521.md) | GitHub, Security, SupplyChain, VSCode, DevSecOps |

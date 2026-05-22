@@ -28,7 +28,7 @@ Cloudflare は 2026-05-21、自社の API ベース CASB (Cloud Access Security 
 | API ベース | `https://api.anthropic.com/v1/compliance/*` |
 | レート制限 | 600 req/min / parent organization (全 key・全 scope 共有) |
 | Activity Feed 保持期間 | 6 年 |
-| データレジデンシー | first-party は US と global のみ。EU/JP は Bedrock/Vertex 経由 |
+| データレジデンシー | first-party の `inference_geo` は `global` / `us`。workspace geo (at-rest) は `us` のみ。EU/JP は Bedrock/Vertex 経由 |
 | Findings 数 | 16 種 (API key hygiene 1 + Access security 6 + DLP 9) |
 
 ### 構造的限界 (採用前に必ず認識する事項)
@@ -1190,7 +1190,7 @@ curl --fail-with-body -sS -OJ \
 gen_file_id="claude_gen_file_01TbR8wAcCeFhJkLnPqStUvX"
 curl --fail-with-body -sS -OJ \
   --header "x-api-key: $ANTHROPIC_COMPLIANCE_ACCESS_KEY" \
-  "https://api.anthropic.com/v1/compliance/apps/chats/generated_files/$gen_file_id/download"
+  "https://api.anthropic.com/v1/compliance/apps/chats/generated-files/$gen_file_id/content"
 
 # Artifact コンテンツ (claude_artifact_version_* ID を使用)
 artifact_version_id="claude_artifact_version_01KmNpQrSt3UvWxYz5AbCdEfG"
@@ -1831,7 +1831,7 @@ Layer 1: Cloudflare Gateway (SWG) による DNS/HTTP 観測
 
 Layer 2: Tenant Restriction ヘッダ挿入 (Cloudflare Gateway / Zscaler / Netskope)
    → Cloudflare Gateway の HTTP policy で claude.ai 宛リクエストに
-     `anthropic-organization-id: <org-id>` ヘッダを強制付与
+     Tenant Restriction 用のヘッダを強制付与 (具体ヘッダ名は Anthropic Help Center の Tenant Restrictions ページを参照)
    → org-id が合わないリクエストは Anthropic 側でエラー (個人アカウントでのアクセスをブロック)
 
 Layer 3: IdP (Okta/Entra) アプリカタログでの Shadow App 検出
@@ -2136,9 +2136,7 @@ Finding 受信
 **症状**: Claude Code CLI や Cowork (エージェント実行) の操作が
 Compliance API にも CASB Findings にも現れない。
 
-**原因**: Anthropic が明示する構造的設計上の制約。
-「Cowork activity is not captured in Audit Logs, the Compliance API, or Data Exports」
-(General Analysis / Anthropic 公式 doc 由来)。
+**原因**: 第三者の解説では「Cowork のエージェントセッションは Audit Logs / Compliance API / Data Exports に含まれない」と報告されています (General Analysis / MintMCP 解説。Anthropic 公式 docs での明示は本記事執筆時点では未確認)。Cowork の role 有効化自体は CASB の Finding ルール「Claude Cowork enabled for role」で検出されます。
 
 ローカル実行型エージェントの会話ログはユーザーのラップトップ上にのみ存在するため、
 クラウド側の Compliance API では取得できない。
