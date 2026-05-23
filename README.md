@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (34)
+## Articles: 下書き (35)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-05-23 | [📊 技術調査 - Findy 開発資本フレーム (Speed/Quality/Control)](articles/ai-development-capital-speed-quality-control_20260523.md) | DORA, DevEx, AIGovernance, SLSA, EnterpriseAI |
 | 2026-05-23 | [📜 Agent Skill を企業運用の契約にする — Contractual Skill Framework 解説](articles/contractual_skill_framework_20260523.md) | AgentSkills, Anthropic, ClaudeCode, Governance, AI |
 | 2026-05-22 | [🛡️ 技術調査 - Cloudflare CASB × Claude Enterprise 統合](articles/cloudflare-casb-claude-enterprise_20260522.md) | Cloudflare, Anthropic, Claude, CASB, AIGovernance |
 | 2026-05-22 | [📦 技術調査 - GKE Agent Sandbox](articles/gke-agent-sandbox_20260522.md) | GKE, Kubernetes, GoogleCloud, gVisor, AIエージェント |
