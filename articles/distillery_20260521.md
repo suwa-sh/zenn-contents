@@ -3,7 +3,8 @@ title: "技術調査 - distillery"
 emoji: "🥃"
 type: "tech"
 topics: ["ClaudeCode", "Claude", "Distillery", "RDRA", "USDM"]
-published: false
+published: true
+published_at: 2026-05-23
 ---
 
 > Distill raw requirements into production-ready design.
