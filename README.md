@@ -12,7 +12,7 @@
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-05-24 | [🔍 技術調査 - chrome-devtools-mcp（Chrome DevTools for agents）](articles/chrome-devtools-mcp_20260524.md) | MCP, ChromeDevTools, Puppeteer, Lighthouse, AIエージェント |
-| 2026-05-23 | [📊 技術調査 - Findy 開発資本フレーム (Speed/Quality/Control)](articles/ai-development-capital-speed-quality-control_20260523.md) | DORA, DevEx, AIGovernance, SLSA, EnterpriseAI |
+| 2026-05-23 | [📊 技術調査 - Findy 開発資本フレーム (Speed/Quality/Control)](articles/ai-dev-speed-quality-control_20260523.md) | DORA, DevEx, AIGovernance, SLSA, EnterpriseAI |
 | 2026-05-23 | [📜 Agent Skill を企業運用の契約にする — Contractual Skill Framework 解説](articles/contractual_skill_framework_20260523.md) | AgentSkills, Anthropic, ClaudeCode, Governance, AI |
 | 2026-05-23 | [🪁 技術調査 - Kestra（宣言型ワークフローオーケストレーター）](articles/kestra_20260523.md) | Kestra, ワークフロー, データエンジニアリング, OSS, Orchestration |
 | 2026-05-22 | [🛡️ 技術調査 - Cloudflare CASB × Claude Enterprise 統合](articles/cloudflare-casb-claude-enterprise_20260522.md) | Cloudflare, Anthropic, Claude, CASB, AIGovernance |
