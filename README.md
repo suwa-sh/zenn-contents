@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (36)
+## Articles: 下書き (37)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-05-24 | [🔍 技術調査 - chrome-devtools-mcp（Chrome DevTools for agents）](articles/chrome-devtools-mcp_20260524.md) | MCP, ChromeDevTools, Puppeteer, Lighthouse, AIエージェント |
 | 2026-05-23 | [📊 技術調査 - Findy 開発資本フレーム (Speed/Quality/Control)](articles/ai-development-capital-speed-quality-control_20260523.md) | DORA, DevEx, AIGovernance, SLSA, EnterpriseAI |
 | 2026-05-23 | [📜 Agent Skill を企業運用の契約にする — Contractual Skill Framework 解説](articles/contractual_skill_framework_20260523.md) | AgentSkills, Anthropic, ClaudeCode, Governance, AI |
 | 2026-05-23 | [🪁 技術調査 - Kestra（宣言型ワークフローオーケストレーター）](articles/kestra_20260523.md) | Kestra, ワークフロー, データエンジニアリング, OSS, Orchestration |
