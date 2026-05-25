@@ -3,7 +3,8 @@ title: "技術調査 - chrome-devtools-mcp（Chrome DevTools for agents）"
 emoji: "🔍"
 type: "tech"
 topics: ["MCP", "ChromeDevTools", "Puppeteer", "Lighthouse", "AIエージェント"]
-published: false
+published: true
+published_at: 2026-05-26
 ---
 
 > 検証日: 2026-05-24 / 対象バージョン: v1.0.1（2026-05-18 リリース）/ 分類: Browser Automation / QA / Coding Agent

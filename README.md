@@ -7,14 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (40)
+## Articles: 下書き (39)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-05-26 | [🛡️ AIが脆弱性を大量発見する時代の修正・開示・優先度付けガバナンス](articles/ai-vuln-discovery-governance_20260526.md) | Security, AI, 脆弱性管理, DevSecOps, CVSS |
 | 2026-05-26 | [☁️ 技術調査 - クラウドコーディングエージェントは実行環境が品質を決める](articles/cursor-cloud-agent-operations_20260526.md) | Cursor, CodingAgent, Temporal, DevContainer, LLMOps |
 | 2026-05-26 | [🛡️ フロンティアAI時代の脆弱性運用設計 - 金融庁・日銀要請を実装に落とす](articles/frontier-ai-finance-threat-response_20260526.md) | Security, AI, 脆弱性管理, 金融 |
-| 2026-05-24 | [🔍 技術調査 - chrome-devtools-mcp（Chrome DevTools for agents）](articles/chrome-devtools-mcp_20260524.md) | MCP, ChromeDevTools, Puppeteer, Lighthouse, AIエージェント |
 | 2026-05-23 | [📊 技術調査 - Findy 開発資本フレーム (Speed/Quality/Control)](articles/ai-dev-speed-quality-control_20260523.md) | DORA, DevEx, AIGovernance, SLSA, EnterpriseAI |
 | 2026-05-23 | [📜 Agent Skill を企業運用の契約にする — Contractual Skill Framework 解説](articles/contractual_skill_framework_20260523.md) | AgentSkills, Anthropic, ClaudeCode, Governance, AI |
 | 2026-05-23 | [🪁 技術調査 - Kestra（宣言型ワークフローオーケストレーター）](articles/kestra_20260523.md) | Kestra, ワークフロー, データエンジニアリング, OSS, Orchestration |
@@ -52,10 +51,11 @@
 | 2025-05-30 | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 
-## Articles: 公開済み (133)
+## Articles: 公開済み (134)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-05-26 | [🔍 技術調査 - chrome-devtools-mcp（Chrome DevTools for agents）](articles/chrome-devtools-mcp_20260524.md) | MCP, ChromeDevTools, Puppeteer, Lighthouse, AIエージェント |
 | 2026-05-23 | [🥃 技術調査 - distillery](articles/distillery_20260521.md) | ClaudeCode, Claude, Distillery, RDRA, USDM |
 | 2026-05-21 | [🔌 技術調査 - Codex App Server](articles/codex-app-server_20260514.md) | Codex, OpenAI, JSONRPC, LLM, VSCode |
 | 2026-05-19 | [🪢 技術調査 - AI Harness Engineering](articles/ai-harness-engineering_20260515.md) | AIエージェント, ClaudeCode, Codex, Observability, SoftwareEngineering |
