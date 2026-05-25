@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (37)
+## Articles: 下書き (39)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-05-26 | [🛡️ AIが脆弱性を大量発見する時代の修正・開示・優先度付けガバナンス](articles/ai-vuln-discovery-governance_20260526.md) | Security, AI, 脆弱性管理, DevSecOps, CVSS |
+| 2026-05-26 | [🛡️ フロンティアAI時代の脆弱性運用設計 - 金融庁・日銀要請を実装に落とす](articles/frontier-ai-finance-threat-response_20260526.md) | Security, AI, 脆弱性管理, 金融 |
 | 2026-05-24 | [🔍 技術調査 - chrome-devtools-mcp（Chrome DevTools for agents）](articles/chrome-devtools-mcp_20260524.md) | MCP, ChromeDevTools, Puppeteer, Lighthouse, AIエージェント |
 | 2026-05-23 | [📊 技術調査 - Findy 開発資本フレーム (Speed/Quality/Control)](articles/ai-dev-speed-quality-control_20260523.md) | DORA, DevEx, AIGovernance, SLSA, EnterpriseAI |
 | 2026-05-23 | [📜 Agent Skill を企業運用の契約にする — Contractual Skill Framework 解説](articles/contractual_skill_framework_20260523.md) | AgentSkills, Anthropic, ClaudeCode, Governance, AI |
