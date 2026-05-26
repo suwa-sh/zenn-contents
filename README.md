@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (42)
+## Articles: 下書き (43)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-05-27 | [🔭 Jaeger×OpenTelemetryでAIエージェントの意思決定→ツール実行をトレースする](articles/jaeger-otel-agent-tracing_20260527.md) | OpenTelemetry, Jaeger, Observability, LLMOps, MCP |
+| 2026-05-27 | [🔁 状態を持つアプリをLLMエージェントに操作させるトランザクション設計と適用限界](articles/stateful-agent-action-transaction_20260527.md) | LLM, AIAgent, Saga, MCP, Transaction |
 | 2026-05-26 | [🛡️ 技術調査 - AI Assurance：Enterprise AIの品質保証を継続的リスク低減へ](articles/ai-assurance-enterprise-testing-strategy_20260526.md) | AI, LLM, RAG, MLOps, QA |
 | 2026-05-26 | [🛡️ AIが脆弱性を大量発見する時代の修正・開示・優先度付けガバナンス](articles/ai-vuln-discovery-governance_20260526.md) | Security, AI, 脆弱性管理, DevSecOps, CVSS |
 | 2026-05-26 | [🧪 技術調査 - agent-breakage: 自律K8s運用エージェントを反証可能に測る基盤](articles/autonomous-k8s-ops-agent-evaluation_20260526.md) | Kubernetes, SRE, AIOps, LLM, Evaluation |
