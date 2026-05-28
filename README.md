@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (45)
+## Articles: 下書き (46)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-05-29 | [🤖 技術調査 - Scheduler-Driven Coding Agent Orchestration](articles/scheduler-coding-agent-orchestration_20260529.md) | OpenTelemetry, Kestra, Launchd, ClaudeCode, Codex |
 | 2026-05-28 | [🕸️ 技術調査 - エージェントワークフローの構造カバレッジテスト](articles/agent-structural-coverage_20260528.md) | LLMOps, Testing, Observability, AIAgent |
 | 2026-05-28 | [🔁 本番トレース×評価ループ×Codexで自己改善するAIエージェント設計](articles/self-improving-agent-eval-loop_20260528.md) | AIAgent, LLMOps, Codex, Evaluation, OpenAI |
 | 2026-05-27 | [🔭 Jaeger×OpenTelemetryでAIエージェントの意思決定→ツール実行をトレースする](articles/jaeger-otel-agent-tracing_20260527.md) | OpenTelemetry, Jaeger, Observability, LLMOps, MCP |
