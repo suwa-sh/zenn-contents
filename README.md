@@ -7,11 +7,10 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (44)
+## Articles: 下書き (43)
 
 | create date | title | topics |
 |-------------|-------|--------|
-| 2026-05-27 | [🧠 技術調査 - gbrain（AIエージェントの自己配線メモリ層）](articles/gbrain_20260527.md) | gbrain, RAG, KnowledgeGraph, PostgreSQL, MCP |
 | 2026-05-27 | [🔭 Jaeger×OpenTelemetryでAIエージェントの意思決定→ツール実行をトレースする](articles/jaeger-otel-agent-tracing_20260527.md) | OpenTelemetry, Jaeger, Observability, LLMOps, MCP |
 | 2026-05-27 | [🔁 状態を持つアプリをLLMエージェントに操作させるトランザクション設計と適用限界](articles/stateful-agent-action-transaction_20260527.md) | LLM, AIAgent, Saga, MCP, Transaction |
 | 2026-05-26 | [🛡️ 技術調査 - AI Assurance：Enterprise AIの品質保証を継続的リスク低減へ](articles/ai-assurance-enterprise-testing-strategy_20260526.md) | AI, LLM, RAG, MLOps, QA |
@@ -56,10 +55,11 @@
 | 2025-05-30 | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 
-## Articles: 公開済み (134)
+## Articles: 公開済み (135)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-05-28 | [🧠 技術調査 - gbrain（AIエージェントの自己配線メモリ層）](articles/gbrain_20260527.md) | gbrain, RAG, KnowledgeGraph, PostgreSQL, MCP |
 | 2026-05-26 | [🔍 技術調査 - chrome-devtools-mcp（Chrome DevTools for agents）](articles/chrome-devtools-mcp_20260524.md) | MCP, ChromeDevTools, Puppeteer, Lighthouse, AIエージェント |
 | 2026-05-23 | [🥃 技術調査 - distillery](articles/distillery_20260521.md) | ClaudeCode, Claude, Distillery, RDRA, USDM |
 | 2026-05-21 | [🔌 技術調査 - Codex App Server](articles/codex-app-server_20260514.md) | Codex, OpenAI, JSONRPC, LLM, VSCode |
