@@ -571,11 +571,16 @@ codex login    # OPENAI_API_KEY 設定
 #### otel-cli のインストール (任意)
 
 ```bash
-# macOS
-brew install otel-cli
+# 直接ダウンロード (推奨): https://github.com/equinix-labs/otel-cli/releases
+#   例: otel-cli_0.4.6_darwin_arm64.tar.gz を展開して PATH に置く
 
-# 直接ダウンロード: https://github.com/equinix-labs/otel-cli/releases
+# Homebrew (注意: 2026-05 時点で macOS の otel-cli formula が壊れており、
+#  `--version` フラグすら無い古い版が入るケースを実測。動かない場合は releases バイナリを使う)
+brew install otel-cli
 ```
+
+> 実測メモ: Homebrew 経由だと意図せず古い 0.x が入り `exec` の挙動が変わることがありました。
+> CI や常駐ランナーに組み込む場合は、バージョン固定できる **releases バイナリの直接配置**が安定します。
 
 #### 結果ストア (SQLite 最小スキーマ例)
 
@@ -1285,9 +1290,16 @@ invoke_workflow {dispatch.name}    kind=INTERNAL  service=agent-loop   ← Kestr
               └── claude_code.tool          (ツール実行)
 ```
 
+ただしこの「最上段 (スケジューラ) から下までの一本のネスト」は **スケジューラが子プロセスへ `TRACEPARENT` を伝播できる場合のみ**成立します。**実測では成立しない組み合わせがある**ので注意してください:
+
+- Kestra の OpenTelemetry を有効化しても、**Process task runner は子プロセス (ランナー/エージェント) に `TRACEPARENT` を伝播しません** (実測: task 内で `echo $TRACEPARENT` が空)。結果、Kestra 自身の trace と `invoke_agent` 以下の trace は **別トレースに分かれます**。
+- この場合の現実解は、**ランナー層 (`invoke_agent` span) を実質的な root とし**、`kestra.execution.id` のような **スケジューラの実行 ID を span 属性 + 結果 DB に載せて相関**させること。1 本の trace にこだわらず「ID で突き合わせられる」状態を作れば、運用上は十分に追跡できます。
+- 逆に言えば `invoke_agent` 以下 (ランナー → エージェント) は `otel-cli exec` が `TRACEPARENT` を注入するので **確実に 1 本に繋がります**。スケジューラ連結は「できれば上積み」と捉えるのが安全です。
+
 注意:
 - `--fail` は必須。指定しない場合 `otel-cli` はエクスポート失敗を silent に飲み込む
 - Claude Code は `claude -p` (print) モードと Agent SDK のみ `TRACEPARENT` を親 span として受け取る。インタラクティブ CLI は CI の ambient context 混入を防ぐため意図的に無視する
+- **OTLP の protocol を明示する**。`otel-cli` も Claude Code も、エンドポイントが `http://` スキームだと **OTLP/HTTP** を選択する。Jaeger 等の **gRPC ポート (4317)** に投げているのに `http://` を渡すと、プロトコル不一致で **何も届かないまま silent fail** する (これも `--fail` 無しだと exit 0)。gRPC に送るなら `otel-cli --protocol grpc` / Claude Code は `OTEL_EXPORTER_OTLP_PROTOCOL=grpc` を明示する。疎通確認は console exporter ではなく **実際の backend (Jaeger UI 等) で span が出るか**を見る (Claude Code の console traces exporter は span を出さないケースを実測)
 
 ### cost / token カーディナリティ
 
@@ -1296,6 +1308,23 @@ invoke_workflow {dispatch.name}    kind=INTERNAL  service=agent-loop   ← Kestr
 カーディナリティ爆発を防ぐための設計:
 - `prompt.id` (UUID) は metrics から意図的に除外する (Claude Code の設計仕様)
 - GenAI semconv の `gen_ai.agent.name` / `gen_ai.workflow.name` は **low cardinality 必須**。動的な run_id 等は乗せない
+
+#### metrics を Prometheus に直接入れる場合の実測知見
+
+Prometheus (2.47+) は OTLP receiver を内蔵するため、**Collector を挟まずに** Claude Code の metrics を直接受けられます (`--enable-feature=otlp-write-receiver` を付け、`/api/v1/otlp/v1/metrics` (HTTP) に送る)。trace を gRPC で Jaeger に、metrics を HTTP で Prometheus に、と **signal ごとに宛先が割れる**ので、`OTEL_EXPORTER_OTLP_TRACES_*` / `OTEL_EXPORTER_OTLP_METRICS_*` の per-signal env で分離します。
+
+このとき 2 つの落とし穴があります (どちらも実測):
+
+- **temporality は cumulative に固定する** (`OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE=cumulative`)。Claude Code 既定の **delta** は **Prometheus OTLP receiver が silent drop** する。これを忘れると `target_info` だけが入って `claude_code_*` 本体が一切現れず、原因不明で延々ハマる。
+- **resource 属性は metric 本体に乗らず `target_info` に分離される**。`agent.skill` などで skill 別集計したいときは PromQL で結合する:
+  ```promql
+  sum by (agent_skill) (
+    claude_code_token_usage_tokens_total
+    * on(job, instance) group_left(agent_skill) target_info
+  )
+  ```
+
+なお Claude Code の metrics は OTLP exporter なら出ますが、**console traces exporter では span が出ない**版があるため、trace の疎通確認は console ではなく必ず backend (Jaeger UI) で行ってください。
 
 ### 3-state outcome 規約
 
@@ -1378,6 +1407,8 @@ otel-cli span \
 | 3 | `claude -p` で trace が親 span と繋がらない | インタラクティブ CLI 起動 / `TRACEPARENT` 未設定 | `claude -p` モードを使う。`otel-cli exec` でラップして `TRACEPARENT` を child env に注入 |
 | 4 | `codex exec` で OTel metrics が出ない | Codex の既知制限。`codex exec` はヘッドレスで metrics が欠落していた (Issue #12913 / PR #13083 で 2026-02 にクローズ、利用バージョンでの状態を要確認)。`codex mcp-server` は telemetry 未初期化 | スケジューラ層で trace を完結させ、Codex 子プロセスは exit_code / stdout 長さのみを span attribute に乗せる「黒箱ラップ」で扱う |
 | 5 | OTLP exporter が silent (Claude Code Issue #50567) | バージョン依存で exporter package が Bun コンパイル時に欠落 | 先に `OTEL_METRICS_EXPORTER=console` で疎通確認し、コンソール出力を確認してから `otlp` に切替 |
+| 5b | エンドポイントは正しいのに trace/metric が一切届かない | `http://` スキームの endpoint を gRPC ポート (4317) に投げてプロトコル誤認 → silent fail (`--fail` 無しだと exit 0) | `otel-cli --protocol grpc` / `OTEL_EXPORTER_OTLP_PROTOCOL=grpc` を明示。疎通は backend (Jaeger UI) で確認 |
+| 5c | Prometheus OTLP に metrics を送ると `target_info` だけ入り `*_total` 本体が入らない | Claude Code 既定の delta temporality を Prometheus OTLP receiver が silent drop | `OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE=cumulative` を指定。skill 別集計は `target_info` 結合 |
 | 6 | Kestra 起動後に secret が空 (UNAUTHENTICATED 等) | `launchctl unload+load` で Kestra 再起動すると `~/.zshrc` の secret が消える | `start.sh` に `grep + eval` bridge があることを確認 |
 | 7 | 並列実行でファイルが上書き / 内容が混在 | 複数 worker が固定 `/tmp` 名 (`/tmp/buffer_payload.json` 等) を同時読み書き | 一時ファイルは必ず `run_id` を含むユニーク名にする。JSON は `python3 json.dump` で生成 |
 | 8 | partial_failed が頻発するが自動回復しない | partial は「一部成功・人手判断待ち」の意図的設計。自動再実行対象外 | 🟡 Discord 通知を確認し、原因特定後に手動 `--resume` 再実行 |
