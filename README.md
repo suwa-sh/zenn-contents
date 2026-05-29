@@ -7,12 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (48)
+## Articles: 下書き (47)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-05-29 | [🛡️ 技術調査 - Google AI Threat Defense](articles/google-ai-threat-defense_20260529.md) | Security, GoogleCloud, CTEM, DevSecOps, AI |
-| 2026-05-29 | [🤖 技術調査 - Scheduler-Driven Coding Agent Orchestration](articles/scheduler-coding-agent-orchestration_20260529.md) | OpenTelemetry, Kestra, Launchd, ClaudeCode, Codex |
 | 2026-05-29 | [🛡️ 技術調査 - Cloudflare Town Lake / Skipper（監査可能なNL-SQLエージェント）](articles/skipper-town-lake_20260529.md) | Cloudflare, MCP, Trino, LLM, Iceberg |
 | 2026-05-28 | [🕸️ 技術調査 - エージェントワークフローの構造カバレッジテスト](articles/agent-structural-coverage_20260528.md) | LLMOps, Testing, Observability, AIAgent |
 | 2026-05-28 | [🔁 本番トレース×評価ループ×Codexで自己改善するAIエージェント設計](articles/self-improving-agent-eval-loop_20260528.md) | AIAgent, LLMOps, Codex, Evaluation, OpenAI |
@@ -60,10 +59,11 @@
 | 2025-05-30 | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 
-## Articles: 公開済み (135)
+## Articles: 公開済み (136)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-05-30 | [🤖 技術調査 - Scheduler-Driven Coding Agent Orchestration](articles/scheduler-coding-agent-orchestration_20260529.md) | OpenTelemetry, Kestra, Launchd, ClaudeCode, Codex |
 | 2026-05-28 | [🧠 技術調査 - gbrain（AIエージェントの自己配線メモリ層）](articles/gbrain_20260527.md) | gbrain, RAG, KnowledgeGraph, PostgreSQL, MCP |
 | 2026-05-26 | [🔍 技術調査 - chrome-devtools-mcp（Chrome DevTools for agents）](articles/chrome-devtools-mcp_20260524.md) | MCP, ChromeDevTools, Puppeteer, Lighthouse, AIエージェント |
 | 2026-05-23 | [🥃 技術調査 - distillery](articles/distillery_20260521.md) | ClaudeCode, Claude, Distillery, RDRA, USDM |

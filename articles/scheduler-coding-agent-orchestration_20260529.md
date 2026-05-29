@@ -3,7 +3,8 @@ title: "技術調査 - Scheduler-Driven Coding Agent Orchestration"
 emoji: "🤖"
 type: "tech"
 topics: ["OpenTelemetry", "Kestra", "Launchd", "ClaudeCode", "Codex"]
-published: false
+published: true
+published_at: 2026-05-30
 ---
 
 > 検証日: 2026-05-28
