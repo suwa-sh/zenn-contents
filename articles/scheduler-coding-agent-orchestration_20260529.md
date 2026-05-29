@@ -585,7 +585,7 @@ brew install otel-cli
 #### 結果ストア (SQLite 最小スキーマ例)
 
 ```sql
--- 実装案: pkm tools/agent-loop/sql/init.sql を参考にした簡略版
+-- 実装案
 CREATE TABLE IF NOT EXISTS agent_runs (
     id            INTEGER PRIMARY KEY AUTOINCREMENT,
     agent_name    TEXT NOT NULL,
@@ -618,7 +618,7 @@ macOS の launchd を使い、一定時刻に `run-agent.sh` を起動して `cl
 
 ```bash
 #!/bin/bash
-# 実装案: equinix-labs/otel-cli README と pkm tools/agent-loop/run-agent.sh を参考
+# 実装案
 set -euo pipefail
 
 AGENT_NAME="${1:?Usage: $0 <agent_name> <skill_name> [prompt]}"
@@ -660,7 +660,7 @@ exit "${EXIT_CODE}"
 #### plist の配置とロード
 
 ```xml
-<!-- 実装案: pkm scripts/add-journal.plist と launchd.info を参考 -->
+<!-- 実装案 -->
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
   "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -774,7 +774,7 @@ docker compose up -d
 #### Kestra Flow YAML
 
 ```yaml
-# 実装案: pkm tools/agent-loop/flows/ の構成と kestra.io/docs のサンプルを参考
+# 実装案
 id: agent_news_to_zenn
 namespace: daily.morning
 
@@ -800,7 +800,6 @@ tasks:
       CLAUDE_CODE_ENHANCED_TELEMETRY_BETA: "1"
       KESTRA_EXECUTION_ID: "{{ execution.id }}"
       AGENT_LOOP_RUN_ID: "{{ execution.id }}"
-      PKM_ROOT: "/Users/yourname/pkm"
     commands:
       - |
         set +e
@@ -811,7 +810,7 @@ tasks:
           --attrs 'gen_ai.operation.name=invoke_agent,gen_ai.agent.name=news-to-zenn' \
           --fail \
           -- \
-          /Users/yourname/pkm/tools/agent-loop/scripts/run-skill.sh \
+          /path/to/agent-loop/scripts/run-skill.sh \
             marketer news-to-zenn
         EXIT=$?
         echo "EXIT=${EXIT}"
@@ -831,7 +830,7 @@ errors:
       - echo "[error] Flow failed: {{ execution.id }}"
 ```
 
-Kestra YAML の注意点 (pkm 実機知見):
+Kestra YAML の注意点:
 - `env:` の値は single quote で囲む。`{{ }}` テンプレート展開と競合するケースに注意
 - `set +e` を Shell task の冒頭に書く (Kestra は非ゼロ exit を自動 failure 扱いにするため、途中エラーで即終了するのを防ぐ)
 - ARRAY 型の inputs は JSON string で `form-data` 渡す
@@ -941,7 +940,6 @@ jobs:
 | `CLAUDE_CODE_ENABLE_TELEMETRY` | Claude Code OTel ゲート (`1` で有効) | Claude 使用時 |
 | `CLAUDE_CODE_ENHANCED_TELEMETRY_BETA` | traces (span) を有効化。`agent_id` / `parent_agent_id` 等の拡張属性も付与 | metrics/logs のみなら不要、traces 利用時は必須 |
 | `OTEL_LOG_USER_PROMPTS` | Claude Code: prompt を OTel logs に流す (PII リスク、opt-in) | 任意 |
-| `PKM_ROOT` | Kestra パターンで `run-skill.sh` が cd するリポジトリ root | Kestra 使用時 |
 | `KESTRA_EXECUTION_ID` | Kestra から渡される execution.id。trace の conversation.id に使う | Kestra 使用時 |
 
 ### 手動実行 (テスト)
@@ -1416,9 +1414,8 @@ otel-cli span \
 | 10 | LLM observability bill が急増 | prompt verbatim (`OTEL_LOG_USER_PROMPTS=1`) / tail_sampling 未調整 | `OTEL_LOG_USER_PROMPTS` を `0` に戻す。Collector でキャッシュ trace をドロップ。Codex の `tool_result` 全量は `attributes/pii_scrub` processor で hash 化 |
 | 11 | Kestra YAML が `Cannot deserialize String from Object` で壊れる | `commands:` 配下に `:` を含む文字列が YAML map と誤解される | `commands:` 配下は全行を single quote で囲む |
 | 12 | claude が SKILL.md の `log_step` 呼び出しを省略 | SKILL.md に書いたログ呼び出し手順をエージェントが見落とす | ログ・exit code チェックをスクリプト側 EXIT trap に移す |
-| 13 | `claude -p` が skill を見つけない | Kestra Shell task の cwd が random tmp dir で `.claude/skills/` を find できない | `run-skill.sh` 冒頭で `cd "${PKM_ROOT}"` を明示する |
-| 14 | Pause Flow が resume されない | Discord bot が thread reply を検知できない / ARRAY 入力が失敗 | ARRAY 型入力は JSON string で form-data を送る |
-| 15 | GenAI semconv アップデートで Langfuse の Input/Output が null 表示 | semconv v1.37+ で prompt/completion が span attributes → span events に移動 (Langfuse Issue #12657, **open** で未解決) | 対応版がリリースされたらアップデート。現時点では Collector の transform processor で旧 attribute 形式にダウングレードしてから Langfuse に送る |
+| 13 | Pause Flow が resume されない | Discord bot が thread reply を検知できない / ARRAY 入力が失敗 | ARRAY 型入力は JSON string で form-data を送る |
+| 14 | GenAI semconv アップデートで Langfuse の Input/Output が null 表示 | semconv v1.37+ で prompt/completion が span attributes → span events に移動 (Langfuse Issue #12657, **open** で未解決) | 対応版がリリースされたらアップデート。現時点では Collector の transform processor で旧 attribute 形式にダウングレードしてから Langfuse に送る |
 
 ## まとめ
 
