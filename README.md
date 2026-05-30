@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (47)
+## Articles: 下書き (49)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-05-30 | [🔀 技術調査 - Claude Code 動的ワークフロー：並列実行の責任境界と検証設計](articles/claude-code-dynamic-workflows_20260530.md) | ClaudeCode, Anthropic, AIエージェント, LLMOps |
+| 2026-05-30 | [🔍 AI 評価レポートを「主張」と「証拠」に分けて書く - OpenAI 第三者評価 playbook を実装に落とす](articles/trustworthy-third-party-ai-evaluation_20260530.md) | LLM, AI, OpenAI, Evaluation, MLOps |
 | 2026-05-29 | [🛡️ 技術調査 - Google AI Threat Defense](articles/google-ai-threat-defense_20260529.md) | Security, GoogleCloud, CTEM, DevSecOps, AI |
 | 2026-05-29 | [🛡️ 技術調査 - Cloudflare Town Lake / Skipper（監査可能なNL-SQLエージェント）](articles/skipper-town-lake_20260529.md) | Cloudflare, MCP, Trino, LLM, Iceberg |
 | 2026-05-28 | [🕸️ 技術調査 - エージェントワークフローの構造カバレッジテスト](articles/agent-structural-coverage_20260528.md) | LLMOps, Testing, Observability, AIAgent |
