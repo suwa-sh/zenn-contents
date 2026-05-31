@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (50)
+## Articles: 下書き (51)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-05-31 | [🌿 顧客要望をプレビューブランチ化する開発運用 — 速さの先に残る検証・合意・捨てる判断](articles/braintrust-codex-preview-branch_20260531.md) | Codex, OpenAI, AIエージェント, プロトタイピング |
 | 2026-05-30 | [🔀 技術調査 - Claude Code 動的ワークフロー：並列実行の責任境界と検証設計](articles/claude-code-dynamic-workflows_20260530.md) | ClaudeCode, Anthropic, AIエージェント, LLMOps |
 | 2026-05-30 | [🤖 SREの判断プロセスのどこを機械化するか — Google SRE の agentic AI 運用と承認設計](articles/google-sre-agentic-ai_20260530.md) | SRE, AIOps, AIエージェント, GoogleCloud, LLMOps |
 | 2026-05-30 | [🔍 AI 評価レポートを「主張」と「証拠」に分けて書く - OpenAI 第三者評価 playbook を実装に落とす](articles/trustworthy-third-party-ai-evaluation_20260530.md) | LLM, AI, OpenAI, Evaluation, MLOps |
