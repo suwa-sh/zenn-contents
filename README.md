@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (53)
+## Articles: 下書き (54)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-06-01 | [🛡️ 技術調査 - CNCF クラウドネイティブ IDP (GitOps + サプライチェーン防御)](articles/cncf-cloud-native-idp_20260601.md) | Kubernetes, GitOps, ArgoCD, CNCF, PlatformEngineering |
 | 2026-05-31 | [🌿 顧客要望をプレビューブランチ化する開発運用 — 速さの先に残る検証・合意・捨てる判断](articles/braintrust-codex-preview-branch_20260531.md) | Codex, OpenAI, AIエージェント, プロトタイピング |
 | 2026-05-31 | [🛡️ 本番AIエンドポイントを推論盗用から守る多層防御とコスト境界の設計](articles/inference-theft-defense_20260531.md) | AISecurity, LLM, Vercel, BotID, SRE |
 | 2026-05-31 | [🛡️ 技術調査 - NSA ZIG ゼロトラスト実装ガイドライン](articles/nsa-zig-zero-trust_20260531.md) | ZeroTrust, Security, NIST, NSA |
