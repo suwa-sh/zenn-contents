@@ -7,13 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (54)
+## Articles: 下書き (53)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-06-01 | [🛡️ 技術調査 - CNCF クラウドネイティブ IDP (GitOps + サプライチェーン防御)](articles/cncf-cloud-native-idp_20260601.md) | Kubernetes, GitOps, ArgoCD, CNCF, PlatformEngineering |
 | 2026-05-31 | [🌿 顧客要望をプレビューブランチ化する開発運用 — 速さの先に残る検証・合意・捨てる判断](articles/braintrust-codex-preview-branch_20260531.md) | Codex, OpenAI, AIエージェント, プロトタイピング |
-| 2026-05-31 | [🛡️ 本番AIエンドポイントを推論盗用から守る多層防御とコスト境界の設計](articles/inference-theft-defense_20260531.md) | AISecurity, LLM, Vercel, BotID, SRE |
 | 2026-05-31 | [🛡️ 技術調査 - NSA ZIG ゼロトラスト実装ガイドライン](articles/nsa-zig-zero-trust_20260531.md) | ZeroTrust, Security, NIST, NSA |
 | 2026-05-30 | [🔀 技術調査 - Claude Code 動的ワークフロー：並列実行の責任境界と検証設計](articles/claude-code-dynamic-workflows_20260530.md) | ClaudeCode, Anthropic, AIエージェント, LLMOps |
 | 2026-05-30 | [🤖 SREの判断プロセスのどこを機械化するか — Google SRE の agentic AI 運用と承認設計](articles/google-sre-agentic-ai_20260530.md) | SRE, AIOps, AIエージェント, GoogleCloud, LLMOps |
@@ -66,10 +65,11 @@
 | 2025-05-30 | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 
-## Articles: 公開済み (136)
+## Articles: 公開済み (137)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-06-02 | [🛡️ 本番AIエンドポイントを推論盗用から守る多層防御とコスト境界の設計](articles/inference-theft-defense_20260531.md) | AISecurity, LLM, Vercel, BotID, SRE |
 | 2026-05-30 | [🤖 技術調査 - Scheduler-Driven Coding Agent Orchestration](articles/scheduler-coding-agent-orchestration_20260529.md) | OpenTelemetry, Kestra, Launchd, ClaudeCode, Codex |
 | 2026-05-28 | [🧠 技術調査 - gbrain（AIエージェントの自己配線メモリ層）](articles/gbrain_20260527.md) | gbrain, RAG, KnowledgeGraph, PostgreSQL, MCP |
 | 2026-05-26 | [🔍 技術調査 - chrome-devtools-mcp（Chrome DevTools for agents）](articles/chrome-devtools-mcp_20260524.md) | MCP, ChromeDevTools, Puppeteer, Lighthouse, AIエージェント |
