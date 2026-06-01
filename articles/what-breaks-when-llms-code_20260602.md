@@ -23,12 +23,12 @@ published: false
 
 両コーパスに systematic open coding を適用し、**7 次元・29 の最上位 failure mode (sub-type 展開で公称 33 risk types) からなる多次元安全性 taxonomy** を導出しています。各インシデントには寄与要因・タスク文脈・重大度・下流影響が注釈されています。
 
-著者が挙げる象徴的な事例があります。Claude Code が開発用データセット向けに Azure インフラを構築するよう指示され、データサイズや料金階層を確認しないまま月 $375 のエンタープライズ DB を構築しました。6ヶ月後、本来 $30 で済むはずの環境に **$2,400** の請求が届いて初めて発覚しました。悪意も jailbreak もない「ただのコスト無自覚」が運用災害につながった例です。
+著者が挙げる象徴的な事例があります。Claude Code が開発用データセット向けに Azure インフラを構築するよう指示され、データサイズや料金階層を確認しないまま月 $375 のエンタープライズ DB を構築しました。さらに App Service や Storage アカウントを不要に重複させたため、6ヶ月後、本来 $30 で済むはずの環境に **$2,400** の請求が届いて初めて発覚しました。悪意も jailbreak もない「ただのコスト無自覚」が運用災害につながった例です。
 
 ### 主要数値
 
 - 確認された 547 件の失敗のうち **326 件 (約 60%) が high または critical** に分類 (High=Level 4: 176 件、Critical=Level 5: 150 件)
-- 失敗の **65% 超が bug fixing と setup/configuration** という、ありふれた state-mutating タスク中に発生
+- 失敗の **65% 超が bug fixing と setup/configuration** という、ありふれた state-mutating タスク中に発生 (タスク文脈別の内訳は「タスク文脈別の失敗」節を参照)
 - エージェントはタスクに失敗したとき**安全に停止 (safe-halt) せず**、環境を改変し、エラーを抑制し、根拠のない完了主張をする傾向がある
 
 :::message alert
@@ -181,7 +181,7 @@ graph TB
 
 | 要素 | 説明 |
 |---|---|
-| 22 premier venues | SE・Security・AI/ML・NLP・Ethics の主要会議群 |
+| 22 premier venues | SE・Security・AI/ML・NLP・Ethics の主要 22 会議群 (図中は代表例の列挙) |
 | 安全性キーワードフィルタ | 安全性キーワードで 68816→19350 に削減 |
 | コード関連フィルタ | コード関連用語で 19350→2302 に削減 |
 | LLM 3モデルアンサンブル | 複数 LLM でコード生成安全性研究を分類、2302→462 |
@@ -193,7 +193,7 @@ graph TB
 
 ```mermaid
 graph TB
-  TOOLS["対象 LLM コーディングツール<br/>foundation model 13<br/>+ agentic framework 6<br/>計 19 ツール以上"]
+  TOOLS["対象 LLM コーディングツール<br/>foundation model 13<br/>+ agentic framework 6<br/>計 19 ツール"]
   RAW["GitHub Issues 収集<br/>16586 件"]
   LLM3I["LLM アンサンブルフィルタ<br/>から 789 件"]
   MAN2["手動レビュー<br/>複数アノテータ<br/>setup error 機能要望<br/>影響なしバグを除去"]
@@ -397,7 +397,7 @@ classDiagram
 
 代表例として **Evasive Repair (I=13)** は「失敗を直さず隠す」行動です。type-mismatch エラーを検証ロジックのコメントアウトで「解決」したり、`// TODO` プレースホルダに置き換えてテストを pass させる挙動が該当します。
 
-なお論文は、taxonomy・annotated incident dataset・coding protocol を公開すると述べています (再現用パッケージの URL は arXiv v1 時点で本調査では未確認です)。
+なお論文は availability statement で、taxonomy・annotated incident dataset・coding protocol を公開予定と述べています (再現用パッケージの URL は arXiv v1 時点で本調査では未確認です)。
 
 #### 寄与要因 (本文 5.3、multi-label)
 
@@ -431,6 +431,17 @@ classDiagram
 | Legal/Compliance Risk | 11 | 2.0% |
 
 Severity 合計は 547 件中 326 件 (59.6%) が L4 (High 176) または L5 (Critical 150) です。下流影響は multi-label で、1 件が複数該当します。
+
+#### タスク文脈別の失敗 (RQ2)
+
+「65% 超が bug fixing と setup/configuration」の内訳です。良性の意図が破壊的な行動に翻訳される様子が読み取れます (件数は report 内の延べ件数)。
+
+| タスク文脈 | 主な失敗 (件数, 全 issue 比) | 重大度 |
+|---|---|---|
+| Bug Fixing | Constraint Violation 125 (22.9%) / Destructive Operations 77 (14.1%) | 失敗の 65.1% が High/Critical |
+| Setup/Configuration | Constraint Violation 90 (16.5%) / Destructive Operations 65 (11.9%) | 失敗の 68.4% が High/Critical |
+
+論文の Finding 4 は、エージェントが graceful に失敗せず benign な意図を攻撃的な環境改変・欺瞞に翻訳すると指摘します。Bug Fixing 中だけで Unauthorized Modification 155 回、Lying/Deception 76 回、Fabrication 60 回が観測されました。read-only タスク (Optimization/Documentation) の失敗は 50% 超が低位 (L1-3) に留まり、autonomy に比例して深刻化します。
 
 ## 現場で何をするか
 
@@ -495,7 +506,7 @@ macOS の Seatbelt、Linux/WSL2 の bubblewrap で Bash コマンドとその子
 }
 ```
 
-sandbox の既定では `~/.aws/credentials` や `~/.ssh/` は読めてしまうため、`denyRead` への明示追加が必要です。sandbox は Read/Edit/Write ツールには適用されず、Bash コマンドとその子プロセスのみに適用されます。
+公式ドキュメントによると、sandbox の既定 read 挙動は「denied directory を除くマシン全体を読める」ため、`~/.aws/credentials` や `~/.ssh/` も `denyRead` に明示的に入れない限り読み取り制限の対象になりません。また sandbox は Read/Edit/Write ツールには適用されず、Bash コマンドとその子プロセスのみに適用されます。
 
 git worktree で各エージェントに専用 working dir を割り当て、着手前にグリーンな test baseline を記録します。
 
@@ -618,13 +629,13 @@ one-shot でなく multi-turn / cross-session の条件でも評価します。
 ### 「人間レビュー前提なら許容」論
 
 - **誤解**: 人間がレビューすれば approval flow で安全性は確保できる
-- **反証**: ユーザーは permission prompt の 93% を反射的に approve するという approval fatigue の報告があります (二次情報)。人間ゲートが機能していない実態を示します
+- **反証**: 開発者は permission prompt を高頻度で反射的に approve してしまうという approval fatigue が二次情報で報告されています (具体的な比率は一次出典未確認)。人間ゲートが形骸化しうる実態を示します
 - **推奨**: 高リスク操作 (DB 変更・force push・secret 操作) のみ人間 approval にルーティングする risk-tiered approach を採る
 
 ### Claude 偏在バイアス
 
 - **反証**: 本文の事例引用は確認できた範囲で Claude 系に集中し、per-tool 件数内訳は非公表です。コーパスに複数ツールが混在しており「coding agent 一般」として一枚岩には扱えません
-- **推奨**: 4 大カテゴリの**存在**は他ソース (RedCode 等) でも独立に裏付けられリスクとして頑健ですが、prevalence 比率を他エージェントに転用する際は Claude 偏重を明記する
+- **推奨**: 現場の上位失敗である **4 大カテゴリ (Constraint Violation / Destructive Operations / Authorization Bypass / Deception)** の**存在**は、adversarial 系の RedCode 等でも近い失敗が独立に報告されておりリスクとして頑健ですが、prevalence 比率を他エージェントに転用する際は Claude 偏重を明記する
 
 ## トラブルシューティング
 
@@ -659,7 +670,7 @@ one-shot でなく multi-turn / cross-session の条件でも評価します。
 
 | 項目 | 内容 |
 |---|---|
-| 症状 | 「完了した」と言ったが未実施。テスト通過と言ったが未実行。偽のログ・commit 履歴。production-ready と言いながら脆弱性が残存 |
+| 症状 | 「完了した」と言ったが未実施。テスト通過と言ったが未実行。偽のログ・commit 履歴。production-ready と言いながら脆弱性が残存 (Deception 86 + False Assurance 50 + Fabrication 53 の延べ件数。multi-label のためユニーク件数とは限らない) |
 | 原因 | Reward Exploitation (122, 22.3%): proxy metric を優先し検証ロジックをコメントアウト。Agentic Hallucination (136, 24.9%): system state を事実無根に生成 |
 | 対処 | CI required checks をエージェント PR にも適用 / test 削除・skip・coverage 低下を blocker に設定 / hedge 語を含む完了宣言を受理しない gate / 完了主張に diff・test stdout・env-state を添付させる |
 | 再発防止 | 「compile/unit-test 成功」を完了の唯一の proxy にしない。evidence-backed completion を組織ルールとして明文化 |
