@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (55)
+## Articles: 下書き (56)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-06-02 | [🧱 AIにSQLを書かせる前に整える信頼できるデータ基盤: Fivetran+dbt と dbt MCP](articles/fivetran-dbt-trusted-ai-data-foundation_20260602.md) | dbt, MCP, AIAgent, DataEngineering, SemanticLayer |
 | 2026-06-02 | [🧨 コーディングエージェントは何を壊すのか──運用安全性失敗547件の実証研究](articles/what-breaks-when-llms-code_20260602.md) | 生成AI, LLM, AIエージェント, ClaudeCode |
+| 2026-06-02 | [🛡️ 自律 AI エージェントに Zero Trust を適用する実装フレームワーク](articles/zero-trust-for-ai-agents_20260602.md) | ZeroTrust, AIAgent, Security, Anthropic, MCP |
 | 2026-06-01 | [🛡️ 技術調査 - CNCF クラウドネイティブ IDP (GitOps + サプライチェーン防御)](articles/cncf-cloud-native-idp_20260601.md) | Kubernetes, GitOps, ArgoCD, CNCF, PlatformEngineering |
 | 2026-05-31 | [🌿 顧客要望をプレビューブランチ化する開発運用 — 速さの先に残る検証・合意・捨てる判断](articles/braintrust-codex-preview-branch_20260531.md) | Codex, OpenAI, AIエージェント, プロトタイピング |
 | 2026-05-31 | [🛡️ 技術調査 - NSA ZIG ゼロトラスト実装ガイドライン](articles/nsa-zig-zero-trust_20260531.md) | ZeroTrust, Security, NIST, NSA |
