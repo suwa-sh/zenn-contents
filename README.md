@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (56)
+## Articles: 下書き (58)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-06-03 | [🚦 GitHub Copilot app の並列エージェント運用を承認点で設計する](articles/github-copilot-agent-desktop_20260603.md) | GitHubCopilot, AIAgent, CodingAgent, DevOps |
+| 2026-06-03 | [🛡️ 技術調査 - Microsoft MXC：Windowsをエージェント実行基盤にする実行境界モデル](articles/microsoft-mxc-agent-runtime_20260603.md) | MXC, AIエージェント, Windows, Security, Microsoft |
 | 2026-06-02 | [🧱 AIにSQLを書かせる前に整える信頼できるデータ基盤: Fivetran+dbt と dbt MCP](articles/fivetran-dbt-trusted-ai-data-foundation_20260602.md) | dbt, MCP, AIAgent, DataEngineering, SemanticLayer |
 | 2026-06-02 | [🧨 コーディングエージェントは何を壊すのか──運用安全性失敗547件の実証研究](articles/what-breaks-when-llms-code_20260602.md) | 生成AI, LLM, AIエージェント, ClaudeCode |
 | 2026-06-02 | [🛡️ 自律 AI エージェントに Zero Trust を適用する実装フレームワーク](articles/zero-trust-for-ai-agents_20260602.md) | ZeroTrust, AIAgent, Security, Anthropic, MCP |
