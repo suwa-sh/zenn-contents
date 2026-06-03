@@ -1,9 +1,10 @@
 ---
-title: "技術調査 - AI Assurance：Enterprise AIの品質保証を継続的リスク低減へ"
+title: "Thoughtworks - AI Assurance：Enterprise AIの品質保証を継続的リスク低減へ"
 emoji: "🛡️"
 type: "tech"
 topics: ["AI", "LLM", "RAG", "MLOps", "QA"]
-published: false
+published: true
+published_at: 2026-06-04
 ---
 
 > 対象論文: arXiv:2605.23459 "AI Assurance: A Comprehensive Testing Strategy for Enterprise AI Systems" (Badagi, Singh, Sen, Shirsath, Thoughtworks, 2026-05-22)
