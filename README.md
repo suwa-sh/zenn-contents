@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (61)
+## Articles: 下書き (62)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-06-04 | [✅ 受け入れテスト駆動でLLMを評価する — 業務要件をリリースゲート化するATDLLMD拡張](articles/acceptance-test-driven-llm-evaluation_20260604.md) | LLM, LLMOps, Evaluation, Testing, AIGovernance |
+| 2026-06-04 | [🗂️ 技術調査 - Agents Schema](articles/agents-schema_20260604.md) | Snowflake, dbt, LookML, Metadata, LLM |
 | 2026-06-04 | [🧠 AIエージェントの長期記憶アーキテクチャ 記憶のライフサイクル管理という設計論](articles/ai-agent-long-term-memory_20260604.md) | LLM, AIエージェント, Mem0, RAG, 生成AI |
 | 2026-06-04 | [🧩 技術調査 - Codex for every role（職種別プラグインとSites）](articles/codex-for-every-role_20260604.md) | OpenAI, Codex, MCP, ChatGPT, AIエージェント |
 | 2026-06-03 | [🛡️ AI エージェント向けサンドボックスの選び方: OS ネイティブから microVM まで構造で比較](articles/ai-agent-sandbox-environments_20260603.md) | Sandbox, Security, Firecracker, gVisor, ClaudeCode |
