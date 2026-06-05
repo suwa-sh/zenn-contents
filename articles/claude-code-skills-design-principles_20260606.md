@@ -346,7 +346,7 @@ classDiagram
 |---|---|
 | Skill | `scope` は enterprise / personal / project / plugin のいずれか。`source` は filesystem パス・plugin namespace・API skill_id |
 | Frontmatter | `name` は最大64文字・小文字英数字とハイフン(API サーフェスでは予約語 anthropic/claude を含められない)。`description` は最大1,024文字(API)、`when_to_use` と合算し listing で1,536文字に truncate |
-| Reference | SKILL.md から1階層の深さに保つ。100行超は冒頭に目次を付ける |
+| Reference | SKILL.md から1階層の深さに保つ。100行を超える長い reference には冒頭に目次を付けるとよい |
 | Script | `execution_intent` は `execute`(出力のみ載る)または `read_as_reference`(内容を読み込む) |
 | PluginData | `${CLAUDE_PLUGIN_DATA}` 配下に格納。`storage_type` は log(append-only) / json / sqlite |
 | Hook | `event_name` は PreToolUse / PostToolUse / SessionStart / Stop 等。`once: true` でセッション内1回のみ |
@@ -358,7 +358,7 @@ classDiagram
 
 ### ディレクトリ構成
 
-Skill はディレクトリ単位で管理します。ディレクトリ名が slash command 名になります。
+Skill はディレクトリ単位で管理します。frontmatter の `name` を省略するとディレクトリ名が slash command 名になります。
 
 ```text
 my-skill/
