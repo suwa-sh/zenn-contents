@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (64)
+## Articles: 下書き (65)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-06-05 | [🔐 技術調査 - CNCF Cloud Native IAM White Paper](articles/cncf-cloud-native-iam_20260605.md) | IAM, SPIFFE, OpenFGA, CNCF, ZeroTrust |
 | 2026-06-05 | [🧭 Endava の Dava.Flow に学ぶ AI-native 開発の制度化](articles/endava-davaflow-ai-native-delivery_20260605.md) | 生成AI, AIエージェント, OpenAI, DevOps, 組織開発 |
+| 2026-06-05 | [⚖️ Vercel規約更新に学ぶ、AIエージェントへの権限委任と責任分界の設計](articles/vercel-agentic-legal-terms_20260605.md) | Vercel, AIエージェント, セキュリティ, 認可, ガバナンス |
 | 2026-06-04 | [✅ 受け入れテスト駆動でLLMを評価する — 業務要件をリリースゲート化するATDLLMD拡張](articles/acceptance-test-driven-llm-evaluation_20260604.md) | LLM, LLMOps, Evaluation, Testing, AIGovernance |
 | 2026-06-04 | [🗂️ 技術調査 - Agents Schema](articles/agents-schema_20260604.md) | Snowflake, dbt, LookML, Metadata, LLM |
 | 2026-06-04 | [🧠 AIエージェントの長期記憶アーキテクチャ 記憶のライフサイクル管理という設計論](articles/ai-agent-long-term-memory_20260604.md) | LLM, AIエージェント, Mem0, RAG, 生成AI |
