@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (64)
+## Articles: 下書き (66)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-06-06 | [🧩 技術調査 - Claude Code Skills の設計原則](articles/claude-code-skills-design-principles_20260606.md) | ClaudeCode, AgentSkills, Anthropic, AIエージェント |
+| 2026-06-06 | [💸 Cloudflare AI Gateway「Spend Limits」を解剖する — AIの権限委任をドル建て予算で設計する](articles/cloudflare-ai-gateway-spend-limits_20260606.md) | Cloudflare, LLM, 生成AI, FinOps |
 | 2026-06-05 | [🔐 技術調査 - CNCF Cloud Native IAM White Paper](articles/cncf-cloud-native-iam_20260605.md) | IAM, SPIFFE, OpenFGA, CNCF, ZeroTrust |
 | 2026-06-05 | [🧭 Endava の Dava.Flow に学ぶ AI-native 開発の制度化](articles/endava-davaflow-ai-native-delivery_20260605.md) | 生成AI, AIエージェント, OpenAI, DevOps, 組織開発 |
 | 2026-06-05 | [⚖️ Vercel規約更新に学ぶ、AIエージェントへの権限委任と責任分界の設計](articles/vercel-agentic-legal-terms_20260605.md) | Vercel, AIエージェント, セキュリティ, 認可, ガバナンス |
