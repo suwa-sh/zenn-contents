@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (67)
+## Articles: 下書き (68)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-06-06 | [🧩 技術調査 - Claude Code Skills の設計原則](articles/claude-code-skills-design-principles_20260606.md) | ClaudeCode, AgentSkills, Anthropic, AIエージェント |
 | 2026-06-06 | [💸 Cloudflare AI Gateway「Spend Limits」を解剖する — AIの権限委任をドル建て予算で設計する](articles/cloudflare-ai-gateway-spend-limits_20260606.md) | Cloudflare, LLM, 生成AI, FinOps |
+| 2026-06-06 | [🌌 技術調査 - Cosmograph 2.0](articles/cosmograph-2-0_20260606.md) | Cosmograph, DataVisualization, WebGL, DuckDB, GraphVisualization |
 | 2026-06-06 | [🧠 技術調査 - OpenAI Dreaming に学ぶAIエージェント記憶設計の6区分](articles/openai-dreaming-memory_20260606.md) | OpenAI, ChatGPT, LLM, Mem0 |
 | 2026-06-05 | [🔐 技術調査 - CNCF Cloud Native IAM White Paper](articles/cncf-cloud-native-iam_20260605.md) | IAM, SPIFFE, OpenFGA, CNCF, ZeroTrust |
 | 2026-06-05 | [🧭 Endava の Dava.Flow に学ぶ AI-native 開発の制度化](articles/endava-davaflow-ai-native-delivery_20260605.md) | 生成AI, AIエージェント, OpenAI, DevOps, 組織開発 |
