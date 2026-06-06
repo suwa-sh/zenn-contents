@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (69)
+## Articles: 下書き (70)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-06-07 | [🚦 AIがコードを書くほどレビューが詰まる — 生成量を成果指標にしない開発フロー設計](articles/ai-dev-review-bottleneck_20260607.md) | AIコーディング, コードレビュー, 開発生産性, DORA, DevOps |
 | 2026-06-07 | [🛡️ 技術調査 - Vercel skills.sh API](articles/vercel-skills-sh-api_20260607.md) | AgentSkills, Vercel, SupplyChain, OIDC, Security |
 | 2026-06-06 | [🧩 技術調査 - Claude Code Skills の設計原則](articles/claude-code-skills-design-principles_20260606.md) | ClaudeCode, AgentSkills, Anthropic, AIエージェント |
 | 2026-06-06 | [💸 Cloudflare AI Gateway「Spend Limits」を解剖する — AIの権限委任をドル建て予算で設計する](articles/cloudflare-ai-gateway-spend-limits_20260606.md) | Cloudflare, LLM, 生成AI, FinOps |
