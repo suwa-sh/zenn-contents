@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (72)
+## Articles: 下書き (71)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -29,7 +29,6 @@
 | 2026-06-03 | [🛡️ AI エージェント向けサンドボックスの選び方: OS ネイティブから microVM まで構造で比較](articles/ai-agent-sandbox-environments_20260603.md) | Sandbox, Security, Firecracker, gVisor, ClaudeCode |
 | 2026-06-03 | [🚦 GitHub Copilot app の並列エージェント運用を承認点で設計する](articles/github-copilot-agent-desktop_20260603.md) | GitHubCopilot, AIAgent, CodingAgent, DevOps |
 | 2026-06-03 | [🛡️ 技術調査 - Microsoft MXC：Windowsをエージェント実行基盤にする実行境界モデル](articles/microsoft-mxc-agent-runtime_20260603.md) | MXC, AIエージェント, Windows, Security, Microsoft |
-| 2026-06-02 | [🧱 AIにSQLを書かせる前に整える信頼できるデータ基盤: Fivetran+dbt と dbt MCP](articles/fivetran-dbt-trusted-ai-data-foundation_20260602.md) | dbt, MCP, AIAgent, DataEngineering, SemanticLayer |
 | 2026-06-02 | [🧨 コーディングエージェントは何を壊すのか──運用安全性失敗547件の実証研究](articles/what-breaks-when-llms-code_20260602.md) | 生成AI, LLM, AIエージェント, ClaudeCode |
 | 2026-06-01 | [🛡️ 技術調査 - CNCF クラウドネイティブ IDP (GitOps + サプライチェーン防御)](articles/cncf-cloud-native-idp_20260601.md) | Kubernetes, GitOps, ArgoCD, CNCF, PlatformEngineering |
 | 2026-05-31 | [🌿 顧客要望をプレビューブランチ化する開発運用 — 速さの先に残る検証・合意・捨てる判断](articles/braintrust-codex-preview-branch_20260531.md) | Codex, OpenAI, AIエージェント, プロトタイピング |
@@ -84,10 +83,11 @@
 | 2025-05-30 | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 
-## Articles: 公開済み (139)
+## Articles: 公開済み (140)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-06-09 | [🧱 AIにSQLを書かせる前に整える信頼できるデータ基盤: Fivetran+dbt と dbt MCP](articles/fivetran-dbt-trusted-ai-data-foundation_20260602.md) | dbt, MCP, AIAgent, DataEngineering, SemanticLayer |
 | 2026-06-06 | [🛡️ 自律 AI エージェントに Zero Trust を適用する実装フレームワーク](articles/zero-trust-for-ai-agents_20260602.md) | ZeroTrust, AIAgent, Security, Anthropic, MCP |
 | 2026-06-04 | [🛡️ Thoughtworks - AI Assurance：Enterprise AIの品質保証を継続的リスク低減へ](articles/ai-assurance-enterprise-testing-strategy_20260526.md) | AI, LLM, RAG, MLOps, QA |
 | 2026-06-02 | [🛡️ 本番AIエンドポイントを推論盗用から守る多層防御とコスト境界の設計](articles/inference-theft-defense_20260531.md) | AISecurity, LLM, Vercel, BotID, SRE |

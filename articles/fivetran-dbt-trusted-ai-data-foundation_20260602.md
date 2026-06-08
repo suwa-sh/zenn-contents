@@ -3,7 +3,8 @@ title: "AIにSQLを書かせる前に整える信頼できるデータ基盤: Fi
 emoji: "🧱"
 type: "tech"
 topics: ["dbt", "MCP", "AIAgent", "DataEngineering", "SemanticLayer"]
-published: false
+published: true
+published_at: 2026-06-09
 ---
 
 > 検証日: 2026-06-02 / 対象: dbt MCP server・Semantic Layer (MetricFlow)・Agents Schema を含む Fivetran+dbt 統合基盤
