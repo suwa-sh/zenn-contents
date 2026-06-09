@@ -48,7 +48,7 @@ frontmatter で宣言できるフィールドは以下のとおりです。
 | `name` | 任意 | 表示名。省略時はファイル名が識別子兼デフォルト表示名 |
 | `target` | 任意 | `vscode` または `github-copilot`。未設定で両環境に対応 |
 | `tools` | 任意 | 使用可能なツール名のリスト。未設定で全ツール許可 |
-| `model` | 任意 | 実行モデルの指定。未設定でデフォルトモデルを継承 |
+| `model` | 任意 | 実行モデルの指定。未設定でデフォルトモデルを継承 (CLI 実機での有効性は後述のとおり要検証) |
 | `disable-model-invocation` | 任意 | `true` でタスク文脈からの自動選択を無効化 |
 | `user-invocable` | 任意 | `false` でユーザーの手動選択を不可にする |
 | `mcp-servers` | 任意 | エージェントに同梱する MCP サーバーの定義 |
@@ -487,7 +487,7 @@ mcp-servers:
 あなたは Issue トリアージの専門エージェントです。
 ```
 
-`type: local` は、ローカルプロセスを起動する MCP サーバーを指定します。`env` の変数展開で使える構文は `$NAME` / `${NAME}` / `${{ secrets.NAME }}` / `${{ vars.NAME }}` です。MCP ツールを `tools:` で参照するときは `<サーバー名>/<ツール名>` プレフィックスを使います (例: `issues-mcp/create_issue`)。`mcp-servers` は VS Code 等 IDE 版では無視されます (CLI / cloud agent 専用)。`~/.copilot/mcp-config.json` との優先関係は未確認です。
+`type: local` は、ローカルプロセスを起動する MCP サーバーを指定します。`env` の変数展開で使える主な構文は `$NAME` / `${NAME}` / `${{ secrets.NAME }}` / `${{ vars.NAME }}` です。MCP ツールを `tools:` で参照するときは `<サーバー名>/<ツール名>` プレフィックスを使います (例: `issues-mcp/create_issue`)。`mcp-servers` は VS Code 等 IDE 版では無視されます (CLI / cloud agent 専用)。`~/.copilot/mcp-config.json` との優先関係は未確認です。
 
 ### 配置スコープと優先順位
 
@@ -577,7 +577,7 @@ copilot --agent issue-triage \
   --prompt "Issue をトリアージして"
 ```
 
-利用可能なツール種別は `shell` (別名 `execute`/`Bash`/`powershell`) `write` `read` `edit` `view` `grep` `glob` `web_fetch` `web_search` です。MCP ツールは `ServerName(subcommand_name)` 構文です。
+ここで渡す tool kind は、起動側 (`--allow-tool`/`--deny-tool`) の語彙です。frontmatter の `tools:` で使うエイリアス (`execute`/`read`/`edit`/`search`/`agent`/`web`/`todo`) とは別系統なので混同しないようにします。`--allow-tool` 側で使う種別は `shell` `write` `read` `edit` `view` `grep` `glob` `web_fetch` `web_search` です。MCP ツールは `ServerName(subcommand_name)` 構文です。
 
 自動承認モードもあります。
 
@@ -727,7 +727,7 @@ deny が常に allow より優先します (公式: "Deny rules always take prec
 
 ### モデル評価セットを用意する — `model` 固定でも版で挙動が変わる
 
-- 誤解: `model: GPT-4.1` でモデルを固定すれば挙動が再現する
+- 誤解: 仮に `model:` が CLI で有効だとして、`model: GPT-4.1` のようにモデルを固定すれば挙動が再現する
 - 反証: LLM はモデル版更新・セッション長・コンテキスト量で挙動が変わる。「定義に書いたハード要件を LLM はサイレントに落とす」(二次情報)
 - 推奨: モデル版更新のたびに実行する回帰評価セット (入力と期待出力のペアに自動 assert) を用意。`model:` の識別子表記は supported-models ページで現行の許容値を確認。per-agent reasoning effort は未対応 (Issue #2904)
 
