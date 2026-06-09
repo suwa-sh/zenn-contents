@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (73)
+## Articles: 下書き (74)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-06-09 | [🧭 技術調査 - AI駆動開発を2コマンドで組織標準にする設計](articles/ai-driven-dev-two-commands_20260609.md) | ClaudeCode, Codex, AIエージェント, 生成AI |
 | 2026-06-09 | [🛡️ 技術調査 - 悪性 Agent Skill を実行時検証する MalSkillBench](articles/malskillbench_20260609.md) | Security, AIAgent, ClaudeCode, LLM, MCP |
+| 2026-06-09 | [🎛️ 本番AIエージェントは「自律性」より「制御可能性」で動く—実証研究MAPを読む](articles/measuring-agents-in-production_20260609.md) | AIエージェント, LLM, 生成AI, MLOps |
 | 2026-06-08 | [🔍 Alibaba Open Code Review:「LLMに行番号を出させない」AIレビュー設計](articles/open-code-review_20260608.md) | CodeReview, AI, LLM, Go, ClaudeCode |
 | 2026-06-08 | [🔒 技術調査 - OpenAI Lockdown Mode：外部送信を絞るプロンプトインジェクション対策](articles/openai-lockdown-mode_20260608.md) | OpenAI, ChatGPT, Security, PromptInjection, MCP |
 | 2026-06-07 | [🚦 AIがコードを書くほどレビューが詰まる — 生成量を成果指標にしない開発フロー設計](articles/ai-dev-review-bottleneck_20260607.md) | AIコーディング, コードレビュー, 開発生産性, DORA, DevOps |
