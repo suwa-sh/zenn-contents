@@ -3,7 +3,8 @@ title: "Loop Engineering入門：AIコーディングエージェントを動か
 emoji: "🔁"
 type: "tech"
 topics: ["AIエージェント", "生成AI", "ClaudeCode", "LoopEngineering", "GitHubActions"]
-published: false
+published: true
+published_at: 2026-06-11
 ---
 
 Loop engineering は、AI コーディングエージェントを手動で逐次プロンプトする代わりに、エージェントを自律的にプロンプト・オーケストレートするシステムを設計する実践方法論です。本記事は方法論として、構成要素・論理構造・データモデル・実装パターン・運用・限界を整理します。
