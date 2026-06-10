@@ -7,13 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (79)
+## Articles: 下書き (80)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-06-10 | [🚦 能力制限付きルーティング — Fable 5 に学ぶLLMゲートウェイ設計](articles/capability-limited-routing_20260610.md) | AI, LLM, Anthropic, Security, LLMOps |
 | 2026-06-10 | [🤖 技術調査 - GitHub Copilot CLI のカスタムエージェント](articles/github-copilot-cli-custom-agents_20260610.md) | GitHubCopilot, CLI, AIエージェント, 生成AI |
 | 2026-06-10 | [🏗️ 価格.comをAI駆動で全面刷新するDODAI — ワークフロー構造と同等性検証の設計](articles/kakaku-com-ai-driven-renewal_20260610.md) | AIエージェント, レガシーマイグレーション, Python, FastAPI |
+| 2026-06-10 | [🔁 Loop Engineering入門：AIコーディングエージェントを動かすシステムを設計する](articles/loop-engineering_20260610.md) | AIエージェント, 生成AI, ClaudeCode, LoopEngineering, GitHubActions |
 | 2026-06-09 | [🧭 技術調査 - AI駆動開発を2コマンドで組織標準にする設計](articles/ai-driven-dev-two-commands_20260609.md) | ClaudeCode, Codex, AIエージェント, 生成AI |
 | 2026-06-09 | [🚀 技術調査 - Antigravity 2.0](articles/antigravity-2-0_20260609.md) | Antigravity, Gemini, Google, AIエージェント, 生成AI |
 | 2026-06-09 | [🖼️ 技術調査 - Azure AI Vision Image Analysis 4.0 (Florence)](articles/azure-florence_20260609.md) | Azure, ComputerVision, AI, OCR, Florence |
