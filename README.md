@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (84)
+## Articles: 下書き (86)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-06-13 | [🤖 技術調査 - GitHub Agentic Workflows](articles/github-agentic-workflows_20260613.md) | GitHubActions, AIAgent, CICD, Security |
+| 2026-06-13 | [📂 技術調査 - OKF (Open Knowledge Format)](articles/okf-open-knowledge-format_20260613.md) | OKF, GoogleCloud, AIエージェント, Markdown, データ基盤 |
 | 2026-06-12 | [🔏 技術調査 - Dapr 1.18 Verifiable Execution](articles/dapr-verifiable-execution_20260612.md) | Dapr, CloudNative, SPIFFE, Security |
 | 2026-06-12 | [🔑 技術調査 - GitHub Secret Scanning の後段 LLM 文脈検証](articles/github-secret-scanning-llm_20260612.md) | GitHub, Security, LLM, DevSecOps |
 | 2026-06-12 | [📋 AIに要件定義の答えを書かせると失敗する: 食べログのフィージビリティレポート設計](articles/tabelog-ai-requirements-definition_20260612.md) | 生成AI, 要件定義, Devin, AIエージェント, GitHubActions |
