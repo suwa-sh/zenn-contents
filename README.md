@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (83)
+## Articles: 下書き (84)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-06-12 | [🔏 技術調査 - Dapr 1.18 Verifiable Execution](articles/dapr-verifiable-execution_20260612.md) | Dapr, CloudNative, SPIFFE, Security |
+| 2026-06-12 | [🔑 技術調査 - GitHub Secret Scanning の後段 LLM 文脈検証](articles/github-secret-scanning-llm_20260612.md) | GitHub, Security, LLM, DevSecOps |
 | 2026-06-11 | [🔌 技術調査 - GitHub Copilot CLI の Language Server (LSP) 連携](articles/copilot-cli-language-server_20260611.md) | GitHubCopilot, LSP, CodingAgent, MCP |
 | 2026-06-11 | [✂️ 技術調査 - 長時間エージェントのコンテキスト設計（Less Context, Better Agents）](articles/less-context-better-agents_20260611.md) | LLM, 生成AI, ContextEngineering, AIエージェント, Anthropic |
 | 2026-06-11 | [🧪 技術調査 - TestMap：AI生成テストを証拠付きで評価する基盤設計](articles/testmap_20260611.md) | LLM, テスト, dotnet, 生成AI |
