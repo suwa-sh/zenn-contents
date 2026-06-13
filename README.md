@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (86)
+## Articles: 下書き (87)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-06-13 | [📨 FTP GET/DELETE 型のレガシーファイル連携を無改修で Pub/Sub 化する file-pubsub を作った](articles/file-pubsub_20260613.md) | Go, OSS, FTP, PubSub |
 | 2026-06-13 | [🤖 技術調査 - GitHub Agentic Workflows](articles/github-agentic-workflows_20260613.md) | GitHubActions, AIAgent, CICD, Security |
 | 2026-06-13 | [📂 技術調査 - OKF (Open Knowledge Format)](articles/okf-open-knowledge-format_20260613.md) | OKF, GoogleCloud, AIエージェント, Markdown, データ基盤 |
 | 2026-06-12 | [🔏 技術調査 - Dapr 1.18 Verifiable Execution](articles/dapr-verifiable-execution_20260612.md) | Dapr, CloudNative, SPIFFE, Security |
