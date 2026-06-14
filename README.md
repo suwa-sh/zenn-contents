@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (89)
+## Articles: 下書き (90)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-06-14 | [🛡️ AIモデルが突然使えなくなる日に備える モデル可用性BCPの設計](articles/ai-model-availability-bcp_20260614.md) | LLM, 生成AI, Anthropic, LLMOps, SRE |
 | 2026-06-14 | [🔒 CI/CD依存をロックダウンする — 実行時の信頼からレビュー時の信頼へ](articles/cicd-dependency-lockdown_20260614.md) | GitHubActions, CICD, SupplyChain, Go, Renovate |
+| 2026-06-14 | [🤖 技術調査 - Trinity（自己ホスト型 AI エージェント運用基盤）](articles/trinity_20260614.md) | Claude, MCP, Docker, AIエージェント, LLM |
 | 2026-06-13 | [📨 FTP GET/DELETE 型のレガシーファイル連携を無改修で Pub/Sub 化する file-pubsub を作った](articles/file-pubsub_20260613.md) | Go, OSS, FTP, PubSub |
 | 2026-06-13 | [🤖 技術調査 - GitHub Agentic Workflows](articles/github-agentic-workflows_20260613.md) | GitHubActions, AIAgent, CICD, Security |
 | 2026-06-13 | [📂 技術調査 - OKF (Open Knowledge Format)](articles/okf-open-knowledge-format_20260613.md) | OKF, GoogleCloud, AIエージェント, Markdown, データ基盤 |
