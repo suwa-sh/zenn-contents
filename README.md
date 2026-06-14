@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (91)
+## Articles: 下書き (92)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-06-15 | [📈 技術調査 - Cloudflareが追加投資なしでセキュリティスキャンを10倍にした方法](articles/cloudflare-security-scan-scaling_20260615.md) | Cloudflare, Kafka, PostgreSQL, Go, Scalability |
 | 2026-06-15 | [🏗️ Gartner予測「IDE中心から自動化プラットフォームへ」を実装と反証で検証する](articles/gartner-ai-coding-platform-shift_20260615.md) | AI, GitHubCopilot, Vercel, DevOps, CodingAgent |
 | 2026-06-14 | [🛡️ AIモデルが突然使えなくなる日に備える モデル可用性BCPの設計](articles/ai-model-availability-bcp_20260614.md) | LLM, 生成AI, Anthropic, LLMOps, SRE |
 | 2026-06-14 | [🔒 CI/CD依存をロックダウンする — 実行時の信頼からレビュー時の信頼へ](articles/cicd-dependency-lockdown_20260614.md) | GitHubActions, CICD, SupplyChain, Go, Renovate |
