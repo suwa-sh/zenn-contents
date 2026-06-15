@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (91)
+## Articles: 下書き (93)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-06-16 | [💰 技術調査 - AWS WAF AIトラフィック収益化機能 (x402)](articles/aws-waf-ai-traffic-monetization_20260616.md) | AWS, WAF, CloudFront, x402, Security |
+| 2026-06-16 | [🧭 AI駆動開発の個人差を組織標準で埋める導入設計](articles/rakus-ai-adoption-standardization_20260616.md) | 生成AI, 開発生産性, DORA, SpecDrivenDevelopment, チーム開発 |
 | 2026-06-15 | [📈 技術調査 - Cloudflareが追加投資なしでセキュリティスキャンを10倍にした方法](articles/cloudflare-security-scan-scaling_20260615.md) | Cloudflare, Kafka, PostgreSQL, Go, Scalability |
 | 2026-06-15 | [🏗️ Gartner予測「IDE中心から自動化プラットフォームへ」を実装と反証で検証する](articles/gartner-ai-coding-platform-shift_20260615.md) | AI, GitHubCopilot, Vercel, DevOps, CodingAgent |
 | 2026-06-14 | [🛡️ AIモデルが突然使えなくなる日に備える モデル可用性BCPの設計](articles/ai-model-availability-bcp_20260614.md) | LLM, 生成AI, Anthropic, LLMOps, SRE |
