@@ -3,7 +3,8 @@ title: "技術調査 - OKF (Open Knowledge Format)"
 emoji: "📂"
 type: "tech"
 topics: ["OKF", "GoogleCloud", "AIエージェント", "Markdown", "データ基盤"]
-published: false
+published: true
+published_at: 2026-06-16
 ---
 
 OKF (Open Knowledge Format) は、Google Cloud が 2026 年 6 月に公開した「AIエージェントが読む知識を、どのファイル形式で持つか」を定める軽量フォーマットです。サービスでもプラットフォームでもなく、YAML frontmatter 付き markdown ファイルのディレクトリツリーという取り決めに過ぎません。本記事は spec 原文とリポジトリ実体を一次ソースとして、OKF の構造・データモデル・導入手順・運用までを整理します。

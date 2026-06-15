@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (92)
+## Articles: 下書き (91)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -18,7 +18,6 @@
 | 2026-06-14 | [🤖 技術調査 - Trinity（自己ホスト型 AI エージェント運用基盤）](articles/trinity_20260614.md) | Claude, MCP, Docker, AIエージェント, LLM |
 | 2026-06-13 | [📨 FTP GET/DELETE 型のレガシーファイル連携を無改修で Pub/Sub 化する file-pubsub を作った](articles/file-pubsub_20260613.md) | Go, OSS, FTP, PubSub |
 | 2026-06-13 | [🤖 技術調査 - GitHub Agentic Workflows](articles/github-agentic-workflows_20260613.md) | GitHubActions, AIAgent, CICD, Security |
-| 2026-06-13 | [📂 技術調査 - OKF (Open Knowledge Format)](articles/okf-open-knowledge-format_20260613.md) | OKF, GoogleCloud, AIエージェント, Markdown, データ基盤 |
 | 2026-06-12 | [🔏 技術調査 - Dapr 1.18 Verifiable Execution](articles/dapr-verifiable-execution_20260612.md) | Dapr, CloudNative, SPIFFE, Security |
 | 2026-06-12 | [🔑 技術調査 - GitHub Secret Scanning の後段 LLM 文脈検証](articles/github-secret-scanning-llm_20260612.md) | GitHub, Security, LLM, DevSecOps |
 | 2026-06-12 | [📋 AIに要件定義の答えを書かせると失敗する: 食べログのフィージビリティレポート設計](articles/tabelog-ai-requirements-definition_20260612.md) | 生成AI, 要件定義, Devin, AIエージェント, GitHubActions |
@@ -104,10 +103,11 @@
 | 2025-05-30 | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 
-## Articles: 公開済み (142)
+## Articles: 公開済み (143)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-06-16 | [📂 技術調査 - OKF (Open Knowledge Format)](articles/okf-open-knowledge-format_20260613.md) | OKF, GoogleCloud, AIエージェント, Markdown, データ基盤 |
 | 2026-06-13 | [🚦 能力制限付きルーティング — Fable 5 に学ぶLLMゲートウェイ設計](articles/capability-limited-routing_20260610.md) | AI, LLM, Anthropic, Security, LLMOps |
 | 2026-06-11 | [🔁 Loop Engineering入門：AIコーディングエージェントを動かすシステムを設計する](articles/loop-engineering_20260610.md) | AIエージェント, 生成AI, ClaudeCode, LoopEngineering, GitHubActions |
 | 2026-06-09 | [🧱 AIにSQLを書かせる前に整える信頼できるデータ基盤: Fivetran+dbt と dbt MCP](articles/fivetran-dbt-trusted-ai-data-foundation_20260602.md) | dbt, MCP, AIAgent, DataEngineering, SemanticLayer |
