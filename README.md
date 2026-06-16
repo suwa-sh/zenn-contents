@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (95)
+## Articles: 下書き (96)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-06-17 | [🧹 技術調査 - AGENTS.md・CLAUDE.md 設定ファイルの設計臭6分類](articles/agents-claude-config-smells_20260617.md) | ClaudeCode, AIエージェント, LLM, GitHubCopilot |
+| 2026-06-17 | [🛡️ 技術調査 - Claude Code 企業配布の3層分離と managed settings 強制](articles/claude-code-enterprise-governance_20260617.md) | ClaudeCode, MCP, セキュリティ, AIエージェント, DevOps |
 | 2026-06-17 | [🛰️ 技術調査 - GitLab Agentic Engineering Platform](articles/gitlab-agentic-platform_20260617.md) | GitLab, AIエージェント, DevOps, MCP |
 | 2026-06-16 | [💰 技術調査 - AWS WAF AIトラフィック収益化機能 (x402)](articles/aws-waf-ai-traffic-monetization_20260616.md) | AWS, WAF, CloudFront, x402, Security |
 | 2026-06-16 | [🧭 AI駆動開発の個人差を組織標準で埋める導入設計](articles/rakus-ai-adoption-standardization_20260616.md) | 生成AI, 開発生産性, DORA, SpecDrivenDevelopment, チーム開発 |
