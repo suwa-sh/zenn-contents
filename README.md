@@ -7,13 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (96)
+## Articles: 下書き (95)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-06-17 | [🧹 技術調査 - AGENTS.md・CLAUDE.md 設定ファイルの設計臭6分類](articles/agents-claude-config-smells_20260617.md) | ClaudeCode, AIエージェント, LLM, GitHubCopilot |
 | 2026-06-17 | [🛡️ 技術調査 - Claude Code 企業配布の3層分離と managed settings 強制](articles/claude-code-enterprise-governance_20260617.md) | ClaudeCode, MCP, セキュリティ, AIエージェント, DevOps |
-| 2026-06-17 | [🛰️ 技術調査 - GitLab Agentic Engineering Platform](articles/gitlab-agentic-platform_20260617.md) | GitLab, AIエージェント, DevOps, MCP |
 | 2026-06-16 | [💰 技術調査 - AWS WAF AIトラフィック収益化機能 (x402)](articles/aws-waf-ai-traffic-monetization_20260616.md) | AWS, WAF, CloudFront, x402, Security |
 | 2026-06-16 | [🧭 AI駆動開発の個人差を組織標準で埋める導入設計](articles/rakus-ai-adoption-standardization_20260616.md) | 生成AI, 開発生産性, DORA, SpecDrivenDevelopment, チーム開発 |
 | 2026-06-15 | [📈 技術調査 - Cloudflareが追加投資なしでセキュリティスキャンを10倍にした方法](articles/cloudflare-security-scan-scaling_20260615.md) | Cloudflare, Kafka, PostgreSQL, Go, Scalability |
@@ -108,10 +107,11 @@
 | 2025-05-30 | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 
-## Articles: 公開済み (143)
+## Articles: 公開済み (144)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-06-18 | [🛰️ 技術調査 - GitLab Agentic Engineering Platform](articles/gitlab-agentic-platform_20260617.md) | GitLab, AIエージェント, DevOps, MCP |
 | 2026-06-16 | [📂 技術調査 - OKF (Open Knowledge Format)](articles/okf-open-knowledge-format_20260613.md) | OKF, GoogleCloud, AIエージェント, Markdown, データ基盤 |
 | 2026-06-13 | [🚦 能力制限付きルーティング — Fable 5 に学ぶLLMゲートウェイ設計](articles/capability-limited-routing_20260610.md) | AI, LLM, Anthropic, Security, LLMOps |
 | 2026-06-11 | [🔁 Loop Engineering入門：AIコーディングエージェントを動かすシステムを設計する](articles/loop-engineering_20260610.md) | AIエージェント, 生成AI, ClaudeCode, LoopEngineering, GitHubActions |

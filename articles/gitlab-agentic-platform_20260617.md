@@ -3,7 +3,8 @@ title: "技術調査 - GitLab Agentic Engineering Platform"
 emoji: "🛰️"
 type: "tech"
 topics: ["GitLab", "AIエージェント", "DevOps", "MCP"]
-published: false
+published: true
+published_at: 2026-06-18
 ---
 
 GitLab は 2026 年 6 月 10〜11 日に開催したオンラインイベント **GitLab Transcend** で、エージェント並列実行を前提にした次世代のソフトウェア開発プラットフォームを発表しました。本記事は、その中核である **次世代 SCM**・**GitLab Orbit**・**エージェント向けガバナンス**・**GitLab Duo Agent Platform**・**GitLab Flex** の構造とデータモデルを、公式情報をもとに整理します。
