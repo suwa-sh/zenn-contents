@@ -3,7 +3,8 @@ title: "技術調査 - AWS Transform Continuous Modernization"
 emoji: "🧹"
 type: "tech"
 topics: ["AWS", "AWSTransform", "TechDebt", "DevOps"]
-published: false
+published: true
+published_at: 2026-06-20
 ---
 
 > 本記事は 2026 年 6 月 17 日の preview 発表時点の情報に基づきます。preview 段階のため、仕様は変更される可能性があります。continuous modernization 固有の手順が未公開な箇所は、公式 User Guide の `atx ct` コマンドリファレンスや公式記載の機能から導いた運用案を「実装案」として明示します。

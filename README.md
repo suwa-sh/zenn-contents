@@ -7,12 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (98)
+## Articles: 下書き (97)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-06-19 | [🛡️ 技術調査 - Cloudflare 脆弱性探索ハーネス (VDH/VVS)](articles/cloudflare-vulnerability-harness_20260619.md) | Cloudflare, セキュリティ, AIエージェント, LLM |
-| 2026-06-18 | [🧹 技術調査 - AWS Transform Continuous Modernization](articles/aws-transform-continuous-modernization_20260618.md) | AWS, AWSTransform, TechDebt, DevOps |
 | 2026-06-18 | [📑 技術調査 - AIコーディングの委任契約とレビュー可能性](articles/software-delegation-contracts_20260618.md) | CodingAgent, CodeReview, LLMOps, AIエージェント |
 | 2026-06-17 | [🧹 技術調査 - AGENTS.md・CLAUDE.md 設定ファイルの設計臭6分類](articles/agents-claude-config-smells_20260617.md) | ClaudeCode, AIエージェント, LLM, GitHubCopilot |
 | 2026-06-17 | [🛡️ 技術調査 - Claude Code 企業配布の3層分離と managed settings 強制](articles/claude-code-enterprise-governance_20260617.md) | ClaudeCode, MCP, セキュリティ, AIエージェント, DevOps |
@@ -110,10 +109,11 @@
 | 2025-05-30 | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 
-## Articles: 公開済み (144)
+## Articles: 公開済み (145)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-06-20 | [🧹 技術調査 - AWS Transform Continuous Modernization](articles/aws-transform-continuous-modernization_20260618.md) | AWS, AWSTransform, TechDebt, DevOps |
 | 2026-06-18 | [🛰️ 技術調査 - GitLab Agentic Engineering Platform](articles/gitlab-agentic-platform_20260617.md) | GitLab, AIエージェント, DevOps, MCP |
 | 2026-06-16 | [📂 技術調査 - OKF (Open Knowledge Format)](articles/okf-open-knowledge-format_20260613.md) | OKF, GoogleCloud, AIエージェント, Markdown, データ基盤 |
 | 2026-06-13 | [🚦 能力制限付きルーティング — Fable 5 に学ぶLLMゲートウェイ設計](articles/capability-limited-routing_20260610.md) | AI, LLM, Anthropic, Security, LLMOps |
