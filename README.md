@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (99)
+## Articles: 下書き (101)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-06-21 | [🎬 技術調査 - Codex Record & Replay](articles/codex-record-and-replay_20260621.md) | Codex, OpenAI, AgentSkills, Automation, ComputerUse |
+| 2026-06-21 | [🧩 技術調査 - MCP サーバー開発を足場化する公式 Agent Skills](articles/mcp-server-agent-skills_20260621.md) | MCP, AgentSkills, ModelContextProtocol, ClaudeCode |
 | 2026-06-20 | [📊 技術調査 - GitHub 社内データ分析エージェント Qubot](articles/github-internal-data-analytics-agent_20260620.md) | GitHub, MCP, DataAnalytics, LLM, Copilot |
 | 2026-06-20 | [🕵️ 技術調査 - MosaicLeaks](articles/mosaicleaks_20260620.md) | LLM, AIエージェント, セキュリティ, 強化学習, プライバシー |
 | 2026-06-19 | [🛡️ 技術調査 - Cloudflare 脆弱性探索ハーネス (VDH/VVS)](articles/cloudflare-vulnerability-harness_20260619.md) | Cloudflare, セキュリティ, AIエージェント, LLM |
