@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (101)
+## Articles: 下書き (102)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-06-21 | [🧾 味の素の経理AIエージェントに学ぶ 承認業務をAIに委任する前提条件](articles/ajinomoto-accounting-agent_20260621.md) | AIエージェント, LLM, 経理, 業務標準化, ガバナンス |
 | 2026-06-21 | [🎬 技術調査 - Codex Record & Replay](articles/codex-record-and-replay_20260621.md) | Codex, OpenAI, AgentSkills, Automation, ComputerUse |
 | 2026-06-21 | [🧩 技術調査 - MCP サーバー開発を足場化する公式 Agent Skills](articles/mcp-server-agent-skills_20260621.md) | MCP, AgentSkills, ModelContextProtocol, ClaudeCode |
 | 2026-06-20 | [📊 技術調査 - GitHub 社内データ分析エージェント Qubot](articles/github-internal-data-analytics-agent_20260620.md) | GitHub, MCP, DataAnalytics, LLM, Copilot |
