@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (102)
+## Articles: 下書き (103)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-06-22 | [🧭 業務文脈を背負う実装者「FDE」はAI時代に何を変えるのか](articles/forward-deployed-engineer-ai-era_20260622.md) | 生成AI, AIエージェント, キャリア, 組織, FDE |
 | 2026-06-21 | [🧾 味の素の経理AIエージェントに学ぶ 承認業務をAIに委任する前提条件](articles/ajinomoto-accounting-agent_20260621.md) | AIエージェント, LLM, 経理, 業務標準化, ガバナンス |
 | 2026-06-21 | [🎬 技術調査 - Codex Record & Replay](articles/codex-record-and-replay_20260621.md) | Codex, OpenAI, AgentSkills, Automation, ComputerUse |
 | 2026-06-21 | [🧩 技術調査 - MCP サーバー開発を足場化する公式 Agent Skills](articles/mcp-server-agent-skills_20260621.md) | MCP, AgentSkills, ModelContextProtocol, ClaudeCode |
