@@ -1,9 +1,10 @@
 ---
-title: "技術調査 - MCP サーバー開発を足場化する公式 Agent Skills"
+title: "MCP サーバー開発を足場化する公式 Agent Skills - mcp-server-dev"
 emoji: "🧩"
 type: "tech"
 topics: ["MCP", "AgentSkills", "ModelContextProtocol", "ClaudeCode"]
-published: false
+published: true
+published_at: 2026-06-23
 ---
 
 MCP（Model Context Protocol）公式が「Build with Agent Skills」ドキュメントで、MCP サーバー開発を足場化する `mcp-server-dev` プラグインを提示しました。`build-mcp-server` / `build-mcp-app` / `build-mcpb` の 3 つの Agent Skill が、エージェントにユースケースを問診させ、デプロイモデル・認証・配布形態・ツール設計まで決めてからサーバーを scaffold します。
