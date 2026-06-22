@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (104)
+## Articles: 下書き (105)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-06-22 | [🧯 システム連携の被害半径(blast radius)を広げない境界設計 — 自動連携・自動登録の事故を防ぐ](articles/blast-radius-boundary-design_20260622.md) | Security, ZeroTrust, Architecture, OAuth |
 | 2026-06-22 | [🗂️ Claude Code の指示をどこに書くか — 7つの指示面とコンテキスト負債の設計](articles/claude-code-steering-surfaces_20260622.md) | ClaudeCode, AI, LLM, 生成AI, ContextEngineering |
 | 2026-06-22 | [🧭 業務文脈を背負う実装者「FDE」はAI時代に何を変えるのか](articles/forward-deployed-engineer-ai-era_20260622.md) | 生成AI, AIエージェント, キャリア, 組織, FDE |
 | 2026-06-21 | [🧾 味の素の経理AIエージェントに学ぶ 承認業務をAIに委任する前提条件](articles/ajinomoto-accounting-agent_20260621.md) | AIエージェント, LLM, 経理, 業務標準化, ガバナンス |
