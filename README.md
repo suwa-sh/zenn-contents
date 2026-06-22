@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (106)
+## Articles: 下書き (107)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-06-23 | [🛡️ 技術調査 - Claude Opus 4.7 の高リスクサイバー遮断と Cyber Verification Program](articles/claude-opus-4-7-cyber-safeguards_20260623.md) | Claude, Anthropic, Security, AI, LLMOps |
 | 2026-06-23 | [🛡️ 技術調査 - OpenAI Daybreak（Codex Security / GPT-5.5-Cyber）](articles/openai-daybreak-security_20260623.md) | OpenAI, Codex, Security, DevSecOps, 生成AI |
 | 2026-06-23 | [🏢 Samsungの全社AI導入に見る「配布した」と「効いている」の距離](articles/samsung-enterprise-ai-deployment_20260623.md) | 生成AI, ChatGPT, OpenAI, 組織開発, DX |
 | 2026-06-22 | [🧯 システム連携の被害半径(blast radius)を広げない境界設計 — 自動連携・自動登録の事故を防ぐ](articles/blast-radius-boundary-design_20260622.md) | Security, ZeroTrust, Architecture, OAuth |
