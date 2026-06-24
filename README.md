@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (111)
+## Articles: 下書き (112)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-06-25 | [🔐 技術調査 - Confidential AI](articles/confidential-ai_20260625.md) | ConfidentialAI, ConfidentialComputing, GoogleCloud, NVIDIA, Attestation |
+| 2026-06-25 | [🛡️ 共用メール基盤事案で露呈した「共有インフラ責任境界」の設計と落とし穴](articles/kddi-isp-shared-mail-incident_20260625.md) | Security, IncidentResponse, Compliance, RACI, DPA |
 | 2026-06-24 | [🚀 技術調査 - AWS Lambda MicroVMs](articles/aws-lambda-microvms_20260624.md) | AWS, Lambda, Serverless, Firecracker, MicroVM |
 | 2026-06-24 | [🔭 技術調査 - Google Cloud Observability Analytics](articles/googlecloud-observability-analytics_20260624.md) | GoogleCloud, Observability, BigQuery, OpenTelemetry, SQL |
 | 2026-06-24 | [🚩 技術調査 - Vercel Flags](articles/vercel-flags_20260624.md) | VercelFlags, FeatureFlags, NextJS, EdgeConfig, ProgressiveDelivery |
