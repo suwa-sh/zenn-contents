@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (110)
+## Articles: 下書き (109)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -18,7 +18,6 @@
 | 2026-06-23 | [🛡️ 技術調査 - OpenAI Daybreak（Codex Security / GPT-5.5-Cyber）](articles/openai-daybreak-security_20260623.md) | OpenAI, Codex, Security, DevSecOps, 生成AI |
 | 2026-06-23 | [🏢 Samsungの全社AI導入に見る「配布した」と「効いている」の距離](articles/samsung-enterprise-ai-deployment_20260623.md) | 生成AI, ChatGPT, OpenAI, 組織開発, DX |
 | 2026-06-22 | [🧯 システム連携の被害半径(blast radius)を広げない境界設計 — 自動連携・自動登録の事故を防ぐ](articles/blast-radius-boundary-design_20260622.md) | Security, ZeroTrust, Architecture, OAuth |
-| 2026-06-22 | [🗂️ Claude Code の指示をどこに書くか — 7つの指示面とコンテキスト負債の設計](articles/claude-code-steering-surfaces_20260622.md) | ClaudeCode, AI, LLM, 生成AI, ContextEngineering |
 | 2026-06-22 | [🧭 業務文脈を背負う実装者「FDE」はAI時代に何を変えるのか](articles/forward-deployed-engineer-ai-era_20260622.md) | 生成AI, AIエージェント, キャリア, 組織, FDE |
 | 2026-06-21 | [🧾 味の素の経理AIエージェントに学ぶ 承認業務をAIに委任する前提条件](articles/ajinomoto-accounting-agent_20260621.md) | AIエージェント, LLM, 経理, 業務標準化, ガバナンス |
 | 2026-06-21 | [🎬 技術調査 - Codex Record & Replay](articles/codex-record-and-replay_20260621.md) | Codex, OpenAI, AgentSkills, Automation, ComputerUse |
@@ -122,10 +121,11 @@
 | 2025-05-30 | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 
-## Articles: 公開済み (146)
+## Articles: 公開済み (147)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-06-25 | [🗂️ Claude Code の指示をどこに書くか — 7つの指示面とコンテキスト負債の設計](articles/claude-code-steering-surfaces_20260622.md) | ClaudeCode, AI, LLM, 生成AI, ContextEngineering |
 | 2026-06-23 | [🧩 MCP サーバー開発を足場化する公式 Agent Skills - mcp-server-dev](articles/mcp-server-agent-skills_20260621.md) | MCP, AgentSkills, ModelContextProtocol, ClaudeCode |
 | 2026-06-20 | [🧹 技術調査 - AWS Transform Continuous Modernization](articles/aws-transform-continuous-modernization_20260618.md) | AWS, AWSTransform, TechDebt, DevOps |
 | 2026-06-18 | [🛰️ 技術調査 - GitLab Agentic Engineering Platform](articles/gitlab-agentic-platform_20260617.md) | GitLab, AIエージェント, DevOps, MCP |

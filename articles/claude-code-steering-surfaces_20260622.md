@@ -3,7 +3,8 @@ title: "Claude Code の指示をどこに書くか — 7つの指示面とコン
 emoji: "🗂️"
 type: "tech"
 topics: ["ClaudeCode", "AI", "LLM", "生成AI", "ContextEngineering"]
-published: false
+published: true
+published_at: 2026-06-25
 ---
 
 Claude Code には、AI の挙動を制御する手段が 7 つあります。`CLAUDE.md`・Rules・Skills・Subagents・Hooks・Output styles・System prompt 追加です。これらに加えて memory・plugins・managed settings も挙動を左右します。
