@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (109)
+## Articles: 下書き (110)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -120,6 +120,7 @@
 | 2026-05-02 | [🚦 ホスト型 LLM のサイレント更新を CI/CD でゲートする - Test-Before-You-Deploy フレームワーク実践ガイド](articles/test-before-you-deploy_20260502.md) | LLM, LLMOps, MLOps, GitHubActions, テスト |
 | 2025-05-30 | [技術調査 - OpenStack Neutron](articles/openstack_neutron_20250530.md) |  |
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
+|  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
 ## Articles: 公開済み (147)
 
