@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (116)
+## Articles: 下書き (117)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-06-26 | [🧭 AI 委任の可否を採点する OSS を作りました - ai-delegation-readiness の中身と設計判断](articles/ai-delegation-readiness-intro_20260626.md) | AIエージェント, Governance, JSONSchema, Python, OSS |
+| 2026-06-26 | [🏗️ AI 前提時代の少人数フルスタック組織 — 味の素モデルから読み解く役割設計の条件](articles/ai-fullstack-team-ajinomoto_20260626.md) | AI, Organization, TeamTopologies, DX, Management |
 | 2026-06-26 | [🔄 技術調査 - Cloudflare Workflows Rollbacks](articles/cloudflare-workflows-rollbacks_20260626.md) | Cloudflare, Workflows, Saga, TypeScript, DurableExecution |
 | 2026-06-26 | [🧩 技術調査 - COBOL モダナイゼーション 4 工程の役割分担モデル](articles/cobol-modernization-role-division_20260626.md) | COBOL, Modernization, LegacySystem, Java, Refactoring |
 | 2026-06-25 | [📐 Appia Foundation — AI 標準の「実装層」を担うオープン仕様団体を読み解く](articles/appia-foundation-ai-standards_20260625.md) | AI, Governance, OpenAI, Standards, MLOps |
