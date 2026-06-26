@@ -7,11 +7,10 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (117)
+## Articles: 下書き (116)
 
 | create date | title | topics |
 |-------------|-------|--------|
-| 2026-06-26 | [🧭 AI 委任の可否を採点する OSS を作りました - ai-delegation-readiness の中身と設計判断](articles/ai-delegation-readiness-intro_20260626.md) | AIエージェント, Governance, JSONSchema, Python, OSS |
 | 2026-06-26 | [🏗️ AI 前提時代の少人数フルスタック組織 — 味の素モデルから読み解く役割設計の条件](articles/ai-fullstack-team-ajinomoto_20260626.md) | AI, Organization, TeamTopologies, DX, Management |
 | 2026-06-26 | [🔄 技術調査 - Cloudflare Workflows Rollbacks](articles/cloudflare-workflows-rollbacks_20260626.md) | Cloudflare, Workflows, Saga, TypeScript, DurableExecution |
 | 2026-06-26 | [🧩 技術調査 - COBOL モダナイゼーション 4 工程の役割分担モデル](articles/cobol-modernization-role-division_20260626.md) | COBOL, Modernization, LegacySystem, Java, Refactoring |
@@ -129,10 +128,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (147)
+## Articles: 公開済み (148)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-06-27 | [🧭 AI 委任の可否を採点する OSS を作りました - ai-delegation-readiness の中身と設計判断](articles/ai-delegation-readiness-intro_20260626.md) | AIエージェント, Governance, JSONSchema, Python, OSS |
 | 2026-06-25 | [🗂️ Claude Code の指示をどこに書くか — 7つの指示面とコンテキスト負債の設計](articles/claude-code-steering-surfaces_20260622.md) | ClaudeCode, AI, LLM, 生成AI, ContextEngineering |
 | 2026-06-23 | [🧩 MCP サーバー開発を足場化する公式 Agent Skills - mcp-server-dev](articles/mcp-server-agent-skills_20260621.md) | MCP, AgentSkills, ModelContextProtocol, ClaudeCode |
 | 2026-06-20 | [🧹 技術調査 - AWS Transform Continuous Modernization](articles/aws-transform-continuous-modernization_20260618.md) | AWS, AWSTransform, TechDebt, DevOps |

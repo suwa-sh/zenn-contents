@@ -3,7 +3,8 @@ title: "AI 委任の可否を採点する OSS を作りました - ai-delegation
 emoji: "🧭"
 type: "tech"
 topics: ["AIエージェント", "Governance", "JSONSchema", "Python", "OSS"]
-published: false
+published: true
+published_at: 2026-06-27
 ---
 
 ## 概要
