@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (115)
+## Articles: 下書き (116)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-06-26 | [🧭 AI 委任の可否を採点する OSS を作りました - ai-delegation-readiness の中身と設計判断](articles/ai-delegation-readiness-intro_20260626.md) | AIエージェント, Governance, JSONSchema, Python, OSS |
 | 2026-06-26 | [🔄 技術調査 - Cloudflare Workflows Rollbacks](articles/cloudflare-workflows-rollbacks_20260626.md) | Cloudflare, Workflows, Saga, TypeScript, DurableExecution |
+| 2026-06-26 | [🧩 技術調査 - COBOL モダナイゼーション 4 工程の役割分担モデル](articles/cobol-modernization-role-division_20260626.md) | COBOL, Modernization, LegacySystem, Java, Refactoring |
 | 2026-06-25 | [📐 Appia Foundation — AI 標準の「実装層」を担うオープン仕様団体を読み解く](articles/appia-foundation-ai-standards_20260625.md) | AI, Governance, OpenAI, Standards, MLOps |
 | 2026-06-25 | [🔐 技術調査 - Confidential AI](articles/confidential-ai_20260625.md) | ConfidentialAI, ConfidentialComputing, GoogleCloud, NVIDIA, Attestation |
 | 2026-06-25 | [🛡️ 共用メール基盤事案で露呈した「共有インフラ責任境界」の設計と落とし穴](articles/kddi-isp-shared-mail-incident_20260625.md) | Security, IncidentResponse, Compliance, RACI, DPA |
