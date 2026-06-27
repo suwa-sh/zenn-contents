@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (118)
+## Articles: 下書き (119)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-06-27 | [🤖 Codexが全職種の主力AIになった日 — OpenAI自身の労働変容データをどう読むか](articles/codex-agents-transforming-work_20260627.md) | OpenAI, Codex, AIエージェント, 組織設計, AI |
 | 2026-06-27 | [🛂 GPT-5.6 trusted partner 限定公開で見える AI モデル配布統制の型](articles/openai-gpt-5-6-trusted-partner-governance_20260627.md) | OpenAI, AI, Governance, Azure, AWS |
+| 2026-06-27 | [📐 技術調査 - Vercel Product Design Skills](articles/vercel-product-design-skills_20260627.md) | Vercel, AgentSkills, Claude, DesignOps |
 | 2026-06-26 | [🏗️ AI 前提時代の少人数フルスタック組織 — 味の素モデルから読み解く役割設計の条件](articles/ai-fullstack-team-ajinomoto_20260626.md) | AI, Organization, TeamTopologies, DX, Management |
 | 2026-06-26 | [🔄 技術調査 - Cloudflare Workflows Rollbacks](articles/cloudflare-workflows-rollbacks_20260626.md) | Cloudflare, Workflows, Saga, TypeScript, DurableExecution |
 | 2026-06-26 | [🧩 技術調査 - COBOL モダナイゼーション 4 工程の役割分担モデル](articles/cobol-modernization-role-division_20260626.md) | COBOL, Modernization, LegacySystem, Java, Refactoring |
