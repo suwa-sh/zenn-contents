@@ -10,11 +10,16 @@ export async function getStaticPaths() {
 const { article } = Astro.props;
 const base = import.meta.env.BASE_URL;
 ---
-<Layout title={article.title} ogImagePath={`og/articles__${article.slug}.png`} wide>
+<Layout
+  title={article.title}
+  ogImagePath={`og/articles__${article.slug}.png`}
+  articleHeader={{ title: article.title, emoji: article.emoji, toc: article.toc }}
+  wide
+>
   <div class="article-layout">
     <div class="article-main" data-pagefind-body>
       {!article.published && <p class="draft-badge">⚠️ 非公開（zenn 未公開）</p>}
-      <h1>{article.emoji} {article.title}</h1>
+      <h1 id="article-top">{article.emoji} {article.title}</h1>
       <div class="article-meta">
         {article.publishedAt && <span>{article.publishedAt}</span>}
         {article.topics?.length > 0 && (

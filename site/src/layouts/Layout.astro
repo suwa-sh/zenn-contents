@@ -1,9 +1,11 @@
 ---
 import 'zenn-content-css';
-const { title, wide = false, ogImagePath } = Astro.props;
+const { title, wide = false, ogImagePath, articleHeader = null } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const siteUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : Astro.url.pathname;
 const ogImage = new URL(`${base}${ogImagePath ?? 'og-image.png'}`, Astro.site ?? 'https://suwa-sh.github.io').toString();
+const hasArticleHeader = Boolean(articleHeader?.title);
+const articleHeaderToc = articleHeader?.toc ?? [];
 ---
 <!doctype html>
 <html lang="ja">
@@ -71,6 +73,89 @@ const ogImage = new URL(`${base}${ogImagePath ?? 'og-image.png'}`, Astro.site ??
         flex: 1; max-width: 480px; margin-left: auto;
         position: relative;
       }
+      body.article-page header.site-header {
+        position: static;
+      }
+      .article-sticky-header {
+        position: sticky;
+        top: 0;
+        z-index: 45;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        min-height: 56px;
+        padding: 8px 20px;
+        border-bottom: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(8px);
+      }
+      .article-sticky-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+        color: var(--fg);
+        text-decoration: none;
+        font-weight: 700;
+      }
+      .article-sticky-title span:last-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .article-sticky-emoji {
+        flex: 0 0 auto;
+      }
+      .article-sticky-toc {
+        display: none;
+        position: relative;
+        flex: 0 0 auto;
+        margin-left: auto;
+      }
+      .article-sticky-toc summary {
+        list-style: none;
+        cursor: pointer;
+        user-select: none;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--fg);
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1;
+        padding: 8px 12px;
+      }
+      .article-sticky-toc summary::-webkit-details-marker { display: none; }
+      .article-sticky-toc summary::after {
+        content: " ▾";
+        color: var(--muted);
+      }
+      .article-sticky-toc[open] summary::after { content: " ▴"; }
+      .article-sticky-toc ul {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        width: min(360px, calc(100vw - 40px));
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+        list-style: none;
+        margin: 0;
+        padding: 10px 12px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      }
+      .article-sticky-toc li { margin: 2px 0; line-height: 1.5; }
+      .article-sticky-toc .toc-l3 { padding-left: 14px; font-size: 12px; }
+      .article-sticky-toc a {
+        display: block;
+        padding: 3px 0;
+        color: var(--muted);
+        font-size: 13px;
+        text-decoration: none;
+      }
+      .article-sticky-toc a:hover { color: var(--accent); }
       /* Pagefind UI customizations */
       .pagefind-ui { --pagefind-ui-scale: 0.85; --pagefind-ui-primary: var(--accent); }
       .pagefind-ui__search-input { background: #fff; }
@@ -286,6 +371,10 @@ const ogImage = new URL(`${base}${ogImagePath ?? 'og-image.png'}`, Astro.site ??
         padding: 2px 0;
       }
       aside.toc a:hover { color: var(--accent); }
+      body.article-page aside.toc {
+        top: 72px;
+        max-height: calc(100vh - 88px);
+      }
 
       @media (max-width: 900px) {
         .article-layout {
@@ -304,14 +393,26 @@ const ogImage = new URL(`${base}${ogImagePath ?? 'og-image.png'}`, Astro.site ??
         }
         aside.toc .toc-title::after { content: " ▾"; }
         aside.toc.open .toc-title::after { content: " ▴"; }
+        body.article-page aside.toc {
+          display: none;
+        }
+        .article-sticky-toc { display: block; }
       }
       @media (max-width: 640px) {
         header.site-header { flex-wrap: wrap; }
         header.site-header .search { width: 100%; max-width: none; margin-left: 0; }
+        .article-sticky-header {
+          gap: 10px;
+          min-height: 52px;
+          padding: 8px 12px;
+        }
+        .article-sticky-title {
+          font-size: 14px;
+        }
       }
     </style>
   </head>
-  <body>
+  <body class={hasArticleHeader ? 'article-page' : undefined}>
     <header class="site-header">
       <a class="brand" href={base}>📚 suwa-sh / zenn-contents</a>
       <nav>
@@ -320,6 +421,26 @@ const ogImage = new URL(`${base}${ogImagePath ?? 'og-image.png'}`, Astro.site ??
       </nav>
       <div class="search"><div id="search"></div></div>
     </header>
+    {hasArticleHeader && (
+      <div class="article-sticky-header">
+        <a class="article-sticky-title" href="#article-top">
+          {articleHeader.emoji && <span class="article-sticky-emoji">{articleHeader.emoji}</span>}
+          <span>{articleHeader.title}</span>
+        </a>
+        {articleHeaderToc.length > 0 && (
+          <details class="article-sticky-toc">
+            <summary>目次</summary>
+            <ul>
+              {articleHeaderToc.map((h) => (
+                <li class={`toc-l${h.level}`}>
+                  <a href={`#${h.id}`}>{h.text}</a>
+                </li>
+              ))}
+            </ul>
+          </details>
+        )}
+      </div>
+    )}
     <main class={wide ? 'wide' : ''}>
       <slot />
     </main>
