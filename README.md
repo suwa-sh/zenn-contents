@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (121)
+## Articles: 下書き (122)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-06-29 | [🔭 技術調査 - Vercel Agent Runs (eve Agent Observability)](articles/vercel-agent-runs_20260629.md) | Vercel, OpenTelemetry, AIAgent, Observability, AISDK |
 | 2026-06-28 | [🛡️ メドピア事例で学ぶ Claude Enterprise 全社導入の段階的ガバナンス設計](articles/medpeer-claude-enterprise-governance_20260628.md) | ClaudeCode, MCP, セキュリティ, AIエージェント, Governance |
 | 2026-06-28 | [🚢 技術調査 - Vercel Ship 2026](articles/vercel-ship-2026_20260628.md) | Vercel, TypeScript, AIAgent, OIDC, OpenTelemetry |
 | 2026-06-27 | [🤖 Codexが全職種の主力AIになった日 — OpenAI自身の労働変容データをどう読むか](articles/codex-agents-transforming-work_20260627.md) | OpenAI, Codex, AIエージェント, 組織設計, AI |
