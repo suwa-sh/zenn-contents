@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (124)
+## Articles: 下書き (125)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-06-29 | [🗂️ 技術調査 - RAGの回答精度を左右する非構造データ継続パイプライン設計](articles/context-data-pipeline-for-rag_20260629.md) | RAG, LLM, 生成AI, ベクトル検索, ContextEngineering |
+| 2026-06-29 | [🧭 内製化の本質は採用ではなく「誰が判断責任を持つか」](articles/mizuho-securities-insourcing-ai_20260629.md) | 内製化, 生成AI, 組織開発, DX, マネジメント |
 | 2026-06-29 | [⚖️ オムロンの知財AIエージェント内製に学ぶ「高責任業務へのAI委任」設計](articles/omron-ip-agent-insourcing_20260629.md) | 生成AI, AIエージェント, AWS, RAG, 知財 |
 | 2026-06-29 | [🔭 技術調査 - Vercel Agent Runs (eve Agent Observability)](articles/vercel-agent-runs_20260629.md) | Vercel, OpenTelemetry, AIAgent, Observability, AISDK |
 | 2026-06-28 | [🛡️ メドピア事例で学ぶ Claude Enterprise 全社導入の段階的ガバナンス設計](articles/medpeer-claude-enterprise-governance_20260628.md) | ClaudeCode, MCP, セキュリティ, AIエージェント, Governance |
