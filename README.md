@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (126)
+## Articles: 下書き (127)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-06-30 | [🛡️ Google Cloud の自律SDLCセキュリティ — AIで脆弱性を発見・検証・修正する閉ループ設計](articles/googlecloud-autonomous-sdlc-security_20260630.md) | Security, GoogleCloud, DevSecOps, AI, LLM |
 | 2026-06-30 | [🗺️ OpenAIのEU職種4類型マップを経営の職務再設計に使う](articles/openai-eu-ai-jobs-transition_20260630.md) | AI, OpenAI, 生成AI, 組織開発, キャリア |
 | 2026-06-29 | [🗂️ 技術調査 - RAGの回答精度を左右する非構造データ継続パイプライン設計](articles/context-data-pipeline-for-rag_20260629.md) | RAG, LLM, 生成AI, ベクトル検索, ContextEngineering |
 | 2026-06-29 | [🧭 内製化の本質は採用ではなく「誰が判断責任を持つか」](articles/mizuho-securities-insourcing-ai_20260629.md) | 内製化, 生成AI, 組織開発, DX, マネジメント |
