@@ -140,7 +140,7 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (148)
+## Articles: 公開済み (149)
 
 | date | title | topics |
 |------|-------|--------|
@@ -292,3 +292,4 @@
 | 2025-05-06 | [🤖 技術調査 - Mastra](articles/mastra_20250503.md) | Mastra, AI Agent, TypeScript, AI Workflow, RAG |
 | 2025-05-01 | [⚙️ 技術調査 - dlt](articles/dlt_20250501.md) | dlt, ELT, ETL, データパイプライン, データ基盤 |
 | 2025-05-01 | [📊 ITコストの透明性向上とビジネス価値最大化に向けた第一歩：tbm-template](articles/tbm-template_20250501.md) | TBM, ITコスト管理, IT投資対効果, ITマネジメント, DX |
+|  | [🛡️ 共有インフラ事故の初動を診断するCLI siir の構造と設計判断](articles/shared-infra-incident-readiness_20260701.md) | IncidentResponse, Security, Python, CLI, SRE |
