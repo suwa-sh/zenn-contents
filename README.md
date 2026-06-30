@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (129)
+## Articles: 下書き (130)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-07-01 | [🔧 Claude Sonnet 5 移行で壊れるAPI前提と運用破断点の棚卸し](articles/claude-sonnet-5-migration_20260701.md) | Claude, Anthropic, 生成AI, LLM, API |
+| 2026-07-01 | [🔌 技術調査 - Gemini Enterprise Agent Platform remote MCP server](articles/gemini-enterprise-remote-mcp_20260701.md) | GoogleCloud, MCP, VertexAI, IAM, Governance |
 | 2026-06-30 | [🛡️ Google Cloud の自律SDLCセキュリティ — AIで脆弱性を発見・検証・修正する閉ループ設計](articles/googlecloud-autonomous-sdlc-security_20260630.md) | Security, GoogleCloud, DevSecOps, AI, LLM |
 | 2026-06-30 | [🗺️ OpenAIのEU職種4類型マップを経営の職務再設計に使う](articles/openai-eu-ai-jobs-transition_20260630.md) | AI, OpenAI, 生成AI, 組織開発, キャリア |
 | 2026-06-30 | [🧭 OpenAI Frontier × HP に学ぶ、AI導入で先に共通化すべき統制レイヤー](articles/openai-frontier-hp-enterprise-ai_20260630.md) | 生成AI, AIエージェント, ガバナンス, OpenAI |
