@@ -11,7 +11,7 @@
 
 | create date | title | topics |
 |-------------|-------|--------|
-| 2026-07-01 | [🔧 Claude Sonnet 5 移行で壊れるAPI前提と運用破断点の棚卸し](articles/claude-sonnet-5-migration_20260701.md) | Claude, Anthropic, 生成AI, LLM, API |
+| 2026-07-02 | [🏛 自治体標準化「1万システム超が期限に間に合わず」を供給制約より深く読む](articles/jichitai-std-supply-constraint_20260702.md) | Modernization, LegacyMigration, PMO, GovTech, IT |
 | 2026-07-01 | [🔌 技術調査 - Gemini Enterprise Agent Platform remote MCP server](articles/gemini-enterprise-remote-mcp_20260701.md) | GoogleCloud, MCP, VertexAI, IAM, Governance |
 | 2026-07-01 | [🛡️ 技術調査 - Vercel Agent の権限境界・承認制御・監査証跡](articles/vercel-agent_20260701.md) | Vercel, AIOps, DevOps, DevSecOps |
 | 2026-06-30 | [🛡️ Google Cloud の自律SDLCセキュリティ — AIで脆弱性を発見・検証・修正する閉ループ設計](articles/googlecloud-autonomous-sdlc-security_20260630.md) | Security, GoogleCloud, DevSecOps, AI, LLM |
@@ -143,10 +143,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (149)
+## Articles: 公開済み (150)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-07-02 | [🔧 Claude Sonnet 5 移行で壊れるAPI前提と運用破断点の棚卸し](articles/claude-sonnet-5-migration_20260701.md) | Claude, Anthropic, 生成AI, LLM, API |
 | 2026-06-27 | [🧭 AI 委任の可否を採点する OSS を作りました - ai-delegation-readiness の中身と設計判断](articles/ai-delegation-readiness-intro_20260626.md) | AIエージェント, Governance, JSONSchema, Python, OSS |
 | 2026-06-25 | [🗂️ Claude Code の指示をどこに書くか — 7つの指示面とコンテキスト負債の設計](articles/claude-code-steering-surfaces_20260622.md) | ClaudeCode, AI, LLM, 生成AI, ContextEngineering |
 | 2026-06-23 | [🧩 MCP サーバー開発を足場化する公式 Agent Skills - mcp-server-dev](articles/mcp-server-agent-skills_20260621.md) | MCP, AgentSkills, ModelContextProtocol, ClaudeCode |
