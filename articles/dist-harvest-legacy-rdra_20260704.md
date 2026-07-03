@@ -3,7 +3,8 @@ title: "レガシーコードから要件を逆生成する - distillery dist-ha
 emoji: "🌾"
 type: "tech"
 topics: ["RDRA", "USDM", "ClaudeCode", "要件定義", "リバースエンジニアリング"]
-published: false
+published: true
+published_at: 2026-07-04
 ---
 
 ## ドキュメントが残っていないシステムをどう扱うか

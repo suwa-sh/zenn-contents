@@ -7,11 +7,10 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (135)
+## Articles: 下書き (134)
 
 | create date | title | topics |
 |-------------|-------|--------|
-| 2026-07-04 | [🌾 レガシーコードから要件を逆生成する - distillery dist-harvest の設計](articles/dist-harvest-legacy-rdra_20260704.md) | RDRA, USDM, ClaudeCode, 要件定義, リバースエンジニアリング |
 | 2026-07-03 | [💰 技術調査 - Cloudflare Monetization Gateway](articles/cloudflare-monetization-gateway_20260703.md) | Cloudflare, x402, AIエージェント, stablecoin |
 | 2026-07-03 | [🚦 最上位モデルが止まる前提の可用性設計：発注側が織り込む4項目](articles/model-redeploy-safety-governance_20260703.md) | 生成AI, LLM, Anthropic, Claude, セキュリティ |
 | 2026-07-03 | [🧭 技術調査 - Safari MCP Server（WebKit公式）](articles/safari-mcp-server_20260703.md) | Safari, MCP, WebKit, AIエージェント, ブラウザ自動化 |
@@ -147,10 +146,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (150)
+## Articles: 公開済み (151)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-07-04 | [🌾 レガシーコードから要件を逆生成する - distillery dist-harvest の設計](articles/dist-harvest-legacy-rdra_20260704.md) | RDRA, USDM, ClaudeCode, 要件定義, リバースエンジニアリング |
 | 2026-07-02 | [🔧 Claude Sonnet 5 移行で壊れるAPI前提と運用破断点の棚卸し](articles/claude-sonnet-5-migration_20260701.md) | Claude, Anthropic, 生成AI, LLM, API |
 | 2026-06-27 | [🧭 AI 委任の可否を採点する OSS を作りました - ai-delegation-readiness の中身と設計判断](articles/ai-delegation-readiness-intro_20260626.md) | AIエージェント, Governance, JSONSchema, Python, OSS |
 | 2026-06-25 | [🗂️ Claude Code の指示をどこに書くか — 7つの指示面とコンテキスト負債の設計](articles/claude-code-steering-surfaces_20260622.md) | ClaudeCode, AI, LLM, 生成AI, ContextEngineering |
