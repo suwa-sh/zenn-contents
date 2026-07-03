@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (134)
+## Articles: 下書き (136)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-04 | [🛡️ AIネイティブ開発組織のリスクアーキテクチャ再設計 — 確率的エージェントの失敗を誰が止めるか](articles/ai-native-risk-architecture_20260704.md) | 生成AI, LLM, AIエージェント, MLOps, アーキテクチャ |
+| 2026-07-04 | [🚧 技術調査 - UnderSpecBench: 曖昧なDevOps指示でコーディングエージェントの55〜68%が境界逸脱](articles/underspecbench_20260704.md) | LLM, AIエージェント, DevOps, Claude, 生成AI |
 | 2026-07-03 | [💰 技術調査 - Cloudflare Monetization Gateway](articles/cloudflare-monetization-gateway_20260703.md) | Cloudflare, x402, AIエージェント, stablecoin |
 | 2026-07-03 | [🚦 最上位モデルが止まる前提の可用性設計：発注側が織り込む4項目](articles/model-redeploy-safety-governance_20260703.md) | 生成AI, LLM, Anthropic, Claude, セキュリティ |
 | 2026-07-03 | [🧭 技術調査 - Safari MCP Server（WebKit公式）](articles/safari-mcp-server_20260703.md) | Safari, MCP, WebKit, AIエージェント, ブラウザ自動化 |
