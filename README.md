@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (131)
+## Articles: 下書き (132)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-03 | [🚦 最上位モデルが止まる前提の可用性設計：発注側が織り込む4項目](articles/model-redeploy-safety-governance_20260703.md) | 生成AI, LLM, Anthropic, Claude, セキュリティ |
 | 2026-07-02 | [🏛 自治体標準化「1万システム超が期限に間に合わず」を供給制約より深く読む](articles/jichitai-std-supply-constraint_20260702.md) | Modernization, LegacyMigration, PMO, GovTech, IT |
 | 2026-07-01 | [🔌 技術調査 - Gemini Enterprise Agent Platform remote MCP server](articles/gemini-enterprise-remote-mcp_20260701.md) | GoogleCloud, MCP, VertexAI, IAM, Governance |
 | 2026-07-01 | [🛡️ 技術調査 - Vercel Agent の権限境界・承認制御・監査証跡](articles/vercel-agent_20260701.md) | Vercel, AIOps, DevOps, DevSecOps |
