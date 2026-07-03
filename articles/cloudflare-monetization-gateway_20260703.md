@@ -21,7 +21,7 @@ Cloudflare Monetization Gateway は、この課金単位のギャップを Cloud
 
 ### x402 プロトコルと Cloudflare Monetization Gateway の関係
 
-x402 は、HTTP の `402 Payment Required` ステータスコードを軸に構築されたオープンな決済標準です。`402` は 1992 年から予約されながら標準実装を持たなかったステータスコードで、x402 はこれを実運用に戻す試みです。Coinbase が原型を提案し、現在は x402 Foundation（Linux Foundation がスポンサー、25 以上の業界リーダーが参加）が標準化を担っています。Cloudflare は Coinbase とともに x402 Foundation の設立に関わった一員です。
+x402 は、HTTP の `402 Payment Required` ステータスコードを軸に構築されたオープンな決済標準です。`402` は 1992 年から予約されながら標準実装を持たなかったステータスコードで、x402 はこれを実運用に戻す試みです。Coinbase が原型を提案し、現在は 25 以上の業界リーダーが参加する x402 Foundation（Linux Foundation の傘下）が標準化を担っています。Cloudflare は Coinbase とともに x402 Foundation の設立に関わった一員です。
 
 x402 のフローは次の順序で進みます。
 
@@ -68,7 +68,7 @@ Cloudflare Monetization Gateway は、これらの facilitator 群と並ぶ選�
 - 成果に応じた課金（例: 解決したサポートエスカレーションのみ $0.99）を設定できます。
 - 認証と課金を分離できます。`401 Unauthorized` を `402 Payment Required` に変換する構成や、Web Bot Auth によるエージェント検証と従量課金を組み合わせる構成を選べます。
 - 決済資産は stablecoin（USDC 等）で、売り手は蓄積した stablecoin をそのまま取引に使うか法定通貨に償還できます。
-- x402 Foundation（Linux Foundation スポンサー）の一員として、Cloudflare は facilitator の役割をエッジで担います。
+- x402 Foundation（Linux Foundation 傘下）の一員として、Cloudflare は facilitator の役割をエッジで担います。
 - 2026-07-01 発表時点では waitlist / early access 段階で、一般提供（GA）には至っていません。
 
 ## 構造
