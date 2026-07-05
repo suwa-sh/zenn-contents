@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (138)
+## Articles: 下書き (139)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-05 | [🔍 AIに障害対応させる前に設計すべき、証拠捏造を見抜く検証プロトコル](articles/ai-incident-agent-evidence-verification_20260705.md) | LLM, GenerativeAI, SRE, Security, AIAgent |
 | 2026-07-05 | [🛡️ データ主権は契約書では守れない：KubernetesとGitOpsで強制する設計論](articles/data-sovereignty-kubernetes-gitops_20260705.md) | Kubernetes, GitOps, Kyverno, セキュリティ, CloudNative |
 | 2026-07-05 | [🚦 技術調査 - 並列AIエージェント開発のPR衝突回避と変更空間の分割設計](articles/parallel-agent-pr-collision_20260705.md) | AIエージェント, GitHub, コードレビュー, Git |
 | 2026-07-04 | [🛡️ AIネイティブ開発組織のリスクアーキテクチャ再設計 — 確率的エージェントの失敗を誰が止めるか](articles/ai-native-risk-architecture_20260704.md) | 生成AI, LLM, AIエージェント, MLOps, アーキテクチャ |
