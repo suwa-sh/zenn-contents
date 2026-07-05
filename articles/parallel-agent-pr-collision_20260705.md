@@ -110,7 +110,7 @@ graph TD
   SYSTEM -->|重複リスクの助言チェックを付与する| GITHUB
   SYSTEM -->|重複警告を提示する| REVIEWER
   AIREVIEW -->|品質評価を報告する| GITHUB
-  SYSTEM -->|semantic競合の確認を依頼する| AIREVIEW
+  SYSTEM -->|semantic衝突の確認を依頼する| AIREVIEW
   REVIEWER -->|マージ可否を判断する| INTEGRATOR
   INTEGRATOR -->|マージ順を確定する| MERGEQUEUE
   MERGEQUEUE -->|統合検証を要求する| CICD
@@ -126,7 +126,7 @@ graph TD
 | GitHub | PR の作成・更新イベントを発行し、調整システムからの助言チェックを表示する PR 基盤です |
 | CI/CDパイプライン | 各 PR・マージ候補に対して自動テストとビルド検証を実行する外部システムです |
 | マージキュー | レビュー済み PR を main に入れる順番と安定性で捌く外部システムです |
-| AIコードレビュー | PR 単体の中身の良し悪しを見る、調整システムとは独立した外部システムです。座標だけでは検出できない semantic な競合はこちらの領分です |
+| AIコードレビュー | PR 単体の中身の良し悪しを見る、調整システムとは独立した外部システムです。座標だけでは検出できない semantic な衝突はこちらの領分です |
 
 ### コンテナ図
 
@@ -384,7 +384,7 @@ AgenticFlict データセットが衝突領域を `file_path` / `region_index` /
 | 座標ベースで検知できる衝突 | `file_path` `start_line` `end_line` の重なりのみ | `detection_method = footprint_overlap`、`semantic_flag = false` | 2 つの PR が同じ関数の同じ行を書き換えている |
 | semantic 衝突（検知対象外） | 本文の意味解釈が必要。変更フットプリントには表現できない | `semantic_flag = true` として層 2 の AI コードレビューへ委譲するのみで、自動では確定しない | 関数名も行番号も異なるが、片方が API の前提を静かに壊している |
 
-`semantic_flag` は「衝突として確定した」ことを意味する属性ではなく、「座標だけでは判定しきれないので、本文を読む工程（AI コードレビュー）に回す」ことを示す委譲マーカーです。
+`semantic_flag` は「衝突として確定した」ことを意味する属性ではなく、「座標だけでは判定しきれないので、本文を読む工程（AI コードレビュー）に回す」ことを示す委譲マーカーです。実装上は、確定した座標衝突とは別状態（例: `needs_semantic_review`）として扱うと、機械検知済みの衝突と本文読解待ちの案件を混同せずに済みます。
 
 ## 構築方法
 
@@ -473,7 +473,7 @@ CODEOWNERS の仕様は次のとおりです（出典: GitHub Docs - About code 
 # ダッシュボードUI = agent-c の担当領域
 /src/dashboard/**   @agent-c-bot @human-reviewer-1
 
-# 共有ロックファイルは統合(integrator)エージェントのみ変更可能
+# 共有ロックファイルは統合(integrator)エージェント専有 (承認を必須化)
 package-lock.json   @integrator-bot
 /db/migrations/**   @integrator-bot
 ```
@@ -504,10 +504,11 @@ merge queue は「Require branches to be up to date before merging」と同等�
 起点記事が扱う「PR 同士の座標を比較して衝突を検知する」仕組みは、GitHub の Checks API を使う GitHub App として実装するのが標準的な形です（出典: GitHub Docs - Building CI checks with a GitHub App / Permissions required for GitHub Apps）。
 
 1. GitHub App をリポジトリ（または Organization）にインストールします。
-2. アプリの Repository permissions で **Checks: Read & write** を付与します。
-3. Subscribe to events で **Check suite** / **Check run** を購読します。
-4. コードが push されると GitHub が自動で `check_suite` イベント（action: `requested`）をアプリへ送信します。
-5. アプリはこのイベントを受けて `check_run` を作成し、他の open PR との変更面重複を判定した結果を Check の conclusion として返します。
+2. アプリの Repository permissions で **Pull requests: Read** と **Checks: Write** を付与します。
+3. Subscribe to events で **Pull request** を購読します（最低でも `opened` / `synchronize` / `reopened`、着地検知に `closed` も）。
+4. PR が作成・更新されると GitHub が `pull_request` イベントをアプリへ送信します。
+5. アプリはこのイベントを受けて変更ファイルの座標を抽出し、他の open PR との変更フットプリント重複を判定した結果を `check_run` の conclusion として返します。
+6. push 起点で判定を回したい場合は、`check_suite` / `check_run` の購読を補助経路として任意で追加します。
 
 Check run を作成・更新する API 呼び出しの実装例です（出典: REST API endpoints for check runs）。
 
@@ -583,15 +584,20 @@ git merge-tree --write-tree \
 ```sql
 -- 実装例: 座標ストアの最小スキーマ (本文カラムを持たない)
 CREATE TABLE pr_coordinates (
-    pr_id       TEXT    NOT NULL,
-    file_path   TEXT    NOT NULL,
-    start_line  INTEGER NOT NULL,
-    end_line    INTEGER NOT NULL,
-    symbol_id   TEXT,
-    change_kind TEXT    NOT NULL,   -- add / delete / modify
-    updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+    repo_id         TEXT    NOT NULL,
+    base_branch     TEXT    NOT NULL,
+    base_commit_oid TEXT    NOT NULL,   -- 比較の基準を揃えるための base
+    pr_id           TEXT    NOT NULL,
+    head_sha        TEXT    NOT NULL,
+    file_path       TEXT    NOT NULL,
+    start_line      INTEGER NOT NULL,
+    end_line        INTEGER NOT NULL,
+    symbol_id       TEXT,
+    change_kind     TEXT    NOT NULL,   -- add / delete / modify
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
     PRIMARY KEY (pr_id, file_path, start_line)
 );
+-- 衝突判定は (repo_id, base_branch) が同じ進行中 PR 群の中で行う
 -- PR がクローズ/マージされたら該当 pr_id の行を削除して陳腐化を防ぐ
 ```
 
@@ -601,10 +607,13 @@ GitHub App の受信側は、`pull_request` webhook を受けて座標を抽出�
 // 実装例: webhook 受信から Check run 作成までの最小スケルトン (Probot 風)
 module.exports = (app) => {
   app.on(["pull_request.opened", "pull_request.synchronize"], async (ctx) => {
+    const prId = ctx.payload.pull_request.id;
     const files = await ctx.octokit.paginate(ctx.octokit.pulls.listFiles, ctx.pullRequest());
     const footprints = files.flatMap(extractCoordinates); // patch の @@ ヘッダから行範囲を抽出
-    await upsertCoordinates(ctx.payload.pull_request.id, footprints);
-    const hits = detectCollisions(footprints, await loadOpenPrCoordinates(ctx));
+    // 自己衝突を避けるため、現在の PR を除外して他 PR の座標だけを取得してから判定する
+    const others = await loadOpenPrCoordinates(ctx, { excludePrId: prId });
+    const hits = detectCollisions(footprints, others);
+    await upsertCoordinates(prId, footprints);
     await ctx.octokit.checks.create(ctx.repo({
       name: "pr-collision-check",
       head_sha: ctx.payload.pull_request.head.sha,
@@ -626,11 +635,11 @@ module.exports = (app) => {
 | ブランチ命名規則 | `feat/agent-<id>-<task>` 等 | CODEOWNERS のパターンと対応させる |
 | CODEOWNERS の owner | エージェント bot アカウント + 人間レビュアー | 共有ファイル（lockfile・migration）は integrator 専有に固定 |
 | branch protection | Require merge queue を有効化 | 直列マージを強制 |
-| GitHub App 権限 | Checks: Read & write、check_suite/check_run 購読 | 衝突検知の前提 |
+| GitHub App 権限 | Pull requests: Read + Checks: Write、`pull_request` 購読 | 衝突検知の前提 |
 
 ### タスク分解を「変更面」で設計する
 
-機能単位（「認証機能を作る」）ではなく、変更面（ファイル所有・依存順・マージ順）を軸にタスクを割ります。分解時に次の 3 点を表にして事前合意します（補完元: MindStudio - Parallel agentic development）。
+機能単位（「認証機能を作る」）ではなく、変更面（ファイル所有・依存順・マージ順）を軸にタスクを割ります。ここでの「変更面」は、PR 単位の変更フットプリントを運用目線で言い換えた語です。分解時に次の 3 点を表にして事前合意します（補完元: MindStudio - Parallel agentic development）。
 
 | エージェント | 触るファイル/ディレクトリ | 依存先 | マージ順 |
 |---|---|---|---|
