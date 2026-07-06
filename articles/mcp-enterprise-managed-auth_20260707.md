@@ -64,7 +64,7 @@ graph TD
 | ユーザー体験 | サーバーごとに同意画面を通過する | 管理者からキーを受け取り手動設定する | 初回ログイン時に全サーバーへ自動接続する |
 | 管理者統制 | 個別ユーザーの認可に依存し統制不可 | キー発行時のみ統制、発行後は把握困難 | IdP の管理コンソールで一元的にポリシー設定する |
 | 監査 | サーバーごとに個別のログを集約する必要がある | キー利用の追跡が困難 | IdP 側に認可判断のログが集約される |
-| 失効 | サーバーごとに個別に取り消す | キーのローテーション・失効を手動管理する | IdP 側の失効が全クライアントへ即時波及する |
+| 失効 | サーバーごとに個別に取り消す | キーのローテーション・失効を手動管理する | IdP 側の失効で新規トークン発行が全クライアントへ即時停止 (発行済みトークンは期限まで残り得る) |
 | 実装コスト | サーバー側は標準 OAuth のみで対応可能 | サーバー側の実装は最小限 | サーバー側に ID-JAG 検証・claim マッピングの追加実装が必要 |
 
 補足が 2 点あります。
@@ -87,7 +87,7 @@ graph TD
 
 | 分類 | 対応状況 |
 |---|---|
-| IdP | Okta (Cross App Access)。VS Code 経由では Entra ID・Auth0 もサポート |
+| IdP | Okta (Cross App Access) が先行実装。VS Code 経由では Entra ID・Auth0 も例示されている |
 | クライアント | Claude (web / Desktop)、Claude Code、Cowork (いずれも 2026-06-18 発表時点で beta 参加組織向け)、VS Code (v1.123 / 2026-06-03 リリース以降、プレビュー) |
 | サーバー | Asana、Atlassian、Canva、Figma、Granola、Linear、Supabase (提供開始済み)、Slack (対応準備中) |
 
@@ -98,8 +98,8 @@ MCP 公式の client-matrix ページでは、コミュニティ管理の対応�
 - IdP が MCP サーバーへのアクセス可否をポリシーとして一元管理します
 - 従業員は企業クレデンシャルで 1 回 SSO するだけで、承認済みの全 MCP サーバーに接続されます
 - IdP がトークン発行前にグループ・ロール・条件付きアクセスルールを評価します
-- アクセス権の取り消しが IdP レベルで即座に全 MCP クライアントへ波及します
-- 拡張はオプトインです。クライアントとサーバーの双方が `initialize` で対応を宣言した場合のみ有効になります
+- アクセス権を取り消すと、新規の ID-JAG / アクセストークン発行が IdP レベルで即座に止まります (発行済みトークンの扱いは「アクセス失効」で後述)
+- 拡張はオプトインです。クライアントは `initialize` リクエストで、サーバーは Authorization Server メタデータで対応を宣言し、双方が対応した場合のみ有効になります
 - 個人アカウントと業務アカウントの混在を防ぎ、業務アカウントのみの利用を強制できます
 - ID-JAG トークンは `sub` (安定識別子) と任意の `email` claim を持ち、サーバー側の既存アカウントとの紐付けに使えます
 
@@ -539,7 +539,7 @@ EMA / ID-JAG 固有の対応宣言は、Authorization Server Metadata の `autho
 | Protected Resource Metadata | resource | 必須 (基本仕様) | MCP Resource Server 自身の識別子 |
 | Protected Resource Metadata | authorization_servers | 必須 (基本仕様) | 利用可能な Authorization Server の issuer 一覧 |
 | Protected Resource Metadata | scopes_supported | 任意 (基本仕様) | サポートするスコープ一覧 |
-| Authorization Server Metadata | authorization_grant_profiles_supported | EMA 対応の場合は必須 | サポートする authorization grant profile の文字列配列。値に `urn:ietf:params:oauth:grant-profile:id-jag` を含めば ID-JAG (EMA) 対応を意味する (IETF draft Section 7.2) |
+| Authorization Server Metadata | authorization_grant_profiles_supported | EMA 対応宣言に使用 (IETF draft は SHOULD) | サポートする authorization grant profile の文字列配列。値に `urn:ietf:params:oauth:grant-profile:id-jag` を含めば ID-JAG (EMA) 対応を意味する (IETF draft Section 7.2) |
 
 MCP Client は、この `authorization_grant_profiles_supported` フィールドを確認することで、接続先の MCP Authorization Server が ID-JAG プロファイルに対応しているかを判定します。
 
@@ -683,7 +683,7 @@ Atlassian の事例では「Resource Authorization Server が外部ベアラー�
 
 **VS Code (v1.123 以降)**
 
-VS Code 1.123 (2026-06-03 リリース) で enterprise-managed MCP 認証がプレビュー提供されました。対応 IdP は Entra ID / Okta / Auth0 です。
+VS Code 1.123 (2026-06-03 リリース) で enterprise-managed MCP 認証がプレビュー提供されました。release notes は対応 IdP の例として Entra ID / Okta / Auth0 を挙げています。
 
 - 管理者: ポリシー管理設定 `mcp.enterpriseManagedAuth.idp` で IdP を構成します。配信経路は Windows Group Policy / macOS managed preferences / Linux `/etc/vscode/policy.json` です
 - ユーザー (またはサーバー定義): `mcp.json` の対象サーバーの `oauth` ブロックに `"enterpriseManaged": true` を指定します。このフラグがあると VS Code は per-server 登録の標準フローではなく XAA プロバイダー経由でルーティングします
@@ -935,11 +935,11 @@ curl -s https://auth.chat.example/.well-known/oauth-authorization-server \
 
 | トークン | 発行元 | 仕様上の例 | 用途 |
 |---|---|---|---|
-| ID-JAG | Enterprise IdP | `expires_in: 300` (5分) | MCP Authorization Server との交換専用。1 回の交換で消費される想定の短命グラント |
+| ID-JAG | Enterprise IdP | `expires_in: 300` (5分) | MCP Authorization Server との交換専用の短命グラント。有効期限内はアクセストークン再取得のため再提示することも許容される (IETF draft Section 4.4.3) |
 | MCP アクセストークン | MCP Authorization Server | `expires_in: 86400` (24時間) | MCP Resource Server への API 呼び出し用 |
 
 - 両方とも仕様本文が定める必須値ではなく例示ですが、ID-JAG は極めて短命、アクセストークンはそれより長寿命という設計思想が読み取れます。
-- アクセストークンの更新について、仕様は通常の OAuth `refresh_token` グラントを規定していません。クライアントは保存しておいた Identity Assertion (ID Token / SAML assertion) を使って IdP に再度 ID-JAG を要求し、それを MCP Authorization Server のアクセストークンと再交換するフローを繰り返します。
+- アクセストークンの更新について、仕様は MCP Authorization Server 向けの通常の OAuth `refresh_token` グラントを規定していません。クライアントは保存しておいた Identity Assertion (ID Token / SAML assertion、IdP が対応すれば `refresh_token` を `subject_token` にする経路も可) から IdP に再度 ID-JAG を要求するか、有効な ID-JAG が残っていればそれを再提示して、MCP Authorization Server のアクセストークンと再交換します。
 - クライアントは IdP が発行するトークンのスコープ制約を尊重し、スコープエラーを適切にハンドリングする実装が求められます。
 
 ### 運用モニタリング (実装案)
@@ -992,7 +992,7 @@ IETF draft (`draft-ietf-oauth-identity-assertion-authz-grant`) の Security Cons
 | メタデータの開示範囲 | 発行者ごとの信頼関係を公開メタデータで広く告知すると、フェデレーションのトポロジーが露出するリスクがある。Resource Authorization Server は `authorization_grant_profiles_supported` を issuer の許可リスト開示に使ってはならない (MUST NOT、IETF draft Section 9.4) |
 | クライアント登録 | MCP クライアントは Enterprise IdP に事前登録が必要になる可能性が高い |
 | `jti` リプレイ検出 | 仕様は ID-JAG の一意性確認を求めるが、`jti` の保存・照合方式は未規定。実装案として、使用済み `jti` を `exp` までストアに保持し重複提示を拒否する (ID-JAG は短命のため保持期間は短くて済む) |
-| token endpoint の保護 | ID-JAG 交換エンドポイントへのレート制限・バックオフを設計する。Auth0 (Customer Identity Cloud) の XAA beta は 5 RPS の制限を明示しており、他実装でも同種の制限を前提にクライアント側のリトライを設計する |
+| token endpoint の保護 | ID-JAG 交換エンドポイントへのレート制限・バックオフを設計する。Auth0 (Customer Identity Cloud) の XAA beta は 5 RPS の制限を明示しており、他実装でも同種の制限がある可能性を前提にクライアント側のリトライを設計する |
 
 ## トラブルシューティング
 
