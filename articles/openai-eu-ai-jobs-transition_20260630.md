@@ -3,7 +3,8 @@ title: "OpenAIのEU職種4類型マップを経営の職務再設計に使う"
 emoji: "🗺️"
 type: "tech"
 topics: ["AI", "OpenAI", "生成AI", "組織開発", "キャリア"]
-published: false
+published: true
+published_at: 2026-07-07
 ---
 
 ## 概要
