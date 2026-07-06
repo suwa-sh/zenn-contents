@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (142)
+## Articles: 下書き (143)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-07-07 | [⚖️ 「AIはもう十分賢い」の先へ 評価・ガバナンスへの投資シフトを検証する](articles/ai-eval-governance-shift_20260707.md) | 生成AI, LLM, 評価, AIガバナンス, LLMOps |
+| 2026-07-07 | [🧭 AIを制御してレガシー基幹の現行分析を進める設計](articles/legacy-asis-ai-control_20260707.md) | LegacyModernization, GenerativeAI, ClaudeCode, PromptEngineering, RequirementsEngineering |
 | 2026-07-07 | [🔐 技術調査 - MCP Enterprise-Managed Authorization (EMA)](articles/mcp-enterprise-managed-auth_20260707.md) | MCP, OAuth, IdP, 認証認可, AIエージェント |
 | 2026-07-06 | [🔍 AIを実装要員でなく「リリース前監査役」に置く出荷判断の型](articles/ai-prerelease-audit-cost_20260706.md) | AIエージェント, コードレビュー, 生成AI, LLM, リリース管理 |
 | 2026-07-06 | [🚦 技術調査 - Cloudflare のAIトラフィック行為別制御](articles/cloudflare-ai-traffic-controls_20260706.md) | Cloudflare, AIエージェント, WAF, BotManagement |
