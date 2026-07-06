@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (140)
+## Articles: 下書き (141)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-07-06 | [🔍 AIを実装要員でなく「リリース前監査役」に置く出荷判断の型](articles/ai-prerelease-audit-cost_20260706.md) | AIエージェント, コードレビュー, 生成AI, LLM, リリース管理 |
+| 2026-07-06 | [🚦 技術調査 - Cloudflare のAIトラフィック行為別制御](articles/cloudflare-ai-traffic-controls_20260706.md) | Cloudflare, AIエージェント, WAF, BotManagement |
 | 2026-07-05 | [🔍 AIに障害対応させる前に設計すべき、証拠捏造を見抜く検証プロトコル](articles/ai-incident-agent-evidence-verification_20260705.md) | LLM, GenerativeAI, SRE, Security, AIAgent |
 | 2026-07-05 | [🛡️ データ主権は契約書では守れない：KubernetesとGitOpsで強制する設計論](articles/data-sovereignty-kubernetes-gitops_20260705.md) | Kubernetes, GitOps, Kyverno, セキュリティ, CloudNative |
 | 2026-07-05 | [🚦 技術調査 - 並列AIエージェント開発のPR衝突回避と変更空間の分割設計](articles/parallel-agent-pr-collision_20260705.md) | AIエージェント, GitHub, コードレビュー, Git |
