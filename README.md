@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (149)
+## Articles: 下書き (150)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-09 | [🧭 エージェント導入を「作る前」に潰す20の問い — Google Cloudの設計レビュー枠組み](articles/agentic-enterprise-20-questions_20260709.md) | GoogleCloud, 生成AI, AIエージェント, LLM, セキュリティ |
 | 2026-07-08 | [📦 技術調査 - AIエージェント実行基盤 Agent Sandbox と Agent Substrate](articles/agent-substrate-runtime_20260708.md) | Kubernetes, CNCF, gVisor, GKE, AIエージェント |
 | 2026-07-08 | [🚦 ソフトバンクの全社AIエージェント展開に見る「運用部門」の再定義](articles/ai-agent-ops-org-redefinition_20260708.md) | 生成AI, AIエージェント, AIガバナンス, MLOps, 組織開発 |
 | 2026-07-08 | [🤖 技術調査 - Gemini API Managed Agents の非同期実行とリモート MCP 直結](articles/gemini-managed-agents_20260708.md) | Gemini, MCP, AIAgent, GoogleAI |
