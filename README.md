@@ -7,10 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (144)
+## Articles: 下書き (147)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-08 | [🚦 ソフトバンクの全社AIエージェント展開に見る「運用部門」の再定義](articles/ai-agent-ops-org-redefinition_20260708.md) | 生成AI, AIエージェント, AIガバナンス, MLOps, 組織開発 |
+| 2026-07-08 | [🚀 技術調査 - GoReleaser](articles/goreleaser_20260708.md) | GoReleaser, Go, GitHubActions |
+| 2026-07-07 | [🏗️ AI委任のreadiness診断に「組織」軸を足す — 業務は委任可でも組織が受け止められない、を分離する](articles/ai-delegation-readiness-org-axis_20260707.md) | AIエージェント, 組織設計, ガバナンス, OSS, Python |
 | 2026-07-07 | [⚖️ 「AIはもう十分賢い」の先へ 評価・ガバナンスへの投資シフトを検証する](articles/ai-eval-governance-shift_20260707.md) | 生成AI, LLM, 評価, AIガバナンス, LLMOps |
 | 2026-07-07 | [🧭 技術調査 - 自律SRE前提のコンテキスト基盤設計 (SREの4体問題)](articles/autonomous-sre-context-foundation_20260707.md) | SRE, Observability, AIOps, OpenTelemetry, AIエージェント |
 | 2026-07-07 | [🧭 AIを制御してレガシー基幹の現行分析を進める設計](articles/legacy-asis-ai-control_20260707.md) | LegacyModernization, GenerativeAI, ClaudeCode, PromptEngineering, RequirementsEngineering |
