@@ -50,6 +50,7 @@ GoReleaserと他のリリース自動化・ビルド関連技術との位置づ�
 | CGOを利用し、かつビルド環境の複雑性をコンテナ内に隠蔽したい場合 | xgo | ツールチェーンのイメージ化による、CI環境の初期構築コストの抑制 |
 
 ### 全体処理フロー
+全体の処理フローを示します。なお、実際の GoReleaser 実装（`internal/pipeline/pipeline.go`）では50以上の Pipe が動作していますが、本図は主要な流れを整理した簡略化された概念図です。
 ```mermaid
 graph TD
     subgraph pipeline["ビルドパッケージングパイプライン"]
@@ -133,8 +134,8 @@ graph TD
 | 署名 公証サービス | リリースの安全性を担保するため、成果物に電子署名や公証を付与する外部システム |
 | 通知システム | リリースの完了情報を開発者やユーザーに告知する外部システム |
 
-### ●コンテナ図
-コンテナ図は、GoReleaserシステム内部における機能モジュールの分割と役割を示します。
+### ●プロセスおよびモジュール構成（コンテナ図）
+プロセスおよびモジュール構成（コンテナ図）は、GoReleaserシステム内部における機能モジュールの分割と役割を示します。なお、本図はC4 modelで厳密に定義されるContainer（プロセスやデータストアなどの独立した実行単位）の境界を示すものではなく、システム内部の主要な論理プロセスやモジュール構成を示したものです。
 
 ```mermaid
 graph TD
@@ -162,7 +163,7 @@ graph TD
 | 外部クライアント | 外部のサービスやAPIと通信を行うための通信モジュール |
 
 ### ●コンポーネント図
-コンポーネント図は、パイプライン実行エンジン（Pipeline Engine）を構成する具体的なPipe実装を示します。
+コンポーネント図は、パイプライン実行エンジン（Pipeline Engine）を構成する具体的なPipe実装を示します。なお、実際の GoReleaser 実装（`internal/pipeline/pipeline.go`）では50以上の Pipe が動作していますが、本図は主要な流れを整理した簡略化された概念図です。
 
 ```mermaid
 graph TD
@@ -178,8 +179,8 @@ graph TD
     AnnouncePipe["announce Pipe<br/>通知メッセージの送信"]
   end
 
-  Context["pkg context Context<br/>状態共有用コンテキスト"]
-  Artifacts["metadata ArtifactsPipe<br/>生成メタデータの記録"]
+  Context["状態共有用コンテキスト<br/>実行環境と成果物の共有"]
+  Artifacts["成果物情報の出力<br/>生成メタデータの記録"]
 
   CleanPipe --> EnvPipe
   EnvPipe --> GitPipe
@@ -215,8 +216,8 @@ graph TD
 | archive Pipe | バイナリを圧縮し、配布用のアーカイブファイルを生成する処理 |
 | publish New | 生成されたアーカイブファイルを外部のホスティングサービスへ公開する処理 |
 | announce Pipe | リリースの完了を告知チャンネルへ通知する処理 |
-| pkg context Context | 各処理コンポーネント間で共通の環境や状態データを共有する仕組み |
-| metadata ArtifactsPipe | 成果物のメタデータをJSON形式のファイルに出力する処理 |
+| 状態共有用コンテキスト | 各処理コンポーネント間で共通の環境や状態データを共有する仕組み |
+| 成果物情報の出力 | 成果物のメタデータをJSON形式のファイルに出力する処理 |
 
 ### ●ネットワーク構成図
 ネットワーク構成図は、GoReleaserが動作するローカル環境から外部のクラウドサービスに対する通信経路を示します。
@@ -226,6 +227,7 @@ graph TD
   subgraph Local_Network["ローカル実行環境"]
     GoReleaser_Bin["GoReleaser バイナリ<br/>CLI 実行プロセス"]
     Local_FS["ローカルファイルシステム<br/>ビルド成果物の配置"]
+    Docker_Daemon["Docker デーモン - buildx<br/>コンテナビルド実行環境"]
   end
 
   Internet_GW["インターネットゲートウェイ<br/>HTTPS 通信の境界"]
@@ -238,6 +240,7 @@ graph TD
   end
 
   GoReleaser_Bin -->|"読み書き"| Local_FS
+  GoReleaser_Bin -->|"ビルド要求"| Docker_Daemon
   GoReleaser_Bin -->|"HTTPS 要求"| Internet_GW
   Internet_GW -->|"API 操作"| GitHub_API
   Internet_GW -->|"イメージ送信"| Docker_Hub
@@ -249,11 +252,14 @@ graph TD
 |---|---|
 | GoReleaser バイナリ | CLIプロセスとして動作するGoReleaserの実行主体 |
 | ローカルファイルシステム | ビルド成果物や一時ファイルを出力するストレージ |
+| Docker デーモン - buildx | ローカル環境でコンテナイメージのビルドおよびパッケージングを実行する環境 |
 | インターネットゲートウェイ | 外部ネットワークとの通信を媒介する境界線 |
 | GitHub API | リリース作成や成果物アップロードに使用する接続先 |
 | Docker Registry API | コンテナイメージのアップロードに使用する接続先 |
 | Cosign 署名インフラ | 成果物への電子署名の実行に使用する接続先 |
 | Slack Webhook | リリース告知のメッセージ送信に使用する接続先 |
+
+※Cosign署名について、鍵ファイル（`--key`）を使用する署名処理はローカル環境で完結します。Keyless署名（公開鍵インフラを利用する署名）を実行する場合にのみ、外部のSigstoreインフラへのHTTPS通信が発生します。
 
 ## ■データ
 
@@ -350,7 +356,7 @@ classDiagram
         +string projectName
         +list builds
         +list archives
-        +list dockers
+        +list dockers_v2
         +list nfpms
         +Release release
         +list publishers
@@ -371,11 +377,11 @@ classDiagram
         +list files
     }
     
-    class Docker {
+    class DockerV2 {
         +string id
         +list imageTemplates
         +string dockerfile
-        +string use
+        +list ids
     }
     
     class NFPM {
@@ -408,7 +414,7 @@ classDiagram
     Context *-- "many" Artifact
     Config *-- "many" Build
     Config *-- "many" Archive
-    Config *-- "many" Docker
+    Config *-- "many" DockerV2
     Config *-- "many" NFPM
     Config *-- "1" Release
     Config *-- "many" Publisher
@@ -425,7 +431,7 @@ classDiagram
 | Config | プロジェクト全体のリリース設定を保持するルートクラス |
 | Build | バイナリビルド用のソースコードパスや対象プラットフォームの設定クラス |
 | Archive | パッケージング形式やアーカイブに含めるファイルの設定クラス |
-| Docker | Dockerイメージ名やDockerfileのパスの設定クラス |
+| DockerV2 | GoReleaser v2に対応したDockerイメージ名やDockerfileのパスの設定クラス |
 | NFPM | パッケージメタデータや生成するパッケージ形式の設定クラス |
 | Release | 公開先のプラットフォーム名や下書き・プレリリース指定の設定クラス |
 | Publisher | カスタムコマンドや実行ディレクトリを定義する外部配布用設定クラス |
@@ -439,9 +445,13 @@ classDiagram
 
 ### インストール方法（複数手段）
 - **Homebrew（macOS / Linux）**
-  - macOSやLinux環境における、公式Tapを経由した以下のコマンドでのインストール。
+  - OSS版 Tap 経由でのインストール：
     ```bash
     brew install goreleaser/tap/goreleaser
+    ```
+  - Pro版 Cask 経由でのインストール（補足）：
+    ```bash
+    brew install --cask goreleaser-pro
     ```
 - **Goコマンド（開発環境共通）**
   - Goのツールチェーン導入環境における、以下のコマンドでの最新バイナリのインストール。
@@ -451,7 +461,7 @@ classDiagram
 - **Scoop（Windows）**
   - Windows環境における、パッケージマネージャーであるScoopを利用した以下のコマンドでのインストール。
     ```bash
-    scoop bucket add goreleaser
+    scoop bucket add goreleaser https://github.com/goreleaser/scoop-bucket.git
     scoop install goreleaser
     ```
 - **Docker**
@@ -475,6 +485,7 @@ goreleaser --version
 
 ### 必須パラメータと前提条件
 利用を開始する前に、以下のパラメータと環境変数を設定してください。
+※利用する公開・配布先プラットフォーム（GitHub/GitLab/Gitea等）に応じて、必要なトークンのみを設定してください。すべてのトークンを同時に設定する必要はありません。
 | パラメータ名 | 区分 | 必須条件と設定方法 | 説明 |
 |---|---|---|---|
 | Gitリポジトリ | 前提環境 | 実行ディレクトリにおける `.git` ディレクトリの存在 | Gitタグやコミット履歴を基準としたリリースの実行 |
@@ -609,12 +620,12 @@ checksum:
   algorithm: sha256
 
 # パッケージ管理システムへの公開設定
-brews:
+homebrew_casks:
   - name: my-app
     repository:
       owner: suwa-sh
       name: homebrew-tap
-    directory: Formula
+    directory: Casks
     homepage: "https://github.com/suwa-sh/my-app"
     description: "Sample application description"
 
@@ -630,6 +641,7 @@ winget:
   - name: my-app
     publisher: suwa-sh
     license: MIT
+    short_description: "Sample application short description"
     repository:
       owner: suwa-sh
       name: winget-pkgs
