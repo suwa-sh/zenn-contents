@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (151)
+## Articles: 下書き (150)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -19,7 +19,6 @@
 | 2026-07-08 | [🚀 技術調査 - GoReleaser](articles/goreleaser_20260708.md) | GoReleaser, Go, GitHubActions |
 | 2026-07-07 | [🏗️ AI委任のreadiness診断に「組織」軸を足す — 業務は委任可でも組織が受け止められない、を分離する](articles/ai-delegation-readiness-org-axis_20260707.md) | AIエージェント, 組織設計, ガバナンス, OSS, Python |
 | 2026-07-07 | [⚖️ 「AIはもう十分賢い」の先へ 評価・ガバナンスへの投資シフトを検証する](articles/ai-eval-governance-shift_20260707.md) | 生成AI, LLM, 評価, AIガバナンス, LLMOps |
-| 2026-07-07 | [🧭 技術調査 - 自律SRE前提のコンテキスト基盤設計 (SREの4体問題)](articles/autonomous-sre-context-foundation_20260707.md) | SRE, Observability, AIOps, OpenTelemetry, AIエージェント |
 | 2026-07-07 | [🧭 AIを制御してレガシー基幹の現行分析を進める設計](articles/legacy-asis-ai-control_20260707.md) | LegacyModernization, GenerativeAI, ClaudeCode, PromptEngineering, RequirementsEngineering |
 | 2026-07-07 | [🔐 技術調査 - MCP Enterprise-Managed Authorization (EMA)](articles/mcp-enterprise-managed-auth_20260707.md) | MCP, OAuth, IdP, 認証認可, AIエージェント |
 | 2026-07-06 | [🔍 AIを実装要員でなく「リリース前監査役」に置く出荷判断の型](articles/ai-prerelease-audit-cost_20260706.md) | AIエージェント, コードレビュー, 生成AI, LLM, リリース管理 |
@@ -163,10 +162,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (152)
+## Articles: 公開済み (153)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-07-09 | [🧭 自律SRE前提のコンテキスト基盤設計 (SREの4体問題)](articles/autonomous-sre-context-foundation_20260707.md) | SRE, Observability, AIOps, OpenTelemetry, AIエージェント |
 | 2026-07-07 | [🗺️ OpenAIのEU職種4類型マップを経営の職務再設計に使う](articles/openai-eu-ai-jobs-transition_20260630.md) | AI, OpenAI, 生成AI, 組織開発, キャリア |
 | 2026-07-04 | [🌾 レガシーコードから要件を逆生成する - distillery dist-harvest の設計](articles/dist-harvest-legacy-rdra_20260704.md) | RDRA, USDM, ClaudeCode, 要件定義, リバースエンジニアリング |
 | 2026-07-02 | [🔧 Claude Sonnet 5 移行で壊れるAPI前提と運用破断点の棚卸し](articles/claude-sonnet-5-migration_20260701.md) | Claude, Anthropic, 生成AI, LLM, API |

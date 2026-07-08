@@ -1,9 +1,10 @@
 ---
-title: "技術調査 - 自律SRE前提のコンテキスト基盤設計 (SREの4体問題)"
+title: "自律SRE前提のコンテキスト基盤設計 (SREの4体問題)"
 emoji: "🧭"
 type: "tech"
 topics: ["SRE", "Observability", "AIOps", "OpenTelemetry", "AIエージェント"]
-published: false
+published: true
+published_at: 2026-07-09
 ---
 
 > この記事は、CNCF Blog (2026-07-06, Sanjeev Sharma / Field CTO at StackGen) の「SRE の 4体問題 (4-Body Problem of SRE)」と、その解として提案される Live Context Graph / Agentic OS for Ops という方法論を、構造とデータの観点から技術調査したものです。本方法論は具体的なプロダクトでなく設計思想のため、構築方法・利用方法のコード例は「意図を反映した実装案」として示し、補完元を明示します。
