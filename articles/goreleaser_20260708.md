@@ -6,7 +6,7 @@ topics: ["GoReleaser", "Go", "GitHubActions"]
 published: false
 ---
 
-![GoReleaser の公式ロゴマーク](/images/goreleaser_20260708/01_goreleaser.svg)
+![ソーシャルメディア用のキービジュアル画像](/images/goreleaser_20260708/03_twitter-card.png)
 
 ## ■概要
 
@@ -92,9 +92,6 @@ GoReleaserの主要な特徴を以下に示します。
 - **セキュリティ対応とコンプライアンス支援**: 生成した成果物に対するCosignを用いた署名、チェックサムファイルの自動生成、およびソフトウェア部品表（SBOM）の標準サポート。
 - **Dockerコンテナイメージの構築とプッシュ**: マルチアーキテクチャに対応したDockerイメージの自動ビルド、およびDocker HubやGitHub Container Registry（GHCR）などのコンテナレジストリへのプッシュ。
 - **柔軟なカスタマイズを可能にするフック機構**: ビルドや公開プロセスの前後における、独自スクリプトやコマンドの実行。
-
-![GoReleaser Pro の公式ロゴマーク](/images/goreleaser_20260708/02_goreleaser-pro.png)
-![ソーシャルメディア用のキービジュアル画像](/images/goreleaser_20260708/03_twitter-card.png)
 
 ## ■構造
 
