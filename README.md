@@ -7,12 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (156)
+## Articles: 下書き (158)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-10 | [📊 AI費を「第二の人件費」として運営する LayerXに学ぶ経費から投資資産への転換](articles/ai-cost-as-second-labor_20260710.md) | 生成AI, AI, FinOps, コスト管理, マネジメント |
 | 2026-07-10 | [🤖 AIエージェントで安全に別リポジトリのドキュメントPRを作る設計](articles/cross-repo-docs-agent-governance_20260710.md) | GitHubActions, AIAgent, DevSecOps, CICD, Documentation |
 | 2026-07-10 | [💻 技術調査 - Cursor CLI](articles/cursor_cli_20260710.md) | Cursor, CLI, AI, DeveloperTools |
+| 2026-07-10 | [🛡️ 社内RAG乱立を収束させる全社基盤の設計 承認・認可・品質ゲートを組み込む](articles/enterprise-rag-authz-governance_20260710.md) | RAG, 生成AI, セキュリティ, AIガバナンス, LLM |
 | 2026-07-10 | [🤖 技術調査 - Grok-Build](articles/grok-build_20260710.md) | Grok, GrokBuild, ModelContextProtocol, AICodingAgent |
 | 2026-07-09 | [🧭 エージェント導入を「作る前」に潰す20の問い — Google Cloudの設計レビュー枠組み](articles/agentic-enterprise-20-questions_20260709.md) | GoogleCloud, 生成AI, AIエージェント, LLM, セキュリティ |
 | 2026-07-09 | [🧱 技術調査 - AI-Agent-Network-Boundary-NGINX-OTEL](articles/ai-agent-network-boundary-nginx-otel_20260709.md) | NGINX, OpenTelemetry, Kubernetes, Security, AIAgent |
