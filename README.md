@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (152)
+## Articles: 下書き (153)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-07-09 | [🧭 エージェント導入を「作る前」に潰す20の問い — Google Cloudの設計レビュー枠組み](articles/agentic-enterprise-20-questions_20260709.md) | GoogleCloud, 生成AI, AIエージェント, LLM, セキュリティ |
 | 2026-07-09 | [🧱 技術調査 - AI-Agent-Network-Boundary-NGINX-OTEL](articles/ai-agent-network-boundary-nginx-otel_20260709.md) | NGINX, OpenTelemetry, Kubernetes, Security, AIAgent |
+| 2026-07-09 | [🛰️ 技術調査 - Claude Cowork のアカウント常駐リモート実行](articles/anthropic-cowork-remote-execution_20260709.md) | Claude, Anthropic, AIエージェント, MCP |
 | 2026-07-09 | [🧭 dbt MCPでBI数字不整合を追う意味層・検証層アーキテクチャ](articles/dbt-mcp-databricks-semantic-layer_20260709.md) | dbt, MCP, Databricks, SemanticLayer, BI |
 | 2026-07-09 | [🚪 技術調査 - 全社AIゲートウェイ（Internal Key方式の入口プロキシ）](articles/enterprise-ai-gateway_20260709.md) | LLM, LiteLLM, 生成AI, セキュリティ, アーキテクチャ |
 | 2026-07-08 | [📦 技術調査 - AIエージェント実行基盤 Agent Sandbox と Agent Substrate](articles/agent-substrate-runtime_20260708.md) | Kubernetes, CNCF, gVisor, GKE, AIエージェント |
