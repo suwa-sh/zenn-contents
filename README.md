@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (155)
+## Articles: 下書き (156)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-10 | [🤖 AIエージェントで安全に別リポジトリのドキュメントPRを作る設計](articles/cross-repo-docs-agent-governance_20260710.md) | GitHubActions, AIAgent, DevSecOps, CICD, Documentation |
 | 2026-07-10 | [💻 技術調査 - Cursor CLI](articles/cursor_cli_20260710.md) | Cursor, CLI, AI, DeveloperTools |
 | 2026-07-10 | [🤖 技術調査 - Grok-Build](articles/grok-build_20260710.md) | Grok, GrokBuild, ModelContextProtocol, AICodingAgent |
 | 2026-07-09 | [🧭 エージェント導入を「作る前」に潰す20の問い — Google Cloudの設計レビュー枠組み](articles/agentic-enterprise-20-questions_20260709.md) | GoogleCloud, 生成AI, AIエージェント, LLM, セキュリティ |
