@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (158)
+## Articles: 下書き (160)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-11 | [🔍 Copilot code review はなぜ共有ツールで悪化したか - ツール指示を仕事に合わせる](articles/copilot-code-review-evidence-flow_20260711.md) | GitHubCopilot, CodeReview, AIAgent, CodingAgent, LLM |
+| 2026-07-11 | [🧬 技術調査 - ハーネスを実行時に進化させる Test-Time Harness Evolution](articles/test-time-harness-evolution_20260711.md) | LLM, AIエージェント, Evaluation, MLOps, arXiv |
 | 2026-07-10 | [📊 AI費を「第二の人件費」として運営する LayerXに学ぶ経費から投資資産への転換](articles/ai-cost-as-second-labor_20260710.md) | 生成AI, AI, FinOps, コスト管理, マネジメント |
 | 2026-07-10 | [🤖 AIエージェントで安全に別リポジトリのドキュメントPRを作る設計](articles/cross-repo-docs-agent-governance_20260710.md) | GitHubActions, AIAgent, DevSecOps, CICD, Documentation |
 | 2026-07-10 | [💻 技術調査 - Cursor CLI](articles/cursor_cli_20260710.md) | Cursor, CLI, AI, DeveloperTools |
