@@ -3,7 +3,8 @@ title: "エージェント導入を「作る前」に潰す20の問い — Googl
 emoji: "🧭"
 type: "tech"
 topics: ["GoogleCloud", "生成AI", "AIエージェント", "LLM", "セキュリティ"]
-published: false
+published: true
+published_at: 2026-07-11
 ---
 
 > 対象: Google Cloud が 2026-07-08 に公開したブログ「20 questions for the agentic enterprise」。

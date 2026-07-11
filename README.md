@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (159)
+## Articles: 下書き (158)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -17,7 +17,6 @@
 | 2026-07-10 | [🛡️ 社内RAG乱立を収束させる全社基盤の設計 承認・認可・品質ゲートを組み込む](articles/enterprise-rag-authz-governance_20260710.md) | RAG, 生成AI, セキュリティ, AIガバナンス, LLM |
 | 2026-07-10 | [🤖 技術調査 - Grok-Build](articles/grok-build_20260710.md) | Grok, GrokBuild, ModelContextProtocol, AICodingAgent |
 | 2026-07-10 | [💎 技術調査 - Progressive Crystallization（エージェント探索の決定論化）](articles/progressive-crystallization_20260710.md) | AIOps, LLM, AIエージェント, 生成AI |
-| 2026-07-09 | [🧭 エージェント導入を「作る前」に潰す20の問い — Google Cloudの設計レビュー枠組み](articles/agentic-enterprise-20-questions_20260709.md) | GoogleCloud, 生成AI, AIエージェント, LLM, セキュリティ |
 | 2026-07-09 | [🧱 技術調査 - AI-Agent-Network-Boundary-NGINX-OTEL](articles/ai-agent-network-boundary-nginx-otel_20260709.md) | NGINX, OpenTelemetry, Kubernetes, Security, AIAgent |
 | 2026-07-09 | [🛰️ 技術調査 - Claude Cowork のアカウント常駐リモート実行](articles/anthropic-cowork-remote-execution_20260709.md) | Claude, Anthropic, AIエージェント, MCP |
 | 2026-07-09 | [🧭 dbt MCPでBI数字不整合を追う意味層・検証層アーキテクチャ](articles/dbt-mcp-databricks-semantic-layer_20260709.md) | dbt, MCP, Databricks, SemanticLayer, BI |
@@ -171,10 +170,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (153)
+## Articles: 公開済み (154)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-07-11 | [🧭 エージェント導入を「作る前」に潰す20の問い — Google Cloudの設計レビュー枠組み](articles/agentic-enterprise-20-questions_20260709.md) | GoogleCloud, 生成AI, AIエージェント, LLM, セキュリティ |
 | 2026-07-09 | [🧭 自律SRE前提のコンテキスト基盤設計 (SREの4体問題)](articles/autonomous-sre-context-foundation_20260707.md) | SRE, Observability, AIOps, OpenTelemetry, AIエージェント |
 | 2026-07-07 | [🗺️ OpenAIのEU職種4類型マップを経営の職務再設計に使う](articles/openai-eu-ai-jobs-transition_20260630.md) | AI, OpenAI, 生成AI, 組織開発, キャリア |
 | 2026-07-04 | [🌾 レガシーコードから要件を逆生成する - distillery dist-harvest の設計](articles/dist-harvest-legacy-rdra_20260704.md) | RDRA, USDM, ClaudeCode, 要件定義, リバースエンジニアリング |
