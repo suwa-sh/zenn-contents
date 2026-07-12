@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (165)
+## Articles: 下書き (166)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-07-12 | [🛡️ 技術調査 - AI Agent SaaS 向け microVM 隔離実行基盤](articles/ai-agent-saas-microvm-isolation_20260712.md) | Firecracker, Kubernetes, Security, Sandbox, AIエージェント |
+| 2026-07-12 | [🧭 Deutsche Telekom の全社AI導入を「業務プロセス単位の運営モデル再設計」として評価する](articles/deutsche-telekom-ai-operating-model_20260712.md) | AI, 生成AI, DX, 経営 |
 | 2026-07-12 | [📑 Errataを持つ仕様書をMCP/RAGへ取り込む設計パターン](articles/errata-aware-spec-rag-ingestion_20260712.md) | MCP, RAG, PDF, TypeScript |
 | 2026-07-12 | [🧠 技術調査 - Memory in the Loop：エージェントのメモリをループ内に置く設計](articles/memory-in-the-loop_20260712.md) | LLM, RAG, AIエージェント, arXiv |
 | 2026-07-11 | [🔍 Copilot code review はなぜ共有ツールで悪化したか - ツール指示を仕事に合わせる](articles/copilot-code-review-evidence-flow_20260711.md) | GitHubCopilot, CodeReview, AIAgent, CodingAgent, LLM |
