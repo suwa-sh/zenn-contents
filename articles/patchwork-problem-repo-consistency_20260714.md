@@ -18,7 +18,7 @@ Patchwork Problem の要点は次のとおりです。
 
 - 生成コードは局所的に正しいです。コンパイルが通り、テストが通ります。
 - 同じコードがリポジトリ全体では構造的に不整合です。
-- 根本原因は論理的な誤りではなく、構造的な不整合です。
+- 本論文が対象とする失敗では、論理的な誤りよりも構造的な不整合が主要因です。
 
 論文は、この不整合を「複数グラフ表現上の整合性不変条件 (consistency invariant)」として形式化しました。import・call・dependency・configuration・schema・resource・control flow・routing の 8 種類のグラフを構築し、各グラフが満たすべき制約を定義します。制約に違反した箇所を、構造的失敗として検出します。
 
@@ -74,7 +74,7 @@ Patchwork Problem の要点は次のとおりです。
 - LLM 固有 (LLM-specific) と amplified の区別: DHI は LLM 特有の失敗 (実在しないパッケージ名の発明) です。他のカテゴリの多くは、人間も起こしうる失敗が LLM によって増幅 (amplified) されたもの、または一般的 (general) な失敗として区別しています。
 - evidence trace 付き診断: 各検出結果に、違反した不変条件・該当ファイル/行番号・成立すべき制約を含む localized evidence trace を付与します。
 - precision-first の hybrid 検出設計: 成熟した静的解析 (mypy/tsc) が扱える意味論はそちらに委譲し、専用検出器はクロスグラフ推論が必要なカテゴリに特化します。
-- CI 実用レベルの性能: 1 ファイルあたり中央値 47ms (グラフ構築から 7 検出器実行までの end-to-end) で、中規模リポジトリの CI 統合に実用的な速度です。
+- CI 実用レベルの性能: 1 ファイルあたり中央値 47ms (グラフ構築から 7 検出器実行までの end-to-end) で、論文著者は中規模リポジトリの CI 統合に実用的と評価しています。
 - pass/fail でなく actionable diagnostics: 合否判定ではなく、開発者レビューと CI 統合の両方を支援する診断情報を出力します。
 - 実運用リポジトリでの外部検証: 43 の実在 AI 生成リポジトリ・1,581 ファイルを対象にした外部検証で、81.4% (35/43) のリポジトリに構造的失敗を確認しました。
 
@@ -280,6 +280,8 @@ Invariant Checker群の内訳です。
 | CCV Checker | cross-graph disconnect検出のAlgorithm5で判定する |
 | CFC Checker | 3層hybridのAlgorithm6にpylint/ESLintを組み合わせて判定する |
 | SSR Checker | resource-clustered majority-rule解析のAlgorithm7で判定する |
+
+論文は 8 カテゴリを 7 アルゴリズムで扱います。SRF と PIA が Algorithm 3 を共有し、DHI は Algorithm 2、BCI は Algorithm 1、RCF は Algorithm 4、CCV は Algorithm 5、CFC は Algorithm 6、SSR は Algorithm 7 に対応します。
 
 Hybrid Detector層とEvidence Trace Reporter、および補助コンテナのドリルダウンです。
 
@@ -970,6 +972,7 @@ function extractExpressRoutes(app: import("express").Express) {
 
 - Import Graph の外部 import を Dependency Graph の宣言済みパッケージと突合します。
 - 未宣言の場合のみレジストリにクエリし、「未宣言だが実在」と「完全な幻覚 (レジストリにも存在しない)」を区別します。
+- 以下は概念を示す簡略例です。実在する未宣言依存も可視化のため finding として返しますが、実運用では stdlib/ローカルモジュールの除外、Python の import 名と配布名の対応、npm の scoped/サブパス正規化が必要です。
 
 ```python
 # 実装例: DHI (Dependency Hallucination) 検証
@@ -1013,6 +1016,7 @@ def verify_dependency_hallucination(
 - 未ガードの環境変数アクセス (`os.environ["K"]` / ガードのない `process.env.K`) を抽出します。
 - `try/except KeyError` 内・メンバーシップテスト前置・`||`/`??` フォールバック付きアクセスを除外します。
 - 抽出済みキーが Configuration Graph の宣言済みキー集合に存在するか検証します。
+- 以下のコード例は `try/except KeyError` のみを扱う部分実装です。membership test 前置や `||`/`??` フォールバックの除外、TypeScript 側の解析は省略しています。
 
 ```python
 # 実装例: BCI (Build/Configuration Incoherence) 検証
@@ -1166,7 +1170,7 @@ def check_cross_file_contract(producer_fields: set[str], consumer_accessed_field
 
 ### SSR: routing graph の guard 有無チェック (majority-rule)
 
-Algorithm 7 は「パスセグメントでクラスタリングし、クラスタサイズと最頻ガードの比率が閾値以上のとき、その多数派ガードを期待値として mutating route (POST/PUT/DELETE/PATCH) のガード欠落を検出する」多数決分析です。クラスタサイズ最小 4 (論文本文 "at least 4 endpoints")、多数決比率 0.9 (同 "ratio≥0.9") は arXiv HTML 本文に明記された値です。
+Algorithm 7 は「パスセグメントでクラスタリングし、クラスタサイズと最頻ガードの比率が閾値以上のとき、その多数派ガードを期待値として mutating route (POST/PUT/DELETE/PATCH) のガード欠落を検出する」多数決分析です。クラスタサイズ最小 4 (論文本文 "at least 4 endpoints")、多数決比率 0.9 (同 "ratio≥0.9") は arXiv HTML 本文に明記された値です。なお public 除外リストは説明用の例で、論文の例示 (health/auth/docs/webhook/metrics) とは一致させていません。
 
 ```python
 # 実装例: SSR (Security Structural Regression) 検証
@@ -1366,16 +1370,16 @@ flowchart LR
 
 | 区分 | カテゴリ | 意味 | 優先度の考え方 |
 |---|---|---|---|
-| LLM 固有 | DHI | 実在しないパッケージ名を LLM が発明する、人間の開発者にはほぼ起きない失敗 | 検出精度を最優先で高める。外部検証でも 474 件と最多カテゴリ |
+| LLM 固有 | DHI | 実在しないパッケージ名を LLM が発明する、LLM 出力に特徴的な失敗 | 検出精度を最優先で高める。外部検証でも 474 件と最多カテゴリ |
 | Strongly amplified | PIA | 命名規則から内部 API シグネチャを幻覚する | 発生頻度が増幅されている前提で監視強化 |
-| Amplified | BCI / RCF / CCV / SSR | 人間も起こし得るが LLM がより高頻度に起こす | 既存の静的解析・レビュー慣行を強化する形で対応 |
+| Amplified | SRF / BCI / RCF / CCV / SSR | 人間も起こし得るが LLM がより高頻度に起こす | 既存の静的解析・レビュー慣行を強化する形で対応 |
 | General/Amplified | CFC | 人間のコードでも起きる一般的な失敗が LLM で増幅 | 相対的に優先度は低いが監視は継続 |
 
-- LLM 固有カテゴリ (DHI) は「人間なら起きない失敗モード」です。既存のレビュー慣行に頼らず専用検出 (レジストリ照合) を最優先で組み込みます。
+- LLM 固有カテゴリ (DHI) は LLM 出力に特徴的な失敗モードです。既存のレビュー慣行に頼らず専用検出 (レジストリ照合) を最優先で組み込みます。
 
 ### Human-in-the-loop の限界を構造ゲートで補完する
 
-- 論文の問題意識は、AI 生成コードが「局所的には正しく見える」ため人間のレビュアーが誤りを見抜けず、むしろ確信度だけが高まりやすいという点です。
+- AI 生成コードは「局所的には正しく見える」ため、人間のレビュアーが全体の不整合を見抜きにくくなります (本記事の観点です)。
 - 制御実験で型検査・テスト・SAST が軒並み検出できなかった事実は、人間のレビュアーが依拠する「CI が green」というシグナル自体が Patchwork Problem に対して機能しないことを示します。
 - 構造ゲート (Hybrid Verification) を人間のレビューの前段に置き、レビュアーには機械検証済みの evidence trace 付き finding だけを提示する流れにします。
 
@@ -1402,7 +1406,7 @@ flowchart LR
 
 ## まとめ
 
-LLM 生成コードは、型検査・テスト・SAST を素通りしながらリポジトリ全体では壊れる Patchwork Problem を抱えます。本論文はこの構造的破綻を 8 グラフ上の不変条件として形式化し、既存ツールへの委譲と専用検出器を組み合わせた precision-first の hybrid 検出で、CI 統合に実用的な速度 (47ms/file) を示しました。実務への含意は、AI 生成コードのレビューを人的目視から構造不変条件の機械検証へ移し、組織固有の不変条件 (認可ガード・schema 契約・設定空間) を CI の第一級資源として資産化する、という統制設計の転換です。
+LLM 生成コードは、型検査・テスト・SAST を素通りしながらリポジトリ全体では壊れることがあります。本論文はこれを Patchwork Problem と名付け、8 グラフ上の不変条件として形式化しました。既存ツールへの委譲と専用検出器を組み合わせた precision-first の hybrid 検出で、論文著者が CI 統合に実用的と評価する速度 (中央値 47ms/file) を示しています。実務への含意は、AI 生成コードのレビューを人的目視から構造不変条件の機械検証へ移し、組織固有の不変条件 (認可ガード・schema 契約・設定空間) を CI の第一級資源として資産化する、という統制設計の転換です。
 
 この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
 
