@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (165)
+## Articles: 下書き (167)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-14 | [📋 技術調査 - k8s-aibom: GKE の AI 資産を実行時に検出する ML-BOM 基盤](articles/gke-ai-bom_20260714.md) | Kubernetes, GKE, SBOM, AIBOM, Security |
+| 2026-07-14 | [🧩 テストもSASTも素通りするAI生成コードの構造破綻「Patchwork Problem」](articles/patchwork-problem-repo-consistency_20260714.md) | 生成AI, LLM, 静的解析, AIエージェント, コードレビュー |
 | 2026-07-12 | [🛡️ 技術調査 - AI Agent SaaS 向け microVM 隔離実行基盤](articles/ai-agent-saas-microvm-isolation_20260712.md) | Firecracker, Kubernetes, Security, Sandbox, AIエージェント |
 | 2026-07-12 | [🧭 Deutsche Telekom の全社AI導入を「業務プロセス単位の運営モデル再設計」として評価する](articles/deutsche-telekom-ai-operating-model_20260712.md) | AI, 生成AI, DX, 経営 |
 | 2026-07-12 | [📑 Errataを持つ仕様書をMCP/RAGへ取り込む設計パターン](articles/errata-aware-spec-rag-ingestion_20260712.md) | MCP, RAG, PDF, TypeScript |
