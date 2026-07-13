@@ -45,7 +45,7 @@ AI コスト管理の文脈では、モデル単価の比較だけでなく、�
 |---|---|---|---|---|
 | モデルを大きくする (フロンティア維持) | 低い (高性能だが高コストのまま) | 高い (タスク非依存で使い回せる) | 低い (モデル契約のみで完結) | 比較対象。コスト構造が持続不能と位置づけ |
 | ファインチューニング (SLM を鍛える) | 中程度 (学習・データ整備コストが別途必要) | 低い (タスクごとに再学習が必要) | 高い (データ収集・再学習の継続運用が必要) | 直接の実験対象外。モデル重みを変えない代替として提案手法と対比 |
-| ハーネス適応 (本論文の提案) | 高い (コスト 90% 削減、探索予算 $20/ペア) | 中程度 (反復業務かつ一定能力以上の SLM に限定) | 中程度 (メタエージェントが自動探索、平均 13 回の実行で投資回収) | 提案手法。モデル重みは固定し、指示・ツール・実行ループを最適化 |
+| ハーネス適応 (本論文の提案) | 高い (コスト 90% 削減、探索コスト平均 $20/ペア) | 中程度 (反復業務かつ一定能力以上の SLM に限定) | 中程度 (メタエージェントが自動探索、平均 13 回の実行で投資回収) | 提案手法。モデル重みは固定し、指示・ツール・実行ループを最適化 |
 
 #### 近接研究との差分
 
@@ -62,7 +62,7 @@ AI コスト管理の文脈では、モデル単価の比較だけでなく、�
 - **失敗モード起点の適応**: Tool-use・Instruction-following・Knowledge・Long-context・Planning/reasoning の 5 種の失敗モードを特定し、それぞれに Context adaptations・Tool adaptations・Agent loop adaptations の 3 系統の戦略で対応します。
 - **GEPA スタイル探索**: メタエージェントは、試行済みハーネスのプールから Pareto フロントに基づき候補をサンプルし、遺伝的探索でハーネスを進化させます。
 - **3 フェーズの最適化ループ**: Sample and evaluate (サンプルと評価) → Diagnose and propose (診断と提案) → Validate and save (検証と保存) を繰り返します。
-- **$20/ペアの探索予算**: タスク-モデルペアあたり $20 の探索予算で、ハーネス最適化を完結させます。
+- **平均 $20/ペアの探索コスト**: タスク-モデルペアあたり平均 $20 程度の探索コストでハーネス最適化を完結させます (タスク別の予算上限は設定で可変)。
 - **89% 性能を 4% コストで回復**: 最良の適応 SLM は、フロンティア LLM 性能の 89% を、コスト 96% 削減 (コスト 4%) で回復します。
 - **21 ペア中 16 ペアで有意改善**: 21 の SLM-タスクペアのうち 16 ペアで有意な性能改善が見られ、うち 7 ペアで SLM-LLM 性能ギャップが解消しました。
 - **平均 13 回の実行で投資回収**: 最適化コストは、平均 13 回のエージェント実行の節約分で回収できます。
@@ -595,13 +595,18 @@ def save_trajectory(run_dir: str, example_id: str, steps: list, is_teacher: bool
 
 - 論文 §II-A/§II-B の分類は、公式 repo の [`docs/adaptation.md`](https://github.com/malusamayo/migration-analysis/blob/main/docs/adaptation.md) に「メタエージェント向け診断ガイド」として実装されています。各失敗モードの節に「観測される SLM の挙動」と「推奨される具体的な適応 (サブ戦術)」が対応付けられています。
 
-| 失敗モード (5種) | 主な適応戦略 (3系統) | 実測比率 |
-|---|---|---|
-| Tool-use | Tool adaptations (新規ツール作成・フィルタ・スキーマ調整) | creating new tools 43% / managing tools 29% |
-| Instruction-following | Context adaptations (指示の外在化・再注入) + Agent loop adaptations (hook 強制) | 成功適応の 81% がこの失敗に対処 |
-| Knowledge | Context adaptations (暗黙知の追加) | 成功適応の 81% がこの失敗に対処 |
-| Long-context | Context adaptations (要約・段階開示・外部ストレージ・刈り込み・分割) | adding contexts 86% (最頻) |
-| Planning/reasoning | Agent loop adaptations (決定的チェック・multi-agent オーケストレーション) | — |
+| 失敗モード (5種) | 主な適応戦略 (3系統) |
+|---|---|
+| Tool-use | Tool adaptations (新規ツール作成・フィルタ・スキーマ調整) |
+| Instruction-following | Context adaptations (指示の外在化・再注入) + Agent loop adaptations (hook 強制) |
+| Knowledge | Context adaptations (暗黙知の追加) |
+| Long-context | Context adaptations (要約・段階開示・外部ストレージ・刈り込み・分割) |
+| Planning/reasoning | Agent loop adaptations (決定的チェック・multi-agent オーケストレーション) |
+
+論文が報告する実測比率は、性質の異なる 2 系統です。取り違えないよう分けて読みます。
+
+- **失敗モードの分布 (成功した適応が対処した失敗の割合)**: instruction-following 81%・knowledge 81% が中心。「どの失敗に効いたか」を示す比率です。
+- **適応戦略の採用比率 (全適応での戦略種別の使用割合)**: adding contexts 86%・creating new tools 43%・managing tools 29%。「どの戦略が多く使われたか」を示す全体比率で、特定の失敗モード専用の値ではありません。
 
 - 実装上は、①で保存した軌跡と feedback をこの表 (またはメタエージェントが直接読む `docs/adaptation.md`) に照らして「どの適応系統を試すか」の候補を絞り込みます。
 
@@ -646,7 +651,7 @@ def propose_new_harness(workspace_dir: str, reflection_lm) -> str:
 
 ### ④ $20/ペア予算内でのイテレーション
 
-- 実測値では、探索予算はタスク-モデルペアあたり **$20**、平均 **13 回の実行**で最適化コストが回収されるとされています。
+- 実測値では、探索コストはタスク-モデルペアあたり平均 **$20**、平均 **13 回の実行**で回収されるとされています。
 - 実装上は③の `CostBudgetStopper` を `max_cost=20.0` で GEPA の `optimize()` に渡すだけで、予算超過時に自動停止します。
 - タスクごとの予算・例数・分割比は設定ファイルで管理し、難易度別 (low/medium/high/extra_high) の複数バリエーションを用意します。
 
@@ -755,7 +760,7 @@ def should_retrigger_optimization(pair_metrics, baseline):
 
 ### ④ 探索コスト会計 ($20/ペア、平均 13 回で回収)
 
-- 1 タスク×モデルペアあたりの探索予算は $20 です。
+- 1 タスク×モデルペアあたりの探索コストは平均 $20 です。
 - 損益分岐は「平均 13 回の実行」で到達します。1 回あたりの節約額を試算し、回収見込みを事前に見積もります。
 
 ```python
