@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (166)
+## Articles: 下書き (165)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -17,7 +17,6 @@
 | 2026-07-12 | [🧠 技術調査 - Memory in the Loop：エージェントのメモリをループ内に置く設計](articles/memory-in-the-loop_20260712.md) | LLM, RAG, AIエージェント, arXiv |
 | 2026-07-11 | [🔍 Copilot code review はなぜ共有ツールで悪化したか - ツール指示を仕事に合わせる](articles/copilot-code-review-evidence-flow_20260711.md) | GitHubCopilot, CodeReview, AIAgent, CodingAgent, LLM |
 | 2026-07-11 | [🧮 技術調査 - GPT-5.6三階層のタスク別計算予算と実行基盤](articles/gpt-5-6-tiered-execution-budget_20260711.md) | OpenAI, LLMOps, AI, Agent |
-| 2026-07-11 | [🧪 業務日付をまたぐシナリオテストを、ディレクトリ規約で自動実行する — stfw](articles/stfw_20260711.md) | Go, Testing, CLI, OSS |
 | 2026-07-11 | [🧬 技術調査 - ハーネスを実行時に進化させる Test-Time Harness Evolution](articles/test-time-harness-evolution_20260711.md) | LLM, AIエージェント, Evaluation, MLOps, arXiv |
 | 2026-07-10 | [📊 AI費を「第二の人件費」として運営する LayerXに学ぶ経費から投資資産への転換](articles/ai-cost-as-second-labor_20260710.md) | 生成AI, AI, FinOps, コスト管理, マネジメント |
 | 2026-07-10 | [🤖 AIエージェントで安全に別リポジトリのドキュメントPRを作る設計](articles/cross-repo-docs-agent-governance_20260710.md) | GitHubActions, AIAgent, DevSecOps, CICD, Documentation |
@@ -178,10 +177,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (154)
+## Articles: 公開済み (155)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-07-14 | [🧪 業務日付をまたぐシナリオテストを、ディレクトリ規約で自動実行する — stfw](articles/stfw_20260711.md) | Go, Testing, CLI, OSS |
 | 2026-07-11 | [🧭 エージェント導入を「作る前」に潰す20の問い — Google Cloudの設計レビュー枠組み](articles/agentic-enterprise-20-questions_20260709.md) | GoogleCloud, 生成AI, AIエージェント, LLM, セキュリティ |
 | 2026-07-09 | [🧭 自律SRE前提のコンテキスト基盤設計 (SREの4体問題)](articles/autonomous-sre-context-foundation_20260707.md) | SRE, Observability, AIOps, OpenTelemetry, AIエージェント |
 | 2026-07-07 | [🗺️ OpenAIのEU職種4類型マップを経営の職務再設計に使う](articles/openai-eu-ai-jobs-transition_20260630.md) | AI, OpenAI, 生成AI, 組織開発, キャリア |
