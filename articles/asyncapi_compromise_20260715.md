@@ -1,5 +1,5 @@
 ---
-title: "技術調査 - AsyncAPI サプライチェーン攻撃 (Miasma ワーム)"
+title: "AsyncAPI サプライチェーン攻撃 (Miasma ワーム) の内容と対処方法"
 emoji: "🦠"
 type: "tech"
 topics: ["Security", "npm", "SupplyChainAttack", "Malware", "AsyncAPI"]
