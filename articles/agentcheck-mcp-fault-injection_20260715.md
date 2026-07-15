@@ -161,6 +161,8 @@ flowchart TD
 
 AgentCheck 内部の主要コンテナです。論文 §4 の構成要素（Controlled Comparison Engine / Interactive Dashboard / Agent Harness Layer / Fault Injection Engine / Primary Checks and Diagnostic Labels）に、公開実装のコンテナ（dashboard の FastAPI API + React UI、fixed_scenario_mcp、SQLite storage）を対応させています。
 
+なお AgentCheck には 2 つの実行経路があります。対話ワークベンチ（`POST /api/run`）は実 MCP サーバーから応答を記録して再生します。CLI ベンチマーク（`experiments/`）は同梱の Fixed Scenario MCP Server で 120 シナリオの固定応答を再生します。以下の図は両経路に共通する論理構成を示し、応答供給元を Fixed Scenario MCP Server で代表させています。
+
 ```mermaid
 flowchart TD
     Tester["テスト実施者"]
