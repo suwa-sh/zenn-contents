@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (172)
+## Articles: 下書き (173)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-15 | [🧪 技術調査 - AgentCheck：MCPツール障害を注入してエージェント耐性を測るワークベンチ](articles/agentcheck-mcp-fault-injection_20260715.md) | MCP, LLM, AIエージェント, テスト, arXiv |
 | 2026-07-15 | [📊 AI投資評価の単位をトークン単価から採用成果単価へ 発注側視点でOpenAIフレームを分解する](articles/ai-investment-outcome-unit-cost_20260715.md) | 生成AI, FinOps, コスト管理, AIエージェント, AIガバナンス |
 | 2026-07-15 | [🦠 AsyncAPI サプライチェーン攻撃 (Miasma ワーム) の内容と対処方法](articles/asyncapi_compromise_20260715.md) | Security, npm, SupplyChainAttack, Malware, AsyncAPI |
 | 2026-07-15 | [📦 技術調査 - Kubernetes AIエージェントのデプロイ単位設計とAgent Sandbox](articles/k8s-ai-agent-deployment-unit_20260715.md) | Kubernetes, AIエージェント, CNCF, Sandbox |
