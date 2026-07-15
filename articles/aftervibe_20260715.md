@@ -86,7 +86,7 @@ AfterVibe は逆方向です。仕様を書かずにコーディングした後�
 
 - **実企業 monorepo での評価**: ある企業内部の大規模 monorepo・7 日窓の実セッションから、完了・land した diff かつ十分な会話 context を持つ 122 候補を抽出しています。両 grader が verdict を出せた 81 件 (残り 41 件はインフラ障害で脱落) のうち、元コードで flex と VC が両方 pass した 72 task (88.9%) を最終評価セットにしています。平均元 diff は 41,638 文字、平均 10.5 VC という規模です。
 
-- **人間が書く summary を上回る結果**: developer 自身の PR summary をそのまま spec 化したベースラインは平均 4.23/6.0 でした。AfterVibe の baseline spec は平均 5.06/6.0、反復強化後 (best-of-3) は平均 5.74/6.0 まで到達しています (これらのスコアは、完全な grader verdict を得た 68/72 task の平均です)。
+- **人間が書く summary を上回る結果**: developer 自身の PR summary をそのまま spec 化したベースラインは平均 4.23/6.0 でした。AfterVibe の baseline spec は平均 5.06/6.0、反復強化後 (baseline + 最大 3 round の best-of-K) は平均 5.74/6.0 まで到達しています (これらのスコアは、完全な grader verdict を得た 68/72 task の平均です)。
 
 - **抽象度を定量測定**: spec の圧縮率 (standard spec) は元 diff に対し 5.69 倍、spec に残る code leakage (distinctive token の混入率) は 38.6% です。抽象化の強制がプロンプト任せで終わらず、数値で確認されています。
 
@@ -469,19 +469,21 @@ class RegenResult:
 
 def run_pipeline(task: Task, call_llm) -> RegenResult:
     """4 ステージを直列実行する最小骨格 (実装案)。"""
-    spec = extract_spec(task, call_llm)
-    best_result = regenerate_and_verify(task, spec, call_llm)
+    best_spec = extract_spec(task, call_llm)
+    best_result = regenerate_and_verify(task, best_spec, call_llm)
 
+    # current は「直近 round の spec/result の組」、best は「全 round の最高スコアの組」
+    current_spec, current_result = best_spec, best_result
     round_no = 0
     while best_result.regen_score < TAU and round_no < MAX_ROUNDS:
-        spec = refine_spec(task, spec, best_result, call_llm)
-        candidate = regenerate_and_verify(task, spec, call_llm)
-        # best-of-K: スコアは単調非減少で採用 (論文の Best-of-K 選択方針)
-        if candidate.regen_score > best_result.regen_score:
-            best_result = candidate
+        current_spec = refine_spec(task, current_spec, current_result, call_llm)
+        current_result = regenerate_and_verify(task, current_spec, call_llm)
+        # best-of-K: baseline と全 round のうち最高スコアの spec/result の組を保持 (単調非減少)
+        if current_result.regen_score > best_result.regen_score:
+            best_spec, best_result = current_spec, current_result
         round_no += 1
 
-    return best_result
+    return best_result  # 対応する best_spec も併せて採用する (最終 spec = best_spec)
 ```
 
 `extract_spec` / `regenerate_and_verify` / `refine_spec` は、後述の「利用方法」で示す各 prompt を `call_llm` に渡す関数として実装します。
@@ -545,7 +547,8 @@ def regenerate_and_verify(task: Task, spec: Spec, call_llm) -> RegenResult:
 
     flex = run_flex_tests(task.observed_test_commands, regenerated_diff)
     vc = check_verification_conditions(task, regenerated_diff, call_llm)
-    align = judge_ground_truth_alignment(task, spec, regenerated_diff, call_llm)
+    # align は ground truth (会話 + 元 diff) を基準にし、spec は渡さない
+    align = judge_ground_truth_alignment(task, regenerated_diff, call_llm)
 
     return RegenResult(regenerated_diff, flex, vc, align)
 ```
@@ -640,11 +643,17 @@ def execute_test(cmd: dict, regenerated_diff: str) -> "TestResult":
 `judge_ground_truth_alignment` は LLM-as-judge パターンで、二値 (conform / not conform) を返す構成にします。二値判定はスケールの粒度を持たせすぎないほうが判定のブレが小さいという実務知見と整合します。
 
 ```python
-def judge_ground_truth_alignment(task: Task, spec: Spec, regenerated_diff: str, call_llm) -> int:
+def judge_ground_truth_alignment(task: Task, regenerated_diff: str, call_llm) -> int:
+    # align は「再生成が会話上の意図 (ground truth) に conform するか」を判定する。
+    # spec を正解にすると spec の欠落を検出できず循環評価になるため、
+    # 判定根拠は spec ではなく会話 trajectory と元 diff (ground truth) にする。
     prompt = (
-        "再生成された diff は、以下の spec が意図した振る舞いに conform していますか。"
+        "元の会話で示された意図と、元コードの変更 (ground truth) を基準に、"
+        "再生成された diff が同じ振る舞いを実現しているか判定してください。"
         "Pass/Fail のみで判定し、一文の理由を添えてください。\n"
-        f"spec: {spec}\nregenerated_diff: {regenerated_diff}"
+        f"conversation_context: {task.conversation_context}\n"
+        f"ground_truth_diff: {task.unified_diff}\n"
+        f"regenerated_diff: {regenerated_diff}"
     )
     verdict = call_llm(prompt=prompt)
     return 1 if verdict.startswith("Pass") else 0
@@ -706,7 +715,7 @@ gh pr list --state merged --search "is:merged" --json number,mergedAt,additions,
 | test 抽出失敗 | 3 | 会話からゼロコマンド抽出、またはテストターゲットが存在しない |
 | grading edge case | 2 | テストファイルのみを削除する diff で、保守的にスコアが判定される |
 
-いずれも「コードが壊れていた」わけではありません。すべて CI を通過し本番デプロイ済みの変更であり、**評価パイプライン側の制約 (サンドボックス環境・test 抽出の網羅性) による脱落**である点が運用上重要です。自環境に導入する際は、評価サンドボックスの依存関係網羅性を先に点検しないと、この規模 (約 11%) の脱落が発生し得ます。
+いずれも「コードが壊れていた」わけではありません。すべて CI を通過し land 済みの変更であり、**評価パイプライン側の制約 (サンドボックス環境・test 抽出の網羅性) による脱落**である点が運用上重要です。自環境に導入する際は、評価サンドボックスの依存関係網羅性を先に点検しないと、この規模 (約 11%) の脱落が発生し得ます。
 
 運用手順案:
 
@@ -743,9 +752,9 @@ flowchart LR
     U -->|Yes| Y["best-of-K採用: baseline含む全roundの最高スコアを task ごとに確定"]
 ```
 
-- 最大 K=3 round。regen_score が満点の 6.0 に到達した task は早期終了する。上の疑似コードの `while ... < TAU` はこの「満点到達で打ち切り」を実装したものです。なお論文中の RegenTest の合否定義は `V > τ` (厳密な超過) で、これは強化ループの打ち切り条件とは別の文脈の判定式です。閾値の値自体はどちらも 6.0 を使います。
+- 最大 K=3 round。regen_score が満点の 6.0 に到達した task は早期終了する (`regen_score >= 6.0` で打ち切り)。上の疑似コードの `while ... < TAU` はこの「満点到達で打ち切り」を実装したものです。
 - **best-of-K は「最後の round」ではなく「baseline を含む全 round の最高スコア」を task ごとに採用する**。スコアは単調非減少になるよう設計する。
-- 実測: baseline 平均 5.06 → best-of-3 平均 5.74 (+0.68)。いずれも完全な grader verdict を得た 68/72 task の平均。失敗 cohort (N=31) の 84% が正の delta。ただし残り 16% は改善しなかった、または改善が乏しかったことも意味する。K=3 で頭打ちの task が一定数残る前提で運用する。
+- 実測: baseline 平均 5.06 → best-of-K (baseline + 最大 3 round) 平均 5.74 (+0.68)。いずれも完全な grader verdict を得た 68/72 task の平均。失敗 cohort (N=31) の 84% が正の delta。ただし残り 16% は改善しなかった、または改善が乏しかったことも意味する。K=3 で頭打ちの task が一定数残る前提で運用する。
 
 ## ベストプラクティス
 
@@ -765,20 +774,20 @@ spec 抽出 (Extractor) と再生成 (Regenerator) は **別セッション・co
 
 ### 人間の summary をレビュー記述から再生成契約へ書き直す
 
-developer 自身のコードレビュー記述 (diff title + description + test plan) をそのまま spec として使う baseline は平均 4.23 でした。AfterVibe の抽出 spec は平均 5.06 で上回ります。原因は、人間のレビュー記述が「何を変えたか (what changed)」を書く一方、blind agent が再実装するために必要な「守るべき振る舞い契約 (behavioral requirement)」を書いていないためです。
+developer 自身のコードレビュー記述 (diff title + description + test plan) をそのまま spec として使う baseline は平均 4.23 でした。AfterVibe の抽出 spec は平均 5.06 で上回ります。論文はこの差を、人間のレビュー記述が「何を変えたか (what changed)」を書く一方で、blind agent が再実装するために必要な「守るべき振る舞い契約 (behavioral requirement)」を書いていない、と解釈しています (因果を厳密に実証したものではありません)。
 
 - PR description のテンプレートを「変更点の説明」から「この変更が満たすべき振る舞い要件」に寄せる運用は、AfterVibe の spec 構造 (Part A: Intent / Essential Design Decisions / Undiscoverable Facts、Part B: 宣言的 behavioral requirement) を model として設計できる。
 - ただし人間の記述を機械的に spec 化しても baseline 止まりの品質 (4.23) にしかならない。LLM による抽出 + oracle 検証 + 反復強化を経て初めて baseline を上回る点に注意する。
 
 ### oracle 検証を必須ゲートにする
 
-テストや VC を「会話から抽出しただけ」で採点に使いません。**元の land 済みコードに対して事前に pass することを確認してから oracle として採用します**。このゲートを飛ばすと、LLM が生成した誤った oracle (hallucination) に基づいて正しい再生成を誤って減点する、または誤った再生成を誤って加点するリスクがあります。運用上は「spec 抽出 → oracle 検証 → 採点」の順序を崩さないことが最重要です。
+テストや VC を「会話から抽出しただけ」で採点に使いません。**元の land 済みコードに対して事前に pass することを確認してから oracle として採用します**。このゲートを飛ばすと、LLM が生成した誤った oracle (hallucination) に基づいて正しい再生成を誤って減点する、または誤った再生成を誤って加点するリスクがあります。運用上は「VC・test の抽出 → 元コードでの oracle 検証 → spec 抽出・再生成・採点」の順序を崩さないことが最重要です。
 
 ## トラブルシューティング
 
 | 症状 | 原因 | 対処 |
 |---|---|---|
-| 再生成が明らかに spec 通りに見えるのに regen_score が安定しない (毎回スコアが揺れる) | 再生成の非決定性。per-task regen_score の std.dev は 0.49 で無視できない分散がある | 1 回の再生成で合否判断しない。K=3 の反復と best-of-K で吸収する。閾値 τ=6.0 ちょうどの task は特に複数回サンプリングして確認する |
+| 再生成が明らかに spec 通りに見えるのに regen_score が安定しない (毎回スコアが揺れる) | 再生成の非決定性。同一 spec を 3 回再生成した際の regen_score の std.dev は 0.49 で無視できない分散がある (論文 RQ4 の same-spec rollout)。spec を書き換える強化 round (K=3) とは別軸の分散 | 1 回の再生成で合否判断しない。閾値 τ=6.0 付近の task は同一 spec で複数回サンプリングして確認する (強化 round とは別に、same-spec の再現性を見る) |
 | test-env mismatch で ground-truth 検証が通らない | 評価サンドボックスに JS ランタイム・ネイティブライブラリ・ビルドターゲット依存が不在 (脱落 9件中4件の主因) | spec 抽出前に評価サンドボックスの依存関係を対象リポジトリの実行環境と揃える。事前チェックリスト化する |
 | 会話ログから test コマンドが抽出できない (ゼロコマンド抽出) | 会話にテスト実行の言及がない、またはテストターゲットが存在しない (脱落 9件中3件) | funnel の「十分な会話 context」条件を厳格化する。テスト言及のない diff は spec 抽出前に除外する |
 | grading が不自然に保守的になる (テストのみ削除する diff で低スコア) | grading edge case。テストファイル削除のみの diff は保守的スコア判定になる (脱落 9件中2件) | テスト専用 diff は AfterVibe の funnel から自動除外する。プロダクションコード変更を伴う diff のみを対象にする |
