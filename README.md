@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (170)
+## Articles: 下書き (171)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-15 | [📊 AI投資評価の単位をトークン単価から採用成果単価へ 発注側視点でOpenAIフレームを分解する](articles/ai-investment-outcome-unit-cost_20260715.md) | 生成AI, FinOps, コスト管理, AIエージェント, AIガバナンス |
 | 2026-07-15 | [🦠 AsyncAPI サプライチェーン攻撃 (Miasma ワーム) の内容と対処方法](articles/asyncapi_compromise_20260715.md) | Security, npm, SupplyChainAttack, Malware, AsyncAPI |
 | 2026-07-14 | [🔐 生データを渡さずモデルを持ち寄る運用の境界設計と落とし穴](articles/federated-model-exchange-governance_20260714.md) | FederatedLearning, MachineLearning, Security, Privacy, MLOps |
 | 2026-07-14 | [📋 技術調査 - k8s-aibom: GKE の AI 資産を実行時に検出する ML-BOM 基盤](articles/gke-ai-bom_20260714.md) | Kubernetes, GKE, SBOM, AIBOM, Security |
