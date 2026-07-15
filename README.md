@@ -7,14 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (174)
+## Articles: 下書き (173)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-07-15 | [🔁 AfterVibe - 会話履歴とコードから再生成可能な仕様を復元する手法](articles/aftervibe_20260715.md) | 生成AI, LLM, VibeCoding, CodeGeneration, ソフトウェアテスト |
 | 2026-07-15 | [🧪 技術調査 - AgentCheck：MCPツール障害を注入してエージェント耐性を測るワークベンチ](articles/agentcheck-mcp-fault-injection_20260715.md) | MCP, LLM, AIエージェント, テスト, arXiv |
 | 2026-07-15 | [📊 AI投資評価の単位をトークン単価から採用成果単価へ 発注側視点でOpenAIフレームを分解する](articles/ai-investment-outcome-unit-cost_20260715.md) | 生成AI, FinOps, コスト管理, AIエージェント, AIガバナンス |
-| 2026-07-15 | [🦠 AsyncAPI サプライチェーン攻撃 (Miasma ワーム) の内容と対処方法](articles/asyncapi_compromise_20260715.md) | Security, npm, SupplyChainAttack, Malware, AsyncAPI |
 | 2026-07-15 | [📦 技術調査 - Kubernetes AIエージェントのデプロイ単位設計とAgent Sandbox](articles/k8s-ai-agent-deployment-unit_20260715.md) | Kubernetes, AIエージェント, CNCF, Sandbox |
 | 2026-07-14 | [🔐 生データを渡さずモデルを持ち寄る運用の境界設計と落とし穴](articles/federated-model-exchange-governance_20260714.md) | FederatedLearning, MachineLearning, Security, Privacy, MLOps |
 | 2026-07-14 | [📋 技術調査 - k8s-aibom: GKE の AI 資産を実行時に検出する ML-BOM 基盤](articles/gke-ai-bom_20260714.md) | Kubernetes, GKE, SBOM, AIBOM, Security |
@@ -186,10 +185,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (155)
+## Articles: 公開済み (156)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-07-16 | [🦠 AsyncAPI サプライチェーン攻撃 (Miasma ワーム) の内容と対処方法](articles/asyncapi_compromise_20260715.md) | Security, npm, SupplyChainAttack, Malware, AsyncAPI |
 | 2026-07-14 | [🧪 業務日付をまたぐシナリオテストを、ディレクトリ規約で自動実行する — stfw](articles/stfw_20260711.md) | Go, Testing, CLI, OSS |
 | 2026-07-11 | [🧭 エージェント導入を「作る前」に潰す20の問い — Google Cloudの設計レビュー枠組み](articles/agentic-enterprise-20-questions_20260709.md) | GoogleCloud, 生成AI, AIエージェント, LLM, セキュリティ |
 | 2026-07-09 | [🧭 自律SRE前提のコンテキスト基盤設計 (SREの4体問題)](articles/autonomous-sre-context-foundation_20260707.md) | SRE, Observability, AIOps, OpenTelemetry, AIエージェント |

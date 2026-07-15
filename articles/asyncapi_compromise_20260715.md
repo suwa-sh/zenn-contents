@@ -3,7 +3,8 @@ title: "AsyncAPI サプライチェーン攻撃 (Miasma ワーム) の内容と�
 emoji: "🦠"
 type: "tech"
 topics: ["Security", "npm", "SupplyChainAttack", "Malware", "AsyncAPI"]
-published: false
+published: true
+published_at: 2026-07-16
 ---
 
 ## 概要
