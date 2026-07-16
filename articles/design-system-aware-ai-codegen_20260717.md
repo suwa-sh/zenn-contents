@@ -9,6 +9,10 @@ published: false
 > 対象論文: Luciane Silva, Thayssa Rocha, Nicole Davila, Gustavo Pinto. "Design-System-Aware Development with AI: Evaluating Productivity and Design Consistency." SBES 2026 Industry Track.
 > arXiv: <https://arxiv.org/abs/2607.13156>
 
+:::message
+本記事は、論文が確認した事実（企業DSでコンテキスト化した内製AIツール StackSpot AI と専門家レビューによる産業実験の結果）を起点に、「デザインシステムをAIが参照できる実行可能な制約として設計する」というアーキテクチャへ一般化してまとめたものです。DTCG・Figma MCP・Style Dictionary・CI lint 等の具体構成は論文が検証した介入ではなく、筆者による実装案です。「論文で確認された事実」と「実装案」は各節で区別して記載します。
+:::
+
 ## 概要
 
 デザインシステム対応AIコード生成（Design-System-Aware AI Codegen）は、AIコード生成にデザインシステム（DS）の制約を組み込む開発手法です。高忠実度モックアップを、企業固有のデザインシステムに準拠したUIコードへ変換する過程で、AIにDSを「参照可能な制約」として与えます。
@@ -87,7 +91,7 @@ DS対応AI開発の主要な特徴を整理します。
 - プラットフォーム別ガイドライン（Angular Material の規約、Apple HIG、Material Design 3）をAIが踏まえて出力する
 - 開発者の作業が「部品を探す」「規約を確認する」から「AI出力をレビューする」へシフトする
 - 開発者ごとのDS習熟度による完成度・時間のばらつきが縮小する
-- 作業の休止パターン（break pattern）が短く均質になり、ワークフローの摩擦（認知的中断）が減る
+- 作業の休止パターン（break pattern）が短く均質になったと観察され、ワークフローの摩擦（認知的中断）の低下が示唆される（論文では監督者が集めた定性的観察であり、正式な統計指標ではない）
 
 ### 3手法の比較（論文の実測値）
 
@@ -104,8 +108,10 @@ DS対応AI開発の主要な特徴を整理します。
 | ばらつき（標準偏差） | 最大 | 中間 | 最小（結果が均一・予測可能） |
 
 - 時間短縮率46.7〜69.4%は「手作業 → DS対応AI」の比較値です。
+- 「DSのみ → DS対応AI」の追加短縮は Angular 24.3% / iOS 15.5% / Android 23.4% です（実測値から算出）。手作業比の数字より控えめで、DS導入済みチームがAIで得る上乗せ分はこちらが目安です。
 - iOSは参加者間のばらつきが最も大きく、短縮率も最小でした。Angularは手作業ベースラインが最も高く、絶対削減量が最大でした。
 - 実験は2サイクル（2025年6月・2025年10月）、高忠実度モックアップから2画面を実装、1タスクの上限は8時間労働日という設定でした。
+- 論文は有意差を `p<0.05` とだけ報告し、検定手法・スタック別人数・信頼区間・効果量・多重比較補正を示していません。Manual群は全体で7名です。数値は「単一企業の産業実験での報告値」として扱い、母集団への一般化は控えます。
 
 ### 関連ツール/アプローチとの関係
 
@@ -336,7 +342,7 @@ MockupDesignSpec -- "指定" --> Component
 | 要素名 | 説明 |
 |---|---|
 | Design System | 論文が言及する「組織のDS」。標準化コンポーネント・layout token・パターンの集合（論文記述） |
-| Design Token | 色・spacing・typography等の最小単位の値（論文は layout tokens とのみ言及。global/alias/component の3層構造はW3C DTCG仕様から補完） |
+| Design Token | 色・spacing・typography等の最小単位の値（論文は layout tokens とのみ言及。global/alias/component の3層構造はデザインシステムで広く使われる運用上の階層設計であり、DTCG が規定する分類ではない） |
 | Component | 再利用可能なUI部品。論文は reusable components / component hierarchies と言及 |
 | Usage Rule | いつ使う/使わないかの制約。論文は非準拠コード提案の回避と効果のみ言及、ルールの構造自体は既存デザインシステム運用から補完 |
 | Platform Binding | Angular / iOS / Android での実体マッピング。論文に具体的マッピングの記載なし。各プラットフォーム実装から補完 |
@@ -418,7 +424,7 @@ MockupDesignSpec "many" --> "many" Component : 指定する
 | 要素名 | 属性 | 説明 |
 |---|---|---|
 | DesignToken | type | color / spacing / typography 等の種別（論文未記載、DTCG仕様 type から補完） |
-| DesignToken | tier | global（primitive）/ alias（semantic）/ component の3層（論文未記載、DTCG仕様/Figma variablesの一般的な階層設計から補完） |
+| DesignToken | tier | global（primitive）/ alias（semantic）/ component の3層（論文未記載。デザインシステムで広く使われる運用上の階層設計であり、DTCG が規定する分類ではない） |
 | Component | variants | 見た目・状態違いのバリエーション（論文未記載、一般的なコンポーネントライブラリ設計から補完） |
 | Component | props | 外部から渡す設定値（論文未記載、一般的なコンポーネントAPI設計から補完） |
 | UsageRule | condition / recommendation / prohibition | いつ使うか・推奨・禁止パターン（論文は効果のみ記述、ルール構造自体は補完） |
@@ -491,7 +497,7 @@ Measurement "many" --> "1" Metric : 指標とする
 
 デザイントークンは W3C Design Tokens Community Group（DTCG）形式の JSON で一元管理し、Style Dictionary でプラットフォームごとのコードに変換します。
 
-トークン定義（`tokens.json`、DTCG 形式、`$value` / `$type` を使用）の実装例です。
+トークン定義（`tokens.json`、Style Dictionary が受け付ける `$value` / `$type` 表記）の実装例です。
 
 ```json
 {
@@ -507,6 +513,8 @@ Measurement "many" --> "1" Metric : 指標とする
   }
 }
 ```
+
+上記は Style Dictionary が扱う hex 文字列の簡易表記です。DTCG フォーマット 2025.10 の厳密な color 型では、`$value` は `{"colorSpace": "srgb", "components": [...], "hex": "..."}` のようなオブジェクトを要求します。hex 文字列のまま運用する場合は「Style Dictionary 互換の簡易表記」と割り切り、厳密な DTCG 準拠が必要なら object 形式へ変換します。
 
 Style Dictionary の設定ファイル（`config.json`）は、1つのトークン定義から Angular（SCSS）・iOS（Swift）・Android（XML/Compose）向けの成果物をそれぞれ生成します。実装案です。
 
@@ -549,7 +557,7 @@ Style Dictionary の設定ファイル（`config.json`）は、1つのトーク�
           "format": "ios-swift/any.swift",
           "options": {
             "className": "StyleDictionaryStruct",
-            "imports": "SwiftUI",
+            "import": ["UIKit", "SwiftUI"],
             "objectType": "struct"
           }
         }
@@ -630,7 +638,7 @@ html {
 
 **SwiftUI + Apple HIG（iOS）**
 
-SwiftUI は標準コンポーネントを使う限り HIG（Human Interface Guidelines）準拠を既定で満たします。色はセマンティックカラー（`.primary` / `.secondary` など）を使い、ハードコードした RGB 値を避けます。
+SwiftUI は標準コンポーネントを使うと HIG（Human Interface Guidelines）準拠の基盤を得やすく、既定の挙動がプラットフォーム慣習に沿いやすくなります（ナビゲーション・タップ領域・アクセシビリティまでは自動保証しません）。色はセマンティックカラー（`.primary` / `.secondary` など）を使い、ハードコードした RGB 値を避けます。
 
 ```swift
 Text("Hello")
@@ -638,7 +646,7 @@ Text("Hello")
     .font(.body) // Dynamic Type に自動追従
 ```
 
-Style Dictionary で生成した Swift のトークンを、この `.foregroundStyle` 等に渡す形で統合します。
+Style Dictionary の `ios-swift` フォーマットは既定で `UIColor` を生成します。SwiftUI の `.foregroundStyle` へ渡すときは `Color(uiColor: token)` でブリッジするか、SwiftUI `Color` を生成するカスタムフォーマットを用意します。
 
 **Jetpack Compose + Material 3（Android）**
 
@@ -681,10 +689,10 @@ AI エージェントにモックアップ実装を依頼するプロンプト�
    design-token 系ルールの violation が 0 件になるまで修正する。
 ```
 
-Figma Dev Mode MCP server を使う場合は、Figma 上で対象フレームを選択したうえで、次のように AI エージェントへ依頼します（実装案）。
+Figma Dev Mode MCP server を使う場合は、次のように AI エージェントへ依頼します（実装案）。「選択中のレイヤーを読む」操作はデスクトップ MCP サーバー（`http://127.0.0.1:3845/mcp`）限定です。リモートサーバー（`https://mcp.figma.com/mcp`）では対象フレームの URL / node-id をプロンプトに渡します。
 
 ```text
-get_design_context と get_variable_defs で選択中のフレームの構造とトークンを取得し、
+get_design_context と get_variable_defs で対象フレーム（URL/node-id を指定）の構造とトークンを取得し、
 Angular Material のコンポーネントで実装してください。
 取得した変数名をハードコード値に置き換えないでください。
 ```
@@ -723,7 +731,7 @@ JS/JSX 側は MetaMask の `eslint-plugin-design-tokens`（`color-no-hex` ルー
 <div style={{ color: "var(--color-error-default)" }}>...</div>
 ```
 
-これらの lint を CI に組み込みます。AI が生成したコードをマージ前に自動検証し、DS 逸脱をレビュー前に機械的に検出できます。
+これらの lint を CI に組み込みます。AI が生成したコードをマージ前に自動検証し、対象プロパティのトークン直値ハードコードを機械的に検出できます。既定では `rgb()` などの関数は許容されるため、「トークン参照のみ」を強制するには第二オプション（`ignoreFunctions` / `ignoreVariables` / `ignoreValues`）を明示します。lint は DS 準拠全体でなく「指定プロパティの直値抑止」を担う点に注意します。
 
 ## 運用
 
@@ -841,6 +849,8 @@ DS の tokens やコンポーネント定義は更新され続けます。AI が
 
 論文自身が「結果は研究対象の文脈を超えて一般化しない可能性がある」旨の限界を明記します。今後の課題として「より多様なタスク」「より広い参加者層」「縦断的効果の検証」を挙げています。
 
+なお、タスク上限は8時間（480分）とされる一方、iOS Manual の平均は593分など480分を超えるセルがあります。time-to-delivery は自然な休止を含む定義ですが、上限と平均値・休止時間・複数日計測・打ち切り処理の関係は論文で明示されていません。測定定義上の曖昧さとして留意します。
+
 ### 誤解 → 反証 → 推奨
 
 **誤解 1: DS 対応 AI は常に速い。**
@@ -878,7 +888,7 @@ DS の tokens やコンポーネント定義は更新され続けます。AI が
   - [InfoQ: AI Productivity](https://www.infoq.com/news/2025/07/ai-productivity/)
 - デザイントークン（機械可読化）
   - [Design Tokens Community Group（designtokens.org）](https://www.designtokens.org/)
-  - [Design Tokens Format Module（designtokens.org）](https://www.designtokens.org/tr/drafts/format/)
+  - [Design Tokens Format Module 2025.10（designtokens.org）](https://www.designtokens.org/tr/2025.10/format/)
   - [Style Dictionary: config リファレンス](https://github.com/style-dictionary/style-dictionary/blob/main/docs/src/content/docs/reference/config.md)
   - [Style Dictionary: DTCG tokens format](https://github.com/style-dictionary/style-dictionary/blob/main/docs/src/content/docs/info/tokens.md)
   - [designtoken.md - Rich Design Tokens for Coding Agents](https://designtoken.md/)
