@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (180)
+## Articles: 下書き (181)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-17 | [🎨 技術調査 - デザインシステム対応AIコード生成 - 開発時間46.7〜69.4%短縮の実証](articles/design-system-aware-ai-codegen_20260717.md) | DesignSystem, AI, CodeGeneration, DesignTokens, Figma |
 | 2026-07-17 | [🔄 基盤モデルを更新し続ける移行運用モデル - 互換性評価・段階切替・ロールバックの標準移行路](articles/foundation-model-upgrade-migration-ops_20260717.md) | LLMOps, MLOps, 生成AI, VertexAI |
 | 2026-07-17 | [🛡️ 自律AIエージェント攻撃に学ぶ、権限境界とインシデント対応の設計](articles/huggingface-autonomous-attack-incident_20260717.md) | Security, AI, Kubernetes, IAM, LLM |
 | 2026-07-16 | [🔑 技術調査 - AIエージェントの認可: Device Flowで実行主体と承認主体を分離](articles/ai-agent-device-flow-authz-separation_20260716.md) | OAuth, 認可, AIエージェント, MCP, セキュリティ |
