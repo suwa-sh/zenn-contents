@@ -5,7 +5,7 @@
 # 更新時は updated_at と updated_by を必ず書き換えること
 
 version: 1
-updated_at: 2026-05-21
+updated_at: 2026-07-16
 updated_by: tech-dr-to-zenn-learning
 
 # タイトル方針 (Step 3)
@@ -46,5 +46,8 @@ evaluation:
     - "統計値の正確性"
     - "用語の整合"
     - "他記事との差別化"
+    # tech-dr ソースは内部 DOM/クラスモデルを CLI/API の JSON 出力例として提示しがち。
+    # `--json` 出力例・API レスポンス例は README/Wiki の実出力形と 1:1 照合する
+    - "JSON/API レスポンス例の実形照合"
 
 analytics_notes: []
