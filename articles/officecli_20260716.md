@@ -3,7 +3,8 @@ title: "技術調査 - OfficeCLI"
 emoji: "📄"
 type: "tech"
 topics: ["OfficeCLI", "AIエージェント", "MCP", "CLI", "OpenXML"]
-published: false
+published: true
+published_at: 2026-07-18
 ---
 
 > 本記事は OfficeCLI のコードベース（commit SHA [`4ba79f0`](https://github.com/iOfficeAI/OfficeCLI/commit/4ba79f0b984e141f57f58d4398ba2df29e8187e8)、確認日 2026年7月16日）の実装と実ファイル構造を照合して整理しました。

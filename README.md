@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (182)
+## Articles: 下書き (181)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -18,7 +18,6 @@
 | 2026-07-16 | [🔑 技術調査 - AIエージェントの認可: Device Flowで実行主体と承認主体を分離](articles/ai-agent-device-flow-authz-separation_20260716.md) | OAuth, 認可, AIエージェント, MCP, セキュリティ |
 | 2026-07-16 | [📊 技術調査 - Gemini Enterprise 利用状況の BigQuery 分析・統制](articles/gemini-enterprise-usage-bigquery_20260716.md) | GoogleCloud, BigQuery, GeminiEnterprise, Governance, GenerativeAI |
 | 2026-07-16 | [🛡️ GPT-Red解説：自己対戦レッドチームと、AIリリース判定の再設計](articles/gpt-red-adversarial-redteam_20260716.md) | OpenAI, LLM, AIAgent, Security, PromptInjection |
-| 2026-07-16 | [📄 技術調査 - OfficeCLI](articles/officecli_20260716.md) | OfficeCLI, AIエージェント, MCP, CLI, OpenXML |
 | 2026-07-16 | [🧪 技術調査 - PICT CLI](articles/pict-cli_20260716.md) | PICT, SoftwareTesting, PairwiseTesting, TestAutomation |
 | 2026-07-15 | [🔁 AfterVibe - 会話履歴とコードから再生成可能な仕様を復元する手法](articles/aftervibe_20260715.md) | 生成AI, LLM, VibeCoding, CodeGeneration, ソフトウェアテスト |
 | 2026-07-15 | [🧪 技術調査 - AgentCheck：MCPツール障害を注入してエージェント耐性を測るワークベンチ](articles/agentcheck-mcp-fault-injection_20260715.md) | MCP, LLM, AIエージェント, テスト, arXiv |
@@ -194,10 +193,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (156)
+## Articles: 公開済み (157)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-07-18 | [📄 技術調査 - OfficeCLI](articles/officecli_20260716.md) | OfficeCLI, AIエージェント, MCP, CLI, OpenXML |
 | 2026-07-16 | [🦠 AsyncAPI サプライチェーン攻撃 (Miasma ワーム) の内容と対処方法](articles/asyncapi_compromise_20260715.md) | Security, npm, SupplyChainAttack, Malware, AsyncAPI |
 | 2026-07-14 | [🧪 業務日付をまたぐシナリオテストを、ディレクトリ規約で自動実行する — stfw](articles/stfw_20260711.md) | Go, Testing, CLI, OSS |
 | 2026-07-11 | [🧭 エージェント導入を「作る前」に潰す20の問い — Google Cloudの設計レビュー枠組み](articles/agentic-enterprise-20-questions_20260709.md) | GoogleCloud, 生成AI, AIエージェント, LLM, セキュリティ |
