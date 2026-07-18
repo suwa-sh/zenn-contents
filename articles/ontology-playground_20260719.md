@@ -18,7 +18,7 @@ Ontology Playground は、ブラウザだけで動くオントロジーの視覚
 
 Ontology Playground はバックエンドサーバーを必要とせず、完全にクライアントサイド（React 19 + TypeScript 5 + Zustand + Cytoscape.js）で動きます。リテール・製造・ヘルスケア・金融などの標準カタログオントロジーを直感的に閲覧できます。ビジュアルエディタでエンティティタイプ（EntityType）・プロパティ（Property）・リレーションシップ（Relationship）をリアルタイムに編集し、RDF/XML 形式（OWL 構文を含む）でエクスポートできます。
 
-本ツールはエディタにとどまりません。**「Ontology School」**という対話型の教育コンテンツ（コース・記事・クイズ・埋め込みデモ）を備えます。オントロジーに対して自然言語の類似クエリやデータ検証をシミュレートする**クエリエンジン（Query Engine）**と**クエスト（Quests）機能**も持ちます。組織へのセマンティックモデリング導入と Fabric IQ 連携を後押しする総合プラットフォームです。
+本ツールはエディタにとどまりません。**「Ontology School」**という対話型の教育コンテンツ（コース・記事・クイズ・埋め込みデモ）を備えます。オントロジーに対して自然言語クエリを解釈する**クエリエンジン（Query Engine）**と、理解度を高める**クエスト（Quests）機能**も持ちます。組織へのセマンティックモデリング導入と Fabric IQ 連携を後押しする総合プラットフォームです。
 
 ## 特徴
 
@@ -31,8 +31,8 @@ Ontology Playground の主要な特徴は次のとおりです。
 | 公式カタログとドメインテンプレート | Retail・E-Commerce・Healthcare・Finance・Manufacturing・Education の定義済みオントロジーを収録。コミュニティ投稿フローも完備 |
 | マルチフォーマット入出力 | RDF/XML（OWL 構文）のインポート/エクスポート、Fabric IQ 向けマッピング、URL による状態共有。JSON/YAML/CSV は `VITE_ENABLE_LEGACY_FORMATS` で有効化 |
 | 対話型学習「Ontology School」 | Markdown コース記事、習得度クイズ、埋め込みウィジェット、プレゼンテーションモード |
-| クエリエンジンとクエスト | グラフ探索・データバインディングシミュレーション・課題自動生成をインメモリで実行 |
-| AI エージェント親和性 | GitHub Copilot カスタマイズを標準搭載。外部 RDF/OWL の自動カタログ変換や学習モジュール生成に対応 |
+| クエリエンジンとクエスト | 自然言語クエリの解釈（`processQuery`）、最短パス探索（PathFinderPanel）、課題（Quests）自動生成をインメモリで実行 |
+| AI 活用 | ランタイムの AI Builder（`VITE_ENABLE_AI_BUILDER` で有効化、Azure OpenAI）で自然言語からオントロジー生成。加えてリポジトリに GitHub Copilot 用の開発支援資産（`.github/skills/` `.github/prompts/`）を同梱 |
 
 ## 構造
 
@@ -53,13 +53,15 @@ graph TD
     fabric_iq["Microsoft Fabric IQ<br/>Real-Time Intelligence"]
     github_repo["GitHub リポジトリ<br/>カタログ PR / CI"]
     external_rdf["外部 RDF/OWL ファイル<br/>W3C 準拠仕様"]
+    external_site["外部 Web サイト<br/>ドキュメント"]
 
     user -->|"モデル編集 / 受講"| app
-    ai_agent -->|"Copilot で生成"| app
+    ai_agent -->|"Copilot でカタログ/レッスン作成支援"| github_repo
     app -->|"RDF/XML 出力"| fabric_iq
     app -->|"カタログ PR 投稿"| github_repo
     external_rdf -->|"RDF/XML 取り込み"| app
-    embed -->|"外部サイトへ埋め込み"| app
+    external_site -->|"script タグで読込"| embed
+    embed -->|"オントロジー取得"| app
 ```
 
 #### システムコンテキスト構成要素の説明
@@ -67,7 +69,7 @@ graph TD
 | 要素名 | 説明 |
 |---|---|
 | ユーザー | オントロジーの参照・視覚化、新規モデル設計、RDF/OWL 出力、学習 |
-| AI エージェント | Copilot スキル経由の自動オントロジー変換・レッスン生成 |
+| AI エージェント | リポジトリ同梱の GitHub Copilot 開発支援資産（`.github/skills/` `.github/prompts/`）を使ったオントロジー変換・レッスン生成支援 |
 | Web アプリ本体 | グラフ描画・モデル編集・クエリ実行・学習コンテンツ提供 |
 | 埋め込みウィジェット | 外部サイトへ対話型グラフビューを埋め込む独立モジュール |
 | Microsoft Fabric IQ | エクスポート済みオントロジーの読み込みと自然言語データ検索 |
@@ -95,8 +97,8 @@ graph TB
             github_client["GitHub API クライアント<br/>github.ts"]
         end
 
-        subgraph StorageContainer ["ブラウザストレージ"]
-            local_storage["Local Storage<br/>URL Hash 状態"]
+        subgraph StorageContainer ["状態の保持先"]
+            local_storage["URL Hash / Location<br/>共有状態"]
         end
     end
 
@@ -122,7 +124,7 @@ graph TB
     store --> query_engine
     store --> rdf_codec
     store --> share_codec
-    share_codec <--> local_storage
+    share_codec -->|"deflate + base64url を URL に格納"| local_storage
     github_client -->|"PR 作成 REST"| github_repo
 ```
 
@@ -209,10 +211,10 @@ graph TD
     Ontology -->|"1:N 保持"| EntityType
     Ontology -->|"1:N 保持"| Relationship
     EntityType -->|"1:N 所有"| Property
-    EntityType -->|"起点 from"| Relationship
-    EntityType -->|"終点 to"| Relationship
-    EntityType -->|"1:N 生成"| EntityInstance
-    EntityType -->|"1:1 マッピング"| DataBinding
+    Relationship -->|"起点 from"| EntityType
+    Relationship -->|"終点 to"| EntityType
+    EntityType -->|"1:N インスタンス化"| EntityInstance
+    EntityType -->|"0..1 マッピング"| DataBinding
     CatalogueEntry -->|"メタデータ参照"| Ontology
 ```
 
@@ -462,10 +464,12 @@ console.log(response.highlightEntities); // ハイライト対象のエンティ
 
 Fabric IQ との連携手順は次のとおりです。
 
-1. ビジュアルデザイナーで設計後、「Export」から `RDF/XML` をダウンロードします。
-2. Microsoft Fabric ポータルで「Fabric IQ」または「Semantic Layer Manager」を選びます。
-3. 「Import Ontology」でダウンロードした RDF/XML を選び、Lakehouse/Delta Table とのデータバインディングを設定します。
-4. 自然言語 Copilot で「Fourth Coffee の先月のゴールド会員の売上合計は？」のようなセマンティッククエリを実行します。
+1. ビジュアルデザイナーで設計後、「Export」から `RDF/XML` をダウンロードします。README は「Fabric IQ が期待する形式でエクスポートする」と説明しています。
+2. Microsoft Fabric 側でオントロジーを取り込みます。取り込み画面名や手順は Fabric 側の仕様に従うため、[Fabric IQ 公式ドキュメント](https://learn.microsoft.com/en-us/fabric/iq/ontology/overview)を参照してください。
+3. Lakehouse などの物理データと EntityType のバインディングを設定します。
+4. 自然言語で「Fourth Coffee の先月のゴールド会員の売上合計は？」のようなセマンティッククエリを実行します。
+
+> 補足: 本アプリが保証するのは手順 1（Fabric IQ 期待形式での RDF/XML 出力）までです。手順 2 以降は Microsoft Fabric 側の機能であり、画面名・操作は Fabric の公式手順に従ってください。
 
 ## ベストプラクティス
 
@@ -499,7 +503,7 @@ Fabric IQ との連携手順は次のとおりです。
 - **原因**: W3C 規格のネームスペース定義（`xmlns:rdf`・`xmlns:owl`・`xmlns:rdfs`）の欠落、または未サポートの高度な OWL 構文（`owl:unionOf`・`owl:intersectionOf` 等）の混入です。
 - **対策**:
   1. インポートファイルのルートタグにネームスペースが定義されているか確認します。
-  2. `npm run validate` にファイルを渡してエラー行を特定します。
+  2. `npm run validate -- <file>.rdf` で対象ファイルを検証し、エラー内容を確認します（`validate-rdf.ts` は個別 RDF ファイルの引数を受け付けます）。
   3. サポート対象の `owl:Class`・`owl:DatatypeProperty`・`owl:ObjectProperty` へ構文を単純化します。
 
 ### 2. グラフキャンバスがフリーズする・描画が重い
@@ -507,14 +511,15 @@ Fabric IQ との連携手順は次のとおりです。
 - **現象**: 大規模オントロジーを開くと、ブラウザの UI スレッドがハングアップします。
 - **原因**: `cytoscape-fcose` の初期ノード配置計算による CPU 高負荷です。
 - **対策**:
-  1. デザイナー画面を「Tree View」または「Table View」へ一時的に切り替えます。
-  2. URL パラメータで簡易描画フラグを設定するか、ノード表示数をフィルタリングします。
+  1. ライブ検索バー（`SearchFilter`）でエンティティ/リレーションを絞り込み、表示対象を減らします。
+  2. 大規模オントロジーはサブドメイン（Sub-ontology）ごとに分割して開きます（ベストプラクティス参照）。
+  3. フォーク開発時は `fcose` レイアウトの物理シミュレーションのイテレーション数を抑えて計算負荷を下げます。
 
 ### 3. 1-click カタログ PR 作成時に 401 / 403 エラーが発生する
 
 - **現象**: デザイナーで作成したオントロジーを GitHub PR へ投稿すると認証エラーになります。
-- **原因**: `VITE_GITHUB_CLIENT_ID` または OAuth プロキシ URL（`VITE_GITHUB_OAUTH_BASE`）が未設定、あるいは GitHub OAuth トークンの期限切れです。
-- **対策**: `.env` で正しいクライアント ID と OAuth プロキシ（Cloudflare Worker 等）を確認します。手動の場合は RDF ファイルをエクスポートし、標準の GitHub Web UI / CLI から PR を起票します。
+- **原因**: この機能は GitHub の device-flow OAuth を使います。ブラウザから GitHub の OAuth エンドポイントを直接呼べない（CORS）ため、`VITE_GITHUB_CLIENT_ID` と中継プロキシ `VITE_GITHUB_OAUTH_BASE`（Cloudflare Worker 等）が必要です。いずれかが未設定、またはトークンの期限切れが原因です。
+- **対策**: `.env` で正しいクライアント ID と OAuth プロキシを確認します。手動の場合は RDF ファイルをエクスポートし、標準の GitHub Web UI / CLI から PR を起票します。
 
 ## まとめ
 
