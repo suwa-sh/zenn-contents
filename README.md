@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (183)
+## Articles: 下書き (184)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-07-18 | [🔐 技術調査 - 1Password for Claude](articles/1password-for-claude_20260718.md) | 1Password, Claude, Security, Authentication, AI |
 | 2026-07-18 | [🧭 AI支援の要件定義を縛るのはツール性能より連携と組織的遅延（XITASO実地調査）](articles/ai-assisted-re-tool-integration-org-lag_20260718.md) | RequirementsEngineering, 生成AI, MCP, プロダクトマネジメント, アジャイル |
+| 2026-07-18 | [🧭 数千体のAIエージェントをどう管理するか — 体数ではなく所有と廃止を設計する](articles/enterprise-agent-fleet-governance_20260718.md) | AIエージェント, 生成AI, ガバナンス, DX, エンタープライズ |
 | 2026-07-17 | [🎨 技術調査 - デザインシステム対応AIコード生成 - 開発時間46.7〜69.4%短縮の実証](articles/design-system-aware-ai-codegen_20260717.md) | DesignSystem, AI, CodeGeneration, DesignTokens, Figma |
 | 2026-07-17 | [🔄 基盤モデルを更新し続ける移行運用モデル - 互換性評価・段階切替・ロールバックの標準移行路](articles/foundation-model-upgrade-migration-ops_20260717.md) | LLMOps, MLOps, 生成AI, VertexAI |
 | 2026-07-17 | [🛡️ 自律AIエージェント攻撃に学ぶ、権限境界とインシデント対応の設計](articles/huggingface-autonomous-attack-incident_20260717.md) | Security, AI, Kubernetes, IAM, LLM |
