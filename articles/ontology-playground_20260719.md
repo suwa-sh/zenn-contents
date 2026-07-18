@@ -10,6 +10,9 @@ Microsoft **Ontology Playground**（リポジトリ: `microsoft/Ontology-Playgro
 
 > 調査対象: `microsoft/Ontology-Playground`（旧プロジェクト名 `ontology-quest`） / 検証時点のスタック: React 19・Vite 8・TypeScript 5
 
+![Ontology Playground の画面。E-Commerce サンプルのグラフ、左に Quests、右に検索/インスペクター、右下に自然言語クエリ](/images/ontology-playground_20260719/overview.png)
+*出典: [microsoft/Ontology-Playground](https://github.com/microsoft/Ontology-Playground)（`public/og-image.png`, MIT License）*
+
 ## 概要
 
 Ontology Playground は、ブラウザだけで動くオントロジーの視覚化・モデリング・学習用オープンソース Web アプリケーションです。Microsoft Fabric IQ やリアルタイムインテリジェンス（Real-Time Intelligence）といったデータ & AI プラットフォームへの接続を想定しています。
