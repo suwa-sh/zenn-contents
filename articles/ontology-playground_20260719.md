@@ -524,6 +524,58 @@ Fabric IQ との連携手順は次のとおりです。
 - **原因**: この機能は GitHub の device-flow OAuth を使います。ブラウザから GitHub の OAuth エンドポイントを直接呼べない（CORS）ため、`VITE_GITHUB_CLIENT_ID` と中継プロキシ `VITE_GITHUB_OAUTH_BASE`（Cloudflare Worker 等）が必要です。いずれかが未設定、またはトークンの期限切れが原因です。
 - **対策**: `.env` で正しいクライアント ID と OAuth プロキシを確認します。手動の場合は RDF ファイルをエクスポートし、標準の GitHub Web UI / CLI から PR を起票します。
 
+## 関連ツール・標準との連携と位置づけ
+
+エンタープライズのオントロジー基盤には、gist のような上位オントロジー、SKOS・SHACL などの W3C 標準、Timbr などの仮想化ツールが登場します。Ontology Playground がこれらとどう連携できるかを、各ツールの一次ソースに基づいて整理します。
+
+### 連携対応
+
+| 相手 | 連携 | 内容 |
+|---|---|---|
+| Microsoft Fabric IQ | ○ 実連携 | RDF/XML 出力に加え、`src/lib/fabric.ts` から Fabric REST API へオントロジー定義を push。想定される唯一の下流基盤 |
+| OWL（骨格） | △ フラットのみ | クラスとデータ型/オブジェクトプロパティ（domain/range）まで対応。クラス階層（`rdfs:subClassOf`）や制約（`owl:Restriction`）は保持しない |
+| gist 上位オントロジー | △ 骨格のみ取り込み | gist は RDF/XML 版も配布するものの、公式 RDF/XML は DTD 内部実体参照を多用するため、ブラウザのパーサではそのまま解析に失敗しうる（前処理が必要）。解析できても `owl:Restriction`・`owl:equivalentClass`・`owl:unionOf` などで定義されるクラス本体と階層は落ち、主要クラス/プロパティの一覧を眺める用途に限る |
+| SKOS | ✗ 非対応 | 分類（`broader`/`narrower`）・同義語・多言語の器を持たない |
+| SHACL | ✗ 非対応 | 独自のバリデーションはあるが、SHACL shapes の入出力はしない |
+| R2RML / Direct Mapping / OBDA | ✗ 非対応 | RDB スキーマの取り込みや SPARQL から SQL への変換をしない。DataBinding は手動の簡易マッピング |
+| Timbr などの仮想 SQL 層 | ✗ 非対応 | 接続機構を持たない |
+| Turtle / JSON-LD / SPARQL | ✗ 非対応 | シリアライズは RDF/XML のみ。クエリはインメモリの自然言語解釈のみ |
+
+### エンタープライズ基盤での位置づけ
+
+「SKOS = マスタ / OWL = 骨格 / SHACL = 検証」という役割分担で見ると、Ontology Playground が担うのは **OWL 骨格（フラットなクラス + プロパティ）の作成・可視化**です。上位の gist、分類の SKOS、検証の SHACL、RDB 変換や仮想化（R2RML・Timbr）は Playground の外側で担います。
+
+```mermaid
+graph TB
+    subgraph Playground ["Ontology Playground が担う範囲"]
+        auth["OWL 骨格の作成<br/>クラス + プロパティ"]
+        viz["グラフ可視化<br/>学習"]
+    end
+
+    fabric["Microsoft Fabric IQ<br/>下流セマンティック基盤"]
+
+    subgraph Outside ["Playground の外側<br/>別ツールが担当"]
+        gist["gist 上位オントロジー<br/>OWL 2 DL 公理"]
+        skos["SKOS<br/>マスタ / 分類"]
+        shacl["SHACL<br/>データ検証"]
+        rdb["R2RML / Timbr<br/>RDB 変換 / 仮想 SQL"]
+    end
+
+    auth --> viz
+    auth -->|"RDF/XML エクスポート<br/>または REST push (JSON)"| fabric
+    gist -->|"骨格のみ取り込み可"| auth
+    skos -->|"非対応"| auth
+    shacl -->|"非対応"| auth
+    rdb -->|"非対応"| auth
+```
+
+Ontology Playground は、重厚な OWL 2 DL エディタ（Protégé など）の入口となる**軽量なオーサリング・可視化フロントエンド**として位置づけると実態に合います。オントロジーの意味論をフルに保持した統合基盤ではありません。
+
+### 関連記事
+
+- [エンタープライズデータ統合の要 - Semantic Arts gist オントロジー](https://zenn.dev/suwash/articles/semantic_arts_gist_ontorojii_taikeika_20260216)
+- [社内データ利活用のためのオントロジー整理方法](https://zenn.dev/suwash/articles/shanai_data_ontology_seiri_20260215)
+
 ## まとめ
 
 Ontology Playground は、React 19 の完全クライアントサイド設計で、オントロジーの視覚化・モデリング・学習・Fabric IQ 連携までブラウザ 1 つで完結させる OSS です。RDF/XML（OWL 構文）の相互運用と対話型学習「Ontology School」を備え、セマンティックモデリングの導入障壁を大きく下げます。
