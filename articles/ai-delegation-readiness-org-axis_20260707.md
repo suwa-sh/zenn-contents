@@ -91,7 +91,7 @@ docker run --rm ghcr.io/suwa-sh/ai-delegation-readiness:v0.3.0 \
   check-readiness examples/business/ajinomoto-discovery-team.yaml
 ```
 
-自社を採点したいときは、`examples/business/` のサンプルをひな型に `yes` / `no` を埋め、必要なら overlay で自社固有の組織条件を足してください。詳細は [docs/05_organization_axis.md](https://github.com/suwa-sh/ai-delegation-readiness/blob/main/docs/05_organization_axis.md) にまとめています。
+自社を採点したいときは、`examples/business/` のサンプルをひな型に `yes` / `no` を埋め、必要なら overlay で自社固有の組織条件を足してください。詳細は [docs/03_organization_axis.md](https://github.com/suwa-sh/ai-delegation-readiness/blob/main/docs/03_organization_axis.md) にまとめています。
 
 ## まとめ
 
