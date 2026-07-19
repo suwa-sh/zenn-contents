@@ -11,13 +11,12 @@ updated_by: user-title-convention-change
 # タイトル方針 (Step 3)
 title:
   max_chars: 70                       # 不変 (Zenn の制限)
-  default_prefix: ""                  # prefix なし (2026-07-20 に "技術調査 - " を廃止)
+  default_prefix: ""                  # prefix なし
   preferred_patterns:                 # analytics で増やしていく型
     # 調査対象が何であるかを先に示し、名前を後置する。
     # 例: "MCP サーバー内蔵の macOS AI ビデオエディタ - palmier-pro"
     - "{summary} - {target}"
-  avoid_patterns:                     # 反応低かった型
-    - "技術調査 - {target}"           # 2026-07-20 廃止。何の記事か件名から判別できない
+  avoid_patterns: []                  # 反応低かった型
 
 # topics (CamelCase, max 5)
 topics:
