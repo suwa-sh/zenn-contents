@@ -11,7 +11,7 @@
 
 | create date | title | topics |
 |-------------|-------|--------|
-| 2026-07-20 | [🎬 技術調査 - palmier-pro（MCP サーバー内蔵の macOS AI ビデオエディタ）](articles/palmier-pro_20260720.md) | PalmierPro, MCP, Swift, macOS, 生成AI |
+| 2026-07-20 | [🎬 MCP サーバー内蔵の macOS AI ビデオエディタ - palmier-pro](articles/palmier-pro_20260720.md) | PalmierPro, MCP, Swift, macOS, 生成AI |
 | 2026-07-19 | [🧹 技術調査 - agents-lint（AGENTS.md 参照整合性リンタ）](articles/agents-md-reference-integrity-lint_20260719.md) | AgentsMd, Linter, CI, GitHubActions, AIエージェント |
 | 2026-07-19 | [🏷️ AI生成パッチは「値札」— 所有コストで採否を決める判断フレーム](articles/ai-patch-ownership-cost_20260719.md) | 生成AI, AIエージェント, 技術的負債, コードレビュー, エンジニアリングマネジメント |
 | 2026-07-19 | [🪙 AI Tokenomics：コーディングのトークン効率を工程で設計する11原則](articles/ai-tokenomics_20260719.md) | 生成AI, LLM, AIエージェント, GoogleCloud, コンテキストエンジニアリング |

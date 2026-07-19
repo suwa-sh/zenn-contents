@@ -1,5 +1,5 @@
 ---
-title: "技術調査 - palmier-pro（MCP サーバー内蔵の macOS AI ビデオエディタ）"
+title: "MCP サーバー内蔵の macOS AI ビデオエディタ - palmier-pro"
 emoji: "🎬"
 type: "tech"
 topics: ["PalmierPro", "MCP", "Swift", "macOS", "生成AI"]
