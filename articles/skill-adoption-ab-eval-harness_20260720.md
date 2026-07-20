@@ -740,7 +740,7 @@ Decision は pass_rate_baseline と pass_rate_skill のそれぞれに、n_trial
 
 ### ●状態遷移
 
-Skill の状態は candidate から始まります。Decision の結果に応じて adopted または retired へ遷移します。adopted は RegressionRun の失敗により retired へ戻ります。retired はモデル更新をきっかけに candidate へ戻り、再評価の対象になります。
+Skill の状態は candidate から始まります。Decision の結果に応じて adopted または retired へ遷移します。adopted からの遷移先は 2 つあります。回帰評価に失敗した場合は retired へ退避し、モデル更新や Skill 改訂があった場合は candidate へ戻して再評価の対象にします。retired もモデル更新をきっかけに candidate へ戻ります。
 
 ```mermaid
 stateDiagram-v2
@@ -748,6 +748,7 @@ stateDiagram-v2
     candidate --> adopted : Decision.verdict=adopt
     candidate --> retired : Decision.verdict=reject
     adopted --> retired : RegressionRun.verdict=fail
+    adopted --> candidate : モデル更新 / Skill 改訂
     retired --> candidate : モデル更新
 ```
 
@@ -1220,13 +1221,14 @@ stateDiagram-v2
     candidate --> retired
     retired --> candidate
     adopted --> candidate
+    adopted --> retired
 ```
 
 | 状態 | 意味 | 遷移条件 |
 |---|---|---|
 | candidate | A/B 評価待ち、または評価中 | 新規作成、または再評価の起点 (モデル更新 / Skill 改訂) |
 | adopted | 採用基準を満たし本番導入済み | 合格率が baseline を上回り、かつコスト増が閾値以内 |
-| retired | 棄却され退避中 | 合格率が同等以下、またはコスト増が閾値超過 |
+| retired | 棄却され退避中 | 合格率が同等以下、コスト増が閾値超過、または回帰評価に失敗 |
 
 状態はリポジトリ上で 2 つの手段を組み合わせて持ちます。
 
