@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (193)
+## Articles: 下書き (194)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-07-20 | [🔐 エージェントの権限設計を OS 能力とユーザー同意の 2 軸で分解する](articles/agent-authorization-os-capability-consent_20260720.md) | AI, Security, Android, OAuth, LLM |
+| 2026-07-20 | [⏳ エージェント記憶の鮮度設計 静かに嘘になる記憶をどう扱うか](articles/agent-memory-freshness-revalidation_20260720.md) | LLM, AIエージェント, RAG, LLMOps, 生成AI |
 | 2026-07-20 | [🧪 実装より先に評価系を設計する - AI生成コードの評価オラクル](articles/evaluation-oracle-design_20260720.md) | LLM, テスト, 品質保証, Java, SonarQube |
 | 2026-07-20 | [🎬 MCP サーバー内蔵の macOS AI ビデオエディタ - palmier-pro](articles/palmier-pro_20260720.md) | PalmierPro, MCP, Swift, macOS, 生成AI |
 | 2026-07-20 | [⚖️ 隔離 worktree と機械計測で導入可否を決める - Claude Code Skills の A/B 評価ハーネス](articles/skill-adoption-ab-eval-harness_20260720.md) | ClaudeCode, AgentSkills, LLMOps, 評価 |
