@@ -7,13 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (192)
+## Articles: 下書き (193)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-07-20 | [🔐 エージェントの権限設計を OS 能力とユーザー同意の 2 軸で分解する](articles/agent-authorization-os-capability-consent_20260720.md) | AI, Security, Android, OAuth, LLM |
 | 2026-07-20 | [🧪 実装より先に評価系を設計する - AI生成コードの評価オラクル](articles/evaluation-oracle-design_20260720.md) | LLM, テスト, 品質保証, Java, SonarQube |
 | 2026-07-20 | [🎬 MCP サーバー内蔵の macOS AI ビデオエディタ - palmier-pro](articles/palmier-pro_20260720.md) | PalmierPro, MCP, Swift, macOS, 生成AI |
+| 2026-07-20 | [⚖️ 隔離 worktree と機械計測で導入可否を決める - Claude Code Skills の A/B 評価ハーネス](articles/skill-adoption-ab-eval-harness_20260720.md) | ClaudeCode, AgentSkills, LLMOps, 評価 |
 | 2026-07-19 | [🧹 技術調査 - agents-lint（AGENTS.md 参照整合性リンタ）](articles/agents-md-reference-integrity-lint_20260719.md) | AgentsMd, Linter, CI, GitHubActions, AIエージェント |
 | 2026-07-19 | [🏷️ AI生成パッチは「値札」— 所有コストで採否を決める判断フレーム](articles/ai-patch-ownership-cost_20260719.md) | 生成AI, AIエージェント, 技術的負債, コードレビュー, エンジニアリングマネジメント |
 | 2026-07-19 | [🪙 AI Tokenomics：コーディングのトークン効率を工程で設計する11原則](articles/ai-tokenomics_20260719.md) | 生成AI, LLM, AIエージェント, GoogleCloud, コンテキストエンジニアリング |
