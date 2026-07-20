@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (194)
+## Articles: 下書き (193)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -20,7 +20,6 @@
 | 2026-07-19 | [🏷️ AI生成パッチは「値札」— 所有コストで採否を決める判断フレーム](articles/ai-patch-ownership-cost_20260719.md) | 生成AI, AIエージェント, 技術的負債, コードレビュー, エンジニアリングマネジメント |
 | 2026-07-19 | [🪙 AI Tokenomics：コーディングのトークン効率を工程で設計する11原則](articles/ai-tokenomics_20260719.md) | 生成AI, LLM, AIエージェント, GoogleCloud, コンテキストエンジニアリング |
 | 2026-07-19 | [🧩 技術調査 - Ontology Playground](articles/ontology-playground_20260719.md) | Ontology, RDF, OWL, TypeScript, React |
-| 2026-07-19 | [🚢 ビルドから SSL・バックアップまで自動化するセルフホスト型デプロイ基盤 openship](articles/openship_20260719.md) | Openship, PaaS, セルフホスト, Docker, OSS |
 | 2026-07-18 | [🔐 技術調査 - 1Password for Claude](articles/1password-for-claude_20260718.md) | 1Password, Claude, Security, Authentication, AI |
 | 2026-07-18 | [🧭 AI支援の要件定義を縛るのはツール性能より連携と組織的遅延（XITASO実地調査）](articles/ai-assisted-re-tool-integration-org-lag_20260718.md) | RequirementsEngineering, 生成AI, MCP, プロダクトマネジメント, アジャイル |
 | 2026-07-18 | [🧭 数千体のAIエージェントをどう管理するか — 体数ではなく所有と廃止を設計する](articles/enterprise-agent-fleet-governance_20260718.md) | AIエージェント, 生成AI, ガバナンス, DX, エンタープライズ |
@@ -206,10 +205,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (157)
+## Articles: 公開済み (158)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-07-21 | [🚢 ビルドから SSL・バックアップまで自動化するセルフホスト型デプロイ基盤 openship](articles/openship_20260719.md) | Openship, PaaS, セルフホスト, Docker, OSS |
 | 2026-07-18 | [📄 技術調査 - OfficeCLI](articles/officecli_20260716.md) | OfficeCLI, AIエージェント, MCP, CLI, OpenXML |
 | 2026-07-16 | [🦠 AsyncAPI サプライチェーン攻撃 (Miasma ワーム) の内容と対処方法](articles/asyncapi_compromise_20260715.md) | Security, npm, SupplyChainAttack, Malware, AsyncAPI |
 | 2026-07-14 | [🧪 業務日付をまたぐシナリオテストを、ディレクトリ規約で自動実行する — stfw](articles/stfw_20260711.md) | Go, Testing, CLI, OSS |
