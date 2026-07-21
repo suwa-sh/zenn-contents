@@ -1015,8 +1015,8 @@ def union_coverage_ratio(
 ) -> float:
     """論文 Definition 3 をそのまま実装する。
 
-    Cov_union = Num_covered_old + Num_covered_new
-                / Num_changed_old + Num_changed_new
+    Cov_union = (Num_covered_old + Num_covered_new)
+                / (Num_changed_old + Num_changed_new)
 
     集合和ではなく、旧版・新版を別々に数えた加重比です。
     旧版だけが行 L をカバーした場合、集合和なら 100% ですが本式では 50% です。
