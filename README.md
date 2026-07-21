@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (198)
+## Articles: 下書き (199)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-22 | [🧪 自己修正バイアスを防ぐ契約駆動のSkill評価CI - AEVAL](articles/aeval_20260722.md) | LLM, CI, Testing, LLMOps, AgentSkills |
 | 2026-07-22 | [🔗 要件からテスト証跡までをつなぐ機械可読な V&V フレームワーク - VNVSpec](articles/vnvspec_20260722.md) | VNVSpec, Python, MLOps, AI, テスト |
 | 2026-07-21 | [🚦 リポジトリ内で反例を仕様へ昇格させるエージェント合成 - Counterexample-Supplemented Sketches](articles/counterexample-supplemented-sketches_20260721.md) | ProgramSynthesis, CodingAgent, LLM, CEGIS, ソフトウェア設計 |
 | 2026-07-21 | [🔍 PRの振る舞い差を露出させる変更誘導型テスト生成 - DiffTestGen](articles/difftestgen_20260721.md) | Python, Testing, LLM, CI |
