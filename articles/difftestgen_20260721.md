@@ -91,16 +91,18 @@ Testora と ChaCo は、それぞれ別の一次研究として公開されて�
 
 ### ユースケース別の推奨
 
-| 状況 | DiffTestGen が効くか | 理由 |
+| 状況 | DiffTestGen の有効性 | 理由 |
 |---|---|---|
-| private 関数を変更した PR で、到達経路が不明 | 効きます | access information が到達経路を LLM に提示します |
-| 変更箇所を実行する既存テストが無い | 効きます | diff 起点でテストを新規生成するため、既存テストの有無に依存しません |
-| Python かつ構造・ドキュメントが整ったプロジェクト | 効きます | access information の抽出が静的コールグラフとドキュメントに依存します |
-| 変更が typing 改善・リファクタ・互換性調整・dtype 安定化など非機能的なもの | 効きにくいです | 論文の 69 PR (3 手法すべて失敗) はこの種の変更が中心でした |
+| private 関数を変更した PR で、到達経路が不明 | 有効性が期待できます | access information が到達経路を LLM に提示します |
+| 変更箇所を実行する既存テストが無い | 有効性が期待できます | diff 起点でテストを新規生成するため、既存テストの有無に依存しません |
+| Python かつ構造・ドキュメントが整ったプロジェクト | 有効性が期待できます | access information の抽出が静的コールグラフとドキュメントに依存します |
+| 変更が typing 改善・リファクタ・互換性調整・dtype 安定化など非機能的なもの | 期待しにくいです | 論文の 69 PR (3 手法すべて失敗) はこの種の変更が中心でした |
 | Python 以外の言語のプロジェクト | 対象外です | 論文の評価は Python の 4 プロジェクトに限定されています |
 | 設定ファイルのみの変更、コメント・ドキュメントのみの変更 | 対象外です | 論文の対象スコープから明示的に除外されています |
 | 変更する非テストソースファイルが 4 つ以上の大規模 PR | スコープ外です | 論文はスケーラビリティ対策として最大 3 ファイルまでを対象にしています |
 | 最小コストで素早くスクリーニングしたいだけの場合 | 素の Testora の方が向きます | 論文の RQ3 では、Testora が最も低コスト ($0.018/PR, 8.92 分) でした |
+
+論文が示したのはデータセット全体での平均的な改善です。個別 PR での検出を保証するものではありません。
 
 ## 特徴
 
@@ -108,8 +110,10 @@ Testora と ChaCo は、それぞれ別の一次研究として公開されて�
 - **access information を 3 分類で切り替える**: 変更関数を public / private / special method に分類し、分類ごとに異なる到達経路情報を LLM へ渡します。private 関数でも、テストは public API 経由でのみ実行させる設計です。private 関数を直接叩くテストを書かせるのではなく、到達経路そのものを教える点が特徴です
 - **静的コールグラフから到達経路を導出する**: ノードを関数、エッジを呼び出し関係とする有向グラフを構築します。private 関数については、公開された entry 関数までの top-k 最短コールパスを BFS 的に探索します
 - **三重ループ構造で反復的にテストを改善する**: 内側 2 ループ (生成テストの静的妥当性エラー解消、実行時に判明したランタイムエラーへの対応) と、外側 1 ループ (カバレッジ確認) で構成されます。停止条件は、カバレッジが 100% に到達した場合、または前ラウンドから変化が無い場合です
-  > **注意**: 内側ループの修正試行上限 (5 回) と、外側ループのラウンド数 (R0〜R4 = 5 ラウンド) は、
-  > どちらも「5」ですが**独立した別のカウンタ**です。混同しないでください
+  > **注意**: 内側ループの修正試行上限 (5 回) と、論文 Table IV が報告する外側ループのラウンド (R0〜R4) は、
+  > どちらも「5」に見えますが**独立した別のカウンタ**です。混同しないでください。
+  > なお R4 は**実験で観測された最大ラウンドであり、実装上の固定上限ではありません**。
+  > 公開実装 (`RegressionFinder.py`) に `round <= 4` の上限は無く、カバレッジが伸び続ける限り次ラウンドへ進みます
 - **flaky なテストを除去してから振る舞い差を報告する**: タイムスタンプなどの付随情報を正規化したうえで、各生成テストを新旧両版で再実行します。初回と結果が異なるテストは flaky として破棄します
 - **回帰バグ検出の一段手前を担う**: DiffTestGen が検出するのは「振る舞い差」であり、「回帰バグ」そのものではありません。論文では、DiffTestGen だけが差を検出した 70 PR を対象に別の LLM 分類器で意図判定した結果、7 PR が回帰と分類され、手動精査の結果 5 件が実際の回帰バグでした。振る舞い差の検出割合と実回帰の件数は、異なるレイヤーの数字として扱う必要があります
 - **効かないケースがある**: 論文の評価では、Testora / Testora++ / DiffTestGen の 3 手法すべてが振る舞い差を検出できなかった PR が 69 件ありました。内容は typing 改善・リファクタ・互換性調整・dtype 安定化など、非機能的で振る舞いへの影響が小さい変更が中心でした
@@ -608,14 +612,14 @@ ReferenceTest "1" --> "1" Prompt : feeds next round
 | EntryFunction | private 関数に到達できる公開関数です。`importLine`・`signature`・`docstring` を持ちます (論文 Table I) |
 | CallGraph | ノードが関数、エッジが呼び出し関係の有向グラフです。属性は概念上のものであり、公開実装では永続化されていません (実装補完の注記) |
 | CallPath | private 関数から EntryFunction への呼び出し経路です。`rank` は top-k 最短経路の順位です。**k = 5** は論文 II-C3 Algorithm 1 に明記されています ("selects the top-k shortest remaining paths ... with k = 5") |
-| Round | R0 (初回生成) から R4 (最終フィードバック) まで存在します。カバレッジが 100% に到達、または前ラウンドから変化がなければ終了します (論文 II-B) |
+| Round | 反復の 1 単位です。論文の実験では R0 (初回生成) から R4 まで観測されました。実装上の固定上限ではありません。カバレッジが 100% に到達、または前ラウンドから変化がなければ終了します (論文 II-B) |
 | Prompt | `kind` は `initial` (R0) または `coverageFeedback` (R1 以降) です。coverageFeedback は未カバー行に関連する ChangedFunction と AccessInformation のみに絞り込みます (論文 Table II) |
 | GeneratedTest | Prompt から LLM が生成したテストコードです。公開実装の `TestExecution.code` フィールドに相当します (`src/testora/execution/TestExecution.py` で確認済み) |
 | ExecutionResult | 旧版・新版それぞれの実行結果です。属性名は概念上の呼称で、公開実装の `TestExecution` dataclass (`code`, `output`, `coverage_report`, `coverage_percentage`, `all_covered_exec_modified_stms_num`, `all_uncovered_exec_modified_stmts_num`) に対応します (確認済み) |
 | BehavioralDifference | Definition 2 の 3 条件のいずれかで成立します。詳細は次項の表を参照してください |
 | CoverageReport | 公開実装の `DiffCoverage` dataclass (`percentage_covered`, `total_exec_modified_stmts`, `total_covered_exec_modified_stmts`) に対応します (`src/testora/execution/CoverageAnalyzer.py` で確認済み) |
 | UnionCoverage | 旧版と新版のカバレッジを合成した指標です。定義式は本項下部を参照してください |
-| ReferenceTest | 未カバー行までの距離が最小の GeneratedTest を選びます。公開実装は Mean Absolute Distance (MAD) を用いています (`src/testora/util/ReferenceTestsFilter.py` で確認済み) |
+| ReferenceTest | 未カバー行に最も近い GeneratedTest を選びます。公開実装は未カバー行ごとに最寄り被覆行との絶対距離を求め、距離リストの比較とテスト数・ランダム選択で候補を絞る**最寄り行距離ベースのヒューリスティック**です。ソースコメントは Mean Absolute Distance と記していますが、実装は平均を計算していません (`src/testora/util/ReferenceTestsFilter.py` で確認済み) |
 
 ### AccessInformation の分類別構成 (論文 Table I 準拠)
 
@@ -683,7 +687,7 @@ DiffTestGen は MIT ライセンスの公開実装です。リポジトリは ht
 |---|---|
 | `openai==1.55.3` | LLM 呼び出し |
 | `PyGithub==2.3.0` | GitHub API 経由の PR 取得 |
-| `PyCG==0.0.8` | 静的コールグラフ構築 (access information の元データ) |
+| `PyCG==0.0.8` | 依存には残りますが、現行の呼び出し関係抽出コードからは利用を確認できません。実際の抽出は vendored `multilspy` + `libcst` の `ExtractCallerCallee.py` が担います |
 | `jedi-language-server==0.41.4` | LSP ベースの public / private 判定 |
 | `libcst==1.2.0` | Python AST/CST 解析 (差分から変更関数を抽出) |
 | `coverage==7.11.0` | union coverage の計測 |
@@ -834,7 +838,8 @@ python -m testora.RegressionFinder \
 
 アブレーション実験を再現する場合は、要素を 1 つずつ切り替えるのではなく、`src/testora/Entry.py` が持つ
 名前付き設定をそのまま使います。実装で確認できる定義は次のとおりです (先頭 8 要素。残り 2 要素は
-`max_iteration` と `model_version`)。
+`iteration` と `model_version`)。なお `Entry.py` にある `max_iteration` は外側 for ループの上限であり、
+`--paras` 配列の要素ではありません。
 
 | 名前付き設定 | 配列 | 対応する論文の条件 |
 |---|---|---|
@@ -855,8 +860,13 @@ python -m testora.RegressionFinder \
 |---|---|---|
 | データベースモード | `python -m testora.Entry` | データベースから PR を取得して一括実行。結果はデータベースへ記録 |
 | ローカルモード (Testora data) | `python -m testora.EntryLocal` | ローカル実行。結果はリポジトリ直下にログファイルとして出力 |
-| ローカルモード (ChaCo data) | `python -m testora.EntryLocalChaCo` | ChaCo データセット (pandas/scipy 34 PR) 向け |
+| ローカルモード (ChaCo data) | `python -m testora.EntryLocalChaCo` | ChaCo データセット (pandas/scipy 34 PR) 向け。下記の既知の注意点あり |
 | 分類のみ再実行 | `python -m testora.EntryLocalClassification` | 既存ログファイルに対して回帰分類だけを再実行 |
+
+> **`EntryLocalChaCo` の既知の注意点** (2026-07-21 時点の main で確認):
+> モデルループ内で同じ `config` リストへ 2 要素を繰り返し追加するため、2 モデル目では 12 要素になり
+> 10 変数へのアンパックに失敗します。また `dataset = "unique",` は末尾カンマにより文字列ではなくタプルです。
+> 公開実装側の不具合なので、複数モデルで回す場合は手元で修正してから実行します。
 
 データベースモードのステータス確認とダウンロードは次のコマンドです。
 
@@ -975,8 +985,12 @@ def measure_changed_line_coverage(
     changed_file: str,
     changed_lines: set[int],
     test_files: list[str],
-) -> set[int]:
-    """指定ワークツリーでテストを実行し、変更行のうちカバーされた行番号を返す。"""
+) -> tuple[set[int], set[int]]:
+    """指定ワークツリーでテストを実行する。
+
+    戻り値は 実行可能な変更行 と そのうちカバーされた行 の 2 集合です。
+    分母を「実行可能な変更行」に限定するため executable_stmts と交差させます。
+    """
     data_file = worktree / ".coverage.diff"
     subprocess.run(
         ["coverage", "run", f"--data-file={data_file}", "-m", "pytest", *test_files],
@@ -988,30 +1002,43 @@ def measure_changed_line_coverage(
     _, executable_stmts, _, uncovered_stmts, _ = cov.analysis2(
         str(worktree / changed_file)
     )
-    covered = set(executable_stmts) - set(uncovered_stmts)
-    return covered & changed_lines
+    executable_changed = set(executable_stmts) & changed_lines
+    covered = executable_changed - set(uncovered_stmts)
+    return executable_changed, covered
+
 
 def union_coverage_ratio(
-    old_covered: set[int], new_covered: set[int], changed_lines: set[int]
+    old_executable: set[int],
+    old_covered: set[int],
+    new_executable: set[int],
+    new_covered: set[int],
 ) -> float:
-    """旧版・新版のどちらかでカバーされていれば union にカウントする。
+    """論文 Definition 3 をそのまま実装する。
 
-    変更行が無い場合は 1.0 (100%) 扱いとする。DiffTestGen の規約に合わせている。
+    Cov_union = Num_covered_old + Num_covered_new
+                / Num_changed_old + Num_changed_new
+
+    集合和ではなく、旧版・新版を別々に数えた加重比です。
+    旧版だけが行 L をカバーした場合、集合和なら 100% ですが本式では 50% です。
+    削除行は旧版のみ、追加行は新版のみに存在するため変更行集合も版ごとに分けます。
+    実行可能な変更行が両版とも無い場合は 1.0 つまり 100% 扱いとします。
     """
-    if not changed_lines:
+    denominator = len(old_executable) + len(new_executable)
+    if denominator == 0:
         return 1.0
-    covered_union = (old_covered | new_covered) & changed_lines
-    return len(covered_union) / len(changed_lines)
+    return (len(old_covered) + len(new_covered)) / denominator
+
 
 if __name__ == "__main__":
-    changed_lines = {120, 121, 122, 130}
-    old_covered = measure_changed_line_coverage(
-        Path("worktree_old"), "src/mylib/core.py", changed_lines, ["tests/generated/"]
+    old_changed = {120, 121, 122}
+    new_changed = {120, 121, 122, 130}
+    old_exec, old_cov = measure_changed_line_coverage(
+        Path("worktree_old"), "src/mylib/core.py", old_changed, ["tests/generated/"]
     )
-    new_covered = measure_changed_line_coverage(
-        Path("worktree_new"), "src/mylib/core.py", changed_lines, ["tests/generated/"]
+    new_exec, new_cov = measure_changed_line_coverage(
+        Path("worktree_new"), "src/mylib/core.py", new_changed, ["tests/generated/"]
     )
-    ratio = union_coverage_ratio(old_covered, new_covered, changed_lines)
+    ratio = union_coverage_ratio(old_exec, old_cov, new_exec, new_cov)
     print(f"union coverage: {ratio:.1%}")
 ```
 
@@ -1025,37 +1052,66 @@ def aggregate_union_coverage(per_pr_ratios: list[float]) -> float:
 
 ### 実装案: 差分実行ハーネス (Definition 2 の実装)
 
-Definition 2 (behavioral difference) の 3 条件と、flaky 除去のための再実行を実装した例です。DiffTestGen 本体は pytest 単体実行ではなくテスト統合実行 (`ProgramMerger`) を使っていますが、ここでは自分のプロジェクトに組み込みやすい pytest サブプロセス実行の形にしています。
+Definition 2 (behavioral difference) の 3 条件と、flaky 除去のための再実行を実装した例です。DiffTestGen 本体は既定では生成コードを 1 件ずつ実行します (`Config.py` の `use_program_merger = False`)。テスト統合実行 (`ProgramMerger`) は設定を有効にしたときだけ使う任意の経路です。ここでは自分のプロジェクトに組み込みやすい pytest サブプロセス実行の形にしています。
 
 ```python
 """diff_harness.py
 Definition 2 (behavioral difference) を実装する差分実行ハーネスの実装案。
 同一の生成テストを旧版 / 新版 2 つのワークツリーで実行し、出力とエラー型を比較する。
 """
+import re
 import subprocess
 from dataclasses import dataclass
+
+# pytest 自身が出す進捗行・サマリ行。SUT の出力と混ざるため除去する。
+_PYTEST_NOISE = re.compile(
+    r"^(=+.*=+|-+.*-+|[.FEsxX]+\s*\[\s*\d+%\]|\d+ (passed|failed|error).*)$"
+)
+
 
 @dataclass
 class RunResult:
     output: str | None
     error_type: str | None  # None ならエラー無し
 
-def run_test(worktree: str, test_path: str) -> RunResult:
+
+def run_test(worktree: str, test_path: str, python_bin: str = "python") -> RunResult:
+    """テストを実行し、SUT の標準出力とランタイムエラー型を取り出す。
+
+    `-s` で pytest の出力キャプチャを無効にする点が重要です。
+    既定の pytest は成功したテストの標準出力を表示しません。
+    そのままでは Definition 2 の条件 3 つまり出力差を検出できません。
+    `python_bin` には旧版用・新版用に分離した venv の python を渡します。
+    """
     proc = subprocess.run(
-        ["python", "-m", "pytest", test_path, "--tb=line", "-q"],
+        [python_bin, "-m", "pytest", test_path,
+         "-s", "-q", "--tb=short", "-p", "no:cacheprovider"],
         cwd=worktree,
         capture_output=True,
         text=True,
     )
+    sut_output = "\n".join(
+        line for line in proc.stdout.splitlines()
+        if line.strip() and not _PYTEST_NOISE.match(line.strip())
+    )
     if proc.returncode == 0:
-        return RunResult(output=proc.stdout.strip(), error_type=None)
-    return RunResult(output=None, error_type=_extract_error_type(proc.stdout + proc.stderr))
+        return RunResult(output=sut_output, error_type=None)
+    return RunResult(output=sut_output, error_type=_extract_error_type(proc.stdout))
+
 
 def _extract_error_type(text: str) -> str:
+    """short traceback 末尾の `E   SomeError: ...` から例外型名を取り出す。
+
+    assertion failure は AssertionError として現れます。
+    収集エラーなど pytest 自身の失敗も混ざります。
+    本番運用では pytest の JSON レポートプラグインを使う方が安定します。
+    """
     for line in reversed(text.splitlines()):
-        if "Error" in line or "Exception" in line:
-            return line.split(":")[0].strip()
+        m = re.match(r"E\s+([A-Za-z_][\w.]*(?:Error|Exception))\b", line.strip())
+        if m:
+            return m.group(1)
     return "UnknownError"
+
 
 def has_behavioral_difference(old: RunResult, new: RunResult) -> bool:
     """Definition 2 の3条件をそのまま実装する。
@@ -1070,20 +1126,28 @@ def has_behavioral_difference(old: RunResult, new: RunResult) -> bool:
         return True
     return old.output != new.output
 
-def is_flaky(worktree: str, test_path: str, first: RunResult, reruns: int = 2) -> bool:
+
+def is_flaky(
+    worktree: str, test_path: str, first: RunResult,
+    python_bin: str = "python", reruns: int = 2,
+) -> bool:
     """同一版で再実行し、結果が変われば flaky とみなして破棄する。"""
     for _ in range(reruns):
-        rerun = run_test(worktree, test_path)
+        rerun = run_test(worktree, test_path, python_bin)
         if rerun.output != first.output or rerun.error_type != first.error_type:
             return True
     return False
 
-def check_test(old_worktree: str, new_worktree: str, test_path: str) -> dict:
-    old_result = run_test(old_worktree, test_path)
-    new_result = run_test(new_worktree, test_path)
 
-    if is_flaky(old_worktree, test_path, old_result) or is_flaky(
-        new_worktree, test_path, new_result
+def check_test(
+    old_worktree: str, new_worktree: str, test_path: str,
+    old_python: str = "python", new_python: str = "python",
+) -> dict:
+    old_result = run_test(old_worktree, test_path, old_python)
+    new_result = run_test(new_worktree, test_path, new_python)
+
+    if is_flaky(old_worktree, test_path, old_result, old_python) or is_flaky(
+        new_worktree, test_path, new_result, new_python
     ):
         return {"test": test_path, "status": "flaky_discarded"}
 
@@ -1127,6 +1191,8 @@ jobs:
       - name: Checkout PR head (new version)
         uses: actions/checkout@v4
         with:
+          # pull_request の既定 ref は merge commit なので head を明示する
+          ref: ${{ github.event.pull_request.head.sha }}
           path: new
 
       - name: Checkout PR base (old version)
@@ -1139,18 +1205,25 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies (both versions)
+      # 旧版と新版を同じ環境へ入れると後勝ちになる。venv で分離する
+      - name: Install dependencies (isolated per version)
         run: |
-          pip install -e ./old -r old/requirements.txt coverage pytest
-          pip install -e ./new -r new/requirements.txt coverage pytest
+          python -m venv .venv-old
+          ./.venv-old/bin/pip install -e ./old -r old/requirements.txt coverage pytest
+          python -m venv .venv-new
+          ./.venv-new/bin/pip install -e ./new -r new/requirements.txt coverage pytest
 
       - name: Generate change-directed tests
-        run: python scripts/generate_diff_tests.py --base old --head new --out generated_tests/
+        run: python new/scripts/generate_diff_tests.py --base old --head new --out generated_tests/
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
       - name: Run differential harness
-        run: python scripts/diff_harness_runner.py --old old --new new --tests generated_tests/
+        run: |
+          python new/scripts/diff_harness_runner.py \
+            --old old --old-python ./.venv-old/bin/python \
+            --new new --new-python ./.venv-new/bin/python \
+            --tests generated_tests/
 
       - name: Upload behavioral-difference report
         uses: actions/upload-artifact@v4
@@ -1160,6 +1233,8 @@ jobs:
 ```
 
 `generate_diff_tests.py` と `diff_harness_runner.py` は、それぞれ「access information を組み込んだプロンプトで LLM にテストを生成させるスクリプト」「上記 `diff_harness.py` を対象テスト全件に対して回して JSON レポートを書き出すスクリプト」を指します。両方とも自作が必要です。
+
+> ⚠️ **fork からの PR では動きません。** GitHub は fork 由来の `pull_request` イベントに `GITHUB_TOKEN` 以外の secret を渡しません。`OPENAI_API_KEY` が空になるため、fork PR を対象にするなら `pull_request_target` と明示的な安全対策、または内部 PR 限定の運用に切り替えます。
 
 ## 運用
 
@@ -1174,6 +1249,9 @@ DiffTestGen の 1 PR あたりの実測コストは、論文 III-E (RQ3, Table V
 | 合計トークン | 10,617 | 24,115 | 31,260 |
 | 金額 | $0.018 | $0.045 | $0.041 |
 | 所要時間 | 8.92 分 | 25.36 分 | 15.86 分 |
+
+> **注記**: DiffTestGen 行は 12,584 + 18,677 = 31,261 ですが、論文 Table VI の合計欄は 31,260 です。
+> 論文掲載値に 1 トークンの算術差があります。本記事の月間試算は論文掲載値 31,260 を基準にしています。
 
 DiffTestGen は Testora++ より合計トークン数が多いにもかかわらず、金額は安く済みます。理由は出力トークンの差です。Testora++ は初回生成テスト数を 20 → 100 に増やした対照条件なので、高価な出力トークンを大量に消費します。DiffTestGen は複数ラウンドに分けて必要な分だけ追加生成するため、出力トークンを抑えられます。所要時間も DiffTestGen が Testora++ の約 6 割で済みます。
 
@@ -1227,7 +1305,7 @@ DiffTestGen は外側ループでカバレッジ確認 → 追加ラウンドの
 | R4 | 9 | 0.06% | 100.00% |
 | 合計 | 15,055 | 100% | – |
 
-R0 (初回生成) だけで全体の 94% を占め、R2 終了時点で累積 99.77% に達します。R3・R4 は合計しても全体の 0.23% です。この事実は「テスト数」の観点であり、「検出できる振る舞い差の価値」がラウンドごとに同じ比率で減るとは限りません。ただし、コスト超過を避けるためにラウンド数の上限を運用で設けたい場合、R2 〜 R3 で打ち切っても取りこぼす分は僅少である、という目安として使えます。
+R0 (初回生成) だけで全体の 94% を占め、R2 終了時点で累積 99.77% に達します。R3・R4 は合計しても全体の 0.23% です。**この数字はあくまで「生成テスト数」の分布です。** 検出できる振る舞い差の件数や、そこから見つかる回帰の価値が、同じ比率で減るとは限りません。コスト超過を避けるためにラウンド数の上限を運用で設けたい場合、R2 〜 R3 で打ち切っても**追加生成されるテスト数**の取りこぼしは僅少である、という目安としてのみ使えます。
 
 停止条件そのもの (union coverage 100% 到達、または前ラウンドから変化なし) を無効化してまで固定ラウンド数で打ち切る運用は推奨しません。停止条件は、その PR にとって「もう改善の余地がない」ことを示すシグナルであり、固定回数の打ち切りより精度が高いためです。コスト上限を設ける場合は、停止条件を優先しつつ、フェイルセーフとして「R3 到達で強制終了」のような上限を併用する運用が安全です。
 
@@ -1396,7 +1474,7 @@ DiffTestGen は、PR の diff を起点にテストを誘導し、private 関数
 - [PrivateIdentification.py — public / private / special method の判定](https://github.com/sola-st/DiffTestGen/blob/main/src/testora/util/PrivateIdentification.py)
 - [ExtractCallerCallee.py — コールグラフ解決 (LSP の references / definition を利用)](https://github.com/sola-st/DiffTestGen/blob/main/src/testora/util/ExtractCallerCallee.py)
 - [GetAccessInfoString.py — access information の文字列化](https://github.com/sola-st/DiffTestGen/blob/main/src/testora/util/GetAccessInfoString.py)
-- [ReferenceTestsFilter.py — reference test の選定 (Mean Absolute Distance)](https://github.com/sola-st/DiffTestGen/blob/main/src/testora/util/ReferenceTestsFilter.py)
+- [ReferenceTestsFilter.py — reference test の選定 (最寄り行距離ベースのヒューリスティック)](https://github.com/sola-st/DiffTestGen/blob/main/src/testora/util/ReferenceTestsFilter.py)
 - [.devcontainer — Dev Container によるセットアップ定義](https://github.com/sola-st/DiffTestGen/tree/main/.devcontainer)
 
 ### 関連学術論文 (系譜)
