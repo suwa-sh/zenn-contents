@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (200)
+## Articles: 下書き (201)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-23 | [🧪 安全機構を外したAI評価の封じ込め設計と責任の空白](articles/openai-eval-model-containment_20260723.md) | Security, AI, LLM, Kubernetes, IAM |
 | 2026-07-22 | [🧪 自己修正バイアスを防ぐ契約駆動のSkill評価CI - AEVAL](articles/aeval_20260722.md) | LLM, CI, Testing, LLMOps, AgentSkills |
 | 2026-07-22 | [🧪 正解データ不要でRAG検索の網羅性を測るテスト十分性基準 - Chunk Coverage](articles/chunk-coverage_20260722.md) | RAG, LLM, LLMOps, Testing |
 | 2026-07-22 | [🔗 要件からテスト証跡までをつなぐ機械可読な V&V フレームワーク - VNVSpec](articles/vnvspec_20260722.md) | VNVSpec, Python, MLOps, AI, テスト |
