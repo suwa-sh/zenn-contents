@@ -3,7 +3,8 @@ title: "MCP サーバー内蔵の macOS AI ビデオエディタ - palmier-pro"
 emoji: "🎬"
 type: "tech"
 topics: ["PalmierPro", "MCP", "Swift", "macOS", "生成AI"]
-published: false
+published: true
+published_at: 2026-07-23
 ---
 
 `palmier-io/palmier-pro` は、AI エージェントと人間が同じタイムライン上で協働することを前提に設計された、macOS ネイティブのビデオエディタです。Swift 6.2 でフルスクラッチ実装され、アプリ内に MCP サーバーを内蔵します。Claude Code や Cursor から `claude mcp add` するだけで、エージェントが 47 個の MCP ツールでタイムラインを直接編集できます。

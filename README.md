@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (201)
+## Articles: 下書き (200)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -22,7 +22,6 @@
 | 2026-07-20 | [🔐 エージェントの権限設計を OS 能力とユーザー同意の 2 軸で分解する](articles/agent-authorization-os-capability-consent_20260720.md) | AI, Security, Android, OAuth, LLM |
 | 2026-07-20 | [⏳ エージェント記憶の鮮度設計 静かに嘘になる記憶をどう扱うか](articles/agent-memory-freshness-revalidation_20260720.md) | LLM, AIエージェント, RAG, LLMOps, 生成AI |
 | 2026-07-20 | [🧪 実装より先に評価系を設計する - AI生成コードの評価オラクル](articles/evaluation-oracle-design_20260720.md) | LLM, テスト, 品質保証, Java, SonarQube |
-| 2026-07-20 | [🎬 MCP サーバー内蔵の macOS AI ビデオエディタ - palmier-pro](articles/palmier-pro_20260720.md) | PalmierPro, MCP, Swift, macOS, 生成AI |
 | 2026-07-20 | [⚖️ 隔離 worktree と機械計測で導入可否を決める - Claude Code Skills の A/B 評価ハーネス](articles/skill-adoption-ab-eval-harness_20260720.md) | ClaudeCode, AgentSkills, LLMOps, 評価 |
 | 2026-07-19 | [🧹 技術調査 - agents-lint（AGENTS.md 参照整合性リンタ）](articles/agents-md-reference-integrity-lint_20260719.md) | AgentsMd, Linter, CI, GitHubActions, AIエージェント |
 | 2026-07-19 | [🏷️ AI生成パッチは「値札」— 所有コストで採否を決める判断フレーム](articles/ai-patch-ownership-cost_20260719.md) | 生成AI, AIエージェント, 技術的負債, コードレビュー, エンジニアリングマネジメント |
@@ -213,10 +212,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (158)
+## Articles: 公開済み (159)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-07-23 | [🎬 MCP サーバー内蔵の macOS AI ビデオエディタ - palmier-pro](articles/palmier-pro_20260720.md) | PalmierPro, MCP, Swift, macOS, 生成AI |
 | 2026-07-21 | [🚢 ビルドから SSL・バックアップまで自動化するセルフホスト型デプロイ基盤 openship](articles/openship_20260719.md) | Openship, PaaS, セルフホスト, Docker, OSS |
 | 2026-07-18 | [📄 技術調査 - OfficeCLI](articles/officecli_20260716.md) | OfficeCLI, AIエージェント, MCP, CLI, OpenXML |
 | 2026-07-16 | [🦠 AsyncAPI サプライチェーン攻撃 (Miasma ワーム) の内容と対処方法](articles/asyncapi_compromise_20260715.md) | Security, npm, SupplyChainAttack, Malware, AsyncAPI |
