@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (203)
+## Articles: 下書き (204)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-24 | [⏳ Dependabotの既定クールダウン: 待つことを既定にした判断と、その境界](articles/dependabot-default-cooldown_20260724.md) | Dependabot, SupplyChain, GitHub, Security, npm |
 | 2026-07-23 | [🎯 多段エージェントで対象固定が誤操作を3倍に増幅する現象と対処 - Binding Drift](articles/binding-drift_20260723.md) | LLM, AIAgent, Evaluation, Bedrock |
 | 2026-07-23 | [📋 JiraのAI開発台帳化。委任・統制・コスト計測の構造と評価の判断条件](articles/jira-ai-delegation-ledger_20260723.md) | Jira, AIエージェント, Atlassian, プロジェクト管理 |
 | 2026-07-23 | [🧪 安全機構を外したAI評価の封じ込め設計と責任の空白](articles/openai-eval-model-containment_20260723.md) | Security, AI, LLM, Kubernetes, IAM |
