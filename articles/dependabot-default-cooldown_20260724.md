@@ -352,7 +352,7 @@ GitHub 公式 blog は次の調整を推奨しています。
 
 層 2 で見つかった穴はすべて実装漏れであり、方針の否定ではありません。PR #15485 は設計思想を明文化しています。
 
-> "Security updates are never gated, they still pass the existing `=0` bypass (which intentionally overrides any native gate)."
+> "Security updates are never gated — they still pass the existing `=0` bypass (which intentionally overrides any native gate)."
 
 問題は方針ではなく、その方針がどこまで届くかの境界にあります。
 
@@ -416,5 +416,5 @@ Dependabot の既定クールダウンは、待つか待たないかの初期状
   - [Yarn: npmMinimalAgeGate](https://yarnpkg.com/configuration/yarnrc)
   - [npm: min-release-age](https://docs.npmjs.com/cli/using-npm/config)
 - 記事
-  - [Quarantining package updates](https://blog.yossarian.net/2025/11/21/Quarantining-package-updates)
+  - [We should all be using dependency cooldowns](https://blog.yossarian.net/2025/11/21/We-should-all-be-using-dependency-cooldowns)
   - [CI/CD依存をロックダウンする](https://zenn.dev/suwash/articles/cicd-dependency-lockdown_20260614)
