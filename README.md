@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (205)
+## Articles: 下書き (204)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -18,7 +18,6 @@
 | 2026-07-23 | [🧪 安全機構を外したAI評価の封じ込め設計と責任の空白](articles/openai-eval-model-containment_20260723.md) | Security, AI, LLM, Kubernetes, IAM |
 | 2026-07-23 | [📦 Agent Skills を独立したソフトウェア資産として扱うオントロジー - Skillware](articles/skillware_20260723.md) | AgentSkills, ClaudeCode, AIAgent, SoftwareEngineering |
 | 2026-07-22 | [🧪 自己修正バイアスを防ぐ契約駆動のSkill評価CI - AEVAL](articles/aeval_20260722.md) | LLM, CI, Testing, LLMOps, AgentSkills |
-| 2026-07-22 | [🧪 正解データ不要でRAG検索の網羅性を測るテスト十分性基準 - Chunk Coverage](articles/chunk-coverage_20260722.md) | RAG, LLM, LLMOps, Testing |
 | 2026-07-22 | [🔗 要件からテスト証跡までをつなぐ機械可読な V&V フレームワーク - VNVSpec](articles/vnvspec_20260722.md) | VNVSpec, Python, MLOps, AI, テスト |
 | 2026-07-21 | [🚦 リポジトリ内で反例を仕様へ昇格させるエージェント合成 - Counterexample-Supplemented Sketches](articles/counterexample-supplemented-sketches_20260721.md) | ProgramSynthesis, CodingAgent, LLM, CEGIS, ソフトウェア設計 |
 | 2026-07-21 | [🔍 PRの振る舞い差を露出させる変更誘導型テスト生成 - DiffTestGen](articles/difftestgen_20260721.md) | Python, Testing, LLM, CI |
@@ -217,10 +216,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (159)
+## Articles: 公開済み (160)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-07-25 | [🧪 正解データ不要でRAG検索の網羅性を測るテスト十分性基準 - Chunk Coverage](articles/chunk-coverage_20260722.md) | RAG, LLM, LLMOps, Testing |
 | 2026-07-23 | [🎬 MCP サーバー内蔵の macOS AI ビデオエディタ - palmier-pro](articles/palmier-pro_20260720.md) | PalmierPro, MCP, Swift, macOS, 生成AI |
 | 2026-07-21 | [🚢 ビルドから SSL・バックアップまで自動化するセルフホスト型デプロイ基盤 openship](articles/openship_20260719.md) | Openship, PaaS, セルフホスト, Docker, OSS |
 | 2026-07-18 | [📄 技術調査 - OfficeCLI](articles/officecli_20260716.md) | OfficeCLI, AIエージェント, MCP, CLI, OpenXML |

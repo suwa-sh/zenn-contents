@@ -3,7 +3,8 @@ title: "正解データ不要でRAG検索の網羅性を測るテスト十分性
 emoji: "🧪"
 type: "tech"
 topics: ["RAG", "LLM", "LLMOps", "Testing"]
-published: false
+published: true
+published_at: 2026-07-25
 ---
 
 > RAG（Retrieval-Augmented Generation）のテストは、クエリ単位で回答の質を測る指標に偏ってきました。本稿は、正解データを使わずに「テストスイートが検索空間のどこに触れていないか」を測る新しいテスト十分性基準 **Chunk Coverage（CC）** を、ISSTA 2026 採録論文と公開実装から構造化して解説します。既存の RAGAS/ARES を置き換えるのではなく、検索網羅性という別軸を足す考え方と、CI/CD の回帰試験設計への落とし込みまで扱います。
