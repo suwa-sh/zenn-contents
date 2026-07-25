@@ -7,13 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (209)
+## Articles: 下書き (210)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-07-26 | [🛡️ Markdownで管理するコーディングエージェントの権限設計 - Antigravity CLI](articles/antigravity-cli-agent-policy_20260726.md) | AI, CodingAgent, Security, MCP |
 | 2026-07-26 | [🔁 AIコーディングの品質確認をSkillへ変える設計 - Claude Code](articles/claude-code-verification-loops_20260726.md) | ClaudeCode, AIAgent, Testing, Quality |
 | 2026-07-26 | [🧭 dbt Native App廃止で問われる意味定義の移行設計](articles/dbt-semantic-layer-retirement_20260726.md) | dbt, Snowflake, DataEngineering, AI |
+| 2026-07-26 | [🧭 エージェント知識の信頼信号を記述する形式 - OKF v0.2](articles/okf-v02-trust-signals_20260726.md) | AIAgent, GoogleCloud, DataGovernance |
 | 2026-07-26 | [🧭 小型モデル移行を支える製品ハーネスの評価設計](articles/product-harness-model-eval_20260726.md) | AI, GitHubCopilot, LLMOps |
 | 2026-07-25 | [🛡️ 悪意あるIssueを安全に扱うための境界設計 - IssueTrojanBench](articles/issue-trojan-bench_20260725.md) | AIAgent, Security, ClaudeCode, Codex |
 | 2026-07-24 | [🔁 エージェント運用の変更管理ループ: OpenAI Presence が示した器と、その中身の空白](articles/agent-operations-change-management-loop_20260724.md) | OpenAI, AIAgent, LLMOps, Governance, Evaluation |
