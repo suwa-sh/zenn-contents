@@ -4,3 +4,4 @@ node_modules
 tmp/
 site/dist/
 site/.astro/
+.work/
