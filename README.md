@@ -13,7 +13,7 @@
 |-------------|-------|--------|
 | 2026-07-27 | [🚦 承認トポロジーと意思決定待ち時間: 開発速度を決めるのは承認回数なのか](articles/approval-topology-decision-latency_20260727.md) | DevOps, CodeReview, DORA, マネジメント |
 | 2026-07-27 | [🧯 サイバー障害の復旧を3層に分解する: 設計RTO1時間の会社が11日かかった理由](articles/cyber-incident-degraded-operations_20260727.md) | BCP, SRE, AIAgent, Reliability, Security |
-| 2026-07-27 | [🧩 AIエージェントのループを明示グラフへ変える - Graph Engineering](articles/graph-engineering_20260727.md) | AI, AIAgent, LangGraph, Workflow, DistributedSystems |
+| 2026-07-27 | [🧩 Graph Engineering 入門](articles/graph-engineering_20260727.md) | AI, AIAgent, LangGraph, Workflow, DistributedSystems |
 | 2026-07-27 | [🔌 セッションと初期化ハンドシェイクを廃止したステートレス改訂 - MCP 2026-07-28](articles/mcp-2026-07-28-stateless_20260727.md) | MCP, ModelContextProtocol, AIAgent, Architecture, LLM |
 | 2026-07-27 | [🚧 無人公開のfail-closedゲートは、どの層に置くと効くのか](articles/unattended-publish-fail-closed-gate_20260727.md) | LLM, 生成AI, セキュリティ, アーキテクチャ |
 | 2026-07-26 | [🛡️ AI生成SaaSで権限不備を量産しないentitlement設計](articles/ai-generated-saas-entitlement-control_20260726.md) | Security, WebSecurity, SaaS, AI |
