@@ -24,11 +24,11 @@ HyperFrames のキャッチコピーは「Write HTML. Render video. Built for ag
 |---|---|
 | 記述言語 | HTML + CSS + JS (GSAP 等)。フレームワーク非依存 |
 | 時間表現 | `data-*` 属性による宣言的タイムライン |
-| レンダリング | headless Chrome で 1 フレームずつ seek + capture → FFmpeg |
+| レンダリング | headless Chrome で 1 フレームずつ seek + 環境別の capture → FFmpeg |
 
 動作要件は Node.js 22 以上と FFmpeg です。ライセンスは Apache 2.0 です。
 
-「なぜ今 HTML なのか」の答えは LLM にあります。React コンポーネントや独自の動画 DSL は、LLM にとって学習データが相対的に薄く、生成エラーの温床になります。対して HTML / CSS はもっとも学習量が多い領域です。HyperFrames はその非対称性を前提に、記述面を Web 標準へ寄せています。
+「なぜ今 HTML なのか」の答えを、HeyGen は LLM との相性に置いています。同社は社内 eval で HTML + GSAP の方が少ないガードレールで創造的な結果を得られたことと、Web コードが LLM の学習データに多いとの見立てを設計理由に挙げています。ただし、モデル・サンプル数・エラー率・学習コーパス量は公開されていないため、これは検証済みの一般則ではなくベンダーの設計判断として読むべきです。
 
 ## 特徴
 
@@ -111,7 +111,7 @@ graph TD
 graph LR
     clock["1. Frame Clock<br/>time = floor(frame) / fps"]
     seek["2. Seek<br/>seekFrame(frame)"]
-    capture["3. Capture<br/>HeadlessExperimental.beginFrame"]
+    capture["3. Capture<br/>beginFrame / Screenshot / drawElement"]
     encode["4. Encode<br/>FFmpeg + audio mix"]
 
     clock --> seek
@@ -121,7 +121,7 @@ graph LR
 
 1. **Frame Clock**: 整数演算 `time = floor(frame) / fps` で時刻を決める。壁時計から完全に切り離す
 2. **Seek**: Frame Adapter の `seekFrame(frame)` が DOM・アニメーション・canvas を目標フレームへ配置する
-3. **Capture**: Chrome の `HeadlessExperimental.beginFrame` でピクセルバッファをアトミックに取得する。部分描画や競合が起きない
+3. **Capture**: OS・Chrome・GPU 条件に応じて BeginFrame / Screenshot / drawElement のいずれかでフレームを取得する
 4. **Encode**: FFmpeg が MP4 へエンコードし、`<audio>` / `<video>` 要素の音声をこの段でミックスする
 
 プレビューとレンダリングは同じ `hyperframe.runtime` を使うため見た目は一致しますが、性能特性は異なります。プレビューはリアルタイム再生 (30fps なら 1 フレーム 33ms 以内が要求される) で、レンダリングは 1 フレームずつ処理するためコマ落ちしません。
@@ -312,7 +312,7 @@ root に識別子とキャンバス寸法、clip にタイミングを書きま�
 ここが唯一の「お作法」です。`paused: true` で作り、`window.__timelines` に `data-composition-id` をキーとして登録します。キーが root の `data-composition-id` と一致しないと、タイムラインが seek 対象になりません。
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
 <script>
   const tl = gsap.timeline({ paused: true });
   tl.to("#title", { opacity: 1, duration: 0.5 }, 0);
@@ -321,6 +321,8 @@ root に識別子とキャンバス寸法、clip にタイミングを書きま�
 ```
 
 `paused: true` が必須なのは、再生をフレームワークが seek で制御するためです。第 3 引数の position parameter は絶対秒で指定します。相対指定を積み重ねると、あとから差分編集したときにタイミングがずれます。
+
+上は試作用の CDN 例です。決定論とオフライン再現性が必要なレンダリングでは、同じ GSAP バージョンをプロジェクトへ同梱し、ネットワーク fetch を発生させないでください。
 
 メディア再生・clip のライフサイクル・サブコンポジションのネストはフレームワークの責務です。自前でタイムラインを再生・停止しないでください。
 
@@ -336,7 +338,7 @@ npx hyperframes render --output output.mp4 --fps 30 --quality standard
 | `--fps` | 1〜240。`30000/1001` のような有理数も可。root の `data-fps` を上書きする |
 | `--quality` | `draft` / `standard` / `high` |
 | `--resolution` | landscape / portrait / 4k 系のプリセット |
-| `--workers` | 並列ワーカー数。既定は `CPU コア数 - 2` (上限 24)。1 ワーカー = 1 Chrome プロセス ≒ 256MB |
+| `--workers` | 並列ワーカー数。`auto` は CPU・メモリ・総フレーム数・描画負荷から適応的に決定。明示指定のハード上限は 24。現行実装のメモリ予算は約 1.5GB / worker |
 | `--docker` | コンテナ経由で決定論的な出力を得る |
 | `--gpu` | NVENC / VideoToolbox 等のハードウェアエンコード |
 | `--variables` | パラメータ化レンダリング用の JSON |
@@ -384,7 +386,7 @@ npx hyperframes snapshot my-project --at 2.9,10.4,18.7
 | ローカル | `npx hyperframes render` | 開発・少量。起動が速くコンテナ不要 |
 | ローカル + Docker | `npx hyperframes render --docker` | 再現性が要るとき。本番・CI 向け |
 | AWS Lambda | `hyperframes lambda deploy` → `lambda render` | 自前インフラでの分散 |
-| Google Cloud Run | `@hyperframes/gcp-cloud-run` (Cloud Workflows + GCS) | GCP 側で分散したい場合 |
+| Google Cloud Run | `hyperframes cloudrun deploy` → `cloudrun render` | Cloud Workflows + GCS で分散したい場合 |
 | HeyGen クラウド | `hyperframes cloud render` | ローカル依存を一切持ちたくない場合 |
 
 ```bash
@@ -394,14 +396,15 @@ hyperframes lambda render ./my-project --width 1920 --height 1080 --wait
 hyperframes cloud render ./my-video --quality high --fps 60
 ```
 
-クラウドレンダリングは `--no-wait` / `--callback-url` / `--asset-id` に対応し、非同期パイプラインへ組み込めます。認証は `hyperframes auth login --api-key` で、`heygen` CLI と資格情報を共有します。
+HeyGen hosted cloud の `hyperframes cloud render` は `--no-wait` / `--callback-url` / `--asset-id` に対応し、非同期パイプラインへ組み込めます。認証は `hyperframes auth login --api-key` で、`heygen` CLI と資格情報を共有します。AWS Lambda と Google Cloud Run はそれぞれ別の `--wait` / `--site-id` 契約を持つため、同じフラグを流用しません。
 
 ### キャプチャ方式と OS の差
 
-ここが実運用でもっとも誤解しやすい点です。キャプチャには 2 モードがあります。
+ここが実運用でもっとも誤解しやすい点です。現行エンジンの最終キャプチャ経路は 3 つあります。
 
-- **BeginFrame**: `chrome-headless-shell` を使い、フレーム精度で決定論的にキャプチャする経路
-- **Screenshot**: 環境が BeginFrame を取れないときのフォールバック
+- **BeginFrame**: Linux + `chrome-headless-shell` + BeginFrame 制御が有効な場合のフレーム精度経路
+- **Screenshot**: BeginFrame 条件を満たさない環境の基本経路。macOS / Windows では単なる障害時フォールバックではない
+- **drawElement**: 条件を満たすローカル環境で使う高速経路。現行 CLI は macOS + hardware GPU で既定有効にする
 
 そして「決定論」と「ビット単位の再現性」は別の話です。ローカルレンダリングは起動が速い反面、**フォント と Chrome のバージョン差によりプラットフォーム間で出力が変わりうる**ため、公式ガイドは再現性を要求する CI/CD には不向きと明言しています。
 
@@ -472,7 +475,7 @@ jobs:
 
 - **`hyperframes.config.js` の有無**: 公開ドキュメントに記載がありません。コンポジションの寸法・尺・fps は root の `data-*` 属性、レンダリング設定は CLI フラグで指定する経路だけが確認できました
 - **`data-duration` の記述の揺れ**: コアスキルの属性定義は root での条件付き利用を認める一方、HTML Schema 側にはコンポジション要素で `data-duration` を使わず `tl.duration()` から尺を決める旨の記述があります。本記事はコアスキル側の定義に従いました。バージョンによって挙動が変わる可能性があるため、`lint` の結果で確かめてください
-- **Screenshot フォールバックの発動条件**: BeginFrame が使えない環境で切り替わることは確認できましたが、条件の網羅的な一覧は見つかりませんでした
+- **capture 経路の全選択条件**: LinuxのBeginFrame条件とmacOS hardware GPUのdrawElement既定は確認できましたが、Chromeバージョンや全フラグを含む網羅的な優先順位は実装時に現行ソースで再確認してください
 
 ### 決定論を壊しやすい書き方
 
@@ -486,7 +489,7 @@ jobs:
 
 ## まとめ
 
-- HyperFrames は HTML / CSS / JS を入力とし、headless Chrome の `beginFrame` と FFmpeg で決定論的に動画を生成する Apache 2.0 のフレームワーク
+- HyperFrames は HTML / CSS / JS を入力とし、headless Chrome の環境別capture経路と FFmpeg で決定論的に動画を生成する Apache 2.0 のフレームワーク
 - 決定論は「壁時計・未シード乱数・実行時 fetch・可変パラメータ・無限尺の禁止」という契約として明示され、Frame Adapter の `seekFrame(frame)` が冪等性と任意順 seek を担保する
 - データモデルは HTML そのもの。`data-composition-id` / `data-start` / `data-duration` / `data-track-index` を軸に、変数バインドとネストで再利用する
 - CLI は render / preview だけでなく transcribe / tts / remove-background / check まで抱え、自動パイプラインの外部依存を減らせる
