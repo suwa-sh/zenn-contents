@@ -13,7 +13,7 @@ AIエージェントが長いタスクを担うと、1つのloopへ判断・状�
 
 設計方式を選びたい方は「概要」「反証・限界・適用条件」から読むと、graphを採用すべき条件を短時間で判断できます。実装へ進みたい方は「構造」「データ」「構築方法」を読み、運用担当者は「運用」「トラブルシューティング」を参照してください。
 
-> 本稿の Graph Engineering は Knowledge Graph Engineering や GraphRAG ではありません。agent、決定的関数、evaluator、人間承認を実行ノードとして接続し、状態・遷移・権限・予算・回復を明示的に設計する方法論を扱います。
+> 本稿の Graph Engineering は Knowledge Graph Engineering や GraphRAG ではありません。agent、決定的関数、evaluator、人間承認を実行nodeとして接続し、状態・遷移・権限・予算・回復を明示的に設計する方法論を扱います。
 
 ## 概要
 
@@ -23,7 +23,7 @@ AIエージェントが長いタスクを担うと、1つのloopへ判断・状�
 
 | 用語 | 本稿での意味 |
 |---|---|
-| Graph Engineering | agent、決定的関数、evaluator、human gate をノードとして構成し、型付き状態と検査可能な遷移で接続する設計活動 |
+| Graph Engineering | agent、決定的関数、evaluator、human gate をnodeとして構成し、型付き状態と検査可能な遷移で接続する設計活動 |
 | Execution Graph | 1 回の仕事について、何が実行可能で、何に依存し、どの状態を受け渡すかを表す制御構造 |
 | Knowledge Graph | 実世界のエンティティと関係を表す知識構造。実行順序の制御を主目的としない |
 | GraphRAG | 知識グラフやグラフ由来の構造を検索・生成に利用する手法。実行オーケストレーションとは役割が異なる |
@@ -44,9 +44,7 @@ AIエージェントが長いタスクを担うと、1つのloopへ判断・状�
 
 ### 起点と普及の時系列
 
-![Graph Engineering 議論の普及契機となった Peter Steinberger の投稿画面](/images/graph-engineering_20260727/01_steinberger-tweet.png)
-
-出典: [iii が保存した投稿画面](https://iii.dev/_astro/steinberger-tweet.IIwgglcn_Z3CMXJ.webp)（取得日: 2026-07-27）
+@[tweet](https://x.com/steipete/status/2078277297791189132)
 
 「誰が用語を提唱したか」は、確認できた一次資料と普及の契機を分けて扱う必要があります。
 
@@ -90,15 +88,11 @@ Graph Engineering の構成要素は新規発明の集合ではありません�
 
 ### 関連概念との違い
 
-![Google ADK 公式ドキュメントで配布される prompt から graph workflow への移行図](/images/graph-engineering_20260727/02_prompts-to-graphs.svg)
-
-出典: [Google ADK documentation asset](https://adk.dev/assets/prompts-to-graphs.svg)（取得日: 2026-07-27）
-
 | 概念 | 主に設計する対象 | Graph Engineering との関係 |
 |---|---|---|
 | Prompt Engineering | 1 回の model 呼び出しへ与える指示 | node 内部の品質を支える下位レイヤーです。 |
 | Context Engineering | model が各 turn で読む情報と圧縮・記憶 | node 内部の判断材料と、node 間で受け渡す state の選別を支えます。 |
-| Loop Engineering | 1 agent の think-act-observe、tool、stop condition、compaction | graph の node 内部で継続します。Graph Engineering は loop 間の依存、handoff、gate、join を主に扱います。 |
+| [Loop Engineering](https://zenn.dev/suwash/articles/loop-engineering_20260610) | 1 agent の think-act-observe、tool、stop condition、compaction | graph の node 内部で継続します。Graph Engineering は loop 間の依存、handoff、gate、join を主に扱います。 |
 | Agent harness | loop を実行する runtime、tool、sandbox、policy、session store | graph の各 node を動かす substrate です。1 つの harness は loop と graph の双方を実行できます。 |
 | State machine | 状態集合と遷移規則 | Graph Engineering の制御意味論を厳密化します。各 node の lifecycle と graph 全体の進行状態に利用できます。 |
 | DAG | cycle を含まない有向 graph | 既知の依存と有限実行に向く graph topology の一種です。Graph Engineering 全体は cyclic / dynamic graph も含みます。 |
@@ -106,16 +100,16 @@ Graph Engineering の構成要素は新規発明の集合ではありません�
 | Multi-agent orchestration | 複数 agent の役割と対話 | agent 数に注目する概念です。明示 graph を持たない会話型 MAS もあります。Graph Engineering は単一 agent と関数だけでも成立します。 |
 | Durable execution | 障害後の replay / resume、timer、signal、retry | graph を本番運用可能にする実行基盤です。graph topology と durable runtime は独立に選べます。Temporal は loop も graph も durable にできます。 |
 
-### 方式比較
+### 実行構成の明示度を比較する
 
-以下は実装製品の benchmark ではなく、設計方式の概念比較です。「起動」は task の設計から最初の有効な実行までを指します。実測値は model、tool、runtime、並列上限に依存します。
+以下は方法論を排他的に比べる表ではありません。loopをnode内部で使い、workflowをgraphの実行基盤にする包含関係を前提に、制御構造をどこまで明示するかを比較します。「起動」はtaskの設計から最初の有効な実行までを指します。実測値はmodel、tool、runtime、並列上限に依存します。
 
 | 方式 | 実行方式 | リソース消費 | 対応機能 | 起動速度 |
 |---|---|---|---|---|
 | 単一 LLM 呼び出し | 1 request / 1 response。必要に応じて retrieval を付加 | 最小。state persistence と coordination がほぼ不要 | 要約、分類、抽出、短い生成 | 最速。schema と評価だけで開始しやすい |
 | 単一 Agent Loop | 1 つの active context が tool を選び、stop まで逐次反復 | 中。turn 数と transcript が増える | open-ended exploration、未知の手順、逐次 tool use | 速い。目的・tool・stop condition を定義すれば開始できる |
 | 決定的 workflow / DAG | code または DSL が順序、分岐、並列を規定 | 中。scheduler と state store が必要だが LLM 呼び出しを限定しやすい | 定型 business process、ETL、CI/CD、承認 | 中。依存関係と failure policy の事前設計が必要 |
-| Graph Engineering | agent loop、関数、evaluator、人間を node とし、typed state / transition で接続 | 中〜大。checkpoint、trace、validation、join、複数 context が加わる | 長期実行、fan-out / fan-in、混合決定性、trajectory eval、段階的承認 | 中〜遅。state schema と edge contract の設計を先に行う |
+| 明示graph構成 | agent loop、関数、evaluator、人間をnodeとし、typed state / transitionで接続 | 中〜大。checkpoint、trace、validation、join、複数contextが加わる | 長期実行、fan-out / fan-in、混合決定性、trajectory eval、段階的承認 | 中〜遅。state schemaとedge contractの設計を先に行う |
 | 自由会話型 Multi-Agent | 複数 agent が message で役割分担し、会話から次動作を決める | 大。agent 数に応じて token と handoff が増える | emergent collaboration、role-based deliberation | prototype は速い。再現性・回復・監査の整備に追加時間が必要 |
 
 技術的には、Graph Engineering の overhead は node 数そのものより、node 境界の永続化、serialization、schema validation、routing、join、trace、retry に生じます。一方、独立 branch の wall-clock time は並列化で短縮できます。依存が密な task、rate limit が厳しい tool、共有 context が大きい task では、この利点が小さくなります。
@@ -193,11 +187,11 @@ Anthropic は、Claude Opus 4 を lead agent、Claude Sonnet 4 を subagent と�
 
 Hu Wei の論文は、Graph Engineering の理論的背景として有用です。一方、著者自身が position paper / design proposal と明記し、production implementation と empirical result を提供していません。静的 DAG が loop より優れるという性能主張は、将来検証する仮説です。
 
-同論文の 70-project survey は、著者自身が peer-reviewed survey ではなく qualitative evidence だと明記しています。また、本文は Agent Loop を 42 / 70 と記載する一方、Appendix A.7 の見出しは 41 projects と記載します。Appendix の category 件数は 41 + 11 + 4 + 5 + 7 = 68 で、同じ project 名が複数 category に現れる箇所もあります。したがって、「60%」は産業全体の有病率として一般化せず、著者の sample における概算として扱います。
+同論文の 70-project survey は、著者自身が peer-reviewed survey ではなく qualitative evidence だと明記しています。また、本文は Agent Loop を 42 / 70 と記載する一方、Appendix A.7 の見出しは 41 projects と記載します。Appendix の category 件数は 41 + 11 + 4 + 5 + 7 = 68 で、同じ project 名が複数 category に現れる箇所もあります。したがって、「60%」は産業全体の普及率として一般化せず、著者の sample における概算として扱います。
 
 ## 構造
 
-ここでいう Graph Engineering の対象は、AI エージェントの制御フローです。制御をノード、型付きエッジ、状態、ゲートとして外在化します。Knowledge Graph Engineering の対象は、知識をノードと関係として格納する情報構造です。Josh C. Simmons は、ノードを交換可能な能力単位、エッジを意思決定、状態をチェックポイント可能なスキーマとして捉えています。一方、arXiv:2604.11378 の Structured Graph Harness は、静的 DAG、計画・実行・復旧の分離、段階的復旧を採用する厳格な設計案です。以下の図は Graph Engineering 全般を表し、論文固有の制約は境界として明記します。
+ここでいう Graph Engineering の対象は、AI エージェントの制御フローです。制御をnode、型付きedge、状態、ゲートとして外在化します。Knowledge Graph Engineering の対象は、知識をnodeと関係として格納する情報構造です。Josh C. Simmons は、nodeを交換可能な能力単位、edgeを意思決定、状態をチェックポイント可能なスキーマとして捉えています。一方、arXiv:2604.11378 の Structured Graph Harness は、静的 DAG、計画・実行・復旧の分離、段階的復旧を採用する厳格な設計案です。以下の図は Graph Engineering 全般を表し、論文固有の制約は境界として明記します。
 
 ### システムコンテキスト図
 
@@ -230,11 +224,11 @@ graph LR
 | ドメイン責任者 | 業務目的、禁止事項、受入条件、品質基準を定義し、成果と例外を確認します。 |
 | 人間承認者 | 高影響操作や曖昧な判断をレビューし、承認、却下、修正入力を返します。人間を制御グラフ上の参加者として扱います。 |
 | Graph Engineering システム | タスクを明示的な実行グラフとして定義し、依存関係、ルーティング、並列性、状態、復旧、統制を一体で管理します。 |
-| モデル エージェント ランタイム | LLM 推論やノード内のエージェントループを実行します。Graph Engineering はループを境界の明確なノード内部へ配置します。 |
+| モデル エージェント ランタイム | LLM 推論やnode内のエージェントループを実行します。Graph Engineering はループを境界の明確なnode内部へ配置します。 |
 | ツール データ プレーン | API、コード実行、検索、データストアなどの副作用を伴う能力と、その結果や成果物を提供します。 |
 | ポリシー エビデンス基盤 | 権限、予算、リスク分類を判定し、計画版、ルーティング、実行結果、承認を追跡可能な証跡として保持します。 |
 
-この境界では、LLM は制約された推論コンポーネントとして、計画生成、分類、評価、ノード内部の推論に参加します。検査可能なグラフとポリシーが、実行可否、依存関係、予算、権限、承認を制御します。
+この境界では、LLM は制約された推論コンポーネントとして、計画生成、分類、評価、node内部の推論に参加します。検査可能なグラフとポリシーが、実行可否、依存関係、予算、権限、承認を制御します。
 
 ### コンテナ図
 
@@ -256,7 +250,7 @@ graph TD
     GV -->|検証済みグラフ| SR
     SR -->|状態読込| SC
     SC -->|再開点| SR
-    SR -->|実行可能ノード| WE
+    SR -->|実行可能node| WE
     WE -->|構造化出力| EG
     EG -->|判定と次候補| SR
     SR -->|高影響操作| AG
@@ -277,15 +271,15 @@ graph TD
 | 要素名 | 説明 |
 |---|---|
 | タスク受付 | 依頼、実行主体、期限、予算、許可された能力を正規化し、計画へ渡します。 |
-| プランナー グラフ定義 | 目的を責務の小さいノードへ分解し、依存、分岐、結合、ループ、受入条件を定義します。テンプレート、決定的コード、LLM、またはその組合せで実装できます。 |
+| プランナー グラフ定義 | 目的を責務の小さいnodeへ分解し、依存、分岐、結合、ループ、受入条件を定義します。テンプレート、決定的コード、LLM、またはその組合せで実装できます。 |
 | グラフ検証 版管理 | 到達可能性、型整合性、停止条件、権限、副作用、予算を実行前に検証し、実行対象のグラフ版を固定します。静的 DAG を採用する設計では循環も拒否します。 |
-| スケジューラ ルーター | 依存条件を満たす準備済みノードを求め、直列、条件分岐、fan-out、fan-in、ループを進めます。LLM が返す分類を使う場合も、許可された遷移先に制限します。 |
-| 型付き状態 チェックポイント | ノード入出力、実行位置、保留中要求、予算、計画版をスキーマ付きで保存し、障害や人間待ちからの再開点を提供します。 |
-| ワーカー 実行器 | LLM、決定的関数、ツール、サブグラフなど、単一責務のノードを実行します。副作用を伴う処理は冪等性キーや補償境界を持たせます。 |
+| スケジューラ ルーター | 依存条件を満たす準備済みnodeを求め、直列、条件分岐、fan-out、fan-in、ループを進めます。LLM が返す分類を使う場合も、許可された遷移先に制限します。 |
+| 型付き状態 チェックポイント | node入出力、実行位置、保留中要求、予算、計画版をスキーマ付きで保存し、障害や人間待ちからの再開点を提供します。 |
+| ワーカー 実行器 | LLM、決定的関数、ツール、サブグラフなど、単一責務のnodeを実行します。副作用を伴う処理は冪等性キーや補償境界を持たせます。 |
 | 評価器 品質ゲート | 出力型、テスト、ポリシー、意味品質、受入条件を検査し、通過、再実行、修正、エスカレーションを判定します。 |
 | 承認 権限ゲート | 操作主体の権限、影響度、データ境界を検査し、必要な操作を人間承認まで停止します。 |
 | 復旧 エスカレーション | 障害を一時的、入力起因、契約違反、構造起因に分類し、局所再試行、局所修正、再計画、人間介入へ段階的に上げます。 |
-| 可観測性 ガバナンス | ノード、エッジ、状態遷移、モデルとツールの呼出し、費用、承認、復旧を相関付けます。予算超過や権限違反ではスケジューラへ停止判定を返します。 |
+| 可観測性 ガバナンス | node、edge、状態遷移、モデルとツールの呼出し、費用、承認、復旧を相関付けます。予算超過や権限違反ではスケジューラへ停止判定を返します。 |
 | 成果物 | 出力契約と必要なゲートを満たし、証跡と対応付いた最終結果です。 |
 
 コンテナ境界は方法論上の責務分離です。単一プロセスにも分散サービスにも実装できます。特に、チェックポイントの粒度は製品ごとに異なります。LangGraph はグラフの各 step に状態スナップショットを保存します。Microsoft Agent Framework は superstep の完了時に全 executor 状態、次のメッセージ、保留要求、共有状態を保存します。Temporal は Workflow と Activity の履歴、再試行、待機を耐久化する下位実行基盤を担い、agent graph のモデルは上位アプリケーションやフレームワークが定義します。
@@ -297,8 +291,8 @@ graph TD
     GD[グラフ定義 API]
     VC["構造検証<br/>コンパイラ"]
     RS["準備集合<br/>スーパーステップ"]
-    ND["ノード<br/>実行器アダプター"]
-    RT["エッジ<br/>条件ルーター"]
+    ND["node<br/>実行器アダプター"]
+    RT["edge<br/>条件ルーター"]
     FO["Fan out<br/>ディスパッチャー"]
     W1[ワーカー A]
     W2[ワーカー B]
@@ -323,7 +317,7 @@ graph TD
     FI --> EV
     EV --> RT
     RT --> LC
-    LC -->|次ノード| RS
+    LC -->|次node| RS
     LC -->|反復| RS
     LC -->|高影響| BA
     BA -->|許可| RS
@@ -345,22 +339,22 @@ graph TD
 
 | 要素名 | 説明 |
 |---|---|
-| グラフ定義 API | ノードとエッジを宣言します。代表例は LangGraph の `StateGraph`、Microsoft Agent Framework の `WorkflowBuilder`、Google ADK 2.0 の `Workflow` です。API 名は似ていますが、状態、再開、版管理の意味論は別々です。 |
-| 構造検証 コンパイラ | 到達不能ノード、型不一致、無制限ループ、未設定の終了経路を検出します。Structured Graph Harness では、静的 DAG と計画版不変条件の検証も担います。 |
-| 準備集合 スーパーステップ | 実行条件を満たしたノードを選びます。論文は ready set をスケジューラ比較の中心概念にします。Microsoft Agent Framework は同じ superstep で起動した executor を並列実行し、全完了後に次へ進みます。 |
-| ノード 実行器アダプター | LLM エージェント、通常関数、ツール、サブグラフを同じ実行単位へ適合させます。ノード内部では従来の agent loop を利用できます。 |
-| エッジ 条件ルーター | 成功、失敗、分類、ポリシー判定を型付き遷移へ変換します。LangGraph は通常 edge、conditional edge、`Command` を持ち、Google ADK は route を持つ `Event` と route edge を使います。 |
-| Fan out ディスパッチャー | 独立した作業を複数の準備済みノードへ展開します。LangGraph の複数 outgoing edge や `Send`、Microsoft の fan-out edge、Google ADK の複数経路が代表例です。 |
+| グラフ定義 API | nodeとedgeを宣言します。代表例は LangGraph の `StateGraph`、Microsoft Agent Framework の `WorkflowBuilder`、Google ADK 2.0 の `Workflow` です。API 名は似ていますが、状態、再開、版管理の意味論は別々です。 |
+| 構造検証 コンパイラ | 到達不能node、型不一致、無制限ループ、未設定の終了経路を検出します。Structured Graph Harness では、静的 DAG と計画版不変条件の検証も担います。 |
+| 準備集合 スーパーステップ | 実行条件を満たしたnodeを選びます。論文は ready set をスケジューラ比較の中心概念にします。Microsoft Agent Framework は同じ superstep で起動した executor を並列実行し、全完了後に次へ進みます。 |
+| node 実行器アダプター | LLM エージェント、通常関数、ツール、サブグラフを同じ実行単位へ適合させます。node内部では従来の agent loop を利用できます。 |
+| edge 条件ルーター | 成功、失敗、分類、ポリシー判定を型付き遷移へ変換します。LangGraph は通常 edge、conditional edge、`Command` を持ち、Google ADK は route を持つ `Event` と route edge を使います。 |
+| Fan out ディスパッチャー | 独立した作業を複数の準備済みnodeへ展開します。LangGraph の複数 outgoing edge や `Send`、Microsoft の fan-out edge、Google ADK の複数経路が代表例です。 |
 | ワーカー A | fan-out された独立作業の一方を、分離された入力で実行します。 |
 | ワーカー B | fan-out された独立作業の他方を、分離された入力で実行します。 |
 | Fan in 結合バリア | 必要な先行結果を集約して後続へ渡します。Google ADK 2.0 は `JoinNode`、Microsoft Agent Framework は fan-in barrier を提供します。LangGraph は reducer 付き共有 state と後続 node で集約します。 |
 | 評価器 出力契約 | 型、形式、テスト、意味品質を検証します。決定的検証と人間判断を優先し、LLM 評価をリスクに応じて組み合わせます。 |
-| 分岐 ループ制御 | 判定結果を次ノード、反復、承認、終了へ写像します。LangGraph は conditional edge、Google ADK は back-edge、Microsoft Agent Framework は条件 edge や Functional API のループで表現できます。全ループに回数、時間、費用の上限を付けます。 |
+| 分岐 ループ制御 | 判定結果を次node、反復、承認、終了へ写像します。LangGraph は conditional edge、Google ADK は back-edge、Microsoft Agent Framework は条件 edge や Functional API のループで表現できます。全ループに回数、時間、費用の上限を付けます。 |
 | 状態 チェックポイント | 型付き状態と進行位置を保存します。LangGraph の checkpointer、Microsoft Agent Framework の checkpoint storage、Temporal の durable Workflow history は目的が重なり、保存境界と replay の契約は製品ごとに異なります。 |
 | 中断 人間再開 | 人間入力を待つ間に実行を停止し、同じ実行識別子と保存状態から再開します。代表例は LangGraph の `interrupt` と `Command`、Microsoft の request response、Google ADK 2.0 の `RequestInput` です。 |
 | 予算 権限 実行ゲート | token、費用、時間、試行回数、tool 権限、データ境界を遷移前に検査します。モデルへの指示に加え、ランタイムの強制条件として実装します。 |
 | 障害分類 復旧制御 | 一時障害を局所再試行し、契約や設定の問題を局所修正し、構造上の問題を再計画へ送ります。Structured Graph Harness は retry、patch、replan の順序を機械的に強制する設計を提案します。 |
-| イベント トレース | ノード開始・終了、edge 選択、状態版、評価、承認、復旧、費用を run ID と計画版へ関連付けます。Microsoft Agent Framework は workflow、executor、edge group、message の span を提供します。 |
+| イベント トレース | node開始・終了、edge 選択、状態版、評価、承認、復旧、費用を run ID と計画版へ関連付けます。Microsoft Agent Framework は workflow、executor、edge group、message の span を提供します。 |
 | 完了 | すべての必須依存、出力契約、権限、承認を満たした終端です。 |
 
 コンポーネント図は実装可能な共通パターンを示します。各フレームワークの機能と Structured Graph Harness の保証は別々に追跡します。LangGraph と Google ADK は条件付き back-edge や動的経路を表現できます。Structured Graph Harness は計画版内の静的 DAG を選び、動的な構造変更を新しい計画版へ限定します。したがって、Graph Engineering の設計時には、探索性を優先する動的グラフと、監査性を優先する静的グラフのどちらを採用するかを明示します。
@@ -371,24 +365,24 @@ graph TD
 
 本節の Graph Engineering は、AI エージェントの制御フローをグラフとして設計し、実行履歴を追跡するためのデータ設計を指します。ドメイン知識を triple や ontology として表現する Knowledge Graph Engineering とは対象が異なります。ここで扱うグラフの頂点は実行単位であり、辺は依存関係またはルーティング条件です。
 
-起点論文の Graph Harness は、実行計画を `Π=(id, version, V, E, σ, κ)` と定義します。論文はノード状態、回復プロトコル、予算、承認待ちを定義しています。一方、永続化スキーマや監査台帳は将来の engineering details としています。そのため、以下では論文の概念と、公式フレームワークから補完した「実装モデル案」を区別します。
+起点論文の Graph Harness は、実行計画を `Π=(id, version, V, E, σ, κ)` と定義します。論文はnode状態、回復プロトコル、予算、承認待ちを定義しています。一方、永続化スキーマや監査台帳は将来の engineering details としています。そのため、以下では論文の概念と、公式フレームワークから補完した「実装モデル案」を区別します。
 
 ### モデルの出典境界
 
 | エンティティ | 区分 | 根拠と位置づけ |
 |---|---|---|
-| GraphDefinition | 論文概念の正規化名 | 論文の `Execution Plan Π` に対応します。`id` と `version`、ノード集合、辺集合、ノード設定写像、出力契約を持ちます。 |
+| GraphDefinition | 論文概念の正規化名 | 論文の `Execution Plan Π` に対応します。`id` と `version`、node集合、辺集合、node設定写像、出力契約を持ちます。 |
 | Node | 論文概念 | 実行可能単位 `V` に対応します。アクション、再試行方針、副作用レベル、出力契約を持ちます。 |
 | Edge | 論文概念 | 有向辺集合 `E` と join semantics に対応します。論文は `all_of` と `any_of` を定義し、`first_of` を対象外とします。 |
-| StateSchema | framework 公式実装から補完 | 論文のノード状態集合と実行コンテキストを、永続化可能な state channel のスキーマへ落とした実装モデル案です。LangGraph の state schema と reducer を参照します。 |
+| StateSchema | framework 公式実装から補完 | 論文のnode状態集合と実行コンテキストを、永続化可能な state channel のスキーマへ落とした実装モデル案です。LangGraph の state schema と reducer を参照します。 |
 | Run | 論文概念から導出した実装モデル案 | 論文が要求する plan version ごとの execution trace を識別する集約です。Microsoft Agent Framework の `Run` と LangGraph の thread を参考にします。 |
-| NodeAttempt | 論文概念から導出した実装モデル案 | ノード状態遷移、timeout、retry budget、recovery counter を試行単位で記録します。 |
+| NodeAttempt | 論文概念から導出した実装モデル案 | node状態遷移、timeout、retry budget、recovery counter を試行単位で記録します。 |
 | EdgeTraversal | 論文概念から導出した実装モデル案 | 論文の dependency と node 状態遷移を、実行時に選択された edge、condition version、判定根拠として記録します。属性はこの記事の提案です。 |
 | Checkpoint | framework 公式実装から補完 | 論文は fault-tolerant persistence を将来課題としています。LangGraph と Microsoft Agent Framework の superstep checkpoint を参照します。 |
 | Artifact | 論文概念と framework 補完 | 論文の execution context にある visible artifacts を、Google ADK の版管理された artifact として具体化します。 |
 | Evidence | 実装モデル案 | 出力契約の検証方法、観測、承認根拠、artifact digest を結び付ける追記型の監査レコードです。論文は検証方法を audit trail に残す要件を示しますが、属性は定義していません。 |
 | Evaluation | 論文概念から導出した実装モデル案 | 論文の experimental protocol にある成功率、実行時間、token cost、node count、recovery action などの測定結果を表します。 |
-| Budget | 論文概念 | 実行コンテキストの budget、ノードの retry budget と timeout、実験条件の token budget を統一して表します。 |
+| Budget | 論文概念 | 実行コンテキストの budget、nodeの retry budget と timeout、実験条件の token budget を統一して表します。 |
 | Approval | 論文概念から導出した実装モデル案 | `running → waiting_human` と、承認または再開による `ready` への遷移を監査可能な判断レコードにします。 |
 | Policy | 論文概念から導出した実装モデル案 | 論文の scheduling policy、side-effect threshold、recovery invariant を版管理する集約です。 |
 | Escalation | 論文概念から導出した実装モデル案 | `local_retry → local_patch → request_replan` の順序と診断結果を記録します。 |
@@ -446,8 +440,8 @@ graph TD
 |---|---|
 | GraphDefinition | 変更不能な一つの plan version を表します。再計画は既存定義の更新ではなく、新しい version の生成として扱います。 |
 | Node | エージェント、ツール、検証器などの実行単位を表します。 |
-| Edge | ノード間の依存関係と join または分岐条件を表します。 |
-| StateSchema | ノードが読み書きする共有状態の型、scope、merge 規則、terminal state を定義します。 |
+| Edge | node間の依存関係と join または分岐条件を表します。 |
+| StateSchema | nodeが読み書きする共有状態の型、scope、merge 規則、terminal state を定義します。 |
 | Policy | scheduling、budget、approval、recovery に適用する版管理された制約を表します。 |
 
 #### 実行所有
@@ -455,7 +449,7 @@ graph TD
 | 要素名 | 説明 |
 |---|---|
 | Run | 特定の GraphDefinition version を実行した一回の履歴を表します。 |
-| NodeAttempt | ノードの一回の実行または再実行を表します。再試行回数と冪等性キーを保持します。 |
+| NodeAttempt | nodeの一回の実行または再実行を表します。再試行回数と冪等性キーを保持します。 |
 | EdgeTraversal | Run 中に実際に選ばれた Edge と、その condition version、判定、Evidence を表します。 |
 | Checkpoint | superstep 境界などで保存した状態スナップショットと次に実行する単位を表します。 |
 | Budget | token、時間、金額、再試行回数などの上限、予約量、確定消費量を表します。 |
@@ -465,12 +459,16 @@ graph TD
 
 | 要素名 | 説明 |
 |---|---|
-| Artifact | ノードが生成または参照したファイル、構造化出力、外部オブジェクトへの不変参照を表します。 |
+| Artifact | nodeが生成または参照したファイル、構造化出力、外部オブジェクトへの不変参照を表します。 |
 | Evidence | 契約検証、承認、評価の根拠を content hash 付きで記録します。 |
 | Evaluation | Run または NodeAttempt を metric と threshold で評価した結果を表します。 |
 | Approval | 高副作用操作などに対する要求、判断、判断者、policy version を表します。 |
 
 ### 情報モデル
+
+以下の3図は、ZennのMermaid上限に合わせて定義・実行・保証へ分割した情報モデルです。図には主要属性だけを示し、追加属性と制約は各図の直後の表で補足します。
+
+#### 定義エンティティ
 
 ```mermaid
 classDiagram
@@ -478,166 +476,34 @@ classDiagram
         string graphId
         integer version
         string outputContract
-        boolean immutable
-        datetime createdAt
     }
     class Node {
         string nodeId
         string actionRef
-        string outputContract
         integer retryLimit
         duration timeout
-        string sideEffectLevel
     }
     class Edge {
         string edgeId
         string sourceNodeId
         string targetNodeId
-        string joinMode
         string conditionRef
-        integer dispatchOrder
     }
     class StateSchema {
         string schemaVersion
         map fields
         map reducers
-        map scopes
-        set terminalStates
     }
     class Policy {
         string policyId
         integer version
-        string schedulingPolicy
-        string sideEffectThreshold
         map recoveryLimits
-    }
-    class Run {
-        string runId
-        string graphId
-        integer graphVersion
-        string policyId
-        integer policyVersion
-        string status
-        datetime startedAt
-        datetime finishedAt
-    }
-    class NodeAttempt {
-        string attemptId
-        string nodeId
-        integer sequence
-        string status
-        string idempotencyKey
-        datetime startedAt
-        datetime finishedAt
-    }
-    class EdgeTraversal {
-        string traversalId
-        string edgeId
-        string sourceAttemptId
-        string targetNodeId
-        string conditionVersion
-        string verdict
-        datetime selectedAt
-    }
-    class Checkpoint {
-        string checkpointId
-        integer superstep
-        string stateSchemaVersion
-        string stateDigest
-        string parentCheckpointId
-        datetime createdAt
-    }
-    class Budget {
-        string budgetId
-        string scope
-        string scopeRef
-        integer policyVersion
-        string kind
-        decimal limit
-        decimal reserved
-        decimal consumed
-        string unit
-    }
-    class Escalation {
-        string escalationId
-        string attemptId
-        string fromLevel
-        string toLevel
-        string reason
-        decimal confidence
-        integer policyVersion
-    }
-    class Artifact {
-        string artifactId
-        string uri
-        string mediaType
-        string contentHash
-        integer version
-        datetime createdAt
-    }
-    class Evidence {
-        string evidenceId
-        string runId
-        string attemptId
-        integer graphVersion
-        integer policyVersion
-        string kind
-        string sourceRef
-        string contentHash
-        datetime capturedAt
-    }
-    class Evaluation {
-        string evaluationId
-        string metricName
-        decimal metricValue
-        decimal threshold
-        string verdict
-    }
-    class Approval {
-        string approvalId
-        string status
-        string requestDigest
-        string targetAction
-        string sideEffectLevel
-        string requestedBy
-        string decidedBy
-        integer policyVersion
-        string comment
-        datetime requestedAt
-        datetime decidedAt
     }
     GraphDefinition "1" *-- "many" Node : owns
     GraphDefinition "1" *-- "many" Edge : owns
     GraphDefinition "1" *-- "1" StateSchema : owns
     GraphDefinition "many" --> "many" Policy : compatibleWith
-    GraphDefinition "1" --> "many" Run : instantiates
-    Run "many" --> "1" Policy : fixes
-    Node "1" --> "many" NodeAttempt : executesAs
-    Run "1" *-- "many" NodeAttempt : contains
-    Run "1" *-- "many" EdgeTraversal : records
-    Run "1" *-- "many" Checkpoint : snapshots
-    Run "1" *-- "many" Budget : accounts
-    Run "1" *-- "many" Escalation : records
-    Run "1" *-- "many" Evaluation : evaluates
-    NodeAttempt "1" --> "many" Artifact : produces
-    NodeAttempt "1" --> "many" Evidence : supports
-    NodeAttempt "1" --> "many" EdgeTraversal : triggers
-    NodeAttempt "1" --> "many" Escalation : escalates
-    Edge "1" --> "many" EdgeTraversal : traversedAs
-    EdgeTraversal "many" --> "0..1" Checkpoint : capturedAt
-    EdgeTraversal "1" --> "many" Evidence : cites
-    NodeAttempt "1" --> "0..1" Approval : mayRequire
-    Checkpoint "many" --> "1" StateSchema : conformsTo
-    Policy "1" --> "many" Approval : governs
-    Policy "1" --> "many" Budget : constrains
-    Policy "1" --> "many" Escalation : constrains
-    Approval "1" --> "many" Evidence : yields
-    Artifact "1" --> "many" Evidence : anchors
-    Evaluation "1" --> "many" Evidence : cites
-    Escalation "1" --> "many" Evidence : cites
 ```
-
-#### 定義エンティティ
 
 | 要素名 | 説明 |
 |---|---|
@@ -649,6 +515,53 @@ classDiagram
 
 #### 実行エンティティ
 
+```mermaid
+classDiagram
+    class Run {
+        string runId
+        integer graphVersion
+        integer policyVersion
+        string status
+    }
+    class NodeAttempt {
+        string attemptId
+        string nodeId
+        integer sequence
+        string status
+        string idempotencyKey
+    }
+    class EdgeTraversal {
+        string traversalId
+        string edgeId
+        string conditionVersion
+        string verdict
+    }
+    class Checkpoint {
+        string checkpointId
+        integer superstep
+        string stateDigest
+    }
+    class Budget {
+        string budgetId
+        string scopeRef
+        decimal limit
+        decimal consumed
+    }
+    class Escalation {
+        string escalationId
+        string attemptId
+        string toLevel
+        string reason
+    }
+    Run "1" *-- "many" NodeAttempt : contains
+    Run "1" *-- "many" EdgeTraversal : records
+    Run "1" *-- "many" Checkpoint : snapshots
+    Run "1" *-- "many" Budget : accounts
+    Run "1" *-- "many" Escalation : records
+    NodeAttempt "1" --> "many" EdgeTraversal : triggers
+    NodeAttempt "1" --> "many" Escalation : escalates
+```
+
 | 要素名 | 説明 |
 |---|---|
 | Run | `graphVersion` と `policyId` / `policyVersion` を必須にして、実行中の topology・policy 更新から履歴を分離します。 |
@@ -659,6 +572,46 @@ classDiagram
 | Escalation | 対象 `attemptId`、診断 `reason`、`confidence` を保持し、policy が許す次の段階だけを Evidence とともに記録します。 |
 
 #### 保証エンティティ
+
+```mermaid
+classDiagram
+    class Artifact {
+        string artifactId
+        string uri
+        string contentHash
+        integer version
+    }
+    class Evidence {
+        string evidenceId
+        string runId
+        string attemptId
+        integer graphVersion
+        integer policyVersion
+        string contentHash
+    }
+    class Evaluation {
+        string evaluationId
+        string metricName
+        decimal metricValue
+        string verdict
+    }
+    class Approval {
+        string approvalId
+        string status
+        string requestDigest
+        string targetAction
+        integer policyVersion
+    }
+    class NodeAttempt {
+        string attemptId
+    }
+    NodeAttempt "1" --> "many" Artifact : produces
+    NodeAttempt "1" --> "many" Evidence : supports
+    NodeAttempt "1" --> "0..1" Approval : mayRequire
+    Artifact "1" --> "many" Evidence : anchors
+    Evaluation "1" --> "many" Evidence : cites
+    Approval "1" --> "many" Evidence : yields
+```
 
 | 要素名 | 説明 |
 |---|---|
@@ -760,7 +713,7 @@ Approval は boolean だけで表現しません。request payload digest、対�
 
 ### 前提条件とバージョン固定
 
-- Python の独立した仮想環境を使います。
+- Python 3.12 の独立した仮想環境を使います。
 - LangGraph 公式 Graph API は `StateGraph`、`START`、`END`、`Send`、reducer、conditional edge を提供します。
 - 本稿の最小例は外部 LLM を呼び出しません。API キーを用意せずに再現できます。
 - 調査時の再現確認には `langgraph==1.2.9` を使いました。実プロジェクトは lock file で検証済みバージョンを固定します。
@@ -769,13 +722,13 @@ Approval は boolean だけで表現しません。request payload digest、対�
 
 ```bash
 # uv
-uv init graph-engineering-sample
+uv init --python 3.12 graph-engineering-sample
 cd graph-engineering-sample
 uv add 'langgraph==1.2.9'
 uv run python -c 'import importlib.metadata as m; print(m.version("langgraph"))'
 
 # pip
-python -m venv .venv
+python3.12 -m venv .venv
 source .venv/bin/activate
 python -m pip install 'langgraph==1.2.9'
 python -c 'import importlib.metadata as m; print(m.version("langgraph"))'
@@ -838,8 +791,8 @@ side_effect_class: external_publish
 ```python
 # graph_example.py
 import operator
-from typing import Annotated, Literal, NotRequired
-from typing_extensions import TypedDict
+from typing import Annotated, Literal
+from typing_extensions import NotRequired, TypedDict
 
 from langgraph.graph import END, START, StateGraph
 from langgraph.types import Send
@@ -870,7 +823,8 @@ def dispatch(state: GraphState):
 
 def worker(state: GraphState):
     # 実際の LLM ・ツール呼び出しと置換する境界です。
-    return {"results": [f'{state["work_item"]}:done']}
+    suffix = "failed" if state["work_item"].startswith("fix:") else "done"
+    return {"results": [f'{state["work_item"]}:{suffix}']}
 
 
 def aggregate(state: GraphState):
@@ -878,7 +832,12 @@ def aggregate(state: GraphState):
 
 
 def evaluate(state: GraphState):
-    score = sum(item.endswith(":done") for item in state["results"])
+    completed = {
+        item.removesuffix(":done")
+        for item in state["results"]
+        if item.endswith(":done")
+    }
+    score = len(completed & set(state["work_items"]))
     return {"score": score}
 
 
@@ -891,7 +850,15 @@ def choose_next(state: GraphState) -> Literal["gate", "revise", "stop"]:
 
 
 def revise(state: GraphState):
-    return {"results": ["repair:done"], "attempt": state["attempt"] + 1}
+    failed = next(
+        (item.removesuffix(":failed") for item in state["results"]
+         if item.endswith(":failed")),
+        None,
+    )
+    update = {"attempt": state["attempt"] + 1}
+    if failed is not None:
+        update["results"] = [f"{failed}:done"]
+    return update
 
 
 def gate(state: GraphState):
@@ -926,11 +893,11 @@ builder.add_edge("stop", END)
 graph = builder.compile()
 ```
 
-`worker` は同じ入力に同じ更新を返す決定的な境界です。LLM や外部 API を組み込む場合は、その呼び出しをこの node 内の明示的な副作用として扱います。経路選択は `choose_next` の列挙値に限定します。
+`worker` は同じ入力に同じ更新を返す決定的な境界です。`fix:` で始まるitemを失敗させ、`revise` が同じitemの成功結果を追加します。`evaluate` はwork itemごとの成功を一度だけ数えるため、再試行回数だけでscoreは増えません。LLMや外部APIを組み込む場合は、その呼び出しをnode内部の明示的な副作用として扱います。
 
 ### graph definition の静的 lint
 
-`compile()` は graph 構造を検査します。チーム独自の契約は、node と遷移先の集合を CI で検査すると明確になります。次の lint は、未定義 node、到達不可 node、終了経路を持たない node、budget stop の欠落を検出します。
+`compile()` はgraph構造を検査します。次の例は、宣言的なgraph仕様に対するlintの最小形で、直前の`graph_example.py`とは独立しています。実プロジェクトでは、この仕様から`StateGraph`とlint入力の両方を生成するか、`graph.get_graph()`から実node・edgeを取得し、定義と検査の二重管理を避けます。
 
 ```python
 # lint_graph.py
@@ -1010,38 +977,39 @@ assert lint_graph_definition() == []
 
 ### 基本実行と budget stop
 
-次の入力は 3 件を fan-out します。初回スコアが 3 のため `revise` を 1 回通り、スコア 4 で `gate` へ進みます。
+次の入力は3件をfan-outします。`fix:validate`だけが初回に失敗し、`revise`が同じitemを修復します。3つのwork itemが成功した段階で`gate`へ進みます。
 
 ```python
 from graph_example import graph
 
 result = graph.invoke({
-    "request": "parse,validate,publish",
+    "request": "parse,fix:validate,publish",
     "work_items": [],
     "results": [],
     "score": 0,
-    "required_score": 4,
+    "required_score": 3,
     "attempt": 0,
     "max_attempts": 1,
     "status": "new",
 })
 
-assert result["results"] == [
-    "parse:done", "validate:done", "publish:done", "repair:done"
-]
+assert set(result["results"]) == {
+    "parse:done", "fix:validate:failed",
+    "fix:validate:done", "publish:done",
+}
 assert result["attempt"] == 1
 assert result["status"] == "accepted"
 ```
 
-`required_score` を 5 にすると、1 回の再作業後に `max_attempts` へ達し、`budget_exhausted` で終了します。トークンコストや deadline を追加する場合も、同じように state へ使用量と上限を保持します。
+`required_score`をwork item数より大きい4にすると、再作業後もscoreは3から増えません。1回の再作業で`max_attempts`へ達し、`budget_exhausted`で終了します。
 
 ```python
 stopped = graph.invoke({
-    "request": "parse,validate,publish",
+    "request": "parse,fix:validate,publish",
     "work_items": [],
     "results": [],
     "score": 0,
-    "required_score": 5,
+    "required_score": 4,
     "attempt": 0,
     "max_attempts": 1,
     "status": "new",
@@ -1224,13 +1192,13 @@ assert replayed["trace"] == ["stable", "flaky", "finish"]
 | `graph_example.py` と「基本実行と budget stop」の invocation を統合した一時 harness | Python 3.12、`uv run --with 'langgraph==1.2.9'` | `accepted` 経路と `budget_exhausted` 経路が assertion を通過 |
 | interrupt / approval 例 | 同上、`InMemorySaver` と固定 `thread_id` | interrupt 後に `Command(resume=True)` で完走 |
 | recovery 例 | 同上、最初の `flaky` 呼び出しへ `TimeoutError` を注入 | `stable` を再実行せず `flaky` から再開して完走 |
-| Mermaid 図 5 点 | repository の `npx md-mermaid-lint` | 全図 lint 成功 |
+| Mermaid 図 7 点 | `npx md-mermaid-lint`と1ブロック2,000字以内の検査 | 全図が構文・Zenn字数制約を通過 |
 
 依存関係を固定して一時 harness を実行したコマンドの基準形は次です。`graph_example.py` 単体は graph を定義・compile するコードであり、経路 assertion は「基本実行と budget stop」のコードも同じファイルへ続けて保存して実行します。approval と recovery は state 型が異なるため別スクリプトとして検証します。
 
 ```bash
 uv run --with 'langgraph==1.2.9' python graph_example.py
-npx md-mermaid-lint 'Graph-Engineering_構造とデータ調査.md'
+npx md-mermaid-lint 'articles/graph-engineering_20260727.md'
 ```
 
 `langgraph==1.2.9` は検証時点の PyPI 公開版です。将来の最新版での動作を保証する記述ではないため、導入時には lock file と CI で再検証します。
@@ -1252,7 +1220,7 @@ Temporal では Workflow コードの決定性を保ち、LLM や外部 API の�
 
 ### 運用上の前提
 
-Graph Engineering は、AI エージェントの実行単位をノード、許可された遷移をエッジとして扱う設計上の呼称です。2026 年 7 月時点では標準規格や確立済みの独立分野ではありません。arXiv:2604.11378 の Structured Graph Harness は position paper と設計提案であり、本番実装と実験結果を伴いません。論文が主張する性能向上、安定性向上、コスト効率は将来の実験で検証する仮説です。
+Graph Engineering は、AI エージェントの実行単位をnode、許可された遷移をedgeとして扱う設計上の呼称です。2026 年 7 月時点では標準規格や確立済みの独立分野ではありません。arXiv:2604.11378 の Structured Graph Harness は position paper と設計提案であり、本番実装と実験結果を伴いません。論文が主張する性能向上、安定性向上、コスト効率は将来の実験で検証する仮説です。
 
 本番運用では、Graph Engineering 固有の用語より、durable execution、イベント履歴、冪等実行、分散トレーシング、バックプレッシャー、dead-letter queue、SLO、canary、incident response という既存の分散システム原語を正本にします。論文自身も、永続化、ハートビート、ワーカー再配置、リーダー選出を既存の workflow engine と distributed systems が扱ってきた課題として位置づけています。
 
@@ -1294,10 +1262,6 @@ retention:
 policy 更新は canary run で旧版と比較し、成功率だけでなく token、遅延、escalation、human override を判定します。上限超過は例外ログだけでなく、`budget_exhausted` や `escalated` という明示的な終端状態へ遷移させます。
 
 ### run・node・edge のトレース
-
-![iii Console の session と function call・sub-agent spawn の trace 画面](/images/graph-engineering_20260727/03_harness-session-traces.png)
-
-出典: [iii Console trace image](https://iii.dev/_astro/harness-session-traces.BtBYjNwJ_Z1XU9wW.webp)（取得日: 2026-07-27）
 
 - 1 回の graph run を root span にします。各 node 実行を child span にします。
 - edge は、単なる静的定義ではなく「どの条件、どの証拠、どの plan version により遷移したか」をイベントとして記録します。
@@ -1527,12 +1491,9 @@ for index, (old, new) in enumerate(zip(old_routes, new_routes)):
 
 | 誤解 | 反証 | 実務上の結論 |
 |---|---|---|
-| graph は multi-agent と同義です | node は決定的関数、router、tool、human gate、単一 agent の状態でも構成できます | agent 数と control-flow topology を別軸で設計します |
 | 複数 loop をつなげれば統制済み graph です | typed edge、join semantics、state ownership、retry bound、version、audit が欠ける構成では統制を説明できません | 接続数より contract と runtime invariant を評価します |
-| parallelism は常に品質と速度を高めます | branch の誤りが fan-in へ集まり、共有 state 競合、straggler 待ち、重複探索、token 増加が生じます | 独立性、merge、cancel、budget を事前に定義します |
 | 静的 DAG は探索的タスクにも適します | arXiv:2604.11378 自身が、探索的研究、未知の failure mode を持つ debugging、動的 goal evolution を静的 DAG の適用境界外に置きます | 構造が実行中に判明する仕事では agent loop または dynamic graph を選びます |
 | Structured Graph Harness の優位性は実証済みです | 論文は position paper で、prototype と empirical result を提供していません | 理論仮説として canary と対照実験で検証します |
-| Graph Engineering は新しい基盤技術です | iii.dev は、state machine、DAG orchestration、queue、retry、trace、durable state の再命名という批判を提示します | 新語より既存 distributed systems の性質を採用条件にします |
 
 iii.dev の批判はベンダ自身の立場を含む論説です。ただし「新しいラベルの下で queue、state、retry、trace、dead-letter を再発明しない」という検査観点は、Temporal、OpenTelemetry、SQS、SRE の一次資料と整合します。
 
@@ -1625,6 +1586,11 @@ raise SystemExit(1 if violations else 0)
 Graph Engineeringの本質は、loopを捨てることではありません。loopをnode内部へ閉じ込め、node間のstate、権限、予算、停止、回復を検査可能な契約として設計することです。まず単一call、loop、決定的workflowを検討し、並列分岐・長期再開・監査可能なhuman gateが必要になった段階でgraphを採用してください。
 
 この記事が参考になった、あるいは改善点が見つかった場合は、リアクションやコメント、SNSで共有していただけると励みになります。
+
+## 関連記事
+
+- [Loop Engineering入門](https://zenn.dev/suwash/articles/loop-engineering_20260610)
+- [LangGraph技術調査](https://zenn.dev/suwash/articles/lang_graph_20251110)
 
 ## 参考リンク
 
