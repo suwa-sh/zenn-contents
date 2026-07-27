@@ -1,1 +1,1 @@
-日本語で回答してください
+[CLAUDE.md](./CLAUDE.md)

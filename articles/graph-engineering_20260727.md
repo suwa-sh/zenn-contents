@@ -3,7 +3,8 @@ title: "Graph Engineering入門：AIエージェントのループを明示グ�
 emoji: "🧩"
 type: "tech"
 topics: ["AI", "AIAgent", "LangGraph", "Workflow", "DistributedSystems"]
-published: false
+published: true
+published_at: 2026-07-28
 ---
 
 AIエージェントが長いタスクを担うと、1つのloopへ判断・状態・副作用が集中し、再開や監査が難しくなります。Graph Engineeringは、agent、決定的関数、evaluator、人間承認を明示的な実行グラフへ分離し、型付きstateと検査可能なedgeで接続する方法論です。
