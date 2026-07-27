@@ -1,5 +1,5 @@
 ---
-title: "Graph Engineering 入門"
+title: "Graph Engineering入門：AIエージェントのループを明示グラフへ変える"
 emoji: "🧩"
 type: "tech"
 topics: ["AI", "AIAgent", "LangGraph", "Workflow", "DistributedSystems"]
