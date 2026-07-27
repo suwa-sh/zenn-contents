@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (215)
+## Articles: 下書き (216)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-07-27 | [🔌 セッションと初期化ハンドシェイクを廃止したステートレス改訂 - MCP 2026-07-28](articles/mcp-2026-07-28-stateless_20260727.md) | MCP, ModelContextProtocol, AIAgent, Architecture, LLM |
+| 2026-07-27 | [🚧 無人公開のfail-closedゲートは、どの層に置くと効くのか](articles/unattended-publish-fail-closed-gate_20260727.md) | LLM, 生成AI, セキュリティ, アーキテクチャ |
 | 2026-07-26 | [🛡️ AI生成SaaSで権限不備を量産しないentitlement設計](articles/ai-generated-saas-entitlement-control_20260726.md) | Security, WebSecurity, SaaS, AI |
 | 2026-07-26 | [🛡️ Markdownで管理するコーディングエージェントの権限設計 - Antigravity CLI](articles/antigravity-cli-agent-policy_20260726.md) | AI, CodingAgent, Security, MCP |
 | 2026-07-26 | [🧭 Claude Code Skillsを組織導入する、判断工程から始める設計](articles/claude-code-skills-org-adoption_20260726.md) | ClaudeCode, AIAgent, CodeReview, QA, DataAnalytics |
