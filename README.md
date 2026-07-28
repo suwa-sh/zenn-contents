@@ -7,10 +7,15 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (219)
+## Articles: 下書き (224)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-28 | [🔍 AIレビュー5万4791件の分析: 指摘が直される条件と直されない理由](articles/ai-4791-arxiv-abs-2607-21997-p3_20260728.md) | CodeReview, AIAgent, GitHub, Copilot, LLM |
+| 2026-07-28 | [🧪 Skillのテストは何を漏らすか - Skill Test Coverageで未検証の運用義務を測る](articles/cloud-skills-skill-test-agent-p2_20260728.md) | AIAgent, Testing, LLM, CloudNative, CI |
+| 2026-07-28 | [🧰 エージェントハーネスに何を固定し、何を可変にするか](articles/github-ai-github-company-p9_20260728.md) | GitHub, Copilot, AIAgent, DevOps |
+| 2026-07-28 | [🧭 AI研修を単発講座にしない設計: MIXI 新卒技術研修12科目の構造を読む](articles/mixi-ai-mixi-co-jp-2026-0727-p8_20260728.md) | AI, 生成AI, エンジニア組織, 研修, MLOps |
+| 2026-07-28 | [🧩 障害履歴を症状・原因・対処の三つ組で検索する OM-RAG の設計](articles/om-rag-rag-arxiv-abs-2607-21911-p4_20260728.md) | RAG, LLM, SRE, 生成AI, AIエージェント |
 | 2026-07-27 | [🚦 承認トポロジーと意思決定待ち時間: 開発速度を決めるのは承認回数なのか](articles/approval-topology-decision-latency_20260727.md) | DevOps, CodeReview, DORA, マネジメント |
 | 2026-07-27 | [🧯 サイバー障害の復旧を3層に分解する: 設計RTO1時間の会社が11日かかった理由](articles/cyber-incident-degraded-operations_20260727.md) | BCP, SRE, AIAgent, Reliability, Security |
 | 2026-07-27 | [🎬 HTML を決定論的に動画化する agent 前提の描画基盤 - HyperFrames](articles/hyperframes-framework-runtime_20260727.md) | HyperFrames, Remotion, 動画生成, FFmpeg, AIエージェント |
