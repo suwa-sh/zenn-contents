@@ -210,9 +210,17 @@ npm install recharts
 
 registry item の `dependencies` にも `recharts` が入っているため CLI が自動で入れますが、**バージョンは固定されません**。`recharts-background` を使うなら 3.5.0 以上を自分で担保してください。
 
-### 2. namespace を components.json に登録する
+### 2. チャートを追加する
 
-公式ドキュメントのインストール手順は `@evilcharts/...` という namespace 形式です。これを解決させるには、利用側の `components.json` に `registries` を追加します。
+公式のインストール手順は `@evilcharts/...` という namespace 形式です。
+
+```bash
+npx shadcn@latest add @evilcharts/recharts-bar-chart
+```
+
+この namespace は shadcn CLI の公開 registry index に登録済みで、**利用側での設定は不要**です。空のディレクトリでも `npx shadcn@latest view @evilcharts/recharts-chart` が JSON を返すことを確認しました。未登録の namespace を指定した場合は `Unknown registry "@..."` で失敗します。
+
+URL を固定したい場合や、namespace 非対応の古い CLI を使う場合は、`components.json` に明示登録するか、registry JSON の URL を直接渡します。
 
 ```json
 {
@@ -223,16 +231,8 @@ registry item の `dependencies` にも `recharts` が入っているため CLI 
 }
 ```
 
-namespace を使わず、registry JSON の URL を直接渡すこともできます。
-
 ```bash
 npx shadcn@latest add https://evilcharts.com/r/recharts-chart.json
-```
-
-### 3. チャートを追加する
-
-```bash
-npx shadcn@latest add @evilcharts/recharts-bar-chart
 ```
 
 `recharts-bar-chart` は registry 依存として `recharts-chart` / `recharts-tooltip` / `recharts-legend` / `recharts-brush` / `recharts-background` を宣言しているため、土台一式がまとめて入ります。生成されるのは次のファイル群です。
@@ -355,7 +355,7 @@ evilcharts は Recharts 側のバーアニメーションを常時無効化し�
 
 | 症状 | 原因 | 対処 |
 |---|---|---|
-| `@evilcharts/...` が解決できない | 利用側 `components.json` に `registries` が未設定 | `"@evilcharts": "https://evilcharts.com/r/{name}.json"` を追加するか、registry JSON の URL を直接指定する |
+| `@evilcharts/...` が解決できない | shadcn CLI が古く namespace 未対応 | CLI を `shadcn@latest` にする。それでも解決しなければ `components.json` に `registries` を書くか、registry JSON の URL を直接指定する |
 | 取り込んだファイルが見つからない | 配置先が `components/ui/` ではない | `components/evilcharts/ui/` と `components/evilcharts/charts/` を見る |
 | `[EvilCharts] Invalid chart config...` で落ちる | `colors` に `light` / `dark` のいずれも無い | 最低 1 テーマ分の色配列を渡す |
 | 背景パターンでビルドが通らない | `ZIndexLayer` は Recharts 3.5.0 以降の export | Recharts を 3.5.0 以上に上げる |
@@ -365,7 +365,7 @@ evilcharts は Recharts 側のバーアニメーションを常時無効化し�
 ## まとめ
 
 - evilcharts は npm パッケージではなく **shadcn registry でソースを配る**チャート集で、取り込み先は `components/evilcharts/` 配下です。
-- 導入には利用側 `components.json` への namespace 登録、または registry JSON の URL 直指定が要ります。
+- `@evilcharts` は shadcn CLI の公開 index に登録済みなので、`npx shadcn@latest add @evilcharts/recharts-bar-chart` がそのまま通ります。
 - 設定は `ChartConfig` に集約され、テーマ別の色配列が `--color-<キー>-<番号>` の CSS 変数へ展開されます。色数がスロット数に足りなければ自動で分配されます。
 - API は `<EvilBarChart>` と静的メンバーによる compound 形式で、必要な部品だけを合成します。
 - コピー型なので、更新の取り込みと改変のマージは自分の責任になります。Recharts 系と ECharts 系が独立実装である点も含め、「ライブラリを使う」より「テンプレートをもらう」感覚が近いです。
