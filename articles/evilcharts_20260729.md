@@ -3,7 +3,8 @@ title: "shadcn registry でソースごと配るチャート集 - evilcharts"
 emoji: "📊"
 type: "tech"
 topics: ["React", "Nextjs", "TailwindCSS", "Recharts", "shadcnui"]
-published: false
+published: true
+published_at: 2026-07-30
 ---
 
 [evilcharts](https://github.com/legions-developer/evilcharts) は、React 向けのチャートコンポーネントを **shadcn registry 経由でソースコードごと配る** OSS です。npm パッケージとして依存に加えるのではなく、CLI で自分のリポジトリに `.tsx` をコピーして使います。

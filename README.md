@@ -7,13 +7,16 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (231)
+## Articles: 下書き (234)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-30 | [🧭 コーディングエージェントの文脈は「検索方式」より「鮮度境界」で決まる](articles/codenib-coding-agent-context-p5_20260730.md) | AI, CodingAgent, RAG, LSP, Git |
+| 2026-07-30 | [🚧 AIエージェントの暴走課金を止める境界設計 - Google Cloud Spend Caps の使いどころ](articles/google-cloud-ai-finops-agent-p3_20260730.md) | GoogleCloud, FinOps, VertexAI, AIエージェント |
+| 2026-07-30 | [🔬 AIで書き直せる時代のモダナイゼーション完了条件 — 検証オラクルと保守責任](articles/openai-modernization-software-p9_20260730.md) | AI, OpenAI, Rust, OSS, SoftwareDesign |
+| 2026-07-30 | [🛡 Skill導入前の悪性判定でLLM入力トークンを77%削減するSkillGateの構造](articles/skillgate-skill-agent-skills-p1_20260730.md) | Security, AIAgent, MCP, SupplyChain, LLM |
 | 2026-07-29 | [🧩 AI生成コードの「暗黙の前提」を成果物にする — AssumptionMinerの読み解き](articles/assumptionminer-ai-arxiv-p4_20260729.md) | LLM, CodeGeneration, SpecDrivenDevelopment, ADR, Requirements |
 | 2026-07-29 | [🏗️ 仕様書から「動くコード」まで自走する Claude Code 実装ハーネス - distillery-impl](articles/distillery-impl-harness_20260729.md) | ClaudeCode, AIAgent, TDD, BDD |
-| 2026-07-29 | [📊 shadcn registry でソースごと配るチャート集 - evilcharts](articles/evilcharts_20260729.md) | React, Nextjs, TailwindCSS, Recharts, shadcnui |
 | 2026-07-29 | [🔐 npmとGitHub Actionsのサプライチェーン対策をCI/CD権限設計へ落とす](articles/github-npm-actions-ci-cd-p8_20260729.md) | GitHub, npm, GitHubActions, CICD, Security |
 | 2026-07-29 | [🧪 実トラフィックから回帰テストを生成する: NL2Testの役割分担設計](articles/nl2test-196-arxiv-abs-p7_20260729.md) | LLM, Testing, API, Architecture |
 | 2026-07-29 | [🔬 AIで実装が100倍速くなっても、検証と保守の責任は移譲できない](articles/openai-openai-index-scientific-p1_20260729.md) | AI, Codex, OSS, SoftwareEngineering, Refactoring |
@@ -243,10 +246,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (161)
+## Articles: 公開済み (162)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-07-30 | [📊 shadcn registry でソースごと配るチャート集 - evilcharts](articles/evilcharts_20260729.md) | React, Nextjs, TailwindCSS, Recharts, shadcnui |
 | 2026-07-28 | [🧩 Graph Engineering入門：AIエージェントのループを明示グラフへ変える](articles/graph-engineering_20260727.md) | AI, AIAgent, LangGraph, Workflow, DistributedSystems |
 | 2026-07-25 | [🧪 正解データ不要でRAG検索の網羅性を測るテスト十分性基準 - Chunk Coverage](articles/chunk-coverage_20260722.md) | RAG, LLM, LLMOps, Testing |
 | 2026-07-23 | [🎬 MCP サーバー内蔵の macOS AI ビデオエディタ - palmier-pro](articles/palmier-pro_20260720.md) | PalmierPro, MCP, Swift, macOS, 生成AI |
