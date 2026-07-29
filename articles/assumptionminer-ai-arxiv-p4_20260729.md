@@ -241,6 +241,8 @@ flowchart LR
 
 「AI にコードを書かせる」という判断をするとき、速さの対価として何を見えなくしているかを把握しておくことは、発注する側の責任範囲に入ります。前提を成果物にするという発想は、その見えない部分を検査可能な形に戻すための、素直で有効なアプローチだと考えます。
 
+この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
+
 ## 参考リンク
 
 - [arXiv:2607.22898 — AssumptionMiner: Extracting, Tracing, and Revising Implicit Assumptions in LLM Code Generation](https://arxiv.org/abs/2607.22898)

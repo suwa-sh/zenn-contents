@@ -165,6 +165,8 @@ OIDC Trusted Publishing は初回のパッケージ作成に使えません。�
 - AI エージェントを開発に組み込むなら、エージェント環境に長期トークンを置かず、公開の最終承認を人間側に残す設計が既定になる
 - 既定変更（`pull_request_target`、npm v12、Dependabot クールダウン）は設定を変えなくても効くため、副作用の確認を先に行う
 
+この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
+
 ## 参考リンク
 
 - [Disrupting supply chain attacks on npm and GitHub Actions](https://github.blog/security/supply-chain-security/disrupting-supply-chain-attacks-on-npm-and-github-actions/)（GitHub Blog, 2026-07-28）

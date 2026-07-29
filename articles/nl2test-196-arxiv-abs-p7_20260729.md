@@ -195,6 +195,8 @@ trace_id, span_id, request_id, *_uuid
 - 自前で用意すべき前提は 3 つ。PII サニタイズ (一貫したダミー値化)、非決定値の除外ルール (複数回記録の差分比較が確実)、異常系トラフィックの意図的な確保
 - モダナイゼーション文脈での本命は、テストから現行仕様を逆展開できること
 
+この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
+
 ## 参考リンク
 
 - [Industrial Practice of LLM-Based Test Case Carving and Assertion Generation (Experience Paper) — arXiv:2607.24000](https://arxiv.org/abs/2607.24000)
