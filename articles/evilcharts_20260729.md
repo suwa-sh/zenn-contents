@@ -1,161 +1,154 @@
 ---
-title: "shadcn/Rechartsベースの次世代チャート集 evilcharts の構造とデータ設計"
+title: "shadcn registry でソースごと配るチャート集 - evilcharts"
 emoji: "📊"
 type: "tech"
 topics: ["React", "Nextjs", "TailwindCSS", "Recharts", "shadcnui"]
 published: false
 ---
 
-`evilcharts`（[https://github.com/legions-developer/evilcharts](https://github.com/legions-developer/evilcharts)）は、React 19 および Next.js 16（App Router）環境向けに開発された、shadcn/ui をベースに Recharts と ECharts を二つの選択可能な描画バックエンドとして提供するオープンソースのチャートコンポーネント集および Web プラットフォームです。
+[evilcharts](https://github.com/legions-developer/evilcharts) は、React 向けのチャートコンポーネントを **shadcn registry 経由でソースコードごと配る** OSS です。npm パッケージとして依存に加えるのではなく、CLI で自分のリポジトリに `.tsx` をコピーして使います。
 
-従来のチャートライブラリの多くが単一の npm パッケージとしてモノリシックに提供されていたのに対し、`evilcharts` は **shadcn CLI による分散型 Component Registry モデル** を全面的に採用しています。開発者はライブラリ全体を依存関係に追加することなく、必要なチャート UI や視視覚エフェクトのソースコードを CLI コマンド（`npx shadcn add`）で自分のプロジェクト（`components/evilcharts/ui/`）に直接取り込んでカスタマイズ運用することができます。
+この記事では、evilcharts の配布の仕組み、設定モデル（`ChartConfig` と CSS 変数）、実際の導入・利用手順、そしてコピー型ゆえの運用上の注意点を、リポジトリの現行実装と照合して整理します。読み終えると「自分のプロジェクトに入れるべきか」「入れたあと何を自分で面倒みることになるか」を判断できます。
 
-本記事では、`evilcharts` のアーキテクチャ、コンポーネント構造、CSS 変数を活かした動的カラーテーマ設計、11 種類の SVG 背景パターン描画、および Recharts を中心とした低レベルコンポーネント設計について詳しく解説します。
+なお evilcharts は Recharts 系と ECharts 系の 2 系統を持ちますが、内部構造・型・コード例は **Recharts 系を対象**に説明します。ECharts 系については、両系統の関係と設計上の含意だけを扱います。
 
----
+検証時点は 2026-07-29、対象は `main` ブランチ（最終 push 2026-07-28）です。ライセンスは MIT、GitHub スター数は約 2,700 です。
 
-## ■特徴と主要機能
+主要な依存バージョンは `package.json` で次のとおり固定されています。
 
-`evilcharts` には現代的な Web アプリケーション開発に応える様々な機能が組み込まれています。
+| 依存 | バージョン |
+|---|---|
+| react / react-dom | 19.2.3 |
+| next | ^16.2.11 |
+| recharts | 3.8.0 |
+| echarts | ^6.1.0 |
+| motion | ^12.23.26 |
+| shadcn | ^4.14.0 |
 
-- **shadcn Registry 互換の配布アーキテクチャ**
-  `bun run registry:build` コマンドにより、コンポーネントのコードと依存定義が `public/r/*.json` 形式の Registry Item ペイロードとして静的生成されます。開発者は `npx shadcn add` コマンド経由でソースコードを直接取得可能です。
-- **Recharts (v3.8) & ECharts (v6.1) 二大バックエンドの選択肢**
-  標準的で宣言的な React チャート（Recharts: SVG描画）と、大容量データや Canvas 描画に適した ECharts の双方が独立した選択肢として提供されています。
-- **動的カラーテーマ展開 (`ChartStyle` & `distributeColors`)**
-  `ChartConfig` 内で定義したテーマ別カラー配列（`light`, `dark`）の要素数を揃えるため、均等分配アルゴリズム（`distributeColors`）によって短配列の既存色を複製し、`<style>` タグ経由で CSS カスタムプロパティ（`--color-${key}-${index}`）をデータキー毎にスコープ注入します。
-- **リッチな視覚効果（すりガラス・SVG背景パターン）**
-  `backdrop-blur-sm` を使用したグラスモフィズムツールチップ（Frosted Glass Tooltip）や Glowing エフェクト、11 種類の SVG 装飾パターン背景（`ChartBackground`）を標準提供しています。
-- **スケルトン・ローディングユーティリティの提供**
-  上位コンポーネント向けに `LoadingIndicator` と `getLoadingData` ユーティリティが用意されており、データフェッチ中や初期ロード中のアニメーション表示を構成可能です。
+## 特徴
 
----
+- **配布単位がソースコード**: `npx shadcn add` で `.tsx` が利用側リポジトリに書き込まれます。取り込んだあとは自分のコードなので、自由に改変できます。
+- **Recharts 系と ECharts 系の 2 系統**: SVG 描画の Recharts 系と、Canvas 描画の ECharts 系が並列に用意されています。両者は同じ設定契約を持ちますが、コードは共有していません。
+- **compound component の API**: `<EvilBarChart>` の下に `<EvilBarChart.Bar />`、`<EvilBarChart.Tooltip />` のように、必要な部品だけを合成します。
+- **設定は 1 つの `ChartConfig` に集約**: ライト/ダークのテーマ別カラーをここで宣言すると、`--color-<キー>-<番号>` という CSS 変数として DOM に注入されます。
+- **装飾のバリエーションが組み込み**: バーの塗り（`hatched` / `duotone` / `gradient` / `stripped` など）、すりガラス調ツールチップ、11 種の SVG 背景パターン、ローディングスケルトンが最初から入っています。
 
-## ■システム構造 (C4 Model)
+## 構造
 
-### システムコンテキスト図 (C4 Level 1)
+### リポジトリから利用側リポジトリまで
 
-`evilcharts` プラットフォームと外部システム、開発者の関係性を以下に示します。開発者はチャートごとに Recharts 版または ECharts 版のいずれかを選択して取り込みます。
-
-```mermaid
-graph TD
-    subgraph Users["ユーザー / 開発者"]
-        Developer["フロントエンド開発者<br/>(Developer)"]
-        EndUser["エンドユーザー<br/>(End User)"]
-    end
-
-    subgraph EvilChartsEco["evilcharts エコシステム"]
-        EvilWeb["evilcharts Web App & Doc<br/>(Next.js 16 App Router)"]
-        RegistryAPI["EvilCharts Registry Storage<br/>(public/r/*.json)"]
-    end
-
-    subgraph ClientEnv["ターゲット開発環境"]
-        ShadcnCLI["shadcn CLI<br/>(npx shadcn add)"]
-        TargetApp["開発者の React / Next.js アプリ"]
-    end
-
-    subgraph ExternalLibs["描画エンジン (選択)"]
-        RechartsEngine["Recharts (SVG 描画)"]
-        EChartsEngine["Apache ECharts (Canvas 描画)"]
-    end
-
-    Developer -->|Web閲覧 & コードコピー| EvilWeb
-    Developer -->|npx shadcn add 実行| ShadcnCLI
-    ShadcnCLI -->|Registry Item JSON 取得| RegistryAPI
-    RegistryAPI -->|コードコンポーネント注入| TargetApp
-    TargetApp -.->|Recharts版選択| RechartsEngine
-    TargetApp -.->|ECharts版選択| EChartsEngine
-    EndUser -->|チャート UI 閲覧| TargetApp
-```
-
-### コンポーネント構造 (C4 Level 3)
-
-`recharts-chart` モジュール周辺の内部コンポーネント構造です。
+evilcharts の本体は「コンポーネント群」と「それを配信するビルドパイプライン」の 2 つでできています。
 
 ```mermaid
 graph LR
-    subgraph TargetComponent["recharts-chart モジュール"]
-        ChartContainer["ChartContainer<br/>(Context 配信 & 枠制御)"]
-        ChartStyle["ChartStyle<br/>(動的 CSS 変数生成)"]
-        ChartContext["ChartContext<br/>(React Context)"]
-    end
+    Src["src/registry/<br/>ui・charts・examples・blocks"]
+    Meta["registry-ui.ts など<br/>name・deps・target のメタ定義"]
+    Build["src/scripts/build-registry.mts"]
+    Index["src/registry/__index__.tsx<br/>React.lazy のプレビュー索引"]
+    Json["registry.json"]
+    Shadcn["bunx shadcn build"]
+    Public["public/r/*.json"]
+    Cli["利用側の shadcn CLI"]
+    App["利用側の components/evilcharts/"]
 
-    subgraph HighLevelComponent["上位チャート / ユーティリティ"]
-        EvilBarChart["EvilBarChart / 上位チャート"]
-        LoadingIndicator["LoadingIndicator<br/>(ローディング表示)"]
-    end
-
-    subgraph TooltipComponent["recharts-tooltip モジュール"]
-        ChartTooltipContent["ChartTooltipContent<br/>(グラスモフィズム)"]
-    end
-
-    subgraph BackgroundComponent["recharts-background モジュール"]
-        ChartBackground["ChartBackground<br/>(SVG パターン & マスク)"]
-    end
-
-    subgraph RechartsLib["Recharts ライブラリ"]
-        ResponsiveContainer["ResponsiveContainer"]
-    end
-
-    ChartContainer -->|Context 提供| ChartContext
-    ChartContainer -->|Style 注入| ChartStyle
-    ChartContainer -->|Wrap| ResponsiveContainer
-    EvilBarChart -->|利用| ChartContainer
-    EvilBarChart -->|Option| LoadingIndicator
-    ChartBackground -->|zIndex -1 描画| ChartContainer
+    Src --> Meta
+    Meta --> Build
+    Build --> Index
+    Build --> Json
+    Json --> Shadcn
+    Shadcn --> Public
+    Public --> Cli
+    Cli --> App
 ```
 
-| コンポーネント名 | ファイルパス | 役割・機能 |
-|---|---|---|
-| `ChartContainer` | `src/registry/ui/recharts-chart.tsx` | ルート要素。`ChartConfig` のバリデーション、`<style>` タグによる CSS 変数注入、レスポンシブ枠の提供 |
-| `ChartStyle` | `src/registry/ui/recharts-chart.tsx` | 各テーマ（Light/Dark）のカラー配列を DOM 上の `<style>` タグへ変換して CSS カスタムプロパティを展開 |
-| `ChartTooltipContent` | `src/registry/ui/recharts-tooltip.tsx` | すりガラス効果 (`frosted-glass`) やグラデーションインジケータを備えた高機能ツールチップ |
-| `ChartBackground` | `src/registry/ui/recharts-background.tsx` | 11 種類の SVG パターンとガウシアンブラーマスクを組み合わせてチャート背景を描画 |
-| `LoadingIndicator` | `src/registry/ui/recharts-chart.tsx` | 上位チャートがオーバーレイ表示用に使用するローディングインジケータユーティリティ |
+| 要素 | 役割 |
+|---|---|
+| `src/registry/ui/` | 土台コンポーネント。`recharts-chart` / `recharts-tooltip` / `recharts-background` など 11 ファイル |
+| `src/registry/charts/` | 完成品チャート。`recharts-bar-chart` など。`ui/` に依存 |
+| `src/registry/registry-*.ts` | 各アイテムの名前・npm 依存・registry 依存・配置先パスのメタ定義 |
+| `build-registry.mts` | 上記メタから `__index__.tsx` と `registry.json` を生成し `shadcn build` を呼ぶ |
+| `public/r/*.json` | 配信される registry item。`https://evilcharts.com/r/<name>.json` で公開 |
 
----
+ビルドは `bun run registry:fresh`（`registry:clean` + `registry:build`）で走ります。`build-registry.mts` の処理は次の 3 段です。
 
-## ■データモデル設計
+1. `src/registry/__index__.tsx` を生成する。ドキュメントサイトのプレビュー用に、各コンポーネントを `React.lazy` で動的 import する索引
+2. `registry.json` を生成し `public/r/` へコピーする
+3. `bunx --bun shadcn build registry.json --output public/r` を実行し、アイテムごとの `<name>.json` を出力する
 
-### 概念モデル
+配信される JSON は、たとえば `recharts-chart` なら次の形です（`files[].content` は省略）。
 
-`evilcharts` 内で扱われる主要データ構造の関係性です。
+```json
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "recharts-chart",
+  "type": "registry:component",
+  "dependencies": ["recharts"],
+  "files": [
+    {
+      "path": "src/registry/ui/recharts-chart.tsx",
+      "type": "registry:component",
+      "target": "components/evilcharts/ui/recharts-chart.tsx"
+    }
+  ]
+}
+```
+
+ここで重要なのは `target` です。**取り込み先は `components/ui/` ではなく `components/evilcharts/` 配下**になります。土台は `components/evilcharts/ui/`、完成品チャートは `components/evilcharts/charts/` です。既存の shadcn/ui コンポーネントとはディレクトリが分かれるため、名前の衝突は起きません。
+
+### Recharts 系コンポーネントの内部
+
+`recharts-chart.tsx` が土台で、ここから設定とスタイルが配られます。
 
 ```mermaid
 graph TD
-    Chart["Chart (チャート)"]
-    ChartConfig["ChartConfig (設定)"]
-    ConfigItem["ConfigItem (シリーズ設定)"]
-    ThemeColors["AtLeastOneThemeColor (テーマ別カラー)"]
-    TooltipVariant["TooltipVariant (ツールチップ様式)"]
-    BackgroundVariant["BackgroundVariant (背景様式)"]
+    Container["ChartContainer<br/>Context 提供とレスポンシブ枠"]
+    Style["ChartStyle<br/>style タグで CSS 変数を注入"]
+    Ctx["ChartContext<br/>ChartConfig を保持"]
+    Hook["useChart()"]
+    Resp["Recharts ResponsiveContainer"]
+    TooltipContent["ChartTooltipContent<br/>ツールチップ本体"]
+    Background["ChartBackground<br/>SVG パターン背景"]
+    ZLayer["Recharts ZIndexLayer<br/>zIndex -1"]
 
-    Chart -->|1:1 保持| ChartConfig
-    ChartConfig -->|0:N 含有| ConfigItem
-    ConfigItem -->|0:1 含有| ThemeColors
-    Chart -->|0:1 適用| TooltipVariant
-    Chart -->|0:1 適用| BackgroundVariant
+    Container --> Ctx
+    Container --> Style
+    Container --> Resp
+    TooltipContent --> Hook
+    Hook --> Ctx
+    Background --> ZLayer
 ```
 
-※ `ChartConfig` は空オブジェクトを含む任意のキー集合 (`0..N`) であり、`ConfigItem` における `label`, `icon`, `colors` もすべてオプショナル (`0..1`) です。
+| 名前 | ファイル | 役割 |
+|---|---|---|
+| `ChartContainer` | `recharts-chart.tsx` | `ChartConfig` の実行時検証、Context 提供、`ResponsiveContainer` のラップ |
+| `ChartStyle` | `recharts-chart.tsx` | テーマ別カラーを CSS 変数へ展開し `<style>` として出力 |
+| `LoadingIndicator` / `getLoadingData` | `recharts-chart.tsx` | ローディング表示とスケルトン用ダミーデータ。個別に export され、上位のチャートが組み込む |
+| `ChartTooltipContent` | `recharts-tooltip.tsx` | `useChart()` で config を読み、ラベルとインジケータを描画 |
+| `ChartBackground` | `recharts-background.tsx` | 11 種の `<pattern>` を `PATTERN_MAP` から引き、ガウシアンブラーのマスクで縁をぼかす |
 
-### TypeScript インターフェース定義
+背景の重ね順は `ZIndexLayer`（`zIndex={-1}`）で制御しています。これは evilcharts 独自の部品ではなく、**Recharts 3.5.0 で追加された export** です（3.4.0 の型定義には存在しません）。`recharts-background` を使うなら Recharts 3.5.0 以上が必要になります。
 
-`evilcharts` で利用される型定義コードの抜粋です（※内部型は説明用）。
+ECharts 系（`echarts-chart.tsx` ほか）は `ChartConfig` や `distributeColors` といった同名・同契約のユーティリティを持ちますが、Recharts 系からは何も import していません。ソースにも「no recharts ui imports」と明記された意図的な複製です。registry から片方だけを取り込んでも動くようにするための設計で、裏を返すと **同じ概念の実装が 2 箇所に存在する**ことになります。
+
+## データ
+
+### ChartConfig の型
+
+設定はデータキー（`desktop`、`mobile` など）をキーにしたマップです。
 
 ```typescript
-// 内部型定義（説明用）
+// THEMES = { light: "", dark: ".dark" } の keyof
 type ThemeKey = "light" | "dark";
 
 type ThemeColorsBase = {
   [K in ThemeKey]?: string[];
 };
 
+// light / dark のうち最低 1 つを必須にする
 type AtLeastOneThemeColor = {
   [K in ThemeKey]: Required<Pick<ThemeColorsBase, K>> & Partial<Omit<ThemeColorsBase, K>>;
 }[ThemeKey];
 
-// 公開型定義
 export type ChartConfig = Record<
   string,
   {
@@ -164,147 +157,227 @@ export type ChartConfig = Record<
     colors?: AtLeastOneThemeColor;
   }
 >;
-
-// 11 種類の背景パターン識別名
-export type BackgroundVariant =
-  | "dots"
-  | "grid"
-  | "cross-hatch"
-  | "diagonal-lines"
-  | "plus"
-  | "falling-triangles"
-  | "4-pointed-star"
-  | "tiny-checkers"
-  | "overlapping-circles"
-  | "wiggle-lines"
-  | "bubbles";
-
-// ツールチップの表現バリエーション
-export type TooltipVariant = "default" | "frosted-glass";
 ```
 
----
+`colors` が **配列**である点がポイントです。1 シリーズに複数色を渡せて、グラデーションや複数スロットの塗りに使われます。
 
-## ■導入と実装コード例
+型だけでは防げないケース（`colors: {}` や無効なキーだけを渡す場合）に備えて、`ChartContainer` は実行時にも検証します。該当すると次の例外が投げられます。
 
-### 1. shadcn CLI による導入
+```text
+[EvilCharts] Invalid chart config for "desktop": colors object must have at least one theme key (light, dark). Received empty object or invalid keys.
+```
 
-標準パッケージ名（例: `@evilcharts/recharts-bar-chart`）または個別 JSON URL を指定して導入します。
+### 色が CSS 変数になるまで
+
+`ChartStyle` は config から `[data-chart=<id>]` セレクタ配下の CSS 変数を組み立てます。
+
+```mermaid
+graph LR
+    Config["ChartConfig の colors"]
+    Count["getColorsCount<br/>全テーマ中の最大要素数"]
+    Dist["distributeColors<br/>スロット数へ均等分配"]
+    Vars["--color-キー-番号"]
+    Css["style タグ<br/>data-chart セレクタ配下"]
+
+    Config --> Count
+    Count --> Dist
+    Config --> Dist
+    Dist --> Vars
+    Vars --> Css
+```
+
+スロット数はテーマをまたいだ最大色数（最低 1）です。ライトに 3 色、ダークに 1 色を指定した場合、スロット数は 3 になり、ダーク側の 1 色が 3 スロットへ複製されます。分配規則は「余りは後ろの色に配る」です。
+
+| 入力色数 | スロット数 | 結果 |
+|---|---|---|
+| 2 | 4 | `[c0, c0, c1, c1]` |
+| 3 | 4 | `[c0, c1, c2, c2]` |
+| 4 | 2 | `[c0, c1]`。先頭から切り詰め |
+
+生成される CSS は、ライトが `[data-chart=chart-xxx]`、ダークが `.dark [data-chart=chart-xxx]` の 2 ブロックです。`next-themes` などで `<html class="dark">` を切り替える構成にそのまま乗ります。
+
+ツールチップのインジケータも同じ変数を読みます。色が 1 つなら単色、複数なら `linear-gradient(to right, var(--color-desktop-0) 0%, var(--color-desktop-1) 100%)` のように等間隔のグラデーションになります。
+
+## 導入方法
+
+Next.js + shadcn/ui 初期化済みのプロジェクトに取り込む手順です。
+
+### 1. Recharts を入れる
 
 ```bash
-# 公式パッケージ指定による導入例
-npx shadcn@latest add @evilcharts/recharts-bar-chart
-
-# 個別 JSON URL を直接指定して低レベルコンポーネントを取り込む場合
-npx shadcn@latest add https://evilcharts.com/r/recharts-chart.json
-npx shadcn@latest add https://evilcharts.com/r/recharts-tooltip.json
-npx shadcn@latest add https://evilcharts.com/r/recharts-background.json
+npm install recharts
 ```
 
-### 2. 実際のコンポーネントコード例
+registry item の `dependencies` にも `recharts` が入っているため CLI が自動で入れますが、**バージョンは固定されません**。`recharts-background` を使うなら 3.5.0 以上を自分で担保してください。
 
-`BarChart` に対し、すりガラス風ツールチップ（`frosted-glass`）と 4-pointed-star 背景パターンを組み合わせた実装例です。
+### 2. namespace を components.json に登録する
+
+公式ドキュメントのインストール手順は `@evilcharts/...` という namespace 形式です。これを解決させるには、利用側の `components.json` に `registries` を追加します。
+
+```json
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "registries": {
+    "@evilcharts": "https://evilcharts.com/r/{name}.json"
+  }
+}
+```
+
+namespace を使わず、registry JSON の URL を直接渡すこともできます。
+
+```bash
+npx shadcn@latest add https://evilcharts.com/r/recharts-chart.json
+```
+
+### 3. チャートを追加する
+
+```bash
+npx shadcn@latest add @evilcharts/recharts-bar-chart
+```
+
+`recharts-bar-chart` は registry 依存として `recharts-chart` / `recharts-tooltip` / `recharts-legend` / `recharts-brush` / `recharts-background` を宣言しているため、土台一式がまとめて入ります。生成されるのは次のファイル群です。
+
+```text
+components/evilcharts/charts/recharts-bar-chart.tsx
+components/evilcharts/ui/recharts-chart.tsx
+components/evilcharts/ui/recharts-tooltip.tsx
+components/evilcharts/ui/recharts-legend.tsx
+components/evilcharts/ui/recharts-brush.tsx
+components/evilcharts/ui/recharts-background.tsx
+```
+
+チャート種別は `recharts-` / `echarts-` の接頭辞つきで、`area` / `line` / `bar` / `composed` / `pie` / `radial` / `radar` / `sankey` の 8 種類が両系統に用意されています。
+
+## 利用方法
+
+リポジトリ同梱の例（`src/registry/examples/recharts/ex-bar-chart.tsx`）を、取り込み後の import パスに置き換えたものです。
 
 ```tsx
 "use client";
 
-import React from "react";
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
-import { ChartContainer, ChartConfig } from "@/components/evilcharts/ui/recharts-chart";
-import { ChartTooltip, ChartTooltipContent } from "@/components/evilcharts/ui/recharts-tooltip";
-import { ChartBackground } from "@/components/evilcharts/ui/recharts-background";
+import { EvilBarChart } from "@/components/evilcharts/charts/recharts-bar-chart";
+import { type ChartConfig } from "@/components/evilcharts/ui/recharts-chart";
 
-// 1. チャート設定とテーマカラー
+const data = [
+  { month: "January", desktop: 342, mobile: 184 },
+  { month: "February", desktop: 876, mobile: 491 },
+  { month: "March", desktop: 512, mobile: 290 },
+  { month: "April", desktop: 629, mobile: 391 },
+  { month: "May", desktop: 458, mobile: 309 },
+  { month: "June", desktop: 781, mobile: 449 },
+];
+
 const chartConfig = {
   desktop: {
-    label: "Desktop Users",
+    label: "Desktop",
     colors: {
-      light: ["#3b82f6", "#60a5fa"],
-      dark: ["#2563eb", "#3b82f6"],
+      light: ["#047857"],
+      dark: ["#10b981"],
     },
   },
   mobile: {
-    label: "Mobile Users",
+    label: "Mobile",
     colors: {
-      light: ["#f43f5e"],
-      dark: ["#e11d48"],
+      light: ["#be123c"],
+      dark: ["#f43f5e"],
     },
   },
 } satisfies ChartConfig;
 
-const chartData = [
-  { month: "Jan", desktop: 186, mobile: 80 },
-  { month: "Feb", desktop: 305, mobile: 200 },
-  { month: "Mar", desktop: 237, mobile: 120 },
-  { month: "Apr", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "Jun", desktop: 214, mobile: 140 },
-];
-
-export function MyEvilBarChart() {
+export function ExampleBarChart() {
   return (
-    <div className="w-full max-w-2xl p-4 rounded-xl border bg-card text-card-foreground shadow-sm">
-      <h3 className="text-lg font-semibold mb-4">Monthly Active Users</h3>
-      
-      {/* 2. ChartContainer の配置 */}
-      <ChartContainer config={chartConfig} className="h-[300px]">
-        <BarChart data={chartData}>
-          {/* 背景に SVG 星柄パターンを挿入 */}
-          <ChartBackground variant="4-pointed-star" />
-          
-          <CartesianGrid strokeDasharray="3 3" className="stroke-border/40" />
-          <XAxis dataKey="month" tickLine={false} axisLine={false} />
-          <YAxis tickLine={false} axisLine={false} />
-          
-          {/* すりガラス風ツールチップ */}
-          <ChartTooltip
-            content={<ChartTooltipContent variant="frosted-glass" roundness="xl" />}
-          />
-          
-          {/* CSS 変数 --color-desktop-0 を適用 */}
-          <Bar dataKey="desktop" fill="var(--color-desktop-0)" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="mobile" fill="var(--color-mobile-0)" radius={[4, 4, 0, 0]} />
-        </BarChart>
-      </ChartContainer>
-    </div>
+    <EvilBarChart
+      data={data}
+      config={chartConfig}
+      className="h-full w-full p-4"
+      xDataKey="month"
+    >
+      <EvilBarChart.Grid />
+      <EvilBarChart.XAxis dataKey="month" tickFormatter={(value) => value.substring(0, 3)} />
+      <EvilBarChart.Brush formatLabel={(value) => String(value).substring(0, 3)} />
+      <EvilBarChart.Legend isClickable />
+      <EvilBarChart.Tooltip />
+      <EvilBarChart.Bar dataKey="desktop" variant="default" isClickable />
+      <EvilBarChart.Bar dataKey="mobile" variant="default" isClickable />
+    </EvilBarChart>
   );
 }
 ```
 
----
+Recharts の `<BarChart>` を直接書くのではなく、`EvilBarChart` のルートに部品をぶら下げる形です。部品はルートの静的メンバー（`EvilBarChart.Bar` など）なので、複数種類のチャートを 1 ファイルに置いても import 名が衝突しません。
 
-## ■運用上の注意点とトラブルシューティング
+`config` のキーはデータ行の型と突き合わされます。`data` に存在しないキーを `config` に書くと型エラーになるため、シリーズ名のタイポはコンパイル時に落とせます。
 
-### 1. SSR と Hydration / レスポンシブ境界の扱い
-Recharts コンポーネントはクライアントサイドでのみ安全に動作します。
-- 生の Recharts 部品を直接組み合わせて独自のラッパーを作成する場合は、そのファイル冒頭に `"use client";` を明記してください。なお、`EvilBarChart` などあらかじめ境界が定義されたコンポーネントは Server Component から直接呼ぶことも可能です。
-- `ChartContainer` には `initialDimension={{ width: 320, height: 200 }}` がプリセットされており、初回のレイアウトシフト（CLS）を防ぐ工夫がなされています。
+主なルート props は次のとおりです。
 
-### 2. カラー分配処理（`distributeColors`）
-`ChartConfig` 内の同一データキーについて `light` と `dark` の配列長が異なる場合、`distributeColors` アルゴリズムが短い配列要素を複製・拡張し、両テーマ間で同一数の配色スロット（`--color-${key}-0`〜`--color-${key}-${n}`）を安全に揃えます。
-
-### 3. トラブルシューティング一覧
-
-| 現象 | 主な原因 | 対処方法 |
+| props | 既定値 | 用途 |
 |---|---|---|
-| `Invalid chart config...` エラーが発生する | `colors` オブジェクトに `light` や `dark` のキーが存在しない | `colors: { light: ["#3b82f6"] }` のように有効なテーマキーを設定する |
-| Tooltip が画面左上 (0,0) からアニメーションする | Recharts 初期ロード時にマウント位置が未確定のまま描画される | `recharts-tooltip.tsx` 内で Guard (`if (!active) return <span className="p-4" />`) を通す |
-| チャートの幅・高さが 0 になる | リサイズ領域が非ゼロ寸法を持たない | 通常 `ChartContainer` には `aspect-video` が適用されます。上書き時や `footer` 使用時は `ChartContainer` 自身に `h-[300px]` などを設定してください |
+| `stackType` | `"default"` | `"stacked"` / `"percent"` で積み上げ・100% 積み上げ |
+| `layout` | `"vertical"` | `"horizontal"` で横棒 |
+| `barRadius` | `2` | 各バーの既定角丸 |
+| `animationType` | `"left-to-right"` | 出現順。`"none"` / `"center-out"` / `"edges-in"` など |
+| `backgroundVariant` | なし | 背景パターン。`"dots"` `"grid"` ほか計 11 種 |
+| `isLoading` | `false` | ローディングスケルトンの表示 |
+| `xDataKey` | なし | `<Brush />` を使うときの X 軸キー |
 
----
+バー側は `variant`（`default` / `hatched` / `duotone` / `duotone-reverse` / `gradient` / `stripped`）と `glowing`、`isClickable` を持ちます。ツールチップは `variant="frosted-glass"` ですりガラス調（`bg-background/70 backdrop-blur-sm`）になり、`roundness` は `sm` / `md` / `lg` / `xl` から選べます。
+
+## 運用
+
+### Client Component 境界
+
+`recharts-chart.tsx`、`recharts-background.tsx`、および各チャート本体は先頭に `"use client"` を持ちます。したがって Server Component から import すること自体は可能です。ただし上の例のように `tickFormatter` などの関数を props で渡す場合、渡す側も Client Component である必要があります。
+
+一方 `recharts-tooltip.tsx` には `"use client"` が付いていません。チャート経由で使う前提の作りなので、単体で切り出して Server Component から読むことは想定されていません。
+
+### レイアウトと初期サイズ
+
+`ChartContainer` は `ResponsiveContainer` に `initialDimension = { width: 320, height: 200 }` を渡します。初回描画で 0px にならないための保険であり、**最終的な高さは利用側が決める**必要があります。
+
+`ChartContainer` に渡した `className` は外側の `div` にそのまま適用されるため、高さは `className="h-[300px]"` のように自分自身へ指定できます。`footer` を渡さない場合は既定で `aspect-video` が付くので、アスペクト比に任せる選択もあります。どちらも使わないなら、レイアウトを確定させる祖先要素側で高さを決めてください。
+
+### アニメーションのコスト
+
+evilcharts は Recharts 側のバーアニメーションを常時無効化し、代わりに motion による「ベースラインから伸びる」演出を自前で描いています。これはフレームごとの描画になるため静的チャートより重く、ソースコードにも注意書きがあります。
+
+- 大量データや低スペック端末では `animationType="none"` で無効化する
+- OS の「視差効果を減らす」設定が有効な端末では、自動的に `none` 相当へフォールバックする
+
+### 更新の取り込み
+
+コピー型配布の裏返しとして、**アップストリームの修正は自動で降ってきません**。再度 `npx shadcn add` すると取り込み済みファイルが上書きされるため、ローカルで手を入れている場合は自分で差分をマージすることになります。改変するなら、取り込んだファイルを直接編集するのではなく、ラッパーを一段かぶせて差分を局所化しておくと更新が楽になります。
+
+前述のとおり Recharts 系と ECharts 系はコードを共有していません。片系統で見つけた不具合の修正が、もう片方に自動で効くこともありません。
+
+## 注意点
+
+導入時に踏みやすい箇所をまとめます。
+
+| 症状 | 原因 | 対処 |
+|---|---|---|
+| `@evilcharts/...` が解決できない | 利用側 `components.json` に `registries` が未設定 | `"@evilcharts": "https://evilcharts.com/r/{name}.json"` を追加するか、registry JSON の URL を直接指定する |
+| 取り込んだファイルが見つからない | 配置先が `components/ui/` ではない | `components/evilcharts/ui/` と `components/evilcharts/charts/` を見る |
+| `[EvilCharts] Invalid chart config...` で落ちる | `colors` に `light` / `dark` のいずれも無い | 最低 1 テーマ分の色配列を渡す |
+| 背景パターンでビルドが通らない | `ZIndexLayer` は Recharts 3.5.0 以降の export | Recharts を 3.5.0 以上に上げる |
+| チャートが潰れる、親をはみ出す | 高さの決定が利用側任せ | `ChartContainer` に `className="h-[300px]"` を与えるか、既定の `aspect-video` に任せる |
+| 描画が重い | 自前アニメーションがフレームごとに走る | `animationType="none"` にする、データ点数を減らす |
 
 ## まとめ
 
-`evilcharts` は、shadcn CLI の分散配信エコシステムと Recharts / ECharts を組み合わた、非常に現代的で洗練されたチャートライブラリです。モノリシックなライブラリに縛られず、コンポーネント単位でコードを取り込み、Tailwind CSS v4 や CSS 変数を活かした自由度の高いスタイリングと表現力を実現できます。
+- evilcharts は npm パッケージではなく **shadcn registry でソースを配る**チャート集で、取り込み先は `components/evilcharts/` 配下です。
+- 導入には利用側 `components.json` への namespace 登録、または registry JSON の URL 直指定が要ります。
+- 設定は `ChartConfig` に集約され、テーマ別の色配列が `--color-<キー>-<番号>` の CSS 変数へ展開されます。色数がスロット数に足りなければ自動で分配されます。
+- API は `<EvilBarChart>` と静的メンバーによる compound 形式で、必要な部品だけを合成します。
+- コピー型なので、更新の取り込みと改変のマージは自分の責任になります。Recharts 系と ECharts 系が独立実装である点も含め、「ライブラリを使う」より「テンプレートをもらう」感覚が近いです。
 
-React 19 / Next.js 16 環境でリッチでインタラクティブなデータビジュアライゼーションを構築する際の有力な選択肢となるでしょう。
-
----
+デザイン込みのチャートを短時間で立ち上げたい、かつ後から自由に手を入れたい場合に噛み合います。逆に、依存を薄く保ってバージョン管理をパッケージマネージャに任せたい場合は、方向性が合いません。
 
 ## 参考リンク
 
-- **evilcharts GitHub リポジトリ**: [https://github.com/legions-developer/evilcharts](https://github.com/legions-developer/evilcharts)
-- **evilcharts Web サイト**: [https://evilcharts.com](https://evilcharts.com)
-- **Recharts 公式**: [https://recharts.org](https://recharts.org)
-- **Apache ECharts 公式**: [https://echarts.apache.org](https://echarts.apache.org)
-- **shadcn/ui Registry 仕様**: [https://ui.shadcn.com/docs/registry](https://ui.shadcn.com/docs/registry)
+- [evilcharts リポジトリ（legions-developer/evilcharts）](https://github.com/legions-developer/evilcharts)
+- [evilcharts 公式サイト](https://evilcharts.com)
+- [evilcharts インストール手順（Recharts）](https://evilcharts.com/docs/recharts/installation)
+- [shadcn/ui Registry ドキュメント](https://ui.shadcn.com/docs/registry)
+- [shadcn/ui Registry Namespaces](https://ui.shadcn.com/docs/registry/namespace)
+- [Recharts 公式サイト](https://recharts.org)
+- [Apache ECharts 公式サイト](https://echarts.apache.org)
