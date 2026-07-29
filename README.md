@@ -7,10 +7,17 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (224)
+## Articles: 下書き (231)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-07-29 | [🧩 AI生成コードの「暗黙の前提」を成果物にする — AssumptionMinerの読み解き](articles/assumptionminer-ai-arxiv-p4_20260729.md) | LLM, CodeGeneration, SpecDrivenDevelopment, ADR, Requirements |
+| 2026-07-29 | [🏗️ 仕様書から「動くコード」まで自走する Claude Code 実装ハーネス - distillery-impl](articles/distillery-impl-harness_20260729.md) | ClaudeCode, AIAgent, TDD, BDD |
+| 2026-07-29 | [📊 shadcn registry でソースごと配るチャート集 - evilcharts](articles/evilcharts_20260729.md) | React, Nextjs, TailwindCSS, Recharts, shadcnui |
+| 2026-07-29 | [🔐 npmとGitHub Actionsのサプライチェーン対策をCI/CD権限設計へ落とす](articles/github-npm-actions-ci-cd-p8_20260729.md) | GitHub, npm, GitHubActions, CICD, Security |
+| 2026-07-29 | [🧪 実トラフィックから回帰テストを生成する: NL2Testの役割分担設計](articles/nl2test-196-arxiv-abs-p7_20260729.md) | LLM, Testing, API, Architecture |
+| 2026-07-29 | [🔬 AIで実装が100倍速くなっても、検証と保守の責任は移譲できない](articles/openai-openai-index-scientific-p1_20260729.md) | AI, Codex, OSS, SoftwareEngineering, Refactoring |
+| 2026-07-29 | [🗃️ 画面を見ないPC操作エージェント: StateActが示す状態基盤設計](articles/stateact-1-1-arxiv-abs-p3_20260729.md) | AIAgent, LLM, Architecture, ComputerUse |
 | 2026-07-28 | [🔍 AIレビュー5万4791件の分析: 指摘が直される条件と直されない理由](articles/ai-4791-arxiv-abs-2607-21997-p3_20260728.md) | CodeReview, AIAgent, GitHub, Copilot, LLM |
 | 2026-07-28 | [🧪 Skillのテストは何を漏らすか - Skill Test Coverageで未検証の運用義務を測る](articles/cloud-skills-skill-test-agent-p2_20260728.md) | AIAgent, Testing, LLM, CloudNative, CI |
 | 2026-07-28 | [🧰 エージェントハーネスに何を固定し、何を可変にするか](articles/github-ai-github-company-p9_20260728.md) | GitHub, Copilot, AIAgent, DevOps |

@@ -372,6 +372,8 @@ evilcharts は Recharts 側のバーアニメーションを常時無効化し�
 
 デザイン込みのチャートを短時間で立ち上げたい、かつ後から自由に手を入れたい場合に噛み合います。逆に、依存を薄く保ってバージョン管理をパッケージマネージャに任せたい場合は、方向性が合いません。
 
+この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
+
 ## 参考リンク
 
 - [evilcharts リポジトリ（legions-developer/evilcharts）](https://github.com/legions-developer/evilcharts)

@@ -12,7 +12,7 @@ AI エージェントに実装を任せると、3 つの問題に必ずぶつか
 
 distillery-impl は、この 3 つに正面から答える Claude Code plugin です。仕様書(前工程の [distillery](https://github.com/suwa-sh/suwa-sh-claude-plugins/tree/main/plugins/distillery) が生成)を入力に、テストを 4 段先に作り、実装エージェント(Implementer)が書き、**別モデルの検証エージェント(Verifier)が反証し**、途中で切れても再開できる形で「動くコード」まで運びます。
 
-https://github.com/suwa-sh/suwa-sh-claude-plugins
+https://github.com/suwa-sh/suwa-sh-claude-plugins/tree/main/plugins/distillery-impl
 
 設計の骨格は、Cloudflare が公開した脆弱性探索ハーネス(VDH/VVS)の設計原則を「脆弱性探索」から「仕様駆動実装」へ転用したものです。
 
