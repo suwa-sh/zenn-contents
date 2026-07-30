@@ -1593,6 +1593,7 @@ Graph Engineeringの本質は、loopを捨てることではありません。lo
 - [Loop Engineering入門](https://zenn.dev/suwash/articles/loop-engineering_20260610) — graph が node 内部へ閉じ込める loop そのものを設計する
 - [AI Harness Engineering入門](https://zenn.dev/suwash/articles/ai-harness-engineering_20260515) — node を実行する層の責務と証跡を契約として定義する
 - [Context Engineering入門](https://zenn.dev/suwash/articles/context_engineering_20250719) — 型付き state に載せる情報を、何を渡すかの側から設計する
+- [プロンプトエンジニアリングの進化](https://zenn.dev/suwash/articles/prompt_engneering_20250529) — node 内部の 1 回の model 呼び出しに与える指示を設計する
 - [LangGraph技術調査](https://zenn.dev/suwash/articles/lang_graph_20251110)
 
 ## 参考リンク
