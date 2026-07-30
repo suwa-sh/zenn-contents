@@ -1,5 +1,5 @@
 ---
-title: "コンテキストエンジニアリング：次世代AIを構築する設計戦略と思想"
+title: "Context Engineering入門：AIに何を渡すかをシステムとして設計する"
 emoji: "🧠"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AI", "LLM", "RAG", "Agent", "SystemDesign"]

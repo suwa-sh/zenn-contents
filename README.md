@@ -280,7 +280,7 @@
 | 2026-05-26 | [🔍 技術調査 - chrome-devtools-mcp（Chrome DevTools for agents）](articles/chrome-devtools-mcp_20260524.md) | MCP, ChromeDevTools, Puppeteer, Lighthouse, AIエージェント |
 | 2026-05-23 | [🥃 技術調査 - distillery](articles/distillery_20260521.md) | ClaudeCode, Claude, Distillery, RDRA, USDM |
 | 2026-05-21 | [🔌 技術調査 - Codex App Server](articles/codex-app-server_20260514.md) | Codex, OpenAI, JSONRPC, LLM, VSCode |
-| 2026-05-19 | [🪢 技術調査 - AI Harness Engineering](articles/ai-harness-engineering_20260515.md) | AIエージェント, ClaudeCode, Codex, Observability, SoftwareEngineering |
+| 2026-05-19 | [🪢 AI Harness Engineering入門：エージェントを包む実行層を契約として設計する](articles/ai-harness-engineering_20260515.md) | AIエージェント, ClaudeCode, Codex, Observability, SoftwareEngineering |
 | 2026-05-15 | [🎯 技術調査 - Claude Code /goal コマンド](articles/claude-code-goal-command_20260514.md) | ClaudeCode, Anthropic, AIAgent, Automation, DevTools |
 | 2026-05-13 | [🧠 技術調査 - Personal AI Infrastructure (PAI)](articles/pai_20260513.md) | PAI, ClaudeCode, AIAgent, PersonalAI, LifeOS |
 | 2026-05-08 | [☁️ 技術調査 - Cloudflare Dynamic Workflows](articles/cloudflare-dynamic-workflows_20260503.md) | Cloudflare, Workflows, DurableExecution, Multitenant, AIAgent |
@@ -374,7 +374,7 @@
 | 2025-08-18 | [🤖 技術調査 - PR-Agent](articles/pr_agent_20250818.md) | AI, GitHub, 開発効率化, コードレビュー, LLM |
 | 2025-08-17 | [🔐 技術調査 - Clerk](articles/clerk_20250702.md) | Clerk, Nextjs, Auth, 認証, 開発 |
 | 2025-08-08 | [🤖 技術調査 - Serena MCP](articles/serene_mcp_20250807.md) | LLM, AI, コーディング, Python, LSP |
-| 2025-07-20 | [🧠 コンテキストエンジニアリング：次世代AIを構築する設計戦略と思想](articles/context_engineering_20250719.md) | AI, LLM, RAG, Agent, SystemDesign |
+| 2025-07-20 | [🧠 Context Engineering入門：AIに何を渡すかをシステムとして設計する](articles/context_engineering_20250719.md) | AI, LLM, RAG, Agent, SystemDesign |
 | 2025-07-18 | [☁️ Gmailイベントを扱うSaaSのアーキテクチャ - Google Cloud版](articles/gmail_app_gcp_20250718.md) | GoogleCloud, Gmail, Architecture, PubSub, CloudRun |
 | 2025-07-16 | [🚀 パフォーマンステストの戦略ガイド：Grafana k6による実践と自動化](articles/perf_test_k6_20250716.md) | k6, performance, test, sre, cicd |
 | 2025-07-15 | [🚀 技術調査 - Grafana k6](articles/grafana_k6_20250715.md) | k6, performance, testing, DevOps, SRE |

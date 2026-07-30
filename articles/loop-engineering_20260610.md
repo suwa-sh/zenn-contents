@@ -1141,6 +1141,11 @@ Loop engineering は、AI コーディングエージェントを「手で動か
 
 この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
 
+## 関連記事
+
+- [AI Harness Engineering入門](https://zenn.dev/suwash/articles/ai-harness-engineering_20260515) — loop を回す実行層そのものを、責務と証跡の契約として定義する
+- [Context Engineering入門](https://zenn.dev/suwash/articles/context_engineering_20250719) — loop の各ターンでエージェントに何を渡すかを設計する
+
 ## 参考リンク
 
 - 公式リポジトリ（cobusgreyling/loop-engineering）

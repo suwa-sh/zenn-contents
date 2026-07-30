@@ -1,5 +1,5 @@
 ---
-title: "技術調査 - AI Harness Engineering"
+title: "AI Harness Engineering入門：エージェントを包む実行層を契約として設計する"
 emoji: "🪢"
 type: "tech"
 topics: ["AIエージェント", "ClaudeCode", "Codex", "Observability", "SoftwareEngineering"]
@@ -1130,6 +1130,10 @@ Entropy auditor は「保守負債の蓄積速度」を測る責務です。専�
 論文「AI Harness Engineering」は、SWE エージェントの成否を「最終パッチが正しいか」ではなく「実行証跡 (auditable episode package) が証拠として残るか」で測り直す枠組みを提示します。11 責務 / H0-H3 ラダー / 8 トレース / 5 outcome ラベル は preprint 段階ですが、Claude Code Hooks 29 種、Codex の sandbox/approval、Phoenix の OpenInference span kind と実装界の動きと整合しており、現場のチェックリストとして十分に転用できます。
 
 この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
+
+## 関連記事
+
+- [Context Engineering入門](https://zenn.dev/suwash/articles/context_engineering_20250719) — harness が媒介する context を、何を渡すかの側から設計する
 
 ## 参考リンク
 
