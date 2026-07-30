@@ -91,10 +91,10 @@ Graph Engineering の構成要素は新規発明の集合ではありません�
 
 | 概念 | 主に設計する対象 | Graph Engineering との関係 |
 |---|---|---|
-| Prompt Engineering | 1 回の model 呼び出しへ与える指示 | node 内部の品質を支える下位レイヤーです。 |
-| Context Engineering | model が各 turn で読む情報と圧縮・記憶 | node 内部の判断材料と、node 間で受け渡す state の選別を支えます。 |
+| [Prompt Engineering](https://zenn.dev/suwash/articles/prompt_engneering_20250529) | 1 回の model 呼び出しへ与える指示 | node 内部の品質を支える下位レイヤーです。 |
+| [Context Engineering](https://zenn.dev/suwash/articles/context_engineering_20250719) | model が各 turn で読む情報と圧縮・記憶 | node 内部の判断材料と、node 間で受け渡す state の選別を支えます。 |
 | [Loop Engineering](https://zenn.dev/suwash/articles/loop-engineering_20260610) | 1 agent の think-act-observe、tool、stop condition、compaction | graph の node 内部で継続します。Graph Engineering は loop 間の依存、handoff、gate、join を主に扱います。 |
-| Agent harness | loop を実行する runtime、tool、sandbox、policy、session store | graph の各 node を動かす substrate です。1 つの harness は loop と graph の双方を実行できます。 |
+| [Agent harness](https://zenn.dev/suwash/articles/ai-harness-engineering_20260515) | loop を実行する runtime、tool、sandbox、policy、session store | graph の各 node を動かす substrate です。1 つの harness は loop と graph の双方を実行できます。 |
 | State machine | 状態集合と遷移規則 | Graph Engineering の制御意味論を厳密化します。各 node の lifecycle と graph 全体の進行状態に利用できます。 |
 | DAG | cycle を含まない有向 graph | 既知の依存と有限実行に向く graph topology の一種です。Graph Engineering 全体は cyclic / dynamic graph も含みます。 |
 | Workflow | code で規定した処理経路 | Graph Engineering は workflow engineering と大きく重なります。LLM node、model-driven routing、semantic evaluation、token budget を第一級の対象とする点が特徴です。 |
