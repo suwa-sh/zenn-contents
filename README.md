@@ -7,10 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (238)
+## Articles: 下書き (241)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-01 | [🛡️ タスク完了率93.7%の裏側 - エージェント実行の66.2%が危険なまま完了していた](articles/agents4d-66-2-arxiv-abs-p2_20260801.md) | LLM, AIAgent, Security, MCP, ClaudeCode |
+| 2026-08-01 | [🧭 GPT-5.6 Lunaの80%値下げで問い直すべきは単価ではなく工程設計](articles/openai-gpt-5-6-luna-openai-p4_20260801.md) | OpenAI, LLM, Codex, AIAgent |
+| 2026-08-01 | [🧩 文章で書いたSkillは56%しか守られない - SIGILが示す型付きハーネスへのコンパイル](articles/sigil-skill-agent-skills-p3_20260801.md) | ai, agent, llm, claudecode, 設計 |
 | 2026-08-01 | [📦 AIエージェントのスキルを社内で審査して配るレジストリ - SkillHub](articles/skillhub_20260801.md) | AI, Java, SpringBoot, Docker, ClaudeCode |
 | 2026-07-31 | [🚨 AIの暴走課金はなぜ5か月気づかれないのか - Amazonの予算860%超過に学ぶ統制設計](articles/amazon-ai-ai-ft-content-baac40-p1_20260731.md) | AI, FinOps, LLM, AWS, SRE |
 | 2026-07-31 | [🚦 エージェントの誤行動を止めるのは賢さではなく配置 — 実行時データ品質ゲートSARC-DQ](articles/arxiv-abs-2607-26313-p8_20260731.md) | AIAgent, RAG, DataQuality, LLM, MLOps |

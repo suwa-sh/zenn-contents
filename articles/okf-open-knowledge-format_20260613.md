@@ -9,6 +9,8 @@ published_at: 2026-06-16
 
 OKF (Open Knowledge Format) は、Google Cloud が 2026 年 6 月に公開した「AIエージェントが読む知識を、どのファイル形式で持つか」を定める軽量フォーマットです。サービスでもプラットフォームでもなく、YAML frontmatter 付き markdown ファイルのディレクトリツリーという取り決めに過ぎません。本記事は spec 原文とリポジトリ実体を一次ソースとして、OKF の構造・データモデル・導入手順・運用までを整理します。
 
+2026 年 7 月に公開された v0.2 の信頼信号、trust tier、Attested Computation は、[エージェント知識の信頼信号を記述する形式 - OKF v0.2](https://zenn.dev/suwash/articles/okf-v02-trust-signals_20260726) で扱っています。
+
 ---
 
 ## 概要
