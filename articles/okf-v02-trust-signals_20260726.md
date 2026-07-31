@@ -3,7 +3,8 @@ title: "エージェント知識の信頼信号を記述する形式 - OKF v0.2"
 emoji: "🧭"
 type: "tech"
 topics: ["AIAgent", "GoogleCloud", "DataGovernance"]
-published: false
+published: true
+published_at: 2026-08-01
 ---
 
 AI エージェントが知識を継続的に生成・更新するなら、Markdown を保存するだけでは採用判断に必要な情報が足りません。誰が作ったのか、何を根拠に検証したのか、いつ再確認すべきかを、本文を読む前に扱える必要があります。

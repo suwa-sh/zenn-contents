@@ -7,10 +7,15 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (234)
+## Articles: 下書き (238)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-01 | [📦 AIエージェントのスキルを社内で審査して配るレジストリ - SkillHub](articles/skillhub_20260801.md) | AI, Java, SpringBoot, Docker, ClaudeCode |
+| 2026-07-31 | [🚨 AIの暴走課金はなぜ5か月気づかれないのか - Amazonの予算860%超過に学ぶ統制設計](articles/amazon-ai-ai-ft-content-baac40-p1_20260731.md) | AI, FinOps, LLM, AWS, SRE |
+| 2026-07-31 | [🚦 エージェントの誤行動を止めるのは賢さではなく配置 — 実行時データ品質ゲートSARC-DQ](articles/arxiv-abs-2607-26313-p8_20260731.md) | AIAgent, RAG, DataQuality, LLM, MLOps |
+| 2026-07-31 | [🔦 ダッシュボードもdbt定義もGitで回すBI - Lightdash](articles/lightdash_20260731.md) | dbt, BI, OSS, DataEngineering |
+| 2026-07-31 | [🧬 正解データなしでRAGを回帰テストする「メタモルフィックテスト」の考え方](articles/rag-rag-arxiv-abs-2607-26843-p7_20260731.md) | RAG, LLM, AI, テスト |
 | 2026-07-30 | [🧭 コーディングエージェントの文脈は「検索方式」より「鮮度境界」で決まる](articles/codenib-coding-agent-context-p5_20260730.md) | AI, CodingAgent, RAG, LSP, Git |
 | 2026-07-30 | [🚧 AIエージェントの暴走課金を止める境界設計 - Google Cloud Spend Caps の使いどころ](articles/google-cloud-ai-finops-agent-p3_20260730.md) | GoogleCloud, FinOps, VertexAI, AIエージェント |
 | 2026-07-30 | [🔬 AIで書き直せる時代のモダナイゼーション完了条件 — 検証オラクルと保守責任](articles/openai-modernization-software-p9_20260730.md) | AI, OpenAI, Rust, OSS, SoftwareDesign |
@@ -37,7 +42,6 @@
 | 2026-07-26 | [🔁 AIコーディングの品質確認をSkillへ変える設計 - Claude Code](articles/claude-code-verification-loops_20260726.md) | ClaudeCode, AIAgent, Testing, Quality |
 | 2026-07-26 | [🧭 dbt Native App廃止で問われる意味定義の移行設計](articles/dbt-semantic-layer-retirement_20260726.md) | dbt, Snowflake, DataEngineering, AI |
 | 2026-07-26 | [🧭 AI駆動開発で見直す、ドメイン駆動の開発プロセス](articles/domain-driven-development-process_20260726.md) | DomainDrivenDesign, ClaudeCode, SoftwareArchitecture |
-| 2026-07-26 | [🧭 エージェント知識の信頼信号を記述する形式 - OKF v0.2](articles/okf-v02-trust-signals_20260726.md) | AIAgent, GoogleCloud, DataGovernance |
 | 2026-07-26 | [🧭 小型モデル移行を支える製品ハーネスの評価設計](articles/product-harness-model-eval_20260726.md) | AI, GitHubCopilot, LLMOps |
 | 2026-07-26 | [🔄 要件品質を情報移送として捉え直す - RE Quality Reframed](articles/re-quality-information-flow_20260726.md) | RequirementsEngineering, SoftwareEngineering, Agile, AIAgent |
 | 2026-07-25 | [🛡️ 悪意あるIssueを安全に扱うための境界設計 - IssueTrojanBench](articles/issue-trojan-bench_20260725.md) | AIAgent, Security, ClaudeCode, Codex |
@@ -246,10 +250,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (162)
+## Articles: 公開済み (163)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-08-01 | [🧭 エージェント知識の信頼信号を記述する形式 - OKF v0.2](articles/okf-v02-trust-signals_20260726.md) | AIAgent, GoogleCloud, DataGovernance |
 | 2026-07-30 | [📊 shadcn registry でソースごと配るチャート集 - evilcharts](articles/evilcharts_20260729.md) | React, Nextjs, TailwindCSS, Recharts, shadcnui |
 | 2026-07-28 | [🧩 Graph Engineering入門：AIエージェントのループを明示グラフへ変える](articles/graph-engineering_20260727.md) | AI, AIAgent, LangGraph, Workflow, DistributedSystems |
 | 2026-07-25 | [🧪 正解データ不要でRAG検索の網羅性を測るテスト十分性基準 - Chunk Coverage](articles/chunk-coverage_20260722.md) | RAG, LLM, LLMOps, Testing |
