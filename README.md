@@ -7,12 +7,22 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (241)
+## Articles: 下書き (251)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-03 | [🧭 AI事業者ガイドラインを実務へ落とす：3主体の責任と運用チェックリスト](articles/ai-business-guidelines_20260803.md) | 生成AI, ガバナンス, コンプライアンス, リスク管理 |
+| 2026-08-03 | [🔄 5フェーズ・32ステージの現行実装を読み解く - AI-DLC 2.0](articles/ai-dlc_20260803.md) | AI, AWS, ClaudeCode, Codex |
+| 2026-08-03 | [🗂️ Copilotの回答品質は情報共有構造で決まる - 北海道大学のTeams方針に学ぶ](articles/copilot-teams-mx-general-p6_20260803.md) | copilot, microsoft365, teams, generativeai, knowledgemanagement |
+| 2026-08-03 | [🏷️ EU AI Act 第50条が適用開始、AI生成コンテンツの表示と機械可読マーキングの設計論点](articles/eu-ai-ai-digital-strategy-p2_20260803.md) | AI, 生成AI, C2PA, EUAIAct, アーキテクチャ |
+| 2026-08-03 | [🔌 WebMCPドラフトを読む：Web画面の機能をAIエージェントへ公開する仕組みと設計](articles/google-webmcp-web-webmcp-p7_20260803.md) | WebMCP, MCP, Chrome, AI, Agent |
+| 2026-08-03 | [🎥 画面の実作業をAgent Skillに変換する - Microsoft Skill Recorderの構造と導入条件](articles/microsoft-agent-skill-recorder-p3_20260803.md) | AIAgent, GitHubCopilot, Microsoft, RPA, OSS |
+| 2026-08-02 | [🤖 AIエージェントが使えるCLIの条件 — 出力契約・非対話・再実行の設計](articles/ai-cli-cli-zenn-dev-shunsuke-p7_20260802.md) | CLI, AI, MCP, Go, DevOps |
+| 2026-08-02 | [🎮 画面を見て操作するAIをQAに置く設計 スクエニ×Gemini事例の読み解き](articles/gemini-qa-ai-qa-itmedia-co-p5_20260802.md) | AI, QA, Gemini, テスト自動化, アーキテクチャ |
+| 2026-08-02 | [⚖️ 人手ラベル10件からLLM-as-a-Judgeを較正する - 8手法の比較と本番運用設計](articles/llm-as-a-judge-llm-zenn-dev-p8_20260802.md) | llm, evaluation, rag, dspy, mlops |
 | 2026-08-01 | [🛡️ タスク完了率93.7%の裏側 - エージェント実行の66.2%が危険なまま完了していた](articles/agents4d-66-2-arxiv-abs-p2_20260801.md) | LLM, AIAgent, Security, MCP, ClaudeCode |
 | 2026-08-01 | [🧭 GPT-5.6 Lunaの80%値下げで問い直すべきは単価ではなく工程設計](articles/openai-gpt-5-6-luna-openai-p4_20260801.md) | OpenAI, LLM, Codex, AIAgent |
+| 2026-08-01 | [🧪 AI生成テストの「写経オラクル」問題と、意味的オラクルを自動生成するPROGRESS](articles/progress-arxiv-abs-2607-27359-p7_20260801.md) | Testing, LLM, PropertyBasedTesting, Java, EvoSuite |
 | 2026-08-01 | [🧩 文章で書いたSkillは56%しか守られない - SIGILが示す型付きハーネスへのコンパイル](articles/sigil-skill-agent-skills-p3_20260801.md) | ai, agent, llm, claudecode, 設計 |
 | 2026-08-01 | [📦 AIエージェントのスキルを社内で審査して配るレジストリ - SkillHub](articles/skillhub_20260801.md) | AI, Java, SpringBoot, Docker, ClaudeCode |
 | 2026-07-31 | [🚨 AIの暴走課金はなぜ5か月気づかれないのか - Amazonの予算860%超過に学ぶ統制設計](articles/amazon-ai-ai-ft-content-baac40-p1_20260731.md) | AI, FinOps, LLM, AWS, SRE |
