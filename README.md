@@ -11,8 +11,8 @@
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-04 | [🚧 コーディングエージェントの拙速な編集を実行層で止める ECLoop の構造](articles/ecloop-coding-agent-execution-p5_20260804.md) | ai, llm, codex, claudecode, agent |
 | 2026-08-03 | [🧭 AI事業者ガイドラインを実務へ落とす：3主体の責任と運用チェックリスト](articles/ai-business-guidelines_20260803.md) | 生成AI, ガバナンス, コンプライアンス, リスク管理 |
-| 2026-08-03 | [🔄 5フェーズ・32ステージの現行実装を読み解く - AI-DLC 2.0](articles/ai-dlc_20260803.md) | AI, AWS, ClaudeCode, Codex |
 | 2026-08-03 | [🗂️ Copilotの回答品質は情報共有構造で決まる - 北海道大学のTeams方針に学ぶ](articles/copilot-teams-mx-general-p6_20260803.md) | copilot, microsoft365, teams, generativeai, knowledgemanagement |
 | 2026-08-03 | [🏷️ EU AI Act 第50条が適用開始、AI生成コンテンツの表示と機械可読マーキングの設計論点](articles/eu-ai-ai-digital-strategy-p2_20260803.md) | AI, 生成AI, C2PA, EUAIAct, アーキテクチャ |
 | 2026-08-03 | [🔌 WebMCPドラフトを読む：Web画面の機能をAIエージェントへ公開する仕組みと設計](articles/google-webmcp-web-webmcp-p7_20260803.md) | WebMCP, MCP, Chrome, AI, Agent |
@@ -263,10 +263,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (163)
+## Articles: 公開済み (164)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-08-04 | [🔄 5フェーズ・32ステージの現行実装を読み解く - AI-DLC 2.0](articles/ai-dlc_20260803.md) | AI, AWS, ClaudeCode, Codex |
 | 2026-08-01 | [🧭 エージェント知識の信頼信号を記述する形式 - OKF v0.2](articles/okf-v02-trust-signals_20260726.md) | AIAgent, GoogleCloud, DataGovernance |
 | 2026-07-30 | [📊 shadcn registry でソースごと配るチャート集 - evilcharts](articles/evilcharts_20260729.md) | React, Nextjs, TailwindCSS, Recharts, shadcnui |
 | 2026-07-28 | [🧩 Graph Engineering入門：AIエージェントのループを明示グラフへ変える](articles/graph-engineering_20260727.md) | AI, AIAgent, LangGraph, Workflow, DistributedSystems |
