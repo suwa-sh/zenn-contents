@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (251)
+## Articles: 下書き (252)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-08-04 | [🚧 コーディングエージェントの拙速な編集を実行層で止める ECLoop の構造](articles/ecloop-coding-agent-execution-p5_20260804.md) | ai, llm, codex, claudecode, agent |
+| 2026-08-04 | [🎨 コードからFigmaのデザインシステムを構築する - figma-generate-library](articles/figma-generate-library_20260804.md) | Figma, MCP, DesignSystem, AI |
 | 2026-08-03 | [🧭 AI事業者ガイドラインを実務へ落とす：3主体の責任と運用チェックリスト](articles/ai-business-guidelines_20260803.md) | 生成AI, ガバナンス, コンプライアンス, リスク管理 |
 | 2026-08-03 | [🗂️ Copilotの回答品質は情報共有構造で決まる - 北海道大学のTeams方針に学ぶ](articles/copilot-teams-mx-general-p6_20260803.md) | copilot, microsoft365, teams, generativeai, knowledgemanagement |
 | 2026-08-03 | [🏷️ EU AI Act 第50条が適用開始、AI生成コンテンツの表示と機械可読マーキングの設計論点](articles/eu-ai-ai-digital-strategy-p2_20260803.md) | AI, 生成AI, C2PA, EUAIAct, アーキテクチャ |
