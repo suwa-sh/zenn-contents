@@ -14,6 +14,9 @@ published_at: 2026-05-19 00:00
 
 調査日: 2026-05-15
 
+![記事の全体像](/images/ai-harness-engineering_20260515/overview.png)
+*この記事の全体像。以下、順に解説します。*
+
 ---
 
 ## 概要

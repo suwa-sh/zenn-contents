@@ -11,6 +11,9 @@ Loop engineering は、AI コーディングエージェントを手動で逐次
 
 > 調査日: 2026-06-10 / 対象リポジトリ: cobusgreyling/loop-engineering / 起点記事: Addy Osmani "Loop Engineering"（2026-06-07）
 
+![記事の全体像](/images/loop-engineering_20260610/overview.png)
+*この記事の全体像。以下、順に解説します。*
+
 ## 概要
 
 Loop engineering は、設計対象を「個々のプロンプト」から「ループ（システム）」へ移行させる方法論です。エンジニアがエージェントへ毎ターン指示するのではなく、エージェントへ指示するシステムそのものを設計します。

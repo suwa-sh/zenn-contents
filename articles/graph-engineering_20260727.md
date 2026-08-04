@@ -16,6 +16,9 @@ AIエージェントが長いタスクを担うと、1つのloopへ判断・状�
 
 > 本稿の Graph Engineering は Knowledge Graph Engineering や GraphRAG ではありません。agent、決定的関数、evaluator、人間承認を実行nodeとして接続し、状態・遷移・権限・予算・回復を明示的に設計する方法論を扱います。
 
+![記事の全体像](/images/graph-engineering_20260727/overview.png)
+*この記事の全体像。以下、順に解説します。*
+
 ## 概要
 
 ### 調査対象と用語の境界
