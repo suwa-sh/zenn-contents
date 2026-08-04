@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (256)
+## Articles: 下書き (257)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-04 | [🧩 AIエージェントの手順を再利用可能にするオープン形式 - Agent Skills](articles/agentskills_20260804.md) |  |
 | 2026-08-04 | [🧹 AIコード編集の29%は消さずにガードで残す「Guard-and-Go」と変更契約](articles/ai-guard-go-software-quality-p7_20260804.md) | AI, LLM, CodeReview, SoftwareQuality, CICD |
 | 2026-08-04 | [🔦 AI生成差分のレビューを絞り込む:ARCTICの意図・逸脱・重点箇所という3軸](articles/arctic-ai-code-review-human-p8_20260804.md) | CodeReview, AI, LLM, 生成AI |
 | 2026-08-04 | [🚧 コーディングエージェントの拙速な編集を実行層で止める ECLoop の構造](articles/ecloop-coding-agent-execution-p5_20260804.md) | ai, llm, codex, claudecode, agent |
