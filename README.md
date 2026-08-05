@@ -7,10 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (257)
+## Articles: 下書き (260)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-05 | [🧱 AI生成の巨大PRを依存順スタックに割る - GitHubのStacked PR設計](articles/github-ai-pr-github-engineering-p2_20260805.md) | GitHub, AI, CodeReview, GitHubActions, DevOps |
+| 2026-08-05 | [🧩 LEAN UIに学ぶ、AIが読めるデザインシステム3層設計](articles/line-ai-lydesign-jp-n-p9_20260805.md) | DesignSystem, AI, Figma, MCP, Frontend |
+| 2026-08-05 | [🔁 LoopsBench に学ぶ、長期開発でエージェントが壊れる場所と設計の勘所](articles/loopsbench-dag-arxiv-abs-p5_20260805.md) | AIAgent, Benchmark, LLM, SoftwareEngineering, ClaudeCode |
 | 2026-08-04 | [🧩 AIエージェントの手順を再利用可能にするオープン形式 - Agent Skills](articles/agentskills_20260804.md) |  |
 | 2026-08-04 | [🧹 AIコード編集の29%は消さずにガードで残す「Guard-and-Go」と変更契約](articles/ai-guard-go-software-quality-p7_20260804.md) | AI, LLM, CodeReview, SoftwareQuality, CICD |
 | 2026-08-04 | [🔦 AI生成差分のレビューを絞り込む:ARCTICの意図・逸脱・重点箇所という3軸](articles/arctic-ai-code-review-human-p8_20260804.md) | CodeReview, AI, LLM, 生成AI |
