@@ -12,7 +12,7 @@ published: false
 
 逆方向となる「コードからFigmaへデザインシステムを構築する」流れは、先に公開準備した[コードからFigmaのデザインシステムを構築する - figma-generate-library](https://zenn.dev/suwash/articles/figma-generate-library_20260804)で扱っています。
 
-本稿の検証対象は、公式スキルの現行契約と旧称からの変更点です。公開可能なFigmaノードが入力に含まれないため、実際のMCP応答や生成コードを装った例は掲載しません。Figma MCPと既存デザインシステムを組み合わせる一般的な設計は、既存記事の[デザインシステムを理解するAIコード生成](https://zenn.dev/suwash/articles/design-system-aware-ai-codegen_20260717)で扱っています。
+本稿の検証対象は、公式スキルの現行契約と旧称からの変更点です。公開可能なFigmaノードが入力に含まれないため、実際のMCP応答や生成コードを装った例は掲載しません。Figma MCPと既存デザインシステムを組み合わせる一般的な設計は、既存記事の[デザインシステムを理解するAIコード生成](https://suwa-sh.github.io/zenn-contents/articles/design-system-aware-ai-codegen_20260717/)で扱っています。
 
 Node、Component、Instance、Variables、Styles、Code Connectなど、Figma側の概念関係は[Figmaの構造とデータモデル](https://zenn.dev/suwash/articles/figma_20260805)を参照してください。
 
