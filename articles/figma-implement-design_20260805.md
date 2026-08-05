@@ -180,7 +180,7 @@ Code Connectや既存コンポーネントがある場合、それを再利用�
 | `figma-generate-library` | コード、トークン、既存のFigma資産 | Figma Variables、スタイル、コンポーネント | コードをもとにFigmaライブラリを構築・更新 |
 | `figma-design-to-code` | Figmaノード、参照コード、スクリーンショット、ヒント | リポジトリ内のアプリケーションコード | Figmaのデザインを既存実装へ統合 |
 
-コードとFigmaの両方を継続的に扱うチームでは、どちらを正として変更するかをタスクごとに明示する必要があります。ライブラリの構築方法と状態管理は、関連記事の[figma-generate-library解説](https://zenn.dev/suwash/articles/figma-generate-library_20260804)を参照してください。
+コードとFigmaの両方を継続的に扱うチームでは、どちらを正として変更するかをタスクごとに明示する必要があります。ライブラリの構築方法と状態管理は[figma-generate-library解説](https://zenn.dev/suwash/articles/figma-generate-library_20260804)、そのライブラリを使ったFigma画面の組み立ては[figma-generate-design解説](https://zenn.dev/suwash/articles/figma-generate-design_20260805)を参照してください。
 
 ## まとめ
 
@@ -198,3 +198,4 @@ Code Connectや既存コンポーネントがある場合、それを再利用�
 - [Figma MCP Server Guide](https://github.com/figma/mcp-server-guide)
 - [figma-design-to-code SKILL.md](https://github.com/figma/mcp-server-guide/blob/main/skills/figma-design-to-code/SKILL.md)
 - [コードからFigmaのデザインシステムを構築する - figma-generate-library](https://zenn.dev/suwash/articles/figma-generate-library_20260804)
+- [デザインシステムからFigma画面を組み立てる - figma-generate-design](https://zenn.dev/suwash/articles/figma-generate-design_20260805)
