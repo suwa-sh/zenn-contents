@@ -3,7 +3,8 @@ title: "AIエージェントのUI品質を守る4層の運用基盤 - Design Har
 emoji: "🧰"
 type: "tech"
 topics: ["AIAgent", "UIUX", "DesignSystem", "Frontend"]
-published: false
+published: true
+published_at: 2026-08-06
 ---
 
 AIエージェントにUI実装を任せると、単一画面は速く作れても、画面数が増えるほど色・余白・コンポーネント選択・UXの意図がずれやすくなります。プロンプトを長くするだけでは、このずれを継続的に防げません。

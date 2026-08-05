@@ -7,12 +7,15 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (265)
+## Articles: 下書き (268)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-06 | [🧭 エージェントの実行履歴を決定的ワークフローへ変換する - TraceCompiler論文の要点](articles/agent-skills-arxiv-abs-p5_20260806.md) | LLM, AIAgent, ワークフロー, 論文, アーキテクチャ |
+| 2026-08-06 | [🎭 ユーザーIDを外に出さない設計 - Airbnbの文脈別プロフィールID分離に学ぶ](articles/airbnb-id-id-airbnb-tech-p8_20260806.md) | Privacy, Architecture, IdentityManagement, Authorization, DesignPattern |
+| 2026-08-06 | [🧭 シニアの判断をAIレビューエージェントへ移植する MonotaRO「Makasetaro」の設計分析](articles/monotaro-ai-ai-tech-monotaro-p9_20260806.md) | AI, CodeReview, Agent, GitHubActions |
+| 2026-08-06 | [🧮 OpenCost 1.121.0でKubernetes上のLLM推論コストをトークン単位に配賦する](articles/opencost-kubernetes-finops-p7_20260806.md) | kubernetes, finops, opencost, vllm, llm |
 | 2026-08-06 | [🌳 壊れたコードでも構文木を保つ差分パーサー - Tree-sitter](articles/tree-sitter_20260806.md) | TreeSitter, Parser, Rust, WebAssembly, Neovim |
-| 2026-08-05 | [🧰 AIエージェントのUI品質を守る4層の運用基盤 - Design Harness](articles/design-harness_20260805.md) | AIAgent, UIUX, DesignSystem, Frontend |
 | 2026-08-05 | [🧩 デザインシステムからFigma画面を組み立てる - figma-generate-design](articles/figma-generate-design_20260805.md) | Figma, MCP, DesignSystem, AI |
 | 2026-08-05 | [🎨 figma-implement-designからfigma-design-to-codeへ - 現行契約を読む](articles/figma-implement-design_20260805.md) | Figma, MCP, AI, Frontend |
 | 2026-08-05 | [🧱 Figmaの構造とデータモデル - Canvas、Node、Component、Variables、Code Connect](articles/figma_20260805.md) | Figma, DesignSystem, MCP, CodeConnect |
@@ -277,10 +280,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (164)
+## Articles: 公開済み (165)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-08-06 | [🧰 AIエージェントのUI品質を守る4層の運用基盤 - Design Harness](articles/design-harness_20260805.md) | AIAgent, UIUX, DesignSystem, Frontend |
 | 2026-08-04 | [🔄 5フェーズ・32ステージの現行実装を読み解く - AI-DLC 2.0](articles/ai-dlc_20260803.md) | AI, AWS, ClaudeCode, Codex |
 | 2026-08-01 | [🧭 エージェント知識の信頼信号を記述する形式 - OKF v0.2](articles/okf-v02-trust-signals_20260726.md) | AIAgent, GoogleCloud, DataGovernance |
 | 2026-07-30 | [📊 shadcn registry でソースごと配るチャート集 - evilcharts](articles/evilcharts_20260729.md) | React, Nextjs, TailwindCSS, Recharts, shadcnui |
