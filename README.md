@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (262)
+## Articles: 下書き (263)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-08-05 | [🧩 デザインシステムからFigma画面を組み立てる - figma-generate-design](articles/figma-generate-design_20260805.md) | Figma, MCP, DesignSystem, AI |
 | 2026-08-05 | [🎨 figma-implement-designからfigma-design-to-codeへ - 現行契約を読む](articles/figma-implement-design_20260805.md) | Figma, MCP, AI, Frontend |
+| 2026-08-05 | [🧱 Figmaの構造とデータモデル - Canvas、Node、Component、Variables、Code Connect](articles/figma_20260805.md) | Figma, DesignSystem, MCP, CodeConnect |
 | 2026-08-05 | [🧱 AI生成の巨大PRを依存順スタックに割る - GitHubのStacked PR設計](articles/github-ai-pr-github-engineering-p2_20260805.md) | GitHub, AI, CodeReview, GitHubActions, DevOps |
 | 2026-08-05 | [🧩 LEAN UIに学ぶ、AIが読めるデザインシステム3層設計](articles/line-ai-lydesign-jp-n-p9_20260805.md) | DesignSystem, AI, Figma, MCP, Frontend |
 | 2026-08-05 | [🔁 LoopsBench に学ぶ、長期開発でエージェントが壊れる場所と設計の勘所](articles/loopsbench-dag-arxiv-abs-p5_20260805.md) | AIAgent, Benchmark, LLM, SoftwareEngineering, ClaudeCode |

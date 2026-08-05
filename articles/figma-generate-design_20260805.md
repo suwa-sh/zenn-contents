@@ -14,6 +14,8 @@ published: false
 
 Figma関連の3スキルは役割が異なります。再利用資産そのものを構築する流れは[figma-generate-library](https://zenn.dev/suwash/articles/figma-generate-library_20260804)、Figmaからアプリケーションコードへ変換する逆方向は[figma-design-to-code](https://zenn.dev/suwash/articles/figma-implement-design_20260805)で扱っています。
 
+これらのワークフローで扱うCanvas、Node、Component、Instance、Variables、Styles、Code Connectの概念関係は、[Figmaの構造とデータモデル](https://zenn.dev/suwash/articles/figma_20260805)で説明しています。
+
 ![記事の全体像](/images/figma-generate-design_20260805/overview.png)
 *この記事の全体像。以下、順に解説します。*
 

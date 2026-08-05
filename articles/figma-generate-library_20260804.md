@@ -14,6 +14,8 @@ published: false
 
 なお、Figma公式リポジトリでは関連スキルをBeta機能として案内しています。仕様や利用条件は変わる可能性があるため、導入時は公式リポジトリの最新版も確認してください。
 
+この記事に登場するCanvas、Node、Component、Instance、Variables、Styles、Code Connectの関係は、[Figmaの構造とデータモデル](https://zenn.dev/suwash/articles/figma_20260805)で体系的に説明しています。
+
 ![記事の全体像](/images/figma-generate-library_20260804/overview.png)
 *この記事の全体像。以下、順に解説します。*
 
