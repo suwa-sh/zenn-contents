@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (264)
+## Articles: 下書き (265)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-06 | [🌳 🌳 壊れたコードでも構文木を保つ差分パーサー - Tree-sitter](articles/tree-sitter_20260806.md) | TreeSitter, Parser, Rust, WebAssembly, Neovim |
 | 2026-08-05 | [🧰 AIエージェントのUI品質を守る4層の運用基盤 - Design Harness](articles/design-harness_20260805.md) | AIAgent, UIUX, DesignSystem, Frontend |
 | 2026-08-05 | [🧩 デザインシステムからFigma画面を組み立てる - figma-generate-design](articles/figma-generate-design_20260805.md) | Figma, MCP, DesignSystem, AI |
 | 2026-08-05 | [🎨 figma-implement-designからfigma-design-to-codeへ - 現行契約を読む](articles/figma-implement-design_20260805.md) | Figma, MCP, AI, Frontend |
