@@ -30,7 +30,7 @@ published: false
 
 個別コンポーネントを1つ作る場合も対象です。再利用可能なコンポーネントには、Variables、状態、バリアント、コードとの対応関係が必要になるためです。
 
-一方、画面やモーダルを既存のデザインシステムから組み立てる用途は`figma-generate-design`、Figmaのデザインから実装コードを作る用途は`figma-implement-design`が担当します。目的に応じてスキルを使い分ける必要があります。
+一方、画面やモーダルを既存のデザインシステムから組み立てる用途は`figma-generate-design`、Figmaのデザインから実装コードを作る用途は`figma-design-to-code`が担当します。後者は調査時の`figma-implement-design`から改称されています。現行ワークフローは[figma-design-to-codeの解説](https://zenn.dev/suwash/articles/figma-implement-design_20260805)を参照してください。
 
 ## 2つのスキルが分担する構造
 
