@@ -1,5 +1,5 @@
 ---
-title: "🌳 壊れたコードでも構文木を保つ差分パーサー - Tree-sitter"
+title: "壊れたコードでも構文木を保つ差分パーサー - Tree-sitter"
 emoji: "🌳"
 type: "tech"
 topics: ["TreeSitter", "Parser", "Rust", "WebAssembly", "Neovim"]
