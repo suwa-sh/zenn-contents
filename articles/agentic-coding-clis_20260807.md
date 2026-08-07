@@ -1,0 +1,363 @@
+---
+title: "エージェントを替えても近い振る舞いを保つ拡張設計 - 6製品比較"
+emoji: "🧩"
+type: "idea"
+topics: ["ClaudeCode", "Codex", "GitHubCopilot", "Cursor", "AIAgent"]
+published: false
+---
+
+AIコーディングCLIを乗り換えるとき、モデル性能より先に困るのが設定資産の移植です。Claude Codeで育てた`CLAUDE.md`、`.claude/skills/`、hooks、subagentsは、別のCLIではどこに置き、何に読み替えればよいのでしょうか。
+
+この調査の目的は「最強のCLI」を決めることではありません。**コーディングエージェントを切り替えても、リポジトリに対して近い振る舞いをさせること**です。そのため、Claude Code、OpenAI Codex CLI、GitHub Copilot CLI、Google Antigravity CLI（コマンド名`agy`）、xAI Grok Build、Cursor Agent CLIの6製品を、単なる機能の有無ではなく次の観点で比較しました。
+
+- 指示はどの階層から、どの優先順位で読み込まれるか
+- skill、custom agent、hook、MCP、pluginは、それぞれ何を拡張するものか
+- memoryはGit管理できる設定なのか、エージェントが学習する状態なのか
+- 複数CLIで共有できる資産と、製品別に変換すべき資産は何か
+
+:::message
+この記事は2026年8月7日時点の公式ドキュメントとローカルCLIで確認しています。ローカルで確認したバージョンはClaude Code 2.1.223、Codex CLI 0.145.0、GitHub Copilot CLI 1.0.75、Antigravity CLI 1.1.10です。更新の速い領域なので、パスやイベント名は導入時に各製品の最新ドキュメントも確認してください。
+:::
+
+![エージェントを替えても近い振る舞いを保つための全体設計](/images/agentic-coding-clis_20260807/overview.png)
+*共有するPortable Coreと、6製品ごとに変換する設定の全体像*
+
+## 目標はファイル互換ではなく振る舞いの同等性
+
+製品ごとに設定ファイル名とschemaが違う以上、完全なファイル互換を目指すと、いずれかの製品の最小公倍数に機能を落とすことになります。ここで維持したいのはファイルではなく、次の「振る舞い契約」です。
+
+| 維持したい振る舞い | 代表的な実装 |
+|---|---|
+| どのagentでも同じ規約を守る | Instructions / Rules |
+| 同じ作業を同じ手順で進める | Skills / Commands |
+| 調査・レビューなどを別の役割へ委譲する | Custom Agents |
+| 特定イベントで検査や通知を呼び出す | Hooks |
+| 同じ外部システムへ同じ権限で接続する | MCP / Tools |
+| 拡張一式をチームへ配布する | Plugins |
+| 過去の学習状態が規約を上書きしない | Memoryの分離と管理 |
+
+以降は、各製品の機能名をこの契約へ対応づけます。移植の成否は「同じファイルを読めたか」ではなく、最後に示す受け入れテストで、同じ入力に対して許容範囲内の行動になるかで判定します。
+
+## 先に結論：ディレクトリ名ではなく責務で分ける
+
+6製品の設定ディレクトリは似ています。しかし、同じMarkdownファイルでも責務が違います。移植では、まず資産を次の6層に分けると混乱しません。
+
+```mermaid
+flowchart LR
+    A["Instructions / Rules<br/>常時適用する方針"] --> B["Skills / Commands<br/>必要時に呼ぶ手順"]
+    B --> C["Custom Agents<br/>役割と文脈を分離"]
+    C --> D["Hooks<br/>イベントで自動呼び出し"]
+    D --> E["MCP / Tools<br/>外部能力を追加"]
+    E --> F["Plugins<br/>複数の拡張を配布"]
+    M["Memory<br/>実行から学習した状態"] -. "設定とは別軸" .-> A
+```
+
+役割は次のように考えるのが実用的です。
+
+| 拡張点 | 主な用途 | 実行の決まり方 | Git管理との相性 |
+|---|---|---|---|
+| Instructions / Rules | コーディング規約、禁止事項、リポジトリ知識 | セッションや対象ファイルに応じて自動読込 | 高い |
+| Skills / Commands | デプロイ、レビュー、障害対応などの再利用手順 | モデル判断または明示呼び出し | 高い |
+| Custom Agents | レビュアー、調査役など役割ごとの文脈・ツール分離 | 親エージェントまたはユーザーが委譲 | 高い |
+| Hooks | lint、監査、危険操作の拒否、通知 | ライフサイクルイベントで呼び出し。障害時の扱いは製品依存 | 高い。ただし形式・fail-open/closedは製品依存 |
+| MCP | GitHub、DB、ブラウザなど外部システムへの接続 | モデルがツールとして選択 | 設定は管理しやすいが、認証情報は分離が必要 |
+| Plugins | skills、agents、hooks、MCPなどの一括配布 | インストール・有効化で解決 | 配布に向くが、manifestは製品依存 |
+| Memory | 会話から得た事実や個人の好みを次回へ持ち越す | 製品が生成・保存・選択 | 低い。共有規約の正本にしない |
+
+重要なのは、**skillはモデルが選択する手順、hookはライフサイクルイベントから自動的に呼ばれる処理**だという違いです。たとえば「コミット前にテストする」はskillにも書けますが、モデル判断に依存させたくないならhookへ置きます。ただし、hookの拒否能力やタイムアウト・異常終了時のfail-open/closedは、製品・イベント・handlerごとに異なります。実行を保証するセキュリティ境界はCIやサーバー側ポリシーに置くべきです。同様に、MCPは能力を増やしますが、利用条件を強制するポリシーそのものではありません。
+
+## `CLAUDE.md`相当はどこにあるか
+
+最初に見るべき差は、ファイル名よりスコープ解決です。多くの製品は、組織・ユーザー・プロジェクト・現在位置・セッションという階層を持ちますが、結合方法が異なります。
+
+```mermaid
+flowchart TD
+    O["組織・Managed<br/>管理者ポリシー"] --> U["User<br/>全プロジェクト共通"]
+    U --> R["Repository root<br/>チーム共通"]
+    R --> P["Path / package<br/>対象ディレクトリ固有"]
+    P --> L["Local / session<br/>個人・一時上書き"]
+
+    C1["Claude Code<br/>CLAUDE.md + settings scopes"] --- P
+    C2["Codex<br/>AGENTS.mdをroot→cwdで連結"] --- P
+    C3["Copilot<br/>複数instructionsをマージ"] --- P
+    C4["Agy / Grok / Cursor<br/>AGENTS.md等と専用rules"] --- P
+```
+
+### 対応表
+
+| 製品 | リポジトリの基本指示 | ユーザー共通 | パス固有・補助設定 |
+|---|---|---|---|
+| Claude Code | `CLAUDE.md`、`.claude/CLAUDE.md` | `~/.claude/CLAUDE.md` | 子ディレクトリの`CLAUDE.md`、`.claude/rules/`、`.claude/settings*.json` |
+| Codex CLI | `AGENTS.md`または`AGENTS.override.md` | `~/.codex/AGENTS.md` | repo rootからcwdまでの各`AGENTS.md`、`.codex/config.toml` |
+| GitHub Copilot CLI | `.github/copilot-instructions.md`に加え、`AGENTS.md`、`CLAUDE.md`、`GEMINI.md` | `~/.copilot/copilot-instructions.md` | `.github/instructions/**/*.instructions.md`、repo/local settings |
+| Antigravity CLI | `AGENTS.md`または`GEMINI.md` | `~/.gemini/GEMINI.md` | `.agents/rules/`、`.agents/`以下の各種設定 |
+| Grok Build | `AGENTS.md`系と`CLAUDE.md`系の双方 | `~/.grok/config.toml`ほか | `.grok/`、`.claude/`互換資産、追加パス |
+| Cursor Agent CLI | rootの`AGENTS.md`、`CLAUDE.md` | CursorのUser Rules、`~/.cursor/` | `.cursor/rules/*.mdc`、`.cursor/cli.json` |
+
+Claude Codeは、起動時に親階層の`CLAUDE.md`を読み、子階層のファイルは対象ファイルへアクセスしたときに読み込みます。Codexは、リポジトリrootから現在ディレクトリまでの`AGENTS.md`を連結し、近い階層の指示を後勝ちにします。Copilot CLIは複数形式を同時にマージするため、既存のClaude/Gemini資産を受け入れやすい一方、同じ規約を複数ファイルへ重複させると衝突源になります。
+
+この違いから、複数CLI対応では`AGENTS.md`を共有方針の正本にし、Claude Code用の`CLAUDE.md`から`@AGENTS.md`をimportする構成が扱いやすくなります。製品固有の権限やイベント設定は、それぞれの専用ディレクトリへ残します。
+
+## 6製品の拡張ポイントを比較する
+
+### Claude Code：一つのエコシステムとして最も整理されている
+
+Claude Codeは、`CLAUDE.md`を入口に、`.claude/skills/<name>/SKILL.md`、`.claude/agents/`、settings内のhooks、`.mcp.json`、pluginsが連携します。pluginは`skills/`、`commands/`、`agents/`、`hooks/hooks.json`、`.mcp.json`、LSP、monitorなどをまとめ、marketplaceから配布できます。
+
+hookはcommandだけでなく、prompt、agent、HTTP、MCP toolといったhandler種別を持ちます。単なるシェル実行を超え、判断を伴う検査をライフサイクルへ組み込める点が特徴です。custom agentにはmodel、tools、permission mode、preloadするskillsを指定でき、親とは別のコンテキストで動かせます。
+
+memoryは二種類を分けて考える必要があります。`CLAUDE.md`は人が管理する指示です。一方、auto memoryはプロジェクトごとの`~/.claude/projects/<project>/memory/`へ保存される、マシンローカルな学習状態です。チーム規約をauto memoryだけに置くと、再現できません。
+
+**向いている構成**：Claude Codeを主軸に、skillsやagentsをpluginとして組織配布したい場合。
+
+### Codex CLI：`AGENTS.md`の階層とTOML設定を分離する
+
+Codexは、行動指示を`AGENTS.md`、実行設定を`~/.codex/config.toml`とリポジトリの`.codex/config.toml`へ分けます。skillsはリポジトリ内の`.agents/skills/`を現在位置からrootへ探索し、ユーザー、管理者、systemの各スコープも解決します。
+
+custom agentは`[agents.<name>]`でdescriptionと個別のconfig fileを結び、モデル、sandbox、toolsなどを役割ごとに設定できます。現在のCodexはsubagentsを標準で利用でき、CLIでは`/agent`から切り替えられます。
+
+hooksは`hooks.json`またはconfig内の`[hooks]`に置けます。イベントは`PreToolUse`、`PermissionRequest`、`PostToolUse`、`SessionStart`、`SubagentStart`、`Stop`など細かく、現時点で実行されるhandlerはcommand型です。リポジトリのhookは、trusted projectの`.codex/`設定として扱われます。
+
+Codexのmemoryは、過去のchatから生成した記憶を`~/.codex/memories/`以下のローカル生成ファイルとして管理する仕組みです。既定では無効で、`/memories`や設定から生成と利用を別々に制御できます。ここでも、Git管理する規約と自動生成される記憶は分けるべきです。
+
+**向いている構成**：`AGENTS.md`を中心にモノレポの階層指示を作り、TOMLで役割・sandbox・承認を厳密に管理したい場合。
+
+### GitHub Copilot CLI：互換入力とGitHub上の配布範囲が広い
+
+Copilot CLIは`.github/copilot-instructions.md`だけでなく、`AGENTS.md`、`CLAUDE.md`、`GEMINI.md`を読み、`@path`によるimportにも対応します。skillsは`.github/skills/`、`.agents/skills/`、`.claude/skills/`と、それぞれのユーザースコープを探索します。既存資産をコピーせず試しやすい設計です。
+
+custom agentのnative配置は`.github/agents/<name>.md`です。加えてClaude Code互換の`.claude/agents/`もcwdからGit rootまで探索するため、既存agentをすぐ複製せず併用できます。同一階層で同名なら`.github/agents/`が優先されます。hooksは`.github/hooks/*.json`と`~/.copilot/hooks/`を使い、Claude Codeの`.claude/settings*.json`にあるhooksも読み込めます。pluginはagents、skills、hooks、MCP、LSPを束ね、CLIからmarketplaceやGitリポジトリを指定して導入できます。
+
+一方、GitHub上のcloud agentやcode reviewとCLIでは、対応するcustom instructionsやhooksの面が完全には同じではありません。「Copilot対応」という一語でまとめず、CLI、IDE、cloud agentのどこで動かすかを決めてから配置する必要があります。
+
+Copilot Memoryはrepository-level factsとuser-level preferencesを保存し、CLIでも利用されます。CLIのprompt modeでは`--enable-memory`で有効化し、既定では無効です。これはinstructionsの代替ではなく、ユーザー操作から得た補助知識です。
+
+**向いている構成**：GitHubを配布・統制面に使い、Claude系や`.agents/skills`の既存資産も段階的に取り込みたい場合。
+
+### Antigravity CLI（`agy`）：`.agents/`を中心に構成する
+
+Antigravity CLIでは、workspaceの拡張を`.agents/`へ集約します。
+
+```text
+.agents/
+├── rules/
+├── skills/<name>/SKILL.md
+├── agents/<name>/agent.md
+├── plugins/<name>/plugin.json
+├── hooks.json
+└── mcp_config.json
+```
+
+ユーザースコープは主に`~/.gemini/config/`以下の`skills/`、`agents/`、`plugins/`、`hooks.json`、`mcp_config.json`を使います。一方、CLI本体のplugin実体やセッションなどのランタイムデータは`~/.gemini/antigravity-cli/`側にも置かれます。**カスタマイズの正本とランタイム保存先を同一視しない**ことがポイントです。
+
+custom agentは単なるプロンプトテンプレートではありません。`/agents`から切り替えると、そのagent用に会話がforkされ、独立した文脈で作業します。pluginは`plugin.json`を入口に、skills、rules、hooks、MCP、agentsを配布できます。hookは`PreToolUse`、`PostToolUse`、`PreInvocation`、`PostInvocation`、`Stop`などで、commandを実行します。
+
+なお、元調査で想定していた`agy run-agent`という起動形式は、手元の1.1.10では確認できませんでした。agentは`--agent`または対話内の`/agents`を使うのが現行の導線です。
+
+**向いている構成**：`.agents/`をプロジェクトの中心に置き、GoogleのCLI/IDE環境でrulesからpluginsまで一体運用したい場合。
+
+### Grok Build：Claude Code資産からの移行アダプターが強い
+
+Grok Buildの基本設定は`~/.grok/config.toml`、プロジェクト設定は`.grok/config.toml`です。skills、plugins、hooksはそれぞれ`.grok/skills/`、`.grok/plugins/`、`.grok/hooks/`とユーザースコープの`~/.grok/`以下に置けます。
+
+特徴は互換入力の広さです。`AGENTS.md`系に加え、`CLAUDE.md`、`CLAUDE.local.md`、`.claude/rules/`、Claude Codeのskills、agents、hooks、MCP、plugins/marketplacesを読み込めます。MCPについても`.cursor/mcp.json`や`.mcp.json`などを低い優先順位で取り込みます。既存のClaude Code環境を一気に書き換えず、Grok固有設定を上に重ねられます。
+
+ただし「読める」ことと「同じ意味で動く」ことは別です。hookのイベント、権限判定、plugin manifestは、ネイティブ形式と互換形式で解決順が変わります。`grok inspect`で実際に有効な設定を確認する工程を移行手順に入れるべきです。
+
+Grok Buildには実験的なcross-session memoryがあり、`--experimental-memory`で有効化し、`/remember`、`/memory`、`/dream`や`grok memory clear`で管理できます。これはセッションを`~/.grok/sessions`へ保存して再開する仕組みとは別です。実験的機能で保存・統合の挙動が変わり得るため、共有規約の正本にはせず、明示的な`AGENTS.md`や`CLAUDE.md`を優先します。
+
+**向いている構成**：Claude Code資産を維持したままGrokを併用し、段階的に`.grok/`へ寄せたい場合。
+
+### Cursor Agent CLI：IDEとCLIで同じカスタマイズ面を使う
+
+現在のCursorは、CLIの主要コマンドを`agent`とし、`cursor-agent`を互換aliasとして残しています。初期のCLIと異なり、現在はskills、subagents、hooks、pluginsをIDEとCLIの双方で扱えます。「Cursor CLIにはhooksやskillsがない」という比較は、2026年時点では古くなっています。
+
+プロジェクトルールは`.cursor/rules/*.mdc`で、globや適用方式を指定できます。CLIはrootの`AGENTS.md`と`CLAUDE.md`も読みます。skillsは`SKILL.md`形式で、`.cursor/skills/`と移植性の高い`.agents/skills/`を利用できます。subagents、hooks、MCP、pluginsもCursor SettingsのCustomizations画面から、user・team・workspaceのスコープで管理できます。
+
+Cursorのpluginはskills、subagents、MCP、hooks、rulesなどをまとめ、marketplaceで配布します。これはCLI専用パッケージではなく、IDEを含むチームのカスタマイズ面です。端末だけで完結する他製品と比べ、GUIで発見・有効化・組織配布しやすい点が差になります。
+
+旧Cursor Memoriesは、会話からproject-scopedのrulesを生成する機能でしたが、Cursor公式フォーラムのスタッフ回答によれば2.1系で削除されています。2026年時点の共有知識は`.cursor/rules`や`AGENTS.md`へ明示的に置き、旧Memoriesを現行の移植先として設計しない方が安全です。
+
+**向いている構成**：IDEとCLIを横断し、rules、agents、pluginsをチームのUIから管理したい場合。
+
+## 比較すると見える4つの設計差
+
+### 1. 読み込み規則：連結、マージ、上書きは同じではない
+
+Codexの`AGENTS.md`はrootからcwdへの連結が中心です。Claude Codeは親指示と対象ディレクトリの遅延読込を組み合わせます。Copilotは複数のinstruction形式をマージします。Grokは互換形式を低い優先順位で取り込み、ネイティブ設定を重ねます。
+
+したがって、ファイルをコピーしただけでは再現性を保証できません。移行時は次をテストします。
+
+- 同名または矛盾する指示があるとき、どちらが勝つか
+- cwdをサブディレクトリへ移したとき、何が追加で読まれるか
+- repo設定が未trustedのとき、hookやMCPが無効になるか
+- CLIのheadless/prompt modeで、対話モードと同じ拡張が有効か
+
+### 2. Skill標準化は進んだが、完全共通ではない
+
+`<name>/SKILL.md`は6製品で広く使われる形式になりました。特に`.agents/skills/`はCodex、Copilot、Antigravity、Cursorで共有しやすい配置です。
+
+それでも、frontmatter、modelによる自動呼び出しの可否、context fork、利用可能tools、追加ファイルの読み込み方法は異なります。本文のMarkdownと補助スクリプトは共有し、製品固有のmetadataは薄いadapterとして生成する方が安全です。
+
+### 3. Hookは最も移植しにくい
+
+hookはイベント名、JSON入出力、終了コード、非同期実行、trust判定が製品ごとに違います。Claude Codeは複数handler型を持つ一方、CodexやAntigravityの現行hookはcommand型が中心です。CopilotはCLIとcloud agentで対応イベントが異なります。またCopilotやGrokには、タイムアウトや不正出力時に処理を継続するfail-openの経路があります。hookが呼ばれることと、拒否が必ず成立することは別です。
+
+そのため、hook設定ファイルを共有するより、次の二層に分けます。
+
+1. `scripts/hooks/`に製品非依存の検査ロジックを置く
+2. 各製品のhook設定は、そのスクリプトを呼ぶだけの薄いadapterにする
+
+セキュリティ上重要な検査は、hookだけで終わらせずCIやサーバー側ポリシーでも再検証します。明示的にfail-closedが保証される場合だけ、hookを強制境界として扱います。repository hookはコード実行面になるため、初回trustの意味も確認が必要です。
+
+### 4. Memoryは「第2の設定ファイル」ではない
+
+memoryを規約の保存先にすると、誰の環境で、いつ生成され、いつ忘れられたかを追跡できません。製品ごとのmemoryは保存範囲も違います。
+
+| 製品 | memoryの性格 | 共有規約の正本にできるか |
+|---|---|---|
+| Claude Code | マシンローカル、プロジェクト単位のauto memory | できない |
+| Codex | 過去chatから生成し`~/.codex/memories/`へローカル保存。生成と利用を別々に制御 | できない |
+| GitHub Copilot | repository factsとuser preferences。複数Copilot面で利用 | できない。管理・削除対象として扱う |
+| Antigravity | rules、履歴、agent contextを分けて運用 | rulesを正本にし、会話状態とは分離 |
+| Grok Build | 実験的cross-session memoryを提供。session resumeとは別機能 | できない。実験機能を規約の代替にしない |
+| Cursor | 旧Memoriesは2.1系で削除。現行の独立した長期memory拡張点として扱わない | 明示rulesを正本にする |
+
+Git管理すべきなのは「全員が同じ行動をするためのdesired state」です。memoryはエージェントの作業を滑らかにするderived stateとして扱うと、設計が安定します。
+
+## 複数CLIに対応するリポジトリ構成
+
+完全な共通化より、portable coreと薄いadapterへ分ける方が保守しやすくなります。
+
+```mermaid
+flowchart TD
+    CORE["Portable core<br/>AGENTS.md / skill本文 / scripts / MCP server"]
+    CORE --> CL[".claude/<br/>CLAUDE.md・agents・hooks"]
+    CORE --> CX[".codex/<br/>config・hooks"]
+    CORE --> GH[".github/<br/>instructions・agents・hooks"]
+    CORE --> AG[".agents/<br/>skills・rules・agents"]
+    CORE --> GR[".grok/<br/>config・hooks・plugins"]
+    CORE --> CU[".cursor/<br/>rules・agents・hooks"]
+    MEM["Local / service state<br/>memory・sessions・credentials"] -. "同期しない" .-> CORE
+```
+
+たとえば、次のように責務を置きます。
+
+```text
+repository/
+├── AGENTS.md                 # 共有方針の正本
+├── CLAUDE.md                 # @AGENTS.md とClaude固有の補足
+├── .agents/skills/           # 共有しやすいSKILL.md群
+├── scripts/hooks/            # 製品非依存の検査本体
+├── tools/mcp-server/         # MCPの実装本体
+├── .claude/                  # Claude用adapterと配布定義
+├── .codex/                   # Codexのconfig/hooks
+├── .github/                  # Copilotのinstructions/agents/hooks
+├── .grok/                    # Grok固有設定
+└── .cursor/                  # Cursor rulesなど
+```
+
+Antigravityは`.agents/`をネイティブに使えるため、共通skillと同じ場所へ寄せやすい構成です。ただし、各製品が認識しない`.agents/`のサブディレクトリまで共通規格だと思わない方がよいでしょう。たとえば`.agents/rules/`が全製品で読まれるわけではありません。
+
+重複が必要な場合、シンボリックリンクだけに頼ると、scanner、sandbox、Windows環境で差が出ます。小さな生成スクリプトでadapterを同期し、CIで差分がないことを検査する方法が堅実です。
+
+## 選定は「機能数」より運用境界で決める
+
+| 重視すること | 第一候補 | 理由 |
+|---|---|---|
+| Claude中心に拡張を成熟させ、marketplace配布したい | Claude Code | nativeのskills、agents、hooks、pluginsが一体化 |
+| モノレポの階層指示とsandboxを明示したい | Codex CLI | `AGENTS.md`連結とTOML設定の分離 |
+| GitHubのrepo・org境界で配布し、互換資産も読む | GitHub Copilot CLI | instructions/skillsの互換入力とGitHub統制 |
+| `.agents/`中心でGoogle環境に寄せる | Antigravity CLI | workspaceカスタマイズが`.agents/`に集約 |
+| Claude資産を残したまま別モデルを試す | Grok Build | Claude/Cursor/MCP設定の互換読み込み |
+| IDEとCLIのカスタマイズを一つのUIで運用する | Cursor Agent CLI | workspace/team単位のrules・plugins管理 |
+
+どれか一つを永久に選ぶ必要はありません。共有層を小さく保てば、メインCLIとレビュー用CLIを分けたり、同じMCP serverを複数製品から使ったりできます。
+
+導入前には、代表的な1リポジトリで次の受け入れテストを行うと安全です。
+
+- 指示の衝突テスト：rootとsubdirectoryに逆の指示を置き、解決順を確認する
+- skill発見テスト：自動選択と明示呼び出しの双方を確認する
+- hook拒否テスト：危険コマンドが期待どおり止まり、ログが残るか確認する
+- custom agentテスト：利用tools、model、context分離が設定どおりか確認する
+- MCP境界テスト：認証情報をrepoへ置かず、許可したtoolだけ使えるか確認する
+- headlessテスト：CIや`-p`実行時に、対話モードとの差を確認する
+- memory汚染テスト：誤った記憶を発見・削除・無効化できるか確認する
+
+## まとめ
+
+AIコーディングCLIの拡張機構は、名前だけを見ると似ています。しかし、実際の差は「どこから読み、いつ発火し、何を共有し、誰が上書きできるか」にあります。
+
+- `AGENTS.md`と`SKILL.md`はportable coreにしやすい
+- path-scoped rules、custom agent metadata、hooks、plugin manifestは製品別adapterにする
+- MCPは能力の共有点にし、権限・認証・trustは各CLIで設定する
+- memoryは自動生成される状態として扱い、Git管理するinstructionsの代替にしない
+- 互換読込は移行の助けになるが、同一セマンティクスを保証するものではない
+
+最初に作るべきものは巨大な「全CLI共通設定」ではありません。共有方針、再利用手順、検査スクリプト、MCP実装だけをportable coreにし、変化の速い設定面を薄いadapterに閉じ込める構成です。これなら製品の機能追加やパス変更が起きても、運用の中心を作り直さずに済みます。
+
+この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
+
+## 参考リンク
+
+### Claude Code
+
+- [How Claude remembers your project](https://code.claude.com/docs/en/memory)
+- [Claude Code settings](https://code.claude.com/docs/en/settings)
+- [Extend Claude with skills](https://code.claude.com/docs/en/skills)
+- [Create custom subagents](https://code.claude.com/docs/en/sub-agents)
+- [Automate workflows with hooks](https://code.claude.com/docs/en/hooks)
+- [Create plugins](https://code.claude.com/docs/en/plugins)
+- [Connect Claude Code to tools via MCP](https://code.claude.com/docs/en/mcp)
+
+### OpenAI Codex CLI
+
+- [Custom instructions with AGENTS.md](https://developers.openai.com/codex/guides/agents-md)
+- [Agent Skills](https://developers.openai.com/codex/skills)
+- [Advanced Configuration](https://developers.openai.com/codex/config-advanced)
+- [Configuration Reference](https://developers.openai.com/codex/config-reference)
+- [Memories](https://developers.openai.com/codex/memories)
+- [Subagents](https://developers.openai.com/codex/subagents)
+- [Hooks](https://developers.openai.com/codex/hooks)
+- [Build plugins](https://developers.openai.com/codex/build-plugins)
+
+### GitHub Copilot CLI
+
+- [GitHub Copilot CLI command reference](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference)
+- [Adding agent skills for GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills)
+- [About custom agents in GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-custom-agents)
+- [About GitHub Copilot plugins](https://docs.github.com/en/copilot/concepts/agents/about-plugins)
+- [Hooks configuration](https://docs.github.com/en/copilot/reference/hooks-configuration)
+- [About GitHub Copilot Memory](https://docs.github.com/en/copilot/concepts/agents/copilot-memory)
+
+### Google Antigravity CLI
+
+- [Agent Skills](https://antigravity.google/docs/skills)
+- [Custom Agents](https://antigravity.google/docs/cli/commands/agents)
+- [Subagents](https://antigravity.google/docs/subagents)
+- [Hooks](https://antigravity.google/docs/hooks)
+- [Plugins](https://antigravity.google/docs/plugins)
+- [MCP](https://antigravity.google/docs/mcp)
+- [Rules and Workflows](https://antigravity.google/docs/rules-workflows)
+
+### xAI Grok Build
+
+- [Grok Build overview](https://docs.x.ai/build/overview)
+- [Settings](https://docs.x.ai/build/settings)
+- [Skills, plugins, and marketplaces](https://docs.x.ai/build/features/skills-plugins-marketplaces)
+- [MCP servers](https://docs.x.ai/build/features/mcp-servers)
+- [Permissions](https://docs.x.ai/build/features/permissions)
+- [CLI reference](https://docs.x.ai/build/cli/reference)
+- [Modes and commands](https://docs.x.ai/build/modes-and-commands)
+- [Headless and scripting](https://docs.x.ai/build/cli/headless-scripting)
+
+### Cursor Agent CLI
+
+- [Using Cursor Agent CLI](https://docs.cursor.com/en/cli/using)
+- [Cursor Agent CLI parameters](https://docs.cursor.com/en/cli/reference/parameters)
+- [Rules](https://docs.cursor.com/context/rules-for-ai)
+- [Are my Memories gone?（Cursorスタッフ回答）](https://forum.cursor.com/t/are-my-memories-gone/144057/3)
+- [Cursor 2.4: Subagents, Skills, and Hooks](https://cursor.com/changelog/2-4)
+- [Cursor 2.5: Plugins](https://cursor.com/changelog/2-5)
+- [Cursor CLI update: `agent` command](https://cursor.com/changelog/cli-jan-08-2026)
+- [Cursor Marketplace](https://cursor.com/blog/marketplace)
