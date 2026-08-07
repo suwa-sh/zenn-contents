@@ -180,7 +180,7 @@ Cursorのpluginはskills、subagents、MCP、hooks、rulesなどをまとめ、m
 
 **向いている構成**：IDEとCLIを横断し、rules、agents、pluginsをチームのUIから管理したい場合。
 
-## 比較すると見える4つの設計差
+## 比較すると見える5つの設計差
 
 ### 1. 読み込み規則：連結、マージ、上書きは同じではない
 
@@ -197,9 +197,37 @@ Codexの`AGENTS.md`はrootからcwdへの連結が中心です。Claude Codeは�
 
 `<name>/SKILL.md`は6製品で広く使われる形式になりました。特に`.agents/skills/`はCodex、Copilot、Antigravity、Cursorで共有しやすい配置です。
 
-それでも、frontmatter、modelによる自動呼び出しの可否、context fork、利用可能tools、追加ファイルの読み込み方法は異なります。本文のMarkdownと補助スクリプトは共有し、製品固有のmetadataは薄いadapterとして生成する方が安全です。
+そこで、skillは`.agents/skills/`を正本にします。Claude Code向けの`.claude/skills/`は、同じファイルを読める環境ならsymlinkにできます。ただしsymlinkの探索、ファイル監視、workspace trust、Windowsでの扱いまで共通仕様ではありません。対象CLIごとの検出テストをCIに置けない場合は、生成スクリプトで同期する方が堅実です。
 
-### 3. Hookは最も移植しにくい
+共有する`SKILL.md`のfront matterは、[Agent Skills仕様](https://agentskills.io/specification)で必須の`name`と`description`を基本にします。
+
+```md
+---
+name: release
+description: リリース前の検証と成果物作成を実行する
+---
+```
+
+`allowed-tools`は仕様上の任意フィールドですが、実験的で、ツール名と解釈が実装ごとに異なります。Claude CodeやCopilot CLIでは「そのツールだけに制限する」より「確認なしで利用を許可する」という意味を持ちます。最小権限を表す共通allowlistとしては扱えません。共有Skillでは原則省略し、`model`、`context`、`agent`、`hooks`などとともに製品別adapterへ置きます。
+
+### 3. Custom agentはプロンプトを共有し、設定を生成する
+
+custom agentには、Skillのような共通の配置・schemaがありません。
+
+| 製品 | 主なrepository配置 | 形式上の注意 |
+|---|---|---|
+| Claude Code | `.claude/agents/<name>.md` | `tools`、`model`、`permissionMode`、preloadするskillsなどを指定 |
+| Codex CLI | `.codex/config.toml`とagent別TOML | `[agents.<name>]`から個別configを参照 |
+| GitHub Copilot CLI | `.github/agents/<name>.md` | `.claude/agents/`も互換入力として探索 |
+| Antigravity CLI | `.agents/agents/<name>/agent.md` | agentごとのディレクトリを使用 |
+| Grok Build | `.grok/agents/`またはClaude互換入力 | native設定と互換入力の優先順位に注意 |
+| Cursor Agent CLI | `.cursor/agents/` | IDEとCLIでworkspace customizationとして利用 |
+
+この違いがあるため、`.agents/agents/`を`.claude/agents/`へそのままsymlinkしても、ディレクトリ構造とfront matterを同時に満たせません。`.agents/agent-specs/`に製品非依存の役割、入力、出力、完了条件、禁止事項を置き、各製品の実行可能な設定を生成します。`.agents/agents/`はAntigravity用adapterとして扱い、「全製品共通のagent形式」とはみなしません。
+
+tool権限もadapter側の責務です。Skillの`allowed-tools`が事前承認を表す場合がある一方、custom agentの`tools`は利用可能な能力を絞るために使われます。さらに製品ごとにtool名が異なるため、未対応フィールドの警告を許容するのではなく、共通の能力定義を各製品のtool名へ変換します。
+
+### 4. Hookは最も移植しにくい
 
 hookはイベント名、JSON入出力、終了コード、非同期実行、trust判定が製品ごとに違います。Claude Codeは複数handler型を持つ一方、CodexやAntigravityの現行hookはcommand型が中心です。CopilotはCLIとcloud agentで対応イベントが異なります。またCopilotやGrokには、タイムアウトや不正出力時に処理を継続するfail-openの経路があります。hookが呼ばれることと、拒否が必ず成立することは別です。
 
@@ -223,9 +251,9 @@ hookはユーザー単位だけの機能ではありません。2026年8月時�
 
 セキュリティ上重要な検査は、hookだけで終わらせずCIやサーバー側ポリシーでも再検証します。明示的にfail-closedが保証される場合だけ、hookを強制境界として扱います。repository hookはコード実行面になるため、初回trustの意味も確認が必要です。
 
-### 4. Memoryは内容と適用範囲の4象限で置き分ける
+### 5. Memoryは内容と適用範囲の4象限で置き分ける
 
-運用上memoryへ残したいものは、大きく**desired state**と**troubleshooting（ハマりどころ）**です。さらに、その知識が一つのskillだけに必要か、複数skillから参照されるかで配置を分けます。
+運用上memoryへ残したいものは、大きく **desired state（期待する状態）** と **troubleshooting（ハマりどころ）** です。さらに、その知識が一つのskillだけに必要か、複数skillから参照されるかで配置を分けます。
 
 | 内容 | Skill内だけで使う | 複数Skillで使う |
 |---|---|---|
@@ -253,12 +281,12 @@ Git管理する`.agents/memory/`は、チームで合意した運用知識の正
 
 ```mermaid
 flowchart TD
-    CORE["Portable core<br/>AGENTS.md / skills / memory / scripts / MCP"]
-    CORE --> CL[".claude/<br/>CLAUDE.md・agents・hooks"]
+    CORE["Portable core<br/>AGENTS.md / .agents/skills / agent-specs / memory / scripts / MCP"]
+    CORE --> CL[".claude/<br/>CLAUDE.md・skills・agents・hooks"]
     CORE --> CX[".codex/<br/>config・hooks"]
     CORE --> GH[".github/<br/>instructions・agents・hooks"]
-    CORE --> AG[".agents/<br/>skills・memory・agents"]
-    CORE --> GR[".grok/<br/>config・hooks・plugins"]
+    CORE --> AG["Antigravity adapter<br/>.agents/agents・hooks.json"]
+    CORE --> GR[".grok/<br/>config・agents・hooks・plugins"]
     CORE --> CU[".cursor/<br/>rules・agents・hooks"]
     AUTO["Product runtime state<br/>auto memory・sessions・credentials"] -. "候補だけ昇格" .-> CORE
 ```
@@ -271,6 +299,14 @@ flowchart TD
 repository/
 ├── AGENTS.md
 ├── CLAUDE.md
+├── docs/
+│   ├── README.md             # 全knowledgeへ辿る索引
+│   ├── architecture/
+│   │   └── README.md
+│   ├── rules/
+│   │   └── README.md
+│   └── adr/
+│       └── README.md
 ├── .agents/
 │   ├── memory/
 │   │   ├── index.md
@@ -291,7 +327,13 @@ repository/
 │   │       │   └── troubleshooting.md
 │   │       └── scripts/
 │   │           └── verify.sh
-│   ├── agents/
+│   ├── agent-specs/
+│   │   └── reviewer/
+│   │       ├── prompt.md
+│   │       └── policy.yaml
+│   ├── agents/              # Antigravity用の生成adapter
+│   │   └── reviewer/
+│   │       └── agent.md
 │   └── hooks.json
 ├── scripts/
 │   └── agent-hooks/
@@ -301,24 +343,32 @@ repository/
 │   └── mcp-server/
 ├── .claude/
 │   ├── settings.json
-│   ├── agents/
-│   └── skills/              # .agents/skillsから生成するClaude用adapter
+│   ├── agents/              # agent-specsから生成
+│   └── skills/              # .agents/skillsへのsymlinkまたは生成物
 ├── .codex/
 │   ├── config.toml
+│   ├── agents/              # agent-specsから生成
+│   │   └── reviewer.toml
 │   └── hooks.json
 ├── .github/
 │   ├── copilot-instructions.md
-│   ├── agents/
+│   ├── agents/              # agent-specsから生成
 │   └── hooks/
 ├── .grok/
 │   ├── config.toml
+│   ├── agents/              # agent-specsから生成、またはClaude互換入力を利用
 │   └── hooks/
 └── .cursor/
     ├── rules/
+    ├── agents/              # agent-specsから生成
     └── hooks.json
 ```
 
 `.agents/memory/`は、6製品が自動検出する標準ディレクトリではありません。この構成ではOKF v0.2のknowledge bundleとして定義し、`AGENTS.md`、`CLAUDE.md`、各skillから`index.md`を明示的に参照させます。Antigravity、Codex、Copilot、Cursorが`.agents/skills/`を読めても、`.agents/`以下の任意ディレクトリまで自動読込するわけではない点に注意が必要です。
+
+`.agents/skills/`は実行可能なSkillの正本です。一方、`.agents/agent-specs/`はcustom agentの製品非依存な中間表現であり、そのまま各CLIが読むことは想定しません。`.agents/agents/`は名前が似ていますが、Antigravityが読む製品別adapterです。この二つを分けることで、単一のagent定義へ互換性のないfront matterを詰め込まずに済みます。
+
+`policy.yaml`も標準仕様ではなく、このリポジトリだけの論理的な能力定義です。たとえば`read: true`、`edit: false`のように意図を表し、生成時に各製品のtool identifierやpermission設定へ対応づけます。変換できない能力は警告を握りつぶさず、adapter生成またはCIを失敗させます。
 
 特定のruntimeや既存運用が`MEMORY.md`を要求する場合だけ、`index.md`へ誘導する薄いadapterとして追加します。OKFでは`MEMORY.md`は予約ファイルではなくconcept documentになるため、その場合は`type: Memory Adapter`などのfront matterが必要です。標準で二つの入口を置くより、通常は`index.md`へ統一します。
 
@@ -326,17 +376,60 @@ repository/
 
 | ファイル / ディレクトリ | 書く内容 | 書かない内容 |
 |---|---|---|
-| `AGENTS.md` | 常時守るbehavior contract、標準コマンド、knowledge/skillの読込ルーティング | 長いトラブル履歴、製品固有schema |
+| `AGENTS.md` | 常時守るbehavior contract、標準コマンド、`docs/README.md`・knowledge・skillの読込ルーティング | 長いトラブル履歴、製品固有schema |
 | `CLAUDE.md` | `@AGENTS.md`とClaude Codeだけに必要な補足 | `AGENTS.md`と同じ規約の複製 |
+| `docs/README.md` | architecture、rules、ADR、運用手順、memoryへ漏れなく辿るknowledge map | 各文書の本文、常時ロードすべき指示の複製 |
 | `.agents/memory/index.md` | OKF bundleの短い索引、いつ何を読むか、昇格ルール | 詳細な手順や全troubleshootingの本文 |
 | `.agents/memory/log.md` | knowledgeの追加・更新・廃止履歴 | セッションごとの詳細ログ |
 | `.agents/memory/desired-state/*.md` | 複数skillが共有する目標状態、検証方法、例外、正本 | 一回限りの作業ログ |
 | `.agents/memory/troubleshooting/*.md` | 複数skillにまたがる症状、原因、検出、復旧、予防 | 根拠未確認の推測 |
 | `.agents/skills/<name>/SKILL.md` | trigger、入力、前提、手順、分岐、完了条件、参照先 | 他skillにも共通する長い一般知識 |
+| `.agents/skills/<name>/SKILL.md`のfront matter | 原則`name`と`description`。共通性を確認できた標準フィールドだけ | 製品固有の`model`、`context`、`hooks`、安易な`allowed-tools` |
 | `references/desired-state.md` | そのskillだけの成果物・完了条件・検証コマンド | repository全体の規約 |
 | `references/troubleshooting.md` | そのskill固有の失敗パターンと復旧方法 | 複数skillで繰り返す問題 |
+| `.agents/agent-specs/<name>/prompt.md` | 製品非依存の役割、責任範囲、入力、出力、完了条件、禁止事項 | tool名、model名、permission schema |
+| `.agents/agent-specs/<name>/policy.yaml` | `read`、`edit`、`shell`、`delegate`など論理的な能力 | 各製品固有のtool identifier |
+| `.agents/agents/`、`.claude/agents/`、`.codex/agents/`、<br/>`.github/agents/`、`.grok/agents/`、`.cursor/agents/` | agent-specsから生成した製品別front matter、tool、model、権限設定、実行前に読むdocsへの直接リンク | portableな役割本文の手修正・重複管理 |
 | `scripts/agent-hooks/` | 複数製品から呼ぶ決定的な検査・整形・監査処理 | 製品ごとのevent schema |
 | `.claude/`、`.codex/`、`.github/`、`.grok/`、`.cursor/` | 読み込み設定、hook eventの対応、権限、plugin manifestなど薄いadapter | portable core本文のコピー |
+
+### `docs/README.md`を全knowledgeの索引にする
+
+`docs/README.md`を起点にarchitecture、rules、ADR、運用手順などへ段階的に辿れる構成は、特定のコーディングエージェントの標準仕様ではありません。しかし、GitHubは`docs/`のREADMEとrepository内の相対リンクを標準的に扱うため、人にも読みやすく、製品に依存しないrepository conventionとして採用しやすい形です。[GitHubのREADMEドキュメント](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes)
+
+ここでは、二つの読込経路を用意します。
+
+```mermaid
+flowchart LR
+    ENTRY["AGENTS.md / CLAUDE.md"] --> INDEX["docs/README.md<br/>全体索引"]
+    INDEX --> ARCH["architecture"]
+    INDEX --> RULES["rules"]
+    INDEX --> ADR["ADR"]
+    INDEX --> MEMORY[".agents/memory/index.md"]
+    AGENT["Custom agent"] -->|"必要な文書へ直接"| ARCH
+    AGENT -->|"必要な文書へ直接"| RULES
+    AGENT -->|"必要な文書へ直接"| ADR
+```
+
+`AGENTS.md`と`CLAUDE.md`からは、`docs/README.md`を経由して正本の全knowledgeへ辿れるようにします。全ファイルを一枚の索引から直接リンクする必要はありません。各カテゴリの`README.md`を中継してもよいので、リンク切れや孤立した文書がないことをCIで検査します。
+
+一方、custom agentには責務だけでなく、その役割が通常必要とするdocsへの直接リンクを持たせます。これは全体索引を毎回探索させないための実行時のショートカットです。たとえばreviewerならarchitecture overview、review rules、関連ADRの索引を直接参照させます。全体索引と直接リンクは同じ正本を指し、本文をagent定義へ複製しません。
+
+たとえば`.claude/agents/reviewer.md`なら、生成時に次のような相対リンクを埋め込みます。
+
+```md
+## 作業前に読む文書
+
+- [アーキテクチャ概要](../../docs/architecture/README.md)
+- [コードレビュー規約](../../docs/rules/code-review.md)
+- [ADR索引](../../docs/adr/README.md)
+```
+
+agent定義の配置階層は製品ごとに違うため、相対リンクもadapter生成時に書き換えます。リンク先の正本は同じです。
+
+ただし、Markdownリンクを書くだけで各CLIが自動的に内容をロードするとは限りません。「作業前に読む」「この条件のときに読む」と命令まで明示します。Claude Codeの`@path` importは起動時に内容を展開するため、長いdocsをすべてimportすると段階的開示になりません。[Claude Codeの公式ドキュメント](https://code.claude.com/docs/en/memory)も、常時必要な指示は短く保ち、複数手順はSkillやpath-scoped ruleへ分けることを勧めています。
+
+したがって、`docs/README.md`は**発見のための完全な経路**、custom agent内の直接リンクは**実行のための最短経路**として併用します。
 
 ### OKFの`index.md`を段階的開示の入口にする
 
@@ -347,32 +440,33 @@ OKF v0.2は`index.md`を段階的開示のための予約ファイルと定義�
 okf_version: "0.2"
 ---
 
-# Repository Memory
+# リポジトリのメモリー
 
-## Core desired state
-- Repository-wide change: [Repository desired state](desired-state/repository.md)
-- Before completion: [Quality gates](desired-state/quality-gates.md)
+## 基本の期待状態
+- リポジトリ全体を変更するとき: [リポジトリの期待状態](desired-state/repository.md)
+- 作業を完了する前: [品質ゲート](desired-state/quality-gates.md)
 
-## Read when relevant
-- Environment setup: [Environments](desired-state/environments.md)
-- CLI or runtime failure: [Toolchain troubleshooting](troubleshooting/toolchain.md)
-- Permission or hook failure: [Permissions](troubleshooting/permissions.md)
-- Worktree or branch mismatch: [Worktrees](troubleshooting/worktrees.md)
+## 必要なときに読む
+- 環境を構築するとき: [環境の期待状態](desired-state/environments.md)
+- CLIや実行環境が失敗したとき: [ツールチェーンのトラブルシューティング](troubleshooting/toolchain.md)
+- 権限やフックが動かないとき: [権限のトラブルシューティング](troubleshooting/permissions.md)
+- ワークツリーやブランチが一致しないとき: [ワークツリーのトラブルシューティング](troubleshooting/worktrees.md)
 
-## Promotion rule
-- 一つのskillだけで使う知識は、そのskillのreferencesに置く
-- 二つ以上のskillで再発したら、このmemoryへ昇格する
-- auto memoryの内容は、再現確認してから明示ファイルへ移す
+## 昇格ルール
+- 一つのスキルだけで使う知識は、そのスキルの参照資料に置く
+- 二つ以上のスキルで再発したら、このメモリーへ昇格する
+- 自動生成メモリーの内容は、再現確認してから明示ファイルへ移す
 ```
 
 `AGENTS.md`には、すべての詳細を転記せず、次のような入口だけを書きます。
 
 ```md
-## Knowledge routing
+## 知識の読み分け
+- リポジトリ知識の全体像が必要なときは `docs/README.md`から辿る。
 - 作業開始時に `.agents/memory/index.md` を読み、対象タスクに必要なリンクだけを追加で読む。
-- skill実行時は、そのskillの `SKILL.md` と参照されたreferencesを優先する。
-- 新しいtroubleshootingは、まず該当skillのreferencesへ記録する。
-- 複数skillに影響する場合は `.agents/memory/troubleshooting/` へ昇格する。
+- スキル実行時は、そのスキルの `SKILL.md` と参照された資料を優先する。
+- 新しいトラブルシューティングは、まず該当スキルの参照資料へ記録する。
+- 複数スキルに影響する場合は `.agents/memory/troubleshooting/` へ昇格する。
 ```
 
 これなら常時ロードするのは短い索引だけです。詳細はタスクに応じて開くため、memoryが増えてもコンテキストを圧迫しにくくなります。
@@ -381,36 +475,26 @@ okf_version: "0.2"
 
 `.agents/memory/`以下のconcept documentには、OKF v0.2のfront matterを持たせます。常に必須なのは`type`だけです。`Desired State`と`Troubleshooting`は中央レジストリの型ではなく、このbundleで定める説明的なtypeです。OKF consumerは未知のtypeも拒否せず読めます。
 
-`generated`、`verified`、`status`、`stale_after`、`sources`は任意ですが、複数skillの判断に影響するknowledgeほど付ける価値があります。すべてを一律必須にせず、重要度に応じて信頼信号を厚くします。なお、`SKILL.md`は各コーディングエージェントのfront matter schemaを優先し、OKF fieldsを混在させません。OKFを適用する中心は、skillから分離されたknowledge documentです。
+ただし、OKF v0.2や各consumerの実装はまだ変化し得ます。このrepository memoryでは、front matterを`type`だけから始めます。`generated`、`verified`、`sources`は通常記載しません。生成者、確認方法、根拠が必要なら、機械向けmetadataではなく本文の該当箇所へ自然な形で書きます。
+
+`stale_after`も通常は付けません。期限を先回りして全knowledgeへ設定すると、更新されない日付が増え、メンテナンス対象そのものになります。古くなったknowledgeは原則更新または削除し、過去の制約や移行経緯として残す価値がある場合だけ、その時点で`status`や`stale_after`を追加して履歴であることを明示します。
+
+なお、`SKILL.md`はAgent Skillsと各コーディングエージェントのfront matter schemaを優先し、OKF fieldsを混在させません。OKFを適用する中心は、skillから分離されたknowledge documentです。
 
 desired stateは、抽象的な理想ではなく検証可能な状態として書きます。
 
 ```md
 ---
 type: Desired State
-title: Generated files are reproducible
-description: 生成物を再生成してもGit差分が残らない状態
-tags: [release, ci, reproducibility]
-generated:
-  by: human:platform-team
-  at: 2026-08-07T10:00:00Z
-verified:
-  - by: process:ci-generate-check
-    at: 2026-08-07T10:15:00Z
-status: stable
-stale_after: 2026-11-07
-sources:
-  - id: generation-contract
-    resource: https://github.com/example/repo/blob/main/Makefile
 ---
 
-## Generated files are reproducible
-- Scope: release, CI, documentation
-- Desired state: 生成物を再生成してもGit差分が出ない
-- Verify: `make generate && git diff --exit-code`
-- Source of truth: `schemas/` と生成スクリプト
-- Exceptions: 緊急hotfix時はissue URLを記録する
-- Last verified: 2026-08-07
+## 生成物を再現できる
+- 対象: リリース、CI、ドキュメント
+- 期待状態: 生成物を再生成してもGit差分が出ない
+- 検証: `make generate && git diff --exit-code`
+- 正本: `schemas/`と生成スクリプト
+- 例外: 緊急修正時はissue URLを記録する
+- 最終確認日: 2026-08-07
 ```
 
 troubleshootingも、原因だけでなく次のagentが回復できる情報まで残します。
@@ -418,33 +502,19 @@ troubleshootingも、原因だけでなく次のagentが回復できる情報ま
 ```md
 ---
 type: Troubleshooting
-title: Hookがheadless実行で発火しない
-description: 対話実行とheadless実行でhook discoveryが異なる場合の復旧手順
-tags: [hooks, headless, trust]
-generated:
-  by: codex/0.145.0
-  at: 2026-08-07T11:00:00Z
-verified:
-  - by: human:repository-maintainer
-    at: 2026-08-07T11:30:00Z
-status: stable
-stale_after: 2026-09-07
-sources:
-  - id: agent-hook-docs
-    resource: https://example.com/official-hook-docs
 ---
 
-## Hookがheadless実行で発火しない
-- Applies to: release, CI concierge
-- Symptom: 対話実行では動くがprompt modeではログがない
-- Cause: repository hookが未trusted、またはprompt modeで無効
-- Detect: 有効な設定sourceと起動flagを表示する
-- Recovery: trustを確認し、必要な明示flagまたは環境設定を使う
-- Prevention: headless受け入れテストをCIに追加する
-- Last verified: 2026-08-07
+## フックがヘッドレス実行で発火しない
+- 適用対象: リリース、CI concierge
+- 症状: 対話実行では動くがprompt modeではログがない
+- 原因: repository hookが未trusted、またはprompt modeで無効
+- 検出: 有効な設定sourceと起動flagを表示する
+- 復旧: trustを確認し、必要な明示flagまたは環境設定を使う
+- 再発防止: headless受け入れテストをCIに追加する
+- 最終確認日: 2026-08-07
 ```
 
-同じ項目を使うと、別のコーディングエージェントでも「何が起きたか」だけでなく「どう正常性を判断するか」まで再利用できます。
+front matterを小さくしても、本文の項目を揃えれば、別のコーディングエージェントでも「何が起きたか」だけでなく「どう正常性を判断するか」まで再利用できます。
 
 ### Skill内の知識を共通知識へ昇格する
 
@@ -483,6 +553,7 @@ sources:
 - skill発見テスト：自動選択と明示呼び出しの双方を確認する
 - hook拒否テスト：危険コマンドが期待どおり止まり、ログが残るか確認する
 - custom agentテスト：利用tools、model、context分離が設定どおりか確認する
+- adapter検証：未対応fieldや変換できないtoolを警告のまま常態化させず、原則失敗として扱う
 - MCP境界テスト：認証情報をrepoへ置かず、許可したtoolだけ使えるか確認する
 - headlessテスト：CIや`-p`実行時に、対話モードとの差を確認する
 - memory汚染テスト：誤った記憶を発見・削除・無効化できるか確認する
@@ -491,8 +562,10 @@ sources:
 
 AIコーディングCLIの拡張機構は、名前だけを見ると似ています。しかし、実際の差は「どこから読み、いつ発火し、何を共有し、誰が上書きできるか」にあります。
 
-- `AGENTS.md`と`SKILL.md`はportable coreにしやすい
+- Skillは`.agents/skills/`を正本にし、共有front matterを`name`と`description`中心に保つ
+- custom agentは`.agents/agent-specs/`の役割定義を共有し、製品別の実行設定を生成する
 - `.agents/memory/index.md`を短い索引にし、desired stateとtroubleshootingを段階的に開示する
+- memoryのOKF front matterは`type`から始め、信頼信号は必要になった時だけ加える
 - path-scoped rules、custom agent metadata、hooks、plugin manifestは製品別adapterにする
 - MCPは能力の共有点にし、権限・認証・trustは各CLIで設定する
 - Git管理するportable memoryと、製品が自動生成するauto memoryを分離する
