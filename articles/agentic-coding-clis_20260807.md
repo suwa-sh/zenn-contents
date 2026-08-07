@@ -110,8 +110,6 @@ hookはcommandだけでなく、prompt、agent、HTTP、MCP toolといったhand
 
 memoryは二種類を分けて考える必要があります。`CLAUDE.md`は人が管理する指示です。一方、auto memoryはプロジェクトごとの`~/.claude/projects/<project>/memory/`へ保存される、マシンローカルな学習状態です。チーム規約をauto memoryだけに置くと、再現できません。
 
-**向いている構成**：Claude Codeを主軸に、skillsやagentsをpluginとして組織配布したい場合。
-
 ### Codex CLI：`AGENTS.md`の階層とTOML設定を分離する
 
 Codexは、行動指示を`AGENTS.md`、実行設定を`~/.codex/config.toml`とリポジトリの`.codex/config.toml`へ分けます。skillsはリポジトリ内の`.agents/skills/`を現在位置からrootへ探索し、ユーザー、管理者、systemの各スコープも解決します。
@@ -122,8 +120,6 @@ hooksは`hooks.json`またはconfig内の`[hooks]`に置けます。イベント
 
 Codexのmemoryは、過去のchatから生成した記憶を`~/.codex/memories/`以下のローカル生成ファイルとして管理する仕組みです。既定では無効で、`/memories`や設定から生成と利用を別々に制御できます。ここでも、Git管理する規約と自動生成される記憶は分けるべきです。
 
-**向いている構成**：`AGENTS.md`を中心にモノレポの階層指示を作り、TOMLで役割・sandbox・承認を厳密に管理したい場合。
-
 ### GitHub Copilot CLI：互換入力とGitHub上の配布範囲が広い
 
 Copilot CLIは`.github/copilot-instructions.md`だけでなく、`AGENTS.md`、`CLAUDE.md`、`GEMINI.md`を読み、`@path`によるimportにも対応します。skillsは`.github/skills/`、`.agents/skills/`、`.claude/skills/`と、それぞれのユーザースコープを探索します。既存資産をコピーせず試しやすい設計です。
@@ -133,8 +129,6 @@ custom agentのnative配置は`.github/agents/<name>.md`です。加えてClaude
 一方、GitHub上のcloud agentやcode reviewとCLIでは、対応するcustom instructionsやhooksの面が完全には同じではありません。「Copilot対応」という一語でまとめず、CLI、IDE、cloud agentのどこで動かすかを決めてから配置する必要があります。
 
 Copilot Memoryはrepository-level factsとuser-level preferencesを保存し、CLIでも利用されます。CLIのprompt modeでは`--enable-memory`で有効化し、既定では無効です。これはinstructionsの代替ではなく、ユーザー操作から得た補助知識です。
-
-**向いている構成**：GitHubを配布・統制面に使い、Claude系や`.agents/skills`の既存資産も段階的に取り込みたい場合。
 
 ### Antigravity CLI（`agy`）：`.agents/`を中心に構成する
 
@@ -154,10 +148,6 @@ Antigravity CLIでは、workspaceの拡張を`.agents/`へ集約します。
 
 custom agentは単なるプロンプトテンプレートではありません。`/agents`から切り替えると、そのagent用に会話がforkされ、独立した文脈で作業します。pluginは`plugin.json`を入口に、skills、rules、hooks、MCP、agentsを配布できます。hookは`PreToolUse`、`PostToolUse`、`PreInvocation`、`PostInvocation`、`Stop`などで、commandを実行します。
 
-なお、元調査で想定していた`agy run-agent`という起動形式は、手元の1.1.10では確認できませんでした。agentは`--agent`または対話内の`/agents`を使うのが現行の導線です。
-
-**向いている構成**：`.agents/`をプロジェクトの中心に置き、GoogleのCLI/IDE環境でrulesからpluginsまで一体運用したい場合。
-
 ### Grok Build：Claude Code資産からの移行アダプターが強い
 
 Grok Buildの基本設定は`~/.grok/config.toml`、プロジェクト設定は`.grok/config.toml`です。skills、plugins、hooksはそれぞれ`.grok/skills/`、`.grok/plugins/`、`.grok/hooks/`とユーザースコープの`~/.grok/`以下に置けます。
@@ -168,8 +158,6 @@ Grok Buildの基本設定は`~/.grok/config.toml`、プロジェクト設定は`
 
 Grok Buildには実験的なcross-session memoryがあり、`--experimental-memory`で有効化し、`/remember`、`/memory`、`/dream`や`grok memory clear`で管理できます。これはセッションを`~/.grok/sessions`へ保存して再開する仕組みとは別です。実験的機能で保存・統合の挙動が変わり得るため、共有規約の正本にはせず、明示的な`AGENTS.md`や`CLAUDE.md`を優先します。
 
-**向いている構成**：Claude Code資産を維持したままGrokを併用し、段階的に`.grok/`へ寄せたい場合。
-
 ### Cursor Agent CLI：IDEとCLIで同じカスタマイズ面を使う
 
 現在のCursorは、CLIの主要コマンドを`agent`とし、`cursor-agent`を互換aliasとして残しています。初期のCLIと異なり、現在はskills、subagents、hooks、pluginsをIDEとCLIの双方で扱えます。「Cursor CLIにはhooksやskillsがない」という比較は、2026年時点では古くなっています。
@@ -179,8 +167,6 @@ Grok Buildには実験的なcross-session memoryがあり、`--experimental-memo
 Cursorのpluginはskills、subagents、MCP、hooks、rulesなどをまとめ、marketplaceで配布します。これはCLI専用パッケージではなく、IDEを含むチームのカスタマイズ面です。端末だけで完結する他製品と比べ、GUIで発見・有効化・組織配布しやすい点が差になります。
 
 旧Cursor Memoriesは、会話からproject-scopedのrulesを生成する機能でしたが、Cursor公式フォーラムのスタッフ回答によれば2.1系で削除されています。2026年時点の共有知識は`.cursor/rules`や`AGENTS.md`へ明示的に置き、旧Memoriesを現行の移植先として設計しない方が安全です。
-
-**向いている構成**：IDEとCLIを横断し、rules、agents、pluginsをチームのUIから管理したい場合。
 
 ## 比較すると見える5つの設計差
 
@@ -546,20 +532,9 @@ front matterを小さくしても、本文の項目を揃えれば、別のコ�
 
 重複が必要な場合、シンボリックリンクだけに頼ると、scanner、sandbox、Windows環境で差が出ます。小さな生成スクリプトでadapterを同期し、CIで差分がないことを検査する方法が堅実です。
 
-## 選定は「機能数」より運用境界で決める
+## 振る舞いの同等性を受け入れテストで確認する
 
-| 重視すること | 第一候補 | 理由 |
-|---|---|---|
-| Claude中心に拡張を成熟させ、marketplace配布したい | Claude Code | nativeのskills、agents、hooks、pluginsが一体化 |
-| モノレポの階層指示とsandboxを明示したい | Codex CLI | `AGENTS.md`連結とTOML設定の分離 |
-| GitHubのrepo・org境界で配布し、互換資産も読む | GitHub Copilot CLI | instructions/skillsの互換入力とGitHub統制 |
-| `.agents/`中心でGoogle環境に寄せる | Antigravity CLI | workspaceカスタマイズが`.agents/`に集約 |
-| Claude資産を残したまま別モデルを試す | Grok Build | Claude/Cursor/MCP設定の互換読み込み |
-| IDEとCLIのカスタマイズを一つのUIで運用する | Cursor Agent CLI | workspace/team単位のrules・plugins管理 |
-
-どれか一つを永久に選ぶ必要はありません。共有層を小さく保てば、メインCLIとレビュー用CLIを分けたり、同じMCP serverを複数製品から使ったりできます。
-
-導入前には、代表的な1リポジトリで次の受け入れテストを行うと安全です。
+設定ファイルを配置できただけでは、振る舞いを移植できたとは判断できません。代表的な1リポジトリで、各コーディングエージェントに同じ課題を与え、次の受け入れテストを行います。
 
 - 指示の衝突テスト：rootとsubdirectoryに逆の指示を置き、解決順を確認する
 - skill発見テスト：自動選択と明示呼び出しの双方を確認する
