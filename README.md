@@ -11,7 +11,7 @@
 
 | create date | title | topics |
 |-------------|-------|--------|
-| 2026-08-07 | [🧩 エージェントを替えても近い振る舞いを保つ拡張設計 - 6製品比較](articles/agentic-coding-clis_20260807.md) | ClaudeCode, Codex, GitHubCopilot, Cursor, AIAgent |
+| 2026-08-07 | [🧩 コーディングエージェントをまたいで近い振る舞いを保つ拡張設計 - 6製品比較](articles/agentic-coding-clis_20260807.md) | ClaudeCode, Codex, GitHubCopilot, Cursor, AIAgent |
 | 2026-08-07 | [🧩 dbt Labsが示すContext Engineering エージェント向け文脈モデルという設計](articles/dbt-labs-getdbt-from-analytics-p8_20260807.md) | dbt, MCP, AI, Snowflake, データ基盤 |
 | 2026-08-07 | [⚓ ビルドは通るのに「検証済み」だけが失効する問題を成果物依存グラフで捉える](articles/ea-graph-arxiv-abs-2608-04278-p5_20260807.md) | LLM, AIAgent, アーキテクチャ, ソフトウェアテスト |
 | 2026-08-07 | [🔌 SkillとMCPを1ディレクトリで配る最小規格 - Agent Plugins 1.0](articles/vercel-agent-skills-mcp-plugins-p3_20260807.md) | MCP, AIAgent, OpenStandard, JSONSchema, DevTools |

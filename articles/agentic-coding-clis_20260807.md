@@ -1,5 +1,5 @@
 ---
-title: "エージェントを替えても近い振る舞いを保つ拡張設計 - 6製品比較"
+title: "コーディングエージェントをまたいで近い振る舞いを保つ拡張設計 - 6製品比較"
 emoji: "🧩"
 type: "idea"
 topics: ["ClaudeCode", "Codex", "GitHubCopilot", "Cursor", "AIAgent"]
@@ -12,14 +12,14 @@ AIコーディングCLIを乗り換えるとき、モデル性能より先に困
 
 - 指示はどの階層から、どの優先順位で読み込まれるか
 - skill、custom agent、hook、MCP、pluginは、それぞれ何を拡張するものか
-- memoryはGit管理できる設定なのか、エージェントが学習する状態なのか
+- desired stateとハマりどころを、skill内と複数skill共通のどこへ記録するか
 - 複数CLIで共有できる資産と、製品別に変換すべき資産は何か
 
 :::message
 この記事は2026年8月7日時点の公式ドキュメントとローカルCLIで確認しています。ローカルで確認したバージョンはClaude Code 2.1.223、Codex CLI 0.145.0、GitHub Copilot CLI 1.0.75、Antigravity CLI 1.1.10です。更新の速い領域なので、パスやイベント名は導入時に各製品の最新ドキュメントも確認してください。
 :::
 
-![エージェントを替えても近い振る舞いを保つための全体設計](/images/agentic-coding-clis_20260807/overview.png)
+![コーディングエージェントをまたいで近い振る舞いを保つための全体設計](/images/agentic-coding-clis_20260807/overview.png)
 *共有するPortable Coreと、6製品ごとに変換する設定の全体像*
 
 ## 目標はファイル互換ではなく振る舞いの同等性
@@ -34,7 +34,7 @@ AIコーディングCLIを乗り換えるとき、モデル性能より先に困
 | 特定イベントで検査や通知を呼び出す | Hooks |
 | 同じ外部システムへ同じ権限で接続する | MCP / Tools |
 | 拡張一式をチームへ配布する | Plugins |
-| 過去の学習状態が規約を上書きしない | Memoryの分離と管理 |
+| Desired stateとハマりどころを適切な範囲で再利用する | Memory / Knowledgeの段階的開示 |
 
 以降は、各製品の機能名をこの契約へ対応づけます。移植の成否は「同じファイルを読めたか」ではなく、最後に示す受け入れテストで、同じ入力に対して許容範囲内の行動になるかで判定します。
 
@@ -49,7 +49,7 @@ flowchart LR
     C --> D["Hooks<br/>イベントで自動呼び出し"]
     D --> E["MCP / Tools<br/>外部能力を追加"]
     E --> F["Plugins<br/>複数の拡張を配布"]
-    M["Memory<br/>実行から学習した状態"] -. "設定とは別軸" .-> A
+    M["Memory / Knowledge<br/>desired state・ハマりどころ"] -. "適用範囲で配置" .-> A
 ```
 
 役割は次のように考えるのが実用的です。
@@ -62,7 +62,7 @@ flowchart LR
 | Hooks | lint、監査、危険操作の拒否、通知 | ライフサイクルイベントで呼び出し。障害時の扱いは製品依存 | 高い。ただし形式・fail-open/closedは製品依存 |
 | MCP | GitHub、DB、ブラウザなど外部システムへの接続 | モデルがツールとして選択 | 設定は管理しやすいが、認証情報は分離が必要 |
 | Plugins | skills、agents、hooks、MCPなどの一括配布 | インストール・有効化で解決 | 配布に向くが、manifestは製品依存 |
-| Memory | 会話から得た事実や個人の好みを次回へ持ち越す | 製品が生成・保存・選択 | 低い。共有規約の正本にしない |
+| Memory / Knowledge | desired state、ハマりどころ、会話から得た補助知識 | 人が明示管理するものと製品が自動生成するものがある | 明示ファイルは高い。auto memoryは正本にしない |
 
 重要なのは、**skillはモデルが選択する手順、hookはライフサイクルイベントから自動的に呼ばれる処理**だという違いです。たとえば「コミット前にテストする」はskillにも書けますが、モデル判断に依存させたくないならhookへ置きます。ただし、hookの拒否能力やタイムアウト・異常終了時のfail-open/closedは、製品・イベント・handlerごとに異なります。実行を保証するセキュリティ境界はCIやサーバー側ポリシーに置くべきです。同様に、MCPは能力を増やしますが、利用条件を強制するポリシーそのものではありません。
 
@@ -203,16 +203,38 @@ Codexの`AGENTS.md`はrootからcwdへの連結が中心です。Claude Codeは�
 
 hookはイベント名、JSON入出力、終了コード、非同期実行、trust判定が製品ごとに違います。Claude Codeは複数handler型を持つ一方、CodexやAntigravityの現行hookはcommand型が中心です。CopilotはCLIとcloud agentで対応イベントが異なります。またCopilotやGrokには、タイムアウトや不正出力時に処理を継続するfail-openの経路があります。hookが呼ばれることと、拒否が必ず成立することは別です。
 
+hookはユーザー単位だけの機能ではありません。2026年8月時点では、比較した6製品すべてにrepositoryまたはworkspace単位の定義方法があります。
+
+| 製品 | Repository / Workspace scope | User / Machine scope | 注意点 |
+|---|---|---|---|
+| Claude Code | `.claude/settings.json`、個人用は`.claude/settings.local.json` | `~/.claude/settings.json` | project hookはcommit可能。managed policyで制限できる |
+| Codex CLI | `.codex/hooks.json`または`.codex/config.toml` | `~/.codex/hooks.json`または`~/.codex/config.toml` | projectの`.codex/` layerがtrustedのときだけ読む |
+| GitHub Copilot CLI | `.github/hooks/*.json`、repo settings内の`hooks` | `~/.copilot/hooks/*.json`、user settings | CLIとcloud agentでは発火イベントと実行環境が異なる |
+| Antigravity CLI | `.agents/hooks.json` | `~/.gemini/config/hooks.json` | workspaceとglobalの双方をサポート |
+| Grok Build | `.grok/hooks/` | `~/.grok/hooks/` | project hookには`/hooks-trust`が必要 |
+| Cursor Agent CLI | `.cursor/hooks.json` | `~/.cursor/hooks.json` | IDE/CLIのlocal hookとcloud/team hookを区別する |
+
+つまり、チームで再現したいlint、監査、通知の入口はrepositoryへ置けます。ただし、repositoryをcloneしただけで無条件に任意コードが動くわけではありません。CodexやGrokのようにtrustを要求する製品があり、Copilotのprompt modeにもrepository hookを読み込む条件があります。この差も受け入れテストへ含めます。
+
 そのため、hook設定ファイルを共有するより、次の二層に分けます。
 
-1. `scripts/hooks/`に製品非依存の検査ロジックを置く
+1. `scripts/agent-hooks/`に製品非依存の検査ロジックを置く
 2. 各製品のhook設定は、そのスクリプトを呼ぶだけの薄いadapterにする
 
 セキュリティ上重要な検査は、hookだけで終わらせずCIやサーバー側ポリシーでも再検証します。明示的にfail-closedが保証される場合だけ、hookを強制境界として扱います。repository hookはコード実行面になるため、初回trustの意味も確認が必要です。
 
-### 4. Memoryは「第2の設定ファイル」ではない
+### 4. Memoryは内容と適用範囲の4象限で置き分ける
 
-memoryを規約の保存先にすると、誰の環境で、いつ生成され、いつ忘れられたかを追跡できません。製品ごとのmemoryは保存範囲も違います。
+運用上memoryへ残したいものは、大きく**desired state**と**ハマりどころ**です。さらに、その知識が一つのskillだけに必要か、複数skillから参照されるかで配置を分けます。
+
+| 内容 | Skill内だけで使う | 複数Skillで使う |
+|---|---|---|
+| Desired state | `.agents/skills/<name>/references/desired-state.md` | `.agents/memory/desired-state/*.md` |
+| ハマりどころ | `.agents/skills/<name>/references/troubleshooting.md` | `.agents/memory/pitfalls/*.md` |
+
+desired stateには「最終的にどうなっていれば正しいか」「どう検証するか」を書きます。ハマりどころには、単なる作業日記ではなく「症状・原因・検出方法・復旧・再発防止・最終確認日」を書きます。これにより、別のコーディングエージェントでも同じ失敗を避け、同じ完了条件を目指せます。
+
+一方、各製品のauto memoryは、会話から候補知識を拾うための**inbox**として扱います。そこから有効な知識をレビューし、上記の明示ファイルへ昇格させます。auto memoryだけを正本にすると、誰の環境で、いつ生成され、いつ忘れられたかを追跡できません。
 
 | 製品 | memoryの性格 | 共有規約の正本にできるか |
 |---|---|---|
@@ -223,41 +245,174 @@ memoryを規約の保存先にすると、誰の環境で、いつ生成され�
 | Grok Build | 実験的cross-session memoryを提供。session resumeとは別機能 | できない。実験機能を規約の代替にしない |
 | Cursor | 旧Memoriesは2.1系で削除。現行の独立した長期memory拡張点として扱わない | 明示rulesを正本にする |
 
-Git管理すべきなのは「全員が同じ行動をするためのdesired state」です。memoryはエージェントの作業を滑らかにするderived stateとして扱うと、設計が安定します。
+Git管理する`.agents/memory/`は、チームで合意した運用知識の正本です。製品が自動生成するmemoryはderived stateとして分離します。同じ「memory」という語でも、前者はportable knowledge、後者は製品固有のruntime stateです。
 
 ## 複数CLIに対応するリポジトリ構成
 
-完全な共通化より、portable coreと薄いadapterへ分ける方が保守しやすくなります。
+完全な共通化より、portable coreと薄いadapterへ分ける方が保守しやすくなります。ここでは`.agents/memory/`を製品機能ではなく、リポジトリ内の共通規約として導入します。
 
 ```mermaid
 flowchart TD
-    CORE["Portable core<br/>AGENTS.md / skill本文 / scripts / MCP server"]
+    CORE["Portable core<br/>AGENTS.md / skills / memory / scripts / MCP"]
     CORE --> CL[".claude/<br/>CLAUDE.md・agents・hooks"]
     CORE --> CX[".codex/<br/>config・hooks"]
     CORE --> GH[".github/<br/>instructions・agents・hooks"]
-    CORE --> AG[".agents/<br/>skills・rules・agents"]
+    CORE --> AG[".agents/<br/>skills・memory・agents"]
     CORE --> GR[".grok/<br/>config・hooks・plugins"]
     CORE --> CU[".cursor/<br/>rules・agents・hooks"]
-    MEM["Local / service state<br/>memory・sessions・credentials"] -. "同期しない" .-> CORE
+    AUTO["Product runtime state<br/>auto memory・sessions・credentials"] -. "候補だけ昇格" .-> CORE
 ```
 
-たとえば、次のように責務を置きます。
+### 推奨ディレクトリ構成
+
+一例として、次のように責務を置きます。
 
 ```text
 repository/
-├── AGENTS.md                 # 共有方針の正本
-├── CLAUDE.md                 # @AGENTS.md とClaude固有の補足
-├── .agents/skills/           # 共有しやすいSKILL.md群
-├── scripts/hooks/            # 製品非依存の検査本体
-├── tools/mcp-server/         # MCPの実装本体
-├── .claude/                  # Claude用adapterと配布定義
-├── .codex/                   # Codexのconfig/hooks
-├── .github/                  # Copilotのinstructions/agents/hooks
-├── .grok/                    # Grok固有設定
-└── .cursor/                  # Cursor rulesなど
+├── AGENTS.md
+├── CLAUDE.md
+├── .agents/
+│   ├── memory/
+│   │   ├── MEMORY.md
+│   │   ├── desired-state/
+│   │   │   ├── repository.md
+│   │   │   ├── quality-gates.md
+│   │   │   └── environments.md
+│   │   └── pitfalls/
+│   │       ├── toolchain.md
+│   │       ├── permissions.md
+│   │       └── worktrees.md
+│   ├── skills/
+│   │   └── release/
+│   │       ├── SKILL.md
+│   │       ├── references/
+│   │       │   ├── desired-state.md
+│   │       │   └── troubleshooting.md
+│   │       └── scripts/
+│   │           └── verify.sh
+│   ├── agents/
+│   └── hooks.json
+├── scripts/
+│   └── agent-hooks/
+│       ├── pre-tool-policy.sh
+│       └── post-edit-check.sh
+├── tools/
+│   └── mcp-server/
+├── .claude/
+│   ├── settings.json
+│   ├── agents/
+│   └── skills/              # .agents/skillsから生成するClaude用adapter
+├── .codex/
+│   ├── config.toml
+│   └── hooks.json
+├── .github/
+│   ├── copilot-instructions.md
+│   ├── agents/
+│   └── hooks/
+├── .grok/
+│   ├── config.toml
+│   └── hooks/
+└── .cursor/
+    ├── rules/
+    └── hooks.json
 ```
 
-Antigravityは`.agents/`をネイティブに使えるため、共通skillと同じ場所へ寄せやすい構成です。ただし、各製品が認識しない`.agents/`のサブディレクトリまで共通規格だと思わない方がよいでしょう。たとえば`.agents/rules/`が全製品で読まれるわけではありません。
+`.agents/memory/MEMORY.md`は、6製品が自動検出する標準ファイルではありません。この構成ではportable coreの索引として定義し、`AGENTS.md`、`CLAUDE.md`、各skillから明示的に参照させます。Antigravity、Codex、Copilot、Cursorが`.agents/skills/`を読めても、`.agents/`以下の任意ディレクトリまで自動読込するわけではない点に注意が必要です。
+
+### 各ファイルに何を書くか
+
+| ファイル / ディレクトリ | 書く内容 | 書かない内容 |
+|---|---|---|
+| `AGENTS.md` | 常時守るbehavior contract、標準コマンド、knowledge/skillの読込ルーティング | 長いトラブル履歴、製品固有schema |
+| `CLAUDE.md` | `@AGENTS.md`とClaude Codeだけに必要な補足 | `AGENTS.md`と同じ規約の複製 |
+| `.agents/memory/MEMORY.md` | memory全体の短い索引、いつ何を読むか、昇格ルール | 詳細な手順や全pitfallの本文 |
+| `.agents/memory/desired-state/*.md` | 複数skillが共有する目標状態、検証方法、例外、正本 | 一回限りの作業ログ |
+| `.agents/memory/pitfalls/*.md` | 複数skillにまたがる症状、原因、検出、復旧、予防 | 根拠未確認の推測 |
+| `.agents/skills/<name>/SKILL.md` | trigger、入力、前提、手順、分岐、完了条件、参照先 | 他skillにも共通する長い一般知識 |
+| `references/desired-state.md` | そのskillだけの成果物・完了条件・検証コマンド | repository全体の規約 |
+| `references/troubleshooting.md` | そのskill固有の失敗パターンと復旧方法 | 複数skillで繰り返す問題 |
+| `scripts/agent-hooks/` | 複数製品から呼ぶ決定的な検査・整形・監査処理 | 製品ごとのevent schema |
+| `.claude/`、`.codex/`、`.github/`、`.grok/`、`.cursor/` | 読み込み設定、hook eventの対応、権限、plugin manifestなど薄いadapter | portable core本文のコピー |
+
+### `MEMORY.md`は段階的開示の索引にする
+
+`MEMORY.md`を巨大なナレッジ集にせず、最初に読む短いrouting tableにします。
+
+```md
+# Repository Memory
+
+## Core desired state
+- Repository-wide change: [Repository desired state](desired-state/repository.md)
+- Before completion: [Quality gates](desired-state/quality-gates.md)
+
+## Read when relevant
+- Environment setup: [Environments](desired-state/environments.md)
+- CLI or runtime failure: [Toolchain pitfalls](pitfalls/toolchain.md)
+- Permission or hook failure: [Permissions](pitfalls/permissions.md)
+- Worktree or branch mismatch: [Worktrees](pitfalls/worktrees.md)
+
+## Promotion rule
+- 一つのskillだけで使う知識は、そのskillのreferencesに置く
+- 二つ以上のskillで再発したら、このmemoryへ昇格する
+- auto memoryの内容は、再現確認してから明示ファイルへ移す
+```
+
+`AGENTS.md`には、すべての詳細を転記せず、次のような入口だけを書きます。
+
+```md
+## Knowledge routing
+- 作業開始時に `.agents/memory/MEMORY.md` を読み、対象タスクに必要なリンクだけを追加で読む。
+- skill実行時は、そのskillの `SKILL.md` と参照されたreferencesを優先する。
+- 新しいハマりどころは、まず該当skillのtroubleshootingへ記録する。
+- 複数skillに影響する場合は `.agents/memory/pitfalls/` へ昇格する。
+```
+
+これなら常時ロードするのは短い索引だけです。詳細はタスクに応じて開くため、memoryが増えてもコンテキストを圧迫しにくくなります。
+
+### Desired stateとハマりどころの書式を揃える
+
+desired stateは、抽象的な理想ではなく検証可能な状態として書きます。
+
+```md
+## Generated files are reproducible
+- Scope: release, CI, documentation
+- Desired state: 生成物を再生成してもGit差分が出ない
+- Verify: `make generate && git diff --exit-code`
+- Source of truth: `schemas/` と生成スクリプト
+- Exceptions: 緊急hotfix時はissue URLを記録する
+- Last verified: 2026-08-07
+```
+
+ハマりどころも、原因だけでなく次のagentが回復できる情報まで残します。
+
+```md
+## Hookがheadless実行で発火しない
+- Applies to: release, CI concierge
+- Symptom: 対話実行では動くがprompt modeではログがない
+- Cause: repository hookが未trusted、またはprompt modeで無効
+- Detect: 有効な設定sourceと起動flagを表示する
+- Recovery: trustを確認し、必要な明示flagまたは環境設定を使う
+- Prevention: headless受け入れテストをCIに追加する
+- Last verified: 2026-08-07
+```
+
+同じ項目を使うと、別のコーディングエージェントでも「何が起きたか」だけでなく「どう正常性を判断するか」まで再利用できます。
+
+### Skill内の知識を共通知識へ昇格する
+
+知識は最初から共通memoryへ集めません。発見された場所に近いほど、適用条件を正確に書けるためです。
+
+1. skill実行中に得たdesired stateやハマりどころを、そのskillの`references/`へ記録する
+2. 別のskillでも同じ知識が必要になったら、`.agents/memory/`へ昇格する
+3. `MEMORY.md`へ「いつ読むか」を一行追加する
+4. 元のskillから共通ファイルを参照し、重複本文を削除する
+5. 最終確認日や対象バージョンが古くなった項目を定期的に再検証する
+
+この昇格ルールにより、skillは自己完結性を保ちつつ、複数skillにまたがる学習だけをrepository memoryとして共有できます。
+
+### 製品別adapterは薄く保つ
+
+たとえばhookの実装本体は`scripts/agent-hooks/pre-tool-policy.sh`に置き、`.claude/settings.json`、`.codex/hooks.json`、`.github/hooks/*.json`、`.agents/hooks.json`、`.grok/hooks/`、`.cursor/hooks.json`にはevent名と呼び出し方法だけを書きます。製品を替えても検査ロジックは同じで、adapterのschemaだけが変わる状態を目指します。
 
 重複が必要な場合、シンボリックリンクだけに頼ると、scanner、sandbox、Windows環境で差が出ます。小さな生成スクリプトでadapterを同期し、CIで差分がないことを検査する方法が堅実です。
 
@@ -289,12 +444,13 @@ Antigravityは`.agents/`をネイティブに使えるため、共通skillと同
 AIコーディングCLIの拡張機構は、名前だけを見ると似ています。しかし、実際の差は「どこから読み、いつ発火し、何を共有し、誰が上書きできるか」にあります。
 
 - `AGENTS.md`と`SKILL.md`はportable coreにしやすい
+- `.agents/memory/MEMORY.md`を短い索引にし、desired stateとハマりどころを段階的に開示する
 - path-scoped rules、custom agent metadata、hooks、plugin manifestは製品別adapterにする
 - MCPは能力の共有点にし、権限・認証・trustは各CLIで設定する
-- memoryは自動生成される状態として扱い、Git管理するinstructionsの代替にしない
+- Git管理するportable memoryと、製品が自動生成するauto memoryを分離する
 - 互換読込は移行の助けになるが、同一セマンティクスを保証するものではない
 
-最初に作るべきものは巨大な「全CLI共通設定」ではありません。共有方針、再利用手順、検査スクリプト、MCP実装だけをportable coreにし、変化の速い設定面を薄いadapterに閉じ込める構成です。これなら製品の機能追加やパス変更が起きても、運用の中心を作り直さずに済みます。
+最初に作るべきものは巨大な「全CLI共通設定」ではありません。共有方針、再利用手順、段階的に読むmemory、検査スクリプト、MCP実装をportable coreにし、変化の速い設定面を薄いadapterに閉じ込める構成です。これなら製品の機能追加やパス変更が起きても、運用の中心を作り直さずに済みます。
 
 この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
 
@@ -327,7 +483,7 @@ AIコーディングCLIの拡張機構は、名前だけを見ると似ていま
 - [Adding agent skills for GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-skills)
 - [About custom agents in GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-custom-agents)
 - [About GitHub Copilot plugins](https://docs.github.com/en/copilot/concepts/agents/about-plugins)
-- [Hooks configuration](https://docs.github.com/en/copilot/reference/hooks-configuration)
+- [GitHub Copilot hooks reference](https://docs.github.com/en/copilot/reference/hooks-reference)
 - [About GitHub Copilot Memory](https://docs.github.com/en/copilot/concepts/agents/copilot-memory)
 
 ### Google Antigravity CLI
@@ -345,6 +501,7 @@ AIコーディングCLIの拡張機構は、名前だけを見ると似ていま
 - [Grok Build overview](https://docs.x.ai/build/overview)
 - [Settings](https://docs.x.ai/build/settings)
 - [Skills, plugins, and marketplaces](https://docs.x.ai/build/features/skills-plugins-marketplaces)
+- [Hooks](https://docs.x.ai/build/features/hooks)
 - [MCP servers](https://docs.x.ai/build/features/mcp-servers)
 - [Permissions](https://docs.x.ai/build/features/permissions)
 - [CLI reference](https://docs.x.ai/build/cli/reference)
@@ -356,6 +513,7 @@ AIコーディングCLIの拡張機構は、名前だけを見ると似ていま
 - [Using Cursor Agent CLI](https://docs.cursor.com/en/cli/using)
 - [Cursor Agent CLI parameters](https://docs.cursor.com/en/cli/reference/parameters)
 - [Rules](https://docs.cursor.com/context/rules-for-ai)
+- [Hooks](https://cursor.com/docs/hooks)
 - [Are my Memories gone?（Cursorスタッフ回答）](https://forum.cursor.com/t/are-my-memories-gone/144057/3)
 - [Cursor 2.4: Subagents, Skills, and Hooks](https://cursor.com/changelog/2-4)
 - [Cursor 2.5: Plugins](https://cursor.com/changelog/2-5)
