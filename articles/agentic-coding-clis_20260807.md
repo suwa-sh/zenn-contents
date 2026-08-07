@@ -40,16 +40,18 @@ AIコーディングCLIを乗り換えるとき、モデル性能より先に困
 
 ## 先に結論：ディレクトリ名ではなく責務で分ける
 
-6製品の設定ディレクトリは似ています。しかし、同じMarkdownファイルでも責務が違います。移植では、まず資産を次の6層に分けると混乱しません。
+6製品の設定ディレクトリは似ています。しかし、同じMarkdownファイルでも責務が違います。移植では、まず資産を次の責務に分けると混乱しません。
 
 ```mermaid
-flowchart LR
-    A["Instructions / Rules<br/>常時適用する方針"] --> B["Skills / Commands<br/>必要時に呼ぶ手順"]
-    B --> C["Custom Agents<br/>役割と文脈を分離"]
-    C --> D["Hooks<br/>イベントで自動呼び出し"]
-    D --> E["MCP / Tools<br/>外部能力を追加"]
-    E --> F["Plugins<br/>複数の拡張を配布"]
-    M["Memory / Knowledge<br/>desired state・troubleshooting"] -. "適用範囲で配置" .-> A
+flowchart TB
+    RULES["Instructions / Rules<br/>常時の行動契約"] -->|"行動を制約"| RUNTIME["コーディングエージェントの実行"]
+    KNOWLEDGE["Memory / Knowledge<br/>desired state・troubleshooting"] -->|"必要な文脈を供給"| RUNTIME
+    SKILL["Skills / Commands<br/>再利用できる作業手順"] -->|"手順を与える"| RUNTIME
+    RUNTIME -->|"役割を委譲"| AGENT["Custom Agents<br/>分離した文脈・ツール"]
+    RUNTIME -->|"外部能力を呼び出す"| MCP["MCP / Tools<br/>外部システムへの接続"]
+    RUNTIME -->|"イベントで起動"| HOOK["Hooks<br/>検査・拒否・通知"]
+    HOOK -->|"検査結果を返す"| RUNTIME
+    PLUGIN["Plugins<br/>拡張の配布単位"] -.->|"拡張一式を導入"| RUNTIME
 ```
 
 役割は次のように考えるのが実用的です。
@@ -251,14 +253,14 @@ hookはユーザー単位だけの機能ではありません。2026年8月時�
 
 セキュリティ上重要な検査は、hookだけで終わらせずCIやサーバー側ポリシーでも再検証します。明示的にfail-closedが保証される場合だけ、hookを強制境界として扱います。repository hookはコード実行面になるため、初回trustの意味も確認が必要です。
 
-### 5. Memoryは内容と適用範囲の4象限で置き分ける
+### 5. Memoryは人との共有範囲とSkillの適用範囲で置き分ける
 
-運用上memoryへ残したいものは、大きく **desired state（期待する状態）** と **troubleshooting（ハマりどころ）** です。さらに、その知識が一つのskillだけに必要か、複数skillから参照されるかで配置を分けます。
+運用上memoryへ残したいものは、大きく **desired state（期待する状態）** と **troubleshooting（ハマりどころ）** です。ただし、配置を決める前に「エージェントを使わずに作業する人にも必要か」を判断します。人にも必要なら`docs/`を正本にし、エージェントからリンクします。人には不要なエージェント実行知識だけを、Skill内と複数Skill共通に分けます。
 
-| 内容 | Skill内だけで使う | 複数Skillで使う |
-|---|---|---|
-| Desired state | `.agents/skills/<name>/references/desired-state.md` | `.agents/memory/desired-state/*.md` |
-| Troubleshooting（ハマりどころ） | `.agents/skills/<name>/references/troubleshooting.md` | `.agents/memory/troubleshooting/*.md` |
+| 内容 | 人にも必要 | 一つのSkillだけで使う | 複数Skillで使う |
+|---|---|---|---|
+| Desired state | `docs/architecture/`、`docs/rules/`、ADR | `.agents/skills/<name>/references/desired-state.md` | `.agents/memory/desired-state/*.md` |
+| Troubleshooting（ハマりどころ） | `docs/troubleshooting/*.md` | `.agents/skills/<name>/references/troubleshooting.md` | `.agents/memory/troubleshooting/*.md` |
 
 desired stateには「最終的にどうなっていれば正しいか」「どう検証するか」を書きます。troubleshootingには、単なる作業日記ではなく「症状・原因・検出方法・復旧・再発防止・最終確認日」を書きます。これにより、別のコーディングエージェントでも同じ失敗を避け、同じ完了条件を目指せます。
 
@@ -273,15 +275,15 @@ desired stateには「最終的にどうなっていれば正しいか」「ど�
 | Grok Build | 実験的cross-session memoryを提供。session resumeとは別機能 | できない。実験機能を規約の代替にしない |
 | Cursor | 旧Memoriesは2.1系で削除。現行の独立した長期memory拡張点として扱わない | 明示rulesを正本にする |
 
-Git管理する`.agents/memory/`は、チームで合意した運用知識の正本です。製品が自動生成するmemoryはderived stateとして分離します。同じ「memory」という語でも、前者はportable knowledge、後者は製品固有のruntime stateです。
+Git管理する`.agents/memory/`は、チームで合意した**エージェント運用知識**の正本です。人にも必要な知識の正本は`docs/`に置き、`.agents/memory/index.md`から参照します。製品が自動生成するmemoryはderived stateとしてさらに分離します。同じ「memory」という語でも、明示管理するagent knowledgeと、製品固有のruntime stateは別物です。
 
 ## 複数CLIに対応するリポジトリ構成
 
-完全な共通化より、portable coreと薄いadapterへ分ける方が保守しやすくなります。ここでは`.agents/memory/`を製品機能ではなく、リポジトリ内の共通規約として導入します。そのファイル形式には、過去に調査した[OKFの基本構造](https://zenn.dev/suwash/articles/okf-open-knowledge-format_20260613)と[OKF v0.2の信頼信号](https://zenn.dev/suwash/articles/okf-v02-trust-signals_20260726)を適用します。
+完全な共通化より、portable coreと薄いadapterへ分ける方が保守しやすくなります。ここでは`docs/`を人とエージェントが共有するknowledge、`.agents/memory/`をリポジトリ管理するagent knowledgeとして分けます。後者のファイル形式には、過去に調査した[OKFの基本構造](https://zenn.dev/suwash/articles/okf-open-knowledge-format_20260613)と[OKF v0.2の信頼信号](https://zenn.dev/suwash/articles/okf-v02-trust-signals_20260726)を適用します。
 
 ```mermaid
 flowchart TD
-    CORE["Portable core<br/>AGENTS.md / .agents/skills / agent-specs / memory / scripts / MCP"]
+    CORE["Portable core<br/>AGENTS.md / docs / .agents/skills / agent-specs / agent memory / scripts / MCP"]
     CORE --> CL[".claude/<br/>CLAUDE.md・skills・agents・hooks"]
     CORE --> CX[".codex/<br/>config・hooks"]
     CORE --> GH[".github/<br/>instructions・agents・hooks"]
@@ -300,25 +302,29 @@ repository/
 ├── AGENTS.md
 ├── CLAUDE.md
 ├── docs/
-│   ├── README.md             # 全knowledgeへ辿る索引
+│   ├── README.md             # 人とagentが共有するknowledgeの索引
 │   ├── architecture/
-│   │   └── README.md
+│   │   ├── README.md
+│   │   └── repository.md
 │   ├── rules/
+│   │   ├── README.md
+│   │   └── quality-gates.md
+│   ├── adr/
 │   │   └── README.md
-│   └── adr/
-│       └── README.md
+│   └── troubleshooting/
+│       ├── README.md
+│       └── ci.md
 ├── .agents/
 │   ├── memory/
 │   │   ├── index.md
 │   │   ├── log.md
 │   │   ├── desired-state/
-│   │   │   ├── repository.md
-│   │   │   ├── quality-gates.md
-│   │   │   └── environments.md
+│   │   │   ├── tool-access.md
+│   │   │   └── context-loading.md
 │   │   └── troubleshooting/
-│   │       ├── toolchain.md
+│   │       ├── tool-discovery.md
 │   │       ├── permissions.md
-│   │       └── worktrees.md
+│   │       └── headless-mode.md
 │   ├── skills/
 │   │   └── release/
 │   │       ├── SKILL.md
@@ -364,7 +370,7 @@ repository/
     └── hooks.json
 ```
 
-`.agents/memory/`は、6製品が自動検出する標準ディレクトリではありません。この構成ではOKF v0.2のknowledge bundleとして定義し、`AGENTS.md`、`CLAUDE.md`、各skillから`index.md`を明示的に参照させます。Antigravity、Codex、Copilot、Cursorが`.agents/skills/`を読めても、`.agents/`以下の任意ディレクトリまで自動読込するわけではない点に注意が必要です。
+`.agents/memory/`は、6製品が自動検出する標準ディレクトリではありません。この構成ではOKF v0.2のagent knowledge bundleとして定義し、`AGENTS.md`、`CLAUDE.md`、各skillから`index.md`を明示的に参照させます。人向けの`docs/README.md`から逆向きにはリンクしません。Antigravity、Codex、Copilot、Cursorが`.agents/skills/`を読めても、`.agents/`以下の任意ディレクトリまで自動読込するわけではない点に注意が必要です。
 
 `.agents/skills/`は実行可能なSkillの正本です。一方、`.agents/agent-specs/`はcustom agentの製品非依存な中間表現であり、そのまま各CLIが読むことは想定しません。`.agents/agents/`は名前が似ていますが、Antigravityが読む製品別adapterです。この二つを分けることで、単一のagent定義へ互換性のないfront matterを詰め込まずに済みます。
 
@@ -378,11 +384,12 @@ repository/
 |---|---|---|
 | `AGENTS.md` | 常時守るbehavior contract、標準コマンド、`docs/README.md`・knowledge・skillの読込ルーティング | 長いトラブル履歴、製品固有schema |
 | `CLAUDE.md` | `@AGENTS.md`とClaude Codeだけに必要な補足 | `AGENTS.md`と同じ規約の複製 |
-| `docs/README.md` | architecture、rules、ADR、運用手順、memoryへ漏れなく辿るknowledge map | 各文書の本文、常時ロードすべき指示の複製 |
+| `docs/README.md` | 人とエージェントが共有するarchitecture、rules、ADR、運用手順、troubleshootingへ漏れなく辿るknowledge map | `.agents/memory/`への逆向きリンク、各文書の本文、常時ロードすべき指示の複製 |
 | `.agents/memory/index.md` | OKF bundleの短い索引、いつ何を読むか、昇格ルール | 詳細な手順や全troubleshootingの本文 |
 | `.agents/memory/log.md` | knowledgeの追加・更新・廃止履歴 | セッションごとの詳細ログ |
-| `.agents/memory/desired-state/*.md` | 複数skillが共有する目標状態、検証方法、例外、正本 | 一回限りの作業ログ |
-| `.agents/memory/troubleshooting/*.md` | 複数skillにまたがる症状、原因、検出、復旧、予防 | 根拠未確認の推測 |
+| `.agents/memory/desired-state/*.md` | 複数skillが共有するエージェント実行上の目標状態、検証方法、例外 | 人も理解すべきarchitectureや運用規約、一回限りの作業ログ |
+| `.agents/memory/troubleshooting/*.md` | 複数skillにまたがるエージェント固有の症状、原因、検出、復旧、予防 | 人の障害対応にも使う手順、根拠未確認の推測 |
+| `docs/troubleshooting/*.md` | 人とエージェントが共有する障害対応、診断、復旧、再発防止 | エージェント実行だけに閉じたtool discoveryやcontext読込の癖 |
 | `.agents/skills/<name>/SKILL.md` | trigger、入力、前提、手順、分岐、完了条件、参照先 | 他skillにも共通する長い一般知識 |
 | `.agents/skills/<name>/SKILL.md`のfront matter | 原則`name`と`description`。共通性を確認できた標準フィールドだけ | 製品固有の`model`、`context`、`hooks`、安易な`allowed-tools` |
 | `references/desired-state.md` | そのskillだけの成果物・完了条件・検証コマンド | repository全体の規約 |
@@ -393,7 +400,7 @@ repository/
 | `scripts/agent-hooks/` | 複数製品から呼ぶ決定的な検査・整形・監査処理 | 製品ごとのevent schema |
 | `.claude/`、`.codex/`、`.github/`、`.grok/`、`.cursor/` | 読み込み設定、hook eventの対応、権限、plugin manifestなど薄いadapter | portable core本文のコピー |
 
-### `docs/README.md`を全knowledgeの索引にする
+### `docs/README.md`を人とエージェントが共有するknowledgeの索引にする
 
 `docs/README.md`を起点にarchitecture、rules、ADR、運用手順などへ段階的に辿れる構成は、特定のコーディングエージェントの標準仕様ではありません。しかし、GitHubは`docs/`のREADMEとrepository内の相対リンクを標準的に扱うため、人にも読みやすく、製品に依存しないrepository conventionとして採用しやすい形です。[GitHubのREADMEドキュメント](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes)
 
@@ -401,17 +408,23 @@ repository/
 
 ```mermaid
 flowchart LR
-    ENTRY["AGENTS.md / CLAUDE.md"] --> INDEX["docs/README.md<br/>全体索引"]
-    INDEX --> ARCH["architecture"]
-    INDEX --> RULES["rules"]
-    INDEX --> ADR["ADR"]
-    INDEX --> MEMORY[".agents/memory/index.md"]
+    ENTRY["AGENTS.md / CLAUDE.md"] --> DOCS["docs/README.md<br/>共有knowledgeの索引"]
+    ENTRY --> MEMORY[".agents/memory/index.md<br/>agent knowledgeの索引"]
+    DOCS --> ARCH["architecture"]
+    DOCS --> RULES["rules"]
+    DOCS --> ADR["ADR"]
+    DOCS --> TROUBLE["troubleshooting"]
+    MEMORY -->|"共有knowledgeを参照"| TROUBLE
+    MEMORY --> AGENTMEM["エージェント専用<br/>desired state / troubleshooting"]
     AGENT["Custom agent"] -->|"必要な文書へ直接"| ARCH
     AGENT -->|"必要な文書へ直接"| RULES
     AGENT -->|"必要な文書へ直接"| ADR
+    AGENT -->|"必要な文書へ直接"| TROUBLE
 ```
 
-`AGENTS.md`と`CLAUDE.md`からは、`docs/README.md`を経由して正本の全knowledgeへ辿れるようにします。全ファイルを一枚の索引から直接リンクする必要はありません。各カテゴリの`README.md`を中継してもよいので、リンク切れや孤立した文書がないことをCIで検査します。
+`docs/README.md`からは、人とエージェントが共有する正本へ漏れなく辿れるようにします。全ファイルを一枚の索引から直接リンクする必要はありません。各カテゴリの`README.md`を中継してもよいので、リンク切れや孤立した共有文書がないことをCIで検査します。エージェント専用の`.agents/memory/index.md`は、この人向け索引へ含めません。
+
+リンク方向は`.agents/memory/index.md`から`docs/`への一方向です。たとえばCI障害の復旧手順は`docs/troubleshooting/ci.md`を正本にし、エージェント固有のtool discoveryやcontext読込の問題だけを`.agents/memory/troubleshooting/`へ置きます。
 
 一方、custom agentには責務だけでなく、その役割が通常必要とするdocsへの直接リンクを持たせます。これは全体索引を毎回探索させないための実行時のショートカットです。たとえばreviewerならarchitecture overview、review rules、関連ADRの索引を直接参照させます。全体索引と直接リンクは同じ正本を指し、本文をagent定義へ複製しません。
 
@@ -429,7 +442,7 @@ agent定義の配置階層は製品ごとに違うため、相対リンクもada
 
 ただし、Markdownリンクを書くだけで各CLIが自動的に内容をロードするとは限りません。「作業前に読む」「この条件のときに読む」と命令まで明示します。Claude Codeの`@path` importは起動時に内容を展開するため、長いdocsをすべてimportすると段階的開示になりません。[Claude Codeの公式ドキュメント](https://code.claude.com/docs/en/memory)も、常時必要な指示は短く保ち、複数手順はSkillやpath-scoped ruleへ分けることを勧めています。
 
-したがって、`docs/README.md`は**発見のための完全な経路**、custom agent内の直接リンクは**実行のための最短経路**として併用します。
+したがって、`docs/README.md`は**共有knowledgeを発見するための完全な経路**、`.agents/memory/index.md`は**エージェント専用knowledgeの入口と共有docsへのルーター**、custom agent内の直接リンクは**実行のための最短経路**として併用します。
 
 ### OKFの`index.md`を段階的開示の入口にする
 
@@ -443,14 +456,15 @@ okf_version: "0.2"
 # リポジトリのメモリー
 
 ## 基本の期待状態
-- リポジトリ全体を変更するとき: [リポジトリの期待状態](desired-state/repository.md)
-- 作業を完了する前: [品質ゲート](desired-state/quality-gates.md)
+- リポジトリ全体を変更するとき: [リポジトリの期待状態](../../docs/architecture/repository.md)
+- 作業を完了する前: [品質ゲート](../../docs/rules/quality-gates.md)
+- tool権限を設計するとき: [Tool accessの期待状態](desired-state/tool-access.md)
 
 ## 必要なときに読む
-- 環境を構築するとき: [環境の期待状態](desired-state/environments.md)
-- CLIや実行環境が失敗したとき: [ツールチェーンのトラブルシューティング](troubleshooting/toolchain.md)
-- 権限やフックが動かないとき: [権限のトラブルシューティング](troubleshooting/permissions.md)
-- ワークツリーやブランチが一致しないとき: [ワークツリーのトラブルシューティング](troubleshooting/worktrees.md)
+- CIが失敗したとき: [CIのトラブルシューティング](../../docs/troubleshooting/ci.md)
+- toolが検出されないとき: [Tool discoveryのトラブルシューティング](troubleshooting/tool-discovery.md)
+- エージェントの権限が動かないとき: [権限のトラブルシューティング](troubleshooting/permissions.md)
+- ヘッドレス実行だけ失敗するとき: [ヘッドレスモードのトラブルシューティング](troubleshooting/headless-mode.md)
 
 ## 昇格ルール
 - 一つのスキルだけで使う知識は、そのスキルの参照資料に置く
@@ -564,14 +578,15 @@ AIコーディングCLIの拡張機構は、名前だけを見ると似ていま
 
 - Skillは`.agents/skills/`を正本にし、共有front matterを`name`と`description`中心に保つ
 - custom agentは`.agents/agent-specs/`の役割定義を共有し、製品別の実行設定を生成する
-- `.agents/memory/index.md`を短い索引にし、desired stateとtroubleshootingを段階的に開示する
+- 人にも必要なtroubleshootingやdesired stateは`docs/`を正本にする
+- `.agents/memory/index.md`をagent knowledgeの短い索引と、共有docsへの一方向のルーターにする
 - memoryのOKF front matterは`type`から始め、信頼信号は必要になった時だけ加える
 - path-scoped rules、custom agent metadata、hooks、plugin manifestは製品別adapterにする
 - MCPは能力の共有点にし、権限・認証・trustは各CLIで設定する
 - Git管理するportable memoryと、製品が自動生成するauto memoryを分離する
 - 互換読込は移行の助けになるが、同一セマンティクスを保証するものではない
 
-最初に作るべきものは巨大な「全CLI共通設定」ではありません。共有方針、再利用手順、段階的に読むmemory、検査スクリプト、MCP実装をportable coreにし、変化の速い設定面を薄いadapterに閉じ込める構成です。これなら製品の機能追加やパス変更が起きても、運用の中心を作り直さずに済みます。
+最初に作るべきものは巨大な「全CLI共通設定」ではありません。人と共有するdocs、再利用手順、段階的に読むagent memory、検査スクリプト、MCP実装をportable coreにし、変化の速い設定面を薄いadapterに閉じ込める構成です。これなら製品の機能追加やパス変更が起きても、運用の中心を作り直さずに済みます。
 
 この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
 
