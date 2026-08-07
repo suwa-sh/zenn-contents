@@ -7,10 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (268)
+## Articles: 下書き (271)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-07 | [🧩 dbt Labsが示すContext Engineering エージェント向け文脈モデルという設計](articles/dbt-labs-getdbt-from-analytics-p8_20260807.md) | dbt, MCP, AI, Snowflake, データ基盤 |
+| 2026-08-07 | [⚓ ビルドは通るのに「検証済み」だけが失効する問題を成果物依存グラフで捉える](articles/ea-graph-arxiv-abs-2608-04278-p5_20260807.md) | LLM, AIAgent, アーキテクチャ, ソフトウェアテスト |
+| 2026-08-07 | [🔌 SkillとMCPを1ディレクトリで配る最小規格 - Agent Plugins 1.0](articles/vercel-agent-skills-mcp-plugins-p3_20260807.md) | MCP, AIAgent, OpenStandard, JSONSchema, DevTools |
 | 2026-08-06 | [🧭 エージェントの実行履歴を決定的ワークフローへ変換する - TraceCompiler論文の要点](articles/agent-skills-arxiv-abs-p5_20260806.md) | LLM, AIAgent, ワークフロー, 論文, アーキテクチャ |
 | 2026-08-06 | [🎭 ユーザーIDを外に出さない設計 - Airbnbの文脈別プロフィールID分離に学ぶ](articles/airbnb-id-id-airbnb-tech-p8_20260806.md) | Privacy, Architecture, IdentityManagement, Authorization, DesignPattern |
 | 2026-08-06 | [🧭 シニアの判断をAIレビューエージェントへ移植する MonotaRO「Makasetaro」の設計分析](articles/monotaro-ai-ai-tech-monotaro-p9_20260806.md) | AI, CodeReview, Agent, GitHubActions |
