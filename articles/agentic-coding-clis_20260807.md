@@ -283,7 +283,7 @@ Git管理する`.agents/memory/`は、チームで合意した**エージェン�
 
 ```mermaid
 flowchart TD
-    CORE["Portable core<br/>AGENTS.md / docs / .agents/skills / agent-specs / agent memory / scripts / MCP"]
+    CORE["Portable core<br/>AGENTS.md / docs / .agents/skills / agent-specs / agent memory / scripts"]
     CORE --> CL[".claude/<br/>CLAUDE.md・skills・agents・hooks"]
     CORE --> CX[".codex/<br/>config・hooks"]
     CORE --> GH[".github/<br/>instructions・agents・hooks"]
@@ -345,8 +345,6 @@ repository/
 │   └── agent-hooks/
 │       ├── pre-tool-policy.sh
 │       └── post-edit-check.sh
-├── tools/
-│   └── mcp-server/
 ├── .claude/
 │   ├── settings.json
 │   ├── agents/              # agent-specsから生成
@@ -398,7 +396,7 @@ repository/
 | `.agents/agent-specs/<name>/policy.yaml` | `read`、`edit`、`shell`、`delegate`など論理的な能力 | 各製品固有のtool identifier |
 | `.agents/agents/`、`.claude/agents/`、`.codex/agents/`、<br/>`.github/agents/`、`.grok/agents/`、`.cursor/agents/` | agent-specsから生成した製品別front matter、tool、model、権限設定、実行前に読むdocsへの直接リンク | portableな役割本文の手修正・重複管理 |
 | `scripts/agent-hooks/` | 複数製品から呼ぶ決定的な検査・整形・監査処理 | 製品ごとのevent schema |
-| `.claude/`、`.codex/`、`.github/`、`.grok/`、`.cursor/` | 読み込み設定、hook eventの対応、権限、plugin manifestなど薄いadapter | portable core本文のコピー |
+| `.claude/`、`.codex/`、`.github/`、`.grok/`、`.cursor/` | 読み込み設定、hook eventの対応、MCP接続、権限、plugin manifestなど薄いadapter | portable core本文のコピー |
 
 ### `docs/README.md`を人とエージェントが共有するknowledgeの索引にする
 
@@ -586,7 +584,7 @@ AIコーディングCLIの拡張機構は、名前だけを見ると似ていま
 - Git管理するportable memoryと、製品が自動生成するauto memoryを分離する
 - 互換読込は移行の助けになるが、同一セマンティクスを保証するものではない
 
-最初に作るべきものは巨大な「全CLI共通設定」ではありません。人と共有するdocs、再利用手順、段階的に読むagent memory、検査スクリプト、MCP実装をportable coreにし、変化の速い設定面を薄いadapterに閉じ込める構成です。これなら製品の機能追加やパス変更が起きても、運用の中心を作り直さずに済みます。
+最初に作るべきものは巨大な「全CLI共通設定」ではありません。人と共有するdocs、再利用手順、段階的に読むagent memory、検査スクリプトをportable coreにし、MCP接続を含む変化の速い設定面を薄いadapterに閉じ込める構成です。これなら製品の機能追加やパス変更が起きても、運用の中心を作り直さずに済みます。
 
 この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
 
