@@ -12,7 +12,7 @@ AIコーディングCLIを乗り換えるとき、モデル性能より先に困
 
 - 指示はどの階層から、どの優先順位で読み込まれるか
 - skill、custom agent、hook、MCP、pluginは、それぞれ何を拡張するものか
-- desired stateとハマりどころを、skill内と複数skill共通のどこへ記録するか
+- desired stateとtroubleshootingを、skill内と複数skill共通のどこへ記録するか
 - 複数CLIで共有できる資産と、製品別に変換すべき資産は何か
 
 :::message
@@ -34,7 +34,7 @@ AIコーディングCLIを乗り換えるとき、モデル性能より先に困
 | 特定イベントで検査や通知を呼び出す | Hooks |
 | 同じ外部システムへ同じ権限で接続する | MCP / Tools |
 | 拡張一式をチームへ配布する | Plugins |
-| Desired stateとハマりどころを適切な範囲で再利用する | Memory / Knowledgeの段階的開示 |
+| Desired stateとtroubleshootingを適切な範囲で再利用する | Memory / Knowledgeの段階的開示 |
 
 以降は、各製品の機能名をこの契約へ対応づけます。移植の成否は「同じファイルを読めたか」ではなく、最後に示す受け入れテストで、同じ入力に対して許容範囲内の行動になるかで判定します。
 
@@ -49,7 +49,7 @@ flowchart LR
     C --> D["Hooks<br/>イベントで自動呼び出し"]
     D --> E["MCP / Tools<br/>外部能力を追加"]
     E --> F["Plugins<br/>複数の拡張を配布"]
-    M["Memory / Knowledge<br/>desired state・ハマりどころ"] -. "適用範囲で配置" .-> A
+    M["Memory / Knowledge<br/>desired state・troubleshooting"] -. "適用範囲で配置" .-> A
 ```
 
 役割は次のように考えるのが実用的です。
@@ -62,7 +62,7 @@ flowchart LR
 | Hooks | lint、監査、危険操作の拒否、通知 | ライフサイクルイベントで呼び出し。障害時の扱いは製品依存 | 高い。ただし形式・fail-open/closedは製品依存 |
 | MCP | GitHub、DB、ブラウザなど外部システムへの接続 | モデルがツールとして選択 | 設定は管理しやすいが、認証情報は分離が必要 |
 | Plugins | skills、agents、hooks、MCPなどの一括配布 | インストール・有効化で解決 | 配布に向くが、manifestは製品依存 |
-| Memory / Knowledge | desired state、ハマりどころ、会話から得た補助知識 | 人が明示管理するものと製品が自動生成するものがある | 明示ファイルは高い。auto memoryは正本にしない |
+| Memory / Knowledge | desired state、troubleshooting、会話から得た補助知識 | 人が明示管理するものと製品が自動生成するものがある | 明示ファイルは高い。auto memoryは正本にしない |
 
 重要なのは、**skillはモデルが選択する手順、hookはライフサイクルイベントから自動的に呼ばれる処理**だという違いです。たとえば「コミット前にテストする」はskillにも書けますが、モデル判断に依存させたくないならhookへ置きます。ただし、hookの拒否能力やタイムアウト・異常終了時のfail-open/closedは、製品・イベント・handlerごとに異なります。実行を保証するセキュリティ境界はCIやサーバー側ポリシーに置くべきです。同様に、MCPは能力を増やしますが、利用条件を強制するポリシーそのものではありません。
 
@@ -225,14 +225,14 @@ hookはユーザー単位だけの機能ではありません。2026年8月時�
 
 ### 4. Memoryは内容と適用範囲の4象限で置き分ける
 
-運用上memoryへ残したいものは、大きく**desired state**と**ハマりどころ**です。さらに、その知識が一つのskillだけに必要か、複数skillから参照されるかで配置を分けます。
+運用上memoryへ残したいものは、大きく**desired state**と**troubleshooting（ハマりどころ）**です。さらに、その知識が一つのskillだけに必要か、複数skillから参照されるかで配置を分けます。
 
 | 内容 | Skill内だけで使う | 複数Skillで使う |
 |---|---|---|
 | Desired state | `.agents/skills/<name>/references/desired-state.md` | `.agents/memory/desired-state/*.md` |
-| ハマりどころ | `.agents/skills/<name>/references/troubleshooting.md` | `.agents/memory/pitfalls/*.md` |
+| Troubleshooting（ハマりどころ） | `.agents/skills/<name>/references/troubleshooting.md` | `.agents/memory/troubleshooting/*.md` |
 
-desired stateには「最終的にどうなっていれば正しいか」「どう検証するか」を書きます。ハマりどころには、単なる作業日記ではなく「症状・原因・検出方法・復旧・再発防止・最終確認日」を書きます。これにより、別のコーディングエージェントでも同じ失敗を避け、同じ完了条件を目指せます。
+desired stateには「最終的にどうなっていれば正しいか」「どう検証するか」を書きます。troubleshootingには、単なる作業日記ではなく「症状・原因・検出方法・復旧・再発防止・最終確認日」を書きます。これにより、別のコーディングエージェントでも同じ失敗を避け、同じ完了条件を目指せます。
 
 一方、各製品のauto memoryは、会話から候補知識を拾うための**inbox**として扱います。そこから有効な知識をレビューし、上記の明示ファイルへ昇格させます。auto memoryだけを正本にすると、誰の環境で、いつ生成され、いつ忘れられたかを追跡できません。
 
@@ -249,7 +249,7 @@ Git管理する`.agents/memory/`は、チームで合意した運用知識の正
 
 ## 複数CLIに対応するリポジトリ構成
 
-完全な共通化より、portable coreと薄いadapterへ分ける方が保守しやすくなります。ここでは`.agents/memory/`を製品機能ではなく、リポジトリ内の共通規約として導入します。
+完全な共通化より、portable coreと薄いadapterへ分ける方が保守しやすくなります。ここでは`.agents/memory/`を製品機能ではなく、リポジトリ内の共通規約として導入します。そのファイル形式には、過去に調査した[OKFの基本構造](https://zenn.dev/suwash/articles/okf-open-knowledge-format_20260613)と[OKF v0.2の信頼信号](https://zenn.dev/suwash/articles/okf-v02-trust-signals_20260726)を適用します。
 
 ```mermaid
 flowchart TD
@@ -273,12 +273,13 @@ repository/
 ├── CLAUDE.md
 ├── .agents/
 │   ├── memory/
-│   │   ├── MEMORY.md
+│   │   ├── index.md
+│   │   ├── log.md
 │   │   ├── desired-state/
 │   │   │   ├── repository.md
 │   │   │   ├── quality-gates.md
 │   │   │   └── environments.md
-│   │   └── pitfalls/
+│   │   └── troubleshooting/
 │   │       ├── toolchain.md
 │   │       ├── permissions.md
 │   │       └── worktrees.md
@@ -317,7 +318,9 @@ repository/
     └── hooks.json
 ```
 
-`.agents/memory/MEMORY.md`は、6製品が自動検出する標準ファイルではありません。この構成ではportable coreの索引として定義し、`AGENTS.md`、`CLAUDE.md`、各skillから明示的に参照させます。Antigravity、Codex、Copilot、Cursorが`.agents/skills/`を読めても、`.agents/`以下の任意ディレクトリまで自動読込するわけではない点に注意が必要です。
+`.agents/memory/`は、6製品が自動検出する標準ディレクトリではありません。この構成ではOKF v0.2のknowledge bundleとして定義し、`AGENTS.md`、`CLAUDE.md`、各skillから`index.md`を明示的に参照させます。Antigravity、Codex、Copilot、Cursorが`.agents/skills/`を読めても、`.agents/`以下の任意ディレクトリまで自動読込するわけではない点に注意が必要です。
+
+特定のruntimeや既存運用が`MEMORY.md`を要求する場合だけ、`index.md`へ誘導する薄いadapterとして追加します。OKFでは`MEMORY.md`は予約ファイルではなくconcept documentになるため、その場合は`type: Memory Adapter`などのfront matterが必要です。標準で二つの入口を置くより、通常は`index.md`へ統一します。
 
 ### 各ファイルに何を書くか
 
@@ -325,20 +328,25 @@ repository/
 |---|---|---|
 | `AGENTS.md` | 常時守るbehavior contract、標準コマンド、knowledge/skillの読込ルーティング | 長いトラブル履歴、製品固有schema |
 | `CLAUDE.md` | `@AGENTS.md`とClaude Codeだけに必要な補足 | `AGENTS.md`と同じ規約の複製 |
-| `.agents/memory/MEMORY.md` | memory全体の短い索引、いつ何を読むか、昇格ルール | 詳細な手順や全pitfallの本文 |
+| `.agents/memory/index.md` | OKF bundleの短い索引、いつ何を読むか、昇格ルール | 詳細な手順や全troubleshootingの本文 |
+| `.agents/memory/log.md` | knowledgeの追加・更新・廃止履歴 | セッションごとの詳細ログ |
 | `.agents/memory/desired-state/*.md` | 複数skillが共有する目標状態、検証方法、例外、正本 | 一回限りの作業ログ |
-| `.agents/memory/pitfalls/*.md` | 複数skillにまたがる症状、原因、検出、復旧、予防 | 根拠未確認の推測 |
+| `.agents/memory/troubleshooting/*.md` | 複数skillにまたがる症状、原因、検出、復旧、予防 | 根拠未確認の推測 |
 | `.agents/skills/<name>/SKILL.md` | trigger、入力、前提、手順、分岐、完了条件、参照先 | 他skillにも共通する長い一般知識 |
 | `references/desired-state.md` | そのskillだけの成果物・完了条件・検証コマンド | repository全体の規約 |
 | `references/troubleshooting.md` | そのskill固有の失敗パターンと復旧方法 | 複数skillで繰り返す問題 |
 | `scripts/agent-hooks/` | 複数製品から呼ぶ決定的な検査・整形・監査処理 | 製品ごとのevent schema |
 | `.claude/`、`.codex/`、`.github/`、`.grok/`、`.cursor/` | 読み込み設定、hook eventの対応、権限、plugin manifestなど薄いadapter | portable core本文のコピー |
 
-### `MEMORY.md`は段階的開示の索引にする
+### OKFの`index.md`を段階的開示の入口にする
 
-`MEMORY.md`を巨大なナレッジ集にせず、最初に読む短いrouting tableにします。
+OKF v0.2は`index.md`を段階的開示のための予約ファイルと定義しています。`.agents/memory/index.md`を巨大なナレッジ集にせず、最初に読む短いrouting tableにします。bundle rootの`index.md`は、通常のconcept front matterではなく`okf_version`だけを宣言できます。
 
 ```md
+---
+okf_version: "0.2"
+---
+
 # Repository Memory
 
 ## Core desired state
@@ -347,9 +355,9 @@ repository/
 
 ## Read when relevant
 - Environment setup: [Environments](desired-state/environments.md)
-- CLI or runtime failure: [Toolchain pitfalls](pitfalls/toolchain.md)
-- Permission or hook failure: [Permissions](pitfalls/permissions.md)
-- Worktree or branch mismatch: [Worktrees](pitfalls/worktrees.md)
+- CLI or runtime failure: [Toolchain troubleshooting](troubleshooting/toolchain.md)
+- Permission or hook failure: [Permissions](troubleshooting/permissions.md)
+- Worktree or branch mismatch: [Worktrees](troubleshooting/worktrees.md)
 
 ## Promotion rule
 - 一つのskillだけで使う知識は、そのskillのreferencesに置く
@@ -361,19 +369,41 @@ repository/
 
 ```md
 ## Knowledge routing
-- 作業開始時に `.agents/memory/MEMORY.md` を読み、対象タスクに必要なリンクだけを追加で読む。
+- 作業開始時に `.agents/memory/index.md` を読み、対象タスクに必要なリンクだけを追加で読む。
 - skill実行時は、そのskillの `SKILL.md` と参照されたreferencesを優先する。
-- 新しいハマりどころは、まず該当skillのtroubleshootingへ記録する。
-- 複数skillに影響する場合は `.agents/memory/pitfalls/` へ昇格する。
+- 新しいtroubleshootingは、まず該当skillのreferencesへ記録する。
+- 複数skillに影響する場合は `.agents/memory/troubleshooting/` へ昇格する。
 ```
 
 これなら常時ロードするのは短い索引だけです。詳細はタスクに応じて開くため、memoryが増えてもコンテキストを圧迫しにくくなります。
 
-### Desired stateとハマりどころの書式を揃える
+### Desired stateとTroubleshootingの書式を揃える
+
+`.agents/memory/`以下のconcept documentには、OKF v0.2のfront matterを持たせます。常に必須なのは`type`だけです。`Desired State`と`Troubleshooting`は中央レジストリの型ではなく、このbundleで定める説明的なtypeです。OKF consumerは未知のtypeも拒否せず読めます。
+
+`generated`、`verified`、`status`、`stale_after`、`sources`は任意ですが、複数skillの判断に影響するknowledgeほど付ける価値があります。すべてを一律必須にせず、重要度に応じて信頼信号を厚くします。なお、`SKILL.md`は各コーディングエージェントのfront matter schemaを優先し、OKF fieldsを混在させません。OKFを適用する中心は、skillから分離されたknowledge documentです。
 
 desired stateは、抽象的な理想ではなく検証可能な状態として書きます。
 
 ```md
+---
+type: Desired State
+title: Generated files are reproducible
+description: 生成物を再生成してもGit差分が残らない状態
+tags: [release, ci, reproducibility]
+generated:
+  by: human:platform-team
+  at: 2026-08-07T10:00:00Z
+verified:
+  - by: process:ci-generate-check
+    at: 2026-08-07T10:15:00Z
+status: stable
+stale_after: 2026-11-07
+sources:
+  - id: generation-contract
+    resource: https://github.com/example/repo/blob/main/Makefile
+---
+
 ## Generated files are reproducible
 - Scope: release, CI, documentation
 - Desired state: 生成物を再生成してもGit差分が出ない
@@ -383,9 +413,27 @@ desired stateは、抽象的な理想ではなく検証可能な状態として�
 - Last verified: 2026-08-07
 ```
 
-ハマりどころも、原因だけでなく次のagentが回復できる情報まで残します。
+troubleshootingも、原因だけでなく次のagentが回復できる情報まで残します。
 
 ```md
+---
+type: Troubleshooting
+title: Hookがheadless実行で発火しない
+description: 対話実行とheadless実行でhook discoveryが異なる場合の復旧手順
+tags: [hooks, headless, trust]
+generated:
+  by: codex/0.145.0
+  at: 2026-08-07T11:00:00Z
+verified:
+  - by: human:repository-maintainer
+    at: 2026-08-07T11:30:00Z
+status: stable
+stale_after: 2026-09-07
+sources:
+  - id: agent-hook-docs
+    resource: https://example.com/official-hook-docs
+---
+
 ## Hookがheadless実行で発火しない
 - Applies to: release, CI concierge
 - Symptom: 対話実行では動くがprompt modeではログがない
@@ -402,9 +450,9 @@ desired stateは、抽象的な理想ではなく検証可能な状態として�
 
 知識は最初から共通memoryへ集めません。発見された場所に近いほど、適用条件を正確に書けるためです。
 
-1. skill実行中に得たdesired stateやハマりどころを、そのskillの`references/`へ記録する
+1. skill実行中に得たdesired stateやtroubleshootingを、そのskillの`references/`へ記録する
 2. 別のskillでも同じ知識が必要になったら、`.agents/memory/`へ昇格する
-3. `MEMORY.md`へ「いつ読むか」を一行追加する
+3. `index.md`へ「いつ読むか」を一行追加する
 4. 元のskillから共通ファイルを参照し、重複本文を削除する
 5. 最終確認日や対象バージョンが古くなった項目を定期的に再検証する
 
@@ -444,7 +492,7 @@ desired stateは、抽象的な理想ではなく検証可能な状態として�
 AIコーディングCLIの拡張機構は、名前だけを見ると似ています。しかし、実際の差は「どこから読み、いつ発火し、何を共有し、誰が上書きできるか」にあります。
 
 - `AGENTS.md`と`SKILL.md`はportable coreにしやすい
-- `.agents/memory/MEMORY.md`を短い索引にし、desired stateとハマりどころを段階的に開示する
+- `.agents/memory/index.md`を短い索引にし、desired stateとtroubleshootingを段階的に開示する
 - path-scoped rules、custom agent metadata、hooks、plugin manifestは製品別adapterにする
 - MCPは能力の共有点にし、権限・認証・trustは各CLIで設定する
 - Git管理するportable memoryと、製品が自動生成するauto memoryを分離する
@@ -455,6 +503,13 @@ AIコーディングCLIの拡張機構は、名前だけを見ると似ていま
 この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
 
 ## 参考リンク
+
+### Memory format / OKF
+
+- [Open Knowledge Format v0.2 specification](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)
+- [OKF v0.2 adds trust signals](https://cloud.google.com/blog/products/data-analytics/okf-v0-2-adds-trust-signals/)
+- [技術調査 - OKF (Open Knowledge Format)](https://zenn.dev/suwash/articles/okf-open-knowledge-format_20260613)
+- [エージェント知識の信頼信号を記述する形式 - OKF v0.2](https://zenn.dev/suwash/articles/okf-v02-trust-signals_20260726)
 
 ### Claude Code
 
