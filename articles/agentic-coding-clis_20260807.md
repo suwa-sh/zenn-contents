@@ -3,7 +3,8 @@ title: "コーディングエージェントをまたいで近い振る舞いを
 emoji: "🧩"
 type: "idea"
 topics: ["ClaudeCode", "Codex", "GitHubCopilot", "Cursor", "AIAgent"]
-published: false
+published: true
+published_at: 2026-08-08
 ---
 
 AIコーディングCLIを乗り換えるとき、モデル性能より先に困るのが設定資産の移植です。Claude Codeで育てた`CLAUDE.md`、`.claude/skills/`、hooks、subagentsは、別のCLIではどこに置き、何に読み替えればよいのでしょうか。
@@ -73,16 +74,25 @@ flowchart TB
 最初に見るべき差は、ファイル名よりスコープ解決です。多くの製品は、組織・ユーザー・プロジェクト・現在位置・セッションという階層を持ちますが、結合方法が異なります。
 
 ```mermaid
-flowchart TD
-    O["組織・Managed<br/>管理者ポリシー"] --> U["User<br/>全プロジェクト共通"]
-    U --> R["Repository root<br/>チーム共通"]
-    R --> P["Path / package<br/>対象ディレクトリ固有"]
-    P --> L["Local / session<br/>個人・一時上書き"]
+flowchart LR
+    subgraph SCOPE["スコープ階層"]
+        O["組織・Managed<br/>管理者ポリシー"] --> U["User<br/>全プロジェクト共通"]
+        U --> R["Repository root<br/>チーム共通"]
+        R --> P["Path / package<br/>対象ディレクトリ固有"]
+        P --> L["Local / session<br/>個人・一時上書き"]
+    end
 
-    C1["Claude Code<br/>CLAUDE.md + settings scopes"] --- P
-    C2["Codex<br/>AGENTS.mdをroot→cwdで連結"] --- P
-    C3["Copilot<br/>複数instructionsをマージ"] --- P
-    C4["Agy / Grok / Cursor<br/>AGENTS.md等と専用rules"] --- P
+    subgraph PRODUCT["製品ごとの解決方式"]
+        C1["Claude Code<br/>CLAUDE.md + settings scopes"]
+        C2["Codex<br/>AGENTS.mdをroot→cwdで連結"]
+        C3["Copilot<br/>複数instructionsをマージ"]
+        C4["Agy / Grok / Cursor<br/>AGENTS.md等と専用rules"]
+    end
+
+    C1 --- P
+    C2 --- P
+    C3 --- P
+    C4 --- P
 ```
 
 ### 対応表

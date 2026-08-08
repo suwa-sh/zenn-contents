@@ -7,11 +7,10 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (273)
+## Articles: 下書き (272)
 
 | create date | title | topics |
 |-------------|-------|--------|
-| 2026-08-07 | [🧩 コーディングエージェントをまたいで近い振る舞いを保つ拡張設計 - 6製品比較](articles/agentic-coding-clis_20260807.md) | ClaudeCode, Codex, GitHubCopilot, Cursor, AIAgent |
 | 2026-08-07 | [👀 コーディングエージェントの成果を、人がレビューしやすいHTMLにする](articles/coding-agent-human-html-review_20260807.md) | ClaudeCode, CodeReview, AIAgent, OSS, UX |
 | 2026-08-07 | [🧩 dbt Labsが示すContext Engineering エージェント向け文脈モデルという設計](articles/dbt-labs-getdbt-from-analytics-p8_20260807.md) | dbt, MCP, AI, Snowflake, データ基盤 |
 | 2026-08-07 | [⚓ ビルドは通るのに「検証済み」だけが失効する問題を成果物依存グラフで捉える](articles/ea-graph-arxiv-abs-2608-04278-p5_20260807.md) | LLM, AIAgent, アーキテクチャ, ソフトウェアテスト |
@@ -285,10 +284,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (165)
+## Articles: 公開済み (166)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-08-08 | [🧩 コーディングエージェントをまたいで近い振る舞いを保つ拡張設計 - 6製品比較](articles/agentic-coding-clis_20260807.md) | ClaudeCode, Codex, GitHubCopilot, Cursor, AIAgent |
 | 2026-08-06 | [🧰 AIエージェントのUI品質を守る4層の運用基盤 - Design Harness](articles/design-harness_20260805.md) | AIAgent, UIUX, DesignSystem, Frontend |
 | 2026-08-04 | [🔄 5フェーズ・32ステージの現行実装を読み解く - AI-DLC 2.0](articles/ai-dlc_20260803.md) | AI, AWS, ClaudeCode, Codex |
 | 2026-08-01 | [🧭 エージェント知識の信頼信号を記述する形式 - OKF v0.2](articles/okf-v02-trust-signals_20260726.md) | AIAgent, GoogleCloud, DataGovernance |
