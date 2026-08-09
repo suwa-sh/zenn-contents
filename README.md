@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (276)
+## Articles: 下書き (278)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-09 | [🔤 AIが最も間違えるのは「バイト」— 固定長・SJIS処理の5つの罠とガードレール](articles/ai-zenn-dev-tejunya-a015-p7_20260809.md) | AI, LLM, 文字コード, テスト設計, レガシーマイグレーション |
+| 2026-08-09 | [🧭 ASPICE 4.0 SYS.2の整合性チェック、AIに任せる範囲と人の責任を分ける](articles/aspice-4-0-sys-zenn-dev-haowei-p10_20260809.md) | ASPICE, RequirementsEngineering, LLM, USDM, RDRA |
 | 2026-08-08 | [🛡️ 悪性Skill 2,826件でCLIエージェントの96%が攻撃実行された話](articles/826-skill-cli-agent-skills-p2_20260808.md) | AIAgent, Security, SupplyChain, LLM, DevSecOps |
 | 2026-08-08 | [🔎 コーディングエージェントの探索を分離する前に確認すべき「精度閾値」](articles/codegrep-arxiv-abs-2608-05886-p8_20260808.md) | llm, ai, agent, rag, swebench |
 | 2026-08-08 | [🛂 LLMトレースのPII除去とコスト正規化はOpenTelemetry Collectorへ寄せる](articles/opentelemetry-collector-llm-p6_20260808.md) | OpenTelemetry, LLM, Observability, FinOps, OTTL |
