@@ -298,7 +298,7 @@
 
 | date | title | topics |
 |------|-------|--------|
-| 2026-08-08 | [🧩 コーディングエージェントをまたいで近い振る舞いを保つ拡張設計 - 6製品比較](articles/agentic-coding-clis_20260807.md) | ClaudeCode, Codex, GitHubCopilot, Cursor, AIAgent |
+| 2026-08-08 | [🧩 Claude Code や Codex などのコーディングエージェントをまたいで同じ動きをさせる拡張設計 - 6製品比較](articles/agentic-coding-clis_20260807.md) | ClaudeCode, Codex, GitHubCopilot, Cursor, AIAgent |
 | 2026-08-06 | [🧰 AIエージェントのUI品質を守る4層の運用基盤 - Design Harness](articles/design-harness_20260805.md) | AIAgent, UIUX, DesignSystem, Frontend |
 | 2026-08-04 | [🔄 5フェーズ・32ステージの現行実装を読み解く - AI-DLC 2.0](articles/ai-dlc_20260803.md) | AI, AWS, ClaudeCode, Codex |
 | 2026-08-01 | [🧭 エージェント知識の信頼信号を記述する形式 - OKF v0.2](articles/okf-v02-trust-signals_20260726.md) | AIAgent, GoogleCloud, DataGovernance |

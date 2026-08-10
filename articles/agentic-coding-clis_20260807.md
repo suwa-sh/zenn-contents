@@ -1,5 +1,5 @@
 ---
-title: "コーディングエージェントをまたいで近い振る舞いを保つ拡張設計 - 6製品比較"
+title: "Claude Code や Codex などのコーディングエージェントをまたいで同じ動きをさせる拡張設計 - 6製品比較"
 emoji: "🧩"
 type: "idea"
 topics: ["ClaudeCode", "Codex", "GitHubCopilot", "Cursor", "AIAgent"]
