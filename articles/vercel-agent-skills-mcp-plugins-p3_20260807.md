@@ -3,7 +3,8 @@ title: "SkillとMCPを1ディレクトリで配る最小規格 - Agent Plugins 1
 emoji: "🔌"
 type: "tech"
 topics: ["MCP", "AIAgent", "OpenStandard", "JSONSchema", "DevTools"]
-published: false
+published: true
+published_at: 2026-08-11
 ---
 
 2026年8月6日、[Agent Plugins 1.0.0](https://agent-plugins.org/) が公開されました。Vercelが提案し、AWS・Anysphere(Cursor)・GitHub・Microsoft・OpenAIが共同で内容を練り上げたベンダー中立の規格です。ガバナンス上の技術運営委員会(Technical Steering Committee)は、[MAINTAINERS.md](https://github.com/agentplugins/agent-plugins-spec/blob/main/MAINTAINERS.md) 記載時点でAmazon・Cursor・Microsoft・OpenAI・Vercelの各代表5名のCore Maintainerで構成され、Lead Core MaintainerはVercelのJonathan Hefner氏です。Googleは後日、Core Maintainerとしての参加を[自社ブログで表明](https://developers.googleblog.com/agent-plugins-package-your-skills-tools-and-more/)しています(本記事執筆時点でMAINTAINERS.mdへは未反映)。Agent SkillsとMCPサーバーを、1つのディレクトリとして配布可能にするベンダー中立の規格です。
