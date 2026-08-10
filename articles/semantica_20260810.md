@@ -12,7 +12,9 @@ published: false
 
 LLMを使った業務システムでは、回答の精度だけでなく「なぜその判断をしたのか」「どのデータが根拠だったのか」を後から説明できることが重要です。しかし、ベクトル検索と会話履歴だけでは、判断間の因果関係やデータの来歴を構造化して残すのは容易ではありません。
 
-[Semantica](https://github.com/semantica-agi/semantica)は、この課題に対してコンテキストグラフ、決定論的推論、オントロジー、プロビナンスをまとめて提供するオープンソースのPython基盤です。本記事では、2026年8月10日時点の`main`ブランチとバージョン0.6.0のメタデータを基に、構造、データモデル、最小構成での使い方、導入時の注意点を整理します。
+[Semantica](https://github.com/semantica-agi/semantica)は、この課題に対してコンテキストグラフ、決定論的推論、オントロジー、プロビナンスをまとめて提供するオープンソースのPython基盤です。本記事では、2026年8月10日時点の`main`、commit `5048665d35c5183b958893a1011cb7d12d97032e`を基準に、構造、データモデル、構築・利用・運用方法、導入時の注意点を整理します。
+
+同じ`0.6.0`表記でも、PyPI・タグ版と`main`の内容は異なります。以下では、リリース版と`main`固有機能を分けて記載します。コード例は基準commitのソースとテストに照合していますが、外部バックエンドを含む依存一式での実機試験までは行っていません。
 
 ![記事の全体像](/images/semantica_20260810/overview.png)
 *この記事の全体像。以下、順に解説します。*
@@ -31,6 +33,19 @@ SemanticaはLLMやベクトルストアを置き換える製品ではありま�
 - RDF、Labeled Property Graph、ベクトルストアを選べるストレージ抽象化
 
 ベクトル検索が「意味的に近い情報」を探すのに向く一方、グラフ探索は「何と何が、どの関係でつながっているか」をたどるのに向きます。Semanticaは両者を併用し、検索結果だけでなく判断の経路も残す設計です。
+
+ただし、公式READMEの「The Open Source Palantir for AI Agents」や「Production Ready」はプロジェクト自身による位置づけです。Palantirとの機能互換性や、個別法令への準拠認証を意味するものではありません。
+
+| 観点 | Vector DB + RAG | Semantica |
+|---|---|---|
+| 主な検索単位 | 埋め込み済みチャンク | ベクトル類似度とエンティティ・関係 |
+| 複数文書をまたぐ関係 | アプリケーション側で実装 | `ContextGraph`の探索API |
+| 意思決定履歴 | 通常は独自実装 | `record_decision`と因果関係 |
+| 出典・リネージ | metadata設計に依存 | `ProvenanceManager`とPROV-O出力 |
+| ルール推論 | アプリケーション側で実装 | Rete、Datalog、SPARQLなど |
+| 追加コスト | ベクトル索引の構築 | 抽出、グラフ構築、走査も必要 |
+
+単一文書QAや類似検索だけなら、まずVector DB + RAGを評価する方が単純です。複数文書に分散した関係、過去判断との一貫性、説明経路が要件になったときにSemanticaの価値が出やすくなります。
 
 ## 全体構造
 
@@ -78,11 +93,14 @@ flowchart TD
 
 ## 最小構成で試す
 
-パッケージの`requires-python`宣言はPython 3.8以上です。ただし、0.6.0のコア依存に含まれる`scikit-learn>=1.7.2`はPython 3.10以上を要求するため、実際のインストールではPython 3.10以上を使います。まず仮想環境へコアをインストールし、`doctor`で環境を確認します。
+パッケージの`requires-python`宣言はPython 3.8以上です。ただし、コア依存に含まれる`scikit-learn>=1.7.2`はPython 3.10以上を要求するため、通常の依存解決ではPython 3.10以上が実効下限です。運用評価ではPython 3.11以上を使い、仮想環境を分離します。
 
 ```bash
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
 python -m pip install semantica
-semantica doctor
+semantica doctor --json
 ```
 
 次の例は、公式READMEのQuick StartとDecision Intelligenceの例に合わせて、2つの判断を記録し、因果関係を追加するものです。
@@ -90,7 +108,7 @@ semantica doctor
 ```python
 from semantica.context import ContextGraph
 
-graph = ContextGraph(advanced_analytics=True)
+graph = ContextGraph(advanced_analytics=False)
 
 application_id = graph.record_decision(
     category="credit_application",
@@ -119,8 +137,6 @@ causes = graph.get_causal_chain(
     underwriting_id,
     direction="upstream",
 )
-impact = graph.analyze_decision_impact(application_id)
-
 for decision in causes:
     print(
         decision.category,
@@ -137,6 +153,24 @@ credit_application proceed_to_underwriting 1
 
 `relationship_type`として現行実装で許可されている値は`CAUSED`、`INFLUENCED`、`PRECEDENT_FOR`です。なお、公式Quick Startにある`trace_decision_chain()`は別の経路で、共有エンティティと時系列から原因候補を推定します。明示したエッジの探索と混同しないようにしてください。
 
+## LLMを使わずDatalogで推論する
+
+Semanticaには、登録したfactとruleから結果を導く`DatalogReasoner`もあります。抽出段階でLLMを使う構成でも、業務ルールによる判定を決定論的な処理として分離できます。
+
+```python
+from semantica.reasoning import DatalogReasoner
+
+reasoner = DatalogReasoner()
+reasoner.add_fact("parent(tom, bob)")
+reasoner.add_fact("parent(bob, ann)")
+reasoner.add_rule("ancestor(X, Y) :- parent(X, Y).")
+reasoner.add_rule("ancestor(X, Z) :- parent(X, Y), ancestor(Y, Z).")
+
+print(reasoner.query("ancestor(tom, ?X)"))
+```
+
+ルールの変数は大文字で記述します。監査対象では、LLMによる確率的な抽出と、このような決定論的な推論をパイプライン上で区別して記録するのが重要です。
+
 ## 必要な機能だけ追加する
 
 Semanticaはバックエンドや連携先をextrasで追加できます。2026年8月10日時点の`pyproject.toml`では、たとえば次の名前が定義されています。
@@ -151,11 +185,66 @@ python -m pip install "semantica[llm-litellm]"
 # Neo4jバックエンド
 python -m pip install "semantica[graph-neo4j]"
 
-# 開発・可視化・各種バックエンドをまとめて導入
-python -m pip install "semantica[all]"
+# Qdrantバックエンド
+python -m pip install "semantica[vectorstore-qdrant]"
 ```
 
 コア依存にも機械学習・自然言語処理系のパッケージが多く含まれます。小さな検証環境でも、仮想環境を分け、インストールサイズと依存関係の競合を事前に確認するのが安全です。
+
+`main`にだけ存在するOxigraphなどを評価するときは、リリース版と混ぜず、commitを固定して構築します。
+
+```bash
+git clone https://github.com/semantica-agi/semantica.git
+cd semantica
+git checkout 5048665d35c5183b958893a1011cb7d12d97032e
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -e ".[dev,explorer,tripletstore-oxigraph]"
+```
+
+## 起動方法ごとにhealth checkを分ける
+
+SemanticaにはREST serviceとExplorerがあり、起動コマンドもhealth endpointも異なります。
+
+### ローカルREST service
+
+`semantica server status`はPIDへのsignalでプロセスの生存を確認します。HTTP到達性は別途`/health`で確認します。
+
+```bash
+semantica server start --host 127.0.0.1 --port 8000 --workers 1
+semantica server status --json
+curl -fsS http://127.0.0.1:8000/health
+curl -fsS http://127.0.0.1:8000/api/info
+semantica server stop
+```
+
+このREST serviceの`/health`は`{"status":"healthy"}`を返します。
+
+### Docker Explorer
+
+同梱ComposeはExplorerとFalkorDBを起動します。しかし、基準commitのExplorerはインメモリ`ContextGraph`を使用し、FalkorDBへnetwork connectionを開きません。
+
+```bash
+docker compose up -d --build
+docker compose ps
+curl -fsS http://127.0.0.1:8000/api/health
+docker compose logs -f explorer falkordb
+```
+
+Explorerの`/api/health`は`{"status":"ok"}`を返しますが、これはExplorerプロセスの応答です。FalkorDBへの到達性やデータ永続化を確認するhealth checkではありません。
+
+### MCP server
+
+同梱MCP serverの確実な入口はstdioの`semantica-mcp`または`python -m semantica.mcp_server`です。
+
+```bash
+export SEMANTICA_KG_PATH=/var/lib/semantica/context-graph.json
+export SEMANTICA_LOG_LEVEL=INFO
+semantica-mcp
+```
+
+`SEMANTICA_KG_PATH`は、既存グラフを起動時に読み込むために使われます。基準commitでは、MCP toolによる変更を同じパスへ自動保存しません。再起動後も更新を残すには、明示的なexport・保存フローが必要です。
 
 ## 運用設計で先に決めること
 
@@ -171,32 +260,46 @@ python -m pip install "semantica[all]"
 
 ローカル検証と本番運用では要件が異なります。RDF/SPARQLとW3C標準への適合を重視するのか、LPGの探索性能と既存運用を重視するのか、ベクトル検索も同じ構成で扱うのかを先に決めます。特定製品の機能がすべて同一ではないため、バックエンド交換可能性をそのまま完全互換と解釈しないことが重要です。
 
+設定も1系統ではありません。CLI/coreの設定はYAMLの`graph_db`・`vector_store`と`SEMANTICA_GRAPH_DB__...`・`SEMANTICA_VECTOR_STORE__...`を使います。一方、各moduleには`GRAPH_STORE_*`、`VECTOR_STORE_*`、`TRIPLET_STORE_*`があります。どの入口がどの設定を読むかを受け入れ試験で確認してください。
+
 ### LLMを使わない経路も分離して検証する
 
 Semanticaのグラフ構築、ルール推論、プロビナンスは決定論的に実行できると説明されています。一方、LLMを使った抽出を組み込めば、その箇所にはモデル由来の揺らぎが残ります。監査対象では、決定論的な処理と確率的な抽出をパイプライン上で区別し、評価方法も分ける必要があります。
 
 ## 導入時の注意点
 
-- APIは開発中に変化し得るため、導入時はバージョンを固定し、公式READMEと現行ソースを照合する
-- 「監査可能な形式で出力できること」と、個別規制への準拠認証を得ていることを混同しない
-- 競合検出があっても、どの情報源を優先するかという業務ルールは別途設計する
-- 共有Context Graphでは、テナント分離、アクセス制御、個人情報の保持期間を先に定義する
-- グラフ、RDF、ベクトルの複数ストアを併用する場合は、更新順序と障害時の再同期方法を決める
+- **バージョン境界**: v0.6.0と`main`はバージョン文字列が同じでも内容が異なるため、tagまたはcommitを固定する
+- **Python要件**: 宣言上の3.8以上ではなく、依存解決上の3.10以上、推奨3.11以上を基準にする
+- **認証**: READMEは`SEMANTICA_SECRET_KEY`を案内するが、基準commitで同変数を読む実装は確認できない。外部公開にはreverse proxy、認証、network policyを別途用意する
+- **health check**: REST、Explorer、バックエンド到達性を別々に監視する
+- **バックアップ**: Semanticaの`backup create/sync`だけでNeo4j、FalkorDB、Qdrantなどのnative dumpを取得できるとは考えず、各DBのbackupを別途構成する
+- **設定ファイル**: `semantica init`が作る`~/.semantica/config.yaml`は、CLIで自動選択されない場合がある。`semantica --config ~/.semantica/config.yaml doctor`のように明示する
+- **アクセス境界**: 共有Context Graphでは、テナント分離、アクセス制御、個人情報の保持期間を先に定義する
 
-Semanticaは広い機能面を持つため、最初から全機能を導入するより、1つの意思決定フローを対象に、記録、因果追跡、監査出力の順で小さく検証するのが現実的です。
+また、2026年8月10日時点では、永続Vector Store利用時のDecision APIに関する[Issue #848](https://github.com/semantica-agi/semantica/issues/848)、Web/API ingestionのSSRFに関する[Issue #867](https://github.com/semantica-agi/semantica/issues/867)、repository ingestionの入力検証に関する[Issue #868](https://github.com/semantica-agi/semantica/issues/868)がopenです。
+
+未信頼URLやrepositoryを利用者が指定できるserviceとして直接公開せず、allowlist、egress firewall、private・loopback・link-local・metadata endpointの遮断を併用してください。
+
+Semanticaは広い機能面を持つため、最初から全機能を導入するより、1つの意思決定フローを対象に、記録、因果追跡、再起動後の永続性、監査出力の順で小さく検証するのが現実的です。
 
 ## まとめ
 
 Semanticaは、AIエージェントの記憶を単なるテキストや埋め込みではなく、判断、根拠、因果関係、来歴を持つグラフとして管理する基盤です。Context GraphとDecision Intelligenceを中心に、オントロジー、決定論的推論、W3C PROV-O、複数のグラフストレージを組み合わせられます。
 
-導入価値が出やすいのは、判断理由の説明、過去事例の追跡、ポリシー検証が必要な業務です。まずは公式Quick Startを動かし、自社で説明責任を持つべき判断を1つ選んで、必要なデータモデルと運用境界を確かめるとよいでしょう。
+導入価値が出やすいのは、判断理由の説明、過去事例の追跡、ポリシー検証が必要な業務です。一方、現行版ではリリースと`main`の境界、バックエンドごとの差、health checkと永続化、外部公開時の認証・入力検証を個別に確認する必要があります。まず説明責任を持つべき判断を1つ選び、データモデルと運用境界を小さく確かめるとよいでしょう。
 
 この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
 
 ## 参考リンク
 
 - [Semantica GitHubリポジトリ](https://github.com/semantica-agi/semantica)
-- [Semantica公式ドキュメント](https://docs.getsemantica.ai/)
-- [Semantica Architecture](https://github.com/semantica-agi/semantica/blob/main/ARCHITECTURE.md)
-- [Semantica pyproject.toml](https://github.com/semantica-agi/semantica/blob/main/pyproject.toml)
+- [基準commitのREADME](https://github.com/semantica-agi/semantica/blob/5048665d35c5183b958893a1011cb7d12d97032e/README.md)
+- [基準commitのArchitecture](https://github.com/semantica-agi/semantica/blob/5048665d35c5183b958893a1011cb7d12d97032e/ARCHITECTURE.md)
+- [基準commitのpyproject.toml](https://github.com/semantica-agi/semantica/blob/5048665d35c5183b958893a1011cb7d12d97032e/pyproject.toml)
+- [v0.6.0から基準commitまでの比較](https://github.com/semantica-agi/semantica/compare/v0.6.0...5048665d35c5183b958893a1011cb7d12d97032e)
+- [scikit-learn 1.7.2 metadata](https://pypi.org/pypi/scikit-learn/1.7.2/json)
+- [ContextGraph implementation](https://github.com/semantica-agi/semantica/blob/5048665d35c5183b958893a1011cb7d12d97032e/semantica/context/context_graph.py)
+- [DatalogReasoner implementation](https://github.com/semantica-agi/semantica/blob/5048665d35c5183b958893a1011cb7d12d97032e/semantica/reasoning/datalog_reasoner.py)
+- [CLI implementation](https://github.com/semantica-agi/semantica/blob/5048665d35c5183b958893a1011cb7d12d97032e/semantica/cli.py)
+- [Explorer implementation](https://github.com/semantica-agi/semantica/blob/5048665d35c5183b958893a1011cb7d12d97032e/semantica/explorer/app.py)
 - [W3C PROV-O](https://www.w3.org/TR/prov-o/)
