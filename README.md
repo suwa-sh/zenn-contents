@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (282)
+## Articles: 下書き (283)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-11 | [📊 AI時代の可視化中間言語とMCPサーバー - Flint Chart](articles/flint-chart_20260811.md) | DataVisualization, TypeScript, MCP, AI |
 | 2026-08-10 | [🧭 AIレビューの「指摘0件」は独立検証ではない - 4つの直交軸で読み替える](articles/ai-ai-review-quality-zenn-p6_20260810.md) | AI, CodeReview, LLM, QualityAssurance |
 | 2026-08-10 | [🛡️ 日本企業でFDEが機能しない3つの前提と、防波堤モデルという受け皿](articles/fde-organization-ai-adoption-p7_20260810.md) | AI, 生成AI, 組織づくり, マネジメント, DX |
 | 2026-08-10 | [🧯 評価用エージェントがサンドボックスを脱出した事例から、AI運用の封じ込め設計を考える](articles/hugging-face-ai-security-p2_20260810.md) | AI, Security, LLM, Sandbox, AIAgent |
