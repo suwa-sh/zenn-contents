@@ -90,35 +90,32 @@ graph TB
 ```mermaid
 graph TB
     subgraph Repo["リポジトリ (正本)"]
-        MP[".claude-plugin/<br/>marketplace.json"]
-        CursorM[".cursor-plugin/plugin.json"]
-        CopilotM[".copilot-plugin/plugin.json"]
-        InstallSh["install.sh / install.ps1<br/>(platforms_table)"]
-        subgraph Plugin["understand-anything-plugin/ (plugin 実体)"]
-            PJ[".claude-plugin/plugin.json"]
-            Skills["skills/ (9 skill)"]
-            AgentsDir["agents/ (10 agent 定義)"]
-            Hooks["hooks/ (hooks.json)"]
-            Pkgs["packages/ (core / dashboard /<br/>viewer / tree-sitter-*-wasm)"]
-        end
         Test["tests/install/<br/>platform-table-consistency"]
+        InstallSh["install.sh / install.ps1<br/>(platforms_table)"]
+        MP[".claude-plugin/<br/>marketplace.json"]
+        IDEM["IDE 用マニフェスト<br/>.cursor-plugin /<br/>.copilot-plugin"]
+        subgraph Plugin["plugin 実体"]
+            PJ[".claude-plugin/<br/>plugin.json"]
+            Skills["skills/<br/>(9 skill)"]
+            Others["agents / hooks /<br/>packages"]
+        end
+        Test -->|"ドリフト検査"| InstallSh
+        MP -->|"source で参照"| PJ
+        IDEM -.->|"skills / agents を<br/>パス参照"| Skills
     end
 
     subgraph Home["利用者ホームディレクトリ"]
         Clone["~/.understand-anything/repo<br/>(clone)"]
         UniLink["~/.understand-anything-plugin<br/>(統一 symlink)"]
         SkillDirs["~/.agents/skills ほか<br/>各プラットフォーム skills dir"]
-        KiroAgent["~/.kiro/agents/understand.json"]
+        KiroAgent["~/.kiro/agents/<br/>understand.json"]
     end
 
-    MP --> PJ
     InstallSh -->|"git clone / pull"| Clone
-    InstallSh -->|"per-skill or folder"| SkillDirs
-    InstallSh --> UniLink
+    InstallSh -->|"per-skill or folder で<br/>skills を symlink"| SkillDirs
+    InstallSh -->|"統一 symlink 作成<br/>(リンク先: plugin 実体)"| UniLink
     InstallSh -->|"kiro のみ生成"| KiroAgent
-    SkillDirs -.->|"symlink 参照"| Skills
-    UniLink -.->|"symlink 参照"| Plugin
-    Test -->|"ドリフト検査"| InstallSh
+    Skills -.->|"リンク先"| SkillDirs
 ```
 
 | コンテナ | 役割 |
@@ -137,6 +134,7 @@ graph TB
 ```mermaid
 graph TB
     subgraph Installer["install.sh のコンポーネント"]
+        direction TD
         Table["platforms_table<br/>id|target|style の宣言表"]
         Resolve["resolve_platform /<br/>prompt_platform"]
         CloneF["clone_or_update"]
@@ -147,6 +145,7 @@ graph TB
     end
 
     subgraph Runtime["SKILL.md 実行時 (Phase 0)"]
+        direction TD
         C1["1. CLAUDE_PLUGIN_ROOT 環境変数"]
         C2["2. ~/.understand-anything-plugin"]
         C3["3. skill symlink の realpath 逆引き<br/>(~/.agents/skills / ~/.copilot/skills)"]
