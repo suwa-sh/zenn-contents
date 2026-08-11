@@ -6,16 +6,16 @@ topics: ["DataVisualization", "TypeScript", "MCP", "AI"]
 published: false
 ---
 
-Flint Chartは、データの意味と作りたいチャートを簡潔に指定し、複数の描画ライブラリ向け仕様へ変換する可視化コンパイラです。人間が使うTypeScript APIに加え、AIエージェントが検証・コンパイル・レンダリングを実行できるMCPサーバーも提供しています。
+Flint Chartは、データの意味と作りたいチャートを簡潔に指定し、複数の描画ライブラリ向け仕様へ変換する可視化コンパイラです。TypeScript APIに加え、AIエージェントが検証・コンパイル・レンダリングを実行できるMCPサーバーも提供しています。
 
-本記事では、Flintの構造とデータモデル、導入方法、実装例、運用上の制約を、2026年8月11日時点の公式リポジトリに沿って解説します。
+本記事では、Flintのシステム境界と実装構造、概念・情報モデル、導入方法、実装例、運用上の制約を、2026年8月11日時点の公式リポジトリに沿って解説します。
 
 ![記事の全体像](/images/flint-chart_20260811/overview.png)
 *この記事の全体像。以下、順に解説します。*
 
 ## 概要
 
-従来の可視化ライブラリでは、軸、スケール、凡例、余白、ラベルなどを細かく指定します。表現力が高い一方、LLMが設定全体を生成すると、データ件数やラベルの長さによって表示が崩れやすくなります。
+一般的な可視化ライブラリでは、軸、スケール、凡例、余白、ラベルなどを細かく指定します。表現力が高い一方、LLMが設定全体を生成すると、データ件数やラベルの長さによって表示が崩れやすくなります。
 
 Flintは「どのように描くか」よりも「データが何を意味するか」を入力の中心に置きます。利用者は行データ、セマンティックタイプ、チャート種別、視覚チャネルを指定します。コンパイラが意味解析とレイアウト調整を行い、描画バックエンドのネイティブ仕様へ変換します。
 
@@ -28,17 +28,6 @@ Flint自体はCanvasやSVGへ直接描画するライブラリではありませ
 - Chart.js configuration
 - Plotly.js figure
 - Excelネイティブチャート用アーティファクト
-
-```mermaid
-flowchart LR
-  Author["開発者 / AI"]
-  Flint["Flint Chart<br/>意味駆動コンパイラ"]
-  Web["Vega-Lite / ECharts<br/>Chart.js / Plotly"]
-  Excel["Excel<br/>Office.js"]
-  Author -->|共通入力| Flint
-  Flint -->|ネイティブ仕様| Web
-  Flint -->|アーティファクト| Excel
-```
 
 既存ライブラリを置き換えるというより、その前段へバックエンド非依存の意味層を追加する位置づけです。
 
@@ -64,60 +53,193 @@ Economist、Swiss、Popなどの組み込みプリセットを利用できます
 
 ### AIエージェント向けMCPサーバー
 
-`flint-chart-mcp`は、入力検証、ネイティブ仕様へのコンパイル、PNG/SVGレンダリング、チャート種別の列挙をMCPツールとして公開します。MCP Apps対応ホストでは、対話的なチャート調整画面も表示できます。
+`flint-chart-mcp`は、入力検証、ネイティブ仕様へのコンパイル、PNG/SVGレンダリング、チャート種別とテーマの列挙をMCPツールとして公開します。MCP Apps対応ホストでは、対話的なチャート調整画面も表示できます。
 
 ## 構造
 
-Flintのリポジトリは、コンパイラ本体、MCPサーバー、Pythonプレビュー、ドキュメントサイトから構成されます。
+Flintを利用するアクター、リポジトリ／パッケージ構成、コンパイラ内部の処理という3段階で整理します。最初の図はC4のSystem Contextに近い境界図ですが、後続2図は厳密なC4のContainer／Component図ではありません。ライブラリやモジュールを配備単位と誤認させないため、実装構造に即した名称で示します。
 
-| コンテナ | 役割 | 状態・制約 |
+### システムコンテキスト図
+
+開発者またはAIエージェントは、共通の`ChartAssemblyInput`をFlintへ渡します。Flintは意味を解決し、各レンダリング環境が受け取れるネイティブ仕様を返します。
+
+```mermaid
+flowchart TD
+  Author["開発者 / AIエージェント"]
+  Flint["Flint Chart<br/>可視化中間言語・コンパイラ"]
+  VegaLite["Vega-Lite"]
+  ECharts["ECharts"]
+  ChartJs["Chart.js"]
+  Plotly["Plotly"]
+  Excel["Excel<br/>Office.js"]
+  Author -->|ChartAssemblyInput| Flint
+  Flint -->|Vega-Lite spec| VegaLite
+  Flint -->|ECharts option| ECharts
+  Flint -->|Chart.js config| ChartJs
+  Flint -->|Plotly figure| Plotly
+  Flint -->|Excel artifact| Excel
+```
+
+| 要素 | 種別 | 責務 |
 |---|---|---|
-| `packages/flint-js` | TypeScriptコンパイラと各アセンブラ | npmパッケージ`flint-chart` |
-| `packages/flint-mcp` | MCPサーバーとMCP App | npmパッケージ`flint-chart-mcp` |
-| `packages/flint-py` | Pythonポート | ソースプレビュー。公開パッケージ前提では使わない |
-| `site` | ギャラリー、エディタ、ドキュメント | ViteとReactで構築 |
+| 開発者 / AIエージェント | アクター | データの意味とチャート意図を共通入力として作成 |
+| Flint Chart | 対象システム | 意味解析、レイアウト調整、ネイティブ仕様生成 |
+| 描画バックエンド | 外部システム | Flintの出力をCanvas、SVG、Excelチャートなどへ描画 |
 
-### Web系バックエンドのパイプライン
+この境界により、エージェントは各描画ライブラリの詳細設定を毎回生成せず、Flintの小さな入力面へ集中できます。
 
-Vega-Lite、ECharts、Chart.js、Plotlyのアセンブラは、意味解析とレイアウト計算を共有します。
+### リポジトリ／パッケージ構成図（元調査の「コンテナ図」）
+
+リポジトリは、TypeScriptコンパイラ、MCPサーバー、Pythonプレビュー、Webサイトに分かれています。
+
+```mermaid
+flowchart TD
+  subgraph Repository["Flint Repository"]
+    FlintJs["packages/flint-js<br/>TypeScript Library"]
+    FlintMcp["packages/flint-mcp<br/>MCP Server / MCP App"]
+    FlintPy["packages/flint-py<br/>Python Port Preview"]
+    Site["site<br/>Gallery / Editor / Docs"]
+  end
+  FlintMcp -->|コンパイルを委譲| FlintJs
+  Site -->|プレビューに利用| FlintJs
+  FlintPy -.->|入力形を追従| FlintJs
+  FlintJs --> Backends["Vega-Lite / ECharts / Chart.js<br/>Plotly / Excel Assemblers"]
+```
+
+| パッケージ／領域 | 技術 | 役割・制約 |
+|---|---|---|
+| `packages/flint-js` | TypeScript | コンパイラ本体と5種類のアセンブラ。npm名は`flint-chart` |
+| `packages/flint-mcp` | TypeScript / MCP | エージェント向けツールとMCP App。npm名は`flint-chart-mcp` |
+| `packages/flint-py` | Python | ソースプレビュー。公開パッケージ前提では利用しない |
+| `site` | Vite / React | ギャラリー、エディタ、ドキュメント |
+
+MCPサーバーは`flint-js`を利用しますが、公開するバックエンドはVega-Lite、ECharts、Chart.jsの3種類です。PlotlyとExcelはTypeScript API側で利用します。
+
+### コンパイラ処理フロー（元調査の「コンポーネント図」）
+
+Web系4バックエンドは、意味解析とレイアウト計算を共有します。Excelは共通の意味解析を再利用しつつ、Office.js向けの独自プランニング経路へ分岐します。
 
 ```mermaid
 flowchart TD
   Input["ChartAssemblyInput"]
   Semantics["Phase 0<br/>意味解析"]
   Layout["Phase 1<br/>レイアウト計算"]
-  Generator["Phase 2<br/>仕様生成"]
-  Native["バックエンド<br/>ネイティブ仕様"]
+  WebGenerator["Phase 2<br/>Web系仕様生成"]
+  WebOutput["Vega-Lite / ECharts<br/>Chart.js / Plotly"]
+  ExcelPlanner["Excel固有<br/>チャート計画"]
+  ExcelOutput["Excel artifact"]
   Input --> Semantics
   Semantics -->|ChannelSemantics| Layout
-  Layout -->|LayoutResult| Generator
-  Generator --> Native
+  Layout -->|LayoutResult| WebGenerator
+  WebGenerator --> WebOutput
+  Semantics --> ExcelPlanner
+  ExcelPlanner --> ExcelOutput
 ```
 
-Phase 0では、`semantic_types`、実データ、エンコーディングを組み合わせ、チャネルごとの意味を解決します。Phase 1では、目標サイズとデータ密度から寸法やオーバーフロー方針を決定します。Phase 2では、バックエンド別の`ChartTemplateDef`を使ってネイティブ仕様を組み立てます。
+| コンポーネント | 入力 | 主な出力 |
+|---|---|---|
+| Phase 0: 意味解析 | データ、`semantic_types`、encodings | チャネルごとの意味と書式判断 |
+| Phase 1: レイアウト計算 | 意味、データ密度、サイズ制約 | 寸法、ステップ、ファセット、オーバーフロー判断 |
+| Web系仕様生成 | 最適化済みコンテキスト、テンプレート | 各ライブラリのネイティブ仕様 |
+| Excel固有プランナー | 意味解析結果、Excelテンプレート | Office.jsへ渡せるシリアライズ可能なartifact |
 
-### Excelの例外
-
-Excelは共通の意味解析を再利用しますが、Web系4バックエンドと同じ`computeLayout()`経路ではありません。Office.js向けの独自プランニングを行い、シリアライズ可能なアーティファクトを生成します。
-
-この差は、サイズ制約や警告の扱いにも表れます。共通入力を受け取るからといって、内部処理や戻り値の細部まで同じとは限りません。
+この分岐は、`canvasSize`や警告の扱いがExcelとWeb系で完全には一致しない理由にもなります。
 
 ## データ
 
-Flintの公開APIでは、`ChartAssemblyInput`がルートオブジェクトです。
+Flintの入力を、概念間の関係と公開型の情報モデルに分けて整理します。
 
-| フィールド | 必須 | 役割 |
-|---|---:|---|
-| `data` | 必須 | `{ values: rows[] }`または型定義上の`{ url }` |
-| `semantic_types` | 任意 | フィールド名から意味型または注釈への対応 |
-| `chart_spec` | 必須 | チャート種別、チャネル、サイズ、タイトル |
-| `theme_spec` | 任意 | プリセット名またはカスタムテーマ |
-| `options` | 任意 | 伸長率、最小ステップ、色数上限など |
-| `field_display_names` | 任意 | 軸や凡例に使う表示名 |
+### 概念モデル
 
-### セマンティック注釈
+`ChartAssemblyInput`は、データ、意味、チャート意図、テーマ、コンパイルオプションを束ねるルート概念です。チャート種別と視覚チャネルは`ChartSpec`へ、色やタイポグラフィは`ThemeSpec`へ分離されます。
 
-単純な文字列に加え、単位、固有範囲、並び順を指定できます。
+```mermaid
+flowchart TD
+  Input["ChartAssemblyInput"]
+  Data["Data<br/>values / url"]
+  SemanticTypes["SemanticTypes<br/>field meaning"]
+  ChartSpec["ChartSpec<br/>what to show"]
+  ThemeSpec["ThemeSpec<br/>how to style"]
+  Options["AssembleOptions<br/>compiler limits"]
+  Encodings["Encodings<br/>x / y / color"]
+  ThemeParts["Ink / Typography<br/>Layout"]
+  Input --> Data
+  Input --> SemanticTypes
+  Input --> ChartSpec
+  Input --> ThemeSpec
+  Input --> Options
+  ChartSpec --> Encodings
+  ThemeSpec --> ThemeParts
+```
+
+| 概念 | 意味 | 再利用単位 |
+|---|---|---|
+| Data | 描画対象の行データ | チャートごと、またはデータセットごと |
+| SemanticTypes | フィールドが表す業務上の意味 | データセット単位 |
+| ChartSpec | チャート種別とチャネル割り当て | 可視化ごと |
+| ThemeSpec | 色、余白、書体などのデザイン判断 | ブランドまたは製品単位 |
+| AssembleOptions | 伸長率、最小ステップ、色数上限など | 実行環境単位 |
+
+型定義上は`data.url`も表現できますが、TypeScriptのコアアセンブラはURLを取得しません。意味解析とレイアウト計算が必要なホストでは、事前にデータを取得し、`data.values`へ展開して渡します。MCPサーバーはローカルJSON、CSV、TSVを独自に解決します。
+
+### 情報モデル
+
+主要な公開型の所有関係を示します。内部クラスをAPIレスポンスと混同しないため、ここでは利用者が入力・操作する型に絞ります。
+
+```mermaid
+classDiagram
+  class ChartAssemblyInput {
+    +data
+    +semantic_types
+    +chart_spec
+    +theme_spec
+    +options
+    +field_display_names
+  }
+  class ChartSpec {
+    +chartType
+    +title
+    +subtitle
+    +encodings
+    +baseSize
+    +canvasSize
+    +chartProperties
+  }
+  class SemanticAnnotation {
+    +semanticType
+    +intrinsicDomain
+    +unit
+    +sortOrder
+  }
+  class ChartEncoding {
+    +field
+    +type
+    +aggregate
+    +sortOrder
+    +scheme
+  }
+  class ThemeSpec {
+    +id
+    +extends
+    +ink
+    +layout
+    +type
+  }
+  ChartAssemblyInput *-- ChartSpec
+  ChartAssemblyInput *-- ThemeSpec
+  ChartAssemblyInput *-- SemanticAnnotation
+  ChartSpec *-- ChartEncoding
+```
+
+| 型 | 主要フィールド | 役割 |
+|---|---|---|
+| `ChartAssemblyInput` | `data`、`semantic_types`、`chart_spec`、`theme_spec` | コンパイル入口 |
+| `ChartSpec` | `chartType`、`encodings`、サイズ、タイトル | 何をどのチャネルへ割り当てるか定義 |
+| `SemanticAnnotation` | `semanticType`、`unit`、`sortOrder` | 文字列型では足りない意味情報を補足 |
+| `ChartEncoding` | `field`、`type`、`aggregate`、`sortOrder` | 個々の視覚チャネルを定義 |
+| `ThemeSpec` | `extends`、`ink`、`layout`、`type` | デザインシステムを定義 |
+
+セマンティック注釈は、次のようにデータセット単位でまとめます。
 
 ```typescript
 const semanticTypes = {
@@ -127,19 +249,7 @@ const semanticTypes = {
 };
 ```
 
-同じデータセットから複数チャートを作る場合、意味定義は共有し、`chart_spec`だけを差し替えると一貫性を保ちやすくなります。
-
-### `data.url`の扱い
-
-型定義上は`data.url`を表現できますが、TypeScriptのコアアセンブラはURLを取得しません。意味解析とレイアウト計算が必要なホストでは、事前にデータを取得し、`data.values`へ展開して渡します。
-
-MCPサーバーはローカルJSON、CSV、TSVファイルを独自に解決できます。TypeScript APIとMCPサーバーの責務を混同しないことが重要です。
-
-### チャート仕様とサイズ
-
-`chart_spec`には、テンプレートの正式名とチャネルを指定します。たとえば棒グラフの公開名は`"Bar Chart"`です。
-
-Web系バックエンドでは、`baseSize`は目標サイズ、`canvasSize`は超えてはいけない上限として扱われます。`canvasSize`を省略した場合は、既定で`baseSize`から一定範囲まで伸長できます。現行のExcel実装は出力寸法へ`canvasSize`を反映しないため、Excelでは`baseSize`自体を必要な上限内に設定します。
+Web系バックエンドでは、`baseSize`は目標サイズ、`canvasSize`は超えてはいけない上限として扱われます。現行のExcel実装は出力寸法へ`canvasSize`を反映しないため、Excelでは`baseSize`自体を必要な上限内に設定します。
 
 ## 構築方法
 
@@ -181,7 +291,7 @@ npm run site
 
 新しいWeb系バックエンドを追加する場合は、コアの意味解析を再利用し、バックエンド固有のテンプレートレジストリ、`assemble`処理、ネイティブ仕様の組み立てを実装します。
 
-内部型は更新される可能性があるため、記事中の簡略サンプルをそのまま雛形にせず、公式の「Extending backends」と現行ソースを基準にしてください。
+内部型は更新される可能性があるため、簡略サンプルをそのまま雛形にせず、公式の拡張ドキュメントと現行ソースを基準にしてください。
 
 ## 利用方法
 
@@ -222,6 +332,8 @@ const vegaLiteSpec = assembleVegaLite(input);
 ```
 
 戻り値は描画済み画像ではなく、Vega-Liteへ渡せるJSON仕様です。
+
+次の画像は、同じAPIを使った別例です。ヒートマップ用の入力がVega-Lite仕様へ変換され、描画される流れを示しています。
 
 ![簡潔なFlint仕様からVega-Lite仕様とヒートマップを生成する例](/images/flint-chart_20260811/compile-demo.png)
 
@@ -286,8 +398,6 @@ const { code, meta } = generateOfficeJs(artifact, {
 }
 ```
 
-現行MCPサーバーが`compile_chart`、`validate_chart`、`render_chart`で扱うバックエンドはVega-Lite、ECharts、Chart.jsです。PlotlyとExcelはTypeScript API側で利用します。
-
 | MCPツール | 役割 | 論理的な結果内容 |
 |---|---|---|
 | `list_chart_types` | 対応チャートとチャネルの確認 | チャート種別一覧 |
@@ -297,7 +407,7 @@ const { code, meta } = generateOfficeJs(artifact, {
 | `render_chart` | 静的画像の生成 | PNGまたはSVG。Chart.jsはPNGのみ |
 | `create_chart_view` | 対話的な調整 | MCP Apps対応ホストのUI |
 
-MCPプロトコル上、`validate_chart`と`compile_chart`のJSONはトップレベルへ直接展開されず、`content[0].text`内のJSON文字列として返ります。`render_chart`はPNGの場合に`ImageContent`、SVGの場合にSVG文字列を含む`TextContent`を返します。クライアント実装では、表の論理結果と実際のContent Block構造を区別してください。
+MCPプロトコル上、`validate_chart`と`compile_chart`のJSONは`content[0].text`内の文字列として返ります。`render_chart`はPNGの場合に`ImageContent`、SVGの場合にSVG文字列を含む`TextContent`を返します。
 
 ## 運用
 
@@ -388,9 +498,9 @@ Web系バックエンドでは、`baseSize`を読みやすい目標、`canvasSiz
 
 ## まとめ
 
-Flint Chartは、データの意味を共通入力として保持し、複数の描画バックエンドへ変換する可視化コンパイラです。AIエージェントに小さな仕様面を提供しつつ、意味解析、レイアウト調整、検証、レンダリングを分離できます。
+Flint Chartは、データの意味を共通入力として保持し、複数の描画バックエンドへ変換する可視化コンパイラです。C4相当の構造で見ると、利用者とバックエンドの間にFlintを置き、`flint-js`を中心にMCPとWeb UIを接続し、内部では意味解析からWeb系・Excel固有経路へ分岐する設計だと分かります。
 
-導入時は、バックエンドごとの対応チャート、テーマ適用範囲、サイズと警告のExcel例外を確認してください。MCP運用では、transportごとのファイル参照既定値とホスト側の権限管理も重要です。まずは実データで小さく試し、生成仕様と警告を含めて評価するのがよいでしょう。
+データ面では、`ChartAssemblyInput`がData、SemanticTypes、ChartSpec、ThemeSpec、Optionsを束ねます。導入時は、バックエンドごとの対応チャート、テーマ適用範囲、サイズと警告のExcel例外を確認してください。MCP運用では、transportごとのファイル参照既定値とホスト側の権限管理も重要です。
 
 この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
 
