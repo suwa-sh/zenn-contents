@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (287)
+## Articles: 下書き (288)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-12 | [🔌 1つのリポジトリから17プラットフォームへskillsとpluginを配布する仕組み - Understand-Anything](articles/understand-anything-plugin_20260812.md) | ClaudeCode, Codex, AIAgent, Plugin, OSS |
 | 2026-08-11 | [🌪 LLM API障害をHTTP層で注入するカオスエンジニアリング - AgentChaos](articles/agentchaos-llm-api-ai-arxiv-p7_20260811.md) | LLM, AIエージェント, カオスエンジニアリング, Python, httpx |
 | 2026-08-11 | [🛰️ エージェントの監視をLLMに任せない: LivePlanに学ぶ逸脱検知と介入設計](articles/arxiv-abs-2608-06701-p8_20260811.md) | AIAgent, LLM, SWEBench, Observability, Architecture |
 | 2026-08-11 | [📊 AIエージェント向け可視化コンパイラとMCPサーバー - Flint Chart](articles/flint-chart_20260811.md) | DataVisualization, TypeScript, MCP, AI |
