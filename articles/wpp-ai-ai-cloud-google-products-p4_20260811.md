@@ -6,6 +6,9 @@ topics: ["GoogleCloud", "BigQuery", "PlatformEngineering", "RAG", "DataGovernanc
 published: false
 ---
 
+![記事の全体像](/images/wpp-ai-ai-cloud-google-products-p4_20260811/overview.png)
+*この記事の全体像。以下、順に解説します。*
+
 ## この記事の対象と、読んで得られるもの
 
 RAG や AI エージェントを導入したのに、出力の品質が安定しない。原因をモデル選定や検索アルゴリズムに求めても、改善が頭打ちになる。こうした状況は、**入力側のデータ契約が定義されていない**ことに起因する場合があります。
