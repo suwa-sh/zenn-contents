@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (291)
+## Articles: 下書き (293)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-13 | [🧩 AIエージェントの構成管理をグラフで解く — ACM参照モデルの読み方](articles/acm-agentops-arxiv-abs-p2_20260813.md) | AIAgent, LLM, AgentOps, LangGraph, DevOps |
+| 2026-08-13 | [🧭 企業のAI活用格差は、権限と共有ワークフローの設計差である](articles/openai-ai-ai-openai-index-p1_20260813.md) | AI, AIAgent, Governance, LLM |
 | 2026-08-12 | [🛑 エージェントの「停止」は効いていない - 承認ゲートが副作用を漏らす構造と外部ゲート設計](articles/ai-arxiv-abs-2607-14166-p1_20260812.md) | AIAgent, LLM, Security, Architecture |
 | 2026-08-12 | [🧭 同じ最終仕様でも実装が変わる: コーディングエージェントの仕様経路感度](articles/arxiv-abs-2608-09799-p3_20260812.md) | AIAgent, LLM, ADR, 要件定義, Architecture |
 | 2026-08-12 | [📐 LookerのセマンティックレイヤーでGemini EnterpriseのNL2SQLを統治する](articles/looker-gemini-enterprise-p8_20260812.md) | GoogleCloud, Looker, Gemini, BigQuery, LookML |
