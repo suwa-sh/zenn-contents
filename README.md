@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (296)
+## Articles: 下書き (295)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -29,7 +29,6 @@
 | 2026-08-10 | [🧭 AIレビューの「指摘0件」は独立検証ではない - 4つの直交軸で読み替える](articles/ai-ai-review-quality-zenn-p6_20260810.md) | AI, CodeReview, LLM, QualityAssurance |
 | 2026-08-10 | [🛡️ 日本企業でFDEが機能しない3つの前提と、防波堤モデルという受け皿](articles/fde-organization-ai-adoption-p7_20260810.md) | AI, 生成AI, 組織づくり, マネジメント, DX |
 | 2026-08-10 | [🧯 評価用エージェントがサンドボックスを脱出した事例から、AI運用の封じ込め設計を考える](articles/hugging-face-ai-security-p2_20260810.md) | AI, Security, LLM, Sandbox, AIAgent |
-| 2026-08-10 | [🕸️ 判断の因果と来歴を残すAIエージェント基盤 - Semantica](articles/semantica_20260810.md) |  |
 | 2026-08-09 | [🔤 AIが最も間違えるのは「バイト」— 固定長・SJIS処理の5つの罠とガードレール](articles/ai-zenn-dev-tejunya-a015-p7_20260809.md) | AI, LLM, 文字コード, テスト設計, レガシーマイグレーション |
 | 2026-08-09 | [🧭 ASPICE 4.0 SYS.2の整合性チェック、AIに任せる範囲と人の責任を分ける](articles/aspice-4-0-sys-zenn-dev-haowei-p10_20260809.md) | ASPICE, RequirementsEngineering, LLM, USDM, RDRA |
 | 2026-08-08 | [🛡️ 悪性Skill 2,826件でCLIエージェントの96%が攻撃実行された話](articles/826-skill-cli-agent-skills-p2_20260808.md) | AIAgent, Security, SupplyChain, LLM, DevSecOps |
@@ -308,10 +307,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (167)
+## Articles: 公開済み (168)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-08-13 | [🕸️ 判断の因果と来歴を残すAIエージェント基盤 - Semantica](articles/semantica_20260810.md) |  |
 | 2026-08-11 | [🔌 SkillとMCPを1ディレクトリで配る最小規格 - Agent Plugins 1.0](articles/vercel-agent-skills-mcp-plugins-p3_20260807.md) | MCP, AIAgent, OpenStandard, JSONSchema, DevTools |
 | 2026-08-08 | [🧩 Claude Code や Codex などのコーディングエージェントをまたいで同じ動きをさせる拡張設計 - 6製品比較](articles/agentic-coding-clis_20260807.md) | ClaudeCode, Codex, GitHubCopilot, Cursor, AIAgent |
 | 2026-08-06 | [🧰 AIエージェントのUI品質を守る4層の運用基盤 - Design Harness](articles/design-harness_20260805.md) | AIAgent, UIUX, DesignSystem, Frontend |

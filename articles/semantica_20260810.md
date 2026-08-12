@@ -7,7 +7,8 @@ topics:
   - "KnowledgeGraph"
   - "AIAgent"
   - "RAG"
-published: false
+published: true
+published_at: 2026-08-13
 ---
 
 LLMを使った業務システムでは、回答だけでなく「なぜその判断に至ったか」「どのデータが根拠か」を後から説明できることが重要です。一方、会話履歴やベクトル検索だけでは、判断間の因果関係やデータの来歴を構造化して残すには追加設計が必要です。
