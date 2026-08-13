@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (295)
+## Articles: 下書き (296)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-14 | [🧭 Xの「おすすめ」を候補取得からランキングまで読み解く - x-algorithm](articles/x-algorithm_20260814.md) |  |
 | 2026-08-13 | [🧩 AIエージェントの構成管理をグラフで解く — ACM参照モデルの読み方](articles/acm-agentops-arxiv-abs-p2_20260813.md) | AIAgent, LLM, AgentOps, LangGraph, DevOps |
 | 2026-08-13 | [🧪 セキュリティテストを先に見せるとAI生成コードはどう変わるか](articles/ai-arxiv-abs-2608-09740-p5_20260813.md) | LLM, セキュリティ, テスト, AI |
 | 2026-08-13 | [🧭 コーディングエージェントの全社展開とシャドーAI抑止を、同じ運用課題として設計する](articles/claude-code-ai-ai-atmarkit-p9_20260813.md) | ClaudeCode, AIエージェント, セキュリティ, ガバナンス, MDM |
