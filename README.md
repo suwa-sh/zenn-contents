@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (297)
+## Articles: 下書き (299)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-14 | [🔧 同じ能力でも一貫性が4.7倍変わる - コーディングエージェントのツール設計](articles/coding-agent-tool-architecture-p1_20260814.md) | LLM, AIAgent, 生成AI, ClaudeCode |
+| 2026-08-14 | [🔧 LLMを分類器にしない: 知識グラフ誘導RAGで車載HiLの原因分析を説明可能にする](articles/kg-rag-hil-knowledge-graph-p6_20260814.md) | LLM, RAG, KnowledgeGraph, MLOps |
 | 2026-08-14 | [🧭 コードを外に出さずドメインモデルを抽出する段階的パイプライン](articles/llm-legacy-modernization-p5_20260814.md) | LLM, AI, アーキテクチャ, リファクタリング |
 | 2026-08-14 | [🧭 Xの「おすすめ」を候補取得からランキングまで読み解く - x-algorithm](articles/x-algorithm_20260814.md) |  |
 | 2026-08-13 | [🧩 AIエージェントの構成管理をグラフで解く — ACM参照モデルの読み方](articles/acm-agentops-arxiv-abs-p2_20260813.md) | AIAgent, LLM, AgentOps, LangGraph, DevOps |
