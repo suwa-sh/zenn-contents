@@ -7,7 +7,8 @@ topics:
   - "Recommendation"
   - "Rust"
   - "Python"
-published: false
+published: true
+published_at: 2026-08-15
 ---
 
 X（旧Twitter）の「おすすめ」フィードは、フォロー中の投稿を時系列に並べるだけではありません。公開リポジトリの `x-algorithm` では、フォロー中の投稿と機械学習で見つけたフォロー外の投稿を集め、ユーザー文脈を付与し、複数アクションの予測値から順位を決め、表示前のフィルタリングまで行う流れが示されています。

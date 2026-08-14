@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (300)
+## Articles: 下書き (299)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -15,7 +15,6 @@
 | 2026-08-14 | [🔧 LLMを分類器にしない: 知識グラフ誘導RAGで車載HiLの原因分析を説明可能にする](articles/kg-rag-hil-knowledge-graph-p6_20260814.md) | LLM, RAG, KnowledgeGraph, MLOps |
 | 2026-08-14 | [🧭 コードを外に出さずドメインモデルを抽出する段階的パイプライン](articles/llm-legacy-modernization-p5_20260814.md) | LLM, AI, アーキテクチャ, リファクタリング |
 | 2026-08-14 | [🗺️ コード解析を知識グラフへ変えるパイプライン - Understand-Anything](articles/understand-anything_20260814.md) | AIAgent, KnowledgeGraph, TreeSitter, CodeAnalysis, OSS |
-| 2026-08-14 | [🧭 Xの「おすすめ」を候補取得からランキングまで読み解く - x-algorithm](articles/x-algorithm_20260814.md) |  |
 | 2026-08-13 | [🧩 AIエージェントの構成管理をグラフで解く — ACM参照モデルの読み方](articles/acm-agentops-arxiv-abs-p2_20260813.md) | AIAgent, LLM, AgentOps, LangGraph, DevOps |
 | 2026-08-13 | [🧪 セキュリティテストを先に見せるとAI生成コードはどう変わるか](articles/ai-arxiv-abs-2608-09740-p5_20260813.md) | LLM, セキュリティ, テスト, AI |
 | 2026-08-13 | [🧭 コーディングエージェントの全社展開とシャドーAI抑止を、同じ運用課題として設計する](articles/claude-code-ai-ai-atmarkit-p9_20260813.md) | ClaudeCode, AIエージェント, セキュリティ, ガバナンス, MDM |
@@ -312,10 +311,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (168)
+## Articles: 公開済み (169)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-08-15 | [🧭 Xの「おすすめ」を候補取得からランキングまで読み解く - x-algorithm](articles/x-algorithm_20260814.md) |  |
 | 2026-08-13 | [🕸️ 判断の因果と来歴を残すAIエージェント基盤 - Semantica](articles/semantica_20260810.md) |  |
 | 2026-08-11 | [🔌 SkillとMCPを1ディレクトリで配る最小規格 - Agent Plugins 1.0](articles/vercel-agent-skills-mcp-plugins-p3_20260807.md) | MCP, AIAgent, OpenStandard, JSONSchema, DevTools |
 | 2026-08-08 | [🧩 Claude Code や Codex などのコーディングエージェントをまたいで同じ動きをさせる拡張設計 - 6製品比較](articles/agentic-coding-clis_20260807.md) | ClaudeCode, Codex, GitHubCopilot, Cursor, AIAgent |
