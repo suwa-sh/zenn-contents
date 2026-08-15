@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (310)
+## Articles: 下書き (311)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -16,6 +16,7 @@
 | 2026-08-16 | [🔐 Shadow MCPをプロトコル判定で検出し経路統制する - Cloudflare Gateway](articles/cloudflare-shadow-mcp-mcp-p1_20260816.md) | MCP, Cloudflare, ZeroTrust, Security, AI |
 | 2026-08-16 | [🧩 GitHub Agent Appsで配信ワークフローを集約する構造と責任境界](articles/github-agent-apps-sdlc-coding-p7_20260816.md) | GitHub, GitHubCopilot, DevOps, AIAgent, SDLC |
 | 2026-08-16 | [🛟 Kubernetes更新の無人化を支える構造: A/Bフェイルセーフとetcd Quorum保護](articles/kairos-kubernetes-devops-p6_20260816.md) | Kubernetes, GitOps, SRE, etcd, AIエージェント |
+| 2026-08-16 | [📋 制度改定を手順書と記録項目まで伝播させる — 通達DiffのAI実装と限界](articles/zenn-dev-toshikusa-p4_20260816.md) | LLM, AI, RAG, DX |
 | 2026-08-15 | [🤝 エージェントが複数になると壊れる - Anthropicの観測と、インフラ側からの反論](articles/anthropic-multi-agent-safety-p1_20260815.md) | AI, MultiAgent, Anthropic, Architecture |
 | 2026-08-15 | [🧭 LLMOpsは誰が持つのか、AIパイプラインの所有境界を設計する](articles/cncf-llmops-platform-cncf-p8_20260815.md) | LLMOps, PlatformEngineering, CNCF, MLOps |
 | 2026-08-15 | [🕸️ BigQuery Graphs with measures - 指標と関係性を1つのデータ層に置く](articles/google-cloud-knowledge-graph-p7_20260815.md) | BigQuery, GoogleCloud, Looker, AIエージェント, データ基盤 |
