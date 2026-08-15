@@ -7,13 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (311)
+## Articles: 下書き (312)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-08-16 | [🏺 AIの「有識者に聞け」を疑う - 12件をコード証拠で全件決着させる手順](articles/ai-zenn-dev-egu777-sme-evidence-p3_20260816.md) | AI, LegacyModernization, Architecture, Requirements |
 | 2026-08-16 | [🔏 Claudeのウォーターマークは証拠になるか AI生成物の来歴設計](articles/anthropic-claude-ai-anthropic-p2_20260816.md) | Claude, Anthropic, 生成AI, ガバナンス, AIAct |
 | 2026-08-16 | [🔐 Shadow MCPをプロトコル判定で検出し経路統制する - Cloudflare Gateway](articles/cloudflare-shadow-mcp-mcp-p1_20260816.md) | MCP, Cloudflare, ZeroTrust, Security, AI |
+| 2026-08-16 | [🧱 エージェントAIが失敗する場所はモデルではなくデータ基盤にある](articles/dbt-labs-agentic-ai-getdbt-p5_20260816.md) | AI, dbt, DataEngineering, Governance, LLM |
 | 2026-08-16 | [🧩 GitHub Agent Appsで配信ワークフローを集約する構造と責任境界](articles/github-agent-apps-sdlc-coding-p7_20260816.md) | GitHub, GitHubCopilot, DevOps, AIAgent, SDLC |
 | 2026-08-16 | [🛟 Kubernetes更新の無人化を支える構造: A/Bフェイルセーフとetcd Quorum保護](articles/kairos-kubernetes-devops-p6_20260816.md) | Kubernetes, GitOps, SRE, etcd, AIエージェント |
 | 2026-08-16 | [📋 制度改定を手順書と記録項目まで伝播させる — 通達DiffのAI実装と限界](articles/zenn-dev-toshikusa-p4_20260816.md) | LLM, AI, RAG, DX |
