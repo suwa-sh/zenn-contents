@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (304)
+## Articles: 下書き (305)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -16,6 +16,7 @@
 | 2026-08-15 | [🕸️ BigQuery Graphs with measures - 指標と関係性を1つのデータ層に置く](articles/google-cloud-knowledge-graph-p7_20260815.md) | BigQuery, GoogleCloud, Looker, AIエージェント, データ基盤 |
 | 2026-08-15 | [⚖️ LLMアプリの受け入れ判定を要件から組み立てるREAGとカスケード判定](articles/llm-reag-requirements-arxiv-p6_20260815.md) | LLM, 生成AI, テスト, 品質管理, アーキテクチャ |
 | 2026-08-15 | [🕰️ 文脈は「増やす」から「絞る」へ - OpenAI Computer History の設計転換](articles/openai-web-computer-history-p2_20260815.md) | ChatGPT, OpenAI, 生成AI, セキュリティ, macOS |
+| 2026-08-15 | [🔌 数百のSaaSをAIエージェントから操作する統合CLI - WithOne AI CLI](articles/withoneai-cli_20260815.md) | AI, CLI, MCP, PostgreSQL, ワークフロー |
 | 2026-08-14 | [🔧 同じ能力でも一貫性が4.7倍変わる - コーディングエージェントのツール設計](articles/coding-agent-tool-architecture-p1_20260814.md) | LLM, AIAgent, 生成AI, ClaudeCode |
 | 2026-08-14 | [🔧 LLMを分類器にしない: 知識グラフ誘導RAGで車載HiLの原因分析を説明可能にする](articles/kg-rag-hil-knowledge-graph-p6_20260814.md) | LLM, RAG, KnowledgeGraph, MLOps |
 | 2026-08-14 | [🧭 コードを外に出さずドメインモデルを抽出する段階的パイプライン](articles/llm-legacy-modernization-p5_20260814.md) | LLM, AI, アーキテクチャ, リファクタリング |
