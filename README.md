@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (314)
+## Articles: 下書き (315)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-08-17 | [🧾 Claude Code 2.1.233: 利用者別コスト帰属とBashメモリ上限が保証しないもの](articles/claude-code-2-1-233-bash-p1_20260817.md) | ClaudeCode, Anthropic, Cgroup, Governance |
+| 2026-08-17 | [🧮 常駐AIエージェントのコストは、モデル単価ではなくセッション設計で決まる](articles/claude-code-bot-1268-agent-p4_20260817.md) | ClaudeCode, LLM, AIエージェント, 生成AI |
 | 2026-08-17 | [🧬 Zed「Delta」はGitを置き換えない ─ 過程を記録する開発環境の使いどころ](articles/zed-delta-coding-agent-zed-p2_20260817.md) | AIAgent, Zed, Git, CodeReview, DevOps |
 | 2026-08-16 | [🏺 AIの「有識者に聞け」を疑う - 12件をコード証拠で全件決着させる手順](articles/ai-zenn-dev-egu777-sme-evidence-p3_20260816.md) | AI, LegacyModernization, Architecture, Requirements |
 | 2026-08-16 | [🔏 Claudeのウォーターマークは証拠になるか AI生成物の来歴設計](articles/anthropic-claude-ai-anthropic-p2_20260816.md) | Claude, Anthropic, 生成AI, ガバナンス, AIAct |
