@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (322)
+## Articles: 下書き (321)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -32,7 +32,6 @@
 | 2026-08-15 | [🧭 LLMOpsは誰が持つのか、AIパイプラインの所有境界を設計する](articles/cncf-llmops-platform-cncf-p8_20260815.md) | LLMOps, PlatformEngineering, CNCF, MLOps |
 | 2026-08-15 | [🕸️ BigQuery Graphs with measures - 指標と関係性を1つのデータ層に置く](articles/google-cloud-knowledge-graph-p7_20260815.md) | BigQuery, GoogleCloud, Looker, AIエージェント, データ基盤 |
 | 2026-08-15 | [⚖️ LLMアプリの受け入れ判定を要件から組み立てるREAGとカスケード判定](articles/llm-reag-requirements-arxiv-p6_20260815.md) | LLM, 生成AI, テスト, 品質管理, アーキテクチャ |
-| 2026-08-15 | [🕰️ 文脈は「増やす」から「絞る」へ - OpenAI Computer History の設計転換](articles/openai-web-computer-history-p2_20260815.md) | ChatGPT, OpenAI, 生成AI, セキュリティ, macOS |
 | 2026-08-15 | [🔌 数百のSaaSをAIエージェントから操作する統合CLI - WithOne AI CLI](articles/withoneai-cli_20260815.md) | AI, CLI, MCP, PostgreSQL, ワークフロー |
 | 2026-08-14 | [🔧 同じ能力でも一貫性が4.7倍変わる - コーディングエージェントのツール設計](articles/coding-agent-tool-architecture-p1_20260814.md) | LLM, AIAgent, 生成AI, ClaudeCode |
 | 2026-08-14 | [🔧 LLMを分類器にしない: 知識グラフ誘導RAGで車載HiLの原因分析を説明可能にする](articles/kg-rag-hil-knowledge-graph-p6_20260814.md) | LLM, RAG, KnowledgeGraph, MLOps |
@@ -334,10 +333,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (169)
+## Articles: 公開済み (170)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-08-18 | [🕰️ 文脈は「増やす」から「絞る」へ - OpenAI Computer History の設計転換](articles/openai-web-computer-history-p2_20260815.md) | ChatGPT, OpenAI, 生成AI, セキュリティ, macOS |
 | 2026-08-15 | [🧭 Xの「おすすめ」を候補取得からランキングまで読み解く - x-algorithm](articles/x-algorithm_20260814.md) |  |
 | 2026-08-13 | [🕸️ 判断の因果と来歴を残すAIエージェント基盤 - Semantica](articles/semantica_20260810.md) |  |
 | 2026-08-11 | [🔌 SkillとMCPを1ディレクトリで配る最小規格 - Agent Plugins 1.0](articles/vercel-agent-skills-mcp-plugins-p3_20260807.md) | MCP, AIAgent, OpenStandard, JSONSchema, DevTools |

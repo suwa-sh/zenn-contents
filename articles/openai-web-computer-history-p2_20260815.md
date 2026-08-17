@@ -3,7 +3,8 @@ title: "文脈は「増やす」から「絞る」へ - OpenAI Computer History 
 emoji: "🕰️"
 type: "tech"
 topics: ["ChatGPT", "OpenAI", "生成AI", "セキュリティ", "macOS"]
-published: false
+published: true
+published_at: 2026-08-18
 ---
 
 AI に仕事を頼むとき、私たちは「今どういう状況か」を毎回説明してきました。プロンプトに背景を書き、ファイルを添付し、スクリーンショットを貼る。文脈を**渡す**作業です。
