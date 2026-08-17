@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (318)
+## Articles: 下書き (320)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-18 | [🧯 GUIエージェントの評価に原子性を持ち込む：完遂か、副作用のない失敗か](articles/gui-gui-arxiv-abs-2608-14131-p3_20260818.md) | AIAgent, GUI, RPA, LLM |
+| 2026-08-18 | [🧩 LLMコード移行の単位は「機能」ではない — 依存グラフの閉包で分ける](articles/llm-k-loc-arxiv-abs-2608-14128-p2_20260818.md) | LLM, Kotlin, Java, リファクタリング, アーキテクチャ |
 | 2026-08-18 | [🚦 AIエージェントに実行権限をどこまで渡すか 段階的権限解放の設計](articles/openai-ai-ai-openai-index-p1_20260818.md) | AI, LLM, AIAgent, Governance, SRE |
 | 2026-08-17 | [🧱 依存方向の違反をプロンプトの外で止めるアーキテクチャ制約OSS - CellFence](articles/ai-oss-software-architecture-p5_20260817.md) | TypeScript, CI, GitHubActions, アーキテクチャ, AIエージェント |
 | 2026-08-17 | [🧾 Claude Code 2.1.233: 利用者別コスト帰属とBashメモリ上限が保証しないもの](articles/claude-code-2-1-233-bash-p1_20260817.md) | ClaudeCode, Anthropic, Cgroup, Governance |
