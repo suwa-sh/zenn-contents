@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (317)
+## Articles: 下書き (318)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-18 | [🚦 AIエージェントに実行権限をどこまで渡すか 段階的権限解放の設計](articles/openai-ai-ai-openai-index-p1_20260818.md) | AI, LLM, AIAgent, Governance, SRE |
 | 2026-08-17 | [🧱 依存方向の違反をプロンプトの外で止めるアーキテクチャ制約OSS - CellFence](articles/ai-oss-software-architecture-p5_20260817.md) | TypeScript, CI, GitHubActions, アーキテクチャ, AIエージェント |
 | 2026-08-17 | [🧾 Claude Code 2.1.233: 利用者別コスト帰属とBashメモリ上限が保証しないもの](articles/claude-code-2-1-233-bash-p1_20260817.md) | ClaudeCode, Anthropic, Cgroup, Governance |
 | 2026-08-17 | [🧮 常駐AIエージェントのコストは、モデル単価ではなくセッション設計で決まる](articles/claude-code-bot-1268-agent-p4_20260817.md) | ClaudeCode, LLM, AIエージェント, 生成AI |
