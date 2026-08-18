@@ -86,7 +86,8 @@ AIエージェントの記事を読むと「◯◯エンジニアリング」が
 flowchart LR
     A["Loop Engineering<br/>の解説記事"] --> OUT["外側<br/>エージェントを起動する仕組み"]
     B["Graph Engineering<br/>の解説記事にある比較表"] --> IN["内側<br/>think-act-observe の反復"]
-    OUT -.同じ語.- IN
+    OUT -.- C(同じ語)
+    IN -.- C
 ```
 
 *同じ「Loop Engineering」という語が、正反対の層を指している。*
