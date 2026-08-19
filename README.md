@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (326)
+## Articles: 下書き (325)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -16,7 +16,6 @@
 | 2026-08-19 | [🧪 Asanaの「5年→2週間」Enzyme撤去を分解する。エージェントが効く仕事の条件](articles/asana-codex-enzyme-1-2-openai-p1_20260819.md) | AI, Codex, React, Testing, OpenAI |
 | 2026-08-19 | [⚖️ EU AI Actをアジャイル開発へ組み込む12項目と、監査で詰まる3つの論点](articles/eu-ai-act-ai-arxiv-abs-p6_20260819.md) | ai, agile, scrum, governance, eu |
 | 2026-08-18 | [🧯 GUIエージェントの評価に原子性を持ち込む：完遂か、副作用のない失敗か](articles/gui-gui-arxiv-abs-2608-14131-p3_20260818.md) | AIAgent, GUI, RPA, LLM |
-| 2026-08-18 | [🧭 5つの◯◯エンジニアリングを2軸3階層で整理する - Prompt / Context / Loop / Harness / Graph](articles/llm-control-layers-taxonomy_20260818.md) | AIAgent, LLM, ClaudeCode, PromptEngineering, SoftwareEngineering |
 | 2026-08-18 | [🧩 LLMコード移行の単位は「機能」ではない — 依存グラフの閉包で分ける](articles/llm-k-loc-arxiv-abs-2608-14128-p2_20260818.md) | LLM, Kotlin, Java, リファクタリング, アーキテクチャ |
 | 2026-08-18 | [🧬 古い決定が再浮上する問題に、オントロジー型のプロジェクト記憶で挑むMOOSEDev](articles/moosedev-knowledge-graph-p5_20260818.md) | AI, LLM, RAG, KnowledgeGraph, MCP |
 | 2026-08-18 | [🚦 AIエージェントに実行権限をどこまで渡すか 段階的権限解放の設計](articles/openai-ai-ai-openai-index-p1_20260818.md) | AI, LLM, AIAgent, Governance, SRE |
@@ -338,10 +337,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (170)
+## Articles: 公開済み (171)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-08-20 | [🧭 5つの◯◯エンジニアリングを2軸3階層で整理する - Prompt / Context / Loop / Harness / Graph](articles/llm-control-layers-taxonomy_20260818.md) | AIAgent, LLM, ClaudeCode, PromptEngineering, SoftwareEngineering |
 | 2026-08-18 | [🕰️ 文脈は「増やす」から「絞る」へ - OpenAI Computer History の設計転換](articles/openai-web-computer-history-p2_20260815.md) | ChatGPT, OpenAI, 生成AI, セキュリティ, macOS |
 | 2026-08-15 | [🧭 Xの「おすすめ」を候補取得からランキングまで読み解く - x-algorithm](articles/x-algorithm_20260814.md) |  |
 | 2026-08-13 | [🕸️ 判断の因果と来歴を残すAIエージェント基盤 - Semantica](articles/semantica_20260810.md) |  |

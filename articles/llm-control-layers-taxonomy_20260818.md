@@ -3,7 +3,8 @@ title: "5つの◯◯エンジニアリングを2軸3階層で整理する - Pro
 emoji: "🧭"
 type: "tech"
 topics: ["AIAgent", "LLM", "ClaudeCode", "PromptEngineering", "SoftwareEngineering"]
-published: false
+published: true
+published_at: 2026-08-20
 ---
 
 AIエージェントの記事を読むと「◯◯エンジニアリング」が次々に出てきます。Prompt、Context、Loop、Harness、Graph。どれも「次はこれだ」と書いてあります。
