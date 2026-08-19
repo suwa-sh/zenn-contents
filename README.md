@@ -7,12 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (324)
+## Articles: 下書き (326)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-08-19 | [🚦 AIエージェントに手順を「お願い」しても効かない、スキップ不能にすると効く](articles/ai-sdlc-ai-sdlc-arxiv-abs-p5_20260819.md) | AI, LLM, AIエージェント, 設計, アーキテクチャ |
+| 2026-08-19 | [🔀 モバイルアプリの全面刷新を10か月かけて安全に完了させる Dual Boot 構成](articles/arxiv-abs-2608-15135-p7_20260819.md) | mobile, iOS, Android, architecture, refactoring |
 | 2026-08-19 | [🧪 Asanaの「5年→2週間」Enzyme撤去を分解する。エージェントが効く仕事の条件](articles/asana-codex-enzyme-1-2-openai-p1_20260819.md) | AI, Codex, React, Testing, OpenAI |
+| 2026-08-19 | [⚖️ EU AI Actをアジャイル開発へ組み込む12項目と、監査で詰まる3つの論点](articles/eu-ai-act-ai-arxiv-abs-p6_20260819.md) | ai, agile, scrum, governance, eu |
 | 2026-08-18 | [🧯 GUIエージェントの評価に原子性を持ち込む：完遂か、副作用のない失敗か](articles/gui-gui-arxiv-abs-2608-14131-p3_20260818.md) | AIAgent, GUI, RPA, LLM |
 | 2026-08-18 | [🧭 5つの◯◯エンジニアリングを2軸3階層で整理する - Prompt / Context / Loop / Harness / Graph](articles/llm-control-layers-taxonomy_20260818.md) | AIAgent, LLM, ClaudeCode, PromptEngineering, SoftwareEngineering |
 | 2026-08-18 | [🧩 LLMコード移行の単位は「機能」ではない — 依存グラフの閉包で分ける](articles/llm-k-loc-arxiv-abs-2608-14128-p2_20260818.md) | LLM, Kotlin, Java, リファクタリング, アーキテクチャ |
