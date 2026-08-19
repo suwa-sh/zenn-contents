@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (325)
+## Articles: 下書き (327)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-20 | [🔗 局所240倍が全体3割に収束する理由｜工程分割型AIエージェントの主戦場](articles/ai-agentic-integration-platform-p4_20260820.md) | AI, AIエージェント, LLM, アーキテクチャ, 設計 |
+| 2026-08-20 | [🐕 AIエージェントを「プロンプト」ではなく「権限」で止める - AWS Dogwoodの構造と限界](articles/aws-ai-dogwood-zenn-dev-exwzd-p6_20260820.md) | ai, aws, security, bedrock, cedar |
 | 2026-08-19 | [🚦 AIエージェントに手順を「お願い」しても効かない、スキップ不能にすると効く](articles/ai-sdlc-ai-sdlc-arxiv-abs-p5_20260819.md) | AI, LLM, AIエージェント, 設計, アーキテクチャ |
 | 2026-08-19 | [🔀 モバイルアプリの全面刷新を10か月かけて安全に完了させる Dual Boot 構成](articles/arxiv-abs-2608-15135-p7_20260819.md) | mobile, iOS, Android, architecture, refactoring |
 | 2026-08-19 | [🧪 Asanaの「5年→2週間」Enzyme撤去を分解する。エージェントが効く仕事の条件](articles/asana-codex-enzyme-1-2-openai-p1_20260819.md) | AI, Codex, React, Testing, OpenAI |
