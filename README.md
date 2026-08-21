@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (331)
+## Articles: 下書き (332)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-08-21 | [✈️ ANA国内線システム刷新の混乱に学ぶ、移行判定は業務状態の積で行う](articles/ana-xtech-nikkei-atcl-nxt-p2_20260821.md) | アーキテクチャ, 設計, マイグレーション, 運用 |
+| 2026-08-21 | [🚧 GitHub 8月17日障害を読み解く: 出荷を止めたのは認証ゲートだった](articles/github-devops-github-insights-p3_20260821.md) | GitHub, SRE, DevOps, Copilot, 可用性 |
 | 2026-08-21 | [🔍 AIを入れても業務量が減らない構造 - LINEヤフーの商品パトロール事例](articles/line-human-in-loop-ai-ready-p1_20260821.md) | AI, LLM, MachineLearning, 業務改善, AIガバナンス |
 | 2026-08-20 | [🔗 局所240倍が全体3割に収束する理由｜工程分割型AIエージェントの主戦場](articles/ai-agentic-integration-platform-p4_20260820.md) | AI, AIエージェント, LLM, アーキテクチャ, 設計 |
 | 2026-08-20 | [🛡️ 実行証跡で Agent Skill を検証し安全に自動生成する - TRUSS](articles/arxiv-agent-skills-truss-p7_20260820.md) | AIエージェント, LLM, セキュリティ, AgentSkills |
