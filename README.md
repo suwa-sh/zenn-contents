@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (333)
+## Articles: 下書き (332)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -18,7 +18,6 @@
 | 2026-08-20 | [🔗 局所240倍が全体3割に収束する理由｜工程分割型AIエージェントの主戦場](articles/ai-agentic-integration-platform-p4_20260820.md) | AI, AIエージェント, LLM, アーキテクチャ, 設計 |
 | 2026-08-20 | [🛡️ 実行証跡で Agent Skill を検証し安全に自動生成する - TRUSS](articles/arxiv-agent-skills-truss-p7_20260820.md) | AIエージェント, LLM, セキュリティ, AgentSkills |
 | 2026-08-20 | [🐕 AIエージェントを「プロンプト」ではなく「権限」で止める - AWS Dogwoodの構造と限界](articles/aws-ai-dogwood-zenn-dev-exwzd-p6_20260820.md) | ai, aws, security, bedrock, cedar |
-| 2026-08-20 | [🚪 ローカル開発URLを安定化するリバースプロキシ - Portless](articles/portless_20260820.md) | Portless, Nodejs, Https, Turborepo, DevTools |
 | 2026-08-19 | [🚦 AIエージェントに手順を「お願い」しても効かない、スキップ不能にすると効く](articles/ai-sdlc-ai-sdlc-arxiv-abs-p5_20260819.md) | AI, LLM, AIエージェント, 設計, アーキテクチャ |
 | 2026-08-19 | [🔀 モバイルアプリの全面刷新を10か月かけて安全に完了させる Dual Boot 構成](articles/arxiv-abs-2608-15135-p7_20260819.md) | mobile, iOS, Android, architecture, refactoring |
 | 2026-08-19 | [🧪 Asanaの「5年→2週間」Enzyme撤去を分解する。エージェントが効く仕事の条件](articles/asana-codex-enzyme-1-2-openai-p1_20260819.md) | AI, Codex, React, Testing, OpenAI |
@@ -345,10 +344,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (171)
+## Articles: 公開済み (172)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-08-22 | [🚪 ローカル開発URLを安定化するリバースプロキシ - Portless](articles/portless_20260820.md) | Portless, Nodejs, Https, Turborepo, DevTools |
 | 2026-08-20 | [🧭 5つの◯◯エンジニアリングを2軸3階層で整理する - Prompt / Context / Loop / Harness / Graph](articles/llm-control-layers-taxonomy_20260818.md) | AIAgent, LLM, ClaudeCode, PromptEngineering, SoftwareEngineering |
 | 2026-08-18 | [🕰️ 文脈は「増やす」から「絞る」へ - OpenAI Computer History の設計転換](articles/openai-web-computer-history-p2_20260815.md) | ChatGPT, OpenAI, 生成AI, セキュリティ, macOS |
 | 2026-08-15 | [🧭 Xの「おすすめ」を候補取得からランキングまで読み解く - x-algorithm](articles/x-algorithm_20260814.md) |  |
