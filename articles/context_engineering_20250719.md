@@ -1,146 +1,214 @@
 ---
-title: "Context Engineering入門：AIに何を渡すかをシステムとして設計する"
+title: "コンテキストエンジニアリング入門：AIに何を渡すかをシステムとして設計する"
 emoji: "🧠"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["AI", "LLM", "RAG", "Agent", "SystemDesign"]
+topics: ["AI", "LLM", "RAG", "Agent", "ContextEngineering"]
 published: true
 published_at: 2025-07-20
 ---
 
 
-## ■はじめに：なぜ今、「プロンプト」から「コンテキスト」なのか？
+## はじめに
 
-本記事では、AI開発の新たな専門分野「コンテキストエンジニアリング」を体系的に解説します。この分野は、単発の指示でAIを動かす「プロンプトエンジニアリング」の限界から生まれました。本記事を読めば、信頼性と拡張性の高い次世代AIシステムを構築するための、設計思想と実践的な戦略の全体像を掴むことができます。
+> この記事は2025年7月に公開しました。2025年9月以降の一次資料を反映して定義、用語、ツール設計、キャッシュの記述を更新し、2026年8月に長時間タスクのコンテキスト管理と評価を追加しました。
 
-![記事の全体像](/images/context_engineering_20250719/overview.png)
-*この記事の全体像。以下、順に解説します。*
+AIエージェントを長く動かすと、途中から指示を忘れる、同じ調査を繰り返す、規約を破る、といった劣化が起きます。
+原因の一つは、各推論ターンでモデルに渡している情報の設計です。
 
-## ■1. プロンプトからコンテキストへ ― AI開発のパラダイムシフト
+単発の指示を改善するプロンプトエンジニアリングだけでは、この問題を扱いきれません。
+必要なのは、指示、ツール、履歴、検索結果などを含めて、モデルが参照する情報全体を設計することです。
 
-本章では、AI開発の新たな潮流「コンテキストエンジニアリング」の登場背景を解き明かします。まず、その前身であるプロンプトエンジニアリングの定義と限界を明確にし、コンテキストエンジニアリングがその課題をいかにして克服するかを示します。
+この記事では、コンテキストエンジニアリングの定義から、RAGとJIT取得、長時間タスクの履歴管理、キャッシュ、本番環境での評価までを順に解説します。
+読み終えると、何を毎ターン載せ、何を窓の外へ置き、情報が増えたときにどう整理するかを判断できるようになります。
 
-### ●1.1. プロンプトエンジニアリングの定義と限界
+## 1. プロンプトからコンテキストへ
 
-プロンプトエンジニアリングとは、生成AIモデルから望ましい出力を得るために、テキスト入力（プロンプト）を設計・洗練させる**言語的な職人技**です。これは、ユーザーが言葉を選び、試行錯誤を繰り返すプロセスを指します。
+### 1.1. プロンプトエンジニアリングの対象
 
-#### ▷プロンプトの主要構成要素
+**プロンプトエンジニアリング**は、生成AIモデルから望ましい出力を得るために、指示や入力の表現を設計する技術です。
+一般的なプロンプトには、実行させる指示、判断に使う情報、期待する出力形式が含まれます。
 
-一般的なプロンプトは、以下の3要素で構成されます。
+この方法は単発のタスクで有効です。
+しかし、数十ターンにわたる対話では、表現の調整だけで履歴、外部データ、ツールの選択、状態の保存まで制御することはできません。
 
-1.  **指示（Instruction）**: モデルに実行させたい具体的なタスク。
-2.  **コンテキスト（Context）**: モデルが推論で考慮すべき外部情報。
-3.  **出力インジケータ（Output Indicator）**: 期待する出力の型や形式。
+### 1.2. コンテキストエンジニアリングの対象
 
-#### ▷限界と脆弱性
+そこで設計対象を、プロンプト文字列から、推論時にモデルへ渡す情報全体へ広げます。
+[Anthropicの定義](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)に沿えば、**コンテキストエンジニアリング**とは、各推論ターンでモデルへ渡すトークン集合を選び、維持することです。
 
-このアプローチは単発のタスクには強力ですが、本質的に**脆弱で、拡張性に乏しい**という課題があります。表現のわずかな違いやモデルの更新が出力を大きく左右し、複数ターンの対話ではモデルが初期の指示を見失いやすくなります。この課題が、より堅牢で体系的なアプローチ、すなわちコンテキストエンジニアリングの登場を促しました。
+対象には次の情報が含まれます。
 
-### ●1.2. コンテキストエンジニアリングの登場
+| 対象 | 具体例 |
+|---|---|
+| System prompt | 役割、制約、出力形式 |
+| Tools | ツール定義、関数やMCPサーバーのスキーマ |
+| Examples | few-shotの実例 |
+| History | 過去の発話、ツールの呼び出しと応答 |
+| 外部データ | 実行時に読み込んだファイルや検索結果 |
 
-コンテキストエンジニアリングは、プロンプトエンジニアリングの限界から生まれた、より広範で体系的なアプローチです。単なる指示の最適化を超え、AIがタスクを遂行するために必要な**情報エコシステム全体を設計する**ことを目指します。
+設計の原則は、判断に必要な高信号の情報だけを載せることです。
+ここで「最小」と「短い」は同じではありません。
+必要な前提まで削ると、モデルは不足した情報を推測で補います。
 
-![](https://www.philschmid.de/static/blog/context-engineering/context.png)
-*出典: [The New Skill in AI is Not Prompting, It's Context Engineering - Philschmid](https://www.philschmid.de/context-engineering)*
+### 1.3. プロンプトエンジニアリングとの違い
 
-#### ▷中核となる定義
+プロンプトエンジニアリングは、コンテキストエンジニアリングの部分集合として位置づけられます。
 
-コンテキストエンジニアリングとは、大規模言語モデル（LLM）がタスクを達成するために、 **「適切な情報とツール」** を **「適切な形式」** で **「適切なタイミング」** で提供する動的なシステムを設計・構築する専門分野です。その本質は、プロンプト文字列そのものではなく、LLMを呼び出す前に実行される **「システム全体の振る舞い」** にあります。
+| 次元 | プロンプトエンジニアリング | コンテキストエンジニアリング |
+|---|---|---|
+| **主なスコープ** | 指示、例、出力形式 | 指示に加えて履歴、ツール、外部データ |
+| **中核タスク** | 入力表現を調整する | 各ターンの入力を取得、選択、圧縮する |
+| **代表的な手段** | プロンプトテンプレート、few-shot | RAG、外部メモリ、履歴管理、ツール設計 |
+| **評価単位** | 一つの入出力 | 複数ターンを含むシステム全体 |
 
-#### ▷スコープの拡大
+プロンプトの文言は引き続き設計対象です。
+ただし、長時間動くシステムでは、毎ターン何を組み立てるかが出力を大きく左右します。
 
-コンテキストエンジニアリングは、対話履歴、検索されたドキュメント、ユーザーデータ、利用可能なツール、システム指示など、 **モデルが参照する「すべて」** を対象とします。これは、「良い質問をすること（プロンプト）」と「AIが参照すべき知識体系を構築すること（コンテキスト）」の違いに例えられます。
+## 2. なぜコンテキストは多いほどよいとは限らないのか
 
-#### ▷開発者中心の専門分野へ
+### 2.1. コンテキスト窓は有限な注意資源である
 
-この分野は開発者指向であり、LLMのためのソフトウェアアーキテクチャに似た**システム思考**を要求します。焦点は、言語的な調整から、モデルの思考プロセスのフローとメモリ全体の設計へと移行しています。LLMが汎用的な推論エンジンとして普及する今、持続的な競争優位性は、独自のデータソースと、それらをLLMに接続する**コンテキストパイプライン**によってもたらされるのです。
+窓を広く取れば問題が解決する、という直感は部分的にしか正しくありません。
+入力が長くなると、モデルは増えた情報のすべてを同じ精度で利用できるわけではないからです。
 
-### ●1.3. 比較分析：戦術から戦略へ
+[Anthropicはこの制約を「attention budget」](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)と表現しています。
+Transformerでは各トークンがほかのトークンを参照できるため、入力がnトークンなら考慮される組み合わせはn²の規模で増えます。
+窓へ情報を追加できることと、その情報を同じ精度で利用できることは別です。
 
-プロンプトエンジニアリングが特定の応答を引き出す「戦術」なら、コンテキストエンジニアリングは一貫して高品質なパフォーマンスを保証する「戦略」です。
+[Chromaのテクニカルレポート「Context Rot」](https://www.trychroma.com/research/context-rot)も、入力が長くなるにつれて複数モデルの性能が非一様に低下する現象を報告しています。
 
-**表1：プロンプトエンジニアリングとコンテキストエンジニアリングの比較**
+### 2.2. 長い入力で観測される性能劣化
 
-| 次元           | プロンプトエンジニアリング（戦術）     | コンテキストエンジニアリング（戦略）                    |
-| :------------- | :------------------------------------- | :------------------------------------------------------ |
-| **スコープ**   | 単一の入出力ペア                       | 情報エコシステム全体（履歴、ツール、データ）            |
-| **中核タスク** | テキスト指示の作成（言葉選び）         | データパイプラインとシステムアーキテクチャの設計        |
-| **思考様式**   | 言語的チューニング                     | システム思考                                            |
-| **ツール**     | プロンプトテンプレート、少数ショット例 | RAGパイプライン、ベクトルDB、エージェントフレームワーク |
-| **目標**       | 特定タスクで良い出力を得ること         | 1000回目の出力も高品質であることを保証すること          |
-| **拡張性**     | 脆弱で、スケールしにくい               | スケーラビリティと堅牢性を前提とした設計                |
-| **主な担い手** | エンドユーザー、プロンプター           | 開発者、エンジニア                                      |
+長いコンテキストの弱点は、一つのベンチマークだけで観測されているわけではありません。
 
-今や、プロンプトエンジニアリングは、より広範なコンテキストエンジニアリングの**重要なサブセット**として位置づけられます。優れたプロンプトは不可欠ですが、その真価は、それを取り巻くコンテキストの質によって決定されるのです。
+| 研究 | 観測 |
+|---|---|
+| [Lost in the Middle](https://arxiv.org/abs/2307.03172) | 関連情報が入力の中央にあると、先頭や末尾にある場合より精度が落ちる |
+| [NoLiMa](https://arxiv.org/abs/2502.05167) | 字面の一致が少ない検索では、入力長の増加に伴って複数モデルの性能が低下する |
+| [LongMemEval](https://arxiv.org/abs/2410.10813) | 長期対話から過去の情報を想起する課題で、商用アシスタントを含む複数システムの精度低下を観測した |
 
-## ■2. 実装のためのコアアーキテクチャ
+これらの結果から、広告されるコンテキスト窓の長さと、タスクで実効的に使える長さは分けて考える必要があります。
+位置による劣化と、情報量の増加による劣化も同じ現象ではないため、評価では切り分けます。
 
-本章では、コンテキストエンジニアリングを支える主要なアーキテクチャを詳述します。基本となる検索拡張生成（RAG）から、より高度なAIエージェント構造へと進みます。
+### 2.3. 大きなコンテキスト窓で置き換えられる範囲
 
-### ●2.1. 検索拡張生成（RAG）：信頼性の高いAIの基盤
+大きな窓には、情報を検索や要約で削らず、一度の入力へ載せられるという容量上の利点があります。
+入力が窓へ収まらないことだけが問題なら、窓の拡大によって切り捨てや要約を減らせます。
+一方、必要な情報の特定や長期にわたる規約の維持は、容量を増やすだけでは解決しません。
 
-RAGは、LLMの内部知識を外部の信頼できる知識ベースで補強するアーキテクチャです。これにより、モデルの知識の古さやハルシネーション（事実に基づかない情報の生成）といった根本的な限界に対処します。
+したがって、大きな窓だけではコンテキスト管理を置き換えられません。
+窓の大きさを増やした場合も、不要な履歴や検索結果を無条件に載せる構成は避けます。
 
-#### ▷2.1.1. 標準的なRAGアーキテクチャ
+## 3. 外部情報をコンテキストへ入れる
+
+### 3.1. 事前投入とJIT
+
+外部情報の渡し方は、推論前に検索して載せる**事前投入**と、識別子だけを保持して必要時に読む**JIT（just-in-time）取得**に分けられます。
+
+```mermaid
+flowchart TD
+  subgraph outside ["窓の外"]
+    Universe["検索対象のコーパス"]
+    Ids["path、query、URL"]
+    Notes["notes、memory"]
+    Files["大きな成果物"]
+  end
+
+  subgraph inside ["各ターンのコンテキスト窓"]
+    Sys["system prompt"]
+    Tools["tool定義"]
+    Hist["message history"]
+    Retrieved["今回取得した情報"]
+    Assemble["組み立てた入力"]
+  end
+
+  Universe -->|"事前投入で選択"| Retrieved
+  Ids -->|"JITで取得"| Retrieved
+  Notes -->|"JITで読む"| Retrieved
+  Files -->|"必要な範囲だけ読む"| Retrieved
+  Sys --> Assemble
+  Tools --> Assemble
+  Hist --> Assemble
+  Retrieved --> Assemble
+  Assemble --> LLM["LLMの推論"]
+```
+
+| 方式 | 向く場面 | 弱点 |
+|---|---|---|
+| 事前投入 | 静的で更新の少ないコーパス | 古い情報や無関係な断片が窓へ入りやすい |
+| JIT | 変化するファイル群、探索的な調査 | 往復が増え、ツールの誤用も起こり得る |
+| ハイブリッド | 実運用の多く | 両方の取得経路を設計する必要がある |
+
+RAGは事前投入または選択的取得を実装する手段であり、コンテキストエンジニアリング全体と同義ではありません。
+
+### 3.2. 検索拡張生成（RAG）
+
+[RAG](https://arxiv.org/abs/2005.11401)は、LLMの内部知識を外部の知識ベースで補うアーキテクチャです。
+検索結果を回答の根拠として渡すことで、モデルの知識の古さや、根拠のない生成を減らしやすくします。
+
+#### 3.2.1. 標準的なRAGアーキテクチャ
 
 RAGのプロセスは、オフラインでの「インデックス作成」と、オンラインでの「検索・生成」の2フェーズで構成されます。
 
 ```mermaid
-graph TD
+flowchart TD
     subgraph "取り込み・インデックス作成"
-        A[外部データソース] --> B{データ前処理};
-        B --> C{チャンク分割};
-        C --> D[埋め込みモデル];
-        D --> E[ベクトルデータベース];
+        A["外部データソース"] --> B["データ前処理"];
+        B --> C["チャンク分割"];
+        C --> D["埋め込みモデル"];
+        D --> E["ベクトルデータベース"];
     end
 
     subgraph "検索・生成"
-        F[ユーザーのクエリ] --> G[埋め込みモデル];
-        G --> H{類似性検索};
+        F["ユーザーのクエリ"] --> G["埋め込みモデル"];
+        G --> H["類似性検索"];
         E --> H;
-        H --> I[上位K個のチャンク取得];
-        I --> J{拡張プロンプト作成};
+        H --> I["上位K個のチャンク取得"];
+        I --> J["拡張プロンプト作成"];
         F --> J;
-        J --> K[LLM];
-        K --> L[生成された回答];
+        J --> K["LLM"];
+        K --> L["生成された回答"];
     end
 ```
 
-#### ▷2.1.2. 高度な検索技術
+#### 3.2.2. 高度な検索技術
 
-本番環境レベルのRAGシステムでは、検索精度を最大化するため、より洗練された技術が求められます。
+本番環境のRAGでは、検索結果の関連性を高めるために複数の手法を組み合わせます。
 
-  * **ハイブリッド検索**: ベクトル検索の「意味的」な類似性と、キーワード検索の「字句的」な精度を組み合わせるアプローチ。
-  * **リランキング**: 高速な手法で広範な候補を取得し、より高精度なモデルで再評価して順位を付け直す2段階プロセス。
+- **ハイブリッド検索**：ベクトル検索による意味の類似性と、キーワード検索による字句の一致を組み合わせる
+- **リランキング**：高速な手法で候補を取得し、別のモデルで再評価して順位を付け直す
 
-### ●2.2. GraphRAG：データ間の「関係性」を検索する
+### 3.3. GraphRAGで関係を検索する
 
-GraphRAGは、知識をエンティティ（点）と関係（線）のネットワークとして表現する**知識グラフ**を活用し、データポイント間の複雑な関係性を捉える先進的な手法です。
+[GraphRAG](https://arxiv.org/abs/2404.16130)は、知識をエンティティ（点）と関係（線）のネットワークとして表現する**知識グラフ**を活用し、断片間の関係を検索へ利用する手法です。
 
 ```mermaid
-graph TD
+flowchart TD
     subgraph 従来のRAG
-        A[Query] --> B[チャンク1];
-        A --> C[チャンク2];
-        A --> D[チャンク3];
+        A["Query"] --> B["チャンク1"];
+        A --> C["チャンク2"];
+        A --> D["チャンク3"];
     end
     subgraph GraphRAG
-        subgraph Knowledge Graph
-            E(Company A) -- located in --> F(Tokyo);
-            E -- acquired --> G(Company B);
-            G -- develops --> H(Product X);
+        subgraph knowledgeGraph ["Knowledge Graph"]
+            E["Company A"] -- "located in" --> F["Tokyo"];
+            E -- "acquired" --> G["Company B"];
+            G -- "develops" --> H["Product X"];
         end
-        I[Query: 東京にある会社が開発した製品は？] ==> E;
-        E ==> G;
-        G ==> H;
+        subgraph searchPath ["探索順"]
+            I["Query：東京にある会社が買収した会社の製品は？"] --> S1["① Tokyoにある会社を特定"];
+            S1 --> S2["② acquiredをたどる"];
+            S2 --> S3["③ developsをたどる"];
+            S3 --> R["Product X"];
+        end
     end
-    style E fill:#f9f,stroke:#333,stroke-width:2px
-    style G fill:#f9f,stroke:#333,stroke-width:2px
-    style H fill:#f9f,stroke:#333,stroke-width:2px
 ```
 
-GraphRAGは、サプライチェーン分析や不正検知など、複数の情報源を横断する**多段階の推論**を必要とする複雑なクエリで真価を発揮します。
+GraphRAGは、サプライチェーン分析や不正検知など、複数の情報源を横断する**多段階の推論**を必要とするクエリに向きます。
+この図は、関係をたどる検索を示す簡略例です。
+MicrosoftのGraphRAGは、エンティティ間のグラフに加えてコミュニティ要約を構築し、データセット全体を問う質問にも対応します。
 
-### ●2.3. 高度なRAGの実践ツール：local-RAG-backend
+### 3.4. 実装例としてのlocal-RAG-backend
 
 ここで紹介した高度なRAGのコンセプトを実現するOSS `local-RAG-backend` を公開しています。
 
@@ -149,27 +217,29 @@ https://github.com/suwa-sh/local-RAG-backend
 https://zenn.dev/suwash/articles/local_rag_backend_20250622
 
 
-このツールは、多くの開発者が直面する以下のような課題を解決します。
+このツールは、次の機能をまとめて提供します。
 
-1. **高精度なデータ取り込み**: PDFやWordなど多様なファイル形式に対応し、レイアウトや意味のまとまりを維持したまま情報を抽出・分割します。
-2. **ハイブリッド検索とリランキング**: ベクトル検索、全文検索、そして本章で解説したグラフ検索を組み合わせたハイブリッド検索を標準で搭載。さらに、複数の手法でリランキングを行い、文脈に最も関連性の高い情報を特定します。
-3. **簡単な導入**: docker compose upコマンド一つで、これら高機能な検索サーバー群をローカル環境に構築できます。
+1. **データ取り込み**：PDFやWordなどから情報を抽出し、レイアウトや意味のまとまりを考慮して分割する
+2. **ハイブリッド検索とリランキング**：ベクトル検索、全文検索、グラフ検索を組み合わせ、候補を再評価する
+3. **ローカルでの導入**：`docker compose up`で検索サーバー群を起動する
 
-`local-RAG-backend`のようなツールを活用することで、開発者は複雑な環境構築に時間を費やすことなく、コンテキストの最適化という本質的な課題に集中できるのです。
+`local-RAG-backend`を使うと、各検索方式を個別に構築せず、取得するコンテキストの比較と調整から始められます。
 
-### ●2.4. AIエージェント：検索から「行動」へ
+## 4. エージェントのコンテキストを設計する
 
-AIエージェントは、LLMを単なる回答生成器としてではなく、次に行うべき一連の **「行動」を「決定」する思考エンジン** として使用するシステムです。
+### 4.1. 検索から行動へ
 
-#### ▷エージェントのコアコンポーネント
+AIエージェントは、LLMを回答生成だけでなく、次の行動を選ぶために使うシステムです。
 
-1.  **LLMコア**: 計画立案と意思決定を担う推論エンジン。
-2.  **メモリ**: 過去の対話から情報を保存・検索するシステム。
-3.  **ツール／関数**: 外部世界と対話するためのAPIやデータベース。
+#### エージェントの構成要素
 
-#### ▷代表的なアーキテクチャパターン: ReAct
+1. **LLMコア**：計画立案と意思決定を担う推論エンジン
+2. **メモリ**：過去の対話や進捗を保存し、必要時に取得する仕組み
+3. **ツール／関数**：APIやデータベースを操作するインターフェース
 
-**ReAct (Reason + Act)** は、「思考 → 行動 → 観察」のループを繰り返す、エージェントの基本パターンです。
+#### ReAct
+
+[**ReAct（Reason + Act）**](https://arxiv.org/abs/2210.03629)は、「思考 → 行動 → 観察」のループを繰り返すエージェントの基本パターンです。
 
 ```mermaid
 graph LR
@@ -178,305 +248,236 @@ graph LR
     C -->|結果を元に再考| A;
 ```
 
-効果的なエージェントシステムの設計は、プロンプトエンジニアリングから、AIエージェントの役割や通信プロトコルを定義する **「組織設計」にも似たアプローチ** へと進化しています。
+ReActでは、思考、行動、観察を繰り返すたびに履歴が増えます。
+したがって、行動の選択だけでなく、次のターンへ何を残すかもエージェント設計に含まれます。
 
-## ■3. 実践的実装戦略 ― 現場で使えるテクニック
+### 4.2. 窓を構成する部品
 
-第2章で解説したアーキテクチャを実システムに組み込むためには、具体的なエンジニアリングのベストプラクティスが不可欠です。本章では、現場での実装に焦点を当てたテクニックを紹介します。
+エージェントの窓は、主に次の4部品で構成されます。
+実行時に取得した外部データは、これらに追加されます。
 
-### ●3.1. パフォーマンスとコストを最適化する
+| 部品 | 失敗の両極 | 設計方針 |
+|---|---|---|
+| System prompt | 条件分岐を詰め込む、前提を省略する | 最小から始め、観測した失敗に対応する規則を足す |
+| Tools | 機能が重複する、選択基準が曖昧になる | 人間でも選べる粒度と名前にする |
+| Examples | エッジケースの百科事典になる | 少数の代表例に絞る |
+| History | 全履歴が堆積する | 圧縮、外部化、隔離を使い分ける |
 
-本番環境で稼働するAIシステムにとって、パフォーマンスとコストは最重要課題です。特に、LLMの推論プロセスにおける**KVキャッシュ**の活用が決定的な役割を果たします。
+System promptやexamplesの適切な量は、モデル世代によって変わります。
+特定モデルで得られた推奨を、別のモデルへそのまま適用しないようにします。
 
-#### ▷KVキャッシュとは？ ― 計算結果の「メモ帳」
+### 4.3. ツールをコンテキストとして設計する
 
-KVキャッシュとは、一言で言えば **「計算結果のメモ帳」** です。これはプログラミングにおける **メモ化（Memoization）** と同じ考え方に基づいています。
+ツール定義と戻り値も、モデルが読むコンテキストです。
+機能が重複するツールを並べると選択が不安定になり、巨大な戻り値は次の判断に必要な情報を埋もれさせます。
 
-LLMは、文章を一度に生成しているように見えて、内部では単語（トークン）を1つずつ順番に生成しています。そして、次の単語を予測するためには、それまでに出力したすべての単語（コンテキスト）の関係性を毎回参照する必要があります。**この参照計算（アテンション計算）は非常に高コスト**です。
+この節の設計方針は、Anthropicの[Writing effective tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents)を基礎にしています。
 
-  * **キャッシュがない場合**: 100個目の単語を生成するために、1〜99個目までの単語の関係性を**ゼロから再計算**します。
-  * **キャッシュがある場合**: 100個目の単語を生成するために、メモ帳から1〜99個目の計算結果を**読み込み**、99個目と100個目の関係性だけを**新規に計算**します。
+実務では、次の原則を使えます。
 
-KVキャッシュは、この無駄な再計算をなくし、応答速度を劇的に向上させるための根幹技術です。この「メモ帳」の仕組みを理解すれば、なぜ「コンテキストの先頭部分を安定させる」ことが重要なのかが明確になります。プロンプトの先頭が変わると、**キャッシュが無効化されてしまう**ため、その恩恵を受けられなくなるのです。
+- `list_*`を多数並べるより、目的に対応した`search_*`や複合操作を用意する
+- UUIDだけでなく、人間が意味を判断できる識別子を返す
+- 戻り値の件数とサイズに上限を設ける
+- 失敗理由と再試行に必要な情報を構造化して返す
 
-```mermaid
-graph TD
-    subgraph "❌ キャッシュなし"
-        direction LR
-        A1[プロンプト<br>「AIとは」] --> A2{"1.「人工」を生成<br><br><u>計算:</u><br>「AIとは」→「人工」"};
-        A2 -- "コンテキスト全体を再処理" ---> A3{"2.「知能」を生成<br><br><u>計算:</u><br>「AIとは 人工」→「知能」<br>(「人工」の分も再計算…)"};
-        A3 -- "コンテキスト全体を再処理" ---> A4["3.(さらに全文を再計算)"];
-        style A2 fill:#ffdddd,stroke:#c00
-        style A3 fill:#ffdddd,stroke:#c00
-        style A4 fill:#ffdddd,stroke:#c00
-    end
+## 5. 長時間タスクのコンテキストを管理する
 
-    subgraph "✅ KVキャッシュ保存"
-        direction LR
-        B1[プロンプト<br>「AIとは」] --> B2{"1.「人工」を生成<br><br><u>計算:</u><br>「AIとは」→「人工」"};
-        B2 --> C1[(📝 KVキャッシュ<br>「AIとは」の計算結果を保存)];
-        C1 -- "メモ帳を読み込む" --> B3{"2.「知能」を生成<br><br><u>追加計算:</u><br>「人工」→「知能」"};
-        B3 --> C2[(📝 KVキャッシュ<br>「AIとは 人工」の計算結果に更新)];
-        C2 -- "メモ帳を読み込む" --> B4["3.(次の単語の分だけ追加計算)"];
-        style B2 fill:#ddffdd,stroke:#090
-        style B3 fill:#ddffdd,stroke:#090
-        style B4 fill:#ddffdd,stroke:#090
-    end
+### 5.1. Compaction、外部メモリ、サブエージェント
 
-    subgraph "✅ KVキャッシュ利用"
-        direction LR
-        D1[プロンプト<br>「AIとは人工知能...」]  ---> E1[(📝 KVキャッシュ<br>「AIとは 人工 知能」の結果を取得)];
-        E1 -- "メモ帳を読み込む" ----> D2["1.(次の単語の分だけ追加計算)"];
-        style D2 fill:#ddffdd,stroke:#090
-    end
+窓に収まらない長さの仕事では、次の3手段を使い分けます。
 
-    subgraph "結論"
-      Result1("多くの計算が無駄になり、応答が遅い")
-      Result2("過去の計算を再利用し、高速に応答 ✨")
-    end
+| 手段 | 仕組み | 向く仕事 | 主な失敗 |
+|---|---|---|---|
+| [Compaction](https://platform.claude.com/docs/en/build-with-claude/compaction) | 履歴を要約して新しい窓を作る | 往復の多い対話の継続 | 後で必要になる制約が要約から落ちる |
+| Notes、memory | 進捗や決定を窓の外へ保存する | マイルストーンのある反復作業 | 書き忘れた情報が次のセッションへ残らない |
+| Sub-agent | 探索を別の窓へ隔離し、成果だけを戻す | 独立した並列調査 | 引き継ぎで前提や決定が失われる |
 
-    A4 --> Result1
-    B4 --> Result2
-    D2 --> Result2
-```
+情報の置き場は、再び窓へ入れる方法と組み合わせて決めます。
 
-#### ▷KVキャッシュを最大化するテクニック
+| 置く情報 | 置き場 | 再取得する方法 |
+|---|---|---|
+| 不変の規約 | 毎ターンの固定prefix | 常にモデルへ渡す |
+| path、query、URL | 履歴または外部メモリ | JITツールで展開する |
+| 大きな検索結果や成果物 | ファイルシステム | 必要な範囲だけ読む |
+| 進捗、決定、未解決事項 | notes、memory | セッションの開始時や必要時に読む |
+| 探索の詳細なトレース | 子エージェントの窓 | 要約または成果物を親へ戻す |
 
-1.  **プロンプトプレフィックスを安定させる**: システムプロンプトや初期コンテキストは静的に保ちます。
-2.  **コンテキストを追記専用にする**: 対話履歴は常に追記する形式が望ましいです。
-3.  **シリアライゼーションを決定論的に行う**: JSONなど構造化データを含める場合、キーの順序を常に安定させます。
+### 5.2. Compactionは固定規約を保証しない
 
-### ●3.2. 長いコンテキストと「注意散漫」を管理する
+Compactionは自動化しやすい一方、要約に含まれなかった情報を復元できません。
+[Governance Decay](https://arxiv.org/abs/2606.22528)のpreprintでは、常時有効な方針を全文脈へ残した条件では違反率が0%だったのに対し、compaction後は全体で30%、モデルによっては59%まで上昇しました。
+制約が要約へ残った場合は0%、落ちた場合は38%でした。
 
-LLMは長いコンテキストを扱えますが、単に長くするだけでは性能は向上しません。
+この結果は1,323エピソードを使ったpreprintの報告であり、異なるモデルやタスクへ同じ数値を一般化することはできません。
+それでも、直近の会話で話題にならない禁止操作、完了条件、運用規約を要約だけに預けない理由にはなります。
 
-#### ▷「中間部での忘却（Lost in the Middle）」問題
+この種の常時有効な規約は、要約対象の履歴ではなく、毎ターン読み込む固定領域へ置きます。
+要約には、進捗、決定、その判断理由、未解決事項を残します。
 
-多くのLLMは、コンテキストの先頭と末尾の情報はよく記憶する一方、**中間部の情報を無視する傾向**があります。これは、Transformerアーキテクチャの注意機構に起因する根本的な限界です。
+[Context editing](https://platform.claude.com/docs/en/build-with-claude/context-editing)で古いツール結果を削除する場合も、削減量だけでは評価できません。
+履歴のprefixが変わるとPrompt Cacheを再利用できなくなるため、削減できるトークン量と再計算コストを合わせて測ります。
 
-```mermaid
-graph LR
-    subgraph コンテキストウィンドウ
-        direction LR
-        A(先頭:記憶しやすい) -- 重要情報 --> B(中間部:忘れやすい);
-        B -- 無視されがち --> C(末尾:記憶しやすい);
-    end
-    style A fill:#9f9,stroke:#333,stroke-width:2px
-    style C fill:#9f9,stroke:#333,stroke-width:2px
-    style B fill:#ff9,stroke:#333,stroke-width:2px
-```
+### 5.3. 外部メモリと可逆的な圧縮
 
-#### ▷緩和戦略
+ファイルシステムは、長時間タスクの外部メモリとして利用できます。
+検索結果の全文を履歴へ残す代わりにファイルへ保存し、pathやURLだけを保持すれば、必要なときに元の情報を読み直せます。
 
-1.  **情報を戦略的に配置する**: 最も重要な情報（指示、目標など）をプロンプトの**先頭または末尾**に置きます。
-2.  **注意を意図的に操作する**: エージェントの目標などを記述したファイルを常に更新し、コンテキストの **「末尾」** に配置します。
-3.  **要約と枝刈りでノイズを減らす**: 長大な対話履歴は、定期的に要約してノイズを削減します。
+これは、情報を捨てる要約とは異なる可逆的な圧縮です。
+[MemGPT](https://arxiv.org/abs/2310.08560)は、窓の中を主記憶、外部ストレージを補助記憶に見立て、必要な情報を出し入れする構成として定式化しています。
+ただし、[memoryツール](https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool)からファイルを操作できる設計では、canonical pathへ解決したうえで許可したprefix内かを検証し、パストラバーサルを防ぐ必要があります。
 
-### ●3.3. 堅牢なメモリと状態を管理する
+### 5.4. サブエージェントへ分離する基準
 
-  * **ファイルシステムを永続的なメモリとして利用する**: エージェントが中間結果をファイルに書き込み、必要に応じて読み返すことで、事実上無制限のメモリを実現できます。
-  * **可逆的な圧縮を行う**: ウェブページの内容を削除する代わりにURLを保持すれば、トークン数を削減しつつ、後から完全な情報を再取得できます。
+サブエージェントは、独立して調べられる探索を分離するときに役立ちます。
+[Anthropicのmulti-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)は、並列化しやすい調査で複数エージェントを利用しています。
 
-### ●3.4. 回復力（レジリエンス）を設計する
+一方、[Cognitionは並列エージェント間で暗黙の決定を共有できない問題](https://cognition.com/blog/dont-build-multi-agents)を挙げ、文脈を共有する単一エージェントを推奨しています。
+複数の作業が同じ規約や決定へ依存する場合、窓を分けると共有すべき情報が欠けます。
 
-  * **削除せず、マスクする**: 利用不可能なツールは、デコーディング時に「マスク」し、モデルが選択できないようにします。
-  * **失敗をコンテキストに残す**: ツール呼び出しの失敗は、エラー情報ごとコンテキストに残し、自己修正を促します。
-  * **少数ショット学習の罠を避ける**: 応答の形式に意図的に小さなランダム性を加え、パターンの固定化を防ぎます。
+判断の目安は、探索ノイズは隔離できるが、決定と規約は隔離しないことです。
+子エージェントの要約だけに依存せず、生成した成果物や根拠をファイルに残すと、親エージェントが必要な箇所を確認できます。
 
-## ■4. AIシステムの製品化と評価
+## 6. パフォーマンスと回復力を設計する
 
-優れたシステムを設計しても、その性能を客観的に評価し、安定運用できなければ価値は半減します。本章では、RAGやエージェントシステムを本番環境に展開し、その性能を測定するための実践的な側面に焦点を当てます。
+### 6.1. KVキャッシュとPrompt Cache
 
-### ●4.1. 本番環境の「3つの壁」
+KVキャッシュとPrompt Cacheは、どちらも同じprefixに対する計算結果を再利用し、トークンの再処理を減らします。
+違いは、主にキャッシュを再利用する範囲と寿命です。
 
-RAGアプリケーションを本番運用する際には、**コスト（Cost）**、**遅延（Latency）**、そして **品質（Quality）** という3つの壁に直面します。本番環境での成功は、完璧なプロンプトを見つけることではなく、**堅牢で観測可能、かつ保守可能なデータパイプラインを構築すること**にかかっているのです。
+#### KVキャッシュ
 
-### ●4.2. 体系的な評価フレームワーク
+**KVキャッシュ**は、処理済みトークンのKeyとValueを保存し、同じ生成の次のステップで再利用する仕組みです。
+新しいトークンを生成するときは、過去のKeyとValueを再計算せず、新しいトークンのQueryからキャッシュ済みのすべてのKeyへattentionを計算します。
+直前のトークンとの関係だけを計算するわけではありません。
 
-「なんとなく良さそう」という主観的な評価から脱却し、厳密なメトリクスに基づいた評価プロセスへ移行することが不可欠です。
+これにより、過去の系列全体を各ステップで処理し直す計算を避けられます。
 
-#### ▷RAG評価の三本柱（RAGトライアド）
+#### Prompt Cache
+
+[**Prompt Cache**](https://platform.claude.com/docs/en/build-with-claude/prompt-caching)は、同じprefixに対する計算結果を複数リクエストで再利用する機能です。
+概念上は、同一生成内のKVキャッシュより再利用範囲を広げたものとして捉えられますが、内部実装、保持時間、課金条件はサービスによって異なります。
+固定情報を先頭にまとめ、ターンごとに変わる情報を後ろへ置くと、共通prefixを再利用しやすくなります。
+
+キャッシュを利用する場合は、次の点を揃えます。
+
+1. System promptやツール定義などの固定情報を先頭に置く
+2. JSONなどのキー順を安定させる
+3. 履歴の削除や並べ替えがキャッシュを無効にすることを計測へ含める
+
+### 6.2. 失敗から回復できる情報を残す
+
+ツールの失敗を単に削除すると、エージェントは同じ呼び出しを繰り返す可能性があります。
+エラーの種類、失敗した入力、再試行の条件を残せば、次のターンで別の行動を選べます。
+
+一方、利用不能なツールを選択肢へ残し続ける必要はありません。
+現在使えるツールだけを提示し、過去の失敗は再判断に必要な範囲へ圧縮します。
+
+## 7. AIシステムを評価する
+
+コンテキストの改善は、出力だけでなく、コストと遅延を含めて評価します。
+同じ品質なら入力が少ない構成を選べますが、必要な前提を削って品質が落ちるなら最適化にはなりません。
+
+### 7.1. コスト、遅延、品質
+
+RAGやエージェントを本番運用するときは、コスト、遅延、品質を同時に測ります。
+完璧なプロンプトを探すのではなく、取得、組み立て、生成の各段階を観測できるデータパイプラインを作ります。
+
+### 7.2. RAGの評価
+
+RAGの品質は、検索と生成を分けて評価します。
+
+#### RAG評価の三本柱
 
 RAGシステムの品質は、主に3つの観点から評価されます。
 
 ```mermaid
-graph
-    subgraph RAG評価の三本柱
-        A[ユーザーの質問] -- "Context Relevance" --> B(検索された情報);
-        B -- "Groundness / Faithfulness" --> C(生成された回答);
+flowchart LR
+    subgraph triad ["RAG評価の三本柱"]
+        A["ユーザーの質問"] -- "Context Relevance" --> B["検索された情報"];
+        B -- "Groundedness / Faithfulness" --> C["生成された回答"];
         A -- "Answer Relevance" --> C;
     end
 ```
 
-1.  **コンテキスト関連性 (Context Relevance)**: 検索された情報は、ユーザーの質問に関連しているか？
-2.  **接地性／忠実性 (Groundness / Faithfulness)**: 生成された回答は、検索された情報によって完全に裏付けられているか？
-3.  **回答関連性 (Answer Relevance)**: 最終的な回答は、ユーザーの質問に的確に答えているか？
+1. **コンテキスト関連性（Context Relevance）**：検索された情報は、質問に関連しているか
+2. **根拠との整合性（Groundedness / Faithfulness）**：回答は、検索された情報に裏づけられているか
+3. **回答関連性（Answer Relevance）**：回答は、質問に答えているか
 
-#### ▷「LLM-as-Evaluator」パターン
+#### LLM-as-Evaluator
 
-RAGAsやTruLensといった評価フレームワークは、高性能なLLM自身を「評価者」として用い、上記のメトリクスを自動でスコアリングします。
+[RAGAS](https://arxiv.org/abs/2309.15217)や[TruLens](https://www.trulens.org/getting_started/core_concepts/rag_triad/)などは、LLMを評価者として使い、これらの指標をスコアリングします。
+ただし、LLM judgeの判定も誤るため、人手で確認した評価セットとの一致率を測ります。
 
-### ●4.3. 高品質な評価データセットを構築する
+### 7.3. コンテキスト管理の評価
 
-評価の質は、使用するテストデータセットの質によって決まります。**評価データセットへの投資は、システム全体の性能向上において極めて効果的な活動の一つです。**
+長時間タスクでは、通常の回答精度だけでは履歴管理の失敗を検出できません。
+次の条件を評価セットへ含めます。
 
-## ■5. コンテキストエンジニアリングの未来
+- 履歴が長くなっても固定規約を守れるか
+- Compactionの前後で、決定と完了条件が維持されるか
+- 無関係な情報を追加したときに精度が落ちないか
+- JIT取得に失敗したあと、別の方法へ切り替えられるか
+- 入力トークン数を減らしたとき、品質と遅延がどう変わるか
 
-本章では、この分野の研究開発の最前線を探り、コンテキストエンジニアリングの原則がどのように進化しているかを探ります。
+評価の質は、テストデータセットで決まります。
+実際の失敗ログから回帰ケースを追加し、モデル、prompt、retriever、compaction方式の変更前後で同じ評価を実行します。
 
-### ●5.1. 自律的に自己改善するエージェント
+## 8. 実務チェックリスト
 
-AIエージェントの進化は、自らのパフォーマンスを批判し、過ちから学び、計画を洗練させることができる**自己反映型システム**へと向かっています。
+自分のエージェント基盤へ適用するときは、次の順で確認できます。
 
-#### ▷自己反映アーキテクチャ: Reflexion
+1. **設計単位をターンにする**：セッション開始時にすべてを載せず、各ターンで必要な情報を選ぶ
+2. **固定規約を要約の外へ置く**：禁止操作、完了条件、運用規約を毎ターンの固定領域へ置く
+3. **大きな成果物を外部化する**：ファイルへ保存し、履歴にはpathやURLを残す
+4. **取得方法を分ける**：静的コーパスでは事前投入を使い、変化する情報はJITで読む
+5. **探索だけを分離する**：サブエージェントへ渡すのは独立した探索に絞り、決定と規約を親へ残す
+6. **大きな窓を過信しない**：長時間ループでは、外部メモリと選択的な履歴管理を残す
+7. **三つの指標で評価する**：トークン数、遅延、品質を変更前後で比較する
 
-Reflexionは、エージェントがタスクのフィードバックについて言語的に「内省」し、その学びを次の試行に活かすアーキテクチャです。
+モデル世代が変わると、適切なsystem promptの量、examplesの効果、利用できる窓の長さも変わります。
+個別モデルの推奨を固定ルールにせず、失敗ログと評価セットから構成を更新します。
 
-```mermaid
-graph LR
-    A[思考] --> B(行動);
-    B --> C(観察);
-    C --> D{失敗したか？};
-    D -- No --> A;
-    D -- Yes --> E[内省: なぜ失敗したか？];
-    E --> F[計画の更新];
-    F --> A;
-```
+## まとめ
 
-### ●5.2. 自動化されたワークフローアーキテクチャ
+コンテキストエンジニアリングは、各推論ターンでモデルへ渡す情報を設計する考え方です。
+プロンプトだけでなく、ツール、履歴、検索結果、外部メモリまでを対象にします。
 
-未来のシステムは、与えられたタスクに対し、最適なワークフローや計画そのものを**「自動的に生成」**できるようになるでしょう。予測可能な定型タスクには信頼性の高い「ワークフロー」を、予測不可能な非定型タスクには自律的な「エージェント」を使い分けるハイブリッドシステムが主流になると考えられます。
+長い入力は、それだけで高い性能を保証しません。
+RAGとJITを使い分け、大きな成果物を窓の外へ置き、Compaction、外部メモリ、サブエージェントを仕事に応じて選びます。
 
-### ●5.3. モデルを意識したコンテキスト適応
+設計の基準は、必要な情報を、必要なターンだけ、再取得できる形でモデルへ渡すことです。
+その効果は、トークン数だけでなく、遅延と品質を含む評価で確かめます。
 
-最適なコンテキストは、使用するLLMの特性に依存します。将来のシステムは、対象モデルの長所・短所に基づいて、提供するコンテキストを動的に適応させるようになるでしょう。
+この記事が参考になった、あるいは改善点があれば、リアクションやコメントで共有していただけると励みになります。
 
-## ■まとめ：未来のAI開発をリードするために
+## 関連記事
 
-コンテキストエンジニアリングは、もはや単なる技術トレンドではありません。信頼性が高くスケーラブルなAIアプリケーションを構築するための、**中心的かつ不可欠な専門分野**です。今後のAI開発を進めていくために以下のようなマインドセットで挑む必要があります。
-
-1.  **使い捨てのプロンプトではなく、システムに投資する**: 一時的なプロンプトのトリックを追い求めるのをやめ、堅牢なデータパイプラインとMLOpsの構築を優先しましょう。
-2.  **メトリクス駆動の文化を根付かせる**: 「動いたからOK」で終わらせず、体系的な評価を開発プロセスに組み込み、高品質なテストデータセットの作成にこそ投資しましょう。
-3.  **モジュール性と階層性で複雑さに対応する**: 複雑なシステムを、専門化され、独立してテスト可能なコンポーネントの組み合わせとして設計しましょう。
-4.  **自律性の未来を受け入れる**: 自己反映や自動ワークフロー生成といった先進的なアーキテクチャの実験を今日から始め、長期的な競争優位性を築きましょう。
-
-皆さんの現場では、どのようなコンテキスト設計の工夫をされていますか？
-この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
-
-
-## ■関連記事
-
-- [プロンプトエンジニアリングの進化](https://zenn.dev/suwash/articles/prompt_engneering_20250529) — コンテキストの中でも、指示そのものの書き方を設計する
+- [プロンプトエンジニアリングの進化](https://zenn.dev/suwash/articles/prompt_engneering_20250529)：コンテキストの中でも、指示そのものの書き方を設計する
 
 
-## ■引用リンク
+## 参考リンク
 
-### ●コンテキストエンジニアリングの概念と比較
+### コンテキスト設計と運用
 
-- [2025年AI開発の新常識！Context Engineering（コンテキストエンジニアリング）が変える開発現場](https://qiita.com/takuya77088/items/579cce606799e207a2c4)
-- [AIを使う上で必要なのはプロンプトエンジニアリングよりも「コンテキストエンジニアリング」](https://gigazine.net/news/20250703-ai-context-engineering/)
-- [ChatGPTのプロンプトエンジニアリングとは｜7つのプロンプト例や記述のコツを紹介](https://www.skillupai.com/blog/ai-knowledge/chatgpt-prompt-engineering/)
-- [Context Engineering vs Prompt Engineering | by Mehul Gupta | Data Science in Your Pocket](https://medium.com/data-science-in-your-pocket/context-engineering-vs-prompt-engineering-379e9622e19d)
-- [Context Engineering: A Guide With Examples - DataCamp](https://www.datacamp.com/blog/context-engineering)
-- [Context Engineering: Going Beyond Prompts To Push AI - Simple.AI](https://simple.ai/p/the-skill-thats-replacing-prompt-engineering)
-- [Context Engineering: The Future of AI Development - Voiceflow](https://www.voiceflow.com/blog/context-engineering)
-- [Context Engineering: The Future of AI Prompting Explained - AI-Pro.org](https://ai-pro.org/learn-ai/articles/why-context-engineering-is-redefining-how-we-build-ai-systems/)
-- [Context Engineering: Why the Future of Enterprise AI Isn't in Prompts, But in Architecture | by Dario Fabiani | Jul, 2025 | Medium](https://medium.com/@dario.fabiani/context-engineering-why-the-future-of-enterprise-ai-isnt-in-prompts-but-in-architecture-44b9ff44e627)
-- [Context Engineering - INNOQ](https://www.innoq.com/en/blog/2025/07/context-engineering-powering-next-generation-ai-agents/)
-- [The New Skill in AI is Not Prompting, It's Context Engineering - Philschmid](https://www.philschmid.de/context-engineering)
-- [Understanding Prompt Engineering and Context Engineering - Walturn](https://www.walturn.com/insights/understanding-prompt-engineering-and-context-engineering)
-- [What Is This Context Engineering Everyone Is Talking About?? My Thoughts.. - Reddit](https://www.reddit.com/r/PromptEngineering/comments/1lnsprm/what_is_this_context_engineering_everyone_is/)
-- [What is Context Engineering? The New Foundation for Reliable AI and RAG Systems](https://datasciencedojo.com/blog/what-is-context-engineering/)
+- [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
+- [Writing effective tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents)
+- [Compaction](https://platform.claude.com/docs/en/build-with-claude/compaction)
+- [Context editing](https://platform.claude.com/docs/en/build-with-claude/context-editing)
+- [Prompt caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching)
+- [Memory tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool)
+- [Context Rot](https://www.trychroma.com/research/context-rot)
+- [Governance Decay](https://arxiv.org/abs/2606.22528)
 
-### ●RAG
+### 研究とアーキテクチャ
 
-- [技術調査 - RAGの精度向上戦略 | zenn](https://zenn.dev/suwash/articles/rag_accuracy_20250516)
-- [A Comprehensive Review of Retrieval-Augmented Generation (RAG): Key Challenges and Future Directions - arXiv](https://arxiv.org/pdf/2410.12837)
-- [Architecting Production-Ready RAG Systems: A Comprehensive Guide to Pinecone](https://ai-marketinglabs.com/lab-experiments/architecting-production-ready-rag-systems-a-comprehensive-guide-to-pinecone)
-- [Introduction to Retrieval Augmented Generation (RAG) - Weaviate](https://weaviate.io/blog/introduction-to-rag)
-- [Retrieval-Augmented Generation (RAG) - Pinecone](https://www.pinecone.io/learn/retrieval-augmented-generation/)
-- [Retrieval-Augmented Generation: A Comprehensive Survey of Architectures, Enhancements, and Robustness Frontiers - arXiv](https://arxiv.org/html/2506.00054v1)
-- [[2506.00054] Retrieval-Augmented Generation: A Comprehensive Survey of Architectures, Enhancements, and Robustness Frontiers - arXiv](https://arxiv.org/abs/2506.00054)
-- [What is RAG? Understand the Next Evolution of GenAI - Cohere](https://cohere.com/blog/what-is-rag)
-- [Advanced RAG Implementation using Hybrid Search and Reranking | by Nadika Poudel | Medium](https://medium.com/@nadikapoudel16/advanced-rag-implementation-using-hybrid-search-reranking-with-zephyr-alpha-llm-4340b55fef22)
-- [Advanced RAG Techniques - Weaviate](https://weaviate.io/blog/advanced-rag)
-- [Building Contextual RAG Systems with Hybrid Search & Reranking - Analytics Vidhya](https://www.analyticsvidhya.com/blog/2024/12/contextual-rag-systems-with-hybrid-search-and-reranking/)
-- [Enhancing Retrieval-Augmented Generation: A Study of Best Practices - arXiv](https://arxiv.org/html/2501.07391v1)
-- [Exploring RAG and GraphRAG: Understanding when and how to use both | Weaviate](https://weaviate.io/blog/graph-rag)
-- [From RAG to GraphRAG: What's Changed? - Shakudo](https://www.shakudo.io/blog/rag-vs-graph-rag)
-- [GraphRAG vs RAG: Which is Better? | by Mehul Gupta | Data Science in Your Pocket](https://medium.com/data-science-in-your-pocket/graphrag-vs-rag-which-is-better-81a27780c4ff)
-- [GraphRAG: A Complete Guide from Concept to Implementation - Analytics Vidhya](https://www.analyticsvidhya.com/blog/2024/11/graphrag/)
-- [Intro to GraphRAG](https://graphrag.com/concepts/intro-to-graphrag/)
-- [Level Up Your GenAI Apps: Overview of Advanced RAG Techniques ...](https://unstructured.io/blog/level-up-your-genai-apps-overview-of-advanced-rag-techniques)
-- [Naive RAG vs GraphRAG with Neo4J & Weaviate - Colab](https://colab.research.google.com/github/neo4j-contrib/ms-graphrag-neo4j/blob/main/examples/neo4j_weaviate_combined.ipynb)
-- [Neo4j GraphRAG for Python - GitHub](https://github.com/neo4j/neo4j-graphrag-python)
-- [Optimizing RAG with Hybrid Search & Reranking | VectorHub by Superlinked](https://superlinked.com/vectorhub/articles/optimizing-rag-with-hybrid-search-reranking)
-- [Query Routing for Retrieval-Augmented Language Models - arXiv](https://arxiv.org/html/2505.23052v1)
-- [[2505.23052] Query Routing for Retrieval-Augmented Language Models - arXiv](https://arxiv.org/abs/2505.23052)
-- [RAG vs GraphRAG - DEV Community](https://dev.to/angu10/rag-vs-graphrag-5671)
-- [Understanding GraphRAG. Through Hands-On Implementation | by Pelin Balci | Medium](https://medium.com/@balci.pelin/understanding-graphrag-ef62fe357571)
-- [What is GraphRAG? - IBM](https://www.ibm.com/think/topics/graphrag)
-- [[2507.03226] Efficient Knowledge Graph Construction and Retrieval from Unstructured Text for Large-Scale RAG Systems - arXiv](https://arxiv.org/abs/2507.03226)
-
-### ●AIエージェント（自律的アーキテクチャ）
-
-- [AI Agent Architecture: Tutorial & Examples - FME by Safe Software](https://fme.safe.com/guides/ai-agent-architecture/)
-- [Agent architectures - GitHub Pages](https://langchain-ai.github.io/langgraph/concepts/agentic_concepts/)
-- [AutoGen Implementation Patterns: Building Production-Ready Multi-Agent AI Systems](https://galileo.ai/blog/autogen-multi-agent)
-- [AutoFlow: Automated Workflow Generation for Large Language Model Agents - arXiv](https://arxiv.org/html/2407.12821v1)
-- [Build smarter AI agents: Manage short-term and long-term memory with Redis | Redis](https://redis.io/blog/build-smarter-ai-agents-manage-short-term-and-long-term-memory-with-redis/)
-- [Building Effective AI Agents - Anthropic](https://www.anthropic.com/research/building-effective-agents)
-- [Building Your First Hierarchical Multi-Agent System - Spheron's Blog](https://blog.spheron.network/building-your-first-hierarchical-multi-agent-system)
-- [Cognitive Memory in Large Language Models - arXiv](https://arxiv.org/html/2504.02441v1)
-- [ContextAgent: Context-Aware Proactive LLM Agents with Open-World Sensory Perceptions - arXiv](https://arxiv.org/html/2505.14668v1)
-- [Creating an API endpoint for using an LLM-Based agent - Dataiku Developer Guide](https://developer.dataiku.com/latest/tutorials/webapps/dash/api-agent/index.html)
-- [Hierarchical multi-agent systems with LangGraph - YouTube](https://www.youtube.com/watch?v=B_0TNuYi56w)
-- [How does LangChain's agent interface with external APIs and services? - Milvus](https://milvus.io/ai-quick-reference/how-does-langchains-agent-interface-with-external-apis-and-services)
-- [Language Agent Tree Search Unifies Reasoning, Acting, and Planning in Language Models - arXiv](https://arxiv.org/pdf/2310.04406)
-- [LLM + The API Economy: How to Integrate and Why It Matters | by Can Demir | Medium](https://medium.com/@candemir13/llm-the-api-economy-how-to-integrate-and-why-it-matters-b43579cfcc9e)
-- [Memory in multi-agent systems: technical implementations - AI/LLM - Artium.AI](https://artium.ai/insights/memory-in-multi-agent-systems-technical-implementations)
-- [Microsoft AutoGen: Redefining Multi-Agent System Frameworks - Akira AI](https://www.akira.ai/blog/microsoft-autogen-with-multi-agent-system)
-- [Multi-agent Conversation Framework | AutoGen 0.2](https://microsoft.github.io/autogen/0.2/docs/Use-Cases/agent_chat/)
-- [Prompt Engineering Is Dead, and Context Engineering Is Already Obsolete: Why the Future Is Automated Workflow Architecture with LLMs - OpenAI Developer Community](https://community.openai.com/t/prompt-engineering-is-dead-and-context-engineering-is-already-obsolete-why-the-future-is-automated-workflow-architecture-with-llms/1314011)
-- [#12: How Do Agents Learn from Their Own Mistakes? The Role of Reflection in AI](https://www.turingpost.com/p/reflection)
-- [Reflection Agents - LangChain Blog](https://blog.langchain.com/reflection-agents/)
-- [Reflective AI: From Reactive Systems to Self-Improving AI Agents - Neil Sahota](https://www.neilsahota.com/reflective-ai-from-reactive-systems-to-self-improving-ai-agents/)
-- [Talk Structurally, Act Hierarchically: A Collaborative Framework for LLM Multi-Agent Systems](https://arxiv.org/html/2502.11098v1)
-- [Understanding Autonomous Agent Architecture - SmythOS](https://smythos.com/ai-agents/agent-architectures/autonomous-agent-architecture/)
-- [We need to talk about Agents... - Beehiiv](https://div.beehiiv.com/p/need-talk-agents)
-- [Why Memory Matters in LLM Agents: Short-Term vs. Long-Term Memory Architectures](https://skymod.tech/why-memory-matters-in-llm-agents-short-term-vs-long-term-memory-architectures/)
-- [A Developer's Guide to Building Scalable AI: Workflows vs Agents | Towards Data Science](https://towardsdatascience.com/a-developers-guide-to-building-scalable-ai-workflows-vs-agents/)
-
-### ●実装・運用と最適化
-
-- [Context Engineering for AI Agents: Lessons from Building Manus](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus)
-- [Building a Scalable RAG Data Ingestion Pipeline for Large-Scale ML Workloads - Medium](https://medium.com/@pronnoy.goswami/building-a-scalable-rag-data-ingestion-pipeline-for-large-scale-ml-workloads-f6e05d4f8982)
-- [Calculating the Cost of Your RAG-Powered Chatbot - Medium](https://medium.com/@insyte-from-pranay/calculating-the-cost-of-your-rag-powered-chatbot-693a433f61df)
-- [Context-Engineering Challenges & Best-Practices | by Ali Arsanjani ...](https://dr-arsanjani.medium.com/context-engineering-challenges-best-practices-8e4b5252f94f)
-- [Cost optimization in RAG applications | by Shreyas Mondikal Subramanya | Nerd For Tech](https://medium.com/nerd-for-tech/cost-optimization-in-rag-applications-45567bfa8947)
-- [Data Pipelines for RAG | amazee.io](https://www.amazee.io/blog/post/data-pipelines-for-rag/)
-- [A Guide to Improving Long Context Instruction Following - Scale AI](https://scale.com/blog/long-context-instruction-following)
-- [LLM Inference Performance Engineering: Best Practices | Databricks Blog](https://www.databricks.com/blog/llm-inference-performance-engineering-best-practices)
-- [Lost in the Middle: How Language Models Use Long Contexts Paper Reading - Arize AI](https://arize.com/blog/lost-in-the-middle-how-language-models-use-long-contexts-paper-reading/)
-- [Making RAG Production-Ready: Overcoming Common Challenges with Solutions](https://www.konverso.ai/en/blog/rag)
-- [Production-Ready RAG: Engineering Guidelines for Scalable Systems - Netguru](https://www.netguru.com/blog/rag-for-scalable-systems)
-- [RAG Time Journey 2: Data ingestion and search techniques for the ultimate RAG retrieval system with Azure AI Search - Microsoft Community Hub](https://techcommunity.microsoft.com/blog/azure-ai-services-blog/rag-time-journey-2-data-ingestion-and-search-practices-for-the-ultimate-rag-retr/4392157)
-- [Scalable RAG Architectures: How Context Length, Model Choice, and Business Needs Drive Latency | by John Elliott | Medium](https://medium.com/@john-elliott/scalable-rag-architectures-how-context-length-model-choice-and-business-needs-drive-latency-fd17d7154507)
-- [The Production-Ready RAG Pipeline: An Engineering Checklist - ActiveWizards](https://activewizards.com/blog/the-production-ready-rag-pipeline-an-engineering-checklist)
-- [What is an acceptable latency for a RAG system in an interactive setting (e.g., a chatbot), and how do we ensure both retrieval and generation phases meet this target? - Milvus](https://milvus.io/ai-quick-reference/what-is-an-acceptable-latency-for-a-rag-system-in-an-interactive-setting-eg-a-chatbot-and-how-do-we-ensure-both-retrieval-and-generation-phases-meet-this-target)
-
-### ●評価・テスト手法
-
-- [Best Practices for Building a QA Dataset to Evaluate RAG Quality? : r/LangChain - Reddit](https://www.reddit.com/r/LangChain/comments/1iq8vtb/best_practices_for_building_a_qa_dataset_to/)
-- [Building an LLM evaluation framework: best practices - Datadog](https://www.datadoghq.com/blog/llm-evaluation-framework-best-practices/)
-- [Building a RAG Evaluation Dataset: A Step-By-Step Guide Using Document Sources](https://magnimindacademy.com/blog/building-a-rag-evaluation-dataset-a-step-by-step-guide-using-document-sources/)
-- [CASE-Bench: Context-Aware Safety Benchmark for Large Language Models - arXiv](https://arxiv.org/html/2501.14940v3)
-- [CASE-Bench: Context-Aware Safety Evaluation Benchmark for Large Language Models](https://openreview.net/forum?id=y9tQNJ2n1y)
-- [Evaluating Long Context Lengths in LLMs: Challenges and Benchmarks | by Onn Yun Hui](https://medium.com/@onnyunhui/evaluating-long-context-lengths-in-llms-challenges-and-benchmarks-ef77a220d34d)
-- [Generate synthetic data for evaluating RAG systems using Amazon Bedrock - AWS](https://aws.amazon.com/blogs/machine-learning/generate-synthetic-data-for-evaluating-rag-systems-using-amazon-bedrock/)
-- [Generate Synthetic Testset for RAG - Ragas](https://docs.ragas.io/en/stable/getstarted/rag_testset_generation/)
-- [How do RAG evaluators like Trulens actually work? : r/Rag - Reddit](https://www.reddit.com/r/Rag/comments/1lvesfm/how_do_rag_evaluators_like_trulens_actually_work/)
-- [How to make good RAG evaluation dataset? | by AutoRAG - Medium](https://medium.com/@autorag/how-to-make-good-rag-evaluation-dataset-8adcd222195b)
-- [An Overview on RAG Evaluation | Weaviate](https://weaviate.io/blog/rag-evaluation)
-- [RAG Evaluation: Don't let customers tell you first - Pinecone](https://www.pinecone.io/learn/series/vector-databases-in-production-for-busy-engineers/rag-evaluation/)
-- [Top 10 RAG & LLM Evaluation Tools for AI Success - Zilliz Learn](https://zilliz.com/learn/top-ten-rag-and-llm-evaluation-tools-you-dont-want-to-miss)
+- [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)
+- [From Local to Global: A Graph RAG Approach to Query-Focused Summarization](https://arxiv.org/abs/2404.16130)
+- [ReAct: Synergizing Reasoning and Acting in Language Models](https://arxiv.org/abs/2210.03629)
+- [Lost in the Middle](https://arxiv.org/abs/2307.03172)
+- [NoLiMa](https://arxiv.org/abs/2502.05167)
+- [LongMemEval](https://arxiv.org/abs/2410.10813)
+- [MemGPT](https://arxiv.org/abs/2310.08560)
+- [RAGAS: Automated Evaluation of Retrieval Augmented Generation](https://arxiv.org/abs/2309.15217)
+- [TruLens RAG Triad](https://www.trulens.org/getting_started/core_concepts/rag_triad/)
+- [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system)
+- [Don't Build Multi-Agents](https://cognition.com/blog/dont-build-multi-agents)

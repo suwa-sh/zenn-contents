@@ -7,13 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (338)
+## Articles: 下書き (337)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-08-22 | [🧮 制度依存の算定知識をテスト資産にする — 例オラクルと意思決定表の使い分け](articles/domain-modeling-testing-tech-p9_20260822.md) | テスト, QA, ドメイン駆動設計, GitHubActions |
 | 2026-08-22 | [🧾 エージェントの出力・ツール呼び出し・監査文脈を束ねる評価契約 - ECP](articles/ecp-agent-evaluation-protocol-p4_20260822.md) | AI, LLM, Python, テスト, MCP |
-| 2026-08-22 | [🪟 コンテキストエンジニアリング入門 AIエージェントの窓に何を載せるか](articles/effective-context-engineering_20260822.md) | ai, llm, claude, agent, anthropic |
 | 2026-08-22 | [🛰 予算・監査・MCP統制を1つの管理プレーンへ - Antigravity in Gemini Enterprise](articles/google-antigravity-gemini-p1_20260822.md) | Antigravity, GoogleCloud, Gemini, AIエージェント, 生成AI |
 | 2026-08-22 | [🧠 LLMを正しく捉える6つの基礎概念――次トークン予測からContext Rotまで](articles/llm-seiri_20260822.md) | LLM, GenerativeAI, PromptEngineering, AIAgent |
 | 2026-08-22 | [🕸️ PRAXIS入門 依存グラフに暗黙知を貯めるコード生成エージェント](articles/praxis-knowledge-graph-domain-p10_20260822.md) | ai, llm, agent, codegeneration, knowledgegraph |
@@ -355,7 +354,7 @@
 | date | title | topics |
 |------|-------|--------|
 | 2026-08-22 | [🚪 ローカル開発URLを安定化するリバースプロキシ - Portless](articles/portless_20260820.md) | Portless, Nodejs, Https, Turborepo, DevTools |
-| 2026-08-20 | [🧭 5つの◯◯エンジニアリングを2軸3階層で整理する - Prompt / Context / Loop / Harness / Graph](articles/llm-control-layers-taxonomy_20260818.md) | AIAgent, LLM, ClaudeCode, PromptEngineering, SoftwareEngineering |
+| 2026-08-20 | [🧭 5つのAIエンジニアリングを2軸3階層で整理する - Prompt / Context / Loop / Harness / Graph Engineering](articles/llm-control-layers-taxonomy_20260818.md) | AIAgent, LLM, HarnessEngineering, LoopEngineering, GraphEngineering |
 | 2026-08-18 | [🕰️ 文脈は「増やす」から「絞る」へ - OpenAI Computer History の設計転換](articles/openai-web-computer-history-p2_20260815.md) | ChatGPT, OpenAI, 生成AI, セキュリティ, macOS |
 | 2026-08-15 | [🧭 Xの「おすすめ」を候補取得からランキングまで読み解く - x-algorithm](articles/x-algorithm_20260814.md) |  |
 | 2026-08-13 | [🕸️ 判断の因果と来歴を残すAIエージェント基盤 - Semantica](articles/semantica_20260810.md) |  |
@@ -488,7 +487,7 @@
 | 2025-08-18 | [🤖 技術調査 - PR-Agent](articles/pr_agent_20250818.md) | AI, GitHub, 開発効率化, コードレビュー, LLM |
 | 2025-08-17 | [🔐 技術調査 - Clerk](articles/clerk_20250702.md) | Clerk, Nextjs, Auth, 認証, 開発 |
 | 2025-08-08 | [🤖 技術調査 - Serena MCP](articles/serene_mcp_20250807.md) | LLM, AI, コーディング, Python, LSP |
-| 2025-07-20 | [🧠 Context Engineering入門：AIに何を渡すかをシステムとして設計する](articles/context_engineering_20250719.md) | AI, LLM, RAG, Agent, SystemDesign |
+| 2025-07-20 | [🧠 コンテキストエンジニアリング入門：AIに何を渡すかをシステムとして設計する](articles/context_engineering_20250719.md) | AI, LLM, RAG, Agent, ContextEngineering |
 | 2025-07-18 | [☁️ Gmailイベントを扱うSaaSのアーキテクチャ - Google Cloud版](articles/gmail_app_gcp_20250718.md) | GoogleCloud, Gmail, Architecture, PubSub, CloudRun |
 | 2025-07-16 | [🚀 パフォーマンステストの戦略ガイド：Grafana k6による実践と自動化](articles/perf_test_k6_20250716.md) | k6, performance, test, sre, cicd |
 | 2025-07-15 | [🚀 技術調査 - Grafana k6](articles/grafana_k6_20250715.md) | k6, performance, testing, DevOps, SRE |
