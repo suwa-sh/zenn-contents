@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (337)
+## Articles: 下書き (338)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -16,6 +16,7 @@
 | 2026-08-22 | [🛰 予算・監査・MCP統制を1つの管理プレーンへ - Antigravity in Gemini Enterprise](articles/google-antigravity-gemini-p1_20260822.md) | Antigravity, GoogleCloud, Gemini, AIエージェント, 生成AI |
 | 2026-08-22 | [🧠 LLMを正しく捉える6つの基礎概念――次トークン予測からContext Rotまで](articles/llm-seiri_20260822.md) | LLM, GenerativeAI, PromptEngineering, AIAgent |
 | 2026-08-22 | [🕸️ PRAXIS入門 依存グラフに暗黙知を貯めるコード生成エージェント](articles/praxis-knowledge-graph-domain-p10_20260822.md) | ai, llm, agent, codegeneration, knowledgegraph |
+| 2026-08-22 | [🧭 日本語の業務ルールを型にするJVM言語Souther入門](articles/souther_20260822.md) |  |
 | 2026-08-21 | [✈️ ANA国内線システム刷新の混乱に学ぶ、移行判定は業務状態の積で行う](articles/ana-xtech-nikkei-atcl-nxt-p2_20260821.md) | アーキテクチャ, 設計, マイグレーション, 運用 |
 | 2026-08-21 | [🧮 コーディングエージェントの成否は着手前に予測できるか（arXiv:2608.18280）](articles/arxiv-abs-2608-18280-p8_20260821.md) | AI, LLM, 機械学習, XGBoost |
 | 2026-08-21 | [🚧 GitHub 8月17日障害を読み解く: 出荷を止めたのは認証ゲートだった](articles/github-devops-github-insights-p3_20260821.md) | GitHub, SRE, DevOps, Copilot, 可用性 |
