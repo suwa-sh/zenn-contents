@@ -1,5 +1,5 @@
 ---
-title: "5つのAIエンジニアリングを2軸3階層で整理する - Prompt / Context / Loop / Harness / Graph Engineering"
+title: "5つのAIエンジニアリングを2軸3階層で整理する - Prompt / Context / Loop / Harness / Graph"
 emoji: "🧭"
 type: "tech"
 topics: ["AIAgent", "LLM", "HarnessEngineering", "LoopEngineering", "GraphEngineering"]

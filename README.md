@@ -354,7 +354,7 @@
 | date | title | topics |
 |------|-------|--------|
 | 2026-08-22 | [🚪 ローカル開発URLを安定化するリバースプロキシ - Portless](articles/portless_20260820.md) | Portless, Nodejs, Https, Turborepo, DevTools |
-| 2026-08-20 | [🧭 5つのAIエンジニアリングを2軸3階層で整理する - Prompt / Context / Loop / Harness / Graph Engineering](articles/llm-control-layers-taxonomy_20260818.md) | AIAgent, LLM, HarnessEngineering, LoopEngineering, GraphEngineering |
+| 2026-08-20 | [🧭 5つのAIエンジニアリングを2軸3階層で整理する - Prompt / Context / Loop / Harness / Graph](articles/llm-control-layers-taxonomy_20260818.md) | AIAgent, LLM, HarnessEngineering, LoopEngineering, GraphEngineering |
 | 2026-08-18 | [🕰️ 文脈は「増やす」から「絞る」へ - OpenAI Computer History の設計転換](articles/openai-web-computer-history-p2_20260815.md) | ChatGPT, OpenAI, 生成AI, セキュリティ, macOS |
 | 2026-08-15 | [🧭 Xの「おすすめ」を候補取得からランキングまで読み解く - x-algorithm](articles/x-algorithm_20260814.md) |  |
 | 2026-08-13 | [🕸️ 判断の因果と来歴を残すAIエージェント基盤 - Semantica](articles/semantica_20260810.md) |  |
