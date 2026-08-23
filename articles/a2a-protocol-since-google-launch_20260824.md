@@ -1,5 +1,5 @@
 ---
-title: "A2AはGoogle公開時から何が変わったか——v1.0・AAIF・移行の実務"
+title: "A2A v1.0 Google公開時からの変更点と移行の実務"
 emoji: "🔄"
 type: "tech"
 topics: ["A2A", "AIAgent", "MCP", "AgentProtocol"]
