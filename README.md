@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (348)
+## Articles: 下書き (349)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -17,6 +17,7 @@
 | 2026-08-24 | [🔒 Rust crates.io の供給網攻撃から学ぶ、CI に置くべきゲートの順番](articles/rust-crates-io-devsecops-p2_20260824.md) | Rust, Cargo, Security, CI, DevSecOps |
 | 2026-08-24 | [🧵 Slack Codeは共有セッション面であって要件と承認の正本ではない](articles/slack-code-channel-slack-p1_20260824.md) | Slack, GitHubCopilot, AIエージェント, 開発プロセス |
 | 2026-08-24 | [🗺️ 2026年夏のオープンモデル地図：Qwen一強ではない用途別の選び方](articles/state-of-open-models-summer-2026_20260824.md) | LLM, HuggingFace, AI, MLOps |
+| 2026-08-24 | [🕸️ 生成AI単独で業務標準化が失敗した理由とオントロジーで組み直す設計](articles/ufj-knowledge-graph-itmedia-p5_20260824.md) | 生成AI, ナレッジグラフ, RDF, SHACL, オントロジー |
 | 2026-08-23 | [🪢 AIで個人の出力が増えても組織成果が伸びない構造を検証する](articles/ai-zenn-dev-factory-dx-eng-p7_20260823.md) | AI, 組織づくり, DX, 生産性 |
 | 2026-08-23 | [🛡️ モデルを渡さず成果物だけ渡す設計: Claude Mythos 5 の限定提供を読む](articles/anthropic-mythos-ai-claude-p1_20260823.md) | Anthropic, Claude, セキュリティ, AIAgent |
 | 2026-08-23 | [🧩 Googleのマルチエージェント委譲4原則を契約・コスト・最小権限・認知摩擦で検証する](articles/google-cloud-google-products-p2_20260823.md) | GoogleCloud, AIAgent, MCP, LLM |
