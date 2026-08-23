@@ -14,7 +14,7 @@
 | 2026-08-22 | [🧮 制度依存の算定知識をテスト資産にする — 例オラクルと意思決定表の使い分け](articles/domain-modeling-testing-tech-p9_20260822.md) | テスト, QA, ドメイン駆動設計, GitHubActions |
 | 2026-08-22 | [🧾 エージェントの出力・ツール呼び出し・監査文脈を束ねる評価契約 - ECP](articles/ecp-agent-evaluation-protocol-p4_20260822.md) | AI, LLM, Python, テスト, MCP |
 | 2026-08-22 | [🛰 予算・監査・MCP統制を1つの管理プレーンへ - Antigravity in Gemini Enterprise](articles/google-antigravity-gemini-p1_20260822.md) | Antigravity, GoogleCloud, Gemini, AIエージェント, 生成AI |
-| 2026-08-22 | [🧠 LLMを正しく捉える6つの基礎概念――次トークン予測からContext Rotまで](articles/llm-seiri_20260822.md) | LLM, GenerativeAI, PromptEngineering, AIAgent |
+| 2026-08-22 | [🧠 LLMを正しく捉える6つの基礎概念 ― 次トークン予測からContext Rotまで](articles/llm-seiri_20260822.md) | LLM, GenerativeAI, PromptEngineering, AIAgent |
 | 2026-08-22 | [🕸️ PRAXIS入門 依存グラフに暗黙知を貯めるコード生成エージェント](articles/praxis-knowledge-graph-domain-p10_20260822.md) | ai, llm, agent, codegeneration, knowledgegraph |
 | 2026-08-22 | [🧭 日本語の業務ルールを型にするJVM言語Souther入門](articles/souther_20260822.md) |  |
 | 2026-08-21 | [✈️ ANA国内線システム刷新の混乱に学ぶ、移行判定は業務状態の積で行う](articles/ana-xtech-nikkei-atcl-nxt-p2_20260821.md) | アーキテクチャ, 設計, マイグレーション, 運用 |
