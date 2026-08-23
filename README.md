@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (342)
+## Articles: 下書き (343)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-24 | [🗺️ 2026年夏のオープンモデル地図：Qwen一強ではない用途別の選び方](articles/state-of-open-models-summer-2026_20260824.md) | LLM, HuggingFace, AI, MLOps |
 | 2026-08-23 | [🪢 AIで個人の出力が増えても組織成果が伸びない構造を検証する](articles/ai-zenn-dev-factory-dx-eng-p7_20260823.md) | AI, 組織づくり, DX, 生産性 |
 | 2026-08-23 | [🛡️ モデルを渡さず成果物だけ渡す設計: Claude Mythos 5 の限定提供を読む](articles/anthropic-mythos-ai-claude-p1_20260823.md) | Anthropic, Claude, セキュリティ, AIAgent |
 | 2026-08-23 | [🧩 Googleのマルチエージェント委譲4原則を契約・コスト・最小権限・認知摩擦で検証する](articles/google-cloud-google-products-p2_20260823.md) | GoogleCloud, AIAgent, MCP, LLM |
