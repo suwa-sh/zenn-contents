@@ -7,12 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (340)
+## Articles: 下書き (342)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-23 | [🪢 AIで個人の出力が増えても組織成果が伸びない構造を検証する](articles/ai-zenn-dev-factory-dx-eng-p7_20260823.md) | AI, 組織づくり, DX, 生産性 |
 | 2026-08-23 | [🛡️ モデルを渡さず成果物だけ渡す設計: Claude Mythos 5 の限定提供を読む](articles/anthropic-mythos-ai-claude-p1_20260823.md) | Anthropic, Claude, セキュリティ, AIAgent |
 | 2026-08-23 | [🧩 Googleのマルチエージェント委譲4原則を契約・コスト・最小権限・認知摩擦で検証する](articles/google-cloud-google-products-p2_20260823.md) | GoogleCloud, AIAgent, MCP, LLM |
+| 2026-08-23 | [🧭 AIXデザイナーという職能定義から、AI前提の組織設計を読み解く](articles/ux-aix-cyberagent-co-jp-detail-p3_20260823.md) | AI, 組織づくり, デザイン, DesignEngineer |
 | 2026-08-22 | [🧮 制度依存の算定知識をテスト資産にする — 例オラクルと意思決定表の使い分け](articles/domain-modeling-testing-tech-p9_20260822.md) | テスト, QA, ドメイン駆動設計, GitHubActions |
 | 2026-08-22 | [🧾 エージェントの出力・ツール呼び出し・監査文脈を束ねる評価契約 - ECP](articles/ecp-agent-evaluation-protocol-p4_20260822.md) | AI, LLM, Python, テスト, MCP |
 | 2026-08-22 | [🛰 予算・監査・MCP統制を1つの管理プレーンへ - Antigravity in Gemini Enterprise](articles/google-antigravity-gemini-p1_20260822.md) | Antigravity, GoogleCloud, Gemini, AIエージェント, 生成AI |
