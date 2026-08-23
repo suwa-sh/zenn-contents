@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (344)
+## Articles: 下書き (345)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-08-24 | [🔄 A2AはGoogle公開時から何が変わったか——v1.0・AAIF・移行の実務](articles/a2a-protocol-since-google-launch_20260824.md) | A2A, AIAgent, MCP, AgentProtocol |
+| 2026-08-24 | [🪝 安全な並列Git hooksとlintをRustで実現する - hk](articles/research-78032858b5_20260824.md) | Git, Rust, Pkl, MCP, Lint |
 | 2026-08-24 | [🗺️ 2026年夏のオープンモデル地図：Qwen一強ではない用途別の選び方](articles/state-of-open-models-summer-2026_20260824.md) | LLM, HuggingFace, AI, MLOps |
 | 2026-08-23 | [🪢 AIで個人の出力が増えても組織成果が伸びない構造を検証する](articles/ai-zenn-dev-factory-dx-eng-p7_20260823.md) | AI, 組織づくり, DX, 生産性 |
 | 2026-08-23 | [🛡️ モデルを渡さず成果物だけ渡す設計: Claude Mythos 5 の限定提供を読む](articles/anthropic-mythos-ai-claude-p1_20260823.md) | Anthropic, Claude, セキュリティ, AIAgent |
