@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (349)
+## Articles: 下書き (350)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-24 | [🧾 350億円で基幹刷新を完遂という事例を一次情報から読み直す](articles/350-it-xtech-nikkei-atcl-p6_20260824.md) | DX, 基幹システム, 内製化, Oracle, アーキテクチャ |
 | 2026-08-24 | [🔄 A2A v1.0 Google公開時からの変更点と移行の実務](articles/a2a-protocol-since-google-launch_20260824.md) | A2A, AIAgent, MCP, AgentProtocol |
 | 2026-08-24 | [💰 GPT-5.6 Solの期間限定値下げをコスト計画に入れる前に整理すること](articles/openai-gpt-5-6-sol-codex-p4_20260824.md) | OpenAI, GPT5, Codex, LLM |
 | 2026-08-24 | [🪝 安全な並列Git hooksとlintをRustで実現する - hk](articles/research-78032858b5_20260824.md) | Git, Rust, Pkl, MCP, Lint |
