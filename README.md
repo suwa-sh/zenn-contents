@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (350)
+## Articles: 下書き (351)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-08-24 | [🧾 350億円で基幹刷新を完遂という事例を一次情報から読み直す](articles/350-it-xtech-nikkei-atcl-p6_20260824.md) | DX, 基幹システム, 内製化, Oracle, アーキテクチャ |
 | 2026-08-24 | [🔄 A2A v1.0 Google公開時からの変更点と移行の実務](articles/a2a-protocol-since-google-launch_20260824.md) | A2A, AIAgent, MCP, AgentProtocol |
+| 2026-08-24 | [🧱 データ基盤の完成をカットオーバーで定義しない、清水建設の5年から読む受け皿設計](articles/fde-data-governance-xtech-p7_20260824.md) | DX, Snowflake, Denodo, DataManagement |
 | 2026-08-24 | [💰 GPT-5.6 Solの期間限定値下げをコスト計画に入れる前に整理すること](articles/openai-gpt-5-6-sol-codex-p4_20260824.md) | OpenAI, GPT5, Codex, LLM |
 | 2026-08-24 | [🪝 安全な並列Git hooksとlintをRustで実現する - hk](articles/research-78032858b5_20260824.md) | Git, Rust, Pkl, MCP, Lint |
 | 2026-08-24 | [🔒 Rust crates.io の供給網攻撃から学ぶ、CI に置くべきゲートの順番](articles/rust-crates-io-devsecops-p2_20260824.md) | Rust, Cargo, Security, CI, DevSecOps |
