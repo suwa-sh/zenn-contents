@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (351)
+## Articles: 下書き (353)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-25 | [🔍 要件レビューでLLMを先に読ませると検出精度は上がらない](articles/llm-human-ai-collaboration-p1_20260825.md) | LLM, ChatGPT, 要件定義, レビュー, AI |
+| 2026-08-25 | [🔀 仕様ファイルはエージェント中立ではない、SQL移行実験から読む移管ゲートの置き方](articles/sql-sdd-arxiv-abs-2608-21208-p3_20260825.md) | AIAgent, PostgreSQL, Oracle, LLM, SpecDrivenDevelopment |
 | 2026-08-24 | [🧾 350億円で基幹刷新を完遂という事例を一次情報から読み直す](articles/350-it-xtech-nikkei-atcl-p6_20260824.md) | DX, 基幹システム, 内製化, Oracle, アーキテクチャ |
 | 2026-08-24 | [🔄 A2A v1.0 Google公開時からの変更点と移行の実務](articles/a2a-protocol-since-google-launch_20260824.md) | A2A, AIAgent, MCP, AgentProtocol |
 | 2026-08-24 | [🧱 データ基盤の完成をカットオーバーで定義しない、清水建設の5年から読む受け皿設計](articles/fde-data-governance-xtech-p7_20260824.md) | DX, Snowflake, Denodo, DataManagement |
