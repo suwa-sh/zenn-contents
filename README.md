@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (356)
+## Articles: 下書き (357)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-26 | [🗝️ ChatGPT WorkとCodexのAdmin pluginに何を任せ、正本をどこに置くか](articles/openai-chatgpt-work-codex-p2_20260826.md) | openai, chatgpt, codex, governance, security |
 | 2026-08-25 | [☁️ Cloudflareの代表的なサービス群を構造から理解する](articles/cloudflare-services_20260825.md) | Cloudflare, CloudflareWorkers, Serverless, ZeroTrust, CDN |
 | 2026-08-25 | [🧮 Google Cloud移行の初期TCOをAIで出すQuick TCO Estimatorの守備範囲](articles/google-cloud-tco-ai-cloud-p9_20260825.md) | GoogleCloud, MigrationCenter, TCO, VMware, AI |
 | 2026-08-25 | [🔍 要件レビューでLLMを先に読ませると検出精度は上がらない](articles/llm-human-ai-collaboration-p1_20260825.md) | LLM, ChatGPT, 要件定義, レビュー, AI |
