@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (364)
+## Articles: 下書き (366)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-27 | [📚 OKFバンドルをKnowledge Catalogへ統合する構成と運用上の制約](articles/google-cloud-okf-iam-knowledge-p3_20260827.md) | GoogleCloud, Dataplex, IAM, AI, LLM |
+| 2026-08-27 | [🧭 MCP新ロードマップが優先するエージェントID、HTTP統一、長時間実行](articles/mcp-id-http-mcp-io-posts-p2_20260827.md) | MCP, OAuth, Security, AIAgent |
 | 2026-08-27 | [🔓 評価用エージェントがHugging Faceを侵害した経路と共有基盤という盲点](articles/openai-hugging-face-ai-openai-p1_20260827.md) | Security, AI, OpenAI, LLM, Sandbox |
 | 2026-08-26 | [🧭 リポジトリ固有のAgent Skillは警告なく陳腐化する](articles/agent-skill-105-agent-skills-p4_20260826.md) | AI, LLM, AgentSkills, ClaudeCode, DevOps |
 | 2026-08-26 | [🗺️ AIコーディングエージェントの作業をライブで可視化するagenttrail](articles/agenttrail_20260826.md) |  |
