@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (363)
+## Articles: 下書き (364)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-27 | [🔓 評価用エージェントがHugging Faceを侵害した経路と共有基盤という盲点](articles/openai-hugging-face-ai-openai-p1_20260827.md) | Security, AI, OpenAI, LLM, Sandbox |
 | 2026-08-26 | [🧭 リポジトリ固有のAgent Skillは警告なく陳腐化する](articles/agent-skill-105-agent-skills-p4_20260826.md) | AI, LLM, AgentSkills, ClaudeCode, DevOps |
 | 2026-08-26 | [🗺️ AIコーディングエージェントの作業をライブで可視化するagenttrail](articles/agenttrail_20260826.md) |  |
 | 2026-08-26 | [📜 生成AIプリンシプル・コードは発注者の何を変えるか](articles/ai-ai-cas-go-jp-seisakukaigi-p3_20260826.md) | AI, 生成AI, 法務, 知的財産, ガバナンス |
