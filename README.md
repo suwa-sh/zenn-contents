@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (363)
+## Articles: 下書き (364)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -15,6 +15,7 @@
 | 2026-08-26 | [🗺️ AIコーディングエージェントの作業をライブで可視化するagenttrail](articles/agenttrail_20260826.md) |  |
 | 2026-08-26 | [📜 生成AIプリンシプル・コードは発注者の何を変えるか](articles/ai-ai-cas-go-jp-seisakukaigi-p3_20260826.md) | AI, 生成AI, 法務, 知的財産, ガバナンス |
 | 2026-08-26 | [📐 コード近接の仕様形式が弱いモデルのAPIルート網羅を33%から100%へ引き上げる](articles/api-100-arxiv-abs-2608-21747-p5_20260826.md) | ai, llm, architecture, openapi, typescript |
+| 2026-08-26 | [🧭 判断に使える自己完結HTMLを作るEffective HTMLの設計と実践](articles/effective-html_20260826.md) | EffectiveHTML, AgentSkills, ClaudeCode, Codex, HTML |
 | 2026-08-26 | [🗝️ ChatGPT WorkとCodexのAdmin pluginに何を任せ、正本をどこに置くか](articles/openai-chatgpt-work-codex-p2_20260826.md) | openai, chatgpt, codex, governance, security |
 | 2026-08-26 | [🖥️ OpenComputerの構造とデータを実装・運用目線で読み解く](articles/opencomputer_20260826.md) | OpenComputer, AI, TypeScript, KVM |
 | 2026-08-26 | [🧰 WebMCP DraftとChrome OT実装の差分を踏まえた実装・運用ガイド](articles/webmcp_20260826.md) | WebMCP, MCP, Chrome, JavaScript |
