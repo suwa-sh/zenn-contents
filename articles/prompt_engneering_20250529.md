@@ -362,6 +362,10 @@ graph LR
 
 この記事が、プロンプトエンジニアリングの多様なアプローチと、その進化し続けるトレンドに関する皆様の理解を深め、今後のAI戦略立案や技術活用の検討において、少しでもお役に立てれば幸いです。
 
+## 関連記事
+
+* [5つのAIエンジニアリングを2軸3階層で整理する](https://zenn.dev/suwash/articles/llm-control-layers-taxonomy_20260818)：Prompt を、Context / Loop / Harness / Graph との関係の中に位置づける
+
 ## 8. 参考リンク
 
 * プロンプトエンジニアリング

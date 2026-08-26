@@ -452,6 +452,7 @@ RAGとJITを使い分け、大きな成果物を窓の外へ置き、Compaction�
 
 ## 関連記事
 
+- [5つのAIエンジニアリングを2軸3階層で整理する](https://zenn.dev/suwash/articles/llm-control-layers-taxonomy_20260818)：Context を、Prompt / Loop / Harness / Graph との関係の中に位置づける
 - [プロンプトエンジニアリングの進化](https://zenn.dev/suwash/articles/prompt_engneering_20250529)：コンテキストの中でも、指示そのものの書き方を設計する
 
 

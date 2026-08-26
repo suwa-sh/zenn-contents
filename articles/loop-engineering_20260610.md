@@ -1146,6 +1146,7 @@ Loop engineering は、AI コーディングエージェントを「手で動か
 
 ## 関連記事
 
+- [5つのAIエンジニアリングを2軸3階層で整理する](https://zenn.dev/suwash/articles/llm-control-layers-taxonomy_20260818) — Loop を、Prompt / Context / Harness / Graph との関係の中に位置づける
 - [AI Harness Engineering入門](https://zenn.dev/suwash/articles/ai-harness-engineering_20260515) — loop を回す実行層そのものを、責務と証跡の契約として定義する
 - [Context Engineering入門](https://zenn.dev/suwash/articles/context_engineering_20250719) — loop の各ターンでエージェントに何を渡すかを設計する
 - [プロンプトエンジニアリングの進化](https://zenn.dev/suwash/articles/prompt_engneering_20250529) — 各ターンの 1 回の model 呼び出しに与える指示を設計する

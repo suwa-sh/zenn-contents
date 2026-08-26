@@ -1136,6 +1136,7 @@ Entropy auditor は「保守負債の蓄積速度」を測る責務です。専�
 
 ## 関連記事
 
+- [5つのAIエンジニアリングを2軸3階層で整理する](https://zenn.dev/suwash/articles/llm-control-layers-taxonomy_20260818) — Harness を、Prompt / Context / Loop / Graph との関係の中に位置づける
 - [Context Engineering入門](https://zenn.dev/suwash/articles/context_engineering_20250719) — harness が媒介する context を、何を渡すかの側から設計する
 - [プロンプトエンジニアリングの進化](https://zenn.dev/suwash/articles/prompt_engneering_20250529) — harness が組み立てて model へ渡す指示そのものを設計する
 
