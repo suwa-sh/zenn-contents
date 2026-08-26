@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (364)
+## Articles: 下書き (363)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -18,7 +18,6 @@
 | 2026-08-26 | [🧭 判断に使える自己完結HTMLを作るEffective HTMLの設計と実践](articles/effective-html_20260826.md) | EffectiveHTML, AgentSkills, ClaudeCode, Codex, HTML |
 | 2026-08-26 | [🗝️ ChatGPT WorkとCodexのAdmin pluginに何を任せ、正本をどこに置くか](articles/openai-chatgpt-work-codex-p2_20260826.md) | openai, chatgpt, codex, governance, security |
 | 2026-08-26 | [🖥️ OpenComputerの構造とデータを実装・運用目線で読み解く](articles/opencomputer_20260826.md) | OpenComputer, AI, TypeScript, KVM |
-| 2026-08-26 | [🧰 WebMCP DraftとChrome OT実装の差分を踏まえた実装・運用ガイド](articles/webmcp_20260826.md) | WebMCP, MCP, Chrome, JavaScript |
 | 2026-08-25 | [☁️ Cloudflareの代表的なサービス群を構造から理解する](articles/cloudflare-services_20260825.md) | Cloudflare, CloudflareWorkers, Serverless, ZeroTrust, CDN |
 | 2026-08-25 | [🧮 Google Cloud移行の初期TCOをAIで出すQuick TCO Estimatorの守備範囲](articles/google-cloud-tco-ai-cloud-p9_20260825.md) | GoogleCloud, MigrationCenter, TCO, VMware, AI |
 | 2026-08-25 | [🔍 要件レビューでLLMを先に読ませると検出精度は上がらない](articles/llm-human-ai-collaboration-p1_20260825.md) | LLM, ChatGPT, 要件定義, レビュー, AI |
@@ -376,10 +375,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (172)
+## Articles: 公開済み (173)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-08-27 | [🧰 WebMCP DraftとChrome OT実装の差分を踏まえた実装・運用ガイド](articles/webmcp_20260826.md) | WebMCP, MCP, Chrome, JavaScript |
 | 2026-08-22 | [🚪 ローカル開発URLを安定化するリバースプロキシ - Portless](articles/portless_20260820.md) | Portless, Nodejs, Https, Turborepo, DevTools |
 | 2026-08-20 | [🧭 5つのAIエンジニアリングを2軸3階層で整理する - Prompt / Context / Loop / Harness / Graph](articles/llm-control-layers-taxonomy_20260818.md) | AIAgent, LLM, HarnessEngineering, LoopEngineering, GraphEngineering |
 | 2026-08-18 | [🕰️ 文脈は「増やす」から「絞る」へ - OpenAI Computer History の設計転換](articles/openai-web-computer-history-p2_20260815.md) | ChatGPT, OpenAI, 生成AI, セキュリティ, macOS |
