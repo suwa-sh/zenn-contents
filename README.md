@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (366)
+## Articles: 下書き (367)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-27 | [🔑 350超のSPをOktaから内製IdPへ移すとき、接続完了は完了条件にならない](articles/dena-350-sp-okta-idp-dena-p9_20260827.md) | 認証, SAML, Okta, OIDC, セキュリティ |
 | 2026-08-27 | [📚 OKFバンドルをKnowledge Catalogへ統合する構成と運用上の制約](articles/google-cloud-okf-iam-knowledge-p3_20260827.md) | GoogleCloud, Dataplex, IAM, AI, LLM |
 | 2026-08-27 | [🧭 MCP新ロードマップが優先するエージェントID、HTTP統一、長時間実行](articles/mcp-id-http-mcp-io-posts-p2_20260827.md) | MCP, OAuth, Security, AIAgent |
 | 2026-08-27 | [🔓 評価用エージェントがHugging Faceを侵害した経路と共有基盤という盲点](articles/openai-hugging-face-ai-openai-p1_20260827.md) | Security, AI, OpenAI, LLM, Sandbox |
