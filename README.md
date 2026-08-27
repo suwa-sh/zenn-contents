@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (367)
+## Articles: 下書き (369)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-28 | [🚦 LLMの本番投入判定を成果・安全・運用の3層で設計する](articles/github-llm-llm-devsecops-p3_20260828.md) | LLM, AI, GitHub, Security, MLOps |
+| 2026-08-28 | [🚦 AIエージェントのツール実行を型付きイベントで仲介するMetisの設計](articles/metis-arxiv-abs-2608-25322-p2_20260828.md) | AIAgent, MCP, Security, ClaudeCode, LLM |
 | 2026-08-27 | [🔑 350超のSPをOktaから内製IdPへ移すとき、接続完了は完了条件にならない](articles/dena-350-sp-okta-idp-dena-p9_20260827.md) | 認証, SAML, Okta, OIDC, セキュリティ |
 | 2026-08-27 | [📚 OKFバンドルをKnowledge Catalogへ統合する構成と運用上の制約](articles/google-cloud-okf-iam-knowledge-p3_20260827.md) | GoogleCloud, Dataplex, IAM, AI, LLM |
 | 2026-08-27 | [🧭 MCP新ロードマップが優先するエージェントID、HTTP統一、長時間実行](articles/mcp-id-http-mcp-io-posts-p2_20260827.md) | MCP, OAuth, Security, AIAgent |
