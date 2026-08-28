@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (374)
+## Articles: 下書き (375)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-08-29 | [🧭 AIの生成量が増えるとレビュー追加が効かなくなる、三層監督という分け方](articles/ai-ai-assisted-development-p4_20260829.md) | AI, 開発生産性, CI, コードレビュー, 設計 |
+| 2026-08-29 | [🧭 AI後のコンサル若手育成を出社日数ではなく作業単位で設計する](articles/ai-organization-talent-ft-p10_20260829.md) | AI, 組織設計, 人材育成, マネジメント |
 | 2026-08-29 | [🔬 AnthropicのMHSは物理機器のMCPなのか、公開情報で確かめる](articles/anthropic-mhs-agent-hardware-p1_20260829.md) | Anthropic, MCP, AI, セキュリティ |
 | 2026-08-29 | [📚 購入済み書籍を根拠にするGoogle Expert Intelligenceの権利境界設計](articles/google-expert-intelligence-p5_20260829.md) | RAG, Gemini, NotebookLM, Google, 生成AI |
 | 2026-08-29 | [🧭 問い合わせAIは文書からコードへ、そして人へ渡す設計にする](articles/okf-documentation-agent-m3tech-p6_20260829.md) | AI, Devin, Documentation, Diataxis, OKF |
