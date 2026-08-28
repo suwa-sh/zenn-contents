@@ -7,13 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (373)
+## Articles: 下書き (374)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-08-29 | [🧭 AIの生成量が増えるとレビュー追加が効かなくなる、三層監督という分け方](articles/ai-ai-assisted-development-p4_20260829.md) | AI, 開発生産性, CI, コードレビュー, 設計 |
 | 2026-08-29 | [🔬 AnthropicのMHSは物理機器のMCPなのか、公開情報で確かめる](articles/anthropic-mhs-agent-hardware-p1_20260829.md) | Anthropic, MCP, AI, セキュリティ |
 | 2026-08-29 | [📚 購入済み書籍を根拠にするGoogle Expert Intelligenceの権利境界設計](articles/google-expert-intelligence-p5_20260829.md) | RAG, Gemini, NotebookLM, Google, 生成AI |
+| 2026-08-29 | [🧭 問い合わせAIは文書からコードへ、そして人へ渡す設計にする](articles/okf-documentation-agent-m3tech-p6_20260829.md) | AI, Devin, Documentation, Diataxis, OKF |
 | 2026-08-28 | [🚦 LLMの本番投入判定を成果・安全・運用の3層で設計する](articles/github-llm-llm-devsecops-p3_20260828.md) | LLM, AI, GitHub, Security, MLOps |
 | 2026-08-28 | [🏠 Cloud Run instancesは常駐エージェントの置き場になるか](articles/google-cloud-run-instances-p5_20260828.md) | GoogleCloud, CloudRun, Serverless, AIAgent |
 | 2026-08-28 | [🚦 AIエージェントのツール実行を型付きイベントで仲介するMetisの設計](articles/metis-arxiv-abs-2608-25322-p2_20260828.md) | AIAgent, MCP, Security, ClaudeCode, LLM |
