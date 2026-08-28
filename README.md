@@ -13,6 +13,7 @@
 |-------------|-------|--------|
 | 2026-08-29 | [🧭 AIの生成量が増えるとレビュー追加が効かなくなる、三層監督という分け方](articles/ai-ai-assisted-development-p4_20260829.md) | AI, 開発生産性, CI, コードレビュー, 設計 |
 | 2026-08-29 | [🔬 AnthropicのMHSは物理機器のMCPなのか、公開情報で確かめる](articles/anthropic-mhs-agent-hardware-p1_20260829.md) | Anthropic, MCP, AI, セキュリティ |
+| 2026-08-29 | [📚 購入済み書籍を根拠にするGoogle Expert Intelligenceの権利境界設計](articles/google-expert-intelligence-p5_20260829.md) | RAG, Gemini, NotebookLM, Google, 生成AI |
 | 2026-08-28 | [🚦 LLMの本番投入判定を成果・安全・運用の3層で設計する](articles/github-llm-llm-devsecops-p3_20260828.md) | LLM, AI, GitHub, Security, MLOps |
 | 2026-08-28 | [🏠 Cloud Run instancesは常駐エージェントの置き場になるか](articles/google-cloud-run-instances-p5_20260828.md) | GoogleCloud, CloudRun, Serverless, AIAgent |
 | 2026-08-28 | [🚦 AIエージェントのツール実行を型付きイベントで仲介するMetisの設計](articles/metis-arxiv-abs-2608-25322-p2_20260828.md) | AIAgent, MCP, Security, ClaudeCode, LLM |
@@ -28,7 +29,6 @@
 | 2026-08-26 | [🧭 判断に使える自己完結HTMLを作るEffective HTMLの設計と実践](articles/effective-html_20260826.md) | EffectiveHTML, AgentSkills, ClaudeCode, Codex, HTML |
 | 2026-08-26 | [🗝️ ChatGPT WorkとCodexのAdmin pluginに何を任せ、正本をどこに置くか](articles/openai-chatgpt-work-codex-p2_20260826.md) | openai, chatgpt, codex, governance, security |
 | 2026-08-26 | [🖥️ OpenComputerの構造とデータを実装・運用目線で読み解く](articles/opencomputer_20260826.md) | OpenComputer, AI, TypeScript, KVM |
-| 2026-08-25 | [☁️ Cloudflareの代表的なサービス群を構造から理解する](articles/cloudflare-services_20260825.md) | Cloudflare, CloudflareWorkers, Serverless, ZeroTrust, CDN |
 | 2026-08-25 | [🧮 Google Cloud移行の初期TCOをAIで出すQuick TCO Estimatorの守備範囲](articles/google-cloud-tco-ai-cloud-p9_20260825.md) | GoogleCloud, MigrationCenter, TCO, VMware, AI |
 | 2026-08-25 | [🔍 要件レビューでLLMを先に読ませると検出精度は上がらない](articles/llm-human-ai-collaboration-p1_20260825.md) | LLM, ChatGPT, 要件定義, レビュー, AI |
 | 2026-08-25 | [🚦 Metaのヘルスチェック基盤SHCに学ぶ、段階展開と自動ロールバックの接続点](articles/meta-devops-release-engineering-p7_20260825.md) | DevOps, SRE, CICD, Kubernetes, ArgoRollouts |
@@ -385,10 +385,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (173)
+## Articles: 公開済み (174)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-08-29 | [☁️ Cloudflareの代表的なサービス群を構造から理解する](articles/cloudflare-services_20260825.md) | Cloudflare, CloudflareWorkers, Serverless, ZeroTrust, CDN |
 | 2026-08-27 | [🧰 WebMCP DraftとChrome OT実装の差分を踏まえた実装・運用ガイド](articles/webmcp_20260826.md) | WebMCP, MCP, Chrome, JavaScript |
 | 2026-08-22 | [🚪 ローカル開発URLを安定化するリバースプロキシ - Portless](articles/portless_20260820.md) | Portless, Nodejs, Https, Turborepo, DevTools |
 | 2026-08-20 | [🧭 5つのAIエンジニアリングを2軸3階層で整理する - Prompt / Context / Loop / Harness / Graph](articles/llm-control-layers-taxonomy_20260818.md) | AIAgent, LLM, HarnessEngineering, LoopEngineering, GraphEngineering |

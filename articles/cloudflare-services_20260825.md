@@ -3,7 +3,8 @@ title: "Cloudflareの代表的なサービス群を構造から理解する"
 emoji: "☁️"
 type: "tech"
 topics: ["Cloudflare", "CloudflareWorkers", "Serverless", "ZeroTrust", "CDN"]
-published: false
+published: true
+published_at: 2026-08-29
 ---
 
 CloudflareはCDNやDNSだけの会社ではありません。公開Webの配信と防御、エッジでのコード実行、データ保存、社内システムへのZero Trust接続までを、同じグローバルネットワーク上で提供しています。
