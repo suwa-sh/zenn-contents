@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (371)
+## Articles: 下書き (372)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-08-29 | [🔬 AnthropicのMHSは物理機器のMCPなのか、公開情報で確かめる](articles/anthropic-mhs-agent-hardware-p1_20260829.md) | Anthropic, MCP, AI, セキュリティ |
 | 2026-08-28 | [🚦 LLMの本番投入判定を成果・安全・運用の3層で設計する](articles/github-llm-llm-devsecops-p3_20260828.md) | LLM, AI, GitHub, Security, MLOps |
 | 2026-08-28 | [🏠 Cloud Run instancesは常駐エージェントの置き場になるか](articles/google-cloud-run-instances-p5_20260828.md) | GoogleCloud, CloudRun, Serverless, AIAgent |
 | 2026-08-28 | [🚦 AIエージェントのツール実行を型付きイベントで仲介するMetisの設計](articles/metis-arxiv-abs-2608-25322-p2_20260828.md) | AIAgent, MCP, Security, ClaudeCode, LLM |
