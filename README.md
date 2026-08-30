@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (378)
+## Articles: 下書き (379)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-08-30 | [🗂️ 1人でAI組織を回す構成から、再現できる運用契約だけを取り出す](articles/ai-cron-ai-zenn-dev-miyan-p8_20260830.md) | AIエージェント, ClaudeCode, cron, 運用, マルチエージェント |
 | 2026-08-30 | [🧪 Breakscaleで分散システムを壊して学ぶ仕組みと実装](articles/breakscale_20260830.md) | TypeScript, React, DistributedSystems, SystemDesign |
+| 2026-08-30 | [🧩 実行ループと会話履歴をAnthropicへ委ねるClaude Managed Agents with Chat SDK](articles/vercel-claude-managed-agents-p4_20260830.md) | Vercel, Claude, Anthropic, TypeScript, Slack |
 | 2026-08-29 | [🧭 AIの生成量が増えるとレビュー追加が効かなくなる、三層監督という分け方](articles/ai-ai-assisted-development-p4_20260829.md) | AI, 開発生産性, CI, コードレビュー, 設計 |
 | 2026-08-29 | [🧭 AI後のコンサル若手育成を出社日数ではなく作業単位で設計する](articles/ai-organization-talent-ft-p10_20260829.md) | AI, 組織設計, 人材育成, マネジメント |
 | 2026-08-29 | [🔬 AnthropicのMHSは物理機器のMCPなのか、公開情報で確かめる](articles/anthropic-mhs-agent-hardware-p1_20260829.md) | Anthropic, MCP, AI, セキュリティ |
