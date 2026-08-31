@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (381)
+## Articles: 下書き (382)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-08-31 | [🧱 要件書のない基幹刷新で生成AIに任せる範囲と人が裁定する範囲](articles/900-ai-xtech-nikkei-atcl-p2_20260831.md) | AI, 生成AI, レガシーマイグレーション, プロジェクトマネジメント |
 | 2026-08-31 | [⏱️ 無操作でも回るエージェントで、停止と通知とコストをモデルの外に置く](articles/ai-zenn-dev-hosaka2-p6_20260831.md) | AIエージェント, LangGraph, LLM, 設計, 運用 |
+| 2026-08-31 | [🏭 Uber Software Factoryに学ぶAIエージェント基盤のコスト設計](articles/uber-software-factory_20260831.md) | AIAgent, ClaudeCode, MCP, SRE |
 | 2026-08-30 | [🗂️ 1人でAI組織を回す構成から、再現できる運用契約だけを取り出す](articles/ai-cron-ai-zenn-dev-miyan-p8_20260830.md) | AIエージェント, ClaudeCode, cron, 運用, マルチエージェント |
 | 2026-08-30 | [🧪 Breakscaleで分散システムを壊して学ぶ仕組みと実装](articles/breakscale_20260830.md) | TypeScript, React, DistributedSystems, SystemDesign |
 | 2026-08-30 | [🧩 実行ループと会話履歴をAnthropicへ委ねるClaude Managed Agents with Chat SDK](articles/vercel-claude-managed-agents-p4_20260830.md) | Vercel, Claude, Anthropic, TypeScript, Slack |
