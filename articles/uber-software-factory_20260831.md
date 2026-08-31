@@ -3,7 +3,8 @@ title: "Uber Software Factoryに学ぶAIエージェント基盤のコスト設�
 emoji: "🏭"
 type: "tech"
 topics: ["AIAgent", "ClaudeCode", "MCP", "SRE"]
-published: false
+published: true
+published_at: 2026-09-01
 ---
 
 Uberでは、ソフトウェア開発ライフサイクル全体にAIエージェントを組み込み、利用量を伸ばしながら単位コストを下げる社内基盤「Software Factory」を運用しています。
