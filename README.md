@@ -7,12 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (385)
+## Articles: 下書き (387)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-02 | [🧭 Fable 5.1とMythos 5.1の差はモデル世代ではなく利用契約である](articles/anthropic-fable-5-1-mythos-p1_20260902.md) | Anthropic, Claude, LLM, セキュリティ |
 | 2026-09-02 | [🤖 Grok Botに何を任せるか実例から考える安全な活用パターン](articles/grokbot-use-cases_20260902.md) | Grok, AIAgent, 自動化, 業務効率化 |
 | 2026-09-02 | [🤖 Grok Botの構造とデータから理解する導入と安全な運用](articles/grokbot_20260902.md) | AI, Cursor, GrokBot, セキュリティ |
+| 2026-09-02 | [🧭 OpenAIが示した業務エージェント設計を職務記述として借りる](articles/openai-ai-openai-index-ai-p4_20260902.md) | OpenAI, ChatGPT, AIエージェント |
 | 2026-09-01 | [🤖 AIエージェントが競う模擬取引基盤AI-Traderの仕組みと実装](articles/ai-trader_20260901.md) |  |
 | 2026-09-01 | [🧭 チケット履歴からアーキテクチャ意図を復元してドリフトを可視化するLLMパイプライン](articles/architecture-legacy-analysis-p4_20260901.md) | LLM, 生成AI, アーキテクチャ, C4Model, AzureDevOps |
 | 2026-08-31 | [🧱 要件書のない基幹刷新で生成AIに任せる範囲と人が裁定する範囲](articles/900-ai-xtech-nikkei-atcl-p2_20260831.md) | AI, 生成AI, レガシーマイグレーション, プロジェクトマネジメント |
