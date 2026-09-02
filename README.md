@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (389)
+## Articles: 下書き (388)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -15,7 +15,6 @@
 | 2026-09-02 | [🧭 UI上の意図をCodeQLへ翻訳するFlowCheckが検証できる範囲と限界](articles/flowcheck-ui-codeql-ui-arxiv-p7_20260902.md) | CodeQL, StaticAnalysis, Web, AIAgent, Testing |
 | 2026-09-02 | [🕸️ BigQuery GraphのGAは倉庫上の分析グラフであり対話記憶には向かない](articles/google-cloud-bigquery-graph-p5_20260902.md) | BigQuery, GoogleCloud, Graph, GQL |
 | 2026-09-02 | [🤖 Grok Botに何を任せるか実例から考える安全な活用パターン](articles/grokbot-use-cases_20260902.md) | Grok, AIAgent, 自動化, 業務効率化 |
-| 2026-09-02 | [🤖 Grok Botの構造とデータから理解する導入と安全な運用](articles/grokbot_20260902.md) | AI, Cursor, GrokBot, セキュリティ |
 | 2026-09-02 | [🧭 OpenAIが示した業務エージェント設計を職務記述として借りる](articles/openai-ai-openai-index-ai-p4_20260902.md) | OpenAI, ChatGPT, AIエージェント |
 | 2026-09-01 | [🤖 AIエージェントが競う模擬取引基盤AI-Traderの仕組みと実装](articles/ai-trader_20260901.md) |  |
 | 2026-09-01 | [🧭 チケット履歴からアーキテクチャ意図を復元してドリフトを可視化するLLMパイプライン](articles/architecture-legacy-analysis-p4_20260901.md) | LLM, 生成AI, アーキテクチャ, C4Model, AzureDevOps |
@@ -401,10 +400,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (175)
+## Articles: 公開済み (176)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-09-03 | [🤖 Grok Botの構造とデータから理解する導入と安全な運用](articles/grokbot_20260902.md) | AI, Cursor, GrokBot, セキュリティ |
 | 2026-09-01 | [🏭 Uber Software Factoryに学ぶAIエージェント基盤のコスト設計](articles/uber-software-factory_20260831.md) | AIAgent, ClaudeCode, MCP, SRE |
 | 2026-08-29 | [☁️ Cloudflareの代表的なサービス群を構造から理解する](articles/cloudflare-services_20260825.md) | Cloudflare, CloudflareWorkers, Serverless, ZeroTrust, CDN |
 | 2026-08-27 | [🧰 WebMCP DraftとChrome OT実装の差分を踏まえた実装・運用ガイド](articles/webmcp_20260826.md) | WebMCP, MCP, Chrome, JavaScript |
