@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (391)
+## Articles: 下書き (392)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-09-03 | [🧰 11種のコーディングエージェント分析で抽出された7構成要素と29設計パターン](articles/coding-agent-harness-arxiv-p3_20260903.md) | AIエージェント, ClaudeCode, Codex, MCP, LLM |
+| 2026-09-03 | [📉 GitHub Copilotが示した局所的な出力短縮が総タスクコストを増やす逆説](articles/github-copilot-coding-agent-p7_20260903.md) | GitHubCopilot, LLM, CLI, Agent |
 | 2026-09-03 | [🔧 GitOps修復でモデルにYAMLを書かせない決定論的フィールド編集](articles/gitops-llm-yaml-gitops-ai-p5_20260903.md) | GitOps, Kubernetes, LLM, YAML |
 | 2026-09-03 | [🛡️ Google Mantis OSSはAI指摘を増やす道具ではなく再現証拠の品質ゲートである](articles/google-mantis-oss-ai-sdlc-p2_20260903.md) | AIAgent, Security, OSS, DevSecOps, GoogleCloud |
 | 2026-09-02 | [🧭 Fable 5.1とMythos 5.1の差はモデル世代ではなく利用契約である](articles/anthropic-fable-5-1-mythos-p1_20260902.md) | Anthropic, Claude, LLM, セキュリティ |
