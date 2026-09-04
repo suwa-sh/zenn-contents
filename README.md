@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (400)
+## Articles: 下書き (401)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-09-05 | [🧪 GitHub CopilotのHydraFusionは品質ゲート付きの実行時ワークフロー編成](articles/github-hydrafusion-github-p1_20260905.md) | GitHubCopilot, LLM, CLI, AIエージェント |
+| 2026-09-05 | [🚪 SWE-Gateは機能テスト通過644件のうち221件でレビュー制約に落ちる](articles/swe-gate-644-221-arxiv-abs-p4_20260905.md) | LLM, AIエージェント, Python, GitHub |
 | 2026-09-04 | [📐 広告が高いと嘆く前に許容CACから成長チャネルを設計する](articles/1-edec-business-model-cac-tracti_20260904.md) | Marketing, SaaS, BtoB, UnitEconomics |
 | 2026-09-04 | [🧩 異種エージェント構成を共通の承認単位で版管理するACM](articles/agentic-configuration-agentops-p7_20260904.md) | AIエージェント, LLM, LangGraph, Git, AgentOps |
 | 2026-09-04 | [🧭 GitLab、AI統制を中央化し業務戦略と普及を分散する連邦型体制](articles/gitlab-ai-ai-about-gitlab-p6_20260904.md) | GitLab, AI, DX, 経営 |
