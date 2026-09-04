@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (393)
+## Articles: 下書き (395)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-04 | [📦 NVIDIAのHugging Face買収合意で本番が晒されるのはmainの取得設計](articles/nvidia-129-3030-hugging-face-p3_20260904.md) | NVIDIA, HuggingFace, LLM, MLOps |
+| 2026-09-04 | [🧭 GPT-6 Astraのサイバー能力Criticalは導入判断をどう変えるか](articles/openai-gpt-astra-critical-p1_20260904.md) | OpenAI, GPT, Security, Codex, API |
 | 2026-09-03 | [🧰 11種のコーディングエージェント分析で抽出された7構成要素と29設計パターン](articles/coding-agent-harness-arxiv-p3_20260903.md) | AIエージェント, ClaudeCode, Codex, MCP, LLM |
 | 2026-09-03 | [📉 GitHub Copilotが示した局所的な出力短縮が総タスクコストを増やす逆説](articles/github-copilot-coding-agent-p7_20260903.md) | GitHubCopilot, LLM, CLI, Agent |
 | 2026-09-03 | [🔧 GitOps修復でモデルにYAMLを書かせない決定論的フィールド編集](articles/gitops-llm-yaml-gitops-ai-p5_20260903.md) | GitOps, Kubernetes, LLM, YAML |
