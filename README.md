@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (402)
+## Articles: 下書き (401)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -19,7 +19,6 @@
 | 2026-09-04 | [🧭 GitLab、AI統制を中央化し業務戦略と普及を分散する連邦型体制](articles/gitlab-ai-ai-about-gitlab-p6_20260904.md) | GitLab, AI, DX, 経営 |
 | 2026-09-04 | [🧩 HEARTが2万5519ツールを自然言語で選ぶ仕組みと現場が先に取る遅延ロード](articles/heart-5519-harness-engineering-p10_20260904.md) | AIエージェント, MCP, LLM, Claude |
 | 2026-09-04 | [📦 NVIDIAのHugging Face買収合意で本番が晒されるのはmainの取得設計](articles/nvidia-129-3030-hugging-face-p3_20260904.md) | NVIDIA, HuggingFace, LLM, MLOps |
-| 2026-09-04 | [🧭 GPT-6 Astraのサイバー能力Criticalは導入判断をどう変えるか](articles/openai-gpt-astra-critical-p1_20260904.md) | OpenAI, GPT, Security, Codex, API |
 | 2026-09-03 | [🧰 11種のコーディングエージェント分析で抽出された7構成要素と29設計パターン](articles/coding-agent-harness-arxiv-p3_20260903.md) | AIエージェント, ClaudeCode, Codex, MCP, LLM |
 | 2026-09-03 | [📉 GitHub Copilotが示した局所的な出力短縮が総タスクコストを増やす逆説](articles/github-copilot-coding-agent-p7_20260903.md) | GitHubCopilot, LLM, CLI, Agent |
 | 2026-09-03 | [🔧 GitOps修復でモデルにYAMLを書かせない決定論的フィールド編集](articles/gitops-llm-yaml-gitops-ai-p5_20260903.md) | GitOps, Kubernetes, LLM, YAML |
@@ -414,10 +413,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (176)
+## Articles: 公開済み (177)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-09-05 | [🧭 GPT-6 Astraのサイバー能力Criticalは導入判断をどう変えるか](articles/openai-gpt-astra-critical-p1_20260904.md) | OpenAI, GPT, Security, Codex, API |
 | 2026-09-03 | [🤖 Grok Botの構造とデータから理解する導入と安全な運用](articles/grokbot_20260902.md) | AI, Cursor, GrokBot, セキュリティ |
 | 2026-09-01 | [🏭 Uber Software Factoryに学ぶAIエージェント基盤のコスト設計](articles/uber-software-factory_20260831.md) | AIAgent, ClaudeCode, MCP, SRE |
 | 2026-08-29 | [☁️ Cloudflareの代表的なサービス群を構造から理解する](articles/cloudflare-services_20260825.md) | Cloudflare, CloudflareWorkers, Serverless, ZeroTrust, CDN |

@@ -3,7 +3,8 @@ title: "GPT-6 Astraのサイバー能力Criticalは導入判断をどう変え�
 emoji: "🧭"
 type: "tech"
 topics: ["OpenAI", "GPT", "Security", "Codex", "API"]
-published: false
+published: true
+published_at: 2026-09-05
 ---
 
 OpenAI は 2026-09-03 に GPT-6 Astra を公開しました。発表の中心はベンチ首位ではありません。自社 Preparedness Framework でサイバー能力が **Critical** に達した初の広範展開モデルだ、という位置づけです。
