@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (404)
+## Articles: 下書き (405)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-07 | [🧭 OpenAIが社内利用データで公開した長時間タスク成功に残る人の介入](articles/openai-openai-index-research-p4_20260907.md) | OpenAI, Codex, AIエージェント |
 | 2026-09-06 | [🧭 規制現場のAI導入1年後に残るのは速度ではなく責任不安と検証税である](articles/ai-arxiv-abs-2609-03456-p7_20260906.md) | AI, SoftwareEngineering, GenerativeAI |
 | 2026-09-06 | [📐 AnthropicのFLT形式化が示す長期エージェントの共有状態と結合検査](articles/anthropic-anthropic-research-p3_20260906.md) | Anthropic, Claude, Lean, AIエージェント |
 | 2026-09-06 | [📊 Lieflat Charts が図型を固定して単一 HTML チャートを出す仕組み](articles/lieflat-charts_20260906.md) | AgentSkills, ClaudeCode, Codex, ECharts, データ可視化 |
