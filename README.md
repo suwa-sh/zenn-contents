@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (403)
+## Articles: 下書き (404)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-09-06 | [🧭 規制現場のAI導入1年後に残るのは速度ではなく責任不安と検証税である](articles/ai-arxiv-abs-2609-03456-p7_20260906.md) | AI, SoftwareEngineering, GenerativeAI |
 | 2026-09-06 | [📐 AnthropicのFLT形式化が示す長期エージェントの共有状態と結合検査](articles/anthropic-anthropic-research-p3_20260906.md) | Anthropic, Claude, Lean, AIエージェント |
+| 2026-09-06 | [📊 Lieflat Charts が図型を固定して単一 HTML チャートを出す仕組み](articles/lieflat-charts_20260906.md) | AgentSkills, ClaudeCode, Codex, ECharts, データ可視化 |
 | 2026-09-05 | [🧪 GitHub CopilotのHydraFusionは品質ゲート付きの実行時ワークフロー編成](articles/github-hydrafusion-github-p1_20260905.md) | GitHubCopilot, LLM, CLI, AIエージェント |
 | 2026-09-05 | [🔐 RIZAPの私用生成AI事案は禁止の再周知だけでは経路が残る](articles/rizap-ai-ai-rizap-co-jp-p7_20260905.md) | 生成AI, 個人情報保護, セキュリティ, OpenAI |
 | 2026-09-05 | [🚪 SWE-Gateは機能テスト通過644件のうち221件でレビュー制約に落ちる](articles/swe-gate-644-221-arxiv-abs-p4_20260905.md) | LLM, AIエージェント, Python, GitHub |
