@@ -25,7 +25,7 @@ published: false
 
 Lieflat Charts は、データと場面を渡すと単一 HTML のチャート、または 1 ページ完結のレポートを返す Agent Skill です。成果物はビルド不要で、ブラウザでそのまま開けます。形式は `SKILL.md` 互換なので、制作環境である [Moxt](https://moxt.ai/zh-CN/hub?view=skill&id=lieflat-charts) 以外に、Claude Code や Codex などの `SKILL.md` ホストでも動きます。
 
-想定利用者は非プログラマです。書き手、運用担当、資料作成担当が日常語で依頼し、エージェントがデータ形状から図型番号をロックして、テンプレートの骨格で出図します。既定の成果物はチャートです。年報、月報、白書、ポスター、brief、notebook、dashboard といった「1 ページ完結」を示すキーワードがあるときだけ、レポートテンプレート R01–R12 に入ります。
+想定利用者は非プログラマです。書き手、運用担当、資料作成担当が日常語で依頼し、エージェントがデータ形状から図型番号をロックして、テンプレートの骨格で出図します。既定の成果物はチャートです。年報、月報、白書、ポスター、brief、notebook、dashboard レポートといった「1 ページ完結」を示すキーワードがあるときだけ、レポートテンプレート R01–R12 に入ります。`dashboard` 単独はレポートへの切り替え条件ではなく、Glance の使用を許可する条件です。
 
 | 項目 | 値（2026-09-06 時点） |
 |---|---|
@@ -78,7 +78,7 @@ README.md と README.en.md は、どちらも同一ファイル内で世代が�
 
 つまり L18 は「もともと欠番」ではなく、この日に消えたことによる欠番です。現行の見出し「63 张」は `bdfdca2` の値がそのまま残ったものです。
 
-もうひとつ、この 2 日で削られた 3 図型（G1 / G2 / L18）は catalog の「已移除图型」リストに載っていません。そこに並ぶのは Polar Line、Punch Card、Release Rings、静的 Thread Triptych、Profile Equalizer、Slope Beads、Meridian Dots の 7 件です。G1 に至っては `SKILL.md` 第 4 節と第 9 節に参照が残っており、OHLC が始値・終値なしの min–max 区間だけのときは G1 を使う、と書かれたままです。
+もうひとつ、この 2 コミットで削られた 3 図型（G1 / G2 / L18）は catalog の「已移除图型」リストに載っていません。そこに並ぶのは Polar Line、Punch Card、Release Rings、静的 Thread Triptych、Profile Equalizer、Slope Beads、Meridian Dots の 7 件です。G1 に至っては `SKILL.md` 第 4 節と第 9 節に参照が残っており、OHLC が始値・終値なしの min–max 区間だけのときは G1 を使う、と書かれたままです。
 
 この差分は、開発速度に対してドキュメントの更新が追いついていない状態を示しています。実務上は「`catalog.md` の表と gallery 実体だけを見る」というルールで回避できますし、番号体系そのもの（G/L/F/M/B の接頭辞と主力・予備の区分）は一貫しています。今後、見出しの枚数と已移除リストが表の実体から自動生成されるようになれば、二次情報との照合コストがなくなり、外部ツールからカタログを機械的に読むこともしやすくなります。ここは期待したいポイントです。
 
@@ -457,7 +457,7 @@ flowchart TB
 
 ### 情報モデル
 
-概念モデルと同じ 12 エンティティです。図が大きいので、カタログ側とスタイル側の 2 枚に分けています。まずカタログ側です。
+概念モデルと同じ 12 エンティティです。これは実装のクラス構造そのものではなく、カタログとトークンの関係を読み解くために再構成した説明用のモデルです。型名は string / number / boolean / list / map に限り、実際には関数である `rnd` と `obsReveal` だけ注記を添えています。図が大きいので、カタログ側とスタイル側の 2 枚に分けています。まずカタログ側です。
 
 ```mermaid
 classDiagram
@@ -568,8 +568,8 @@ classDiagram
     map FONT
     map SHAPE
     map MOTION
-    string rnd
-    string obsReveal
+    function rnd
+    function obsReveal
     string CARD_CSS
   }
   class ValidationRule {
@@ -1148,7 +1148,7 @@ interface:
 
 ### テンプレートの更新
 
-インストール済みスキルは git クローンなので、更新は再インストールではなく `git pull` です。pull 後は必須ファイルの確認に加えて、公開前検証を回します。図型数は README の表、`catalog.md` の見出し、gallery 実体で食い違うため、二次情報の古い件数は判断材料にしません。
+更新方法は導入経路で分かれます。`git clone` で入れた場合は再インストールではなく `git pull` です。`npx skills add` で入れた場合、Skills CLI はコピー時に `.git` を除外するため `git pull` は使えず、`npx skills update lieflat-charts -g -y` を使います。更新後は必須ファイルの確認に加えて、公開前検証を回します。図型数は README の表、`catalog.md` の見出し、gallery 実体で食い違うため、二次情報の古い件数は判断材料にしません。
 
 ```bash
 cd ~/.claude/skills/lieflat-charts
@@ -1201,8 +1201,9 @@ node scripts/smoke-new-charts.mjs
 | Inter | Google Fonts css2 Inter 400-800 | gallery と単図。レポートも基本書体として読む（R11 を除く） |
 | ECharts 6 | jsDelivr `echarts@6` | Glance の大半、F13、B1/B2、M1/M2、R11/R12 |
 | Chart.js 4 | gallery / R11 / R12 は `https://cdn.jsdelivr.net/npm/chart.js@4`。`SKILL.md` 第 9 節は `.../chart.js@4/dist/chart.umd.min.js` | G3、R11/R12 |
-| Noto Sans SC | Google Fonts css2 | レポート R01–R10、R12（R11 を除く全レポート） |
-| Noto Serif SC + 表示用書体 | Google Fonts css2 | R01（Source Serif 4）、R02（Playfair Display）、R03（Fraunces）、R06、R07（JetBrains Mono）、R10（Roboto Slab） |
+| Noto Sans SC | Google Fonts css2 | レポート**中国語版**の R01–R10、R12（英語版と R11 は読まない） |
+| Noto Serif SC | Google Fonts css2 | 中国語版の R01、R02、R03、R06、R07、R10 |
+| 表示用書体 | Google Fonts css2 | R01 Source Serif 4 / R02 Playfair Display / R03 Fraunces / R04 Oswald / R07 JetBrains Mono / R10 Roboto Slab。中英とも読む |
 | USA GeoJSON | echarts-examples の `USA.json` | M1 |
 | World GeoJSON | `echarts@4.9.0` の `world.json` | M2 |
 
@@ -1285,7 +1286,7 @@ const rnd = (i, k) => Math.abs(((i * 73856093) ^ (k * 19349663)) % 1000) / 1000;
 
 `examples/lenny-2026-survey.html` は現行の図数ルールより前の 8 枚構成ですが、運用の勘所が詰まっています。
 
-- 端数処理は認めます。四捨五入後に合計が 98 になるなら、脚注に `rounding ate the other two` と書き、偽の単位を足しません。
+- 端数処理は認めます。掲載値を整数に丸めて合計が 100 に届かないとき、この例は脚注で `rounding ate 2 people` と断り、辻褄合わせの単位を足しません。丸めだけで差が埋まらない場合もあるので、実データで使うときは元の集計範囲まで確認します。
 - 無いデータは作りません。Brand Spectrum の競合対照点は元データに無いので空にします。
 - 正確なシェアを示す図では `rnd` の残留を切ります。Radial Convergence にあった約 8% の hub 誤差は、調査データでは無効にします。
 - Dot Cascade の縦組みは長いラベルが読めません。該当データは Dot Cascade をやめ、横並びの Tick Rows（F5）へ替えます。
@@ -1295,13 +1296,15 @@ const rnd = (i, k) => Math.abs(((i * 73856093) ^ (k * 19349663)) % 1000) / 1000;
 
 ここは 2 層に分けて理解する必要があります。
 
-**納品物側は縮退が入ります。** `mono-tokens.js` の `CARD_CSS` は末尾で `MOTION.css` を連結しており、その中に `@media (prefers-reduced-motion: reduce)` で `.pop` / `.fade` / `.draw` を止める指定が入っています。`SKILL.md` 第 9 節の骨格どおり `MONO.CARD_CSS` をインライン化して納品すれば、縮退はついてきます。
+**納品物側は、CSS アニメーションだけ縮退が入ります。** `mono-tokens.js` の `CARD_CSS` は末尾で `MOTION.css` を連結しており、その中に `@media (prefers-reduced-motion: reduce)` で `.pop` / `.fade` / `.draw` を止める指定が入っています。`SKILL.md` 第 9 節の骨格どおり `MONO.CARD_CSS` をインライン化して納品すれば、ここまでは自動でついてきます。
+
+**逆に、CSS 以外は縮退しません。** `obsReveal` の ECharts 版である `eReveal` は `matchMedia` を見ず、`animationDuration: 900` をそのまま ECharts へ渡します。Glance のタイマー駆動の更新（race / stream）も同様です。つまり Chart.js / ECharts / タイマーで動く部分は、利用者側で個別に止めるか、静的な図型へ差し替える必要があります。
 
 **落ちているのは gallery の参照実装側です。** 各 gallery は `mono-tokens.js` を読み込まず CSS を自前で展開しているため、`prefers-reduced-motion` を持つのは `lupi-gallery.html` と `maps-gallery.html` の 2 つだけです。`basics-gallery.html`、`glance-gallery.html`、`big-circular.html`、`big-force.html`、`big-threads.html` には縮退指定がありません。`.pop` を使っている basics-gallery でも入っていないので、ギャップは「Glance の動的 3 図」より広い範囲に及びます。
 
 そのうえで、Glance の morph / race / stream については、reduced-motion 対応の PR #4 が「最終状態だけ出すと意味が変わる」という理由で未マージのまま閉じられています。これは放置ではなく設計判断です。アニメーションが情報の一部になっている図で「最終状態だけ見せる」のが正解とは限らない、という指摘には筋があります。
 
-実務としては、アクセシビリティ要件のある納品では gallery のコードをそのまま流用せず、`MONO.CARD_CSS` 経由の骨格に載せ替えるのが安全です。今後、参照実装側にもトークンの縮退が行き渡り、Glance の動的図には静的代替（G21 Rank Strip のような）と組み合わせた縮退が用意されると、使える場面が広がります。ここも今後に期待したいところです。
+実務としては、アクセシビリティ要件のある納品なら、まず gallery のコードをそのまま流用せず `MONO.CARD_CSS` 経由の骨格に載せ替え、そのうえで手書き SVG の図型を選ぶのが安全です。ライブラリ描画やタイマー駆動の図を使うなら、縮退は自前で用意することになります。今後、参照実装側にもトークンの縮退が行き渡り、`eReveal` が `prefers-reduced-motion` を見るようになり、Glance の動的図には静的代替（G21 Rank Strip のような）と組み合わせた縮退が用意されると、使える場面が広がります。ここも今後に期待したいところです。
 
 ## トラブルシューティング
 
