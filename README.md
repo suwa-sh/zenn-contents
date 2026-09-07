@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (406)
+## Articles: 下書き (407)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-08 | [🛡️ 中小OSSの脆弱性対応は受付、判定、同時公開から始める](articles/cncf-oss-oss-cncf-io-2026-p5_20260908.md) | OSS, Security, CNCF, GitHub |
 | 2026-09-07 | [🧭 マーケティングエンジニアは新職種か、一次情報で確かめて残すものを決める](articles/marketing-engineer-2026_20260907.md) | AI, マーケティング, SEO, キャリア, LLM |
 | 2026-09-07 | [🧭 OpenAIが社内利用データで公開した長時間タスク成功に残る人の介入](articles/openai-openai-index-research-p4_20260907.md) | OpenAI, Codex, AIエージェント |
 | 2026-09-06 | [🧭 規制現場のAI導入1年後に残るのは速度ではなく責任不安と検証税である](articles/ai-arxiv-abs-2609-03456-p7_20260906.md) | AI, SoftwareEngineering, GenerativeAI |
