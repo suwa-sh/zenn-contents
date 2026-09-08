@@ -1,265 +1,296 @@
 ---
-title: "マーケティングエンジニアリングの定義と成功事例を一次資料で確かめる"
-emoji: "📐"
+title: "マーケティングエンジニアという肩書きを求人と年収の一次情報で確かめる"
+emoji: "🧭"
 type: "tech"
-topics: ["マーケティング", "データ分析", "意思決定", "MarTech"]
+topics: ["キャリア", "マーケティング", "AIエージェント", "採用", "MarTech"]
 published: false
 ---
 
-「マーケティングエンジニアリング」という言葉には、少なくとも2つの使われ方があります。1998年に教科書とソフトウェアで定着した応用分野の名前と、求人で見かける職種名「マーケティングエンジニア」です。この2つは、名前が近いわりに重点が違います。
+2026年に入って「マーケティングエンジニア（Marketing Engineer）」という肩書きが急に目立つようになりました。「2026年に登場した新職種」「トップ層は年収100万ドル」「新しいタイプの Forward Deployed Engineer」といった強い主張がセットで流通しています。
 
-この記事では、前者、つまり学術分野としてのマーケティングエンジニアリングを扱います。定義、代表モデル、日本語圏での用法、そして「成功事例」としてよく引かれる金額がどこまで一次資料で確かめられるかを整理します。データが薄い小さな組織でも使える部分がどこかまで落とします。
+この記事は、その肩書きを採用する側・目指す側・記事にする側が判断できるように、一次情報（本人の発言、企業の公式ページ、公開求人、公開ボードの掲示）と突き合わせて整理します。扱うのは**求人とキャリアとしての職種**であり、Lilien らが1998年に定着させた学術分野 Marketing Engineering ではありません。名前は似ていますが別物です。
 
 ![記事の全体像](/images/marketing-engineer-2026_20260907/overview.png)
 *この記事の全体像。以下、順に解説します。*
 
-## マーケティングエンジニアリングとは
+## マーケティングエンジニアとは
 
-マーケティングエンジニアリングは、マーケティングのデータと知識を、意思決定支援の道具へ系統的に翻訳する応用分野です。
-
-Gary L. Lilien と Arvind Rangaswamy が1998年の教科書で用語を定着させました。2002年の査読論文 [Bridging the marketing theory–practice gap with marketing engineering](https://doi.org/10.1016/S0148-2963(00)00146-6) は、この分野を次のように定義しています。
-
-> the systematic process of putting marketing data and knowledge to practical use through the planning, design, and construction of decision aids and marketing management support systems (MMSSs)
-
-つまり「意思決定支援（decision aid）とマーケティング管理支援システム（MMSS）を計画し、設計し、構築することを通じて、マーケティングのデータと知識を実用に供する系統的なプロセス」です。同じ論文は、エンジニアリングという語を「特定の問題を解くためにアートとサイエンスを組み合わせること」と括弧書きしています。
-
-### 3つの意思決定の置き方
-
-この分野の特徴は、意思決定の置き方を3つに切り分けたことです。
-
-| 置き方 | 何に依拠するか | 代表例 |
-|---|---|---|
-| 概念的マーケティング | 個人のメンタルモデル | 経験と直感だけの予算決め |
-| マーケティングエンジニアリング | データと判断をモデルへ翻訳した支援 | Syntex の営業規模モデル、Marriott のコンジョイント |
-| 自動化マーケティング | システムの推奨をそのまま実行 | スキャナ分析の自動レポート |
-
-真ん中が本分野の立ち位置です。モデルは予測や、制約下での条件付き最適解までを出します。その解を採用するか、修正するか、例外を入れるかは人が決めます。この結合を残す点が、推奨をそのまま実行する自動化との違いです。
-
-### 意思決定支援までの基本的な流れ
-
-理論がモデルになり、モデルが支援システムになり、支援システムが判断と結合して施策になります。ただし一方通行ではありません。Little が挙げた「適応的であること」は、新しい情報を得たらモデルを調整できることを指します。施策の結果と学習は、データとモデルへ戻ります。
+2026年時点で、Marketing Engineer という同じ文字列は、少なくとも3つの違う仕事を指しています。まずこの三層を分けないと、求人も年収も混ざります。
 
 ```mermaid
 flowchart TD
-  Sci["Marketing Science"] --> Know["理論と定量モデル"]
-  Data["市場データ"] --> Aid["decision aid / MMSS"]
-  Know --> Aid
-  Judge["経営者の判断"] --> Aid
-  Soft["ソフトウェア"] --> Aid
-  Aid --> Dec["施策の選択と資源配分"]
-  Dec --> Out["売上、利益、学習"]
-  Out -->|"新しい情報で較正"| Data
-  Out -->|"モデルの調整"| Know
+  Title["肩書き Marketing Engineer"] --> L1["層1 半導体の TME / PME"]
+  Title --> L2["層2 日本の計測 / MA / Reverse ETL / グロース"]
+  Title --> L3["層3 2026年の AI エージェント職"]
+  L1 --> Intel["Intel / Cisco の<br/>フィールド技術マーケ"]
+  L2 --> JP["MA 実装 / Reverse ETL /<br/>グロースハッカー"]
+  L3 --> Profound["Profound 2026-04<br/>職種宣言"]
+  L3 --> Isenberg["Isenberg 2026-08<br/>拡散"]
 ```
 
-思想的な祖先は、John D. C. Little が1970年に出した [decision calculus](https://doi.org/10.1287/mnsc.16.8.B466) です。Little は、マネージャーが実際に使うモデルの条件を6つ挙げました。単純であること、頑健であること、制御しやすいこと、適応的であること、可能な限り完全であること、対話しやすいことです。この6要件は、いま自分でモデルや自動化を組むときの点検表としてそのまま使えます。
+- **層1**: Intel の Product Marketing Engineer、Cisco の Technical Marketing Engineer。1990年代からある古典職で、製品の技術ナラティブ、PoC、フィールド支援を担います
+- **層2**: 日本語圏で同名の求人に多い型。GA4 / GTM の計測、MA・CRM 実装、Reverse ETL、グロースハック
+- **層3**: 2026年に新しく職種として宣言された型。AIエージェントで自社の成長システムを組む仕事
 
-### 教科書は最初からソフトウェアと組だった
+以下、断りなく「2026年型」と書くときは層3を指します。
 
-1998年の教科書 *Marketing Engineering: Computer-Assisted Marketing Analysis and Planning*（ISBN 0-321-00194-X）は、ソフトウェアモデル26個と組で出ました。配布形態は教科書付属のディスクから Excel アドインへ、さらにブラウザで動く [Enginius](https://www.enginius.biz/) へ移っています。
+### 2026年型の一次定義
 
-現行版の *Principles of Marketing Engineering and Analytics* 3rd（DecisionPro、2017、ISBN 978-0985764821）が扱う領域は、顧客価値、STP、ポジショニング、予測（Bass、ASSESSOR）、新製品（コンジョイント）、ミックス（価格、配分、販促）、デジタル（検索広告、テキスト、パネル）です。
+定義の一次は2つあります。
 
-## 注意点
+[Nick Lafferty](https://nicklafferty.com/blog/marketing-engineer/) による定義:
 
-この分野を紹介する二次情報には、一次資料と食い違う数値がいくつも流通しています。予算や意思決定の根拠に引用する前に、次を押さえてください。
+> A Marketing Engineer doesn't do the marketing. They build the machine that does.
 
-### 「年2,500万ドル」は売上増であって利益ではない
+Greg Isenberg の番組公式記事（2026-08-31）による定義:
 
-Syntex Laboratories の事例は、この分野の代表的な成功譚です。原論文である [Lodish, Curtis, Ness, Simpson (*Interfaces* 18(1), 1988)](https://doi.org/10.1287/inte.18.1.5) の要旨は、営業規模と配置の変更が **年2,500万ドル、8%の売上増** を継続的にもたらしたと書いています。開発の一時費用は3万ドルです。
+> A marketing engineer turns market signal into pipeline using AI agents, data, code, and taste.
 
-一方、同じ論文を引用した Lilien ら（*JBR* 2002, p.112）は、**年2,500万ドル超の利益** と書いています。売上と利益は同じ数字ではありません。引用するなら原論文の語、つまり「売上増」を使ってください。
+2つは言い方が違うだけで、**作る対象がシステムである**という点で一致しています。マーケティングを自分でやるのではなく、マーケティングをする機械を作る。市場のシグナルをパイプラインに変える経路を組む。これが層3の中身です。
 
-### ABB Electric の「シェア4%から40%超」は原論文の要旨にない
+[Profound のマニフェスト](https://www.tryprofound.com/marketing-engineer)は、Marketing Ops との切り分けも明示しています。Ops はインフラを動かす役割、Engineering はその上で新しいマーケティングを発明する役割、という分け方です。
 
-[Gensch, Aversa, Moore (*Interfaces* 20(1), 1990)](https://doi.org/10.1287/inte.20.1.6) の要旨が書いているのは、業界売上が50%落ちるなかで選択モデルの情報システムを使い、業界の支配的企業になった、というところまでです。よく引かれる「シェア4%から40%超」は、要旨には現れません。2002年の論文による要約側の数値です。
+### 仕事の置き方
 
-### 出典が書籍の孫引きになっている数値
-
-次の数値は、2002年の論文が他の書籍から転記したものです。原書籍を直接確認しないかぎり、孫引きとして扱ってください。
-
-- ドイツ鉄道 BahnCard の保持者350万人、年2億ドル超の利益（出典は Dolan と Simon *Power Pricing*, 1996）
-- 効果研究の相関係数19%、25%、54%、複数研究平均の39%対33%（出典は Russo と Shoemaker *Decision Traps*, 1989, p.137）
-
-### 販売文と自己申告
-
-「五大陸150校超で採用」は Amazon の著者ノートによる自己申告です。Enginius 公式が掲げる「ワンクリックで40ページのセグメンテーション報告」は販売文です。ケース数「30+」、スライド数「730+」も公式サイトの現時点の文言で、変動します。
-
-### 「2020年代に MarTech へ進化した」という物語は学術一次ではない
-
-Wikipedia の記述にある「クラウド、CDP、生成AIで統合システムになった」という拡張は、2026年刊行の一般書に依存しています。Lilien の定義を MarTech 実装へそのまま溶かす読み方は、学術一次資料からは支持されません。
-
-### 著者自身が限界を書いている
-
-2002年の論文（p.119）は、この分野が万能薬ではなく、誰にでもどの状況にも向くわけではないと明記しています。ソフトウェアの操作が簡単であることは、偽の安心を生みます。定量に強い人は技術に引きずられ、弱い人は無視するか無批判に受け入れる、とも書かれています。
-
-## どんなモデルを扱うのか
-
-Enginius が2026年9月時点で列挙しているモデルは、セグメンテーション、ポジショニング、コンジョイント、感情分析、予測回帰、社会ネットワーク、資源配分、CLV、価格最適化、Bass 予測、GE/McKinsey マトリクス、パネル分析です。
-
-入力と出力の型は決まっています。
+2026年型の仕事は、次のようなループとして描けます。
 
 ```mermaid
 flowchart LR
-  In["調査、時系列、判断"] --> Mod["反応、STP、コンジョイント、Bass、配分、CLV"]
-  Mod --> Out2["what-if、マップ、部分効用、配分案"]
-  Out2 --> Hum["人が方向を読み、例外を入れる"]
+  Signal["顧客の言葉、採用、資金、競合"] --> Repo["Growth repo<br/>customer truth"]
+  Repo --> Agents["エージェントと自動化"]
+  Agents --> Human["人が taste と承認を入れる"]
+  Human --> Pipe["コンテンツ、outbound、広告、AEO"]
+  Pipe --> Learn["学習して次のテスト"]
+  Learn --> Repo
 ```
 
-重要なのは、右端が人で終わっていることです。資源配分や価格最適化のモデルは、制約下で利益を最大化する配分や価格といった具体的な推奨解を提示します。それでも、その解を採用するか修正するかの判断は人の側に残ります。
+要点は2つあります。ひとつは、シグナルの蓄積場所（Growth repo、顧客の一次言語）がループの起点かつ戻り先になっていること。もうひとつは、エージェントの出力と実行のあいだに人の承認が挟まっていることです。
 
-### データが薄いときに動くもの、動かないもの
+### 2つの Flavor
 
-小さい組織で先に動かせるのは **資源配分** です。Syntex の事例がそうであったように、データが薄くても Delphi 法（専門家の判断を構造化して集約する手法）で反応関数を置けば計算は回ります。
+Hanna Huffman は、この職種を2つに分けています。
 
-一方、コンジョイントと知覚マップは調査設計とサンプルが要ります。顧客数が少ない状態でのセグメンテーションは、手法の前提を満たしにくくなります。
+- **Flavor 1**: 組織に埋め込まれ、マーケチームのシステムを作る係
+- **Flavor 2**: 一人で成長 OS を回す係
 
-### ライセンスの条件
+この2つは求められるものが違います。JD（職務記述書）を書くときに、どちらなのかを先に決めないと採用が破綻します。
 
-Enginius のライセンスは公式の acquire ページが一次です。
+## 注意点
 
-| 種別 | 条件 | 価格 |
+流通している主張のうち、一次情報と衝突するものが4つあります。
+
+### 「2026年に生まれた世界初の職種」は成り立たない
+
+ラベルの先行例が複数あります。
+
+- Intel は1990年代末から Product Marketing Engineer を求人に出しています
+- Scott Brinker は2008年にブログを開始し、marketing technologist という役割の普及と体系化を進めています（本人は[この語が自分のブログより前から存在した](https://chiefmartec.com/2011/02/got-marketing-technologists/)と明記しています）
+- MediaMath の Peter Phelan は [2014-05-17 の投稿](https://www.linkedin.com/pulse/20140517035113-48456821-what-s-a-marketing-engineer)で「we originated the position Marketing Engineer」と書いています（中身はアドテクの client success 回転研修です）
+- Adobe の地域トップは2022年にこの語を使っています
+
+新しいのは**ラベル**ではなく、2026年に定義し直されたエージェント中心の仕事の中身です。この2つを分けてください。
+
+### 「年収100万ドル」にオファーの一次はない
+
+Isenberg の一次の表現は「BEST ones」「top 1%」「18から24ヶ月後」です。つまりトップ層についての予測であって、観測値ではありません。番組公式アカウントは翌日に上限を150万ドルへ伸ばしていますが、根拠の追加はありません。
+
+公開ボード [marketingengineer.jobs](https://www.marketingengineer.jobs/) を2026-09-08 に確認したところ、100万ドルの掲示はありませんでした。給与を開示している掲示は次のとおりです。
+
+| 企業 | 求人タイトル | 給与帯（base） |
 |---|---|---|
-| Instructor | 学位授与機関の教員。Udemy と Coursera は対象外 | 無料、無期限 |
-| University | 大学が席を買う。1席は1学生メール。グループ共有は無効化 | 席数、期間（6または12ヶ月）、含むモデルで見積。公開定価なし |
-| Student | 学生が8桁コードで購入 | 公開定価なし |
-| Business | 法人とコンサル | デモ予約、公開定価なし |
+| Profound | Marketing Engineer | $135,000–200,000 |
+| Harvey | Marketing Engineer | $136,000–204,000 |
+| Figma | Marketing Engineer | $127,000–296,000 |
+| Shepherd | Marketing Engineer, Brokerage Growth | $145,000–190,000 |
 
-注意点が2つあります。
+集計条件は「タイトルが Marketing Engineer に完全一致し、給与を開示しているもの」で、これに当たるのが上の3件（Profound、Harvey、Figma）です。Shepherd は修飾語付きなので参考として並べています。完全一致3件だけでも帯は $127k–296k、中央付近は $135k–200k で変わりません。いずれにせよ100万ドルとは1桁違います。
 
-ひとつは、`https://www.enginius.com` は2014年創業の**別会社**であり、DecisionPro の製品ではないことです。ドメインを取り違えないでください。
+同じボードには修飾語付きの掲示も他にあります。たとえば Legora の「AI Marketing Engineer」は $188k–231k で、職務は自社マーケティング向けのAIワークフロー構築です。この帯に含めても結論は動きません。一方、Expedia の「Principal Software Development Engineer - Business to Agent」（$231k–324k）は職種名も職務も違うので、この集計には含めていません。
 
-もうひとつは、提供範囲と組み込み適性を分けて見る必要があることです。公式サイトは法人、マーケティングコンサルタント、インキュベーター向けの業務利用を明示しており、教育専用の製品ではありません。一方で、レート制限、公開API、SLA、データレジデンシーに関する公式の記載は確認できませんでした。自社システムへ組み込む前提で検討するなら、これらの条件は個別に問い合わせて確かめてください。
+なお、これらはすべて**基本給**の掲示です。株式や追加報酬は別に積まれます。
 
-## 日本語の「マーケティング・エンジニアリング」は同じものか
+なお、独立系の給与調査で見かける数字も注意が要ります。PayScale の平均 $74,614（n=14、更新2026-09-01）は層1の半導体型を拾ったもので、AI職の中央値ではありません。
 
-日本語圏では、同じ問題意識が別の看板で並んでいます。
+### 「Google はもう雇った」は独立確認できない
 
-日本語の標準的な入門書は、上田雅夫と生田目崇による[『マーケティング・エンジニアリング入門』（有斐閣、2017）](https://www.yuhikaku.co.jp/books/detail/9784641220829)です。副題は Introduction to Marketing Engineering ですが、**Lilien の教科書の翻訳ではありません**。
+Profound のマニフェスト（2026-09-08 時点）は Google について「already hired」と書いています。一方、Google マーケティング幹部 Marvin Chow 本人の投稿（2026年4月）の表現は「hiring our first」、つまりこれから雇う、です。
 
-目次は、定義、データの注意、市場理解、反応分析、最適化、予測、感性、施策の実施と確認、今後、という構成です。第7章の「感性」と第8章の「施策効果を事前に確認する実験」は、Lilien 3rd の章立てと一致しません。日本語圏で独自に組まれた入門書です。
+2つは書かれた時点が違うので、その間に採用が完了した可能性は排除できません。ただし、実際に雇ったことを示す公開 JD や人事発表は確認できませんでした。「Google が採用済み」は、独立に確認できていない主張として扱ってください。
 
-[オペレーションズ・リサーチ学会の書評（高野祐一、2017年6月号）](https://orsj.org/wp-content/corsj/or62-6/or62_6_383.pdf)は、この分野を「科学的知識で意思決定を支援し、効果、効率、生産性を上げる分野」と紹介しています。著者が示す実施上の注意として、小さく始める、貢献を示す、低コストから始める、の3つを挙げています。
+### 熱狂の発信者と製品の売り手が同じ
 
-看板の揺れも実在します。生田目崇の研究室名は「マーケティング・サイエンス」です。[中央大学「知の回廊」（2014）](https://www.chuo-u.ac.jp/usr/kairou/news/2014/10/23952/)は番組を「マーケティング・エンジニアリングの最前線」と呼び、本人の専門を「経営科学とマーケティング・サイエンス」と書いています。同じ研究者が2つの名前を使っています。
+Profound は、職種名、コース、認定、ジョブボード、そして自社製品を同時に出しています。職種の普及がそのまま自社の商売になる立場です。この構図を踏まえたうえで、掲示件数や需要の主張を読んでください。2026-09-08 時点の公式ボードの掲載は十数件で、「数百件の求人がある」という規模は確認できませんでした。
 
-なお、日本マーケティング協会が2024年に行った定義刷新は、マーケティングそのものの定義であって、本分野の定義ではありません。
+## 職種名はいつからあるのか
 
-### 職種名「マーケティングエンジニア」との関係
+時系列で並べると、「誰が発明したか」が層ごとに違うことが見えます。
 
-職種としての「マーケティングエンジニア」という呼び方は、近年に生まれたものではありません。たとえば [Pantheon は2019年の記事](https://pantheon.io/blog/what-does-marketing-engineer-do)でこの職種を紹介しており、職務に実装だけでなく分析、計測、A/Bテストを含めています。
-
-一方、日本語のブログや求人には、SQL、Python、MA、広告API、AIエージェントといった実装スキルを前面に出す用法もあります。こうした用法は、Lilien のモデル一覧（反応関数、STP、コンジョイント、Bass 予測など）とは重点が違います。ただし、分析や意思決定支援の部分では重なり得ます。なお、日本語圏での用法の分布は、本記事では網羅的に調べていません。
-
-言えるのは、**分野を採用するかどうかと、職種を採用するかどうかは別の決定である**ということです。求人票の用法は企業ごとに幅があるので、職種名から職務内容を推測せず、個別に確かめてください。
-
-## 隣接分野との違い
-
-| 概念 | 一次に近い定義 | 本分野との関係 |
+| 時期 | 何が起きたか | 中身 |
 |---|---|---|
-| Marketing Science | 市場行動とマーケ活動の効果を定量概念で理解する | 理解が主。Engineering は支援システムの設計が主 |
-| MMSS | IT、分析、データ、知識を意思決定者に渡す装置 | 成果物。Engineering はその計画と構築のやり方 |
-| Marketing Analytics | 3rd が書名に Analytics を足した | 技法の重なり。Engineering は機会費用と判断結合を残す |
-| MMM | 市場反応モデルの一種 | 部分集合。STP とコンジョイントは含まない |
-| Decision calculus | Little 1970 の6要件 | 思想的祖先 |
-| MarTech | 実行とデータの製品群 | モデルは必須でない |
-| Marketing Ops、Growth、RevOps | 運用、実験、ファネルの職能 | 組織の仕事。モデル体系ではない |
-| 職種 Marketing Engineer | 実装スキル中心の求人。用法は企業差が大きい | 名称が近い。分析と意思決定支援で一部重なる |
+| 1990年代〜 | Intel / Cisco の Product / Technical Marketing Engineer | 製品の技術ナラティブ、PoC、フィールド支援 |
+| 2008 | Brinker が chiefmartec を開始し marketing technologist を体系化 | マーケ部門への技術者のネイティブ配置 |
+| 2014-05 | MediaMath が originated と主張、Marketing Engineer Program 開始 | アドテク client success の回転研修 |
+| 2010年代（日本） | ラルズネットが職種ページを公開 | 広告、SEO、UI。本人はグロースハッカーと言い換え |
+| 2021-07 | Scale AI が GTM Engineer 求人を掲載 | Clay の2023年 coined 主張より前 |
+| 2023 | Clay が GTM Engineer を社内職として広める | 営業パイプラインの自動化 |
+| 2026-04-14 | **Profound が Marketing Engineer を新職として発表** | エージェント、自動化、データ基盤 |
+| 2026-08-31 | **Isenberg が FDE の比喩と $1M で拡散** | 成長システムと Growth repo |
 
-```mermaid
-flowchart TD
-  MS["Marketing Science"] -->|"モデルと知見"| ME["Marketing Engineering"]
-  ME --> MMSS["MMSS という成果物"]
-  AN["Analytics"] -->|"技法の重なり"| ME
-  MMM["MMM"] -->|"反応モデルの一部"| ME
-  MT["MarTech"] -->|"データと実行"| JOB["職種 Marketing Engineer"]
-  JOB -.->|"名称が近い<br/>一部重なる"| ME
-```
+2026年型のラベルを職種として立てたのは Profound（4月）、それを広く流通させたのが Isenberg（8月、4ヶ月後）です。**Isenberg は coiner ではなく拡散者**です。
 
-区別の勘所は、**モデルが必須かどうか**と、**機会費用を明示的に扱うかどうか**です。MarTech はモデルなしでも成立します。Marketing Engineering はモデルを介して、ある案を選ぶことで諦める最良の代替案の価値を、議論の土俵に載せます。教科書の10の教訓も、行動した場合と行動しなかった場合の両方について機会費用を枠づけよ、と書いています。
+補足すると、Isenberg が2024-07-25 に書いたブログ *Marketers are the New Engineers* は「コンテンツマーケターが新しいエンジニアだ」という別の主張で、職種名は使っていません。二次情報でこのブログが「Isenberg の初出」として引かれていることがありますが、誤リンクです。
 
-## 効果はどこまで確かめられているか
+## 隣接職種との違い
 
-この分野の効果に関する文献は、支持と反証の両方があります。片側だけを引くと判断を誤ります。
+「同じ仕事の別ラベル」として一括りにはできません。誰の問題を解くかで分かれます。
 
-### 支持する側
+| 職種 | 対面 | 成果指標 | 所属 | 2026年型との関係 |
+|---|---|---|---|---|
+| Marketing Engineer（2026年型） | 自社マーケ | パイプライン、CV、トラフィック | Marketing | 基準 |
+| FDE（Palantir） | 顧客現場 | 顧客の運用KPI | BD / Applied AI | 型の借用。職務は別 |
+| Growth Engineer | 自社ユーザー | 獲得、活性化、定着 | Engineering | 指標は近い。所有物がプロダクト |
+| GTM Engineer（Clay） | 自社GTM | シグナル、outbound | RevOps / Growth | **最も近い** |
+| Marketing Ops | 内部イネーブル | データ品質、実行速度 | CMO配下 | Profound が明示分離 |
+| MarTech / Technologist | 内部 | スタック、計測、独自開発 | マーケ / Business Systems | 運用から独自開発まで含む広い職域。重なる部分がある |
+| Content Engineer | 内部 | コンテンツの量と品質 | Marketing | 部分集合 |
+| GitLab Fullstack Marketing | 内部 | マーケサイト | Digital Experience | 名前の衝突。サイトSWE |
+| Intel / Cisco TME | 顧客とセールス | 採用とPoC | Product Marketing | 名前の衝突。古典職 |
 
-- 2002年の論文が示す、概念的・工学的・自動の三分法そのものが、議論の枠として機能する
-- Lodish 1988 の売上増（原論文の要旨が documented と明記）
-- Gensch 1990 の、業界縮小下での存続
-- Wind らによる Courtyard by Marriott のコンジョイント適用（1989）
-- [Blattberg と Hoch (*Management Science* 36(8), 1990)](https://pubsonline.informs.org/doi/10.1287/mnsc.36.8.887): 検証した5つの業務予測場面で、モデルとマネージャーの併用が、それぞれの単独利用を上回りました。50:50の等重みは、そこで検討された実用的なヒューリスティックです。あらゆる比率・条件での最適性が示されたわけではありません
-- [McIntyre (*Management Science* 28(1), 1982)](https://pubsonline.informs.org/doi/abs/10.1287/mnsc.28.1.17): 96人の実験で、decision calculus 型のモデルが意思決定品質、とくに利益の達成度を改善しました
-- 教科書の「10の教訓」が、判断が必須であることとモデルに欠点があることを先に書いている
+### FDE との関係
 
-### 反証する側
+Isenberg の「新しいタイプの FDE」という言い方は、採用広報としては効きますが、[Palantir 公式の FDE の定義](https://blog.palantir.com/a-day-in-the-life-of-a-palantir-forward-deployed-software-engineer-45ef2de257b1)とは職務が違います。
 
-- [Chakravarti, Mitchell, Staelin (*Management Science* 25(3), 1979)](https://doi.org/10.1287/mnsc.25.3.251): ADBUDG 型のモデルで、**未経験領域への外挿は予測を誤り、条件付きで決定を悪化させ得る**
-- [Little と Lodish (1981)](https://doi.org/10.1177/002224298104500403) のコメント: 上記の実験課題は現場での較正と違う。したがって実験の否定側も一般化は弱い
-- Midgley (*Marketing Theory* 2(4), 2002): 知識のコード化は目的次第で、リターンが低い目的がある
+- **FDE**: 顧客に埋め込まれ、顧客の運用成果を測る。one customer, many capabilities
+- **Marketing Engineer（2026年型）**: 自社のマーケティングに座り、パイプラインとコンバージョンを測る
 
-支持側の McIntyre と反証側の Chakravarti らは、どちらも decision calculus を実験で扱いながら結論が逆です。実験条件が異なるため単純比較はできず、今回確認した要旨だけでは、結果が分かれた原因までは特定できません。文献が一枚岩ではない、というところまでが言えることです。
+重なるのは「現場の手順を見てから仕組みを置く」という姿勢です。成果の帰属先も失敗モードも違います。
 
-### 別に扱うべきこと
+なお、この二項対立は完全ではありません。Stripe の [Forward Deployed AI Accelerator, Marketing](https://stripe.com/careers/listing/forward-deployed-ai-accelerator-marketing/8055930) は、FDE の手法を25〜45人の自社マーケチームへ適用する形をとっています。社内に FDE 型を置く事例です。
 
-次の2つは、モデルの効果の反証ではなく、資料と製品の側の問題です。効果の議論と混ぜないでください。
+## 年収はいくらか
 
-- 2002年の論文自身が、Syntex の売上を利益と書き換えている（引用の不整合）
-- Enginius は公開価格も SLA も公表しておらず、教育以外の導入件数を公式情報から読み取れない（製品情報の不足）
+層を分けて読む必要があります。混ぜると1桁ずれます。
 
-### 筆者としての整理
+| 層 | 数字 | 時点 | 性質 |
+|---|---|---|---|
+| Isenberg の言説 | $250k / $500k / $1M（翌日$1.5M） | 2026-08-31 | トップ1%の予測。オファーの一次なし |
+| Huffman の言説 | Flavor 2 に $400k | 2026-04-27 | 「創業者なら払う」という意思表明 |
+| 公開ボードの掲示 | 完全一致3件で $127k–296k、中央付近 $135k–200k | 2026-09-08 | base。equity は別 |
+| Levels.fyi の GTM Engineer | median TC 約 $156k、p90 約 $397k | 2026-09-08取得 | 近接職。n は非開示 |
+| [Glassdoor の Marketing Engineer](https://www.glassdoor.com/Salaries/marketing-engineer-salary-SRCH_KO0,18.htm) | median total 約 $164k | 2026-09-08取得 | 同名の複数業界・職務が混在した集計。2026年型だけの中央値ではない |
+| PayScale | 平均 $74,614（n=14） | 2026-09-01更新 | 層1 |
 
-以上の文献を踏まえると、「モデルを入れればよい」は支持されません。同時に「判断だけの方がよい」も、Little、Blattberg–Hoch、McIntyre、Syntex が支持しません。
+Isenberg 自身は、収益化の経路として社内採用、コンサル（月$5k–$30k）、プロダクト化したサービス、ソフトウェアの4つを挙げています。これらを合算せよという明示はありませんが、参考までに、コンサルだけを月$30kで12ヶ月回した場合の年間収入は$360kです。
 
-そこで実務上の指針としては、次の狭い運用を勧めます。**領域内の判断でモデルを較正し、Little の6要件（とくに単純さと頑健さ）を満たし、引用する金額は一次資料の語で読む。** これは筆者の実務提案であり、文献が一意に導く結論ではありません。
+言えるのは、**確認できた基本給の掲示に100万ドルは存在しない**ということです。雇用の基本給、株式を含む総報酬、事業としての売上は別々に見る必要があります。
 
-## 小さい組織で今日から使えること
+### 求人が求めるスキル
 
-ソフトウェア一式の導入は、この分野の実務核ではありません。教育用 SaaS の全モデルを入れる必要もありません。持ち込む価値があるのは、次の4つです。
+必須と歓迎は求人ごとに違います。まとめて「必須」と読むと、採用基準も学習の優先順位も誤ります。
 
-1. **施策の上限を、粗利と回収から逆算する。** 許容CAC（顧客獲得コスト）の算術は、本分野の資源配分の考え方とそのまま接続します。
-2. **新しいチャネルや記事テーマを足す前に、機会費用を一文で書く。** 「その予算と時間を投じることで諦める、最良の代替施策は何か」を書きます。あわせて「足さなかった場合に失うもの」も並べると、追加と見送りを同じ土俵で比べられます。片方だけを書くと、追加は常に正しく見えます。
-3. **自動化やエージェントに出す仕事が、Little の simple と robust を満たすか点検する。** 満たさない仕事には人の判断ゲートを残します。
-4. **成功事例を引用するときは、売上と利益を混ぜない。** 原論文の語をそのまま使います。
+公開JDと定義者の発言で、**求人の中核**に置かれているもの:
 
-逆に、次の条件が満たされたときは踏み込んでよい範囲が広がります。
+- **マーケティングの判断と taste**（Isenberg、Lafferty がともに第一に置く）
+- **本番に出したエージェントまたは LLM ワークフロー**（[Figma](https://job-boards.greenhouse.io/figma/jobs/6013495004)、[Stripe](https://stripe.com/careers/listing/forward-deployed-ai-accelerator-marketing/8055930)、Profound の JD）
+- n8n / Gumloop / Claude Code / API
+- 失敗モードの理解とメンテナンス（Lafferty）
 
-- 調査予算と十分なサンプル数を確保できるなら、新製品設計にコンジョイントを足す
-- 実装の空白がボトルネックなら、職種（または相当スキル）は分野の採用とは独立に検討する
+**歓迎要件**に置かれていることが多いもの:
+
+- SQL、CRM / MA（Figma は「While it's not required」の項目、Stripe も Marketo・Salesforce の知識を歓迎要件として掲載）
+
+Lafferty は「技術は判断の倍率である」と書いています。判断が先で、技術がそれを増幅する順序です。Huffman は「ChatGPT で広告コピーを書くことではない」と、コピー作成だけの解釈を明確に否定しています。
+
+## 日本語圏の求人はどうなっているか
+
+まず、求人サイトの生カウント（Indeed 5,000+、Green 999+ など）はAND検索のノイズなので使えません。個別のJDを確認すると、次のように類型が分かれます（すべて2026-09-08 時点、掲載媒体に出ている年収帯）。
+
+| 類型 | 企業 | 求人タイトル | 年収帯 | 媒体 | 2026年型との距離 |
+|---|---|---|---|---|---|
+| 計測とタグ | メドレー | デジタルマーケティングエンジニア | 700–1,100万 | HRMOS | 基盤の一部 |
+| 計測とタグ | [アユダンテ](https://ayudante.jp/recruiting-jp_dm-engineer.htm) | デジタルマーケティングエンジニア | 400–1,000万 | 自社採用ページ | 基盤の一部 |
+| データ基盤 | エス・エム・エス（社名非公開、公開情報と照合） | マーケティングエンジニア/データエンジニア | 690–810万 | コトラ | 隣接 |
+| データ基盤 | [ニンテンドーシステムズ](https://herp.careers/v1/nscareer/2VYZl9ksKJl5) | マーケティングシステムエンジニア | 520–1,500万 | HERP | 隣接 |
+| データ基盤 | MonotaRO | マーケティングプラットフォームエンジニア | 550–1,000万 | Green / ビズリーチ | 隣接 |
+| MA / CRM / LINE | 電通デジタル、Ansatz、タイミー | 各社の MA・CRM 実装職 | 各社の採用ページで個別に確認 | 各社採用ページ | MarTech。別物 |
+| グロースハッカー | ラルズネット | マーケティング職（本人はグロースハッカーと言い換え） | 非開示 | 自社採用ページ | 部分一致。エージェントはJDにない |
+| DevRel | サイボウズ | エンジニアマーケティング | 560–800万 | 自社採用ページ | 別職。語順が違う |
+| 半導体 TME | ルネサス、Keysight | Technical Marketing Engineer 等 | 混入する | 各社採用ページ | 層1 |
+| 近い仕事、別名 | [SalesNow](https://herp.careers/v1/salesnow0801/cxOP3Qg2Fafv) | GTMエンジニア | 900–2,000万 | HERP | **2026年型に最も近い** |
+| 近い仕事、別名 | ラクスル | 【テクノロジー本部】GTMエンジニア | 740–1,000万 | 自社採用ページ | **2026年型に最も近い** |
+
+年収帯はすべて個社の掲示をそのまま載せています。複数社をまとめた数字は使っていません。MA / CRM 類型については、個社ごとの帯を今回は確認していないため、金額を空欄にしています。
+
+「日本にこの求人はない」という言い方は正確ではありません。無いのは**標準化された肩書き**です。仕事自体は複数の名前に分散して存在します。
+
+英語圏の2026年型に近い仕事を日本語で探すなら、「マーケティングエンジニア」より **GTMエンジニア、グロースエンジニア、AIエージェント（マーケティング）** の方が求人と一致します。同名だけを追うと、MA実装と半導体TMEに吸い込まれます。
+
+## 採用する側・目指す側が残すべきもの
+
+### 採用する側
+
+1. **肩書きより Flavor と成果指標を先に書く。** 組織のシステム係（Flavor 1）と一人成長OS（Flavor 2）は別のJDにする
+2. **米国の予算の本丸は base $130k–$230k。** 上限は Figma の $296k まで開きます。$1M はJDに書かない
+3. **中核要件は、本番に出した自動化とメンテナンス。** SQL や CRM/MA を必須にするか歓迎にするかは、既存チームの穴で決める。コピー作成だけでは採らない
+4. **日本では類型をJDの冒頭で宣言する。** 2026年型を採りたいなら、GTM / グロース / AIエージェント（マーケ）と併記する
+5. **報告線をどこに置くか先に決める。** Josh Grant（StackedGTM）は、自身が見た匿名の失敗2例から、報告線の設計が重要だと指摘しています。あわせて「曖昧な状況で90日以内に成果物を出せるか」も、本人の資質として別途論じています（いずれも匿名の観察に基づく指摘です）
+
+### 目指す側
+
+1. **残すのは Growth repo。** 顧客の一次言語（customer truth）には引用かリンクを付ける
+2. **残すのは他人が火曜日に回せるシステム。** 自分だけが使える個人GPTではありません
+3. **ポートフォリオは、動くエージェント1本、計測、CRM連携。** 公開ボードの必須要件に合わせる
+4. **仕事の類型で検索する。** 日本で同名だけを追うと別職に吸い込まれます
+5. **判断と taste を先に残す。** エージェント構築のスキルは、Isenberg 自身がコモディティ化すると言っています
+
+### この職種のプレミアムが消える条件
+
+Isenberg 自身が消滅条件を挙げています。エージェント構築が全員の基礎スキルになれば、専用職としてのプレミアムは消えます。他に、公開ボードのタイトル完全一致が消えてSEO職とSWE職だけになる、という兆候も指標になります。
 
 ## まとめ
 
-- マーケティングエンジニアリングは、データと知識を意思決定支援へ翻訳する応用分野で、1998年の教科書と2002年の査読論文が定義の一次資料です
-- 定義の核は、データ、知識、経営者の判断、ソフトウェアを組み合わせて意思決定を助けることです。モデルは予測や条件付きの最適解を出しますが、採用と修正は人が決めます
-- よく引かれる成功事例の金額には、原論文と二次要約のずれがあります。Syntex の年2,500万ドルは売上増であって利益ではありません
-- 日本語の入門書は Lilien 教科書の翻訳ではなく、独自に組まれた別の本です。職種名「マーケティングエンジニア」とは重点が違いますが、分析と意思決定支援では重なり得ます
-- 文献は支持と反証に分かれます。筆者の実務提案は「領域内の判断で較正し、単純で頑健なモデルを使い、金額は一次資料の語で読む」という狭い運用です
-- 小さい組織が今日から使えるのは、許容CACの逆算、機会費用の明文化、自動化する仕事の点検、引用時の語の統一です
+- Marketing Engineer という肩書きは、2026年時点で3つの違う仕事を指します。半導体の古典職、日本のMarTech実装、そして2026年型のAIエージェント職です
+- 2026年型の定義は「マーケティングをする機械を作る」「市場のシグナルをパイプラインに変える」で、2人の定義者が一致しています
+- 職種として立てたのは Profound（2026-04）、拡散したのが Isenberg（2026-08）です。ラベル自体は Intel、Brinker、MediaMath に先行例があります
+- 年収100万ドルはトップ層についての予測で、オファーの一次情報はありません。公開ボードの開示4件の基本給は $127k–296k、中央付近は $135k–200k です
+- 隣接職では GTM Engineer（Clay型）が最も近く、FDE とは対面も成果の帰属先も違います
+- 日本には標準化された肩書きがないだけで、仕事は GTM / グロース / Reverse ETL などに分散して存在します
+- 確信度を下げるべき主張は「標準化された新職種」「$1M」「Googleは雇った」「日本でも同じ名前」の4つです
+- なお、この記事の求人・年収は2026-09-08 時点の掲示です。掲示は入れ替わるので、判断の前に取得し直してください
 
 この記事が少しでも参考になった、あるいは改善点などがあれば、ぜひリアクションやコメント、SNSでのシェアをいただけると励みになります！
 
 ## 参考リンク
 
-一次資料（本文または公式ページを確認したもの）:
+一次資料:
 
-- Lilien, G. L., Rangaswamy, A., van Bruggen, G. H., and Wierenga, B. (2002). Bridging the marketing theory–practice gap with marketing engineering. *Journal of Business Research*, 55(2), 111–121. https://doi.org/10.1016/S0148-2963(00)00146-6
-- Lilien, G. L., Rangaswamy, A., and De Bruyn, A. (2017). *Principles of Marketing Engineering and Analytics* (3rd ed.). DecisionPro. ISBN 978-0985764821. 目次: https://toc.library.ethz.ch/objects/pdf03/z01_978-0-9857648-2-1_01.pdf
-- Lodish, L. M., Curtis, E., Ness, M., and Simpson, M. K. (1988). Sales force sizing and deployment using a decision calculus model at Syntex Laboratories. *Interfaces*, 18(1), 5–20. https://doi.org/10.1287/inte.18.1.5
-- Gensch, D. H., Aversa, N., and Moore, S. P. (1990). A choice-modeling market information system that enabled ABB Electric to expand its market share. *Interfaces*, 20(1), 6–25. https://doi.org/10.1287/inte.20.1.6
-- Little, J. D. C. (1970). Models and managers: The concept of a decision calculus. *Management Science*, 16(8), B466–B485. https://doi.org/10.1287/mnsc.16.8.B466
-- Chakravarti, D., Mitchell, A., and Staelin, R. (1979). Judgment based marketing decision models: An experimental investigation of the decision calculus approach. *Management Science*, 25(3), 251–263. https://doi.org/10.1287/mnsc.25.3.251
-- Little, J. D. C., and Lodish, L. M. (1981). Commentary on "Judgment based marketing decision models." *Journal of Marketing*, 45(Fall), 24–29. https://doi.org/10.1177/002224298104500403
-- Blattberg, R. C., and Hoch, S. J. (1990). Database models and managerial intuition: 50% model + 50% manager. *Management Science*, 36(8), 887–899. https://pubsonline.informs.org/doi/10.1287/mnsc.36.8.887 （要旨）
-- McIntyre, S. H. (1982). An experimental study of the impact of judgment-based marketing models. *Management Science*, 28(1), 17–33. https://pubsonline.informs.org/doi/abs/10.1287/mnsc.28.1.17 （要旨）
-- Leeflang, P. S. H., and Wittink, D. R. (2000). Building models for marketing decisions: Past, present and future. *International Journal of Research in Marketing*, 17(2–3), 105–126. https://doi.org/10.1016/S0167-8116(00)00008-2
-- 上田雅夫、生田目崇 (2017). 『マーケティング・エンジニアリング入門』. 有斐閣. https://www.yuhikaku.co.jp/books/detail/9784641220829
-- 高野祐一 (2017). 書評. 『オペレーションズ・リサーチ』6月号, 383. https://orsj.org/wp-content/corsj/or62-6/or62_6_383.pdf
-- DecisionPro / Enginius. https://www.enginius.biz/ および https://www.debruyn.info/enginius/
-- 中央大学 (2014). 知の回廊 第98回. https://www.chuo-u.ac.jp/usr/kairou/news/2014/10/23952/
-- Pantheon (2019). What does a marketing engineer do? https://pantheon.io/blog/what-does-marketing-engineer-do
+- Greg Isenberg, X, 2026-08-31. https://x.com/gregisenberg/status/2094518013068484826
+- Greg Isenberg, *Marketing Engineer: The $1M Job with AI Agents*, YouTube, 2026-08-31. https://www.youtube.com/watch?v=8ZC1G1ezN5o
+- Startup Ideas Podcast, X Article, 2026-08-31. https://x.com/startupideaspod/status/2094505890980540534
+- Greg Isenberg, *Marketers are the New Engineers*, 2024-07-25. https://www.gregisenberg.com/blog/marketers-new-engineers
+- Nick Lafferty, *What Is A Marketing Engineer?*, 更新2026-07-30. https://nicklafferty.com/blog/marketing-engineer/
+- Profound, *The Marketing Engineer* manifesto. https://www.tryprofound.com/marketing-engineer
+- marketingengineer.jobs（2026-09-08取得）. https://www.marketingengineer.jobs/
+- Peter Phelan, *What's a Marketing Engineer?*, LinkedIn Pulse, 2014-05-17. https://www.linkedin.com/pulse/20140517035113-48456821-what-s-a-marketing-engineer
+- Palantir, *A Day in the Life of a Palantir Forward Deployed Software Engineer*, 2020-11-02. https://blog.palantir.com/a-day-in-the-life-of-a-palantir-forward-deployed-software-engineer-45ef2de257b1
+- Hanna Huffman, *The Marketing Engineer isn't a rebrand*, 2026-04-27. https://mktrintheloop.com/the-marketing-engineer-isnt-a-rebrand/
+- Figma, Marketing Engineer（求人、2026-09-08取得）. https://job-boards.greenhouse.io/figma/jobs/6013495004
+- Stripe, Forward Deployed AI Accelerator, Marketing（求人、2026-09-08取得）. https://stripe.com/careers/listing/forward-deployed-ai-accelerator-marketing/8055930
+- Shepherd, Marketing Engineer, Brokerage Growth（求人、2026-09-08取得）. https://jobs.ashbyhq.com/shepherd/8b413a20-4309-4992-8e1d-648a018cfe30
+- SalesNow, GTMエンジニア（求人、2026-09-08取得）. https://herp.careers/v1/salesnow0801/cxOP3Qg2Fafv
+- PayScale, Marketing Engineer Salary（2026-09-01更新）. https://www.payscale.com/research/US/Job=Marketing_Engineer/Salary
+- ラルズネット 職種紹介. https://www.rals.co.jp/recruit/job-category/marketing.php
+- サイボウズ エンジニアマーケティング. https://cybozu.co.jp/recruit/entry/career/engineer-marketing.html
+- GitLab, Fullstack Engineer - Marketing. https://handbook.gitlab.com/job-description-library/marketing/fullstack-engineer-marketing/
+- Scott Brinker, *Got marketing technologists?*, chiefmartec, 2011-02. https://chiefmartec.com/2011/02/got-marketing-technologists/
+- Scott Brinker, *Marketing technologist roles and archetypes*, chiefmartec, 2020-01. https://chiefmartec.com/2020/01/marketing-technologists-martech-roles-archetypes/
+- アユダンテ デジタルマーケティングエンジニア（求人、2026-09-08取得）. https://ayudante.jp/recruiting-jp_dm-engineer.htm
+- ニンテンドーシステムズ マーケティングシステムエンジニア（求人、2026-09-08取得）. https://herp.careers/v1/nscareer/2VYZl9ksKJl5
+- Glassdoor, Marketing Engineer Salaries（2026-09-08取得）. https://www.glassdoor.com/Salaries/marketing-engineer-salary-SRCH_KO0,18.htm
 
-二次資料（本文で孫引きと明示したもの）:
+二次資料（利益相反や要約を含むもの）:
 
-- Russo, J. E., and Shoemaker, P. J. H. (1989). *Decision Traps*
-- Dolan, R. J., and Simon, H. (1996). *Power Pricing*
-- Midgley, D. (2002). What to codify: marketing science or marketing engineering? *Marketing Theory*, 2(4), 363–368
+- Jude Cramer, Fast Company, 2026-04-14. https://www.fastcompany.com/91526554/marketing-jobs-engineer-role-job-listings-curious-phenomenon-sign-of-masculinization
+- State of AI Marketing, 2026-09-01. https://www.stateofaimarketing.co/news/marketing-engineer-job-board-salaries/
+- George Chasiotis, GrowthWaves, 2026-04-28. https://www.growthwaves.com/p/marketing-engineer
+- Josh Grant, *How to hire your first marketing engineer*, StackedGTM. https://newsletter.stackedgtm.ai/p/how-to-hire-your-first-marketing

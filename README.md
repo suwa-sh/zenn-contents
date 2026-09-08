@@ -12,7 +12,7 @@
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-09-08 | [🛡️ 中小OSSの脆弱性対応は受付、判定、同時公開から始める](articles/cncf-oss-oss-cncf-io-2026-p5_20260908.md) | OSS, Security, CNCF, GitHub |
-| 2026-09-07 | [📐 マーケティングエンジニアリングの定義と成功事例を一次資料で確かめる](articles/marketing-engineer-2026_20260907.md) | マーケティング, データ分析, 意思決定, MarTech |
+| 2026-09-07 | [🧭 マーケティングエンジニアという肩書きを求人と年収の一次情報で確かめる](articles/marketing-engineer-2026_20260907.md) | キャリア, マーケティング, AIエージェント, 採用, MarTech |
 | 2026-09-07 | [🧭 OpenAIが社内利用データで公開した長時間タスク成功に残る人の介入](articles/openai-openai-index-research-p4_20260907.md) | OpenAI, Codex, AIエージェント |
 | 2026-09-06 | [🧭 規制現場のAI導入1年後に残るのは速度ではなく責任不安と検証税である](articles/ai-arxiv-abs-2609-03456-p7_20260906.md) | AI, SoftwareEngineering, GenerativeAI |
 | 2026-09-06 | [📐 AnthropicのFLT形式化が示す長期エージェントの共有状態と結合検査](articles/anthropic-anthropic-research-p3_20260906.md) | Anthropic, Claude, Lean, AIエージェント |
