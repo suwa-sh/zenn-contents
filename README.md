@@ -7,13 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (410)
+## Articles: 下書き (411)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-09-10 | [📊 マルチテナントKubernetesでGPU指標をテナント別に見せるAdobeの構成](articles/adobe-gpu-cncf-io-2026-whose-p4_20260910.md) | Kubernetes, Prometheus, GPU, Observability |
 | 2026-09-10 | [📡 GitHub組織WebhookとgithubreceiverでCIトレースを一括収集する](articles/github-webhook-ci-ci-cd-cncf-p6_20260910.md) | GitHub, OpenTelemetry, GitHubActions, Observability |
 | 2026-09-10 | [🧩 Google Antigravity SDKの実行監視と状態保存](articles/google-antigravity-sdk-cloud-p5_20260910.md) | Antigravity, Gemini, Python, GoogleCloud, SDK |
+| 2026-09-10 | [🧭 Grok Botを仕事のチームにするHarness・Loop・Graph・Approvalの設計](articles/grok-bot-operating-system_20260910.md) | Grok, AIAgent, Workflow, Architecture |
 | 2026-09-08 | [🛡️ 中小OSSの脆弱性対応は受付、判定、同時公開から始める](articles/cncf-oss-oss-cncf-io-2026-p5_20260908.md) | OSS, Security, CNCF, GitHub |
 | 2026-09-07 | [🧭 マーケティングエンジニアという肩書きを求人と年収の一次情報で確かめる](articles/marketing-engineer-2026_20260907.md) | キャリア, マーケティング, AIエージェント, 採用, MarTech |
 | 2026-09-07 | [🧭 OpenAIが社内利用データで公開した長時間タスク成功に残る人の介入](articles/openai-openai-index-research-p4_20260907.md) | OpenAI, Codex, AIエージェント |
