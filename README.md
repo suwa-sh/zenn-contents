@@ -7,11 +7,10 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (408)
+## Articles: 下書き (407)
 
 | create date | title | topics |
 |-------------|-------|--------|
-| 2026-09-09 | [🔐 Kubernetesの利用者認証を公開OIDCクライアントとPKCEで構成する](articles/cncf-kubernetes-oidc-pkce-p8_20260909.md) | Kubernetes, OIDC, Security, Keycloak |
 | 2026-09-08 | [🛡️ 中小OSSの脆弱性対応は受付、判定、同時公開から始める](articles/cncf-oss-oss-cncf-io-2026-p5_20260908.md) | OSS, Security, CNCF, GitHub |
 | 2026-09-07 | [🧭 マーケティングエンジニアという肩書きを求人と年収の一次情報で確かめる](articles/marketing-engineer-2026_20260907.md) | キャリア, マーケティング, AIエージェント, 採用, MarTech |
 | 2026-09-07 | [🧭 OpenAIが社内利用データで公開した長時間タスク成功に残る人の介入](articles/openai-openai-index-research-p4_20260907.md) | OpenAI, Codex, AIエージェント |
@@ -420,10 +419,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (177)
+## Articles: 公開済み (178)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-09-10 | [🔐 Kubernetesの利用者認証を公開OIDCクライアントとPKCEで構成する](articles/cncf-kubernetes-oidc-pkce-p8_20260909.md) | Kubernetes, OIDC, Security, Keycloak |
 | 2026-09-05 | [🧭 GPT-6 Astraのサイバー能力Criticalは導入判断をどう変えるか](articles/openai-gpt-astra-critical-p1_20260904.md) | OpenAI, GPT, Security, Codex, API |
 | 2026-09-03 | [🤖 Grok Botの構造とデータから理解する導入と安全な運用](articles/grokbot_20260902.md) | AI, Cursor, GrokBot, セキュリティ |
 | 2026-09-01 | [🏭 Uber Software Factoryに学ぶAIエージェント基盤のコスト設計](articles/uber-software-factory_20260831.md) | AIAgent, ClaudeCode, MCP, SRE |

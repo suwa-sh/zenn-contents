@@ -3,7 +3,8 @@ title: "Kubernetesの利用者認証を公開OIDCクライアントとPKCEで構
 emoji: "🔐"
 type: "tech"
 topics: ["Kubernetes", "OIDC", "Security", "Keycloak"]
-published: false
+published: true
+published_at: 2026-09-10
 ---
 
 2026-09-08、CNCF Blog に [Kubernetes access via an identity provider: Public client, not confidential](https://www.cncf.io/blog/2026/09/08/kubernetes-access-via-an-identity-provider-public-client-not-confidential/) が公開されました。
