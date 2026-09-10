@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (407)
+## Articles: 下書き (408)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-10 | [📊 マルチテナントKubernetesでGPU指標をテナント別に見せるAdobeの構成](articles/adobe-gpu-cncf-io-2026-whose-p4_20260910.md) | Kubernetes, Prometheus, GPU, Observability |
 | 2026-09-08 | [🛡️ 中小OSSの脆弱性対応は受付、判定、同時公開から始める](articles/cncf-oss-oss-cncf-io-2026-p5_20260908.md) | OSS, Security, CNCF, GitHub |
 | 2026-09-07 | [🧭 マーケティングエンジニアという肩書きを求人と年収の一次情報で確かめる](articles/marketing-engineer-2026_20260907.md) | キャリア, マーケティング, AIエージェント, 採用, MarTech |
 | 2026-09-07 | [🧭 OpenAIが社内利用データで公開した長時間タスク成功に残る人の介入](articles/openai-openai-index-research-p4_20260907.md) | OpenAI, Codex, AIエージェント |
