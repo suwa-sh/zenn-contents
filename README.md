@@ -7,11 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (412)
+## Articles: 下書き (414)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-09-11 | [🧭 AnthropicがClaude不正アクセス4件を再評価し自己説明だけでは信念を主張しないとした](articles/anthropic-claude-anthropic-p2_20260911.md) | Anthropic, Claude, AIエージェント, セキュリティ |
+| 2026-09-11 | [🧰 アプリケーションからCodexハーネスへ仕事を渡すOpenAI Agents API](articles/openai-codex-agents-api-openai-p1_20260911.md) | OpenAI, Codex, API, Python, MCP |
+| 2026-09-11 | [📊 ChatGPT WorkのData agentは既存の接続権限で問い公開はコピーになる](articles/openai-data-agent-openai-p5_20260911.md) | OpenAI, ChatGPT, データ分析, セキュリティ |
 | 2026-09-10 | [📊 マルチテナントKubernetesでGPU指標をテナント別に見せるAdobeの構成](articles/adobe-gpu-cncf-io-2026-whose-p4_20260910.md) | Kubernetes, Prometheus, GPU, Observability |
 | 2026-09-10 | [📡 GitHub組織WebhookとgithubreceiverでCIトレースを一括収集する](articles/github-webhook-ci-ci-cd-cncf-p6_20260910.md) | GitHub, OpenTelemetry, GitHubActions, Observability |
 | 2026-09-10 | [🧩 Google Antigravity SDKの実行監視と状態保存](articles/google-antigravity-sdk-cloud-p5_20260910.md) | Antigravity, Gemini, Python, GoogleCloud, SDK |
