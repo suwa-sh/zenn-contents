@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (413)
+## Articles: 下書き (414)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-12 | [🗃️ OpenAI Habitatが共有ライブラリをサービス化した背景](articles/openai-openai-index-scaling-p2_20260912.md) | OpenAI, Python, Azure |
 | 2026-09-11 | [🧭 AnthropicがClaude不正アクセス4件を再評価し自己説明だけでは信念を主張しないとした](articles/anthropic-claude-anthropic-p2_20260911.md) | Anthropic, Claude, AIエージェント, セキュリティ |
 | 2026-09-11 | [📊 ChatGPT WorkのData agentは既存の接続権限で問い公開はコピーになる](articles/openai-data-agent-openai-p5_20260911.md) | OpenAI, ChatGPT, データ分析, セキュリティ |
 | 2026-09-10 | [📊 マルチテナントKubernetesでGPU指標をテナント別に見せるAdobeの構成](articles/adobe-gpu-cncf-io-2026-whose-p4_20260910.md) | Kubernetes, Prometheus, GPU, Observability |
