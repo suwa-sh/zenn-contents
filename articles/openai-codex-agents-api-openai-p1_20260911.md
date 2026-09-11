@@ -3,7 +3,8 @@ title: "アプリケーションからCodexハーネスへ仕事を渡すOpenAI 
 emoji: "🧰"
 type: "tech"
 topics: ["OpenAI", "Codex", "API", "Python", "MCP"]
-published: false
+published: true
+published_at: 2026-09-12
 ---
 
 Agents API は、アプリケーションから Codex ハーネスへ仕事を渡し、結果を受け取るマネージド API です。OpenAI がセッション、オーケストレーション、コンテキスト compaction、復旧を運用し、アプリケーションはツールと実行環境を選びます。
