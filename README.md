@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (416)
+## Articles: 下書き (417)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-13 | [🏷️ GitHubがイベント業務をIssue・Actions・Skillsで回した社内事例](articles/github-issue-actions-skills-p1_20260913.md) | GitHub, GitHubActions, Copilot, マーケティング |
 | 2026-09-12 | [🛟 Kubernetes災害復旧で工程成功が結合成功にならない3つの再現シナリオ](articles/cncf-kubernetes-devops-gitops-p7_20260912.md) | Kubernetes, GitOps, Velero, CSI |
 | 2026-09-12 | [🔎 エージェント記憶を読み取り専用プローブで再検証してから書く](articles/microsoft-arxiv-2609-11060-p5_20260912.md) | LLM, AIAgent, セキュリティ, アーキテクチャ, 論文 |
 | 2026-09-12 | [🗃️ OpenAI Habitatが共有ライブラリをサービス化した背景](articles/openai-openai-index-scaling-p2_20260912.md) | OpenAI, Python, Azure |
