@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (418)
+## Articles: 下書き (419)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-14 | [🎬 Devinの自己テストが返す動作録画と未テスト範囲](articles/cognition-devin-openai-index-p5_20260914.md) | Devin, OpenAI, Testing |
 | 2026-09-14 | [🔐 Datasetteが認可を検索索引とキャッシュまで通すセキュリティ修正](articles/datasette-ai-ai-datasette-p2_20260914.md) | Datasette, SQLite, セキュリティ, Python |
 | 2026-09-13 | [🏷️ GitHubがイベント業務をIssue・Actions・Skillsで回した社内事例](articles/github-issue-actions-skills-p1_20260913.md) | GitHub, GitHubActions, Copilot, マーケティング |
 | 2026-09-12 | [🛟 Kubernetes災害復旧で工程成功が結合成功にならない3つの再現シナリオ](articles/cncf-kubernetes-devops-gitops-p7_20260912.md) | Kubernetes, GitOps, Velero, CSI |
