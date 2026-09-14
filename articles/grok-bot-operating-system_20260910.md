@@ -3,7 +3,8 @@ title: "Grok Botを仕事のチームにするHarness・Loop・Graph・Approval�
 emoji: "🧭"
 type: "tech"
 topics: ["Grok", "AIAgent", "Workflow", "Architecture"]
-published: false
+published: true
+published_at: 2026-09-15
 ---
 
 Grok Botに繰り返し仕事を任せるには、役割、実行環境、成果物の検証、引き継ぎ先を決める必要があります。本記事では、0xwhrrariが提案する「運用OS」の考え方を、構造図とデータモデル、実際に渡せる指示例で説明します。定期調査やコンテンツ制作など、複数の工程をBotに任せたい人を対象にしています。
