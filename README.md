@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (418)
+## Articles: 下書き (420)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-16 | [🧪 Ericssonの4観点Skillsと知識グラフによるコードレビュー現場評価](articles/ericsson-skills-arxiv-abs-p5_20260916.md) | AIエージェント, AgentSkills, CodeReview, MCP, LLM |
+| 2026-09-16 | [🔨 失敗実行を起点にプロンプトと訓練データを同時更新するForge](articles/forge-llm-arxiv-abs-2609-15209-p6_20260916.md) | LLM, Prompt, 機械学習, 論文 |
 | 2026-09-14 | [🎬 Devinの自己テストが返す動作録画と未テスト範囲](articles/cognition-devin-openai-index-p5_20260914.md) | Devin, OpenAI, Testing |
 | 2026-09-14 | [🔐 Datasetteが認可を検索索引とキャッシュまで通すセキュリティ修正](articles/datasette-ai-ai-datasette-p2_20260914.md) | Datasette, SQLite, セキュリティ, Python |
 | 2026-09-13 | [🏷️ GitHubがイベント業務をIssue・Actions・Skillsで回した社内事例](articles/github-issue-actions-skills-p1_20260913.md) | GitHub, GitHubActions, Copilot, マーケティング |
