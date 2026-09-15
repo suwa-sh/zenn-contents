@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (420)
+## Articles: 下書き (421)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-16 | [🪟 コンテキスト窓を守る MCP プラグイン context-mode の構造とデータ](articles/context-mode_20260916.md) | mcp, claudecode, ai, sqlite, typescript |
 | 2026-09-16 | [🧪 Ericssonの4観点Skillsと知識グラフによるコードレビュー現場評価](articles/ericsson-skills-arxiv-abs-p5_20260916.md) | AIエージェント, AgentSkills, CodeReview, MCP, LLM |
 | 2026-09-16 | [🔨 失敗実行を起点にプロンプトと訓練データを同時更新するForge](articles/forge-llm-arxiv-abs-2609-15209-p6_20260916.md) | LLM, Prompt, 機械学習, 論文 |
 | 2026-09-14 | [🎬 Devinの自己テストが返す動作録画と未テスト範囲](articles/cognition-devin-openai-index-p5_20260914.md) | Devin, OpenAI, Testing |
