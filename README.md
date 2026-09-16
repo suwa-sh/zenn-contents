@@ -7,12 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (422)
+## Articles: 下書き (424)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-17 | [🧭 IBM ResearchのConsistency Analyzerでエージェントの反復実行の揺れを診断する](articles/ibm-research-huggingface-p3_20260917.md) | AIエージェント, LLM, 評価指標, IBM |
 | 2026-09-17 | [♾️ 名和高司のメビウスモデルとは何か、学習優位で持続的にイノベーションを起こす組織の循環図](articles/nawa-takashi-mobius-model_20260917.md) | マネジメント, 組織開発, イノベーション, 経営戦略 |
 | 2026-09-17 | [🔗 サービスプロフィットチェーンとは何か、原典の命題と実証・反証を整理する](articles/service-profit-chain_20260917.md) | マネジメント, サービスデザイン, 組織開発, カスタマーサクセス |
+| 2026-09-17 | [🧰 手順と進行状態と完了判定を分けたSmartHRの開発ハーネス](articles/smarthr-ai-tech-smarthr-jp-p2_20260917.md) | ClaudeCode, AIエージェント, TDD, AgentSkills |
 | 2026-09-16 | [🧪 Ericssonの4観点Skillsと知識グラフによるコードレビュー現場評価](articles/ericsson-skills-arxiv-abs-p5_20260916.md) | AIエージェント, AgentSkills, CodeReview, MCP, LLM |
 | 2026-09-16 | [🔨 失敗実行を起点にプロンプトと訓練データを同時更新するForge](articles/forge-llm-arxiv-abs-2609-15209-p6_20260916.md) | LLM, Prompt, 機械学習, 論文 |
 | 2026-09-14 | [🎬 Devinの自己テストが返す動作録画と未テスト範囲](articles/cognition-devin-openai-index-p5_20260914.md) | Devin, OpenAI, Testing |
