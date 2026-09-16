@@ -7,11 +7,10 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (423)
+## Articles: 下書き (422)
 
 | create date | title | topics |
 |-------------|-------|--------|
-| 2026-09-17 | [♾️ CX と EX をつなぐメビウスサイクルとは何か、比喩と実証の境界を整理する](articles/cx-ex-mobius-cycle_20260917.md) | cx, ex, employeeexperience, customerexperience, 組織開発 |
 | 2026-09-17 | [🔗 サービスプロフィットチェーンとは何か、原典の命題と実証・反証を整理する](articles/service-profit-chain_20260917.md) | マネジメント, サービスデザイン, 組織開発, カスタマーサクセス |
 | 2026-09-16 | [🪟 コンテキスト窓を守る MCP プラグイン context-mode の構造とデータ](articles/context-mode_20260916.md) | mcp, claudecode, ai, sqlite, typescript |
 | 2026-09-16 | [🧪 Ericssonの4観点Skillsと知識グラフによるコードレビュー現場評価](articles/ericsson-skills-arxiv-abs-p5_20260916.md) | AIエージェント, AgentSkills, CodeReview, MCP, LLM |
