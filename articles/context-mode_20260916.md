@@ -3,7 +3,8 @@ title: "コンテキスト窓を守る MCP プラグイン context-mode の構�
 emoji: "🪟"
 type: "tech"
 topics: ["mcp", "claudecode", "ai", "sqlite", "typescript"]
-published: false
+published: true
+published_at: 2026-09-17
 ---
 
 AI コーディングエージェントを長く動かすと、ログ・ブラウザのスナップショット・Issue 一覧といった大きなツール出力がコンテキスト窓を埋めます。context-mode は、この生出力を会話へ流し込まずにサンドボックス実行と SQLite 全文検索へ迂回させる MCP プラグインです。

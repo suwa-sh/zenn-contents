@@ -7,13 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (423)
+## Articles: 下書き (422)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-09-17 | [♾️ 名和高司のメビウスモデルとは何か、学習優位で持続的にイノベーションを起こす組織の循環図](articles/nawa-takashi-mobius-model_20260917.md) | マネジメント, 組織開発, イノベーション, 経営戦略 |
 | 2026-09-17 | [🔗 サービスプロフィットチェーンとは何か、原典の命題と実証・反証を整理する](articles/service-profit-chain_20260917.md) | マネジメント, サービスデザイン, 組織開発, カスタマーサクセス |
-| 2026-09-16 | [🪟 コンテキスト窓を守る MCP プラグイン context-mode の構造とデータ](articles/context-mode_20260916.md) | mcp, claudecode, ai, sqlite, typescript |
 | 2026-09-16 | [🧪 Ericssonの4観点Skillsと知識グラフによるコードレビュー現場評価](articles/ericsson-skills-arxiv-abs-p5_20260916.md) | AIエージェント, AgentSkills, CodeReview, MCP, LLM |
 | 2026-09-16 | [🔨 失敗実行を起点にプロンプトと訓練データを同時更新するForge](articles/forge-llm-arxiv-abs-2609-15209-p6_20260916.md) | LLM, Prompt, 機械学習, 論文 |
 | 2026-09-14 | [🎬 Devinの自己テストが返す動作録画と未テスト範囲](articles/cognition-devin-openai-index-p5_20260914.md) | Devin, OpenAI, Testing |
@@ -435,10 +434,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (180)
+## Articles: 公開済み (181)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-09-17 | [🪟 コンテキスト窓を守る MCP プラグイン context-mode の構造とデータ](articles/context-mode_20260916.md) | mcp, claudecode, ai, sqlite, typescript |
 | 2026-09-15 | [🧭 Grok Botを仕事のチームにするHarness・Loop・Graph・Approvalの設計](articles/grok-bot-operating-system_20260910.md) | Grok, AIAgent, Workflow, Architecture |
 | 2026-09-12 | [🧰 アプリケーションからCodexハーネスへ仕事を渡すOpenAI Agents API](articles/openai-codex-agents-api-openai-p1_20260911.md) | OpenAI, Codex, API, Python, MCP |
 | 2026-09-10 | [🔐 Kubernetesの利用者認証を公開OIDCクライアントとPKCEで構成する](articles/cncf-kubernetes-oidc-pkce-p8_20260909.md) | Kubernetes, OIDC, Security, Keycloak |
