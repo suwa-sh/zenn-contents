@@ -11,7 +11,7 @@
 
 | create date | title | topics |
 |-------------|-------|--------|
-| 2026-09-17 | [♾️ 名和高司のメビウスモデルとは何か、学習優位の循環図を一次資料で読み解く](articles/nawa-takashi-mobius-model_20260917.md) | マネジメント, 組織開発, イノベーション, 経営戦略 |
+| 2026-09-17 | [♾️ 名和高司のメビウスモデルとは何か、学習優位で持続的にイノベーションを起こす組織の循環図](articles/nawa-takashi-mobius-model_20260917.md) | マネジメント, 組織開発, イノベーション, 経営戦略 |
 | 2026-09-17 | [🔗 サービスプロフィットチェーンとは何か、原典の命題と実証・反証を整理する](articles/service-profit-chain_20260917.md) | マネジメント, サービスデザイン, 組織開発, カスタマーサクセス |
 | 2026-09-16 | [🪟 コンテキスト窓を守る MCP プラグイン context-mode の構造とデータ](articles/context-mode_20260916.md) | mcp, claudecode, ai, sqlite, typescript |
 | 2026-09-16 | [🧪 Ericssonの4観点Skillsと知識グラフによるコードレビュー現場評価](articles/ericsson-skills-arxiv-abs-p5_20260916.md) | AIエージェント, AgentSkills, CodeReview, MCP, LLM |
