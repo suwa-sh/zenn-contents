@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (424)
+## Articles: 下書き (425)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-17 | [🧭 LLM利用の許可は機密除去と生成コード確認の担当を消さない](articles/ai-ai-arxiv-2609-16496-v1-p6_20260917.md) | LLM, セキュリティ, 論文 |
 | 2026-09-17 | [🧭 IBM ResearchのConsistency Analyzerでエージェントの反復実行の揺れを診断する](articles/ibm-research-huggingface-p3_20260917.md) | AIエージェント, LLM, 評価指標, IBM |
 | 2026-09-17 | [♾️ 名和高司のメビウスモデルとは何か、学習優位で持続的にイノベーションを起こす組織の循環図](articles/nawa-takashi-mobius-model_20260917.md) | マネジメント, 組織開発, イノベーション, 経営戦略 |
 | 2026-09-17 | [🔗 サービスプロフィットチェーンとは何か、原典の命題と実証・反証を整理する](articles/service-profit-chain_20260917.md) | マネジメント, サービスデザイン, 組織開発, カスタマーサクセス |
