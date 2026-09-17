@@ -7,11 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (427)
+## Articles: 下書き (429)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-18 | [🧩 Afforaは人とエージェントが同じ画面を読むためのデザイン規則](articles/affora-ui-ui-arxiv-2609-19125-p5_20260918.md) | AIAgent, UI, LLM, アクセシビリティ |
 | 2026-09-18 | [🦀 GitHub Copilot runtimeを128件のPRでRustへ段階移行した設計](articles/github-copilot-128-pr-rust-p2_20260918.md) | GitHubCopilot, Rust, TypeScript, Agent |
+| 2026-09-18 | [🎯 コードが消費できる型付き決定を返すホスト型モデル Jev の構造と使い方](articles/jev-ai_20260918.md) | AI, LLM, API, Python, TypeScript |
 | 2026-09-18 | [🧷 圧縮要約へ混入する自己生成プロンプトインジェクション](articles/openai-alignment-openai-reports-p1_20260918.md) | OpenAI, PromptInjection, LLM, AIAgent |
 | 2026-09-17 | [🧭 LLM利用の許可は機密除去と生成コード確認の担当を消さない](articles/ai-ai-arxiv-2609-16496-v1-p6_20260917.md) | LLM, セキュリティ, 論文 |
 | 2026-09-17 | [🧭 IBM ResearchのConsistency Analyzerでエージェントの反復実行の揺れを診断する](articles/ibm-research-huggingface-p3_20260917.md) | AIエージェント, LLM, 評価指標, IBM |
