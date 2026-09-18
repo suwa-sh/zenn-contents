@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (429)
+## Articles: 下書き (430)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-19 | [🧪 コーディングエージェントの性能差を計画、文脈管理、操作空間へ分解した実証研究](articles/coding-agent-harness-arxiv-p1_20260919.md) | AIエージェント, LLM, 論文 |
 | 2026-09-18 | [🧩 Afforaは人とエージェントが同じ画面を読むためのデザイン規則](articles/affora-ui-ui-arxiv-2609-19125-p5_20260918.md) | AIAgent, UI, LLM, アクセシビリティ |
 | 2026-09-18 | [🦀 GitHub Copilot runtimeを128件のPRでRustへ段階移行した設計](articles/github-copilot-128-pr-rust-p2_20260918.md) | GitHubCopilot, Rust, TypeScript, Agent |
 | 2026-09-18 | [🧷 圧縮要約へ混入する自己生成プロンプトインジェクション](articles/openai-alignment-openai-reports-p1_20260918.md) | OpenAI, PromptInjection, LLM, AIAgent |
