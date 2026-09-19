@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (436)
+## Articles: 下書き (437)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -16,6 +16,7 @@
 | 2026-09-19 | [🧮 DeltaSelectでコーディングエージェントのスキル変更をドル予算内で反復比較する](articles/deltaselect-evaluation-cost-p7_20260919.md) | AIエージェント, LLM, 論文 |
 | 2026-09-19 | [🎲 拡散LLMのDiffusionGemmaでJev互換の型付き判断APIを自己ホストするdjevの構造と使い方](articles/diffusiongemma-as-jev_20260919.md) | LLM, vLLM, Gemma, DiffusionModel, AI |
 | 2026-09-19 | [🍎 Apple SiliconのMacでJev風の判断APIを動かすdiffusiongemma-jev-macosの構造と使い方](articles/diffusiongemma-jev-macos_20260919.md) | LLM, MLX, Gemma, AppleSilicon, AI |
+| 2026-09-19 | [📓 Gemini Notebook（旧NotebookLM）の10冊運用を公式機能と突き合わせる](articles/gemini-notebook-jissen_20260919.md) | GeminiNotebook, NotebookLM, Gemini, GoogleDrive, PKM |
 | 2026-09-19 | [🛡️ 開発・検査・トリアージを分離したGoogleのSDLC常時セキュリティースキャン](articles/google-sdlc-devsecops-agent-p3_20260919.md) | DevSecOps, GoogleCloud, Security, AI |
 | 2026-09-19 | [📦 Notion上のAgent Skillsを標準フォルダとして配布するskills CLI連携](articles/notion-agent-skills-cli-agent-p8_20260919.md) | Notion, AIAgent, DevTools, CLI |
 | 2026-09-18 | [🧩 Afforaは人とエージェントが同じ画面を読むためのデザイン規則](articles/affora-ui-ui-arxiv-2609-19125-p5_20260918.md) | AIAgent, UI, LLM, アクセシビリティ |
