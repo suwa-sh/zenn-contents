@@ -7,13 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (434)
+## Articles: 下書き (435)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-09-19 | [🧭 Claude CodeがCLAUDE.md不在時にAGENTS.mdを読む互換導線を追加した](articles/claude-code-md-agents-coding-p5_20260919.md) | ClaudeCode, AIエージェント, Anthropic, LLM |
 | 2026-09-19 | [🧪 コーディングエージェントの性能差を計画、文脈管理、操作空間へ分解した実証研究](articles/coding-agent-harness-arxiv-p1_20260919.md) | AIエージェント, LLM, 論文 |
 | 2026-09-19 | [🧮 DeltaSelectでコーディングエージェントのスキル変更をドル予算内で反復比較する](articles/deltaselect-evaluation-cost-p7_20260919.md) | AIエージェント, LLM, 論文 |
+| 2026-09-19 | [🎲 拡散LLMのDiffusionGemmaでJev互換の型付き判断APIを自己ホストするdjevの構造と使い方](articles/diffusiongemma-as-jev_20260919.md) | LLM, vLLM, Gemma, DiffusionModel, AI |
 | 2026-09-19 | [🛡️ 開発・検査・トリアージを分離したGoogleのSDLC常時セキュリティースキャン](articles/google-sdlc-devsecops-agent-p3_20260919.md) | DevSecOps, GoogleCloud, Security, AI |
 | 2026-09-19 | [📦 Notion上のAgent Skillsを標準フォルダとして配布するskills CLI連携](articles/notion-agent-skills-cli-agent-p8_20260919.md) | Notion, AIAgent, DevTools, CLI |
 | 2026-09-18 | [🧩 Afforaは人とエージェントが同じ画面を読むためのデザイン規則](articles/affora-ui-ui-arxiv-2609-19125-p5_20260918.md) | AIAgent, UI, LLM, アクセシビリティ |
