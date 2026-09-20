@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (437)
+## Articles: 下書き (438)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-20 | [🧭 Anthropicが開発組織へ入れる埋め込み評価とは何か](articles/anthropic-accenture-ai-ai-p1_20260920.md) | Anthropic, LLM, AI, セキュリティ |
 | 2026-09-19 | [🧭 Claude CodeがCLAUDE.md不在時にAGENTS.mdを読む互換導線を追加した](articles/claude-code-md-agents-coding-p5_20260919.md) | ClaudeCode, AIエージェント, Anthropic, LLM |
 | 2026-09-19 | [🧪 コーディングエージェントの性能差を計画、文脈管理、操作空間へ分解した実証研究](articles/coding-agent-harness-arxiv-p1_20260919.md) | AIエージェント, LLM, 論文 |
 | 2026-09-19 | [🧮 DeltaSelectでコーディングエージェントのスキル変更をドル予算内で反復比較する](articles/deltaselect-evaluation-cost-p7_20260919.md) | AIエージェント, LLM, 論文 |
