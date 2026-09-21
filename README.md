@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (444)
+## Articles: 下書き (443)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -21,7 +21,6 @@
 | 2026-09-19 | [🧭 Claude CodeがCLAUDE.md不在時にAGENTS.mdを読む互換導線を追加した](articles/claude-code-md-agents-coding-p5_20260919.md) | ClaudeCode, AIエージェント, Anthropic, LLM |
 | 2026-09-19 | [🧪 コーディングエージェントの性能差を計画、文脈管理、操作空間へ分解した実証研究](articles/coding-agent-harness-arxiv-p1_20260919.md) | AIエージェント, LLM, 論文 |
 | 2026-09-19 | [🧮 DeltaSelectでコーディングエージェントのスキル変更をドル予算内で反復比較する](articles/deltaselect-evaluation-cost-p7_20260919.md) | AIエージェント, LLM, 論文 |
-| 2026-09-19 | [🎲 拡散LLMのDiffusionGemmaでJev互換の型付き判断APIを自己ホストするdjevの構造と使い方](articles/diffusiongemma-as-jev_20260919.md) | LLM, vLLM, Gemma, DiffusionModel, AI |
 | 2026-09-19 | [🍎 Apple SiliconのMacでJev風の判断APIを動かすdiffusiongemma-jev-macosの構造と使い方](articles/diffusiongemma-jev-macos_20260919.md) | LLM, MLX, Gemma, AppleSilicon, AI |
 | 2026-09-19 | [📓 Gemini Notebook（旧NotebookLM）の10冊運用を公式機能と突き合わせる](articles/gemini-notebook-jissen_20260919.md) | GeminiNotebook, NotebookLM, Gemini, GoogleDrive, PKM |
 | 2026-09-19 | [🛡️ 開発・検査・トリアージを分離したGoogleのSDLC常時セキュリティースキャン](articles/google-sdlc-devsecops-agent-p3_20260919.md) | DevSecOps, GoogleCloud, Security, AI |
@@ -456,10 +455,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (182)
+## Articles: 公開済み (183)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-09-22 | [🎲 拡散LLMのDiffusionGemmaでJev互換の型付き判断APIを自己ホストするdjevの構造と使い方](articles/diffusiongemma-as-jev_20260919.md) | LLM, vLLM, Gemma, DiffusionModel, AI |
 | 2026-09-19 | [🎯 コードが消費できる型付き決定を返すホスト型モデル Jev の構造と使い方](articles/jev-ai_20260918.md) | AI, LLM, API, Python, TypeScript |
 | 2026-09-17 | [🪟 コンテキスト窓を守る MCP プラグイン context-mode の構造とデータ](articles/context-mode_20260916.md) | mcp, claudecode, ai, sqlite, typescript |
 | 2026-09-15 | [🧭 Grok Botを仕事のチームにするHarness・Loop・Graph・Approvalの設計](articles/grok-bot-operating-system_20260910.md) | Grok, AIAgent, Workflow, Architecture |

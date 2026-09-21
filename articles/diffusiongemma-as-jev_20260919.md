@@ -3,7 +3,8 @@ title: "拡散LLMのDiffusionGemmaでJev互換の型付き判断APIを自己ホ�
 emoji: "🎲"
 type: "tech"
 topics: ["LLM", "vLLM", "Gemma", "DiffusionModel", "AI"]
-published: false
+published: true
+published_at: 2026-09-22
 ---
 
 DiffusionGemma-as-Jev（以下 djev）は、Google DeepMind の拡散 LLM「DiffusionGemma」を、TypeSafe AI の決定モデル Jev と同じ HTTP 契約で動かすオープンソースのスタックです。
