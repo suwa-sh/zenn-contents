@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (442)
+## Articles: 下書き (443)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-21 | [⚖️ 委託制作で既存肖像をChatGPTに入れて納品したとき発注側が残すべき来歴](articles/ai-ai-itmedia-co-jp-2609-p8_20260921.md) | AI, ChatGPT, 著作権, 生成AI |
 | 2026-09-21 | [🪝 Claude CodeのHook、822回の遮断件数では測れなかった危険操作の通過経路](articles/claude-code-hook-822-zenn-p2_20260921.md) | ClaudeCode, セキュリティ, AIエージェント, Anthropic |
 | 2026-09-21 | [📐 DeNAのAIオールイン後の人員再配分とは何か](articles/dena-ai-itmedia-co-jp-2609-p6_20260921.md) | DeNA, AI, 生成AI, 組織設計 |
 | 2026-09-21 | [🧪 資生堂の原料探索エージェントは探索・候補化・評価をどう分けるか](articles/hybrid-rag-llm-itmedia-co-p5_20260921.md) | RAG, LLM, GoogleCloud, AI |
