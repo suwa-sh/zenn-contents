@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (443)
+## Articles: 下書き (444)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -15,6 +15,7 @@
 | 2026-09-21 | [🪝 Claude CodeのHook、822回の遮断件数では測れなかった危険操作の通過経路](articles/claude-code-hook-822-zenn-p2_20260921.md) | ClaudeCode, セキュリティ, AIエージェント, Anthropic |
 | 2026-09-21 | [📐 DeNAのAIオールイン後の人員再配分とは何か](articles/dena-ai-itmedia-co-jp-2609-p6_20260921.md) | DeNA, AI, 生成AI, 組織設計 |
 | 2026-09-21 | [🧪 資生堂の原料探索エージェントは探索・候補化・評価をどう分けるか](articles/hybrid-rag-llm-itmedia-co-p5_20260921.md) | RAG, LLM, GoogleCloud, AI |
+| 2026-09-21 | [🧭 型付きの決定を返すモデル Jev の活用法を公式4パターンと実測例から整理する](articles/jev-use-cases_20260921.md) | AI, LLM, API, 設計, アーキテクチャ |
 | 2026-09-20 | [🧭 OpenCodeとLiteLLMで全社AIの入口とモデル契約を分ける](articles/200-ai-opencode-litellm-llm-p7_20260920.md) | LiteLLM, OpenCode, LLM, AIエージェント |
 | 2026-09-20 | [🧭 Anthropicが開発組織へ入れる埋め込み評価とは何か](articles/anthropic-accenture-ai-ai-p1_20260920.md) | Anthropic, LLM, AI, セキュリティ |
 | 2026-09-19 | [🧭 Claude CodeがCLAUDE.md不在時にAGENTS.mdを読む互換導線を追加した](articles/claude-code-md-agents-coding-p5_20260919.md) | ClaudeCode, AIエージェント, Anthropic, LLM |
