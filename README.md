@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (445)
+## Articles: 下書き (446)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-09-22 | [🧭 AI開発ツールの全社義務化を開発者はどう経験したか](articles/ai-ai-arxiv-abs-2609-20977-p6_20260922.md) | AI, 生成AI, マネジメント, 組織 |
 | 2026-09-22 | [🧭 OpenAIのAI国際技術標準提言を、能力測定と重大度別インシデント報告から読み解く](articles/openai-ai-governance-openai-p10_20260922.md) | OpenAI, AI, AIガバナンス, EUAIAct, LLM |
+| 2026-09-22 | [🤖 ブラウザ内拡張で動くエージェント向けブラウザSDK Stagehand v4の構造と使い方](articles/stagehand-v4_20260922.md) | Stagehand, Browserbase, Playwright, AIエージェント, TypeScript |
 | 2026-09-21 | [⚖️ 委託制作で既存肖像をChatGPTに入れて納品したとき発注側が残すべき来歴](articles/ai-ai-itmedia-co-jp-2609-p8_20260921.md) | AI, ChatGPT, 著作権, 生成AI |
 | 2026-09-21 | [🪝 Claude CodeのHook、822回の遮断件数では測れなかった危険操作の通過経路](articles/claude-code-hook-822-zenn-p2_20260921.md) | ClaudeCode, セキュリティ, AIエージェント, Anthropic |
 | 2026-09-21 | [📐 DeNAのAIオールイン後の人員再配分とは何か](articles/dena-ai-itmedia-co-jp-2609-p6_20260921.md) | DeNA, AI, 生成AI, 組織設計 |
