@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (446)
+## Articles: 下書き (448)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-23 | [🧭 Claude Opus 5.5をAI Gatewayで読むときの能力と価格](articles/claude-opus-5-5-ai-gateway-p2_20260923.md) | Claude, Anthropic, Vercel, LLM |
+| 2026-09-23 | [📐 GPT-6 SolとLunaは仕事の規模で能力と単価を分ける](articles/openai-gpt-sol-luna-openai-p1_20260923.md) | OpenAI, LLM, API, ChatGPT, Codex |
 | 2026-09-22 | [🧭 AI開発ツールの全社義務化を開発者はどう経験したか](articles/ai-ai-arxiv-abs-2609-20977-p6_20260922.md) | AI, 生成AI, マネジメント, 組織 |
 | 2026-09-22 | [🧭 OpenAIのAI国際技術標準提言を、能力測定と重大度別インシデント報告から読み解く](articles/openai-ai-governance-openai-p10_20260922.md) | OpenAI, AI, AIガバナンス, EUAIAct, LLM |
 | 2026-09-22 | [🤖 ブラウザ内拡張で動くエージェント向けブラウザSDK Stagehand v4の構造と使い方](articles/stagehand-v4_20260922.md) | Stagehand, Browserbase, Playwright, AIエージェント, TypeScript |
