@@ -3,7 +3,8 @@ title: "既存のエージェントハーネスをResponses形式の1つのAPI�
 emoji: "🔀"
 type: "tech"
 topics: ["AIAgent", "OpenAI", "Docker", "ClaudeCode", "Codex"]
-published: false
+published: true
+published_at: 2026-09-24
 ---
 
 HarnessRouter Community Edition（以下 CE）は、Claude Code や Codex などの既存エージェントハーネスを、製品のバックエンドとして 1 つの HTTP API から呼び出す自己ホスト型の実行レイヤです。
