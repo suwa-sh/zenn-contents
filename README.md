@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (450)
+## Articles: 下書き (451)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-09-23 | [🧪 AnthropicのCIがテスト影響分析の結果取り込みを水平に載せ直した](articles/anthropic-ci-ci-cd-claude-p5_20260923.md) | CICD, Testing, Anthropic, Claude, DevOps |
 | 2026-09-23 | [🧭 Claude Opus 5.5をAI Gatewayで読むときの能力と価格](articles/claude-opus-5-5-ai-gateway-p2_20260923.md) | Claude, Anthropic, Vercel, LLM |
+| 2026-09-23 | [🔀 既存のエージェントハーネスをResponses形式の1つのAPIで束ねる自己ホスト基盤HarnessRouterの構造と使い方](articles/harnessrouter_20260923.md) | AIAgent, OpenAI, Docker, ClaudeCode, Codex |
 | 2026-09-23 | [📦 GPT-6のプロンプトキャッシュに明示ブレークポイントと診断が加わる](articles/openai-gpt-openai-index-better-p3_20260923.md) | OpenAI, GPT, API, LLM, AIAgent |
 | 2026-09-23 | [📐 GPT-6 SolとLunaは仕事の規模で能力と単価を分ける](articles/openai-gpt-sol-luna-openai-p1_20260923.md) | OpenAI, LLM, API, ChatGPT, Codex |
 | 2026-09-22 | [🧭 AI開発ツールの全社義務化を開発者はどう経験したか](articles/ai-ai-arxiv-abs-2609-20977-p6_20260922.md) | AI, 生成AI, マネジメント, 組織 |
