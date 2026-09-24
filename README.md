@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (453)
+## Articles: 下書き (455)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-25 | [☁️ Claude Codeのクラウドセッション一般提供で押さえる実行先、承認、停止、課金](articles/claude-code-x-claudedevs-p1_20260925.md) | ClaudeCode, Anthropic, GitHub, LLM |
+| 2026-09-25 | [🧭 dbtのcontext engineeringは倉庫内の抜粋検索から始まる](articles/dbt-getdbt-context-engineering-p7_20260925.md) | dbt, MCP, SemanticLayer, AI, DataEngineering |
 | 2026-09-24 | [🚢 商船三井の船舶データは層で分かれる。AIへの反論は判断ごとに定義する](articles/ai-xtech-nikkei-atcl-nxt-p8_20260924.md) | AI, データ基盤, アーキテクチャ, 意思決定 |
 | 2026-09-24 | [🧰 Claude Code Migration Kitで言語を全面移行するときの手順と制約](articles/anthropic-github-anthropics-p1_20260924.md) | ClaudeCode, Anthropic, LLM, AIAgent |
 | 2026-09-24 | [🧪 mizchi/jev-playground の実験から Jev の答えの形と計測の落とし穴を学ぶ](articles/jev-playground-mizchi_20260924.md) | AI, LLM, MoonBit, ClaudeCode, 設計 |
