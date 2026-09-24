@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (452)
+## Articles: 下書き (453)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-09-24 | [🚢 商船三井の船舶データは層で分かれる。AIへの反論は判断ごとに定義する](articles/ai-xtech-nikkei-atcl-nxt-p8_20260924.md) | AI, データ基盤, アーキテクチャ, 意思決定 |
 | 2026-09-24 | [🧰 Claude Code Migration Kitで言語を全面移行するときの手順と制約](articles/anthropic-github-anthropics-p1_20260924.md) | ClaudeCode, Anthropic, LLM, AIAgent |
+| 2026-09-24 | [🧪 mizchi/jev-playground の実験から Jev の答えの形と計測の落とし穴を学ぶ](articles/jev-playground-mizchi_20260924.md) | AI, LLM, MoonBit, ClaudeCode, 設計 |
 | 2026-09-23 | [🧪 AnthropicのCIがテスト影響分析の結果取り込みを水平に載せ直した](articles/anthropic-ci-ci-cd-claude-p5_20260923.md) | CICD, Testing, Anthropic, Claude, DevOps |
 | 2026-09-23 | [🧭 Claude Opus 5.5をAI Gatewayで読むときの能力と価格](articles/claude-opus-5-5-ai-gateway-p2_20260923.md) | Claude, Anthropic, Vercel, LLM |
 | 2026-09-23 | [📦 GPT-6のプロンプトキャッシュに明示ブレークポイントと診断が加わる](articles/openai-gpt-openai-index-better-p3_20260923.md) | OpenAI, GPT, API, LLM, AIAgent |
