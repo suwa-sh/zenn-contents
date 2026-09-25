@@ -3,7 +3,8 @@ title: "Claude Code Migration Kitで言語を全面移行するときの手順�
 emoji: "🧰"
 type: "tech"
 topics: ["ClaudeCode", "Anthropic", "LLM", "AIAgent"]
-published: false
+published: true
+published_at: 2026-09-26
 ---
 
 Claude Code Migration Kit は、大規模な言語の全面移行を Claude Code で進めるためのプロンプト、テンプレート、スクリプトの一式です。公開元は Anthropic の GitHub リポジトリ [anthropics/code-migration-kit-with-claude-code](https://github.com/anthropics/code-migration-kit-with-claude-code) です。既定ブランチの初回コミットは 2026-07-08 です。リポジトリ自身は、プロンプトを本番移行の写しではなく、一般化した再構成だと書いています。この記事では、手順の流れ、ディスクに残る成果物、スクリプトが落とす条件を順に整理します。

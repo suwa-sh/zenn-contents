@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (457)
+## Articles: 下書き (456)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -16,7 +16,6 @@
 | 2026-09-25 | [☁️ Claude Codeのクラウドセッション一般提供で押さえる実行先、承認、停止、課金](articles/claude-code-x-claudedevs-p1_20260925.md) | ClaudeCode, Anthropic, GitHub, LLM |
 | 2026-09-25 | [🧭 dbtのcontext engineeringは倉庫内の抜粋検索から始まる](articles/dbt-getdbt-context-engineering-p7_20260925.md) | dbt, MCP, SemanticLayer, AI, DataEngineering |
 | 2026-09-24 | [🚢 商船三井の船舶データは層で分かれる。AIへの反論は判断ごとに定義する](articles/ai-xtech-nikkei-atcl-nxt-p8_20260924.md) | AI, データ基盤, アーキテクチャ, 意思決定 |
-| 2026-09-24 | [🧰 Claude Code Migration Kitで言語を全面移行するときの手順と制約](articles/anthropic-github-anthropics-p1_20260924.md) | ClaudeCode, Anthropic, LLM, AIAgent |
 | 2026-09-24 | [🧪 mizchi/jev-playground の実験から Jev の答えの形と計測の落とし穴を学ぶ](articles/jev-playground-mizchi_20260924.md) | AI, LLM, MoonBit, ClaudeCode, 設計 |
 | 2026-09-23 | [🧪 AnthropicのCIがテスト影響分析の結果取り込みを水平に載せ直した](articles/anthropic-ci-ci-cd-claude-p5_20260923.md) | CICD, Testing, Anthropic, Claude, DevOps |
 | 2026-09-23 | [🧭 Claude Opus 5.5をAI Gatewayで読むときの能力と価格](articles/claude-opus-5-5-ai-gateway-p2_20260923.md) | Claude, Anthropic, Vercel, LLM |
@@ -469,10 +468,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (184)
+## Articles: 公開済み (185)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-09-26 | [🧰 Claude Code Migration Kitで言語を全面移行するときの手順と制約](articles/anthropic-github-anthropics-p1_20260924.md) | ClaudeCode, Anthropic, LLM, AIAgent |
 | 2026-09-24 | [🔀 既存のエージェントハーネスをResponses形式の1つのAPIで束ねる自己ホスト基盤HarnessRouterの構造と使い方](articles/harnessrouter_20260923.md) | AIAgent, OpenAI, Docker, ClaudeCode, Codex |
 | 2026-09-22 | [🎲 拡散LLMのDiffusionGemmaでJev互換の型付き判断APIを自己ホストするdjevの構造と使い方](articles/diffusiongemma-as-jev_20260919.md) | LLM, vLLM, Gemma, DiffusionModel, AI |
 | 2026-09-19 | [🎯 コードが消費できる型付き決定を返すホスト型モデル Jev の構造と使い方](articles/jev-ai_20260918.md) | AI, LLM, API, Python, TypeScript |
