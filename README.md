@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (455)
+## Articles: 下書き (457)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-26 | [📘 エージェントスキルは100万件規模、手順はチーム固有のまま](articles/100-2-8-vercel-state-of-agent-p5_20260926.md) | AIAgent, Vercel, Anthropic, LLM |
+| 2026-09-26 | [🏗️ 建設工程の作業・歩掛・数量を結ぶ4つの設計](articles/llm-zenn-dev-kencopa-p7_20260926.md) | LLM, AIAgent, OpenAI, Architecture |
 | 2026-09-25 | [☁️ Claude Codeのクラウドセッション一般提供で押さえる実行先、承認、停止、課金](articles/claude-code-x-claudedevs-p1_20260925.md) | ClaudeCode, Anthropic, GitHub, LLM |
 | 2026-09-25 | [🧭 dbtのcontext engineeringは倉庫内の抜粋検索から始まる](articles/dbt-getdbt-context-engineering-p7_20260925.md) | dbt, MCP, SemanticLayer, AI, DataEngineering |
 | 2026-09-24 | [🚢 商船三井の船舶データは層で分かれる。AIへの反論は判断ごとに定義する](articles/ai-xtech-nikkei-atcl-nxt-p8_20260924.md) | AI, データ基盤, アーキテクチャ, 意思決定 |
