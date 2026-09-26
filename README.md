@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (456)
+## Articles: 下書き (458)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-27 | [📊 AI内製化の停滞経験91.9%は、誰の何の経験か](articles/ai-atmarkit-itmedia-co-jp-p6_20260927.md) | AI, DX, 組織設計, 意思決定 |
+| 2026-09-27 | [🔀 Cursor Originはgitの正本がOriginとGitHubの2系統に分かれる](articles/cursor-git-origin-github-p4_20260927.md) | Cursor, Git, GitHub |
 | 2026-09-26 | [📘 エージェントスキルは100万件規模、手順はチーム固有のまま](articles/100-2-8-vercel-state-of-agent-p5_20260926.md) | AIAgent, Vercel, Anthropic, LLM |
 | 2026-09-26 | [🏗️ 建設工程の作業・歩掛・数量を結ぶ4つの設計](articles/llm-zenn-dev-kencopa-p7_20260926.md) | LLM, AIAgent, OpenAI, Architecture |
 | 2026-09-25 | [☁️ Claude Codeのクラウドセッション一般提供で押さえる実行先、承認、停止、課金](articles/claude-code-x-claudedevs-p1_20260925.md) | ClaudeCode, Anthropic, GitHub, LLM |
