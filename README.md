@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (463)
+## Articles: 下書き (464)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-28 | [📐 富士通のFDE見積もりは利用料と探索を4行に分ける](articles/fde-si-xtech-nikkei-atcl-p8_20260928.md) | AI, Palantir, Foundry, 契約 |
 | 2026-09-28 | [🗄️ Google Cloudはデータベースの導入と障害対応を別エージェントに分ける](articles/google-cloud-infoq-jp-2026-p10_20260928.md) | GoogleCloud, CloudSQL, AlloyDB, Spanner, Gemini |
 | 2026-09-28 | [🔒 Meta Museの実行環境は誰に見えるか。Secure VMと機密コンピューティング](articles/muse-xtech-nikkei-atcl-nxt-p7_20260928.md) | AIAgent, Security, ConfidentialComputing, Privacy |
 | 2026-09-28 | [🧩 見えている作業の電子化では、使える業務システムにならない](articles/nowokay-hatenablog-entry-p6_20260928.md) | AI, Requirements, SystemDesign, Workflow |
