@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (462)
+## Articles: 下書き (463)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-09-28 | [🗄️ Google Cloudはデータベースの導入と障害対応を別エージェントに分ける](articles/google-cloud-infoq-jp-2026-p10_20260928.md) | GoogleCloud, CloudSQL, AlloyDB, Spanner, Gemini |
 | 2026-09-28 | [🔒 Meta Museの実行環境は誰に見えるか。Secure VMと機密コンピューティング](articles/muse-xtech-nikkei-atcl-nxt-p7_20260928.md) | AIAgent, Security, ConfidentialComputing, Privacy |
 | 2026-09-28 | [🧩 見えている作業の電子化では、使える業務システムにならない](articles/nowokay-hatenablog-entry-p6_20260928.md) | AI, Requirements, SystemDesign, Workflow |
 | 2026-09-27 | [📊 AI内製化の停滞経験91.9%は、誰の何の経験か](articles/ai-atmarkit-itmedia-co-jp-p6_20260927.md) | AI, DX, 組織設計, 意思決定 |
