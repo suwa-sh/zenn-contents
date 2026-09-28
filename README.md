@@ -7,11 +7,10 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (464)
+## Articles: 下書き (463)
 
 | create date | title | topics |
 |-------------|-------|--------|
-| 2026-09-28 | [📐 富士通のFDE見積もりは利用料と探索を4行に分ける](articles/fde-si-xtech-nikkei-atcl-p8_20260928.md) | AI, Palantir, Foundry, 契約 |
 | 2026-09-28 | [🗄️ Google Cloudはデータベースの導入と障害対応を別エージェントに分ける](articles/google-cloud-infoq-jp-2026-p10_20260928.md) | GoogleCloud, CloudSQL, AlloyDB, Spanner, Gemini |
 | 2026-09-28 | [🔒 Meta Museの実行環境は誰に見えるか。Secure VMと機密コンピューティング](articles/muse-xtech-nikkei-atcl-nxt-p7_20260928.md) | AIAgent, Security, ConfidentialComputing, Privacy |
 | 2026-09-28 | [🧩 見えている作業の電子化では、使える業務システムにならない](articles/nowokay-hatenablog-entry-p6_20260928.md) | AI, Requirements, SystemDesign, Workflow |
@@ -476,10 +475,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (185)
+## Articles: 公開済み (186)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-09-29 | [📐 富士通のFDE見積もりは利用料と探索を4行に分ける](articles/fde-si-xtech-nikkei-atcl-p8_20260928.md) | AI, Palantir, Foundry, 契約 |
 | 2026-09-26 | [🧰 Claude Code Migration Kitで言語を全面移行するときの手順と制約](articles/anthropic-github-anthropics-p1_20260924.md) | ClaudeCode, Anthropic, LLM, AIAgent |
 | 2026-09-24 | [🔀 既存のエージェントハーネスをResponses形式の1つのAPIで束ねる自己ホスト基盤HarnessRouterの構造と使い方](articles/harnessrouter_20260923.md) | AIAgent, OpenAI, Docker, ClaudeCode, Codex |
 | 2026-09-22 | [🎲 拡散LLMのDiffusionGemmaでJev互換の型付き判断APIを自己ホストするdjevの構造と使い方](articles/diffusiongemma-as-jev_20260919.md) | LLM, vLLM, Gemma, DiffusionModel, AI |

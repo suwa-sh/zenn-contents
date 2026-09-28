@@ -3,7 +3,8 @@ title: "富士通のFDE見積もりは利用料と探索を4行に分ける"
 emoji: "📐"
 type: "tech"
 topics: ["AI", "Palantir", "Foundry", "契約"]
-published: false
+published: true
+published_at: 2026-09-29
 ---
 
 発注側が、富士通のFDE（Forward Deployed Engineer）を受けるときに、利用料と作業費をどの行に分け、受け入れを誰が判定するかを決められます。日経クロステックの有料本文は未確認で、2026年9月28日の公開リードと、富士通が公開している発表、IR資料、サービス仕様書を材料にしています。
