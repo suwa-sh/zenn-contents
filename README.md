@@ -7,11 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (465)
+## Articles: 下書き (467)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-09-29 | [🧰 Strands harnessの構成とモデルを替えても残る境界](articles/aws-strands-oss-publickey1-p4_20260929.md) | AWS, AIAgent, LLM, Python |
+| 2026-09-29 | [🧭 日本企業のハーネス整備はほぼ手つかずか。ITRの見立てを読む](articles/itr-atmarkit-itmedia-co-jp-p9_20260929.md) | AIAgent, DevOps, 組織設計, 意思決定 |
+| 2026-09-29 | [💬 ドコモ手続き窓口の対話AIは不足を聞き返し、登録は利用者が行う](articles/ntt-ai-kn-itmedia-co-jp-2609-p10_20260929.md) | AIAgent, Chatbot, CustomerSupport, LLM |
 | 2026-09-29 | [📋 チューリッヒ生命の新契約査定はルールと人とエージェントで分かれる](articles/xtech-nikkei-atcl-nxt-column-p5_20260929.md) | AIAgent, Underwriting, Insurance, 生成AI |
 | 2026-09-28 | [🗄️ Google Cloudはデータベースの導入と障害対応を別エージェントに分ける](articles/google-cloud-infoq-jp-2026-p10_20260928.md) | GoogleCloud, CloudSQL, AlloyDB, Spanner, Gemini |
 | 2026-09-28 | [🔒 Meta Museの実行環境は誰に見えるか。Secure VMと機密コンピューティング](articles/muse-xtech-nikkei-atcl-nxt-p7_20260928.md) | AIAgent, Security, ConfidentialComputing, Privacy |
