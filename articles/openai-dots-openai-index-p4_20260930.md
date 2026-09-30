@@ -3,7 +3,8 @@ title: "OpenAI dotsを不在中に任せるときの目標と停止と対外操�
 emoji: "🧭"
 type: "tech"
 topics: ["OpenAI", "ChatGPT", "AIAgent", "LLM"]
-published: false
+published: true
+published_at: 2026-10-01
 ---
 
 OpenAI は 2026-09-29 に dots を公開しました。dots は ChatGPT のエージェントで、利用者が渡した目標に向けて作業を続けます。各 dot は専用のクラウドコンピュータとブラウザを持ち、端末の電源が切れていても、クラウド側の作業と状態を保持します。モデルは GPT-6 Astra です。最初の 1 体は、対象となる Pro または Business Premium に追加料金なしで含まれます。

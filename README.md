@@ -7,12 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (470)
+## Articles: 下書き (469)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-09-30 | [📊 生成AIの個人利用、公開された5%は何を数えているか](articles/ai-itmedia-co-jp-aiplus-2609-p8_20260930.md) | 生成AI, Governance, RiskManagement, AI |
-| 2026-09-30 | [🧭 OpenAI dotsを不在中に任せるときの目標と停止と対外操作と課金](articles/openai-dots-openai-index-p4_20260930.md) | OpenAI, ChatGPT, AIAgent, LLM |
 | 2026-09-29 | [🧰 Strands harnessの構成とモデルを替えても残る境界](articles/aws-strands-oss-publickey1-p4_20260929.md) | AWS, AIAgent, LLM, Python |
 | 2026-09-29 | [🎙️ ElevenLabsの音声合成Eleven v4のAPI構造と品質版・低遅延版の使い分け](articles/eleven-v4_20260929.md) | ElevenLabs, TextToSpeech, 音声合成, API, AIAgent |
 | 2026-09-29 | [🧭 日本企業のハーネス整備はほぼ手つかずか。ITRの見立てを読む](articles/itr-atmarkit-itmedia-co-jp-p9_20260929.md) | AIAgent, DevOps, 組織設計, 意思決定 |
@@ -482,10 +481,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (186)
+## Articles: 公開済み (187)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-10-01 | [🧭 OpenAI dotsを不在中に任せるときの目標と停止と対外操作と課金](articles/openai-dots-openai-index-p4_20260930.md) | OpenAI, ChatGPT, AIAgent, LLM |
 | 2026-09-29 | [📐 富士通のFDE見積もりは利用料と探索を4行に分ける](articles/fde-si-xtech-nikkei-atcl-p8_20260928.md) | AI, Palantir, Foundry, 契約 |
 | 2026-09-26 | [🧰 Claude Code Migration Kitで言語を全面移行するときの手順と制約](articles/anthropic-github-anthropics-p1_20260924.md) | ClaudeCode, Anthropic, LLM, AIAgent |
 | 2026-09-24 | [🔀 既存のエージェントハーネスをResponses形式の1つのAPIで束ねる自己ホスト基盤HarnessRouterの構造と使い方](articles/harnessrouter_20260923.md) | AIAgent, OpenAI, Docker, ClaudeCode, Codex |
