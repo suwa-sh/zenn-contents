@@ -7,12 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (471)
+## Articles: 下書き (473)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-01 | [📊 非エンジニアのAI開発、大企業回答者の65%は何を数えているか](articles/ai-itmedia-co-jp-enterprise-p8_20261001.md) | AI, Governance, Testing, 組織設計 |
 | 2026-10-01 | [💎 Gemini 4 Argonは長い出力の候補で既定は3.8 Flashのまま](articles/google-gemini-argon-google-p6_20261001.md) | Gemini, LLM, Google, AI |
 | 2026-10-01 | [🔒 NVIDIA Open Agent Safety Platformが止める位置と止めない位置](articles/nvidia-dpu-itmedia-co-jp-p3_20261001.md) | NVIDIA, Security, AI, Docker, Kubernetes |
+| 2026-10-01 | [🧭 37signalsの手書き停止を、完了定義の4欄へ翻訳する](articles/signals-rails-world-atmarkit-p9_20261001.md) | AIAgent, Rails, 意思決定, 組織設計 |
 | 2026-09-30 | [📊 生成AIの個人利用、公開された5%は何を数えているか](articles/ai-itmedia-co-jp-aiplus-2609-p8_20260930.md) | 生成AI, Governance, RiskManagement, AI |
 | 2026-09-29 | [🧰 Strands harnessの構成とモデルを替えても残る境界](articles/aws-strands-oss-publickey1-p4_20260929.md) | AWS, AIAgent, LLM, Python |
 | 2026-09-29 | [🎙️ ElevenLabsの音声合成Eleven v4のAPI構造と品質版・低遅延版の使い分け](articles/eleven-v4_20260929.md) | ElevenLabs, TextToSpeech, 音声合成, API, AIAgent |
