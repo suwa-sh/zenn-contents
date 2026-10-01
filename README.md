@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (473)
+## Articles: 下書き (475)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-02 | [🏗️ AWS Well-Architected Agentプレビューの診断出力と適用権限](articles/aws-well-architected-agent-p2_20261002.md) | AWS, IAM, Security, WellArchitected |
+| 2026-10-02 | [🧭 SOMPOとミスミのFDE自社育成で発注側が分ける三つの境界](articles/sompo-fde-xtech-nikkei-atcl-p7_20261002.md) | AI, Palantir, Foundry, 契約 |
 | 2026-10-01 | [📊 非エンジニアのAI開発、大企業回答者の65%は何を数えているか](articles/ai-itmedia-co-jp-enterprise-p8_20261001.md) | AI, Governance, Testing, 組織設計 |
 | 2026-10-01 | [💎 Gemini 4 Argonは長い出力の候補で既定は3.8 Flashのまま](articles/google-gemini-argon-google-p6_20261001.md) | Gemini, LLM, Google, AI |
 | 2026-10-01 | [🔒 NVIDIA Open Agent Safety Platformが止める位置と止めない位置](articles/nvidia-dpu-itmedia-co-jp-p3_20261001.md) | NVIDIA, Security, AI, Docker, Kubernetes |
