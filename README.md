@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (477)
+## Articles: 下書き (479)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-03 | [🐋 複数のCLIエージェントをworktreeで並列に走らせるADE Orcaの構造と使い方](articles/orca_20261003.md) | AI, ClaudeCode, Codex, Git, Electron |
+| 2026-10-03 | [🛰️ T3 Codeで手元のコーディングエージェントを複数端末から操る仕組み](articles/t3-code_20261003.md) | T3Code, AIAgent, ClaudeCode, Codex, TypeScript |
 | 2026-10-02 | [🏗️ AWS Well-Architected Agentプレビューの診断出力と適用権限](articles/aws-well-architected-agent-p2_20261002.md) | AWS, IAM, Security, WellArchitected |
 | 2026-10-02 | [🎧 AI時代の勉強法を学習科学の実験で読み解く 閉本で話す確認ループの効き方](articles/how-to-study-in-ai-era_20261002.md) | LearningScience, GenerativeAI, ChatGPT, NotebookLM, Learning |
 | 2026-10-02 | [🧭 NTTデータ・NRI・アクセンチュアのCOBOLピュアJava化と発注工程](articles/ntt-nri-cobol-java-ai-xtech-p8_20261002.md) | COBOL, Java, AI, Modernization |
