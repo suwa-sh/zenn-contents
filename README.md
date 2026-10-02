@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (476)
+## Articles: 下書き (477)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-10-02 | [🏗️ AWS Well-Architected Agentプレビューの診断出力と適用権限](articles/aws-well-architected-agent-p2_20261002.md) | AWS, IAM, Security, WellArchitected |
+| 2026-10-02 | [🎧 AI時代の勉強法を学習科学の実験で読み解く 閉本で話す確認ループの効き方](articles/how-to-study-in-ai-era_20261002.md) | LearningScience, GenerativeAI, ChatGPT, NotebookLM, Learning |
 | 2026-10-02 | [🧭 NTTデータ・NRI・アクセンチュアのCOBOLピュアJava化と発注工程](articles/ntt-nri-cobol-java-ai-xtech-p8_20261002.md) | COBOL, Java, AI, Modernization |
 | 2026-10-02 | [🧭 SOMPOとミスミのFDE自社育成で発注側が分ける三つの境界](articles/sompo-fde-xtech-nikkei-atcl-p7_20261002.md) | AI, Palantir, Foundry, 契約 |
 | 2026-10-01 | [📊 非エンジニアのAI開発、大企業回答者の65%は何を数えているか](articles/ai-itmedia-co-jp-enterprise-p8_20261001.md) | AI, Governance, Testing, 組織設計 |
