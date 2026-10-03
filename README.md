@@ -7,13 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (483)
+## Articles: 下書き (484)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-10-03 | [📡 AI情報収集の型とHAROを2026年10月に再点検する](articles/ai-info-collection-haro-ogawa_20261003.md) | AI, RSS, HuggingFace, GoogleCloud, Gemini |
 | 2026-10-03 | [🧭 CONTRAは仕様の空白を埋める問いと黙って決めた挙動を分ける](articles/contra-arxiv-abs-2610-01769-p3_20261003.md) | AIAgent, LLM, ClaudeCode, Python |
 | 2026-10-03 | [🔒 Guarded Commitsは不可逆な外部操作の承認をコミット条件にする](articles/guarded-commits-arxiv-abs-p4_20261003.md) | LLM, AIAgent, Workflow, Governance |
+| 2026-10-03 | [🏢 HENNGE AIの取締役2人とエージェントが担う実務の境界](articles/hennge-itmedia-co-jp-aiplus-p10_20261003.md) | AIAgent, Governance, 会社法, IAM |
 | 2026-10-03 | [🧭 GPT-6家族の実務ガイドに書かれたモデル・推論努力・指示の分け方](articles/openai-gpt-openai-index-guide-p2_20261003.md) | OpenAI, GPT, LLM, AIAgent |
 | 2026-10-03 | [🧊 S3 Tables で Iceberg V3 の行系譜、削除ベクトル、列既定値を使う](articles/s3-tables-iceberg-v3-aws-p8_20261003.md) | AWS, S3, Iceberg, Spark |
 | 2026-10-03 | [🛰️ T3 Codeで手元のコーディングエージェントを複数端末から操る仕組み](articles/t3-code_20261003.md) | T3Code, AIAgent, ClaudeCode, Codex, TypeScript |
