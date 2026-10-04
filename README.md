@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (488)
+## Articles: 下書き (489)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-05 | [💸 従量課金APIに既定のハード予算上限を置く](articles/api-simonwillison-2026-oct-p4_20261005.md) | API, AWS, GCP, OpenAI, LLM |
 | 2026-10-05 | [🏦 みずほのCoworkは、約3万人の机上作業をどこまで渡す話か](articles/cowork-xtech-nikkei-atcl-p1_20261005.md) | AIAgent, AWS, Claude, Governance |
 | 2026-10-04 | [🧭 スキルとサブエージェントの置き場所を4つの点検で決める](articles/azure-infoq-jp-2026-choosing-p10_20261004.md) | Azure, ClaudeCode, AIAgent, CopilotStudio |
 | 2026-10-04 | [🏦 損保ジャパンのランオフ系でCOBOLを残すリホストの完了条件](articles/cobol-techtarget-itmedia-p7_20261004.md) | COBOL, Azure, Mainframe, Modernization |
@@ -20,7 +21,7 @@
 | 2026-10-03 | [🧭 CONTRAは仕様の空白を埋める問いと黙って決めた挙動を分ける](articles/contra-arxiv-abs-2610-01769-p3_20261003.md) | AIAgent, LLM, ClaudeCode, Python |
 | 2026-10-03 | [🔒 Guarded Commitsは不可逆な外部操作の承認をコミット条件にする](articles/guarded-commits-arxiv-abs-p4_20261003.md) | LLM, AIAgent, Workflow, Governance |
 | 2026-10-03 | [🏢 HENNGE AIの取締役2人とエージェントが担う実務の境界](articles/hennge-itmedia-co-jp-aiplus-p10_20261003.md) | AIAgent, Governance, 会社法, IAM |
-| 2026-10-03 | [🧭 GPT-6家族の実務ガイドに書かれたモデル・推論努力・指示の分け方](articles/openai-gpt-openai-index-guide-p2_20261003.md) | OpenAI, GPT, LLM, AIAgent |
+| 2026-10-03 | [🧭 GPT-6ファミリーの実務ガイドに書かれたモデル・推論努力・指示の分け方](articles/openai-gpt-openai-index-guide-p2_20261003.md) | OpenAI, GPT, LLM, AIAgent |
 | 2026-10-03 | [🧊 S3 Tables で Iceberg V3 の行系譜、削除ベクトル、列既定値を使う](articles/s3-tables-iceberg-v3-aws-p8_20261003.md) | AWS, S3, Iceberg, Spark |
 | 2026-10-03 | [🛰️ T3 Codeで手元のコーディングエージェントを複数端末から操る仕組み](articles/t3-code_20261003.md) | T3Code, AIAgent, ClaudeCode, Codex, TypeScript |
 | 2026-10-02 | [🏗️ AWS Well-Architected Agentプレビューの診断出力と適用権限](articles/aws-well-architected-agent-p2_20261002.md) | AWS, IAM, Security, WellArchitected |

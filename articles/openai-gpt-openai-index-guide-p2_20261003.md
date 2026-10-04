@@ -1,12 +1,12 @@
 ---
-title: "GPT-6家族の実務ガイドに書かれたモデル・推論努力・指示の分け方"
+title: "GPT-6ファミリーの実務ガイドに書かれたモデル・推論努力・指示の分け方"
 emoji: "🧭"
 type: "tech"
 topics: ["OpenAI", "GPT", "LLM", "AIAgent"]
 published: false
 ---
 
-2026年10月2日、OpenAI は GPT-6 家族のモデルガイドを公開しました。ページの H1 は "A model guide for the GPT-6 family" です。サブタイトルは、時間と費用を管理しながら結果を出すための実務上のヒント、です。同じ URL を指す関連カードの題は "A practical guide to building with GPT-6" です。
+2026年10月2日、OpenAI は GPT-6 ファミリーのモデルガイドを公開しました。ページの H1 は "A model guide for the GPT-6 family" です。サブタイトルは、時間と費用を管理しながら結果を出すための実務上のヒント、です。同じ URL を指す関連カードの題は "A practical guide to building with GPT-6" です。
 
 本文は3つの節です。本番での動かし方、プロンプトとスキル、長い仕事の進め方を、一つの記事に並べています。想定読者は、API でエージェントの仕事を組み立てる人です。モデル ID、単価、推論努力、ツールの同時使用条件の詳細は、記事がリンクする API ドキュメントと価格表にあります。
 
