@@ -7,12 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (485)
+## Articles: 下書き (487)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-04 | [🧭 スキルとサブエージェントの置き場所を4つの点検で決める](articles/azure-infoq-jp-2026-choosing-p10_20261004.md) | Azure, ClaudeCode, AIAgent, CopilotStudio |
 | 2026-10-04 | [🏦 損保ジャパンのランオフ系でCOBOLを残すリホストの完了条件](articles/cobol-techtarget-itmedia-p7_20261004.md) | COBOL, Azure, Mainframe, Modernization |
 | 2026-10-04 | [🧭 GitHubが整理した開発者の中心技能。指示、レビュー、技術判断](articles/github-github-ai-ml-is-career-p8_20261004.md) | GitHub, Copilot, AIAgent, 組織設計 |
+| 2026-10-04 | [📄 繰り返す帳票OCRは範囲を登録して列を固定する](articles/ocr-zenn-dev-polargiver-ocr-p9_20261004.md) | OCR, LLM, Azure, GoogleCloud |
 | 2026-10-03 | [📡 AI情報収集の型とHAROを2026年10月に再点検する](articles/ai-info-collection-haro-ogawa_20261003.md) | AI, RSS, HuggingFace, GoogleCloud, Gemini |
 | 2026-10-03 | [🧭 CONTRAは仕様の空白を埋める問いと黙って決めた挙動を分ける](articles/contra-arxiv-abs-2610-01769-p3_20261003.md) | AIAgent, LLM, ClaudeCode, Python |
 | 2026-10-03 | [🔒 Guarded Commitsは不可逆な外部操作の承認をコミット条件にする](articles/guarded-commits-arxiv-abs-p4_20261003.md) | LLM, AIAgent, Workflow, Governance |
