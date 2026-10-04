@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (489)
+## Articles: 下書き (490)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-10-05 | [💸 従量課金APIに既定のハード予算上限を置く](articles/api-simonwillison-2026-oct-p4_20261005.md) | API, AWS, GCP, OpenAI, LLM |
 | 2026-10-05 | [🏦 みずほのCoworkは、約3万人の机上作業をどこまで渡す話か](articles/cowork-xtech-nikkei-atcl-p1_20261005.md) | AIAgent, AWS, Claude, Governance |
+| 2026-10-05 | [🏛 練馬区の未納対策支援AIが短くするのは調査先を選ぶ時間](articles/xtech-nikkei-atcl-nxt-column-p8_20261005.md) | AI, Governance, 自治体, 税務 |
 | 2026-10-04 | [🧭 スキルとサブエージェントの置き場所を4つの点検で決める](articles/azure-infoq-jp-2026-choosing-p10_20261004.md) | Azure, ClaudeCode, AIAgent, CopilotStudio |
 | 2026-10-04 | [🏦 損保ジャパンのランオフ系でCOBOLを残すリホストの完了条件](articles/cobol-techtarget-itmedia-p7_20261004.md) | COBOL, Azure, Mainframe, Modernization |
 | 2026-10-04 | [🧭 GitHubが整理した開発者の中心技能。指示、レビュー、技術判断](articles/github-github-ai-ml-is-career-p8_20261004.md) | GitHub, Copilot, AIAgent, 組織設計 |
