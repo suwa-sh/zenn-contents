@@ -8,6 +8,9 @@ published: false
 
 従量課金の API とクラウドに、設定した金額へ達した時点で新規の課金操作を止める仕組みを、製品の初期値として置く要求があります。この記事では、その上限の構造、台帳の持ち方、提供者ごとの有効化、エージェントのツール呼び出し前に置く予約までを説明します。手順と応答コードは、2026-10-05 時点の公開ドキュメントに基づきます。Simon Willison の 2026-10-03 の記事は各社の実装一覧ではなく、この停止を既定にする要求です。
 
+![記事の全体像](/images/api-simonwillison-2026-oct-p4_20261005/overview.png)
+*この記事の全体像。以下、順に解説します。*
+
 ## 既定ハード予算上限とは
 
 既定ハード予算上限は、従量課金の API とクラウドに対する製品要求です。設定した金額に達した時点で、新規の課金操作をエラーで止めます。通知メールだけを送って呼び出しを続けるソフト上限とは、停止の有無が違います。
@@ -20,7 +23,7 @@ Simon Willison は 2026-10-03 の記事で、この停止を製品の既定に�
 
 記事が名指しする実装の芽は 2 つです。AWS は 2026-09-16 の新しいビルダー体験で、有料プランのプロジェクトに月額の spend limit を置けるようにし、上限に達したプロジェクトをその月は一時停止すると告知しています。Google Cloud は 2026-07-29 のブログで Spend Caps を公開し、プロジェクト内の特定サービスに月額の金額上限を置き、到達後はそのサービスの課金利用を制限すると説明しています。
 
-この要求は、見積もりの行分けと FinOps の保護時間の次の段です。行分けは「何にいくら使うか」を事前に分けます。保護時間は「いつ気づくか」を早めます。既定のハード上限は「気づいたあと、誰の追加承認が無い限り新規呼び出しを拒むか」を製品の初期値にします。
+この要求は、見積もりの行分けと早期アラートの次の段です。行分けは「何にいくら使うか」を事前に分けます。早期アラートは「いつ気づくか」を早めます。既定のハード上限は「気づいたあと、誰の追加承認が無い限り新規呼び出しを拒むか」を製品の初期値にします。
 
 レート制限（RPM / TPM）は速度の公平性です。月額の利用枠はプロバイダが組織に割り当てる上限です。利用者が金額で置くハード上限は、そのどちらとも別の制御です。OpenAI の現行ガイドは、この 3 つを別物として書いています。
 
@@ -101,7 +104,7 @@ flowchart LR
 
 ### コンテナ図
 
-枠はチーム、ジョブ、対外操作の入れ子です。ジョブ枠と対外操作枠は、呼び出し前に最大見積を予約し、ローカルで許可または拒否します。枠内の転送だけが提供者の API 金額上限へ進みます。AWS のプロジェクト一時停止と Google Cloud のサービス上限は、ゲートが選ぶ停止モードではなく、転送後に観測する状態です。実績が予約より小さいときは、差分をジョブ枠へ戻します。
+枠はチーム、ジョブ、対外操作の入れ子です。ジョブ枠と対外操作枠は、呼び出し前に最大見積を予約し、ローカルで許可または拒否します。枠内の転送だけが提供者の API 金額上限へ進みます。AWS のプロジェクト一時停止と Google Cloud のサービス上限は、ゲートが選ぶ停止モードではなく、転送後に観測する状態です。実績が予約より小さいときは、予約時に引いた全階層へ同じ差分を戻します。
 
 ```mermaid
 flowchart TB
@@ -131,7 +134,9 @@ flowchart TB
     apiHard -.->|"状態を観測"| projectPause
     apiHard -.->|"状態を観測"| serviceCap
     apiHard --> settle
+    settle --> teamCap
     settle --> jobCap
+    settle --> externalCap
 ```
 
 | 要素名 | 説明 |
@@ -142,7 +147,7 @@ flowchart TB
 | 予約 | 応答の最大コストを先に残高から抑える。OpenAI cookbook の per-run controller と同じ考え方 |
 | 判定 | ローカルゲートの許可か拒否。提供者の停止モードをここで選ばない |
 | ローカル拒否 | 残額が予約に満たないとき、新規ツール呼び出しを止める |
-| 精算 | 実績が予約より小さいとき、差分をジョブ枠へ戻す |
+| 精算 | 実績が予約より小さいとき、予約した全階層へ同じ差分を戻す |
 | API の金額上限 | 転送後に提供者またはゲートウェイが返す金額上限。OpenAI の 429、Anthropic の 429 または 400、LiteLLM の 422 など |
 | プロジェクト一時停止 | AWS spend limit が上限到達時に行う停止。ゲートの出力ではなく、観測する状態 |
 | サービス上限 | Google Cloud Spend Cap。単一プロジェクトの単一サービス。ゲートの出力ではなく、観測する状態 |
@@ -334,7 +339,7 @@ classDiagram
 | overageBillable | 強制が即時でないあいだの超過分を請求するか。OpenAI と Google Cloud の現行ドキュメントは、請求されると書く |
 | origin | `official` は公開仕様の写像。`implementation` は公開リソース名ではない実装案。Reservation、LedgerEntry のローカル列、BudgetApproval は implementation |
 | kind | `inference` または `external`。実装案の分類 |
-| errorCode | 例: `organization_spend_limit_exceeded`、`project_spend_limit_exceeded`、`budget_exceeded` |
+| errorCode | OpenAI の `error.code` は `organization_spend_limit_exceeded` か `project_spend_limit_exceeded`。LiteLLM の `budget_exceeded` は `error.type`。チーム例の `error.code` は `"422"` で、設定変更後は `"429"` |
 | httpStatus | OpenAI のハード上限は 429。LiteLLM のチーム予算の例は 422。デプロイメント予算の例は 429 |
 | action | `raise` / `remove_cap` / `lift_pause`。再開の種類 |
 
@@ -436,14 +441,14 @@ Google Cloud の Spend Cap は、請求アカウントの予算で、単一プ�
 
 ### ゲートウェイにチーム予算を置く
 
-LiteLLM のチーム予算は、公式の手順が 3 段です。チュートリアルの金額は `max_budget: 0.000000001` と `budget_duration: "1d"` です。下のコマンドは手順の形だけを借り、金額は読みやすい例です。`budget_duration` の公開例には `1s`、`1m`、`1h`、`1d`、`30d` があります。`30d` は毎月のリセットとして説明されています。
+LiteLLM のチーム予算は、公式の手順が 3 段です。チュートリアルの金額は `max_budget: 0.000000001` と `budget_duration: "1d"` です。下のコマンドは手順の形だけを借り、金額は読みやすい例です。チーム予算の表は `budget_duration="30d"` を every 1 month と書きます。users ページは、毎月 1 日に戻るカレンダー月に `1mo` を使うと書きます。この記事のチーム枠はカレンダー月なので、例は `1mo` にします。`30d` を、毎月 1 日のリセットと同一視しません。
 
 ```bash
 # 公式手順の形。金額と期間は読みやすい例。チュートリアル値ではない。
 curl -X POST "http://127.0.0.1:4000/team/new" \
   -H "Authorization: Bearer $LITELLM_API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"team_alias":"research","max_budget":100,"budget_duration":"30d"}'
+  -d '{"team_alias":"research","max_budget":100,"budget_duration":"1mo"}'
 ```
 
 ```bash
@@ -496,7 +501,7 @@ cookbook は、この予算がストレージ、既定以外の処理ティア�
 
 ### 対外操作の枠を推論枠から分ける
 
-資源の作成、メールや投稿の送信、決済は、トークン単価では見積もれません。実装案では `kind: external` のツール名リストをゲートが持ち、その呼び出しは `external` 枠の予約だけを見ます。AWS の任意制御「新規リソース起動の停止」は、上限の約 7 日前に SCP で新規作成を止める提供者側の近い仕組みです。金額の別枠そのものではありません。
+資源の作成、メールや投稿の送信、決済は、トークン単価では見積もれません。実装案では `kind: external` のツール名リストをゲートが持ち、その呼び出しは `external` 枠を追加で見ます。ジョブ枠とチーム枠も、同じ見積額を同時に予約します。AWS の任意制御「新規リソース起動の停止」は、上限の約 7 日前に SCP で新規作成を止める提供者側の近い仕組みです。金額の別枠そのものではありません。
 
 ```yaml
 # 実装案。ツール名はエージェント実装の名前に合わせる。
@@ -518,7 +523,7 @@ external_limit:
 
 超過後の正しい動作は、進行中の後始末を除き、新しいツール呼び出しを拒否することです。OpenAI のヘルプは、請求、支出、クォータのエラーをリトライしてもアクセスは戻らない、と書いています。
 
-枠が同時に溢れたときの優先は、実装案では次の順です。先に拒否した枠の承認だけを再開条件にします。
+枠が同時に溢れたとき、実装案は次の順で不足を集めます。再開には、不足した全階層の残額か承認が要ります。先頭の 1 枠だけを増額しても、祖先が不足したままなら次の呼び出しは拒否されます。
 
 | 順 | 判定 | 拒否時の resume |
 |---|---|---|
@@ -530,24 +535,67 @@ external_limit:
 実装案のゲートは次の順です。残高の減算は、上の表の 1 枠につき 1 台帳の直列操作にします。
 
 1. ツール種別を推論か対外操作かに分けます。
-2. 子エージェントなら親の `jobId` を必須にします。
-3. 最大見積を予約します。
-4. 予約できないとき、そのツール呼び出しを拒否し、増額承認の識別子が要ることを返します。
-5. 予約できたときだけ提供者へ転送します。
-6. 実績で予約を精算します。
+2. 子エージェントなら `is_child` を立て、親の `jobId` と一致する `parent_job_id` を必須にします。欠落や不一致は拒否します。
+3. 最大見積を予約します。対外操作は `estimate_usd`、推論はトークン単価の最悪額です。同じ額を、対象枠と祖先枠から同時に引きます。
+4. 見積が有限の正数でないとき、残高を変えずに拒否します。
+5. 予約できないとき、不足した全階層を返します。増額が要るのはその全部です。
+6. 予約できたときだけ提供者へ転送します。
+7. 実績で予約を精算します。予約 ID に引いた階層を残し、実績との差分をその全階層へ同じ額だけ、1 台帳の直列操作で戻します。
 
 ```python
 # 実装案。拒否は例外ではなく、再開に必要な承認種別を含む結果にする。
+# 残高の読み取りと減算は、この関数全体を 1 台帳の直列操作の中で呼ぶ。
+def usable(amount):
+    if isinstance(amount, bool):
+        return False
+    try:
+        value = float(amount)
+    except (TypeError, ValueError):
+        return False
+    return value > 0 and value != float("inf")
+
+
 def before_tool(state, call):
-    if state.team.balance <= 0:
-        return {"allow": False, "reason": "budget_exceeded", "resume": "budget_approval", "scope": "team"}
-    scope = state.external if call.kind == "external" else state.job
-    if call.parent_job_id and call.parent_job_id != state.job.job_id:
-        return {"allow": False, "reason": "child_outside_parent"}
-    held = reserve(scope.balance, call.input_tokens, call.max_output_tokens, call.prices)
-    if held is None:
-        return {"allow": False, "reason": "budget_exceeded", "resume": "budget_approval"}
-    scope.holds.append(held)
+    if call.is_child and call.parent_job_id != state.job.job_id:
+        return {
+            "allow": False,
+            "reason": "child_outside_parent",
+            "resume": "budget_approval",
+            "scope": "job",
+            "scopes": ["job"],
+        }
+    chain = []
+    if call.kind == "external":
+        chain.append(("external", state.external))
+        worst = call.estimate_usd
+    else:
+        worst = (
+            call.input_tokens * call.prices.input_per_token
+            + call.max_output_tokens * call.prices.output_per_token
+        )
+    chain.append(("job", state.job))
+    chain.append(("team", state.team))
+    if not usable(worst):
+        return {
+            "allow": False,
+            "reason": "invalid_estimate",
+            "resume": "fix_estimate",
+            "scope": chain[0][0],
+            "scopes": [name for name, _ in chain],
+        }
+    short = [name for name, scope in chain if scope.balance < worst]
+    if short:
+        return {
+            "allow": False,
+            "reason": "budget_exceeded",
+            "resume": "budget_approval",
+            "scope": short[0],
+            "scopes": short,
+        }
+    held = {"held": worst, "scopes": [name for name, _ in chain]}
+    for _, scope in chain:
+        scope.balance -= worst
+        scope.holds.append(held)
     return {"allow": True, "reservation": held}
 ```
 
@@ -577,7 +625,7 @@ def classify_openai_429(code):
     return "rate_limit_or_other"
 ```
 
-LiteLLM のチーム予算の例は 422 と `budget_exceeded` です。デプロイメント予算の例は 429 です。クライアントは両方を「枠の超過」として扱い、本文のパース失敗をレート制限のバックオフに落としません。
+LiteLLM のチーム予算の例は HTTP 422 で、`error.type` が `budget_exceeded`、`error.code` が `"422"` です。`budget_exceeded_status_code: 429` にするとステータスは 429 になります。そのときも種別は `error.type` で読み、`error.code` の数字を OpenAI の code と混ぜません。デプロイメント予算の例は 429 で、メッセージに crossed budget を含みます。クライアントは `error.type == budget_exceeded` と crossed budget の両方を「枠の超過」として扱い、レート制限のバックオフに落としません。
 
 ### サブエージェントの消費を親の上限へ入れる
 
@@ -610,14 +658,14 @@ LiteLLM のチーム予算の例は 422 と `budget_exceeded` です。デプロ
 
 承認レコードが台帳に載るまで、ゲートは同じジョブの新規ツール呼び出しを拒否したままにします。
 
-### 見積もりの行と保護時間の次に遮断を置く
+### 見積もりの行と早期アラートの次に遮断を置く
 
-見積もりの行分けは、チーム、ジョブ、対外操作の `amount` の初期値になります。FinOps の保護時間は、50% や 80% の通知を、その行の金額に対して先に出します。製品の既定値としての遮断は、100% で新規呼び出しを拒む段です。通知しきい値だけを入れて Enforce を外したままにすると、OpenAI の言葉では spend alert であり、トラフィックは継続します。
+見積もりの行分けは、チーム、ジョブ、対外操作の `amount` の初期値になります。早期アラートは、50% や 80% の通知を、その行の金額に対して先に出します。製品の既定値としての遮断は、100% で新規呼び出しを拒む段です。通知しきい値だけを入れて Enforce を外したままにすると、OpenAI の言葉では spend alert であり、トラフィックは継続します。
 
 | 段 | 入力 | 出力 |
 |---|---|---|
 | 行分け | 作業種ごとの見積 | team / job / external の金額 |
-| 保護時間 | 行の金額に対する割合 | 50% と 80% の通知。呼び出しは継続 |
+| 早期アラート | 行の金額に対する割合 | 50% と 80% の通知。呼び出しは継続 |
 | 既定の遮断 | 行の 100% | 新規ツール呼び出しの拒否、または提供者の停止 |
 | 再開 | 追加承認 | 新しい金額か、上限解除の明示 |
 
@@ -766,7 +814,7 @@ date, scope_id, gate_actual_usd, provider_reported_usd, gap_usd, gap_reason
 
 ### 行分けの金額を、そのまま遮断額の初期値にする
 
-見積もりの行がチーム、ジョブ、対外操作に分かれているなら、その金額を各スコープの `amount` に写します。保護時間は 50% と 80% の通知として、その金額の手前に置きます。100% は拒否です。割合だけを通知に使い、100% の拒否を別の担当者の手作業に残すと、エージェントの長時間実行は通知のあいだも進みます。
+見積もりの行がチーム、ジョブ、対外操作に分かれているなら、その金額を各スコープの `amount` に写します。早期アラートは 50% と 80% の通知として、その金額の手前に置きます。100% は拒否です。割合だけを通知に使い、100% の拒否を別の担当者の手作業に残すと、エージェントの長時間実行は通知のあいだも進みます。
 
 - 見積もりの行を、チーム、ジョブ、対外操作の `amount` に写す。
 - 50% と 80% は通知にし、100% は新規ツール呼び出しの拒否にする。
@@ -788,7 +836,7 @@ date, scope_id, gate_actual_usd, provider_reported_usd, gap_usd, gap_reason
 |---|---|---|---|
 | 記事の位置づけ | Willison の記事は要求の提示であり、各社の実装一覧ではない | 記事本文は AWS と Google Cloud を例に、既定のハード上限を求めている。全 API の現行カタログではない | 契約画面の表示を、この記事の代用にしない |
 | AWS の提供範囲 | 記事は既存アカウントへの一般提供を期待している | spend limit のドキュメントは「新しい体験を限られた顧客へ公開中」と警告している | コンソールに項目が無いアカウントは、この停止を持っていると扱わない |
-| AWS のクレジット額 | What's New（2026-09-16）はほとんどの新規顧客でカード不要、最大 200 米ドルのクレジットと書く | 同日の AWS News Blog は 100 米ドルの Free Tier クレジットと書く | 1 つの数字に寄せず、契約画面の表示を正にする |
+| AWS のクレジット額 | What's New（2026-09-16）は最大 200 米ドル、同日の News Blog は 100 米ドルの Free Tier クレジットと書く | 現行の Free Tier ドキュメントは、アカウント作成時に 100 米ドル、アクティビティ完了で追加最大 100 米ドル、合計最大 200 米ドルと書く | 100 と 200 を矛盾として扱わない。初期付与と上限総額を分け、契約画面の表示を正にする |
 | AWS の停止の副作用 | 記事の理想はエラーを返して止めること | spend limit はプロジェクトを一時停止しリソースを止める。操作が無い状態が 90 日続くと、プロジェクトデータを完全に削除する | 429 と同じ障害モードとして扱わない。90 日の期限を監視する |
 | Google Cloud の対象サービス | 2026-04-22 のブログは Maps などを私的プレビューの対象に含めていた | 2026-07-29 のブログと現行の Spend Cap ドキュメントは、Gemini API、Agent Platform、Cloud Run、Cloud Run functions を公開プレビューの対象として書く | サービス名は現行ドキュメントの一覧を正にする |
 | Spend Cap の速度 | 2026-07-29 のブログは、AI サービスの Spend Cap がしきい値の数分以内に作動する、と書く | 支出上限ドキュメントは、レポートより速くても即時ではなく、超過分は通常どおり請求されると書く | ブログの「数分」と、ドキュメントの超過請求を併記する |
@@ -844,20 +892,26 @@ date, scope_id, gate_actual_usd, provider_reported_usd, gap_usd, gap_reason
 
 ```python
 # 実装案。支出上限系はバックオフ対象から外す。
-def retryable(status, code, message=""):
+# OpenAI の error.code、LiteLLM の error.type、
+# Anthropic の error.details.error_code は別引数にする。
+def retryable(status, code, message="", error_type="", detail_code=""):
+    if error_type == "budget_exceeded":
+        return False
+    if detail_code == "enforced_spend_limit_reached":
+        return False
     if code in {
         "organization_spend_limit_exceeded",
         "project_spend_limit_exceeded",
         "organization_usage_limit_exceeded",
         "credit_balance_exhausted",
-        "budget_exceeded",
-        "enforced_spend_limit_reached",
     }:
         return False
     if "crossed budget" in message:
         return False
     return status in {408, 409, 429, 500, 503}
 ```
+
+Anthropic のティア上限は、`error.type` が `rate_limit_error` でも `error.details.error_code` が `enforced_spend_limit_reached` です。この値は `code` ではなく `detail_code` に渡します。`detail_code` を空のままにすると、速度制限の 429 と同じリトライ判定になります。
 
 ### プロジェクト停止のあとデータが消える
 
@@ -890,7 +944,7 @@ def retryable(status, code, message=""):
 | 症状 | 原因 | 対処 |
 |---|---|---|
 | 解除後も最大 1 時間ほど失敗が残る | 予算ドキュメントが、解除後の完全復帰に最大 1 時間と書いている | その窓のあいだは失敗を別インシデントとして増やさない |
-| 同じ月に、同じ目標額でまた止まりたい | 同一月の Lift は、目標額を上げない限り再発動しない | 再開承認で目標額を上げる |
+| 同じ月に、同じ目標額でもう一度止めたい | 同一月の Lift は、目標額を上げない限りその月は再発動しない | 同じ目標額の再武装は同月中はできない。翌月のリセットを待つか、より高い目標額を設定する |
 | 他サービスの請求は止まっていない | Spend Cap は選んだ 1 サービスだけを止める | 止まってほしいサービスが予算の対象かを確認する |
 | サブスクリプションや永続資源の請求が残る | 現行ドキュメントは、サブスクリプション料金と永続資源の継続利用を停止対象の外に置く | その請求を Spend Cap の失敗と見なさない |
 | 処理中のリクエストだけ課金された | 現行ドキュメントは、in-flight を完了させ、その分を課金すると書く | 到達直後の差分を、設定漏れと分けて記録する |
@@ -918,6 +972,7 @@ def retryable(status, code, message=""):
 - [New AWS experience helps builders get started and ship faster](https://aws.amazon.com/about-aws/whats-new/2026/09/New-AWS-Builder-Experience/)（2026-09-16）
 - [AWS reimagines the getting started experience](https://aws.amazon.com/blogs/aws/aws-reimagines-the-getting-started-experience/)（2026-09-16）
 - [Create a spend limit in AWS Settings](https://docs.aws.amazon.com/accounts/latest/reference/create-spend-limit.html)
+- [AWS Free Tier](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/free-tier.html)（アカウント作成時 100 米ドル、追加最大 100 米ドル、合計最大 200 米ドル）
 - [New early anomalies and spend caps on Google Cloud Budgets](https://cloud.google.com/blog/topics/cost-management/new-early-anomalies-and-spend-caps-on-google-cloud-budgets)（2026-07-29）
 - [Manage spend cap budgets](https://docs.cloud.google.com/billing/docs/how-to/budgets-spend-caps)
 - [Create, edit, or delete budgets and budget alerts](https://docs.cloud.google.com/billing/docs/how-to/budgets)
