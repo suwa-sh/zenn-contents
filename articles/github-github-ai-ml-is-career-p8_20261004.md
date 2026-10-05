@@ -3,7 +3,8 @@ title: "GitHubが整理した開発者の中心技能。指示、レビュー、
 emoji: "🧭"
 type: "tech"
 topics: ["GitHub", "Copilot", "AIAgent", "組織設計"]
-published: false
+published: true
+published_at: 2026-10-06
 ---
 
 2026年10月2日、GitHub Blogは、開発者の仕事の中心に残す技能を三つ説明しました。エージェントへの指示、出力の批判的な確認、技術判断です。この記事では、その三つの中身と仕事の分け方を確認したうえで、公開されている等級表の一例との対応、速度に関する別の測定、評価表を触る前の見方を順に示します。

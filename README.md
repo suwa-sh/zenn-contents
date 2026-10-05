@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (490)
+## Articles: 下書き (489)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -16,7 +16,6 @@
 | 2026-10-05 | [🏛 練馬区の未納対策支援AIが短くするのは調査先を選ぶ時間](articles/xtech-nikkei-atcl-nxt-column-p8_20261005.md) | AI, Governance, 自治体, 税務 |
 | 2026-10-04 | [🧭 スキルとサブエージェントの置き場所を4つの点検で決める](articles/azure-infoq-jp-2026-choosing-p10_20261004.md) | Azure, ClaudeCode, AIAgent, CopilotStudio |
 | 2026-10-04 | [🏦 損保ジャパンのランオフ系でCOBOLを残すリホストの完了条件](articles/cobol-techtarget-itmedia-p7_20261004.md) | COBOL, Azure, Mainframe, Modernization |
-| 2026-10-04 | [🧭 GitHubが整理した開発者の中心技能。指示、レビュー、技術判断](articles/github-github-ai-ml-is-career-p8_20261004.md) | GitHub, Copilot, AIAgent, 組織設計 |
 | 2026-10-04 | [📄 繰り返す帳票OCRは範囲を登録して列を固定する](articles/ocr-zenn-dev-polargiver-ocr-p9_20261004.md) | OCR, LLM, Azure, GoogleCloud |
 | 2026-10-03 | [📡 AI情報収集の型とHAROを2026年10月に再点検する](articles/ai-info-collection-haro-ogawa_20261003.md) | AI, RSS, HuggingFace, GoogleCloud, Gemini |
 | 2026-10-03 | [🧭 CONTRAは仕様の空白を埋める問いと黙って決めた挙動を分ける](articles/contra-arxiv-abs-2610-01769-p3_20261003.md) | AIAgent, LLM, ClaudeCode, Python |
@@ -502,10 +501,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (188)
+## Articles: 公開済み (189)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-10-06 | [🧭 GitHubが整理した開発者の中心技能。指示、レビュー、技術判断](articles/github-github-ai-ml-is-career-p8_20261004.md) | GitHub, Copilot, AIAgent, 組織設計 |
 | 2026-10-03 | [🐋 複数のCLIエージェントをworktreeで並列に走らせるADE Orcaの構造と使い方](articles/orca_20261003.md) | AI, ClaudeCode, Codex, Git, Electron |
 | 2026-10-01 | [🧭 OpenAI dotsを不在中に任せるときの目標と停止と対外操作と課金](articles/openai-dots-openai-index-p4_20260930.md) | OpenAI, ChatGPT, AIAgent, LLM |
 | 2026-09-29 | [📐 富士通のFDE見積もりは利用料と探索を4行に分ける](articles/fde-si-xtech-nikkei-atcl-p8_20260928.md) | AI, Palantir, Foundry, 契約 |
