@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (496)
+## Articles: 下書き (497)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-10-07 | [🖥️ Cua Spacesの構造とデータから読む、エージェント用デスクトップの導入と運用](articles/cua-spaces_20261007.md) | Cua, AIAgent, MCP, Sandbox, ComputerUse |
 | 2026-10-07 | [⚖️ 暴走エージェントの巨額損害は、誰のどの科目に着地するか](articles/ft-content-a5caf8d4-992-f-p4_20261007.md) | AIAgent, Governance, OpenAI, RiskManagement |
+| 2026-10-07 | [🏗️ GitHubが本番を止めずに進めるGit基盤の作り替え](articles/github-git-github-engineering-p1_20261007.md) | GitHub, Git, Azure, DevOps |
 | 2026-10-06 | [🧩 複合AIの本番障害150件から見る境界ごとの失敗分類](articles/ai-150-arxiv-abs-2610-02503-p5_20261006.md) | AIAgent, LLM, RAG, SRE |
 | 2026-10-06 | [🧪 GitHubのReviewBenchでAIコードレビューの適合率と再現率を分ける](articles/github-ai-reviewbench-github-p2_20261006.md) | GitHub, Copilot, LLM, CodeReview |
 | 2026-10-06 | [🧪 GTDDは実装を固定したあと追加テストでコーディングエージェントを検査する](articles/gtdd-ai-arxiv-abs-2610-02952-p7_20261006.md) | AIAgent, LLM, Testing, Python |
