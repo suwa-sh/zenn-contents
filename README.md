@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (491)
+## Articles: 下書き (492)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-06 | [🧩 複合AIの本番障害150件から見る境界ごとの失敗分類](articles/ai-150-arxiv-abs-2610-02503-p5_20261006.md) | AIAgent, LLM, RAG, SRE |
 | 2026-10-06 | [🧪 GitHubのReviewBenchでAIコードレビューの適合率と再現率を分ける](articles/github-ai-reviewbench-github-p2_20261006.md) | GitHub, Copilot, LLM, CodeReview |
 | 2026-10-06 | [📦 ThinkingBoxは業務完了を終端のデータベース状態で判定する](articles/microsoft-huggingface-co-p4_20261006.md) | AIAgent, LLM, MCP, Microsoft |
 | 2026-10-05 | [💸 従量課金APIに既定のハード予算上限を置く](articles/api-simonwillison-2026-oct-p4_20261005.md) | API, AWS, GCP, OpenAI, LLM |
