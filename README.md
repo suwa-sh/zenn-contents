@@ -7,13 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (500)
+## Articles: 下書き (501)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-10-07 | [🖥️ Cua Spacesの構造とデータから読む、エージェント用デスクトップの導入と運用](articles/cua-spaces_20261007.md) | Cua, AIAgent, MCP, Sandbox, ComputerUse |
 | 2026-10-07 | [⚖️ 暴走エージェントの巨額損害は、誰のどの科目に着地するか](articles/ft-content-a5caf8d4-992-f-p4_20261007.md) | AIAgent, Governance, OpenAI, RiskManagement |
 | 2026-10-07 | [🏗️ GitHubが本番を止めずに進めるGit基盤の作り替え](articles/github-git-github-engineering-p1_20261007.md) | GitHub, Git, Azure, DevOps |
+| 2026-10-07 | [🧪 仮説の立て方を科学・統計・事業の3種類で書き分ける](articles/kasetsu-no-tatekata_20261007.md) | 仮説検証, 統計, 事前登録, リーンスタートアップ, プロダクトマネジメント |
 | 2026-10-07 | [🧭 問いの立て方の枠組みを整理して調査と執筆の前に問いを狭める](articles/toi-no-tatekata_20261007.md) | Thinking, Research, TechnicalWriting, ProblemSolving |
 | 2026-10-07 | [🏦 みずほとライオンがQwenを自社環境で動かすとき発注側が見る4行](articles/xtech-nikkei-atcl-nxt-column-p6_20261007.md) | LLM, Qwen, AWS, Governance |
 | 2026-10-07 | [🤖 源内で職員が作ったものを数えるとき発注側が見る5段](articles/xtech-nikkei-atcl-nxt-column-p7_20261007.md) | AIAgent, Governance, OSS, LLM |
