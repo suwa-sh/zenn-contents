@@ -3,7 +3,8 @@ title: "Cua Spacesの構造とデータから読む、エージェント用デ�
 emoji: "🖥️"
 type: "tech"
 topics: ["Cua", "AIAgent", "MCP", "Sandbox", "ComputerUse"]
-published: false
+published: true
+published_at: 2026-10-08
 ---
 
 AI エージェントに GUI を操作させたいとき、手元の画面をそのまま渡すのは不安があります。
