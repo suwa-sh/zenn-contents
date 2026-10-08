@@ -7,13 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (504)
+## Articles: 下書き (505)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-10-08 | [🪶 Claude Haiku 5.5の仕様、価格、サブエージェントへの置き方](articles/anthropic-claude-haiku-5-5-p2_20261008.md) | Claude, Anthropic, AIAgent, LLM |
 | 2026-10-08 | [🔐 AnthropicのCyber Verification Programは作業の通し方で3枠に分かれた](articles/anthropic-itmedia-co-jp-2610-p4_20261008.md) | Anthropic, Claude, Security, LLM |
 | 2026-10-08 | [🔐 i-askの管理サイト侵害で見る、委託先と自社システムの境界](articles/faq-xtech-nikkei-atcl-nxt-p6_20261008.md) | Security, SaaS, Privacy |
+| 2026-10-08 | [🔧 GoogleのFlowAgentは提出前のテスト失敗を次の編集までの分で直す](articles/google-ci-arxiv-abs-2610-07289-p9_20261008.md) | CI, Gemini, Testing, LLM |
 | 2026-10-08 | [⚖️ 確率と選択を返すOpenAI Decisions APIの使い方](articles/openai-decisions-api-api-p1_20261008.md) | OpenAI, GPT, LLM, API, Python |
 | 2026-10-07 | [⚖️ 暴走エージェントの巨額損害は、誰のどの科目に着地するか](articles/ft-content-a5caf8d4-992-f-p4_20261007.md) | AIAgent, Governance, OpenAI, RiskManagement |
 | 2026-10-07 | [🏗️ GitHubが本番を止めずに進めるGit基盤の作り替え](articles/github-git-github-engineering-p1_20261007.md) | GitHub, Git, Azure, DevOps |
