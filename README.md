@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (505)
+## Articles: 下書き (506)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-09 | [🧭 馬田隆明さんの仮説思考スライド6本を整理する：4ステップからマップ・ループ・リープへ](articles/umada-hypothesis-thinking-slides_20261009.md) | Startup, LeanStartup, ProductManagement, Idea |
 | 2026-10-08 | [🪶 Claude Haiku 5.5の仕様、価格、サブエージェントへの置き方](articles/anthropic-claude-haiku-5-5-p2_20261008.md) | Claude, Anthropic, AIAgent, LLM |
 | 2026-10-08 | [🔐 AnthropicのCyber Verification Programは作業の通し方で3枠に分かれた](articles/anthropic-itmedia-co-jp-2610-p4_20261008.md) | Anthropic, Claude, Security, LLM |
 | 2026-10-08 | [🔐 i-askの管理サイト侵害で見る、委託先と自社システムの境界](articles/faq-xtech-nikkei-atcl-nxt-p6_20261008.md) | Security, SaaS, Privacy |
