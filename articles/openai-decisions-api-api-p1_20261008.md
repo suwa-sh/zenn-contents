@@ -3,7 +3,8 @@ title: "確率と選択を返すOpenAI Decisions APIの使い方"
 emoji: "⚖️"
 type: "tech"
 topics: ["OpenAI", "GPT", "LLM", "API", "Python"]
-published: false
+published: true
+published_at: 2026-10-10
 ---
 
 OpenAI Decisions API は、共有の入力に対して型つきの質問へ答えを返す専用エンドポイントです。文章を生成する Responses API とは別の `POST /v1/decisions` を使います。2026-10-06 の [Changelog](https://developers.openai.com/api/docs/changelog) は、モデル `gpt-6-luna` 付きの Decisions API をベータとして公開したと記録しています。2026-10-08 時点の [Decisions ガイド](https://developers.openai.com/api/docs/guides/decisions) では、指定できるモデルは `gpt-6-luna` だけです。ガイドは、数週間以内の GA を見込んでいます。

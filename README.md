@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (511)
+## Articles: 下書き (510)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -21,7 +21,6 @@
 | 2026-10-08 | [🔐 AnthropicのCyber Verification Programは作業の通し方で3枠に分かれた](articles/anthropic-itmedia-co-jp-2610-p4_20261008.md) | Anthropic, Claude, Security, LLM |
 | 2026-10-08 | [🔐 i-askの管理サイト侵害で見る、委託先と自社システムの境界](articles/faq-xtech-nikkei-atcl-nxt-p6_20261008.md) | Security, SaaS, Privacy |
 | 2026-10-08 | [🔧 GoogleのFlowAgentは提出前のテスト失敗を次の編集までの分で直す](articles/google-ci-arxiv-abs-2610-07289-p9_20261008.md) | CI, Gemini, Testing, LLM |
-| 2026-10-08 | [⚖️ 確率と選択を返すOpenAI Decisions APIの使い方](articles/openai-decisions-api-api-p1_20261008.md) | OpenAI, GPT, LLM, API, Python |
 | 2026-10-07 | [⚖️ 暴走エージェントの巨額損害は、誰のどの科目に着地するか](articles/ft-content-a5caf8d4-992-f-p4_20261007.md) | AIAgent, Governance, OpenAI, RiskManagement |
 | 2026-10-07 | [🏗️ GitHubが本番を止めずに進めるGit基盤の作り替え](articles/github-git-github-engineering-p1_20261007.md) | GitHub, Git, Azure, DevOps |
 | 2026-10-07 | [🧪 仮説の立て方を科学・統計・事業の3種類で書き分ける](articles/kasetsu-no-tatekata_20261007.md) | 仮説検証, 統計, 事前登録, リーンスタートアップ, プロダクトマネジメント |
@@ -523,10 +522,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (190)
+## Articles: 公開済み (191)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-10-10 | [⚖️ 確率と選択を返すOpenAI Decisions APIの使い方](articles/openai-decisions-api-api-p1_20261008.md) | OpenAI, GPT, LLM, API, Python |
 | 2026-10-08 | [🖥️ Cua Spacesの構造とデータから読む、エージェント用デスクトップの導入と運用](articles/cua-spaces_20261007.md) | Cua, AIAgent, MCP, Sandbox, ComputerUse |
 | 2026-10-06 | [🧭 GitHubが整理した開発者の中心技能。指示、レビュー、技術判断](articles/github-github-ai-ml-is-career-p8_20261004.md) | GitHub, Copilot, AIAgent, 組織設計 |
 | 2026-10-03 | [🐋 複数のCLIエージェントをworktreeで並列に走らせるADE Orcaの構造と使い方](articles/orca_20261003.md) | AI, ClaudeCode, Codex, Git, Electron |
