@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (510)
+## Articles: 下書き (512)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-10 | [📬 daily brief に見る定期実行エージェントの認証、記憶、投稿確認](articles/anthropic-claude-dev-building-p2_20261010.md) | Claude, AIエージェント, Slack, GitHub |
+| 2026-10-10 | [🔍 AnthropicのOSS Scannerは未検証の検出結果を届ける](articles/anthropic-oss-anthropic-opt-p1_20261010.md) | Anthropic, Security, OSS, Claude |
 | 2026-10-09 | [🔍 AgentTracerが間接プロンプト注入の攻撃列を意図のずれから追跡する](articles/agenttracer-arxiv-abs-p7_20261009.md) | AIAgent, LLM, Security, PromptInjection |
 | 2026-10-09 | [🔍 理解監査は、AI研究の担当者が中身を説明できるかを開発継続の条件にする提案](articles/ai-ai-arxiv-abs-2610-10064-p9_20261009.md) | AIAgent, Governance, LLM, CodeReview |
 | 2026-10-09 | [🪝 Claude Code 2.1.295のonFailureでフック失敗時に操作を止める](articles/claude-code-cli-github-claude-p3_20261009.md) | ClaudeCode, セキュリティ, AIエージェント, Anthropic |
