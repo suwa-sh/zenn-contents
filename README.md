@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (508)
+## Articles: 下書き (510)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-09 | [🔍 AgentTracerが間接プロンプト注入の攻撃列を意図のずれから追跡する](articles/agenttracer-arxiv-abs-p7_20261009.md) | AIAgent, LLM, Security, PromptInjection |
+| 2026-10-09 | [🔍 理解監査は、AI研究の担当者が中身を説明できるかを開発継続の条件にする提案](articles/ai-ai-arxiv-abs-2610-10064-p9_20261009.md) | AIAgent, Governance, LLM, CodeReview |
 | 2026-10-09 | [🪝 Claude Code 2.1.295のonFailureでフック失敗時に操作を止める](articles/claude-code-cli-github-claude-p3_20261009.md) | ClaudeCode, セキュリティ, AIエージェント, Anthropic |
 | 2026-10-09 | [🔐 IDCFクラウド障害で見る、4ゾーンの復元と顧客バックアップの境界](articles/idcf-idcf-jp-topics-20261008001-p2_20261009.md) | Cloud, Security, Backup, SLA |
 | 2026-10-09 | [🧭 馬田隆明さんの仮説思考スライド6本を整理する：4ステップからマップ・ループ・リープへ](articles/umada-hypothesis-thinking-slides_20261009.md) | Startup, LeanStartup, ProductManagement, Idea |
