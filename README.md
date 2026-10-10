@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (514)
+## Articles: 下書き (516)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-11 | [🔐 エージェントの操作権限を次のシステム状態の提案に限る](articles/cncf-io-2026-dont-give-ai-p2_20261011.md) | AI, Kubernetes, Security, Linux, GitOps |
+| 2026-10-11 | [🧭 Microsoft Decision-1 は文章を出さず確率と選択だけを返す](articles/microsoft-decision-vercel-p3_20261011.md) | AI, LLM, Azure, Vercel, Microsoft |
 | 2026-10-10 | [🧪 LLMが書く回帰テストは欠陥の挙動を期待値にできる](articles/ai-arxiv-abs-2610-11835-p7_20261010.md) | LLM, Testing, Python, CI |
 | 2026-10-10 | [🔍 AI作成と知覚されたPRのレビュー入口は説明と検証と担当で分かれる](articles/ai-pr-arxiv-abs-2610-11179-p6_20261010.md) | CodeReview, GitHub, LLM, OpenSource |
 | 2026-10-10 | [📬 daily brief に見る定期実行エージェントの認証、記憶、投稿確認](articles/anthropic-claude-dev-building-p2_20261010.md) | Claude, AIエージェント, Slack, GitHub |
