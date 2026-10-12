@@ -7,11 +7,10 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (518)
+## Articles: 下書き (517)
 
 | create date | title | topics |
 |-------------|-------|--------|
-| 2026-10-12 | [🦆 DuckDB CLIのエージェントモードは省略と打ち切りとエラーを明示する](articles/duckdb-cli-duckdb-2026-agent-p4_20261012.md) | DuckDB, CLI, SQL, CodingAgent |
 | 2026-10-11 | [🔐 エージェントの操作権限を次のシステム状態の提案に限る](articles/cncf-io-2026-dont-give-ai-p2_20261011.md) | AI, Kubernetes, Security, Linux, GitOps |
 | 2026-10-11 | [🏢 損保ジャパンのGemini全社展開で、不使用と誤用を別の母数で数える](articles/gemini-kn-itmedia-co-jp-2610-p10_20261011.md) | Gemini, GoogleCloud, Governance, AIAgent |
 | 2026-10-11 | [🧭 Microsoft Decision-1 は文章を出さず確率と選択だけを返す](articles/microsoft-decision-vercel-p3_20261011.md) | AI, LLM, Azure, Vercel, Microsoft |
@@ -530,10 +529,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (191)
+## Articles: 公開済み (192)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-10-13 | [🦆 DuckDB CLIのエージェントモードは省略と打ち切りとエラーを明示する](articles/duckdb-cli-duckdb-2026-agent-p4_20261012.md) | DuckDB, CLI, SQL, CodingAgent |
 | 2026-10-10 | [⚖️ 確率と選択を返すOpenAI Decisions APIの使い方](articles/openai-decisions-api-api-p1_20261008.md) | OpenAI, GPT, LLM, API, Python |
 | 2026-10-08 | [🖥️ Cua Spacesの構造とデータから読む、エージェント用デスクトップの導入と運用](articles/cua-spaces_20261007.md) | Cua, AIAgent, MCP, Sandbox, ComputerUse |
 | 2026-10-06 | [🧭 GitHubが整理した開発者の中心技能。指示、レビュー、技術判断](articles/github-github-ai-ml-is-career-p8_20261004.md) | GitHub, Copilot, AIAgent, 組織設計 |

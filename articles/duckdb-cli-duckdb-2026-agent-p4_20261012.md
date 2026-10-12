@@ -3,7 +3,8 @@ title: "DuckDB CLIのエージェントモードは省略と打ち切りとエ�
 emoji: "🦆"
 type: "tech"
 topics: ["DuckDB", "CLI", "SQL", "CodingAgent"]
-published: false
+published: true
+published_at: 2026-10-13
 ---
 
 DuckDB の CLI には、コーディングエージェント向けの出力モードがあります。エージェントを検知するか、`-agent` で明示すると、桁を揃えた枠の代わりに短い Markdown 表を出します。上限との関係はフッタと省略行に表れ、エラーは標準エラーの JSON で返します。人が端末で同じ CLI を開いたときの既定は、従来の箱型の表のままです。
