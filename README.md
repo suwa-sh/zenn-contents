@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (517)
+## Articles: 下書き (518)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-12 | [🦆 DuckDB CLIのエージェントモードは省略と打ち切りとエラーを明示する](articles/duckdb-cli-duckdb-2026-agent-p4_20261012.md) | DuckDB, CLI, SQL, CodingAgent |
 | 2026-10-11 | [🔐 エージェントの操作権限を次のシステム状態の提案に限る](articles/cncf-io-2026-dont-give-ai-p2_20261011.md) | AI, Kubernetes, Security, Linux, GitOps |
 | 2026-10-11 | [🏢 損保ジャパンのGemini全社展開で、不使用と誤用を別の母数で数える](articles/gemini-kn-itmedia-co-jp-2610-p10_20261011.md) | Gemini, GoogleCloud, Governance, AIAgent |
 | 2026-10-11 | [🧭 Microsoft Decision-1 は文章を出さず確率と選択だけを返す](articles/microsoft-decision-vercel-p3_20261011.md) | AI, LLM, Azure, Vercel, Microsoft |
