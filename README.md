@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (519)
+## Articles: 下書き (520)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-14 | [🌱 エージェント規模のマージに耐えるAnthropic社内VCS Scionの構造とデータ](articles/anthropic-scion_20261014.md) | Anthropic, Git, Monorepo, VersionControl, AIAgent |
 | 2026-10-13 | [🧭 Claude Codeの供給制約を運用前提にしてからハーネスを書く](articles/claude-code-xtech-nikkei-p8_20261013.md) | ClaudeCode, Anthropic, AIエージェント, LLM |
 | 2026-10-13 | [🛡️ フロンティアモデルを内部リスクとして扱うモデル外の統制](articles/si-itmedia-co-jp-2610-p1_20261013.md) | AIAgent, Security, Governance, LLM |
 | 2026-10-11 | [🔐 エージェントの操作権限を次のシステム状態の提案に限る](articles/cncf-io-2026-dont-give-ai-p2_20261011.md) | AI, Kubernetes, Security, Linux, GitOps |
