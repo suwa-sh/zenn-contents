@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (523)
+## Articles: 下書き (524)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -15,6 +15,7 @@
 | 2026-10-14 | [🔄 ネイティブCLIとスコープ別の承認設定で動くAI-DLC 2.11.0の構造とデータ](articles/ai-dlc_20261014.md) | AI, AWS, ClaudeCode, Codex, Kiro |
 | 2026-10-14 | [🌳 Anthropicが社内モノレポを自前のScionへ5カ月で移した構造](articles/anthropic-anthropic-engineering-p1_20261014.md) | Git, Anthropic, AI, DevOps |
 | 2026-10-14 | [🌱 エージェント規模のマージに耐えるAnthropic社内VCS Scionの構造とデータ](articles/anthropic-scion_20261014.md) | Anthropic, Git, Monorepo, VersionControl, AIAgent |
+| 2026-10-14 | [📐 ベンダーFDEが構築したエージェントを2028年までに7割が放棄する予測](articles/fde-2028-itmedia-co-jp-2610-p3_20261014.md) | AIAgent, Governance, Gartner, Procurement |
 | 2026-10-13 | [🧭 Claude Codeの供給制約を運用前提にしてからハーネスを書く](articles/claude-code-xtech-nikkei-p8_20261013.md) | ClaudeCode, Anthropic, AIエージェント, LLM |
 | 2026-10-13 | [🛡️ フロンティアモデルを内部リスクとして扱うモデル外の統制](articles/si-itmedia-co-jp-2610-p1_20261013.md) | AIAgent, Security, Governance, LLM |
 | 2026-10-11 | [🔐 エージェントの操作権限を次のシステム状態の提案に限る](articles/cncf-io-2026-dont-give-ai-p2_20261011.md) | AI, Kubernetes, Security, Linux, GitOps |
