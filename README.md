@@ -7,13 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (525)
+## Articles: 下書き (524)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-10-14 | [🧭 エージェントが古い社内ルールを参照したとき、生成を止める条件](articles/13-4-atmarkit-itmedia-co-p2_20261014.md) | AIAgent, Governance, DataGovernance, Compliance |
 | 2026-10-14 | [🧭 観測の迂回を差分フックで止める。AGENTS.mdは意図の記述に残す](articles/agents-md-simonwillison-2026-p8_20261014.md) | AIAgent, Git, ClaudeCode, Codex |
-| 2026-10-14 | [🔄 ネイティブCLIとスコープ別の承認設定で動くAI-DLC 2.11.0の構造とデータ](articles/ai-dlc_20261014.md) | AI, AWS, ClaudeCode, Codex, Kiro |
 | 2026-10-14 | [🌳 Anthropicが社内モノレポを自前のScionへ5カ月で移した構造](articles/anthropic-anthropic-engineering-p1_20261014.md) | Git, Anthropic, AI, DevOps |
 | 2026-10-14 | [🌱 エージェント規模のマージに耐えるAnthropic社内VCS Scionの構造とデータ](articles/anthropic-scion_20261014.md) | Anthropic, Git, Monorepo, VersionControl, AIAgent |
 | 2026-10-14 | [📐 ベンダーFDEが構築したエージェントを2028年までに7割が放棄する予測](articles/fde-2028-itmedia-co-jp-2610-p3_20261014.md) | AIAgent, Governance, Gartner, Procurement |
@@ -537,10 +536,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (192)
+## Articles: 公開済み (193)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-10-15 | [🔄 ネイティブCLIとスコープ別の承認設定で動くAI-DLC 2.11.0の構造とデータ](articles/ai-dlc_20261014.md) | AI, AWS, ClaudeCode, Codex, Kiro |
 | 2026-10-13 | [🦆 DuckDB CLIのエージェントモードは省略と打ち切りとエラーを明示する](articles/duckdb-cli-duckdb-2026-agent-p4_20261012.md) | DuckDB, CLI, SQL, CodingAgent |
 | 2026-10-10 | [⚖️ 確率と選択を返すOpenAI Decisions APIの使い方](articles/openai-decisions-api-api-p1_20261008.md) | OpenAI, GPT, LLM, API, Python |
 | 2026-10-08 | [🖥️ Cua Spacesの構造とデータから読む、エージェント用デスクトップの導入と運用](articles/cua-spaces_20261007.md) | Cua, AIAgent, MCP, Sandbox, ComputerUse |
