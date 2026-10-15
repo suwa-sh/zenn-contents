@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (526)
+## Articles: 下書き (527)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-15 | [🔐 公開Androidアプリの解析から接続先サーバを狙うA2B攻撃](articles/nict-a2b-android-itmedia-p6_20261015.md) | Security, Android, API, OWASP |
 | 2026-10-15 | [🔐 Windows 11のMicrosoft Execution Containersでエージェントの実行範囲を切る](articles/windows-microsoft-execution-p1_20261015.md) | Windows, Security, Container, AI |
 | 2026-10-15 | [🧭 Zennの本番AIは返すものの形でモデルを分ける](articles/zenn-ai-4000-decision-zenn-p4_20261015.md) | LLM, AI, OpenAI, Claude, DeepSeek |
 | 2026-10-14 | [🧭 エージェントが古い社内ルールを参照したとき、生成を止める条件](articles/13-4-atmarkit-itmedia-co-p2_20261014.md) | AIAgent, Governance, DataGovernance, Compliance |
