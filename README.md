@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (524)
+## Articles: 下書き (526)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-15 | [🔐 Windows 11のMicrosoft Execution Containersでエージェントの実行範囲を切る](articles/windows-microsoft-execution-p1_20261015.md) | Windows, Security, Container, AI |
+| 2026-10-15 | [🧭 Zennの本番AIは返すものの形でモデルを分ける](articles/zenn-ai-4000-decision-zenn-p4_20261015.md) | LLM, AI, OpenAI, Claude, DeepSeek |
 | 2026-10-14 | [🧭 エージェントが古い社内ルールを参照したとき、生成を止める条件](articles/13-4-atmarkit-itmedia-co-p2_20261014.md) | AIAgent, Governance, DataGovernance, Compliance |
 | 2026-10-14 | [🧭 観測の迂回を差分フックで止める。AGENTS.mdは意図の記述に残す](articles/agents-md-simonwillison-2026-p8_20261014.md) | AIAgent, Git, ClaudeCode, Codex |
 | 2026-10-14 | [🌳 Anthropicが社内モノレポを自前のScionへ5カ月で移した構造](articles/anthropic-anthropic-engineering-p1_20261014.md) | Git, Anthropic, AI, DevOps |
