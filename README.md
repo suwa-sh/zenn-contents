@@ -7,14 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (530)
+## Articles: 下書き (529)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-10-16 | [🛡️ 連続不正アクセスの公開APIを台帳と認可で止める](articles/ai-api-blogs-jpcert-or-jp-p6_20261016.md) | Security, API, OWASP, AppSec |
 | 2026-10-16 | [🔍 AnthropicがMETRの6人に与えた従業員相当のアクセス](articles/anthropic-metr-ft-content-p9_20261016.md) | Anthropic, AI, Security, Governance |
 | 2026-10-15 | [🔐 公開Androidアプリの解析から接続先サーバを狙うA2B攻撃](articles/nict-a2b-android-itmedia-p6_20261015.md) | Security, Android, API, OWASP |
-| 2026-10-15 | [📚 エージェントの経験を知識に変えてスキルを育てる WikiSkill の三層構造](articles/wikiskill_20261015.md) | AIエージェント, LLM, AgentSkills, Google, arXiv |
 | 2026-10-15 | [🔐 Windows 11のMicrosoft Execution Containersでエージェントの実行範囲を切る](articles/windows-microsoft-execution-p1_20261015.md) | Windows, Security, Container, AI |
 | 2026-10-15 | [🧭 Zennの本番AIは返すものの形でモデルを分ける](articles/zenn-ai-4000-decision-zenn-p4_20261015.md) | LLM, AI, OpenAI, Claude, DeepSeek |
 | 2026-10-14 | [🧭 エージェントが古い社内ルールを参照したとき、生成を止める条件](articles/13-4-atmarkit-itmedia-co-p2_20261014.md) | AIAgent, Governance, DataGovernance, Compliance |
@@ -542,10 +541,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (193)
+## Articles: 公開済み (194)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-10-17 | [📚 エージェントの経験を知識に変えてスキルを育てる WikiSkill の三層構造](articles/wikiskill_20261015.md) | AIエージェント, LLM, AgentSkills, Google, arXiv |
 | 2026-10-15 | [🔄 ネイティブCLIとスコープ別の承認設定で動くAI-DLC 2.11.0の構造とデータ](articles/ai-dlc_20261014.md) | AI, AWS, ClaudeCode, Codex, Kiro |
 | 2026-10-13 | [🦆 DuckDB CLIのエージェントモードは省略と打ち切りとエラーを明示する](articles/duckdb-cli-duckdb-2026-agent-p4_20261012.md) | DuckDB, CLI, SQL, CodingAgent |
 | 2026-10-10 | [⚖️ 確率と選択を返すOpenAI Decisions APIの使い方](articles/openai-decisions-api-api-p1_20261008.md) | OpenAI, GPT, LLM, API, Python |

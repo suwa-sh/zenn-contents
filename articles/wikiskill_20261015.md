@@ -3,7 +3,8 @@ title: "エージェントの経験を知識に変えてスキルを育てる Wi
 emoji: "📚"
 type: "tech"
 topics: ["AIエージェント", "LLM", "AgentSkills", "Google", "arXiv"]
-published: false
+published: true
+published_at: 2026-10-17
 ---
 
 WikiSkill は、エージェントの実行経験を永続的な知識ベース（wiki）にまとめ、その知識を使って手続きスキルを進化させる Google Research と Virginia Tech の論文（arXiv:2608.27454v1、Tang et al.、2026-08-27 提出、CC BY 4.0）です。この記事では、三層ワークスペースと 4 要素のループ、データの持ち方、実験結果、実装時に迷いやすい点を整理します。数値は論文 HTML を基にしています。
