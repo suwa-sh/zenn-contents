@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (530)
+## Articles: 下書き (531)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-17 | [🏦 第三者AIの銀行ログインを権限表の別欄に置く](articles/ai-ft-content-f49c8e39-f07f-p1_20261017.md) | AIAgent, Banking, OpenBanking, Governance, Security |
 | 2026-10-17 | [📊 Microsoft社内のCLI測定が推定した三つのマージ済み件数](articles/microsoft-cli-itmedia-co-p2_20261017.md) | Microsoft, Copilot, ClaudeCode, AI |
 | 2026-10-16 | [🛡️ 連続不正アクセスの公開APIを台帳と認可で止める](articles/ai-api-blogs-jpcert-or-jp-p6_20261016.md) | Security, API, OWASP, AppSec |
 | 2026-10-16 | [🔍 AnthropicがMETRの6人に与えた従業員相当のアクセス](articles/anthropic-metr-ft-content-p9_20261016.md) | Anthropic, AI, Security, Governance |
