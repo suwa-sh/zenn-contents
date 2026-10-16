@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (528)
+## Articles: 下書き (529)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-16 | [🔍 AnthropicがMETRの6人に与えた従業員相当のアクセス](articles/anthropic-metr-ft-content-p9_20261016.md) | Anthropic, AI, Security, Governance |
 | 2026-10-15 | [🔐 公開Androidアプリの解析から接続先サーバを狙うA2B攻撃](articles/nict-a2b-android-itmedia-p6_20261015.md) | Security, Android, API, OWASP |
 | 2026-10-15 | [📚 エージェントの経験を知識に変えてスキルを育てる WikiSkill の三層構造](articles/wikiskill_20261015.md) | AIエージェント, LLM, AgentSkills, Google, arXiv |
 | 2026-10-15 | [🔐 Windows 11のMicrosoft Execution Containersでエージェントの実行範囲を切る](articles/windows-microsoft-execution-p1_20261015.md) | Windows, Security, Container, AI |
