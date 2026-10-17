@@ -1,0 +1,42 @@
+type: behavior
+title: "Deep Review の4段の処理"
+message: "節ごとに並行点検したあと、最後に節間の整合と外部の根拠を確かめて報告を返す"
+source: "notes/zenn/articles/google-deep-review-research-p8_20261017.md"
+steps:
+  - id: input
+    label: "入力文書"
+    meaning: "点検対象の文書 (PDF・テキストなど)"
+  - id: seg
+    label: "1. 節に分割"
+    meaning: "分割エージェントが論理的な節に分ける。重複可、全体を覆う"
+  - id: budget
+    label: "2. 密度で計算を配分"
+    meaning: "密な証明に多く、導入や関連研究に少なく計算を割り当てる"
+  - id: verify
+    label: "3. 全文を見ながら節を並行検証"
+    meaning: "担当節に集中しつつ全文を参照するエージェントが並行して調べる"
+  - id: synth
+    label: "4. 統合・節間の整合・外部の根拠確認"
+    meaning: "節ごとの報告をまとめ、節をまたぐ矛盾を見て、検索やツールで根拠を確かめる"
+  - id: out
+    label: "レビュー報告"
+    meaning: "人が受け取り、採否を判断する (判断はこの4段の外)"
+transitions:
+  - from: input
+    to: seg
+  - from: seg
+    to: budget
+  - from: budget
+    to: verify
+  - from: verify
+    to: synth
+  - from: synth
+    to: out
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## Deep Reviewとは > ### 4段の処理 (公開ブログと PAT 論文が共通して書く4段)"
+  - "### 4段の処理 末尾: 報告を受け取ったあとに人が行う作業は、この4段の外にある"
+notes:
+  - "統合段で『必要なら論理チェックをやり直す』とあるが、戻りの矢印は描かない (主メッセージを1つに絞るため。順序の主張は変えない)"

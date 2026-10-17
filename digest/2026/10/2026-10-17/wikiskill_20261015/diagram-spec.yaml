@@ -1,0 +1,60 @@
+type: structure
+title: "WikiSkill の三層と進化ループ"
+message: "スキルは改善したときだけ採用し、Wiki は不採用でも残す"
+source: "notes/zenn/articles/wikiskill_20261015.md"
+components:
+  - id: skills
+    label: "スキル"
+    meaning: "推論エージェントが読める手続き (Skills Layer)"
+  - id: infer
+    label: "推論エージェント"
+    meaning: "スキル全文だけを注入されて訓練タスクを実行する。Wiki は読まない"
+  - id: raw
+    label: "生の軌跡"
+    meaning: "反復ごとの実行記録 (Raw Layer)。追記後は不変"
+  - id: maint
+    label: "Wiki 管理者"
+    meaning: "サンプルした軌跡を Wiki のパターンへ統合する"
+  - id: wiki
+    label: "Wiki"
+    meaning: "パターン・進化ログ・採否履歴 (Wiki Layer)。反復をまたいで残る"
+  - id: prop
+    label: "スキル提案者"
+    meaning: "Wiki と軌跡を読み、スキル 1 件の作成または差分編集を提案する"
+  - id: gate
+    label: "ゲート"
+    meaning: "検証点が過去最良を上回ったときだけ採用。それ以外はスキルだけ戻す"
+relationships:
+  - from: skills
+    to: infer
+    label: "全文を注入"
+  - from: infer
+    to: raw
+    label: "軌跡を記録"
+  - from: raw
+    to: maint
+    label: "最大 8 件を抽出"
+  - from: maint
+    to: wiki
+    label: "パターンを追記"
+  - from: wiki
+    to: prop
+    label: "索引と採否履歴"
+  - from: prop
+    to: gate
+    label: "候補を 1 件"
+  - from: gate
+    to: skills
+    label: "改善時だけ採用"
+  - from: gate
+    to: wiki
+    label: "採否と差分を記録"
+layout:
+  direction: left-to-right (左上: スキル → 推論エージェント → 生の軌跡 の上段、右から下段へ Wiki 管理者 → Wiki → スキル提案者 → ゲート と戻り、ゲートから スキル と Wiki へ戻る周回)
+  aspect_ratio: "16:9"
+evidence:
+  - "## 構造 > コンテナ図 (Inference Agent はスキル全文だけを読み軌跡を書く / Maintainer が最大 8 軌跡から wiki を更新 / Proposer が index と impact を読む / Gating が採否と diff を wiki に記録)"
+  - "## WikiSkill とは > 1 反復の 4 要素 (wiki は不採用でも巻き戻さない)"
+  - "## 利用方法 > ゲートの判定 (R_val > R_best のときだけ採用)"
+notes:
+  - "Proposer が必要に応じて軌跡も read_file で読む関係 (記事のコンテナ図にある) は、伝えたいこと 1 つに絞るため図から省いた"

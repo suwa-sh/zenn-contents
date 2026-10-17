@@ -1,0 +1,56 @@
+type: structure
+title: "確認のあと、消すものと残すものが分かれる"
+message: "確認後は原画像を消し、記録だけを残す。消す期限を決める人と点検する人は分ける"
+source: "notes/zenn/articles/unitis-jp-24665-p6_20261017.md"
+components:
+  - id: confirm
+    label: "登録時の確認"
+    meaning: "会員登録時に本人確認書類の画像で本人確認を終える時点"
+  - id: raw
+    label: "原画像（保有しない）"
+    meaning: "本人確認書類の画像。第4報が登録確認完了後は保有しないとした対象"
+  - id: trace
+    label: "確認を終えた記録"
+    meaning: "法令が原本を求めないときの徳丸氏の選択肢"
+    group: keep
+  - id: personal
+    label: "氏名・住所・生年月日"
+    meaning: "FAQ Q8 が法人税法等に基づき7年とした項目"
+    group: keep
+  - id: book
+    label: "貸渡簿の運転者欄"
+    meaning: "通達が貸渡し終了から2年とする記載 (氏名・住所・免許の種類と番号)。許可の対象と確認できた場合"
+    group: keep
+  - id: owner
+    label: "事業部門の責任者"
+    meaning: "法律等の根拠で期限と消去を決める人"
+  - id: checker
+    label: "別の点検者"
+    meaning: "判断者とは別に、半年〜1年に1回運用を点検して記録する人"
+groups:
+  - id: keep
+    label: "残す記録"
+relationships:
+  - from: confirm
+    to: raw
+    label: "消す"
+  - from: confirm
+    to: keep
+    label: "残す"
+  - from: owner
+    to: raw
+    label: "期限と消去を決める"
+  - from: checker
+    to: owner
+    label: "半年〜1年ごとに点検"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+  notes: "左に「登録時の確認」。右上に「原画像（保有しない）」、右下に「残す記録」の枠 (中に3項目を縦に並べる)。原画像の上に「事業部門の責任者」、その左に「別の点検者」"
+evidence:
+  - "### 確認のあと、記録は別の置き場所へ分かれる (Mermaid 図: confirm から raw / trace / book / taxid、owner --> raw、checker --> owner)"
+  - "### 事案と、同日に出た文書 (第4報: 登録確認完了後は画像を保有しない)"
+  - "### 徳丸氏が分けた保管と消去 (6 段落目: 事業部門の責任者が決定、別の人が半年〜1年に1回点検)"
+  - "## 手順に置く五つの欄 > ### 消す原画像と残す記録"
+omitted_on_purpose:
+  - "置き場所 (Web 区画 / 保管専用区画 / eKYC 委託先) と委託元の監督は、1 枚 1 メッセージに絞るため図に入れず digest.md の表で扱う"

@@ -1,0 +1,47 @@
+type: structure
+title: "三つの比率はどこから出たか"
+message: "+24.0% / +24.9% / +11.4% は別の研究・別の比較相手から出た別々の数"
+source: "notes/zenn/articles/microsoft-cli-itmedia-co-p2_20261017.md"
+components:
+  - id: boundary
+    label: "社内展開 (2026-01-05 を境)"
+    meaning: "著者が分析上の境目に置いた日付。製品の一般提供日ではない"
+  - id: adopt
+    label: "採用研究 (Copilot CLI だけ)"
+    meaning: "誰が試し、誰が使い続けたかを推定する研究"
+  - id: outcome
+    label: "成果研究 (両方の CLI)"
+    meaning: "マージ済みプルリクエスト件数の増加を推定する研究"
+  - id: odds
+    label: "初回・継続のオッズ (例: 同僚利用で +216%)"
+    meaning: "ロジスティック回帰のオッズ変化。確率の倍率ではない"
+  - id: part1
+    label: "Part 1: 早期利用者 対 合成対照 → +24.0% (1人1日)"
+    meaning: "2026-01-05〜11 の利用者。事後 115 日。合成対照との比較"
+  - id: part2
+    label: "Part 2: 同じ人の利用週 対 未使用週 → Copilot CLI +24.9% / Claude Code +11.4% (1人1週)"
+    meaning: "単一ツール利用者の週次パネル。関連であり因果としては読まない"
+relationships:
+  - from: boundary
+    to: adopt
+    label: "分岐"
+  - from: boundary
+    to: outcome
+    label: "分岐"
+  - from: adopt
+    to: odds
+    label: "推定"
+  - from: outcome
+    to: part1
+    label: "推定"
+  - from: outcome
+    to: part2
+    label: "推定"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "### 測定の並び (mermaid flowchart)"
+  - "## 三つの比率の定義 (表: 分子 / 比べる相手 / 原稿の位置)"
+  - "## 初回利用と継続の係数 (+216%) / ### オッズと、4か月の点推定"
+  - "## 因果として読める範囲 (Part 2 は因果効果として読んでいない)"

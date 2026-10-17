@@ -1,0 +1,42 @@
+type: structure
+title: "シティが拒んだ経路"
+message: "シティが拒んだのは、第三者が銀行の画面にログインして取引する経路だけ"
+source: "notes/zenn/articles/ai-ft-content-f49c8e39-f07f-p1_20261017.md"
+components:
+  - id: third
+    label: "第三者AIエージェント"
+    meaning: "顧客の代わりに動く外部のエージェント"
+  - id: bankui
+    label: "銀行の画面（ログイン・直接取引）"
+    meaning: "シティがFT引用で拒否した経路。認証方法の条件は引用に無い"
+    tag: "拒否（シティ）"
+  - id: readpath
+    label: "顧客が認可した読み取り"
+    meaning: "オープンバンキングの読み取り。限定的に残ると二次報道"
+  - id: rail
+    label: "許可制の口座引き落とし"
+    meaning: "Plaid Transfer 等の ACH・即時払い。画面ログインとは別の入口"
+  - id: own
+    label: "銀行自身のエージェント"
+    meaning: "行為者は銀行。JPM は社内・顧客向けに使うと CEO が述べた"
+relationships:
+  - from: third
+    to: bankui
+    label: "ログインして取引"
+  - from: third
+    to: readpath
+    label: "読み取り"
+  - from: third
+    to: rail
+    label: "画面の外で送金"
+  - from: own
+    to: bankui
+    label: "銀行が行為者"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+  note: "左に第三者AIエージェント、右に3つの入口を縦に並べる。銀行自身のエージェントは銀行の画面の右側(内側)に置く"
+evidence:
+  - "### シティが言葉にした範囲 (FT 公式投稿の引用: ログインと直接取引を拒む)"
+  - "### 口座に触る経路 (mermaid 図: third->bankui / third->readpath / third->rail / own->bankui)"
+  - "経路の表: 読み取り・許可制 ACH・銀行自身のエージェントは画面ログインとは別の入口"

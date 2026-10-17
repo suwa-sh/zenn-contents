@@ -1,0 +1,52 @@
+type: structure
+title: "報告を3種に分けて書き戻す"
+message: "報告を3種に分け、種類ごとに別の欄へ人が書き戻す。1つの『仕様の修正』に混ぜない"
+source: "notes/zenn/articles/google-deep-review-research-p8_20261017.md"
+components:
+  - id: assumption
+    label: "未記載の前提"
+    meaning: "本文が、書いていない条件に依存している。問いとして扱う"
+  - id: mismatch
+    label: "本文と図表の不一致"
+    meaning: "主張と図が食い違う。どちらが誤りの候補かを人が見る"
+  - id: proposal
+    label: "改善提案"
+    meaning: "まだ決めていないことを新しく足す案"
+  - id: open_col
+    label: "未決の欄"
+    meaning: "未決の問いを置く"
+  - id: decided_col
+    label: "決定の欄"
+    meaning: "チームがすでに決めていた挙動の記録を置く"
+  - id: defect_col
+    label: "欠陥候補の欄"
+    meaning: "図表の食い違いを置く"
+  - id: proposal_col
+    label: "提案の欄"
+    meaning: "改善提案を、既決の挙動とは別に置く"
+relationships:
+  - from: assumption
+    to: open_col
+    label: "未決なら"
+  - from: assumption
+    to: decided_col
+    label: "既に決めていたなら"
+  - from: mismatch
+    to: defect_col
+    label: ""
+  - from: proposal
+    to: proposal_col
+    label: ""
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+  groups:
+    - label: "報告の3種"
+      members: [assumption, mismatch, proposal]
+    - label: "書き戻す欄 (人が選ぶ)"
+      members: [open_col, decided_col, defect_col, proposal_col]
+evidence:
+  - "## 設計レビューの報告を3種に分ける: 1〜3 の分類と『書き戻す欄は、指摘ごとに人が選びます』の段落"
+  - "同節: 未決の問いは未決の欄、既決の挙動は決定の欄、図表の食い違いは欠陥候補の欄、3種を1つの『仕様の修正』に混ぜない"
+notes:
+  - "『提案の欄』は記事に固有名がない。記事は『既に黙って実装した挙動の復元とは、別の欄に置きます』とだけ書くため、説明用の名前として付けた"

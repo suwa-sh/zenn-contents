@@ -1,0 +1,58 @@
+type: structure
+title: "会話から読んだデータはどこに残るか"
+message: "メタデータは連合で取りにいき、読んだブロックはカタログのリージョンに複製として残る"
+source: "notes/zenn/articles/google-cloud-cloud-google-p7_20261017.md"
+components:
+  - id: agent
+    label: "Gemini の Data agent"
+    meaning: "業務利用者の会話を受け、明示した knowledge source だけを読み取り専用で読む"
+  - id: bq
+    label: "BigQuery"
+    meaning: "Data agent のクエリを実行する"
+  - id: catalog
+    label: "Lakehouse runtime catalog"
+    meaning: "旧 BigLake metastore。リモートカタログのメタデータを持つ"
+  - id: remote
+    label: "リモートカタログ"
+    meaning: "Databricks Unity Catalog / AWS Glue / Snowflake Horizon など (Iceberg REST catalog)"
+  - id: store
+    label: "相手クラウドのストレージ (正本)"
+    meaning: "実データの正本が残る場所"
+  - id: cache
+    label: "キャッシュ (カタログのリージョン)"
+    meaning: "読んだブロックの data-at-rest の複製。鍵は Google 管理で CMEK 不可"
+relationships:
+  - from: agent
+    to: bq
+    label: "クエリ"
+  - from: bq
+    to: catalog
+    label: "表を解決"
+  - from: catalog
+    to: remote
+    label: "メタデータ取得"
+  - from: remote
+    to: store
+    label: "実データの所在"
+  - from: store
+    to: cache
+    label: "読んだブロックを複製"
+  - from: bq
+    to: cache
+    label: "再読"
+groups:
+  - label: "Google Cloud"
+    members: [agent, bq, catalog, cache]
+  - label: "相手クラウド / SaaS"
+    members: [remote, store]
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### データの流れ (元記事の mermaid と本文: runtime catalog はメタデータを持ち、実データは相手クラウドのオブジェクトストレージ、読んだブロックはカタログのリージョンのキャッシュへ)"
+  - "### キャッシュと専用線 (data-at-rest としてカタログのリージョンに残る。us-east4 の例)"
+  - "### コピーが残る箇所 (キャッシュの鍵は Google 管理、CMEK 不可)"
+  - "### 会話から届く表 (明示した knowledge source だけ、読み取りのみ)"
+notes:
+  - "元記事の mermaid の「業務利用者 → Gemini の会話 → Data agent」は 1 要素「Gemini の Data agent」にまとめた (要素数 7 以内に収めるため)"
+  - "矢印ラベルは元記事の mermaid に無いため、本文の記述から付けた"

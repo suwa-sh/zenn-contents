@@ -1,0 +1,50 @@
+source:
+  title: "エージェントの経験を知識に変えてスキルを育てる WikiSkill の三層構造"
+  url: "notes/zenn/articles/wikiskill_20261015.md"
+  primary_source: "https://arxiv.org/abs/2608.27454 (arXiv:2608.27454v1, Tang et al., 2026-08-27)"
+  retrieved_at: "2026-10-17"
+archetype: mixed # architecture (三層 + 4 要素のループ) と research (5 ベンチマーク × 5 モデルの評価) の混合
+one_liner: "WikiSkill は、エージェントの実行経験を「生の軌跡・wiki・スキル」の三層に分け、スキルは検証点が上がったときだけ採用し、wiki の知識は不採用でも残すことで、スキルを反復的に育てる手法。"
+key_points:
+  - claim: "三層を分けるので、スキルを巻き戻しても学んだ知識 (wiki) は消えない。既存手法では「何を学んだか」が最適化履歴に散らばる。"
+    evidence: "## WikiSkill とは / ## 特徴 (1 項目目) / 1 反復の 4 要素の表の直後「wiki は不採用でも巻き戻しません」"
+    status: fact
+  - claim: "推論エージェントにはスキル全文だけを渡し、wiki は渡さない。wiki は提案側だけが読む。この既定 (平均 63.7) が、推論にも wiki を開く条件 (60.9) より高い。"
+    evidence: "## 運用 > アブレーションの設定を固定する (論文 Table 3、Gemini-3.5-Flash の 4 ベンチマーク平均)"
+    status: fact
+  - claim: "採用は検証点が過去最良を厳密に上回るときだけ。同点も不採用で、不採用案の diff と点数は skill-impact に残り、次の提案で同じ修正の再提案を避ける材料になる。"
+    evidence: "## 利用方法 > ゲートの判定 / ## ベストプラクティス > ゲートは厳密改善のまま監査を残す"
+    status: fact
+  - claim: "5 ベンチマーク平均で、スキルなしと既存のスキル進化手法 (Trace2Skill / EvoSkill / SkillOpt) を全 5 モデルで上回る。Qwen-3.5-9B + WikiSkill (47.4) はスキルなしの Qwen-3.6-27B (39.4) を上回る。"
+    evidence: "## WikiSkill とは > 主結果 / ## 特徴 > モデル別の平均"
+    status: fact
+  - claim: "スキルは別モデルへ移せるが、負の転移もある。小さいモデル向けの細かい手順が強いモデルの邪魔をすることがある (Qwen-3.5-4B の SpreadSheet スキルで Gemini-3.5-Flash が 50.5 → 18.1)。"
+    evidence: "## 運用 > 転移を別ランで測る / ## ベストプラクティス > 転移前に手順の粒度を見る"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "スキルは改善したときだけ採用し、wiki は不採用でも残す"
+    reason_needed: "三層と 4 要素の読み書き関係 (誰が何を読み、何を書くか) が理解の中心で、文章だけだと「推論は wiki を読まない」「ゲートはスキルだけ戻す」が埋もれるため"
+example:
+  description: "ALFWorld (Qwen-3.6-27B) の事例。反復 0 で失敗パターン take-examine-move-loop.md が wiki にできるが、提案 goal-directed-action は検証を改善せず不採用。反復 1 で break-repetition-loop (「物を元の場所に戻さない」) が採用される。その後 multi-operation-loop.md が溜まり、反復 4 で「品目ごとに各操作は 1 回だけ」がスキルに追記される。"
+  evidence: "## 構造 > コンポーネント図 (論文 Figure 3)"
+  hypothetical: false
+applicability:
+  - "手続きが繰り返し失敗する作業 (失敗の根因を wiki のパターンとして残せる)"
+  - "自動採点できる作業 (得点関数が 0〜1 を返し、検証分割で比較できることがゲートの前提)"
+  - "モデルをまたいで手順を再利用したい作業 (数学のようなモデル非依存の手順は転移しやすい)"
+decision_criteria:
+  - "検証分割で採点できるか。できなければゲートが成立しない"
+  - "空スキルで検証が満点になっていないか。満点だとループは 1 回も訓練を走らせずに止まる"
+  - "スキルを別モデルへ移す前に、作成元と実行先の組で検証を別に取ったか"
+  - "論文と比較したいなら、ゲートは厳密改善・3 ラン平均・フルバッチのまま揃える"
+limitations:
+  - "検証分割が小さく (LiveMath 18 / SealQA 10 / ALFWorld 18)、単一ランの採否はノイズを含む。論文は 3 ラン平均とブートストラップで対処"
+  - "スキルは全文注入だけを評価。スキルが増えたときの検索・選択の精度は未評価"
+  - "同点の提案は捨てるため、すぐ点数が動かない中立なリファクタはスキルに残らない (知識は wiki に残る)"
+  - "wiki の自動剪定はなく、長い進化では必要になり得る"
+  - "数百アクション・数時間に及ぶ超長ホライズンや、1 回の実行途中での適応は評価範囲外"
+unknowns:
+  - "公式実装は案内されていない。コミュニティ実装 (ashutoshsinghpr7/wikiskill 等) は論文 Table 1 の再現物として未保証"
+  - "反復回数 K の具体値は本文にない"
+  - "進化ログのファイル名 (logs.md / log.md) や軌跡パス (raw/ と traces/) の表記が論文内で揺れている"
