@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (534)
+## Articles: 下書き (535)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-18 | [🔬 ソースのないアプリをエージェントに逆解析させるREAの構造と証拠モデル](articles/rea_20261018.md) | ReverseEngineering, MCP, AIAgent, Ghidra, CLI |
 | 2026-10-17 | [🏦 第三者AIの銀行ログインを権限表の別欄に置く](articles/ai-ft-content-f49c8e39-f07f-p1_20261017.md) | AIAgent, Banking, OpenBanking, Governance, Security |
 | 2026-10-17 | [🗄️ Borderless LakehouseをGeminiの入口にするときの到達範囲](articles/google-cloud-cloud-google-p7_20261017.md) | GoogleCloud, BigQuery, Gemini, ApacheIceberg, AIAgent |
 | 2026-10-17 | [📑 Deep Reviewは設計文書の未記載前提をどう返すか](articles/google-deep-review-research-p8_20261017.md) | Google, Gemini, LLM, AIAgent |
