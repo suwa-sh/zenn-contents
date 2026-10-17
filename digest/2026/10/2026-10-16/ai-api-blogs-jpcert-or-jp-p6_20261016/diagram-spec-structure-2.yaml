@@ -1,0 +1,60 @@
+type: structure
+title: "指標は文書に、対策は公開面に"
+message: "侵害指標は文書に付けたまま、公開面へは点検と対策だけをつなぐ"
+source: "notes/zenn/articles/ai-api-blogs-jpcert-or-jp-p6_20261016.md"
+components:
+  - id: speaker
+    label: "公表主体"
+    meaning: "文書の話し手。観測範囲は同じではない"
+  - id: document
+    label: "文書"
+    meaning: "日付と更新を持つ一次または二次の資料"
+  - id: case_type
+    label: "攻撃類型"
+    meaning: "その文書が分けた手口。全事案で同一とは限らず、共通キャンペーンの ID ではない"
+  - id: indicator
+    label: "侵害指標"
+    meaning: "その文書が不審だと書いた送信元。リストは文書ごとに別で、正規利用の注記の有無も文書ごとに違う"
+  - id: surface
+    label: "公開面"
+    meaning: "インターネットから届くアプリ、API、管理系、BI。台帳の 1 行"
+  - id: control
+    label: "対策"
+    meaning: "その面を閉じる運用。レート制限、認可、修正適用、公開停止"
+groups:
+  - id: documents
+    label: "文書側"
+    members: [speaker, document, case_type, indicator]
+  - id: surfaces
+    label: "公開面側"
+    members: [surface, control]
+relationships:
+  - from: speaker
+    to: document
+    label: "公表する"
+  - from: document
+    to: case_type
+    label: "手口を分ける"
+  - from: document
+    to: indicator
+    label: "ぶら下げる"
+  - from: case_type
+    to: surface
+    label: "対応する面"
+  - from: control
+    to: surface
+    label: "閉じる"
+omitted:
+  - item: "侵害指標から公開面へ、または侵害指標から対策への矢印"
+    reason: "情報モデルは、文書側の指標・段階と公開面側の対策を線でつながない。自社ログとの照合結果だけを公開面の行へ付ける、は本文の規則であり、リストを結合する矢印にはしない"
+  - item: "段階観測（PhaseObservation）"
+    reason: "段階と件数を持つのは WAF Tech Blog だけであり、Eyes は段階表を持たない。侵害指標と一つの攻撃元にまとめると、伝えたいことと逆になる"
+  - item: "ITmedia"
+    reason: "公表主体の例には挙がるが、WAF Tech Blog の要約であり、指標の箱を増やすと要素が過密になる。語尾のずれは本文側に残す"
+layout:
+  direction: "left-to-right。左に文書側（上から公表主体、文書、その下に攻撃類型と侵害指標）、右に公開面側（対策から公開面）。グループをまたぐ矢印は、攻撃類型から公開面への 1 本だけ"
+  aspect_ratio: "16:9"
+evidence:
+  - "## 台帳に載せるデータ / ### 概念モデル（公表主体から文書、文書から攻撃類型と侵害指標、攻撃類型から公開面、対策から公開面。類型は共通キャンペーン ID ではない）"
+  - "### 情報モデル（文書側の指標・段階と、公開面側の対策は、クラス図では線でつながない）"
+  - "## 台帳に載せるデータ（指標は文書にぶら下げ、自社ログとの照合結果だけを公開面の行へ付ける。2 つのリストを 1 つの攻撃元マスタに結合しない）"

@@ -1,0 +1,51 @@
+type: structure
+title: "評価者の三つの階層"
+message: "第1層は出版に承認が要り、第3層は従業員相当のアクセスと拒否できない出版を持つ"
+source: "notes/zenn/articles/anthropic-metr-ft-content-p9_20261016.md"
+components:
+  - id: tier1
+    label: "第1層 SecureBio"
+    meaning: "範囲の狭いリスク調査。アクセスは Anthropic が決め、発見の出版には Anthropic の承認が要る"
+  - id: tier2
+    label: "第2層"
+    meaning: "より多くの情報と、承認なしの出版。特定カテゴリの削除は要求できる。10月15日の文章に組織名は無い"
+  - id: tier3
+    label: "第3層 METRの6人"
+    meaning: "従業員相当のアクセスに、第2層と同様の出版権が付く"
+  - id: tools
+    label: "社内ツールとシステム"
+    meaning: "リスク評価チームとおおむね同水準。会社の機材とオフィスを含む"
+  - id: publish
+    label: "承認なしの出版"
+    meaning: "出版の拒否はできない。狭い事前カテゴリの削除は要求でき、評価者はその妥当性についての見解を出版できる"
+groups:
+  - id: approval
+    label: "出版に承認が要る"
+    members: [tier1]
+  - id: noveto
+    label: "拒否できない出版"
+    members: [tier2, tier3, publish]
+relationships:
+  - from: tier3
+    to: tools
+    label: "おおむね同水準で使う"
+  - from: tier2
+    to: publish
+    label: "承認なしで出版"
+  - from: tier3
+    to: publish
+    label: "第2層と同様"
+omitted:
+  - item: "Accenture、Faculty、Hugging Face"
+    reason: "10月15日の文章は、これらを第2層とも第3層とも置いていない。階層の差を示す図には入れない"
+  - item: "共有しない例（顧客データ、弁護士秘匿、モデルアーキテクチャ）と、他のMETR職員の隔離"
+    reason: "第3層の共有条件と人数の境界であり、階層ごとの出版権の差という伝えたいことには矢印として使わない。本文の具体例に残す"
+  - item: "第1層から出版承認への矢印"
+    reason: "第1層の承認は、要素をまとめる枠「出版に承認が要る」で示す。第1層に出入りする矢印は仕様に置かない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "評価者の三つの階層"
+  - "6人が使う条件"
+  - "見てから出版するまでの経路"

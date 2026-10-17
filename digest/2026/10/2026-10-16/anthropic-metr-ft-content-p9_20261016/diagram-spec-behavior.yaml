@@ -1,0 +1,46 @@
+type: behavior
+title: "見てから出版するまで"
+message: "第3層は分析を出版でき、Anthropicは拒否できず、狭いカテゴリだけ削除を要求できる"
+source: "notes/zenn/articles/anthropic-metr-ft-content-p9_20261016.md"
+steps:
+  - id: see
+    label: "社内情報を見る"
+    meaning: "評価者は社内の情報を見る"
+  - id: write
+    label: "分析を書く"
+    meaning: "リスク水準、インシデント、実務の分析を書く"
+  - id: publish
+    label: "出版する"
+    meaning: "Anthropic は出版を拒否できない"
+  - id: redact
+    label: "削除を要求する"
+    meaning: "狭い事前カテゴリに当たる情報について、削除を要求できる"
+  - id: comment
+    label: "削除の妥当性を述べる"
+    meaning: "METR は、削除した中身を明かさずに、その削除が妥当だったかを公に述べてよい"
+transitions:
+  - from: see
+    to: write
+    label: "分析する"
+  - from: write
+    to: publish
+    label: "拒否権は無い"
+  - from: publish
+    to: redact
+    label: "狭いカテゴリなら"
+  - from: redact
+    to: comment
+    label: "中身は出さない"
+omitted:
+  - item: "第1層の出版承認"
+    reason: "階層の差は構造図で示し、この図は第3層の経路だけを示す"
+  - item: "学習、出荷、配備を止める判断"
+    reason: "10月15日の公開された経路に、停止の条項は出てこない"
+  - item: "除外カテゴリの個別例と、カテゴリに当たらないときの別矢印"
+    reason: "削除要求の条件は矢印の「狭いカテゴリなら」にまとめた。当たらない場合の分岐は、元記事の図が描いていないため足さない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "見てから出版するまでの経路（本文は、見て、分析を書き、狭いカテゴリだけ削除を要求し、削除の妥当性を公開側に残す、と置く）"
+  - "同節の図の順は、分析を書く、出版（拒否できない）、狭い事前カテゴリなら削除を要求、中身を出さず妥当性を述べる"
