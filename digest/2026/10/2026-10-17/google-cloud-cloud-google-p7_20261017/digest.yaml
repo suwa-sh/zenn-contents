@@ -1,59 +1,57 @@
 source:
   title: "Borderless LakehouseをGeminiの入口にするときの到達範囲"
-  url: "notes/zenn/articles/google-cloud-cloud-google-p7_20261017.md"
+  url: null
+  path: "notes/zenn/articles/google-cloud-cloud-google-p7_20261017.md"
+  primary:
+    - title: "Bringing the borderless Lakehouse into the agentic era with innovations for Gemini"
+      url: "https://cloud.google.com/blog/products/data-analytics/borderless-lakehouse-integrates-with-gemini/"
+    - title: "About cross-cloud data access"
+      url: "https://docs.cloud.google.com/lakehouse/docs/about-cross-cloud-data-access"
+    - title: "Conversational analytics"
+      url: "https://docs.cloud.google.com/bigquery/docs/conversational-analytics"
+    - title: "Quotas"
+      url: "https://docs.cloud.google.com/lakehouse/docs/quotas"
   retrieved_at: "2026-10-17"
-  note: "元記事は 2026-10-16 の Google Cloud Blog と 2026-10-17 までの公式ドキュメントを整理した Zenn 下書き (published: false)"
-archetype: mixed # architecture (データの流れ) + decision (エージェントに渡す前の 4 境界)
+archetype:
+  primary: decision
+  secondary: [architecture]
 one_liner: >-
-  Gemini の Data agent が届くのは、連合したカタログと明示した knowledge source の内側だけ。
-  読んだデータはカタログのリージョンに複製が残り、提供段階はブログの GA 一覧でなく各ドキュメントの先頭で確かめる。
+  Gemini の Data agent が読めるのは、連合したカタログと明示した knowledge source の内側だけ。
+  読んだデータはカタログのリージョンに複製が残る。提供段階はブログでなく各ドキュメントで確かめる。
 key_points:
-  - claim: "メタデータはリモートの Iceberg REST catalog から取るが、読んだデータブロックはカタログを作った Google Cloud リージョンのキャッシュに data-at-rest として残る。「データを動かさない」が正しいのは発見時だけ"
-    evidence: "## Borderless Lakehouse とは > ### メタデータの発見 / ### キャッシュと専用線 / ## 注意点 > ### コピーが残る箇所"
+  - claim: "発見時に取りにいくのはメタデータだけだが、読んだブロックはカタログのリージョンにキャッシュとして残る。「データを動かさない」はデータの所在地の保証にならない"
+    evidence: "### メタデータの発見 / ### キャッシュと専用線 / ## 注意点 > ### コピーが残る箇所"
     status: fact
-  - claim: "キャッシュの鍵は Google 管理で CMEK は使えない。CMEK 必須の組織ポリシー (constraints/gcp.restrictNonCmekServices) が効くとキャッシュが無効になり、クエリだけ走る"
+  - claim: "キャッシュには CMEK を使えない。CMEK 必須の組織ポリシーが効くと、キャッシュだけが無効になりクエリは走る"
     evidence: "## 注意点 > ### コピーが残る箇所"
     status: fact
-  - claim: "ブログが generally available と並べた項目と、2026-10-15 時点のドキュメントの Preview / Pre-GA 表記が一致しない。cross-cloud data access・caching・Iceberg V3 はドキュメント上 Preview"
+  - claim: "ブログは GA と書くが、cross-cloud data access・caching・Iceberg V3 のドキュメントは 2026-10-15 時点で Preview。本番の前提にはドキュメントの表記を使う"
     evidence: "### ブログが generally available と並べた項目 / ## 注意点 > ### ドキュメントが Preview と書く範囲"
     status: fact
-  - claim: "到達範囲は問題設定より狭い。オンプレミスのテーブルコネクタはカタログ列挙に無く、Salesforce の専用セットアップ手順、Gemini の画面からカタログを作る手順も見つかっていない"
+  - claim: "到達範囲は問題設定より狭い。連合できるカタログの一覧にオンプレミスの表を読むコネクタは無く、Gemini の画面からカタログを作る手順も見つかっていない"
     evidence: "## 注意点 > ### 問題設定より狭い到達範囲"
     status: fact
-  - claim: "Data agent は明示した knowledge source (上限 100) だけを、読み取り専用で読む。ただし AlloyDB / Cloud SQL / Spanner では「table selection はセキュリティ設定ではない」と公式が書いており、BigQuery 経路の選択と同じ意味に広げない"
-    evidence: "### 会話から届く表 / ## 注意点 > ### 会話 API の上限と、選択の意味"
-    status: fact
-  - claim: "egress 料金の「消去」、petabytes をローカル同等の性能で扱えること、Etsy の 60% 高速化は、測定条件のないベンダーの自己記述"
-    evidence: "## 注意点 > ### 帯域、性能、顧客事例"
-    status: interpretation
 mental_models:
   - type: structure
     key_message: "メタデータは連合で取りにいき、読んだブロックはカタログのリージョンに複製として残る (正本は相手クラウド)"
-    reason_needed: "「データを動かさない」という宣伝文句と、キャッシュに複製が残る事実の差は、要素と矢印で見ないと区別しにくい。レジデンシーと CMEK の判断がここから出る"
+    reason_needed: "「データを動かさない」という説明と、キャッシュに複製が残る事実の違いを、要素と矢印で区別するため"
 example:
-  description: >-
-    元記事のドキュメント引用例: EU の Amazon S3 にあるデータを、us-east4 に作ったカタログ経由で BigQuery から読むと、
-    読んだブロックのキャッシュは us-east4 に置かれる。正本は EU の S3 に残るが、複製は us-east4 にも存在する。
+  description: "EU の Amazon S3 のデータを us-east4 に作ったカタログ経由で BigQuery から読むと、キャッシュは us-east4 に置かれる。正本は EU に残るが、複製は us-east4 にもある"
   hypothetical: false
+  evidence: "### キャッシュと専用線"
 applicability:
-  - "AWS / Azure / SaaS (Databricks Unity Catalog、AWS Glue、Snowflake Horizon、Workday、SAP BDC) にある Iceberg 系の表を、BigQuery と Gemini の会話分析から読ませたい場面"
-  - "複数クラウドに散らばったデータを、コピーの取り込みパイプラインを作らずにエージェントの参照先へ加えたい場面 (ただしキャッシュの複製は残る)"
+  - "Databricks Unity Catalog・AWS Glue・Snowflake Horizon などにある Iceberg の表を、BigQuery の会話分析から読ませたい"
+  - "取り込みパイプラインを作らずに、エージェントの参照先を増やしたい"
 decision_criteria:
-  - "連合してよいカタログ・namespace・表を決める (枠: カタログあたり namespace 100 / namespace あたり table 300 / カタログあたり table 10,000 / namespace filter 16)"
-  - "Data agent に載せる knowledge source を表名まで書き出す (上限 100、BigQuery クエリは 500 GB of bytes processed まで)"
-  - "キャッシュを置いてよいリージョンを決め、CMEK 必須の組織ポリシーと衝突しないか確認する"
-  - "会話プロンプトの分析 (既定で有効) を止めるか決める。2026-11-23 より前はフォーム、以降は constraints/gcp.disablePromptAnalytics"
-  - "本番の提供段階は、ブログの GA 一覧ではなく各ドキュメントのページ先頭の launch stage で判断する"
+  - "連合するカタログ・namespace・表 (カタログあたり table 10,000、namespace あたり table 300)"
+  - "Data agent の knowledge source (上限 100。BigQuery のクエリは 500 GB of bytes processed まで)"
+  - "キャッシュを置くリージョンが、CMEK 必須の組織ポリシーと衝突しないか"
+  - "会話プロンプトの分析 (既定で有効。2026-11-23 以降は組織ポリシーで止める)"
+  - "使う機能の提供段階を、ブログの一覧でなく各ドキュメントのページ先頭で見る"
 limitations:
-  - "cross-cloud data access・caching・Iceberg V3 はドキュメント上 Preview / Pre-GA (2026-10-15 時点)"
-  - "Iceberg V3 は BigQuery からは read のみ。新しい V3 型と row lineage は非対応"
-  - "Delta Lake のコンソール取り込みはデータのコピーで、ソースの Amazon S3 は非対応"
-  - "リモート連合カタログに列レベルの制御を掛ける記述は見つかっていない (確認できたのはテーブル単位)"
-  - "クロスクラウドクエリとキャッシュ固有の公開単価は見つかっていない"
+  - "Iceberg V3 は BigQuery からは読み取りのみ"
+  - "Delta Lake のコンソール取り込みはデータのコピーで、Amazon S3 上のソースは扱えない"
+  - "帯域・性能・顧客事例の数値はベンダーの自己記述で、測定条件は公開されていない"
 unknowns:
-  - "10 月 16 日より後に cross-cloud data access と Iceberg V3 のドキュメントが GA へ更新されたか"
-  - "Gemini の画面から federated catalog を作る手順が未掲載のまま出荷されているか"
-  - "リモート連合カタログに行・列の制御を公式機能として掛けられるか"
-  - "Iceberg V2 の read-write interoperability を GA と書くページがあるか"
-  - "bi-directional caching という語の公式定義"
-  - "Etsy の 3 petabytes と 60% の顧客事例ページでの裏付け"
+  - "リモート連合カタログに列単位の制御を掛けられるか (確認できたのはテーブル単位)"
+  - "クロスクラウドクエリとキャッシュに固有の公開単価"

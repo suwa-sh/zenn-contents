@@ -4,9 +4,9 @@
 
 | 記事 | 区分 | ひとことで言うと | 元記事 |
 |---|---|---|---|
-| [第三者AIの銀行ログインを権限表の別欄に置く](ai-ft-content-f49c8e39-f07f-p1_20261017/digest.md) | 作成 | シティが拒んだのは「第三者AIが銀行の画面にログインし、そこで取引する経路」。読み取り・銀行自身のエージェント・画面外の送金レールとは分け、社内の権限表では口座を持つ金融機関の拒否を自社承認とは別の列に書く。 | [元記事](../../../../articles/ai-ft-content-f49c8e39-f07f-p1_20261017.md) |
-| [Borderless LakehouseをGeminiの入口にするときの到達範囲](google-cloud-cloud-google-p7_20261017/digest.md) | 作成 | Gemini の Data agent が届くのは、連合したカタログと明示した knowledge source の内側だけ。読んだデータはカタログのリージョンに複製が残り、提供段階はブログの GA 一覧でなく各ドキュメントの先頭で確かめる。 | [元記事](../../../../articles/google-cloud-cloud-google-p7_20261017.md) |
-| [Deep Reviewは設計文書の未記載前提をどう返すか](google-deep-review-research-p8_20261017/digest.md) | 作成 | Google の Deep Review は、文書を節に分けて並行点検し、節間の整合と外部の根拠を確かめて報告を返す。設計レビューでは報告を「未記載の前提・本文と図表の不一致・改善提案」の3種に分け、採否と書き戻し先は人が決める。 | [元記事](../../../../articles/google-deep-review-research-p8_20261017.md) |
-| [Microsoft社内のCLI測定が推定した三つのマージ済み件数](microsoft-cli-itmedia-co-p2_20261017/digest.md) | 作成 | Microsoft 社内の CLI コーディングエージェント研究が出した +24.0% / +24.9% / +11.4% は、分子・比べる相手・含む道具が違う別々の推定であり、「生産性 24% 向上」という一つの数ではない。 | [元記事](../../../../articles/microsoft-cli-itmedia-co-p2_20261017.md) |
-| [タイムズカー事案から分ける本人確認書類の保管場所と消去](unitis-jp-24665-p6_20261017/digest.md) | 作成 | 本人確認書類は「原画像」と「残す記録」で扱いを分ける。原画像は確認後に消し、消す期限は事業部門の責任者が決め、実行は別の人が点検する。委託してもリスクは一部移るだけで、委託元の監督は残る。 | [元記事](../../../../articles/unitis-jp-24665-p6_20261017.md) |
-| [エージェントの経験を知識に変えてスキルを育てる WikiSkill の三層構造](wikiskill_20261015/digest.md) | 公開 | WikiSkill は、エージェントの実行経験を「生の軌跡・wiki・スキル」の三層に分け、スキルは検証点が上がったときだけ採用し、wiki の知識は不採用でも残すことで、スキルを反復的に育てる手法。 | [元記事](../../../../articles/wikiskill_20261015.md) |
+| [第三者AIの銀行ログインを権限表の別欄に置く](ai-ft-content-f49c8e39-f07f-p1_20261017/digest.md) | 作成 | シティが拒んだのは、第三者のAIエージェントが銀行の画面にログインし、そこで取引する経路。社内の権限表では、この拒否を自社の承認とは別の列に書く。 | [元記事](../../../../articles/ai-ft-content-f49c8e39-f07f-p1_20261017.md) |
+| [Borderless LakehouseをGeminiの入口にするときの到達範囲](google-cloud-cloud-google-p7_20261017/digest.md) | 作成 | Gemini の Data agent が読めるのは、連合したカタログと明示した knowledge source の内側だけ。読んだデータはカタログのリージョンに複製が残る。提供段階はブログでなく各ドキュメントで確かめる。 | [元記事](../../../../articles/google-cloud-cloud-google-p7_20261017.md) |
+| [Deep Reviewは設計文書の未記載前提をどう返すか](google-deep-review-research-p8_20261017/digest.md) | 作成 | Google の Deep Review は、文書を節に分けて並行で点検し、節をまたぐ整合と外部の根拠を確かめて報告を返す。設計レビューに使うなら、報告を3種に分けて、採否と書き戻し先は人が決める。 | [元記事](../../../../articles/google-deep-review-research-p8_20261017.md) |
+| [Microsoft社内のCLI測定が推定した三つのマージ済み件数](microsoft-cli-itmedia-co-p2_20261017/digest.md) | 作成 | Microsoft 社内の CLI コーディングエージェント研究 (査読前の preprint) が出した +24.0% / +24.9% / +11.4% は、それぞれ別の推定であり、「生産性が 24% 上がった」という一つの数ではない。 | [元記事](../../../../articles/microsoft-cli-itmedia-co-p2_20261017.md) |
+| [タイムズカー事案から分ける本人確認書類の保管場所と消去](unitis-jp-24665-p6_20261017/digest.md) | 作成 | 本人確認書類は、確認後に消す原画像と、根拠を持って残す記録に分けて扱う。消去の期限は事業部門の責任者が決め、別の人が点検する。 | [元記事](../../../../articles/unitis-jp-24665-p6_20261017.md) |
+| [エージェントの経験を知識に変えてスキルを育てる WikiSkill の三層構造](wikiskill_20261015/digest.md) | 公開 | エージェントの実行経験を「生の軌跡・wiki・スキル」の三層に分けて、スキルを育てる手法。スキルは検証点が上がったときだけ採用し、wiki の知識は不採用でも残す。 | [元記事](../../../../articles/wikiskill_20261015.md) |
