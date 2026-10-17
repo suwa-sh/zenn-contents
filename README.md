@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (532)
+## Articles: 下書き (533)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-10-17 | [🏦 第三者AIの銀行ログインを権限表の別欄に置く](articles/ai-ft-content-f49c8e39-f07f-p1_20261017.md) | AIAgent, Banking, OpenBanking, Governance, Security |
+| 2026-10-17 | [🗄️ Borderless LakehouseをGeminiの入口にするときの到達範囲](articles/google-cloud-cloud-google-p7_20261017.md) | GoogleCloud, BigQuery, Gemini, ApacheIceberg, AIAgent |
 | 2026-10-17 | [📊 Microsoft社内のCLI測定が推定した三つのマージ済み件数](articles/microsoft-cli-itmedia-co-p2_20261017.md) | Microsoft, Copilot, ClaudeCode, AI |
 | 2026-10-17 | [🔐 タイムズカー事案から分ける本人確認書類の保管場所と消去](articles/unitis-jp-24665-p6_20261017.md) | Security, Privacy, Compliance, Governance |
 | 2026-10-16 | [🛡️ 連続不正アクセスの公開APIを台帳と認可で止める](articles/ai-api-blogs-jpcert-or-jp-p6_20261016.md) | Security, API, OWASP, AppSec |
