@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (539)
+## Articles: 下書き (540)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-19 | [🔐 人間の承認を増やしても本番データベース削除は止まらない](articles/atmarkit-itmedia-co-jp-ait-p1_20261019.md) | AIAgent, Security, ClaudeCode, Docker, Database |
 | 2026-10-18 | [🔍 Claude Codeチームはレビュー完了の基準を「人が読んだか」から外した](articles/claude-code-claude-dev-solving-p1_20261018.md) | ClaudeCode, CodeReview, GitHub, AIエージェント |
 | 2026-10-18 | [🧪 エージェントの1サイクルに入れるE2Eの範囲](articles/e2e-future-architect-github-p5_20261018.md) | Playwright, Testing, E2E, OpenTelemetry |
 | 2026-10-18 | [🏦 Itaúのia.iとIARAを設計レビューでどう読むか](articles/ita-iara-openai-index-itau-p7_20261018.md) | AI, LLM, Governance, Banking, OpenAI |
