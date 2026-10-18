@@ -1,0 +1,40 @@
+type: structure
+title: "レビュー完了を判断する4列"
+message: "完了の判断は「壊れうること・自動検査・人の枠・戻し方」の4列で持ち帰る。段階の表で人が不要でも、別の分類器が人を要すると判断することがある"
+source: "notes/zenn/articles/claude-code-claude-dev-solving-p1_20261018.md"
+components:
+  - id: breaks
+    label: "壊れうること"
+    meaning: "その変更で何が壊れうるか"
+  - id: auto
+    label: "自動検査"
+    meaning: "壊れうることを捕まえる自動のレビュー、セキュリティ、テスト、ビルド"
+  - id: human
+    label: "人の枠"
+    meaning: "必要な人の承認の数。エージェントの承認は数えない"
+  - id: rollback
+    label: "戻し方"
+    meaning: "flag、revert、段階公開など、壊れたときに戻す手段"
+  - id: classifier
+    label: "別の分類器"
+    meaning: "段階の表とは別に、人を要すると判断することがある分類器"
+groups:
+  - id: four
+    label: "持ち帰る4列"
+    members: [breaks, auto, human, rollback]
+relationships:
+  - from: classifier
+    to: human
+    label: "段階上は不要でも人を要することがある"
+omitted:
+  - item: "3段階それぞれの行の中身 (docs、通常の製品変更、課金など)"
+    reason: "具体例の表で示すため、図は4列の構造と分類器の位置づけだけに絞る"
+  - item: "公開の Code Review と bughunter-severity"
+    reason: "伝えたいこと (判断の4列) に関係しないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## メンタルモデル の1段落目 (持ち帰る単位は4列)"
+  - "## メンタルモデル の2段落目 (段階の表で不要でも、別の分類器が人を要すると判断することがある)"
+  - "## 核心ポイント の2つ目 (エージェントの承認は人の枠に入らない)"
