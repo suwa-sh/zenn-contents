@@ -1,0 +1,50 @@
+type: structure
+title: "一つの操作に結び付く四つの項目"
+message: "チャネルの一つの操作は、話者、モデル、データ文脈、許可または拒否とトークンへ辿れて初めて、完了と見る"
+source: "notes/zenn/articles/ita-iara-openai-index-itau-p7_20261018.md"
+components:
+  - id: op
+    label: "一つの操作"
+    meaning: "チャネルで起きた、完了判定の単位にする操作"
+  - id: who
+    label: "話者"
+    meaning: "顧客か、行員か、どの権限か"
+  - id: model
+    label: "モデル"
+    meaning: "その操作で選んだモデル"
+  - id: context
+    label: "データ文脈"
+    meaning: "顧客の関係文脈か、行員の業務文脈か"
+  - id: allow
+    label: "許可・拒否とトークン"
+    meaning: "許可したか拒否したかと、その操作に残るトークン"
+groups:
+  - id: traces
+    label: "辿る項目"
+    members: [who, model, context, allow]
+relationships:
+  - from: op
+    to: who
+    label: "辿る"
+  - from: op
+    to: model
+    label: "辿る"
+  - from: op
+    to: context
+    label: "辿る"
+  - from: op
+    to: allow
+    label: "辿る"
+omitted:
+  - item: "ia.i、IARA、Customer DNA、法務の文書読解"
+    reason: "図が伝えるのはレビューの完了条件であり、製品の構成図ではないため"
+  - item: "人数、倍率、件数、65%"
+    reason: "主語の切り分けは本文の要点に残し、この図の一つのメッセージには入れないため"
+  - item: "この四つは IARA の公開済み列名ではない、という但し書き"
+    reason: "図の中の説明文を増やさないため。本文の図の説明に書く"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 設計レビューで辿る項目: 辿れるの中身は、話者、モデル、データ文脈、許可または拒否とトークンが一つの操作に結び付くこと"
+  - "同節: この確認項目は公開事例の読みから立てた提案であり、IARA の公開済み仕様ではない"

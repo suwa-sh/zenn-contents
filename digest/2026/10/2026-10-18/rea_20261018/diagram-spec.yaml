@@ -1,0 +1,73 @@
+type: structure
+title: "REA の束縛と証拠"
+message: "深いネイティブ解析はエンジン1つに固定し、結果は証拠と未解決の問いとして残す"
+source: "notes/zenn/articles/rea_20261018.md"
+components:
+  - id: agent
+    label: "エージェント"
+    meaning: "MCP クライアント。CLI と同じワークフローを呼ぶ"
+  - id: rea
+    label: "REA"
+    meaning: "CLI と MCP が共有するローカルのオーケストレータ"
+  - id: deep
+    label: "深いプロバイダ1つ"
+    meaning: "Hopper、Ghidra、IDA のどれか 1 つ。失敗しても別エンジンへ切り替えない"
+  - id: aux
+    label: "補助経路"
+    meaning: "JavaScript、.NET、Web、Android など。深いエンジンなし、または呼び出し元のツール"
+  - id: artifact
+    label: "対象"
+    meaning: "解析者がパスで渡すファイル、ディレクトリ、接続先"
+  - id: evidence
+    label: "証拠"
+    meaning: "成功した公開観測。confidence は observed、derived、inferred"
+  - id: unknown
+    label: "未解決の問い"
+    meaning: "ResidualUnknown。根拠として証拠 ID を指す"
+groups:
+  - id: result
+    label: "結果"
+    members: [evidence, unknown]
+relationships:
+  - from: agent
+    to: rea
+    label: "同じワークフロー"
+  - from: rea
+    to: artifact
+    label: "ローカルのバイトを読む"
+  - from: rea
+    to: deep
+    label: "1つに固定。失敗しても切り替えない"
+  - from: rea
+    to: aux
+    label: "エンジンなし、または持ち込みツール"
+  - from: deep
+    to: evidence
+    label: "成功した観測"
+  - from: aux
+    to: evidence
+    label: "成功した観測"
+  - from: unknown
+    to: evidence
+    label: "根拠の証拠 ID"
+layout:
+  direction: "left-to-right（左: エージェント → REA。REA から右上の深いプロバイダ1つ、右の補助経路、下の対象へ。右下に結果の枠で証拠と未解決の問い。深いプロバイダと補助経路から証拠へ、未解決の問いから証拠へ）"
+  aspect_ratio: "16:9"
+evidence:
+  - "## 構造 > システムコンテキスト図（エージェント → REA → 対象と外部エンジン）"
+  - "## 構造 > コンポーネント図（深い束縛は Hopper / Ghidra / IDA の 1 つ。fallback しない。browser、dotnet、android、JavaScript 再構成は補助経路）"
+  - "## データ > 概念モデル（Evidence と ResidualUnknown。unknown は supporting_evidence_ids で証拠を指す）"
+  - "## 特徴（confidence は observed / derived / inferred。候補が複数なら明示選択）"
+omitted:
+  - item: "解析者"
+    reason: "セットアップを承認する人であり、束縛と証拠の関係の中心ではない。エージェントか CLI を使う前提に含めた"
+  - item: "npm registry と実行ファイルの振り分け"
+    reason: "導入の入口であり、解析中の束縛を説明しない"
+  - item: "Hopper、Ghidra、IDA を別々の箱にすること"
+    reason: "同時に使う関係ではなく、選ばれた 1 つだけが束縛になるため 1 要素にまとめた"
+  - item: "JADX、tshark、Binwalk、WABT、EVMole、SQLite などの個別ツール"
+    reason: "補助経路にまとめた。深いプロバイダの自動代替にはならない"
+  - item: "AnalysisSnapshot、BinarySession、EvidenceBundle のフィールド"
+    reason: "結果が証拠と未解決の問いに分かれることだけを伝えるため"
+notes:
+  - "6.5.0 の深い登録は 3 つ。図のラベルは記事が 6.5.0 の本番登録として書く Hopper、Ghidra、IDA に合わせ、main の Kuna は図に入れない"

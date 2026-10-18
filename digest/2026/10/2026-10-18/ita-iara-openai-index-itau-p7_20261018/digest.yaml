@@ -1,0 +1,65 @@
+source:
+  title: "Itaúのia.iとIARAを設計レビューでどう読むか"
+  url: null # Zenn 下書き (published: false)。公開 URL なし
+  path: "notes/zenn/articles/ita-iara-openai-index-itau-p7_20261018.md"
+  primary:
+    - title: "OpenAI, How Itaú is building generative AI for its entire customer base (2026-10-16)"
+      url: "https://openai.com/index/itau-generative-ai"
+    - title: "Feito.Itaú, Itaú lança ia.i (2026-07-28、更新 2026-07-30)"
+      url: "https://feito-itau.cloud.itau.com.br/itau-iai-superapp-inteligencia-artificial/"
+    - title: "Mobile Time, Henrique Medeiros, ia.i の copiloto (2026-07-27)"
+      url: "https://www.mobiletime.com.br/noticias/27/07/2026/itau-copiloto-ia-i-ai/"
+  retrieved_at: "2026-10-19"
+archetype:
+  primary: governance # 公開事例を設計レビューの完了条件にどこまで使ってよいか
+  secondary: [decision] # 人数・倍率・件数の主語を分けて、転記してよいかを判断する
+one_liner: >-
+  Itaú の公開事例は、顧客の会話 ia.i とモデル統制の IARA を組にして語る。
+  設計レビューでは、一つの操作に話者、モデル、データ文脈、許可または拒否とトークンが結び付くかを見る。
+key_points:
+  - claim: "ia.i は顧客向けの会話層で、口座から保険までの相談を一つの会話にまとめ、必要なら人へ渡す。発売時点の銀行側説明では、取引として通る中心は Pix である"
+    evidence: "## Itaúのia.iとIARAとは 第2段落（初回提供と Pix）"
+    status: fact
+  - claim: "IARA は社内方針に沿ったモデルアクセスを担い、トークンあたりのコスト、応答の正確性、Responsible AI 方針を同時に扱う。事例が用途として名指しするのは法務の文書読解である"
+    evidence: "## Itaúのia.iとIARAとは 第4段落（IARA）と第5段落（法務の件数）"
+    status: fact
+  - claim: "行員の支援は、顧客の会話と同じ知能の層に乗ると書かれている。監査ログの共有は、その文面には無い"
+    evidence: "## 注意点 > ### 同じ層は、同じ監査ログではない"
+    status: fact
+  - claim: "約 30 万人は初回提供、約 7,000 万人は Customer DNA が金融文脈を持つ人数で ia.i の利用者数ではない。9 月の 300 万人は 7 月時点の予定で、2026 年 10 月 18 日時点の実績は確認できていない"
+    evidence: "### 展開の母数 / ### 7,000 万人の指すもの / ## 公開記録が支える範囲 > ### 公開記録が支えていないこと"
+    status: fact
+  - claim: "「3 倍の時間、最大 2 倍の速度、最大 3 倍の会話効果」は行内利用への期待であり、測定済みの結果としては書かれていない。ポルトガル語記事の「最大 3 時間」は、英語事例の「3 倍の時間」と同じ文の翻訳として扱わない"
+    evidence: "### 期待と実績"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "チャネルの一つの操作は、話者、モデル、データ文脈、許可または拒否とトークンへ辿れて初めて、完了と見る"
+    reason_needed: "名前の付いた基盤の有無と、操作を監査の項目まで辿れるかを、レビューの完了条件として分けるため"
+example:
+  description: "公開記録の読み方は二つに分かれ、どちらも支える範囲とレビューで足す問いを分ける"
+  hypothetical: false
+  evidence: "## 公開記録が支える範囲 の読み方の表"
+applicability:
+  - "ベンダー事例が、会話体験とガバナンスの層を組にして全社展開を語るとき"
+  - "顧客向けと行員向けを、同じ知能の層としてリリース判定するとき"
+  - "人数、倍率、効率を、別の報告へ転記するとき"
+decision_criteria:
+  - "記帳側の主キーと会話側の主キーが結ばれているか"
+  - "OpenAI 事例の法務 9,000 万件超と、会見報道の 4,300 万文書を、同じ母数にしていないか"
+  - "二次記事が書くマネーロンダリング防止の遮断を、OpenAI 事例本文の事実として使っていないか"
+  - "初期テストの満足度 87.5% を、全顧客展開後の品質として読んでいないか"
+  - "生成 AI 支出の 65% 減を、金融の copilot に開かれている人の割合（別の 65%）として読んでいないか"
+limitations:
+  - "効率 20% から 80% は幅だけで、どの工程と比べたかは事例に無い。生成 AI 支出の 65% 減は、単位コストの前年比とは書かれていない"
+  - "IARA が止める操作の一覧は、公開事例に無い"
+  - "誰の識別子、モデル、データ文脈、許可または拒否、トークンが同一レコードに入るかは未公開である"
+  - "顧客データと従業員データが分離しているか混在しているかも、公開資料では確認できていない"
+  - "ICTi の Pix 記録の図は製品内部を表さないと図の説明が書いており、ログ仕様へ転記できない"
+unknowns:
+  - "IARA が止める操作の一覧"
+  - "ログの同一レコードに、誰の識別子、モデル、データ文脈、許可または拒否、トークンが含まれるか"
+  - "顧客データと従業員データが分離しているか、混在しているか"
+  - "2026 年 9 月の 300 万人は達成されたか（達成も未達も、2026 年 10 月 18 日時点で一次発表は確認できていない）"
+  - "行員向けの ia.i と顧客向けの ia.i が、同じ監査キーを出すか"
+reviewed: true

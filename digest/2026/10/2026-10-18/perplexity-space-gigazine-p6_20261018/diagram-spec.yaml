@@ -1,0 +1,45 @@
+type: structure
+title: "到達範囲は1枚のポリシーではない"
+message: "プラットフォーム拒否、テナントポリシー、Kind の Pod、ホスト特権は別の層である"
+source: "notes/zenn/articles/perplexity-space-gigazine-p6_20261018.md"
+components:
+  - id: platform
+    label: "プラットフォーム拒否"
+    meaning: "テナントポリシーより先に拒否する。対象はメタデータ、link-local（169.254.0.20/30 は例外）、10.11.0.0/16 と 10.12.0.0/16、ループバック、IPv6 link-local"
+  - id: tenant
+    label: "テナントポリシー"
+    meaning: "新規テンプレートは拒否既定。allow は空。TLS interception は off"
+  - id: kind
+    label: "Kind の NetworkPolicy"
+    meaning: "sandboxes 名前空間。公開 IPv4 とクラスタ DNS への出口。IPv6 の出口は無い。VM の外の Pod に付く。ゲストの default_action ではない"
+  - id: host
+    label: "ホスト側サービス"
+    meaning: "Firecracker がゲスト実行を分ける。ワーカーは特権を要する。ゲストがホスト資格情報に触れない、とはこの文からは言えない"
+groups:
+  - id: gateway
+    label: "ゲストから外への通信"
+    members: [platform, tenant]
+  - id: kind_box
+    label: "VM の外。ゲストポリシーの次の段ではない"
+    members: [kind]
+  - id: host_box
+    label: "ホスト。資格情報に触れないとは言えない"
+    members: [host]
+relationships:
+  - from: platform
+    to: tenant
+    label: "より先に拒否する"
+omitted:
+  - item: "管理 API とデータプレーンの二つの経路"
+    reason: "図の主張は到達範囲の層であり、呼び出しの経路ではない"
+  - item: "CIDR の一覧と E2B の pause 対応"
+    reason: "プラットフォーム拒否の中身は要素の意味にまとめ、ライフサイクルは別の話のため"
+  - item: "Kind からテナントポリシーへの矢印"
+    reason: "記事は、VM から Kind への関係をゲストポリシーの次の処理段ではないと書いているため、処理順の矢印にしない"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "### ネットワークの既定（プラットフォームがテナントポリシーより先に拒否する宛先）"
+  - "### 層を取り違えやすい点（Kind の Pod はゲストの default_action ではない。ホスト側サービスは特権を要する）"
+  - "呼び出しから宛先までの流れ（vm から kind への矢印は次の処理段ではない）"

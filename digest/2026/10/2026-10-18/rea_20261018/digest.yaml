@@ -1,0 +1,57 @@
+source:
+  title: "ソースのないアプリをエージェントに逆解析させるREAの構造と証拠モデル"
+  url: "https://github.com/suwa-sh/zenn-contents/blob/main/articles/rea_20261018.md"
+  path: "notes/zenn/articles/rea_20261018.md"
+  primary:
+    - title: "morluto/rea (rea-agents@6.5.0, GitHub Release 2026-10-14)"
+      url: "https://github.com/morluto/rea"
+    - title: "src/domain/evidence.ts"
+      url: "https://github.com/morluto/rea/blob/main/src/domain/evidence.ts"
+    - title: "src/domain/residualUnknown.ts"
+      url: "https://github.com/morluto/rea/blob/main/src/domain/residualUnknown.ts"
+  retrieved_at: "2026-10-19"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "ソースの無いソフトを、1つの MCP と CLI で調べるローカル基盤。深いネイティブ解析はエンジン1つに固定し、結果は証拠と未解決の問いとして残す。"
+key_points:
+  - claim: "深いネイティブ解析は Hopper、Ghidra、IDA のどれか 1 つに固定する。対象をサポートする候補が 1 つなら自動、複数なら明示選択で、失敗しても別エンジンへ切り替えない。"
+    evidence: "## 特徴 / ## 構造 > コンポーネント図（設計の要点）"
+    status: fact
+  - claim: "JavaScript / Electron の静的解析と .NET の PE/CLI メタデータ読み取りは、そのエンジンを起動しない。ファームウェア、パケット、信号は、呼び出し元が入れるツールに依存する。"
+    evidence: "## 概要 > 何を自前で持ち、何を持ち込むか / ## 特徴"
+    status: fact
+  - claim: "結果は observed、derived、inferred を分ける。証拠 ID は表示名と local_path を除いた意味内容のダイジェストで、未解決の問いはその証拠 ID を根拠にできる。"
+    evidence: "## データ > 情報モデル / ## トラブルシューティング > 証拠の ID が期待と一致しない"
+    status: fact
+  - claim: "6.0.0（2026-10-08）以降、MCP のファイル入力は絶対パス。CLI は相対パスも使える。"
+    evidence: "## 利用方法 > 入出力と必須のパス / ## 運用 > リリース境界"
+    status: fact
+  - claim: "解析対象のバイトは、利用者が持つファイルと、利用者が起動した観測先に留まる。"
+    evidence: "## 概要"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "深いネイティブ解析はエンジン1つに固定し、結果は証拠と未解決の問いとして残す"
+    reason_needed: "失敗しても切り替えない束縛と、補助経路と証拠の出方が理解の中心で、文章だけでは埋もれるため"
+example:
+  description: "CLI ガイドの例では、Obsidian の JavaScript 証拠が 334 MB になり、summary view に切ると約 10 KB になる。"
+  hypothetical: false
+  evidence: "## 利用方法 > JavaScript と .NET"
+applicability:
+  - "ソースの無いネイティブや Electron を、エージェントと端末で同じ手順で調べたい"
+  - "デコンパイラを起動せず、JavaScript / Electron か .NET のメタデータだけ読みたい"
+  - "再構成の主張を、証拠 ID と未解決の問い付きで残したい"
+decision_criteria:
+  - "深い逆コンパイルが要るなら、Hopper、Ghidra、IDA のどれかを自分で用意できるか"
+  - "Node.js が 22.19 以上の 22 系、24.11 以上の 24 系、または 26 以上か"
+  - "Linux で Ghidra や静的 JavaScript を使うなら、procps 互換の ps が REA の PATH にあるか"
+  - "履歴ソースを取り込むなら Linux か macOS か（ネイティブ Windows は unsupported_host）"
+  - "使いたい操作が、接続中サーバの tool list にあるか"
+limitations:
+  - "オプションなしの rea doctor は任意エンジンの不在も含めて healthy を決める。目的の作業ができるかは provider や client でスコープを切る。"
+  - "公開版は npm view rea-agents dist-tags.latest で確認する。"
+  - "スナップショットは、対象バイト、操作、パラメータ、プロバイダ、設定が一致する成功結果を再利用する。変更操作とカーソル依存はキャッシュから外れ、メタデータ書き込みを送ると応答が失敗してもそのセッションのキャッシュは無効になる。"
+unknowns:
+  - "モデル提供者への送信範囲は、接続したエージェント側の契約に従う。記事はエージェントごとの送信範囲を固定していない。"
+reviewed: true

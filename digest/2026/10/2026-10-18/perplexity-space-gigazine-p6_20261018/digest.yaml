@@ -1,0 +1,68 @@
+source:
+  title: "Perplexity SPACEでエージェントの実行場所と到達範囲を分ける"
+  url: null
+  path: "notes/zenn/articles/perplexity-space-gigazine-p6_20261018.md"
+  primary:
+    - title: "Perplexity, Open-sourcing SPACE"
+      url: "https://www.perplexity.ai/hub/blog/open-sourcing-space"
+    - title: "Perplexity, Escaping SPACE Part I（引用日 2026年9月23日）"
+      url: "https://www.perplexity.ai/hub/blog/escaping-space-part-i"
+    - title: "perplexityai/SPACE docs/architecture.md"
+      url: "https://github.com/perplexityai/SPACE/blob/main/docs/architecture.md"
+    - title: "Gigazine（2026年10月16日）"
+      url: "https://gigazine.net/news/20261016-perplexity-space/"
+  retrieved_at: "2026-10-19"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: >-
+  SPACE はエージェントのコードをマイクロ VM で動かし、届く宛先は別の層のポリシーで切る。
+  脱出 0/108 は観察記録であり、自分の環境での試験の代わりにはならない。
+key_points:
+  - claim: "各サンドボックスは Firecracker のマイクロ VM で、管理 API（状態は PostgreSQL）とコマンド入出力（データプレーン）は別経路。管理用 bearer とセッション添付トークンは交換できない"
+    evidence: "### マイクロ VM と二つの経路"
+    status: fact
+  - claim: "新規テンプレートは拒否既定（allow も deny も空、TLS interception off）。プラットフォームはテナントより先に、メタデータ、link-local の 169.254.0.0/16（169.254.0.20/30 は例外）、10.11.0.0/16 と 10.12.0.0/16（10.0.0.0/8 全体ではない）、ループバック、IPv6 link-local を拒否する"
+    evidence: "### ネットワークの既定 / ### 層を取り違えやすい点"
+    status: fact
+  - claim: "Kind の NetworkPolicy は VM の外の Pod に付き、ゲストの拒否既定ではない。sandboxes 名前空間の出口は公開 IPv4 とクラスタ DNS で、IPv6 の出口は無い。直接アダプタはサンドボックス用 Pod を作らない"
+    evidence: "### ローカル Kind の待受 / ### 層を取り違えやすい点 / 呼び出しから宛先までの流れ"
+    status: fact
+  - claim: "ゲストからホストへの脱出 0/108 と、ネットワーク遮断の迂回（無し 0/54、部分ネットワークは修正前 11/54）は別の結果。修正後の再試験は自社が特定した 2 経路。いずれも Perplexity の自己申告で、公開一次の範囲では独立した再現は見つかっていない"
+    evidence: "### 自己申告の数字が届く範囲"
+    status: fact
+  - claim: "アクセスもコマンドも無い状態が 6 時間続くと suspend する。Paused はメモリをワーカーに残し永続スナップショットは取らない。E2B の pause は SPACE の suspend（スナップショットを取って VM を解放）、resume は restore に対応する"
+    evidence: "### ライフサイクル"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "到達範囲は 1 枚のポリシーではない。プラットフォーム拒否、テナントポリシー、Kind の Pod、ホスト特権は別の層である"
+    reason_needed: "Kind の公開 IPv4 やホスト分離を、ゲストの拒否既定と同じものとして読むと、配るポリシーの範囲を誤るため"
+example:
+  description: >-
+    公開ブログと Gigazine（2026年10月16日）は同じ数字を「耐性が示された」に近い調子で要約する。
+    一次は脱出 0/108（9 モデル、2 課題、4 条件、各 3 回。ゲスト内 root、ホスト上の足場なし。ソースの有無、ネットワーク無しまたは部分、1 時間または 2 時間）と、
+    迂回（ネットワーク無し 0/54、部分ネットワークは修正前 11/54。ソースありでは一部モデルが 3/3 または 2/3）を別の分数で出す。
+    修正後は 2026年8月26日の 2 経路を、ソースあり・部分ネットワーク・検索ありで再試験し、検証できた実行ではフラグ取得がなく、2 回はエラー終了。
+  hypothetical: false
+  evidence: "### 自己申告の数字が届く範囲"
+applicability:
+  - "エージェントのコード実行を、モデルの禁止文やホスト OS の権限とは別の部品として置くとき"
+  - "Linux x86_64 と KVM、ホスト特権のワーカーを運用の前提にできるとき（Firecracker 1.17.0 を置いても、本番と未認識の環境名では VMM は 1.15.1 のまま）"
+decision_criteria:
+  - "配るテナントポリシーが拒否既定で、allow が自社の権限表と一致し、TLS exemption が空か、空でない理由が残っている"
+  - "Kind の公開 IPv4 をゲストポリシーの代わりに使わず、Pod の外側の上限として試験している"
+  - "VM の分離と出口の迂回を別の試験にし、0/108 と 11/54 と 2 経路の再試験をその代わりにしない"
+  - "デプロイする commit を記録し、公開リポジトリの先端を Computer 本番と同一視しない"
+  - "ローカル Kind の初期パスワードと開発用鍵のまま、本番の資格情報を入れない"
+limitations:
+  - "承認済みファイルの書き込みはライフサイクルの境界で永続化する、とある。クラッシュ、強制停止、ホスト障害を必ず生き延びるとは書いていない"
+  - "「Computer の全セッションが SPACE」の時期は、2026年7月15日の記事（その日時点で 100%、ロールアウト開始は「先月」）と 10 月のブログ（7 月に商用サンドボックスを置換）で月がずれている。片方に揃えない"
+  - "セキュリティ修正の対象は直近のマイナーリリースで、0.9 が出たあとの 0.8 は文面上、対象外になる。Windows ゲストと利用者の手元マシンは 7 月記事が今後の作業としている"
+  - "Gigazine の「迂回耐性が示された」は、再試験した 2 経路より広い文に寄っている。Cloudflare Sandbox と NVIDIA OpenShell をその 2 経路で迂回無しとした表は 1 回の自社試験であり、その 2 製品を一般に優先する理由にはしない"
+unknowns:
+  - "ネットワーク指定を省略したときテンプレートポリシーを継承するかは、公開文書の確認範囲では閉じていない"
+  - "コマンド実行が 6 時間アイドルの「アクセス」を更新するか。文書は access または command と書き、access idle と読む側も残っている"
+  - "seed:latest を Kind が登録する経路が、必ずテンプレート登録の INSERT を通るか"
+  - "ディスク容量を省略したときの実行時サイズ。価格・可用性契約と公開 API の RPM は、確認した公式ブログと docs には無い"
+reviewed: true

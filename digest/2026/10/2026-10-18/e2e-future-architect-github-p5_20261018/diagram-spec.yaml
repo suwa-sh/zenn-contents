@@ -1,0 +1,47 @@
+type: structure
+title: "1サイクルの内側と外側"
+message: "全件のブラウザE2Eは1サイクルの外に置き、内側は凍結したユニット、サービス境界の統合、4条件を満たす一部だけ"
+source: "notes/zenn/articles/e2e-future-architect-github-p5_20261018.md"
+components:
+  - id: unit
+    label: "凍結したユニット"
+    meaning: "期待値を実装エージェントから凍結したユニットテスト"
+  - id: integration
+    label: "サービス境界の統合"
+    meaning: "サービス境界の統合テスト。内側の既定に入る"
+  - id: slice
+    label: "一部のブラウザE2E"
+    meaning: "画面に出て、デプロイを待たず、必要な一部だけを回し、失敗を人へ残せるブラウザE2E"
+  - id: conditions
+    label: "内側に入れる4条件"
+    meaning: "画面に出る、デプロイ待ちなしで再実行できる、一部だけ、失敗の画面とデータベースの前後とトレースを期待値を直す前に人へ残す。4つ同時"
+  - id: pr
+    label: "PRのローカル全件"
+    meaning: "GitHub Actions上のローカル構成の全件"
+  - id: daily
+    label: "日次のクラウド全件"
+    meaning: "developに対する毎日02:00のクラウド全件"
+groups:
+  - id: inner
+    label: "1サイクルの内側"
+    members: [unit, integration, slice]
+  - id: outer
+    label: "1サイクルの外側"
+    members: [pr, daily]
+relationships:
+  - from: conditions
+    to: slice
+    label: "4つ同時のときだけ内側"
+omitted:
+  - item: "環境構築、実行、人の判断、原因特定という4つの長い時間"
+    reason: "伝えたいこと（内側と外側の境界）に関係しないため"
+  - item: "トレースの伝播、LocalStackとMiniStack、古典の本数比、ImpossibleBenchの率"
+    reason: "境界の判断に直接要らない出典の照合と注意のため"
+  - item: "人が仕様を確認してから日次へ進む実行順"
+    reason: "3段の順序は本文で足り、図は置き場の境界だけを示すため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 本数の中心はブラウザE2Eへ移していない の2つ目の図と、その直下の段落（内側は凍結したユニットとサービス境界の統合、条件を満たす一部のE2E、全件はPRと日次の外側）"
+  - "## ブラウザE2Eを内側へ入れる条件 の1〜4"
