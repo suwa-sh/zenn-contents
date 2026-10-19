@@ -11,6 +11,7 @@
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-20 | [🔐 日本企業向け侵害の攻撃元で確認された自律型診断ARTEX](articles/artex-gmo-cybersecurity-p1_20261020.md) | Security, AIAgent, LLM, Governance |
 | 2026-10-19 | [📐 AI前提のレガシー刷新で再浮上するデータ中心アプローチの発注範囲](articles/ai-xtech-nikkei-atcl-nxt-p6_20261019.md) | AIAgent, DataGovernance, Procurement, Architecture |
 | 2026-10-19 | [🤝 Anthropicが弁護士に相談したエージェント取引で委任と希望を分ける](articles/anthropic-ft-content-f7c26ac0-p5_20261019.md) | AIAgent, Anthropic, Governance, Claude |
 | 2026-10-19 | [🔐 人間の承認を増やしても本番データベース削除は止まらない](articles/atmarkit-itmedia-co-jp-ait-p1_20261019.md) | AIAgent, Security, ClaudeCode, Docker, Database |
@@ -20,7 +21,6 @@
 | 2026-10-18 | [🧪 エージェントの1サイクルに入れるE2Eの範囲](articles/e2e-future-architect-github-p5_20261018.md) | Playwright, Testing, E2E, OpenTelemetry |
 | 2026-10-18 | [🏦 Itaúのia.iとIARAを設計レビューでどう読むか](articles/ita-iara-openai-index-itau-p7_20261018.md) | AI, LLM, Governance, Banking, OpenAI |
 | 2026-10-18 | [🧱 Perplexity SPACEでエージェントの実行場所と到達範囲を分ける](articles/perplexity-space-gigazine-p6_20261018.md) | Perplexity, AIAgent, Security, Sandbox, Linux |
-| 2026-10-18 | [🔬 ソースのないアプリをエージェントに逆解析させるREAの構造と証拠モデル](articles/rea_20261018.md) | ReverseEngineering, MCP, AIAgent, Ghidra, CLI |
 | 2026-10-17 | [🏦 第三者AIの銀行ログインを権限表の別欄に置く](articles/ai-ft-content-f49c8e39-f07f-p1_20261017.md) | AIAgent, Banking, OpenBanking, Governance, Security |
 | 2026-10-17 | [🗄️ Borderless LakehouseをGeminiの入口にするときの到達範囲](articles/google-cloud-cloud-google-p7_20261017.md) | GoogleCloud, BigQuery, Gemini, ApacheIceberg, AIAgent |
 | 2026-10-17 | [📑 Deep Reviewは設計文書の未記載前提をどう返すか](articles/google-deep-review-research-p8_20261017.md) | Google, Gemini, LLM, AIAgent |
@@ -556,10 +556,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (194)
+## Articles: 公開済み (195)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-10-20 | [🔬 ソースのないアプリをエージェントに逆解析させるREAの構造と証拠モデル](articles/rea_20261018.md) | ReverseEngineering, MCP, AIAgent, Ghidra, CLI |
 | 2026-10-17 | [📚 エージェントの経験を知識に変えてスキルを育てる WikiSkill の三層構造](articles/wikiskill_20261015.md) | AIエージェント, LLM, AgentSkills, Google, arXiv |
 | 2026-10-15 | [🔄 ネイティブCLIとスコープ別の承認設定で動くAI-DLC 2.11.0の構造とデータ](articles/ai-dlc_20261014.md) | AI, AWS, ClaudeCode, Codex, Kiro |
 | 2026-10-13 | [🦆 DuckDB CLIのエージェントモードは省略と打ち切りとエラーを明示する](articles/duckdb-cli-duckdb-2026-agent-p4_20261012.md) | DuckDB, CLI, SQL, CodingAgent |
