@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (542)
+## Articles: 下書き (543)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-19 | [📐 AI前提のレガシー刷新で再浮上するデータ中心アプローチの発注範囲](articles/ai-xtech-nikkei-atcl-nxt-p6_20261019.md) | AIAgent, DataGovernance, Procurement, Architecture |
 | 2026-10-19 | [🤝 Anthropicが弁護士に相談したエージェント取引で委任と希望を分ける](articles/anthropic-ft-content-f7c26ac0-p5_20261019.md) | AIAgent, Anthropic, Governance, Claude |
 | 2026-10-19 | [🔐 人間の承認を増やしても本番データベース削除は止まらない](articles/atmarkit-itmedia-co-jp-ait-p1_20261019.md) | AIAgent, Security, ClaudeCode, Docker, Database |
 | 2026-10-19 | [🏛️ 源内で職員が作ったスキルを何件と数えるか](articles/xtech-nikkei-atcl-nxt-column-p7_20261019.md) | AIAgent, Governance, LLM, OSS |
