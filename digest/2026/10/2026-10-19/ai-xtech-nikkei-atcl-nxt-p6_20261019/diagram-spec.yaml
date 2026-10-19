@@ -1,0 +1,60 @@
+type: structure
+title: "発注に足す一行の範囲"
+message: "足すのは一つの使い方に限った項目名、値を決める属性、正本だけである。全社の整備と、同じ日の別手順は、その一行に入れない"
+source: "notes/zenn/articles/ai-xtech-nikkei-atcl-nxt-p6_20261019.md"
+components:
+  - id: doa
+    label: "公開リードのDOA"
+    meaning: "1980年代から90年代。データを先に置き、機能を後から導く"
+  - id: line
+    label: "受入の一行"
+    meaning: "一つの使い方に限り、項目名、値を決める属性、正本"
+  - id: cutover
+    label: "切替日"
+    meaning: "画面とバッチの切替。受入の一行とは別の条件"
+  - id: out
+    label: "一行に含めない"
+    meaning: "全社マスタ、全社用語集、系統グラフ、意味の凍結"
+  - id: parallel
+    label: "同じ日の別手順"
+    meaning: "実行系への移設、進化し続ける設計、コード解析。禁止しない"
+groups:
+  - id: in_scope
+    label: "発注に足す"
+    members: [line]
+  - id: separate
+    label: "別の条件"
+    members: [cutover]
+  - id: excluded
+    label: "この受入に含めない"
+    members: [out]
+  - id: alongside
+    label: "並行して残す"
+    members: [parallel]
+relationships:
+  - from: doa
+    to: line
+    label: "流儀を一つに限って選ぶ"
+  - from: line
+    to: cutover
+    label: "切替日とは別に置く"
+  - from: line
+    to: out
+    label: "含めない"
+  - from: line
+    to: parallel
+    label: "禁止しない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+omitted:
+  - item: "THモデル、T字形ER、三要素分析法、全社共有を前提にする立場"
+    reason: "受入の一行が採る流儀の外であり、境界の中身を増やすと要素が7個を超える"
+  - item: "Andrew Ng の data-centric AI、Semantic Arts、OpenLineage、データメッシュ、RAG、Gartner の MDM"
+    reason: "混同を止める根拠であり、一行に入れる中身そのものではない"
+  - item: "有料2ページ目の未解決の問い、会場と人数、Scalar の自己記載の数値"
+    reason: "発注範囲の境界を示す図には不要"
+evidence:
+  - "## 発注の一行に入れる範囲（表）"
+  - "## 受入条件として固定する一文"
+  - "## 同じ日の手順は一つに畳まない"

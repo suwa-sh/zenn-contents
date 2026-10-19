@@ -1,0 +1,63 @@
+type: structure
+title: "相手に見せる委任と、渡さない希望"
+message: "相手に見せる委任と、渡さない希望と、人に残す確定は別々である"
+source: "notes/zenn/articles/anthropic-ft-content-f7c26ac0-p5_20261019.md"
+components:
+  - id: principal
+    label: "本人"
+    meaning: "交渉の名の元になる人または会社"
+  - id: mandate
+    label: "委任の表示"
+    meaning: "相手に見せる紙。本人、話してよい相手、提案まで、外れたら人に戻す条件、有効期限"
+  - id: private
+    label: "希望のメモ"
+    meaning: "相手に渡さない紙。希望価格、撤退線、譲れない条項の中身"
+  - id: agent
+    label: "交渉エージェント"
+    meaning: "本人のために相手と条件を話すソフトウェア"
+  - id: counterparty
+    label: "相手"
+    meaning: "交渉の相手と、相手のエージェント"
+  - id: human
+    label: "確定する人"
+    meaning: "範囲の外の受諾を行う、名前のある人"
+groups:
+  - id: shown
+    label: "相手に見せる"
+    members: [mandate]
+  - id: hidden
+    label: "相手に渡さない"
+    members: [private]
+relationships:
+  - from: principal
+    to: mandate
+    label: "書いて相手に見せる"
+  - from: principal
+    to: private
+    label: "書いて渡さない"
+  - from: mandate
+    to: agent
+    label: "提案までの範囲"
+  - from: private
+    to: agent
+    label: "会話に置かない"
+  - from: agent
+    to: counterparty
+    label: "提案まで。受諾しない"
+  - from: counterparty
+    to: human
+    label: "範囲の外は戻す"
+omitted:
+  - item: "ツールの許可表"
+    reason: "実行できる操作の一覧であり、相手に見せる権限の表示ではない。図の二枚の紙に代えないことを本文で述べる"
+  - item: "本人を縛る合意"
+    reason: "確定の先の結果であり、三つの記録の分け方が伝えたいことであるため"
+  - item: "民法の条文、約款、Project Deal の数値"
+    reason: "一枚の上限では切れない理由の根拠であり、図が示す関係そのものではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### 相手に見せる記録と、渡さない記録（委任の表示、希望のメモ、人に残す確定）"
+  - "## 交渉の前に書く記録（紙を二枚に分け、確定は人に残す。ツールの許可表はどちらの紙にも代えない）"
+  - "### 一枚の上限では切れない理由（希望価格を委任の表示に書くと、相手は撤退線を読む）"

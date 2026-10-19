@@ -1,0 +1,46 @@
+type: structure
+title: "源内の件数は五つの段に分かれる"
+message: "2026年10月19日時点で実数があるのは利用可能人数と用意されたアプリまで。作成数と共有後の実行は母数が無い"
+source: "notes/zenn/articles/xtech-nikkei-atcl-nxt-column-p7_20261019.md"
+components:
+  - id: usable
+    label: "利用可能人数"
+    meaning: "約18万人が大規模実証の対象。2026年8月下旬時点で約16万人が利用可能。実行者数ではない"
+  - id: apps
+    label: "用意されたアプリ"
+    meaning: "行政の業務向け検索アプリは20以上が府省庁業務で稼働、約30種類は庁内内製、40種類以上は使えるアプリ。母数が三つに分かれる"
+  - id: permit
+    label: "工房の利用許可"
+    meaning: "源内工房の利用許可は基準の目次にある。人数は未公表。作る許可があるかという段であり、作成済み件数とは別"
+  - id: created
+    label: "スキルの作成数"
+    meaning: "1万から数万は規模感の推測。作成済み件数は未公表"
+  - id: shared
+    label: "共有後の実行"
+    meaning: "源内マーケットプレイスは未稼働。審査を通った件数も実行回数も未公表"
+groups:
+  - id: has_count
+    label: "実数がある"
+    members: [usable, apps]
+  - id: no_base
+    label: "母数が無い"
+    members: [permit, created, shared]
+relationships:
+  - from: usable
+    to: created
+    label: "人数を作成数にしない"
+  - from: created
+    to: shared
+    label: "作成と共有後は別"
+omitted:
+  - item: "源内Web、エージェントチャット、源内工房、開発者側の共通部品の層"
+    reason: "件数をどの段で数えるかがこの図の主題であり、画面の層は別の構造のため"
+  - item: "大分市の Oita GENAI、庁外通信の三つの文、四つの承認、ログイン基盤の事案、公開リポジトリの star 数"
+    reason: "五段の境界を示すことに関係しないため"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "## 何を1件と数えるか の5段の表（2026年10月19日時点で実数として言えるのは上の2段まで）"
+  - "同じ節の「この人数を、スキルの作成数に読み替えない」「仕組みが無い段階のゼロを、定着の失敗の証拠にはできません」"
+  - "### 1万から数万件は規模感の推測"

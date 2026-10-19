@@ -1,0 +1,51 @@
+type: structure
+title: "正本はリポジトリの外に残す"
+message: "リポジトリは正本のIDとガイドだけを持ち、本文は実行時に取り、正しさの判断は人に残す"
+source: "notes/zenn/articles/github-engineering-dena-2026-p9_20261019.md"
+components:
+  - id: repo
+    label: "リポジトリ"
+    meaning: "正本のIDとガイド（ゴール、押さえる点、完了判定）と、出力の型を置く。手順の本文は置かない"
+  - id: agent
+    label: "エージェント"
+    meaning: "IDから正本を取り、3〜5ステップに圧縮する"
+  - id: canon
+    label: "正本"
+    meaning: "Confluence と Google Drive に残す手順と仕様の本文"
+  - id: human
+    label: "人"
+    meaning: "コネクタを認証し、教材の正しさを判断して正本側を直す"
+  - id: member
+    label: "新規メンバー"
+    meaning: "圧縮された手順を受け取る"
+relationships:
+  - from: repo
+    to: agent
+    label: "IDとガイド"
+  - from: agent
+    to: canon
+    label: "本文を取る"
+  - from: agent
+    to: member
+    label: "3〜5ステップ"
+  - from: human
+    to: agent
+    label: "認証"
+  - from: human
+    to: canon
+    label: "正しさを判断"
+omitted:
+  - item: "出力の型（スキルに書く結論の出し方）"
+    reason: "矢印は取得のために渡すIDとガイドを示す。出力の型はリポジトリに置くが、この矢印のラベルには入れない"
+  - item: "記録票、sources.yml、ガイド、チェックリスト"
+    reason: "伝える関係はIDとゴールを渡す一点なので、リポジトリにまとめた"
+  - item: "スラッシュコマンド、日報、改善メモ、/maintain"
+    reason: "本文を取る流れと、人と正本の分担以外の運用手順だから"
+  - item: "Slack の任意コネクタと、ファイル名による版の解決"
+    reason: "必須の流れは Confluence と Drive からの取得だから"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### 本文を置かず、IDで正本を引く の図（記録票から正本の本文までをIDでつなぎ、複製を置かない）"
+  - "### 人が持つ仕事 の図と引用「認証は人、手順の要約はAI、教材の正しさの判断は人。」"

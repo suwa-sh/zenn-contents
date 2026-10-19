@@ -1,0 +1,49 @@
+type: structure
+title: "承認した文字列と、変わる状態"
+message: "上の経路では文字列が展開と環境変数を通ると別の状態になりうる。下の経路では、実行前の境界が状態の差分について消してよいかを決め、実行すれば変わった状態に残る"
+source: "notes/zenn/articles/atmarkit-itmedia-co-jp-ait-p1_20261019.md"
+components:
+  - id: cmd
+    label: "コマンド文字列"
+    meaning: "人間が承認しやすい対象。エージェントが書いたコマンドの文言"
+  - id: expand
+    label: "展開と環境変数"
+    meaning: "シェルの展開と、実行直前の環境変数。ここで文字列の意味が入れ替わることがある"
+  - id: gate
+    label: "実行前の境界"
+    meaning: "必ず聞く規則、分類器より前の拒否、デプロイ境界、資格情報を渡さないこと"
+  - id: diff
+    label: "状態の差分"
+    meaning: "消える行、ファイル、スキーマ、外へ出る送信。実行前に載っている変更"
+  - id: changed
+    label: "変わった状態"
+    meaning: "実行後に残る結果"
+relationships:
+  - from: cmd
+    to: expand
+    label: "シェルを通る"
+  - from: expand
+    to: changed
+    label: "別の状態になりうる"
+  - from: gate
+    to: diff
+    label: "消してよいかを決める"
+  - from: diff
+    to: changed
+    label: "実行すると残る"
+omitted:
+  - item: "人間の指示とエージェント"
+    reason: "承認と状態が分岐する前段であり、2つの経路を示すのに不要なため"
+  - item: "実行後の復元とトークンの失効"
+    reason: "削除を止める地点ではなく、変わったあとの手段のため"
+  - item: "Docker の6類型の名前"
+    reason: "どの類型がどちらの経路に乗るかは本文に残し、図は経路だけにするため"
+  - item: "確認ダイアログの回数"
+    reason: "図の主張は、回数を足す場所ではない経路を示すことのため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 承認した文言と変わった状態とは（文字列は展開と環境変数を通ったあとで状態になる）"
+  - "## 6類型が図のどこに乗るか（コマンド文字列 → 展開と環境変数 → 変わった状態、状態の差分 → 変わった状態）"
+  - "## 実行前に置くコミット条件（不可逆な操作は実行前のコミット条件にし、会話の文には置かない）"
