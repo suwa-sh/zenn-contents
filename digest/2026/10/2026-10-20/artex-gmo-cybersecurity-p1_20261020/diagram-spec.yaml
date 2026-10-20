@@ -1,0 +1,47 @@
+type: structure
+title: "許可の台帳と連続試行"
+message: "台帳に無い連続試行は先に調べ、許可が無いと分かったときだけ許可のない試行になる"
+source: "notes/zenn/articles/artex-gmo-cybersecurity-p1_20261020.md"
+components:
+  - id: attempt
+    label: "連続試行"
+    meaning: "診断に似た、続くリクエスト。先に調査対象にするのは、台帳に無いもの"
+  - id: ledger
+    label: "許可の台帳"
+    meaning: "正規の診断として残す記録。対象、期限、試行間隔または上限レート、送信元の識別子、承認者"
+  - id: triad
+    label: "送信元、対象パス、許可の有無"
+    meaning: "許可のない試行として扱う前に確かめる3つ。許可の有無は、許可した記録があるかどうか"
+  - id: unauthorized
+    label: "許可のない試行"
+    meaning: "送信元、対象パス、認可が揃ったときの扱い"
+groups:
+  - id: watch
+    label: "同時に見る"
+    members: [attempt, ledger]
+relationships:
+  - from: attempt
+    to: ledger
+    label: "突き合わせる"
+  - from: ledger
+    to: triad
+    label: "無ければ見る"
+  - from: triad
+    to: unauthorized
+    label: "許可が無いとき"
+omitted:
+  - item: "製品名とUser-Agent"
+    reason: "単独では決めない、という留保は本文に残し、図は突合の条件だけにするため"
+  - item: "台帳の5項目の内訳"
+    reason: "要素を7個以内にするため。内訳は許可の台帳の意味に畳み、具体例の節に残す"
+  - item: "公開資料の三層とplanner、worker"
+    reason: "製品の経路と到達の層は別の主張のため。図は防御の突合だけにする"
+  - item: "ヘルスチェックと死活監視"
+    reason: "間隔だけでは攻撃と閉じない、という注意は本文に残し、矢印にはしないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 防御側は許可の台帳と連続試行を同時に見る（足すときの単位は製品名ではない）"
+  - "同節（台帳に残す5つ、台帳に無い連続試行、送信元・対象パス・認可が揃ってはじめて許可のない試行）"
+  - "同節（名前とUser-Agentは単独では決定的にしない）"
