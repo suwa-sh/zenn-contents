@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (549)
+## Articles: 下書き (548)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -16,7 +16,6 @@
 | 2026-10-21 | [🔐 2026年10月のMicrosoft月例とリスクコホートの読み方](articles/microsoft-1407-xtech-nikkei-p10_20261021.md) | Security, Windows, Microsoft |
 | 2026-10-21 | [🔐 SAP・Oracle・Salesforceのエージェント経路で見積と承認と取消の主体を分ける](articles/sap-oracle-salesforce-saas-p2_20261021.md) | SAP, Oracle, Salesforce, AIAgent, SaaS |
 | 2026-10-20 | [📊 世田谷区の生成AI試行が示した約2900時間の数え方](articles/ai-2900-itmedia-co-jp-business-p3_20261020.md) | GenerativeAI, Governance, Genspark, PublicSector |
-| 2026-10-20 | [🔐 日本企業向け侵害の攻撃元で確認された自律型診断ARTEX](articles/artex-gmo-cybersecurity-p1_20261020.md) | Security, AIAgent, LLM, Governance |
 | 2026-10-19 | [📐 AI前提のレガシー刷新で再浮上するデータ中心アプローチの発注範囲](articles/ai-xtech-nikkei-atcl-nxt-p6_20261019.md) | AIAgent, DataGovernance, Procurement, Architecture |
 | 2026-10-19 | [🤝 Anthropicが弁護士に相談したエージェント取引で委任と希望を分ける](articles/anthropic-ft-content-f7c26ac0-p5_20261019.md) | AIAgent, Anthropic, Governance, Claude |
 | 2026-10-19 | [🔐 人間の承認を増やしても本番データベース削除は止まらない](articles/atmarkit-itmedia-co-jp-ait-p1_20261019.md) | AIAgent, Security, ClaudeCode, Docker, Database |
@@ -561,10 +560,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (195)
+## Articles: 公開済み (196)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-10-22 | [🔐 日本企業向け侵害の攻撃元で確認された自律型診断ARTEX](articles/artex-gmo-cybersecurity-p1_20261020.md) | Security, AIAgent, LLM, Governance |
 | 2026-10-20 | [🔬 ソースのないアプリをエージェントに逆解析させるREAの構造と証拠モデル](articles/rea_20261018.md) | ReverseEngineering, MCP, AIAgent, Ghidra, CLI |
 | 2026-10-17 | [📚 エージェントの経験を知識に変えてスキルを育てる WikiSkill の三層構造](articles/wikiskill_20261015.md) | AIエージェント, LLM, AgentSkills, Google, arXiv |
 | 2026-10-15 | [🔄 ネイティブCLIとスコープ別の承認設定で動くAI-DLC 2.11.0の構造とデータ](articles/ai-dlc_20261014.md) | AI, AWS, ClaudeCode, Codex, Kiro |
