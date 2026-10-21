@@ -1,0 +1,68 @@
+source:
+  title: "SAP・Oracle・Salesforceのエージェント経路で見積と承認と取消の主体を分ける"
+  url: null # Zenn 下書き (published: false)。公開 URL なし
+  path: "notes/zenn/articles/sap-oracle-salesforce-saas-p2_20261021.md"
+  primary:
+    - title: "日経クロステック（本文は会員限定。起点は公開リード）"
+      url: "https://xtech.nikkei.com/atcl/nxt/column/18/03802/101900001/"
+    - title: "SAP Joule Agents Compliance Brief 1.0（PDF、2026年6月17日）"
+      url: "https://www.sap.com/docs/download/2026/06/526001c1-567f-0010-bca6-c68f7e60039b.pdf"
+    - title: "Oracle のワークフロートリガー（26C）"
+      url: "https://docs.oracle.com/en/cloud/saas/fusion-ai/26c/aiaas/configure-workflow-triggers.html"
+    - title: "Oracle 購買オーダーの取消（26C）"
+      url: "https://docs.oracle.com/en/cloud/saas/procurement/26c/fapra/op-purchaseorders-purchaseordersuniqid-action-cancel-post.html"
+    - title: "Salesforce Agent API"
+      url: "https://developer.salesforce.com/docs/ai/agentforce/guide/agent-api.html"
+  retrieved_at: "2026-10-22"
+archetype:
+  primary: decision # 操作ごとに実行主体を固定するか
+  secondary: [architecture] # 人のトークンと技術ユーザーが業務 API に合流する配置
+one_liner: >-
+  SAP、Oracle Fusion、Salesforce は、画面の外から業務 API を起動できる。
+  見積、承認、取消に相当する操作を誰の資格で実行するかは、入口ごとに公式が分けている。
+key_points:
+  - claim: "見積書オブジェクト専用の API 名は、三社の公開ドキュメントからは特定できていない。確認できた相当操作は、SAP の受注、Oracle の購買、Salesforce の会話セッションである"
+    evidence: "### 見積、承認、取消に相当する業務アクション / ## 公式がまだ書いていないこと"
+    status: fact
+  - claim: "人のトークンと、技術ユーザー（人ではない実行主体の総称で、実体は製品で分かれる）が、同じ業務 API に届く。スケジュールとシグナルは、人の操作も API 呼び出しもなしに技術ユーザー側へ入る"
+    evidence: "### 起動、主体、業務 API、記録の配置 / ## 操作ごとに実行主体を固定する"
+    status: fact
+  - claim: "人間の代理（人の資格の範囲で動くこと）を三社の既定とは書けない。自己代理（人の文脈なしに動くこと）は、SAP の検索インデックスが将来リリースと書く"
+    evidence: "### 人間の代理を一枚の文にしない"
+    status: fact
+  - claim: "人間の承認（実行前に人が止める関門）は資格とは別である。Oracle の外部 REST では Require Human Approval を選んだときだけ実行前の確認があり、26C の Human Approval ノードと同一の設定だとは書かれていない"
+    evidence: "### 人間承認は、初期状態のゲートではない"
+    status: fact
+  - claim: "更新者（業務データに残る更新の主体で、人とは限らない）と実行トレースは別記録で、依頼者と実行者の二欄は製品が保証しない。自社では操作ごとに、依頼した人、実行したエージェント、更新者、トレースの ID を契約へ書く"
+    evidence: "### 監査は、依頼者と実行者の二欄を保証しない / ## 自社の見積、承認、取消に残す契約"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "人のトークンと技術ユーザーは同じ業務 API に合流し、更新者と実行トレースは別の記録である"
+    reason_needed: "主体が一つの箱に見えると、依頼者と更新者を取り違えた契約になる"
+example:
+  description: "見積書そのものではなく、公開ドキュメントで確認できた相当操作。SAP は受注の拒否理由（任意の更新項目）と承認の Release / Reject。Oracle は購買オーダーの独立した cancel。Salesforce で確認できるのはセッション終了"
+  hypothetical: false
+  evidence: "### 見積、承認、取消に相当する業務アクション / ## 操作ごとに実行主体を固定する の表"
+applicability:
+  - "三社の画面外の経路を、自社の見積、承認、取消の API 契約へ写す前"
+  - "「既定は人間の代理」の一文で、主体の表を埋める提案を見るとき"
+decision_criteria:
+  - "その操作の実行主体が、人のトークンか、人ではない実行主体か、文書に名指しされているか"
+  - "金額、在庫、雇用、対外の約束を変える承認を、人間の作業項目として残すと契約に書いてあるか"
+  - "取消が、状態の汎用的な更新とは別のアクションか"
+  - "画面だけの必須を、入力規則、二重の権限検査、承認ノードのどれかへ写し、ページレイアウトの必須が API に乗らないという Salesforce の検索インデックスの読みを、SAP と Oracle へ広げていないか"
+  - "依頼者と更新者を、片方の最終更新者だけで答えていないか"
+limitations:
+  - "日経クロステックの会員本文は未取得である"
+  - "検索インデックスと書いた記述は、Help 本文で裏を取っていない"
+  - "SAP で呼び出し元の人を後段へ伝えたときの伝票の更新者、Oracle のスケジュールとシグナルで式に入る主体、Employee 経路で最終更新者が依頼者のまま残るかは、未記載である"
+  - "差戻しと取下げが無いのは、受注の承認を外から扱うサービスだけで、SAP の承認全体ではない"
+  - "自己代理が Help 本文の現行仕様になったとき、またはスケジュールの主体が技術ユーザーで業務データの更新者もそのユーザーだと文書が変わったときは、四欄の初期値を作り直す"
+unknowns:
+  - "見積書オブジェクトの作成、承認、取消を、三社のどの API 名で行うか"
+  - "SAP の principal propagation のとき、伝票の更新者は依頼した人か技術ユーザーか"
+  - "Oracle のスケジュールとシグナルで、式の User Name に入る主体"
+  - "Employee 経路のレコード更新で、Last Modified By が依頼した人のままか"
+  - "Salesforce Help のインデックスが挙げる Flow の System Context Without Sharing が、ライブの本文でも共有と項目レベルセキュリティを外すか"
+reviewed: true

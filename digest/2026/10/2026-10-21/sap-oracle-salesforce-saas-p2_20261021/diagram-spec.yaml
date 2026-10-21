@@ -1,0 +1,61 @@
+type: structure
+title: "人のトークンと技術ユーザーの合流"
+message: "人のトークンと技術ユーザーは同じ業務 API に合流し、更新者と実行トレースは別の記録である"
+source: "notes/zenn/articles/sap-oracle-salesforce-saas-p2_20261021.md"
+components:
+  - id: person
+    label: "依頼した人"
+    meaning: "操作を頼む人。画面を開いているとは限らない"
+  - id: token
+    label: "人のトークン"
+    meaning: "人の資格で業務 API を叩く側。Oracle の外部呼び出しでは User Assertion（呼び出し元ユーザーの表明）がこれに当たる"
+  - id: schedule
+    label: "スケジュールまたはシグナル"
+    meaning: "Oracle の入口。利用者の操作も API 呼び出しもなしに起動する。スケジュールは時間かカレンダー、シグナルは業務イベント"
+  - id: tech
+    label: "技術ユーザー"
+    meaning: "人ではない実行主体の総称。実体は製品で分かれる"
+  - id: api
+    label: "業務 API"
+    meaning: "既存の業務 API、または承認アクション。見積書専用の API 名は未特定"
+  - id: row
+    label: "業務データの更新者"
+    meaning: "伝票やレコードに残る更新者。実行トレースとは別の記録"
+  - id: trace
+    label: "実行トレース"
+    meaning: "エージェント実行の記録。更新者の欄とは別"
+relationships:
+  - from: person
+    to: token
+    label: "人の資格で起動"
+  - from: person
+    to: tech
+    label: "技術ユーザーで起動"
+  - from: schedule
+    to: tech
+    label: "操作なしに入る"
+  - from: token
+    to: api
+    label: "合流する"
+  - from: tech
+    to: api
+    label: "合流する"
+  - from: api
+    to: row
+    label: "更新者を残す"
+  - from: api
+    to: trace
+    label: "トレースを残す"
+omitted:
+  - item: "チャネル別の名指し（SAP の二重認可、Employee、検証なしの Service、bypassUser）"
+    reason: "主体が一つに見えない、という主張は合流の図で足りる。分かれ方は本文の表に残す"
+  - item: "人間承認の選択と、取消アクションの有無"
+    reason: "承認が初期ゲートではないことと、取消の形は別の判断のため"
+  - item: "User Assertion を独立ノードにすること"
+    reason: "元記事の図では人のトークンと同じノードにまとまっているため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### 起動、主体、業務 API、記録の配置 の図と、その直下の段落"
+  - "## 操作ごとに実行主体を固定する（人ではない側を技術ユーザーとまとめて呼ぶ、と書いた節）"

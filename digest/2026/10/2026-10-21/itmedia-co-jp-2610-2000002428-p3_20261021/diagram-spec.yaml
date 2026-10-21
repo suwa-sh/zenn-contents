@@ -1,0 +1,65 @@
+type: structure
+title: "条項に写すのは機械で確認できる到達だけ"
+message: "条項に写すのは、チャットと工房で機械が確認できる到達だけである。人の義務と、一覧の無い項目は別枠に残す"
+source: "notes/zenn/articles/itmedia-co-jp-2610-2000002428-p3_20261021.md"
+components:
+  - id: chat
+    label: "エージェントチャット"
+    meaning: "任意のURLは取らない。通信先は許可したものに限る。検索はガバメントクラウド内の索引で完結する"
+  - id: shop
+    label: "源内工房"
+    meaning: "GETは許可し、通信先、量、日時をログに残す。POSTとPUTは遮断する。初期状態では使えず、管理者が権限を付ける"
+  - id: clause
+    label: "条項に写す到達"
+    meaning: "機械で確認できる到達だけを、受入条項の文案にする"
+  - id: duty
+    label: "人の義務"
+    meaning: "未確認の出力を行政判断や外部送信に使わない。入力前に機密性を確認する。システムが代わりに判定するとは書かない"
+  - id: pending
+    label: "まだ受入にしない"
+    meaning: "危険コマンドの名前、遮断するサイトの名前、ライブラリの審査、府省庁管理者の停止画面。一覧か手続が公開されるまで合否にしない"
+groups:
+  - id: reach
+    label: "環境ごとの到達"
+    members: [chat, shop]
+  - id: copy
+    label: "今日の条項"
+    members: [clause]
+  - id: human
+    label: "人の義務として残す"
+    members: [duty]
+  - id: hold
+    label: "一覧が公開されるまで外す"
+    members: [pending]
+relationships:
+  - from: chat
+    to: clause
+    label: "任意URLを取らない"
+  - from: shop
+    to: clause
+    label: "POSTとPUTを遮断"
+omitted:
+  - item: "チャットから工房への「庁内完結をコピーしない」"
+    reason: "環境間の通信ではなく、条項を書くときの注意である。矢印にするとデータの流れに見える"
+  - item: "まだ受入にしないから条項への「写さない」"
+    reason: "データの流れではない。枠「一覧が公開されるまで外す」で分ける"
+  - item: "源内ライブラリとスキルの中身"
+    reason: "審査は今後であり、今日写す到達の矢印にはしない"
+  - item: "約18万人と世界初"
+    reason: "導入完了の合格線ではない。図の関係にしない"
+  - item: "源内開発者と共通基盤"
+    reason: "三つの主体の説明であり、この1枚の到達には入れない"
+  - item: "将来のAPI、MCP、A2Aによる業務基盤との接続"
+    reason: "今日のチャットと工房の到達とは別、と本文が分ける"
+  - item: "GETの三通りの読み"
+    reason: "注意点である。一つの矢印にまとめると、検索に必要なGETと全サイト可が同じに見える"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 発注条件に写すときの分け方"
+  - "## 機械が届く範囲と人が守る事項"
+  - "### エージェントチャットで機械が確認できる到達"
+  - "### 源内工房で機械が確認できる到達"
+  - "### 利用者と管理者の義務"
+  - "### まだゲートが無い共有と停止"

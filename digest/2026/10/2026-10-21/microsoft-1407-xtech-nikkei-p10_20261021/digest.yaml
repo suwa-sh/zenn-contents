@@ -1,0 +1,66 @@
+source:
+  title: "2026年10月のMicrosoft月例とリスクコホートの読み方"
+  url: null
+  path: "notes/zenn/articles/microsoft-1407-xtech-nikkei-p10_20261021.md"
+  primary:
+    - title: "Using risk cohorts to prioritize security updates"
+      url: "https://www.microsoft.com/en-us/msrc/blog/2026/10/using-risk-cohorts-to-prioritize-security-updates/"
+    - title: "2026 CVEs cohort PDF"
+      url: "https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/msrc/images/partner-images/2026cves.pdf"
+    - title: "MSRC October 2026 release notes"
+      url: "https://msrc.microsoft.com/update-guide/releaseNote/2026-Oct"
+    - title: "CVRF 2026-Oct"
+      url: "https://api.msrc.microsoft.com/cvrf/v3.0/cvrf/2026-Oct"
+    - title: "Tenable October 2026 Patch Tuesday"
+      url: "https://www.tenable.com/blog/microsofts-october-2026-patch-tuesday-addresses-1407-cves-cve-2026-96951"
+    - title: "CISA KEV CVE-2026-96951"
+      url: "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-96951"
+  retrieved_at: "2026-10-22"
+archetype:
+  primary: decision
+  secondary: [governance]
+one_liner: "2026年10月の月例は数える定義で件数が分かれ、リスクコホートは環境の問いを共有する暫定の束であり、配る順は既知の悪用から始める。"
+key_points:
+  - claim: "リスクコホートの問いは、たとえば外から届くリモートデスクトップはどれか、のように環境への一つの質問である。Security Update Guide には関係が出ておらず、一つの更新が束のすべてのCVEを直すとも書いていない。"
+    evidence: "リスクコホートとは / 配る順の決め方"
+    status: fact
+  - claim: "件数は母集団が違うので引き算しない。Tenableは1,407件、リリースノート見出しは1,453件、CVRFで注記タイトルがMicrosoftかつ改訂の最古日が2026-10-13のレコードは1,408件、注記がMicrosoftの全件は1,456件。ブログ表は15コホートで1,118件、PDFは1,119件。"
+    evidence: "注意点"
+    status: fact
+  - claim: "2026年10月にCISA KEVへ追加されたMicrosoftのCVEは CVE-2026-96951 だけで、コホートPDFに無い。公開済み（Publicly disclosed）の CVE-2026-108398（.NET Framework）は悪用が確認されておらず、PDFの外である。"
+    evidence: "既知の悪用はコホートの外にもある"
+    status: fact
+  - claim: "分析順を下げるのは、製品、役割、機能が環境に無いとき（役割が無くても Windows の累積更新からは外れない）、問いの答えがその経路は無いとき、クラウドのFAQが緩和済みで作業が無いときである。「その経路は無い」ときは、悪用済み、公開済み、認証不要、経路が違うもの、Critical、Exploitation More Likely は残し、届かない束は分析順を下げ、パッケージを分割できる製品だけ配る順も下げ、配らない判断へは広げない。"
+    evidence: "分析の優先度を下げる条件"
+    status: fact
+  - claim: "配る順は、既知の悪用、公開済み、該当すると答えた問いを見る、CriticalかつExploitation More Likely、検証できる量である。この月の Critical かつ More Likely は AD DS（Active Directory Domain Services）の CVE-2026-70229（コホート内）と Exchange の CVE-2026-70571（PDFの外）である。コホートはKEVの代わりでも更新を止める許可でもない。"
+    evidence: "配る順の決め方 / 既知の悪用はコホートの外にもある"
+    status: fact
+mental_models:
+  - type: behavior
+    key_message: "配る順は悪用の確認から始め、コホートは分析の束にとどめる"
+    reason_needed: "件数やコホート所属を配る順と取り違えると、PDFの外にある悪用確認済みを後回しにするため"
+example:
+  description: "CVE-2026-96951（Windows Shell）は Important、Exploitation Detected、CVSS 3.1 は 8.8（ネットワーク到達、条件は低い、権限不要、利用者の操作が必要）。Mark of the Web の回避。CISA KEV へ 2026-10-13 に追加、期限は 2026-10-16。2026-10-21 時点で期限は過ぎており、拘束は BOD 26-04 が向けた連邦文民行政機関の話である。コホートPDFには無い。"
+  hypothetical: false
+  evidence: "既知の悪用はコホートの外にもある / 配る順の決め方"
+applicability:
+  - "月例の件数見出しだけで配る順を決めようとしているとき"
+  - "Windowsの累積更新と、Exchangeなど別パッケージが混在するとき"
+  - "役割や機能が環境に無いCVEを、パッケージを配らない判断へ広げようとしているとき"
+decision_criteria:
+  - "件数の差を引き算して、配る判断に使っていないか"
+  - "コホート所属を、既知の悪用や Exploitation Detected の包含と読んでいないか"
+  - "検証枠が足りない更新は、保留の責任者、対象パッケージ、再開日を書いて止めているか"
+  - "件数が多いことだけでは、Windows の累積更新を止めていないか"
+  - "FAQが緩和済みで利用者の作業は無いと書くクラウドCVEを、顧客の検証キューに足していないか"
+limitations:
+  - "確認した公開資料の範囲ではコホートの撤回告知は見つかっていない。見つからないことは、撤回が無いことの証明にはならない。"
+  - "2026年9月のリモートデスクトップ不具合への対処は、新しい累積更新を入れることであり、累積更新を止める理由にはならない。"
+  - "SharePoint、SQL、Exchange について、PDFから外れているCVEの総数は確定していない。個別に確認したのは Exchange の CVE-2026-70571 がPDFに無いことまでである。"
+unknowns:
+  - "ブログ表の「サービスID」が名前なのか実行アカウントなのかは、表だけでは書いていない。"
+  - "Developer Tools の型「混在」と Edge の件数0・更新1が何を指すかは、表の列名以上には書いていない。"
+  - "Exchange の SE がどの製品名の略かは、参照した一覧では展開されていない。"
+  - "日経の図注にある2026年上半期の月54〜198件は図注の記述であり、各月のTenable記事はこの記事では開き直していない。"
+reviewed: true

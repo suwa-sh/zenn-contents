@@ -1,0 +1,51 @@
+type: behavior
+title: "2026年10月の月例を配る順"
+message: "配る順は悪用の確認から始め、コホートは分析の束にとどめる"
+source: "notes/zenn/articles/microsoft-1407-xtech-nikkei-p10_20261021.md"
+components:
+  - id: exploited
+    label: "既知の悪用"
+    meaning: "Exploitation Detected または CISA の既知悪用カタログ。重要度が Important でも、コホートPDFに無くても外さない。この月は CVE-2026-96951"
+  - id: disclosed
+    label: "公開済み"
+    meaning: "この月は CVE-2026-108398"
+  - id: reachable
+    label: "該当すると答えた問い"
+    meaning: "リスクコホートが共有する環境の問い。該当しない束は分析順を下げる。別パッケージの製品だけ、配る順も下げる"
+  - id: more_likely
+    label: "Critical かつ More Likely"
+    meaning: "コホートの有無と別に残す。この月の Critical かつ More Likely は AD DS の CVE-2026-70229（コホート内）と Exchange の CVE-2026-70571（PDFの外）"
+  - id: capacity
+    label: "検証できる量"
+    meaning: "枠が足りない更新は、保留の責任者、対象パッケージ、再開日を書いて止める。件数だけでは Windows 累積更新を止めない"
+groups:
+  - id: cohort
+    label: "分析の束（リスクコホート）"
+    members: [reachable]
+relationships:
+  - from: exploited
+    to: disclosed
+    label: "次に置く"
+  - from: disclosed
+    to: reachable
+    label: "次に見る"
+  - from: reachable
+    to: more_likely
+    label: "別に残す"
+  - from: more_likely
+    to: capacity
+    label: "足りなければ止める"
+omitted:
+  - item: "FAQが緩和済みで利用者の作業は無いクラウドCVE（CVE-2026-77900、CVE-2026-88131、CVE-2026-96207）"
+    reason: "顧客の検証キューに足さない。配る順の本線ではない"
+  - item: "件数の定義差（1,407 / 1,453 / 1,408 / 1,456 / 1,118 / 1,119）"
+    reason: "伝えたいこと（配る順）とは別の主張なので、この図には入れない"
+  - item: "順をひっくり返す二つの条件（Security Update Guide の正式な関係、またはコホート所属が既知悪用を包含すると一次資料で示されること）"
+    reason: "現時点のブログはどちらも約束していない。図の順序そのものではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "配る順の決め方: 既知の悪用、公開済み、環境が届くと答える問い、Critical かつ Exploitation More Likely、検証できる量"
+  - "既知の悪用はコホートの外にもある: CVE-2026-96951 はPDFに無い"
+  - "分析の優先度を下げる条件: 下げるのは分析の優先度であり、パッケージを配らない判断へ広げる材料はブログに無い"

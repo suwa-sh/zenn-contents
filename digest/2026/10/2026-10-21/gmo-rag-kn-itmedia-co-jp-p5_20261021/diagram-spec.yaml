@@ -1,0 +1,64 @@
+type: behavior
+title: "1サイクルの着地"
+message: "1サイクルは文章の返却では終わらず、台帳の4状態のどれかに着地する。検索の未ヒットは許可にしない"
+source: "notes/zenn/articles/gmo-rag-kn-itmedia-co-jp-p5_20261021.md"
+components:
+  - id: ask
+    label: "根拠を聞く"
+    meaning: "ワークフローがRAGに根拠を聞く。未ヒットは許可と読まない"
+  - id: draft
+    label: "下書き"
+    meaning: "根拠にした条文、文書の版、取り込み済みの時刻を同じ行に残す。取り込み完了前の新規申請はここで止め、登録済みへ自動で進めない"
+  - id: check
+    label: "項目検査"
+    meaning: "金額、日付、必須添付、重複、権限のように、項目の値だけで合否が決まる禁止を登録直前に拒否する"
+  - id: reject
+    label: "拒否"
+    meaning: "必須項目の不足、重複、権限不足。台帳の終端の一つ"
+  - id: human
+    label: "人待ち"
+    meaning: "例外、根拠不足、条文の衝突、高影響の操作を、人の判断が終わるまで登録へ進めない状態"
+  - id: registered
+    label: "登録済み"
+    meaning: "台帳の終端。項目検査を通過していない申請は、この状態にしない"
+groups:
+  - id: ledger
+    label: "台帳の状態"
+    members: [draft, reject, human, registered]
+relationships:
+  - from: ask
+    to: human
+    label: "根拠なし、または条文が衝突"
+  - from: ask
+    to: draft
+    label: "根拠あり"
+  - from: draft
+    to: check
+    label: "更新直後の新規以外は検査"
+  - from: check
+    to: reject
+    label: "不足、重複、権限不足"
+  - from: check
+    to: human
+    label: "例外、または権利、金、対外通知、設備"
+  - from: check
+    to: registered
+    label: "例外も高影響も残っていない"
+  - from: human
+    to: registered
+    label: "人の承認のあと"
+omitted:
+  - item: "ストレージ、基幹システム、MCP、価格、F1@10"
+    reason: "接続の形と数値は別の主張であり、1サイクルの着地には不要"
+  - item: "担当キューへの回送"
+    reason: "自動にしてよい遷移の一つだが、4つの終端状態の分かれ方ではない"
+  - item: "製造ラインで生産実績とマニュアルを照合する例"
+    reason: "原因絞り込みの支援であり、申請の終端状態を示す図ではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 規則違反を止める位置: 検索は証拠。根拠が無い、または条文が衝突している申請は登録へ進めず人へ回す。項目として書ける禁止は台帳を書く直前に拒否する"
+  - "## 人を残す遷移: 下書きは自動にしてよい。取り込み完了前の新規申請は下書きまで。高影響は人の承認が終わるまで登録済みにしない"
+  - "## 1サイクルの終わり方: 終端は下書き、拒否、人待ち、登録済みの4つ"
+  - "## 見積もりの前に確認する点: 人が残るのは承認、例外、根拠不足、取り込み完了前の新規申請"
