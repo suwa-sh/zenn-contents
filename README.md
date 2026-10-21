@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (547)
+## Articles: 下書き (548)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-21 | [🔗 GMOの社内RAGが申請と登録までの処理へつながる条件](articles/gmo-rag-kn-itmedia-co-jp-p5_20261021.md) | RAG, LLM, Workflow, AIAgent |
 | 2026-10-21 | [🤖 ガバメントAI源内のエージェント環境と源内基準第1版を読む](articles/itmedia-co-jp-2610-2000002428-p3_20261021.md) | AIAgent, Security, Governance, ClaudeCode |
 | 2026-10-21 | [🔐 SAP・Oracle・Salesforceのエージェント経路で見積と承認と取消の主体を分ける](articles/sap-oracle-salesforce-saas-p2_20261021.md) | SAP, Oracle, Salesforce, AIAgent, SaaS |
 | 2026-10-20 | [📊 世田谷区の生成AI試行が示した約2900時間の数え方](articles/ai-2900-itmedia-co-jp-business-p3_20261020.md) | GenerativeAI, Governance, Genspark, PublicSector |
