@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (548)
+## Articles: 下書き (550)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-22 | [🧭 AI SREを評価する前に、既存エージェントへ調査文脈を渡す](articles/ai-sre-cncf-io-2026-before-p4_20261022.md) | Kubernetes, SRE, AIAgent, ClaudeCode |
+| 2026-10-22 | [🛡️ OpenAIが提案した協調開示とPHPの致命的欠陥二件を手順に落とす](articles/openai-oss-openai-index-of-p1_20261022.md) | PHP, OpenAI, Security, CVE, OSS |
 | 2026-10-21 | [🔗 GMOの社内RAGが申請と登録までの処理へつながる条件](articles/gmo-rag-kn-itmedia-co-jp-p5_20261021.md) | RAG, LLM, Workflow, AIAgent |
 | 2026-10-21 | [🤖 ガバメントAI源内のエージェント環境と源内基準第1版を読む](articles/itmedia-co-jp-2610-2000002428-p3_20261021.md) | AIAgent, Security, Governance, ClaudeCode |
 | 2026-10-21 | [🔐 2026年10月のMicrosoft月例とリスクコホートの読み方](articles/microsoft-1407-xtech-nikkei-p10_20261021.md) | Security, Windows, Microsoft |
