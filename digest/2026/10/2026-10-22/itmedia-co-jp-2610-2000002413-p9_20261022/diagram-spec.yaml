@@ -1,0 +1,51 @@
+type: structure
+title: "委託先が止まったときの三つの分岐"
+message: "別環境へ移す案内は、医院側の受付代替と、移すデータの健全性確認を済ませたことではない"
+source: "notes/zenn/articles/itmedia-co-jp-2610-2000002413-p9_20261022.md"
+components:
+  - id: stop
+    label: "従来の系統は停止"
+    meaning: "2026年10月14日深夜から、アットリンクの提供は止まっている"
+  - id: same
+    label: "同じ系統は再稼働しない"
+    meaning: "2026年10月20日23時の公式は、この分岐を採らないと書いた。10月22日10時の本文も、その文を撤回していない"
+  - id: beta
+    label: "別環境のβ版"
+    meaning: "同じ10月20日23時の文が、@link クラウド β版として採ると書いた。10月22日10時の本文は、不具合で提供開始が遅れ、目処は立っていないと書いた"
+  - id: data
+    label: "予約・患者データ等"
+    meaning: "公式が別環境へ移すと書く範囲。known good とは書いていない"
+  - id: clinic
+    label: "医院側の受付"
+    meaning: "運用マニュアルと予約一覧ファイル。患者向けアプリと Web 予約は、10月22日10時の本文でも停止のまま"
+groups:
+  - id: forks
+    label: "三つの分岐"
+    members: [same, beta, clinic]
+relationships:
+  - from: stop
+    to: same
+    label: "採らないと書いた"
+  - from: stop
+    to: beta
+    label: "採ると書いた"
+  - from: data
+    to: beta
+    label: "移すと書いた"
+  - from: stop
+    to: clinic
+    label: "開通を待たず案内"
+omitted:
+  - item: "戻す予定だった院内三機能の内訳と、停止のままの機能名の一覧"
+    reason: "三つの分岐の位置づけが伝われば足り、機能名は判断の入口に不要なため"
+  - item: "院内サーバのパッケージと、医療機関ごとのクラウド STC"
+    reason: "告知は、二つの設置を別々に止めたとは書いていないため"
+  - item: "787件、朝7時、PHP 脆弱性で止めた別製品"
+    reason: "図のメッセージは分岐の読み分けであり、数字の読み方と別事案は本文に残すため"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "## 手順に先に書いておく三つの分岐 の表"
+  - "### 2026年10月22日10時の分かれ方"
+  - "## 戻さないことを唯一の手順にはしない"

@@ -1,0 +1,62 @@
+type: structure
+title: "無人で出す二つの条件"
+message: "無人で出すのは、強さを測ってあり、かつ古い版を書き戻せるときだけ"
+source: "notes/zenn/articles/arxiv-abs-2610-27465-p8_20261022.md"
+components:
+  - id: local
+    label: "手元の検証器"
+    meaning: "変更の採否を出す検証器"
+  - id: ref
+    label: "参照検証器"
+    meaning: "信頼できる側の合否"
+  - id: sigma
+    label: "強さ σ"
+    meaning: "手元と参照の一致。自己採点ではない"
+  - id: rollback
+    label: "古い版の書き戻し"
+    meaning: "残した値へ戻すだけ。再承認は要らない"
+  - id: release
+    label: "無人で出す"
+    meaning: "人が著者にならない公開"
+  - id: refuse
+    label: "拒否"
+    meaning: "未測定の条件を残して出さない"
+groups:
+  - id: judge
+    label: "採否"
+    members: [local, ref, sigma]
+  - id: recover
+    label: "戻す"
+    members: [rollback]
+relationships:
+  - from: local
+    to: sigma
+    label: "一致を測る"
+  - from: ref
+    to: sigma
+    label: "一致を測る"
+  - from: sigma
+    to: release
+    label: "測ってあり下限以上"
+  - from: rollback
+    to: release
+    label: "再承認なしで戻せる"
+  - from: sigma
+    to: refuse
+    label: "未測定"
+  - from: rollback
+    to: refuse
+    label: "古い版が無い"
+omitted:
+  - item: "公開中の影響 β と復元の一致 ρ"
+    reason: "伝えたいことは無人の関門の条件であり、測った幅の内訳ではないため"
+  - item: "重み更新を人の承認に残す例外"
+    reason: "戻せるのに無人にしない別理由であり、この図の1つのメッセージに含めると条件が二つに増えるため"
+  - item: "実行トレースから変更を作る矢印"
+    reason: "関門の入力の由来であり、出すか拒否かの条件ではないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 無人のエージェント自己改修とは（無人で出してよい条件、強さ σ、再承認の要否 g）"
+  - "## 変更の種類ごとに無人と人の承認を分ける"

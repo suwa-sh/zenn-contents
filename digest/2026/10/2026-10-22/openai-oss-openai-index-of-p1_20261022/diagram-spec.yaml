@@ -1,0 +1,44 @@
+type: structure
+title: "同じ手順の三行"
+message: "棚卸しから更新、遮断の確認、隔離へ同時に割り当て、完了連絡を直列に待たない"
+source: "notes/zenn/articles/openai-oss-openai-index-of-p1_20261022.md"
+components:
+  - id: inventory
+    label: "棚卸し"
+    meaning: "版、リクエストの受け方、イメージの出どころを一行ずつ書く"
+  - id: patch
+    label: "パッチ"
+    meaning: "サポート内を四つの修正版以上にし、処理中のプロセスを再起動する"
+  - id: block
+    label: "前面の遮断"
+    meaning: "使っている遮断ルールがベンダーの一次で投入済みか確認する。パッチ完了の代わりにしない"
+  - id: isolate
+    label: "隔離"
+    meaning: "パッチも切り戻しもできない公開面を外すか止める"
+groups:
+  - id: runbook
+    label: "同じランブック"
+    members: [patch, block, isolate]
+relationships:
+  - from: inventory
+    to: patch
+    label: "四版未満は更新"
+  - from: inventory
+    to: block
+    label: "ルール確認を同じページへ"
+  - from: inventory
+    to: isolate
+    label: "不能な公開面は隔離"
+omitted:
+  - item: "OpenAI の五段階"
+    reason: "この案件の実施済み手順としては採用しないため"
+  - item: "点数の二系統と範囲の出典分け"
+    reason: "図で伝えるのは三行の同時割り当てであり、点数と範囲は本文の別の判断であるため"
+  - item: "公開時刻の表、設定変更、欠陥の内部機構"
+    reason: "三行への割り当てに不要なため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "今日の手順は三つの時刻を同じページに書く"
+  - "直近の行動の 1 から 3"

@@ -1,0 +1,65 @@
+source:
+  title: "OpenAIが提案した協調開示とPHPの致命的欠陥二件を手順に落とす"
+  url: null
+  path: "notes/zenn/articles/openai-oss-openai-index-of-p1_20261022.md"
+  primary:
+    - title: "OpenAI, Coordinated disclosure of critical vulnerabilities"
+      url: "https://openai.com/index/coordinated-disclosure-of-critical-vulnerabilities"
+    - title: "CVE-2026-109618 (CNA php)"
+      url: "https://cveawg.mitre.org/api/cve/CVE-2026-109618"
+    - title: "CVE-2026-109619 (CNA php)"
+      url: "https://cveawg.mitre.org/api/cve/CVE-2026-109619"
+    - title: "PHP Foundation, Today's PHP security release"
+      url: "https://thephp.foundation/blog/2026/10/21/todays-php-security-release-and-how-were-strengthening-php-security/"
+  retrieved_at: "2026-10-23"
+archetype:
+  primary: decision
+  secondary:
+    - governance
+    - incident
+one_liner: "発注側は、修正版への更新、入口での遮断、直せない系統の隔離を、同じ手順の三行に同時に書く。点数と影響範囲は出典ごとに残す。"
+key_points:
+  - claim: "二件とも未認証の遠隔コード実行として公開済みで、点数も影響範囲も同じである。CNA の CVSS 4.0 は 9.2 で攻撃の複雑さが高く追加要件がある。NVD の主採点は CVSS 3.1 の 9.8 で複雑さが低い。4.0 と 3.1 は方式の番号であり、一方の点数に畳まない。"
+    evidence: "二件のレコード / スコアは二系統"
+    status: fact
+  - claim: "影響範囲も出典で割れる。CNA は 8.2 から 8.5 の各系列で四つの修正版未満である。事業者ブログはそれより広く、おおよそ 5.4 から修正版の直前までと書く。php.net は 8.1 以前を通常の更新対象外とし、7.4、8.0、8.1 には最小のソース移植を別に示す。"
+    evidence: "影響範囲は出典ごとに違う"
+    status: fact
+  - claim: "OpenAI の五段階（上流の修正、影響組織が動く時間、政府との調整、下流の更新準備、公開後の案内）は提案であり、この案件の実施済み手順としては採用しない。同じページに、連合を率いたという文と、修正とリリースの主導は PHP の保守側だという文が並ぶ。"
+    evidence: "五段階と、この案件で並ぶ関与 / 採らなかった四つの置き方"
+    status: fact
+  - claim: "今日書く手順は、パッチ、前面の遮断、隔離の三行を同じページに置き、完了通知を直列に待たない。遮断の確認はパッチの完了条件にしない。"
+    evidence: "今日の手順は三つの時刻を同じページに書く"
+    status: fact
+  - claim: "「攻撃者より先」は OpenAI の「知る限り」であり、攻撃者が持っていなかったという調査結論ではない。既知悪用カタログへの未掲載も、対応不要の根拠にしない。"
+    evidence: "「攻撃者より先」は留保つきの文である / 悪用の状態は時点の記録"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "棚卸しから、更新、遮断の確認、隔離へ同時に割り当てる。三行の完了時刻は揃わない。"
+    reason_needed: "完了通知を直列に待つ置き方を、図の上で採らないため。"
+example:
+  description: "パッチ、前面の遮断、隔離の三行。公開日に第三者配布元の更新が無く、遮断の既定投入と公式の公開枠は同じ時刻に閉じていない。"
+  hypothetical: false
+  evidence: "今日の手順は三つの時刻を同じページに書く"
+applicability:
+  - "インターネットに出している PHP の発注側が、今日の手順を一枚に書くとき。"
+  - "更新、遮断、隔離を別の担当に分けているとき。"
+  - "棚卸しで、使う点数の版と、使う範囲の出典を手順に書くとき。"
+decision_criteria:
+  - "サポート内で四つの修正版未満は更新、7.4 と 8.0 と 8.1 は最小ソース移植の検討、パッチも切り戻しもできない公開面は隔離に残す。"
+  - "使っている遮断ルールの識別子をベンダーの一次で取り、パッチ担当と同じページに置く。遮断をパッチ完了の代理にしない。"
+  - "点数を 9.2 か 9.8 の一方だけにしない。範囲を CNA の 8.2 から 8.5 か、ブログの 5.4 以降の一方だけにしない。"
+  - "既知悪用カタログの未掲載や、一次声明が未確認の先行イメージを、自社の完了条件にしない。"
+  - "全系統が四つの修正版以上で再起動済み、かつサポート終了と自前イメージがゼロだと棚卸しで分かるまで、隔離の行を消さない。"
+limitations:
+  - "アプリからメモリ制限を戻せない置き方や、PHP 8.5 で呼び出し履歴を出さない設定は、露出を下げる例であり、更新の代わりにしない。プロセスへ課す別の資源制限は、その代わりにせず、公式が脆弱な割当失敗を起こしうると書くので緩和にしない。"
+  - "常駐プロセス方式の実証は文書で割れる。GitHub の告知は完全な実証が無いと書き、PHP Foundation はアプリケーション経路で確認したと書く。この方式を手順から外す根拠にはしない。"
+  - "公開前の通信の変化は侵害の成立確認ではない。悪用の有無は見た時点の記録である。「攻撃者より先」は OpenAI の「知る限り」であり、2026-08 より前に攻撃者が到達経路を持っていたかは未確認である。"
+  - "10 億ドルの利用枠はページ上の約束であり、支出の実績ではない。指令の本文、版確認用の手順書の中身、先行イメージの一次声明は未確認のまま残す。未確認は三行を書くことを止めない。"
+  - "再現の手順とペイロードは元記事に無い。影響の種類、前提、修正版で判断する。"
+unknowns:
+  - "2026-08 より前に、攻撃者が到達経路を持っていたか。"
+  - "Cloudflare が観測したトラフィックが、侵害の成立か。"
+  - "Chainguard の一次声明、CISA BOD 26-04 の本文、php2shell-checker の判定ロジック、10 億ドルの執行。"
+reviewed: true

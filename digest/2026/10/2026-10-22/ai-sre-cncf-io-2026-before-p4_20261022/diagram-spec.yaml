@@ -1,0 +1,62 @@
+type: structure
+title: "空いた行だけ製品を見る"
+message: "専用製品を見るのは、4点を渡せない行と、残った起動・届け先・記録だけである"
+source: "notes/zenn/articles/ai-sre-cncf-io-2026-before-p4_20261022.md"
+components:
+  - id: materials
+    label: "4点の材料"
+    meaning: "障害の順位、Event が消えたあとの変更、リソースの関係、秘匿値を伏せたログ"
+  - id: scope
+    label: "読み取り権限"
+    meaning: "実行してよいコマンドの範囲。4点の外。記事の例は組み込み view で、Secret は読めない"
+  - id: agent
+    label: "既存エージェント"
+    meaning: "Claude Code、Codex、Cursor。推論のループはここがすでに持つ"
+  - id: context_gap
+    label: "4点が空"
+    meaning: "材料を渡したあとも、4点を自前で渡せない状態。見るのは Context の行"
+  - id: ops_gap
+    label: "起動・届け先・記録"
+    meaning: "人が気づく前の起動、起きた時点の届け先、記録される身元。材料を渡したあとも空なら、その行だけ見る"
+  - id: product
+    label: "専用製品"
+    meaning: "空いた行だけを比べる相手。正解数の 1 件差では見始めない"
+groups:
+  - id: given
+    label: "先に渡す"
+    members: [materials, scope]
+relationships:
+  - from: materials
+    to: agent
+    label: "渡す"
+  - from: scope
+    to: agent
+    label: "別に渡す"
+  - from: agent
+    to: context_gap
+    label: "4点が空なら"
+  - from: agent
+    to: ops_gap
+    label: "運用が空なら"
+  - from: context_gap
+    to: product
+    label: "その材料の行"
+  - from: ops_gap
+    to: product
+    label: "その行だけ"
+omitted:
+  - item: "2分と5分の時間測定"
+    reason: "自分の障害で残す確認であり、製品を見る行の分岐とは別の主張のため"
+  - item: "正解 46 対 45、平均 64 秒と 191 秒、6 製品の順位"
+    reason: "購入の起点にしない数値であり、空いた行の分岐を示す図には不要なため"
+  - item: "許可コマンドが空なときの権限の問題"
+    reason: "無人の起動を買う理由にはしない、という留保は本文に残し、製品への矢印にはしないため"
+  - item: "修復を別の身元に残すこと"
+    reason: "調査のあとの境界であり、どの行の製品を見るかの図には入れないため"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "## 専用製品は空いた行だけ見る（5 行の表。Context は 4 点が空なとき。Trigger、Delivery、記録は渡したあとも空ならその行）"
+  - "## クラスタ文脈を渡す手順とは（4 点と、その外にある実行してよいコマンドの範囲。例は組み込み view）"
+  - "## 自分の障害では時間と診断を残す（採るのは 2 番。4 点が空なら Context、許可コマンドが空なら権限の問題で Trigger の購入理由にはしない）"
