@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (553)
+## Articles: 下書き (554)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-10-23 | [📦 AnthropicがAgent SkillsをAgentic AI Foundationへ寄贈した](articles/anthropic-agent-skills-agentic-p1_20261023.md) | AIAgent, ClaudeCode, Anthropic, AgentSkills |
+| 2026-10-23 | [🔐 eMudhraの中間CA8件で秘密鍵が復元できる条件と開発ツールの更新先](articles/emudhra-ca8-cloudflare-emudhra-p6_20261023.md) | Security, TLS, PKI, Python, Go |
 | 2026-10-22 | [🧭 AI SREを評価する前に、既存エージェントへ調査文脈を渡す](articles/ai-sre-cncf-io-2026-before-p4_20261022.md) | Kubernetes, SRE, AIAgent, ClaudeCode |
 | 2026-10-22 | [🔁 配備済みエージェントの無人自己改修を回復可能性と検証器の強さで区切る](articles/arxiv-abs-2610-27465-p8_20261022.md) | AIAgent, LLM, Evaluation |
 | 2026-10-22 | [🔒 侵害されたアットリンクを再稼働せず別環境へ移す案内の読み方](articles/itmedia-co-jp-2610-2000002413-p9_20261022.md) | Security, IncidentResponse, Healthcare, Governance |
