@@ -1,0 +1,60 @@
+type: structure
+title: "同じ中間鍵が別々の信頼の置き場に載る"
+message: "ブラウザの遮断リストを更新しても、OS のストア、同梱の証明書束、ランタイムの検証コードは置き換わらない"
+source: "notes/zenn/articles/emudhra-ca8-cloudflare-emudhra-p6_20261023.md"
+components:
+  - id: weak_keys
+    label: "弱い中間鍵 8件"
+    meaning: "2025-04-30 の式典で作られた eMudhra の中間 CA。TLS 用 6 件とコード署名用 2 件"
+  - id: crlset
+    label: "Chrome の CRLSet"
+    meaning: "Chrome がブラウザへ配る遮断リスト。2026-10-17 に対象の公開鍵を遮断"
+  - id: onecrl
+    label: "Firefox の OneCRL"
+    meaning: "Firefox が配る遮断リスト。2026-10-17 に対象の公開鍵を遮断"
+  - id: os_store
+    label: "OS の ca-certificates"
+    meaning: "OS の信頼ストア。OpenJDK が名指ししたディストリの Java もこれを使う"
+  - id: vendored
+    label: "pip・uv の同梱束"
+    meaning: "pip が同梱する certifi、uv が既定で使う証明書束"
+  - id: verifier
+    label: "Go・Node.js・rustls-webpki"
+    meaning: "修正版の検証コードが対象中間を含むチェーンを拒否する"
+groups:
+  - id: browser
+    label: "ブラウザ (10/17 遮断済み)"
+    members: [crlset, onecrl]
+  - id: separate
+    label: "別々に更新する経路"
+    members: [os_store, vendored, verifier]
+relationships:
+  - from: weak_keys
+    to: crlset
+    label: "公開鍵で遮断"
+  - from: weak_keys
+    to: onecrl
+    label: "公開鍵で遮断"
+  - from: weak_keys
+    to: os_store
+    label: "OS を更新"
+  - from: weak_keys
+    to: vendored
+    label: "版を上げる"
+  - from: weak_keys
+    to: verifier
+    label: "版を上げて再ビルド"
+omitted:
+  - item: "emSign ECC Root CA - G3 / emSign Root TLS CA - G3 / emSign Root CS CA - G3 / AAA Certificate Services の発行者名の対応"
+    reason: "伝えたいのは信頼の置き場が分かれていることで、発行者名の対応は本文の注意点で扱うため"
+  - item: "OpenJDK (単体導入) と Cloudflare のクライアント"
+    reason: "要素を 7 個以内に収めるため。どちらも別々に更新する経路に含まれ、本文の確認項目で扱う"
+  - item: "コード署名用 2 件が OS の信頼ストアだけにつながる区別"
+    reason: "TLS とコード署名の区別は本文の注意点で扱うため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "信頼ストアは経路ごとに分かれる (元記事の mermaid 図と説明)"
+  - "開発ツールが見ている場所"
+  - "自分の環境では何を見ればよいか"

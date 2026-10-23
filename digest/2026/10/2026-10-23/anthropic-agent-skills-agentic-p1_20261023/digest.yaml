@@ -1,0 +1,65 @@
+source:
+  title: "AnthropicがAgent SkillsをAgentic AI Foundationへ寄贈した"
+  url: null # Zenn 下書き (published: false)。公開 URL なし
+  path: "notes/zenn/articles/anthropic-agent-skills-agentic-p1_20261023.md"
+  primary:
+    - title: "Anthropic, Donating Agent Skills to the Agentic AI Foundation（2026-10-22）"
+      url: "https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation"
+    - title: "Agentic AI Foundation, Agent Skills: Sharing Team Expertise Across AI Agents（2026-10-22）"
+      url: "https://aaif.io/blog/agent-skills-sharing-team-expertise-across-ai-agents"
+    - title: "Agent Skills specification"
+      url: "https://agentskills.io/specification"
+    - title: "Claude Code Docs, Extend Claude with skills（2026-10-23 取得）"
+      url: "https://code.claude.com/docs/en/skills"
+    - title: "Vercel, State of agent skills（2026-09-25）"
+      url: "https://vercel.com/blog/state-of-agent-skills"
+  retrieved_at: "2026-10-24"
+archetype:
+  primary: governance # 仕様の変更主体がベンダーから財団へ移ると宣言された日と、公開記録が変わる日の区別
+  secondary: [architecture] # SKILL.md を必須とするフォルダ形式と段階的な読み込み
+one_liner: >-
+  Agent Skills の Agentic AI Foundation への寄贈を Anthropic が 2026-10-22 に発表したが、翌日の公開記録は未更新だった。
+  台帳では発表日と記録が変わった日を分ける。スキルは形式と権限を別に審査する。
+key_points:
+  - claim: "Agent Skills は SKILL.md を必須とするフォルダで、エージェントは起動時に名前と説明だけ、使うと判断したら本文、手順が指したら scripts・references・assets のファイルを読む"
+    evidence: "## Agent Skillsとは / ### フォルダと SKILL.md / ### 段階的な読み込み"
+    status: fact
+  - claim: "発表が寄贈物に挙げたのは標準、名称とロゴ、GitHub organization agentskills、agentskills.io だが、2026-10-23 の WHOIS の登録組織は Anthropic PBC、仕様リポジトリ agentskills/agentskills の最終 commit は 2026-08-09 で AAIF に触れず、財団ページに表示される GitHub リンクは例示リポジトリ anthropics/skills を指す (埋め込みデータの githubUrl は agentskills/agentskills)"
+    evidence: "### 寄贈すると発表されたもの / ## 注意点（発表の文言と公開記録の表）"
+    status: fact
+  - claim: "100 万スキル・約 2.8 億回は skills.sh (スキルを掲載するレジストリ) の掲載数と 2026 年 8 月までの延べインストール数で、上位 1.2% が回数の 94% を占める。Anthropic が書く 70 以上のプラットフォームに対し、仕様リポジトリに申請制で載るスキル組み込み製品の一覧 (client showcase) は 46 件である"
+    evidence: "## 注意点（表と件数の読み方） / ## 台帳に残す行（採用数として使うときのセット）"
+    status: fact
+  - claim: "仕様に合う形式と実行権限は別である。allowed-tools は frontmatter の実験的な任意欄で、Claude Code ではスキルを起動したターンのあいだ列挙したツールを確認なしで使わせる許可 (禁止ではない) になる"
+    evidence: "## 形式と実行権限"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "寄贈の発表日と、公開記録が発表に一致した日は、台帳に別の日付として残す"
+    reason_needed: "宣言と、3 つの公開記録が変わる条件の対応を 1 枚で示すと、空欄を埋める条件が分かるため"
+example:
+  description: >-
+    agentskills.io は寄贈物に挙げられたが、発表翌日 2026-10-23 の WHOIS で登録組織は Anthropic PBC のままだった。
+    ドメインのロック (clientTransferProhibited) はレジストラが掛けるもので、移転を拒否した証拠ではない。
+  hypothetical: false
+  evidence: "## 注意点（agentskills.io を寄贈する の行）"
+applicability:
+  - "Agent Skills の採用数や仕様の所有者を、台帳や記事に書くとき"
+  - "外部で公開されたスキルを Claude Code などに入れるか判断するとき"
+decision_criteria:
+  - "仕様の所有者の行に、発表日 2026-10-22 と、3 つの公開記録 (ドメインの登録者、仕様リポジトリの AAIF への言及、財団ページの GitHub リンク) が一致した日 (空欄から開始) を分けて書いたか"
+  - "形式の検査 (skills-ref validate、SKILL.md 500 行未満・本文 5000 トークン未満の推奨) とは別に、シェル・ファイル・ネットワークを確認なしで使わせるかを見たか"
+  - "スキルを置く場所は仕様が決めないので、使う製品の文書で確かめたか (仕様の統合ガイドが勧める .agents/skills/ は、Claude Code の読み込み場所の一覧に無い)"
+limitations:
+  - "保守者として氏名が出ているのは Anthropic 側の 2 名で、Agent Skills の保守者としての Google と OpenAI の個人名は、Anthropic 発表・AAIF ブログ・PR Newswire に無い"
+  - "提案を採択する手順とセキュリティ手引きは、発表自身が「始める案」と呼び、仕様リポジトリの公開ツリーにも無い"
+  - "公開スキルの危険度の数字は Snyk の自社スキャン (3984 スキル中 critical 534 件) で、仕様の欠陥件数ではない。Agent Skills 仕様自体の CVE は 2026-10-23 時点で確認できていない"
+  - "GitHub organization の owner 権限がいつどの法人へ移るか、名称とロゴの商標が誰の名義かは未確認である"
+  - "Claude Code では、未信頼のフォルダで -p 実行しても project のスキルの allowed-tools が効き、文書はリポジトリに入ったスキルが自分へ広いツール権限を与えられると警告している"
+unknowns:
+  - "GitHub organization agentskills の owner 権限の移転時期と移転先"
+  - "名称とロゴの商標の管轄と名義"
+  - "Technical Steering Committee の名簿と、提案を採択する文書がいつ置かれるか"
+  - "70 プラットフォームの定義"
+  - "skills.sh の 9 月以降の件数"
+reviewed: true

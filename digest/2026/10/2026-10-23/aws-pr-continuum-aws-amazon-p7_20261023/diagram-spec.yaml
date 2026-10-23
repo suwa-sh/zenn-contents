@@ -1,0 +1,60 @@
+type: structure
+title: "自動は修正案の配送まで"
+message: "現行の Continuum が自動で行うのは修正案の配送までで、マージは人に残る"
+source: "notes/zenn/articles/aws-pr-continuum-aws-amazon-p7_20261023.md"
+components:
+  - id: code
+    label: "コード（GitHub / S3 zip）"
+    meaning: "OAuth で選んだ GitHub.com のリポジトリ、または同一アカウント・同一 Region の S3 zip"
+  - id: collector
+    label: "AWS 構成（任意）"
+    meaning: "AWS Config、Lambda、EKS、ECR などを読む任意の collector。コードとは別経路"
+  - id: context
+    label: "コンテキスト"
+    meaning: "選んだコードと任意の AWS 構成を、検出が参照できる形にまとめたもの"
+  - id: issue
+    label: "issue（証拠レベル・Proof）"
+    meaning: "finding を検証・優先度付けしたもの。証拠の種類は issue ごとに違う"
+  - id: delivery
+    label: "修正案の配送（PR / S3 patch）"
+    meaning: "GitHub なら pull request、S3 なら continuum-patches/ 配下。patchCreationPolicy が ENABLED のとき（既定）"
+  - id: merge
+    label: "レビューとマージ"
+    meaning: "GitHub App は自分ではマージしないと書く。News Blog も現行のマージは利用者とする"
+groups:
+  - id: auto
+    label: "現行の自動（既定オン）"
+    members: [context, issue, delivery]
+  - id: human
+    label: "人に残す"
+    members: [merge]
+relationships:
+  - from: code
+    to: context
+    label: "取り込み"
+  - from: collector
+    to: context
+    label: "別経路で追加"
+  - from: context
+    to: issue
+    label: "検証・優先度付け"
+  - from: issue
+    to: delivery
+    label: "自動配送"
+  - from: delivery
+    to: merge
+    label: "人が判断"
+omitted:
+  - item: "patchCreationPolicy が DISABLED のとき配送しない分岐"
+    reason: "既定はオンであり、伝えたいこと（自動とマージの境界）には既定の経路だけで足りるため"
+  - item: "finding と issue の区別、証拠レベルと Proof の個別要素"
+    reason: "issue の 1 要素にまとめた。証拠の強さの違いは本文の注意点で扱うため"
+  - item: "What's New の Learn / Enforce mode"
+    reason: "User Guide と API に操作が無く、現行の境界を示す図に入れると誤解を招くため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## AWS Continuum for code vulnerabilities とは / ### 入力・### 修正案の配送・### 処理の流れ"
+  - "## 注意点 / ### 自動適用と Enforce（News Blog は自動適用を将来形、GitHub App は never merges）"
+  - "## まとめ（配送までが現行の自動、マージは利用者）"

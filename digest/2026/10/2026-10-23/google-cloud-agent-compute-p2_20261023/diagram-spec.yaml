@@ -1,0 +1,55 @@
+type: structure
+title: "長命の資格情報はマイクロVMの外"
+message: "ツールを実行するマイクロVMには短命の識別だけを渡し、長命の資格情報は外の Agent Gateway が転送時に載せる"
+source: "notes/zenn/articles/google-cloud-agent-compute-p2_20261023.md"
+components:
+  - id: harness
+    label: "ハーネス"
+    meaning: "モデルを呼び、次の行動を決める側"
+  - id: vm
+    label: "マイクロVM"
+    meaning: "コード、シェル、ブラウザを実行するサンドボックス。セッションごとにハードウェアで隔離する"
+  - id: gateway
+    label: "Agent Gateway"
+    meaning: "外向き通信の前段に置く関門。ユーザー委任、エージェントの身元、ノードの証明を見る"
+  - id: cred
+    label: "長命の資格情報"
+    meaning: "OAuth のリフレッシュトークン、サービスアカウント鍵など。ゲストに置かない"
+  - id: tools
+    label: "ツールと社内データ"
+    meaning: "エージェントが呼ぶ外部の宛先"
+groups:
+  - id: sandbox
+    label: "サンドボックス（ゲスト）"
+    members: [vm]
+  - id: outside
+    label: "マイクロVMの外"
+    members: [gateway, cred]
+relationships:
+  - from: harness
+    to: vm
+    label: "ツール指示"
+  - from: vm
+    to: gateway
+    label: "短命の識別だけ"
+  - from: cred
+    to: gateway
+    label: "外で保管"
+  - from: gateway
+    to: tools
+    label: "資格情報を載せて転送"
+omitted:
+  - item: "virtio-vsock と VM 外のプロキシ"
+    reason: "マイクロVMが標準の NIC を持たない実装の詳細で、資格情報の置き場という伝えたいことには不要なため"
+  - item: "SPIFFE 証明書と identity token の区別"
+    reason: "「短命の識別」に 1 つにまとめた"
+  - item: "アイドル時のチェックポイント、Copy-on-Write、Hyperdisk"
+    reason: "密度と永続化の話で、資格情報の経路とは別の主張のため"
+  - item: "Confidential G4"
+    reason: "処理中のモデル保護は別製品で、ACE の本文と接続していないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## Agent Compute Engineとは（ハーネスとサンドボックスの分離、NIC を持たない、Gateway が長命の資格情報を VM の外で回線へ載せ替える、ゲストに置かないもの / 渡すもの）"
+  - "## Agent Compute Engineとは の mermaid 図（ハーネス → マイクロVM → 短命の識別 → Agent Gateway ← 長命の資格情報、入れ替え後 → ツールと社内データ）"

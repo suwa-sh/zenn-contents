@@ -1,0 +1,66 @@
+source:
+  title: "eMudhraの中間CA8件で秘密鍵が復元できる条件と開発ツールの更新先"
+  url: null
+  path: "notes/zenn/articles/emudhra-ca8-cloudflare-emudhra-p6_20261023.md"
+  primary:
+    - title: "Google, Protecting Chrome and Android Users from Compromised eMudhra Intermediate CA Certificates"
+      url: "https://blog.google/security/protecting-chrome-and-android-users-from-compromised-emudhra-intermediate-ca-certificates/"
+    - title: "Mozilla Security Blog, Protecting Firefox users following the compromise of eMudhra intermediate certificates"
+      url: "https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/"
+    - title: "Mozilla Bugzilla Bug 2083449"
+      url: "https://bugzilla.mozilla.org/show_bug.cgi?id=2083449"
+    - title: "Python discuss, Information for Python users regarding eMudhra emSign CA certificate security incident"
+      url: "https://discuss.python.org/t/information-for-python-users-regarding-emudhra-emsign-ca-certificate-security-incident/109576"
+    - title: "Cloudflare Blog, emudhra certificate compromise"
+      url: "https://blog.cloudflare.com/emudhra-certificate-compromise/"
+  retrieved_at: "2026-10-23"
+archetype:
+  primary: incident
+  secondary:
+    - decision
+one_liner: "eMudhra の中間 CA 8 件は、公開の証明書から秘密鍵を復元できる。Chrome と Firefox (標準設定) は 2026-10-17 に遮断済みだが、開発ツールの多くは別の信頼ストアか検証コードを持つので、経路ごとに更新する。"
+key_points:
+  - claim: "2025-04-30 の式典で作られた P-384 の中間 CA 8 件 (TLS 用 6、コード署名用 2) は、秘密スカラーが 256 未満の整数だった。公開の証明書から秘密鍵を復元できる、と Google は書く。曲線や TLS の暗号方式が壊れた話ではない。"
+    evidence: "冒頭 / eMudhraの中間CAとは / 注意点 1 項目目"
+    status: fact
+  - claim: "Chrome の CRLSet と Firefox の OneCRL (標準設定) は 2026-10-17 に対象の公開鍵 (SPKI) を遮断した。パッケージ取得やビルドが参照する信頼ストアは、この遮断リストとは別のファイルで、更新の単位も別である。"
+    evidence: "eMudhraの中間CAとは / いつ遮断されたか / 信頼ストアは経路ごとに分かれる"
+    status: fact
+  - claim: "pip は同梱の certifi を読み (26.2.2 以上でも同梱の束は残る)、OS の更新では置き換わらない。危険なルートを外すには pip を 26.2.2 以上へ上げ、certifi パッケージを 2026.10.19 にし、venv を作り直し、コンテナイメージはレイヤーキャッシュ無しで作り直す。"
+    evidence: "開発ツールが見ている場所 / 修正版の一覧 / 経路を分けて確認する 3"
+    status: fact
+  - claim: "Google は emSign ECC Root CA - G3 を 2026-10-27 朝 PDT 予定で Chrome Root Store から外す。このルート配下の正規証明書は、弱い 8 件から出たものでなくても Chrome で動かなくなるので、Google は Chrome Root Store に含まれる別の階層へ移すよう求める。"
+    evidence: "いつ遮断されたか / 正規の証明書を移すとき"
+    status: fact
+  - claim: "「悪用は確認されていない」は言った主体の範囲に限る。Cloudflare は自社サービスのレビューに限り、Google の説明は TLS 用 6 件について CT を強制するクライアントに限られる。2025-04-30 から遮断までの間に何が起きたかは未確定である。"
+    evidence: "注意点 2 項目目"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "この中間鍵を信頼するかは、ブラウザの遮断リスト、OS のストア、同梱の証明書束、ランタイムの検証コードで別々に決まる。ブラウザの遮断は他の経路を置き換えない。"
+    reason_needed: "ブラウザが遮断済みなら終わり、という読みを図の上で避けるため。"
+example:
+  description: "OS の ca-certificates を更新したコンテナでも、イメージ内の pip が 26.2.2 未満なら同梱 certifi の経路は残る。同じコンテナの OpenJDK が Debian や Ubuntu のパッケージなら、OS の証明書更新で足りる。"
+  hypothetical: false
+  evidence: "経路を分けて確認する (末尾の「たとえば」)"
+applicability:
+  - "pip・uv・Go・Node.js・Rust・Java でパッケージ取得や TLS 接続をするビルド環境・実行環境を持つとき。"
+  - "emSign の TLS 証明書を自社で使っているか、その証明書を受け取るとき。"
+decision_criteria:
+  - "経路ごとに修正版へ上げたか (pip 26.2.2 以上と certifi 2026.10.19、uv 0.13.4 以上、Go 1.27.3 / 1.26.10、Node.js 22.23.4 / 24.22.1 / 26.12.1、rustls-webpki 0.103.16 以上かつ 0.104.0-alpha.1 未満、または 0.104.0-alpha.8 以上)。"
+  - "Go や Node.js を上げたあと、実行ファイルを再ビルドしたか (再ビルドしない実行ファイルには修正が入らない)。"
+  - "Java は、OpenJDK が名指ししたディストリ (Arch、Debian、Devuan、Fedora、Gentoo、Oracle Linux、RHEL、Ubuntu) のパッケージなら OS の証明書更新、単体導入・FreeBSD・Homebrew ならランタイムを影響バージョンより新しいビルドへ上げたか (修正ビルドの番号一覧は無い)。"
+  - "自社の証明書の鎖をたどり、終点のルートが emSign ECC Root CA - G3 なら 2026-10-27 の前に別の階層へ移したか (発行者の表示名、例えば emSign Root TLS CA - G3 だけでは、このルートと同一かを決められない)。"
+  - "証明書エラーを、検証の無効化で通していないか。"
+limitations:
+  - "8 件の中間からエンドエンティティ証明書は出ていない、インフラ侵害は無い、という記述は eMudhra の自己申告である。"
+  - "弱い鍵は HSM 上の鍵生成の式典で wrap/unwrap の手順の欠陥から生まれた、と eMudhra は書くが、根本原因は調査中で未確定である。"
+  - "Google が外すと名指しする emSign ECC Root CA - G3 と、対象一覧が直接の発行者とする emSign Root TLS CA - G3 が同一の証明書かは、公開文書だけでは確定できない。"
+  - "コード署名用の 2 件は Microsoft が信頼する、と Bug 2083449 は書く (元記事は Microsoft の告知本文を未読)。署名を検証する環境では、ブラウザの HTTPS 遮断とは別に、Microsoft の信頼と署名検証の経路を見る。"
+  - "2026-10-23 時点で Bottlerocket、Composer の ca-bundle、Erlang の certifi、Godot は修正待ち (pending) と表示されていた。"
+unknowns:
+  - "2025-04-30 から遮断までの間に、鍵が悪用されたか。"
+  - "弱い鍵が生まれた根本原因。"
+  - "emSign ECC Root CA - G3 と emSign Root TLS CA - G3 が同一の証明書か。"
+  - "Microsoft と Apple の告知本文での遮断日。"
+reviewed: true

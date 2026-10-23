@@ -1,0 +1,58 @@
+type: structure
+title: "宣言日と一致日を分けて残す"
+message: "寄贈の発表日と、公開記録が発表に一致した日は、台帳に別の日付として残す"
+source: "notes/zenn/articles/anthropic-agent-skills-agentic-p1_20261023.md"
+components:
+  - id: announce
+    label: "寄贈の発表 2026-10-22"
+    meaning: "Anthropic が標準、名称とロゴ、GitHub organization、agentskills.io を AAIF へ寄贈すると列挙した"
+  - id: whois
+    label: "ドメインの登録者"
+    meaning: "2026-10-23 の WHOIS で Registrant Organization は Anthropic PBC のまま"
+  - id: repo
+    label: "仕様リポジトリ"
+    meaning: "agentskills/agentskills の最終 commit は 2026-08-09。README は AAIF に触れない"
+  - id: page
+    label: "財団ページのリンク"
+    meaning: "AAIF のプロジェクト一覧で見える GitHub リンクは anthropics/skills を指す"
+  - id: declared
+    label: "宣言日: 2026-10-22"
+    meaning: "台帳の所有者行に置く 1 つ目の日付"
+  - id: matched
+    label: "一致日: 空欄"
+    meaning: "公開記録が宣言と一致した日。空欄のまま開始し、3 つの記録が変わったら埋める"
+groups:
+  - id: records
+    label: "公開記録 (2026-10-23 時点で未更新)"
+    members: [whois, repo, page]
+  - id: ledger
+    label: "台帳の所有者行"
+    members: [declared, matched]
+relationships:
+  - from: announce
+    to: declared
+    label: "記入する"
+  - from: whois
+    to: matched
+    label: "AAIF 側へ移ったら"
+  - from: repo
+    to: matched
+    label: "AAIF に言及したら"
+  - from: page
+    to: matched
+    label: "agentskills/agentskills を指したら"
+omitted:
+  - item: "寄贈物 4 点 (標準、名称とロゴ、GitHub organization、agentskills.io) を個別の要素にすること"
+    reason: "発表 1 つにまとめた。個別にすると要素が 7 個を超え、日付を分ける主張が薄れるため"
+  - item: "形式と実行権限の 2 段の審査"
+    reason: "台帳の日付とは別の主張のため。digest 本文の適用と判断に残す"
+  - item: "100 万スキル・約 2.8 億回、70 以上と 46 件の件数"
+    reason: "件数の書き方の条件であり、日付を分ける図には不要なため"
+  - item: "保守者の個人名、Technical Steering Committee の名簿"
+    reason: "一致日を埋める 3 条件に含まれないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 注意点 (発表の文言と同じ週に見えた公開記録の表)"
+  - "## 台帳に残す行 (宣言の日付は 2026-10-22。一致した日付は空欄で開始。埋める条件は、Registrant が移った日、仕様リポジトリが AAIF に言及した日、財団ページの GitHub リンクが agentskills/agentskills を指した日)"
