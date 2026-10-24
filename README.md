@@ -7,11 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (557)
+## Articles: 下書き (559)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-10-24 | [🔐 Claudeで「晒す必要のないコード」を減らす攻撃対象領域削減の初期研究](articles/anthropic-attack-surface-reducti_20261024.md) | Anthropic, Claude, Security, OpenSSH, OSS |
+| 2026-10-24 | [🧪 コードを人が書かない開発で何が希少になるか、AI支援アジャイルの経験報告を読む](articles/arxiv-abs-2610-30916-p8_20261024.md) | AIAgent, SoftwareEngineering, Agile, Testing, LLM |
+| 2026-10-24 | [🪪 オンライン本人確認が券面画像からICへ移るとき、過去に預かった画像をいつまで残すか](articles/ic-nikkei-p6_20261024.md) | Security, Privacy, Compliance, Fintech |
 | 2026-10-24 | [🔑 1Password for Agentsが閉じる秘密の経路と、ログイン後に残る権限](articles/password-itmedia-co-jp-aiplus-p3_20261024.md) | 1Password, AIAgent, Security, Authentication, Authorization |
 | 2026-10-24 | [🔐 Vercelの静的認証情報廃止論と、Stripe鍵の代行発行で短命になるもの・ならないもの](articles/vercel-vercel-death-to-long-p2_20261024.md) | Vercel, Stripe, OIDC, Security, AIAgent |
 | 2026-10-23 | [📦 AnthropicがAgent SkillsをAgentic AI Foundationへ寄贈した](articles/anthropic-agent-skills-agentic-p1_20261023.md) | AIAgent, ClaudeCode, Anthropic, AgentSkills |
