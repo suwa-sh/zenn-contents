@@ -1,0 +1,54 @@
+type: structure
+title: "受付の切り替えと保存は別の時計"
+message: "受付方式の切り替えは新規受付だけを変え、過去の確認記録の保存期間には効かない"
+source: "notes/zenn/articles/ic-nikkei-p6_20261024.md"
+components:
+  - id: switch
+    label: "受付方式の切り替え日"
+    meaning: "前倒しの停止日、または2027年4月1日の施行日"
+  - id: removed
+    label: "やめる方式"
+    meaning: "容貌の画像と券面画像のセット、写しの送付 (一般)"
+  - id: kept
+    label: "残る方式"
+    meaning: "容貌の画像と IC 内の情報、署名用電子証明書、原本の送付など"
+  - id: record
+    label: "過去の確認記録"
+    meaning: "券面画像を添付として含む。既に記載した内容は消去できない"
+  - id: retention
+    label: "契約終了日等から7年保存"
+    meaning: "後日の取引時確認済みの取引で起算日がずれうる"
+groups:
+  - id: intake
+    label: "新規の受付"
+    members: [removed, kept]
+  - id: storage
+    label: "保存中の記録"
+    members: [record, retention]
+relationships:
+  - from: switch
+    to: removed
+    label: "受付を止める"
+  - from: switch
+    to: kept
+    label: "受付を続ける"
+  - from: switch
+    to: record
+    label: "消去の起点にならない"
+  - from: record
+    to: retention
+    label: "添付ごと保存"
+omitted:
+  - item: "個別の残る方式 (転送不要郵便、照会、一部取引の写し、非居住者等の方式)"
+    reason: "「残る方式」1 つにまとめた。図で伝えるのは切り替えと保存の分離であるため"
+  - item: "委託先との契約の点検"
+    reason: "切り替えと保存の分離に直接関係しないため"
+  - item: "個人情報保護法の努力義務"
+    reason: "保存期間の根拠は犯収法側で示せば足りるため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "過去に預かった券面画像はいつまで残すか (受付方式を変えた日は、過去に預かった券面画像を消してよい日にはなりません)"
+  - "削られる方式と残る方式"
+  - "保存期間の起算日 / 添付と既記載の扱い"

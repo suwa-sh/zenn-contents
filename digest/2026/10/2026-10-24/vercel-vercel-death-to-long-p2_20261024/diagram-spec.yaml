@@ -1,0 +1,57 @@
+type: structure
+title: "エージェント用の鍵を台帳の1行にまとめる"
+message: "権限・保管と失効・金額の上限・通信元は別々の場所にあるので、利用者の台帳の1行にまとめる"
+source: "notes/zenn/articles/vercel-vercel-death-to-long-p2_20261024.md"
+components:
+  - id: ledger
+    label: "利用者の発行台帳（1行）"
+    meaning: "1件の鍵の発行について、ベンダーが別々に置いた制御を列に並べる表。製品の機能ではなく利用者が持つ"
+  - id: restricted
+    label: "Stripe 制限付きキー"
+    meaning: "Stripe の resource ごとに None / Read / Write を選べる API キー"
+  - id: policy
+    label: "Stripe access policy"
+    meaning: "通信元を IP、ASN、国、脅威カテゴリで限定する。金額の上限ではない"
+  - id: connect
+    label: "Vercel Connect"
+    meaning: "Managed API Key で鍵を作って保管し、再デプロイなしでローテーションする（旧鍵は最大24時間有効）"
+  - id: budget
+    label: "Vercel の予算機能"
+    meaning: "AI Gateway の予算、または Spend Management の --pause。Stripe の支払いは止めない"
+groups:
+  - id: stripe
+    label: "Stripe 側"
+    members: [restricted, policy]
+  - id: vercel
+    label: "Vercel 側"
+    members: [connect, budget]
+relationships:
+  - from: restricted
+    to: ledger
+    label: "権限の列"
+  - from: policy
+    to: ledger
+    label: "通信元の列"
+  - from: connect
+    to: ledger
+    label: "保管・失効の列"
+  - from: budget
+    to: ledger
+    label: "金額の上限の列（別システム）"
+omitted:
+  - item: "Vercel の OIDC トークンと Connect の実行時取得の流れ"
+    reason: "図で伝えるのは台帳の列への集約であり、トークン取得の流れは本文で扱うため"
+  - item: "Stripe の WIF"
+    reason: "Managed API Key とは別の短命経路で、台帳の列の集約に不要なため"
+  - item: "Marketplace の Stripe 連携と持ち込みの API key コネクタ"
+    reason: "長寿命の鍵として台帳に載せる対象であり、列の出どころを示す図に不要なため"
+  - item: "名前・束縛・人の鍵との分離の列"
+    reason: "要素を 7 個以内に保つため。代表的な 4 列に絞った"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "エージェント用の鍵を台帳でどう管理するか"
+  - "注意点 / Stripe の通信元制限は、金額の上限ではありません"
+  - "Stripe の Managed API Key"
+  - "同じ時期の支出制御"

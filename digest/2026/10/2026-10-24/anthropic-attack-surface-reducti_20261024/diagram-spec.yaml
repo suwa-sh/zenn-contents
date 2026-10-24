@@ -1,0 +1,55 @@
+type: behavior
+title: "許可リストを見る位置を前へ動かす"
+message: "許可リストの照合を後ろから前へ動かし、無効なはずの機能のコードが未認証の入力で動く範囲を狭める"
+source: "notes/zenn/articles/anthropic-attack-surface-reducti_20261024.md"
+components:
+  - id: c1
+    label: "未認証クライアント"
+    meaning: "認証前の接続相手"
+  - id: parse1
+    label: "鍵をパースし、証明書なら CA を検証"
+    meaning: "鍵タイプ用の処理コードがここで動く"
+  - id: allow1
+    label: "そのあとで許可リストを見る"
+    meaning: "無効な鍵タイプでも、弾く前にパーサが動いていた"
+  - id: c2
+    label: "未認証クライアント"
+    meaning: "認証前の接続相手"
+  - id: allow2
+    label: "パースの早い段階で、鍵の型と CA 署名のアルゴリズムを許可リストと照合"
+    meaning: "鍵タイプと CA 署名タイプを、パース中にできるだけ早く許可リストと照合する"
+  - id: parse2
+    label: "許可外はその場で弾く"
+    meaning: "許可リストで弾く位置が前に来る"
+groups:
+  - id: before
+    label: "10.4 まで"
+    members: [c1, parse1, allow1]
+  - id: after
+    label: "10.6"
+    members: [c2, allow2, parse2]
+relationships:
+  - from: c1
+    to: parse1
+    label: "鍵を送る"
+  - from: parse1
+    to: allow1
+    label: "読み解いた後"
+  - from: c2
+    to: allow2
+    label: "鍵を送る"
+  - from: allow2
+    to: parse2
+    label: "許可外なら"
+omitted:
+  - item: "10.5 の中間段階 (公開鍵タイプの照合だけを前へ動かし、隙間が二つ残った)"
+    reason: "伝えたいのは照合の位置の前後関係で、二段階の経緯は本文で扱うため"
+  - item: "元記事の図にある「許可されたものだけパースし検証」という単純化"
+    reason: "10.6 のノートは「パースの中でできるだけ早く」と書き、パース全体を許可後に限るとは書いていないため、図はノートの表現に合わせた (読者役レビューの指摘)"
+  - item: "ML-DSA-44 の約 4,500 行・約 16% という数値"
+    reason: "未検証の数値を図に入れないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "OpenSSH での実例 (本文と 10.4 まで / 10.6 の mermaid 図)"

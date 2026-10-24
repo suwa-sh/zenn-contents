@@ -1,0 +1,64 @@
+source:
+  title: "1Password for Agentsとは何か、個人向けAIエージェントのサインインを仲介する仕組みと注意点"
+  url: null
+  path: "notes/zenn/articles/1-password-for-agents_20261024.md"
+  primary:
+    - title: "Introducing 1Password for Agents (1Password, 2026-10-22)"
+      url: "https://1password.com/blog/1password-for-ai-agents"
+    - title: "Build with 1Password Agentic Autofill (Partner preview)"
+      url: "https://www.1password.dev/agentic-autofill/partners.md"
+    - title: "Partner FAQ"
+      url: "https://www.1password.dev/agentic-autofill/partners/faq.md"
+    - title: "製品ページ (personal AI agent integrations)"
+      url: "https://1password.com/personal-ai-agent-integrations"
+  retrieved_at: "2026-10-25"
+archetype:
+  primary: architecture
+  secondary:
+    - decision
+    - governance
+one_liner: "1Password for Agents は、個人向け AI エージェントのログインで、パスワードをエージェントとモデルに渡さずにフォームへ入れる仕組みである。保証は入力までで、ログイン後の操作は含まない。"
+key_points:
+  - claim: "本人が自分の端末で、保存したログイン情報の使用を承認すると、1Password のブラウザ拡張がフォームへ値を入れる。公式の説明では、エージェントとモデルは値を受け取らない。"
+    evidence: "1Password for Agentsとは / 仕組み"
+    status: fact
+  - claim: "承認を求められる頻度は、連携によって変わり得る。連携先 (1Password とつなぐエージェント製品) 向けのガイドでは、1 回の承認が 30 日残り、その間は本人が不在でも同じログインを入力し直せる。"
+    evidence: "承認は連携によって「その場のたび」とは限らない"
+    status: fact
+  - claim: "ログイン後にエージェントがアカウント内で何をするかは、1Password の保証の外である。入力中はページ上に値があり、それをモデルに読ませないのは連携先の義務である。"
+    evidence: "パスワード文字列とログイン後のアカウントは別"
+    status: fact
+  - claim: "発表日 (2026-10-22) に順次提供とされた相手は、個人向けエージェントの Muse (Meta) と Grok Bot (SpaceXSI) だけである。Claude Duet (Anthropic) などほかは近日提供である。"
+    evidence: "発表日に一般提供されていた相手は少ない"
+    status: fact
+  - claim: "コーディングエージェントや無人の定期実行に API キーを渡す用途は別物である。1Password の既存機能 (Environments、op run、Service Account など) で考える。"
+    evidence: "既存の渡し方との違い / 用途別の選び方"
+    status: interpretation
+mental_models:
+  - type: structure
+    key_message: "エージェントはログイン要求を作り、値は本人の承認を経て拡張からフォームへ入る。ログイン後の操作は保証の外にある。"
+    reason_needed: "「パスワードを渡さない」ことと「アカウントを任せる」ことの境界を、一目で分けるため。"
+example:
+  description: "秘密の渡し方 3 経路の比較: for Agents (フォームへ入力、相手のコードやモデルには返さない) / Environments と op run (ローカルのファイルやプロセスの環境変数) / Service Account と SDK (呼び出し側のプロセスに値が返る)。"
+  hypothetical: false
+  evidence: "既存の渡し方との違い"
+applicability:
+  - "対応済みのエージェントに個人の Web ログインを任せるとき。パスワードをチャットに貼る代わりになる。"
+decision_criteria:
+  - "自分のアカウントが、ガイドの対象である米国の 1password.com の Individual か Families か。日本のアカウントが含まれるかは未確認。"
+  - "使いたい相手が提供済みかを、その相手の連携ページで確かめたか。"
+  - "渡すログインが、本人の Personal か Private のボルトにあるか。共有ボルトはガイドの範囲外。"
+  - "使うブラウザが Chromium 系か。"
+  - "ログイン後にそのアカウントで何をされ得るかを、承認の前にタスクとサイトで判断したか。"
+limitations:
+  - "ガイドでは、接続 (本人が 1Password を相手製品につなぐこと) の取り消しは、相手製品の側から接続全体を切る形だけである。1Password アプリ内やログイン単位の取り消しは、ローンチ時点で無い。"
+  - "ローンチ時点では、入力を呼び出せる鍵 (access token と integration key) は、エージェントが動かすブラウザ上に置かれる。"
+  - "同じ接続の複数エージェントは 1Password から区別されず、タスク間の分離は相手製品の実装次第である。"
+  - "承認リンク (本人が 1Password アプリで開く承認依頼) に出る目的や理由は、相手製品が書いた主張である。その内容はローンチ時点では符号化しただけで読め、エンドツーエンドでは暗号化されていない。"
+  - "未確認: Muse と Grok Bot が、ガイドの 30 日の承認と、相手製品側からの切断をそのまま実装しているか。"
+unknowns:
+  - "Muse と Grok Bot が、ガイドの 30 日 grant、Nightly 承認、相手製品側の切断をそのまま実装しているか。"
+  - "日本を含む米国以外の 1password.com アカウントが「in the US」に含まれるか。"
+  - "「全プラットフォーム」にどの OS が入るか。"
+  - "個人プランで、どの連携の入力履歴を後から読めるか。"
+reviewed: true

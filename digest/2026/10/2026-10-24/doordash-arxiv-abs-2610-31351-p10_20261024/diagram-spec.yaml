@@ -1,0 +1,63 @@
+type: behavior
+title: "人の確認が残る 2 か所"
+message: "エージェントの撤去作業は、前を人の採用値確認、後ろを owner の PR レビューで挟み、その間を機械の検証で囲む"
+source: "notes/zenn/articles/doordash-arxiv-abs-2610-31351-p10_20261024.md"
+components:
+  - id: stale
+    label: "stale 判定"
+    meaning: "日次 cron が 90 日無変更などの 4 条件で使い終えたフラグを拾い、チケットを作る"
+  - id: phase1
+    label: "Phase 1: 調査"
+    meaning: "orchestrator が実験基盤から本番の値を読み、コード上の参照を集めて報告する"
+  - id: confirm
+    label: "人: 採用値の確認"
+    meaning: "エンジニアがフラグごとに、消したあと固定する値を確認する"
+  - id: phase2
+    label: "Phase 2: 撤去"
+    meaning: "フラグごとの removal agent が隔離した作業ディレクトリで分岐とテストを外す"
+  - id: gate
+    label: "機械の検証"
+    meaning: "build、test、静的解析がローカルで通るまで PR を作らない。変更行カバレッジ 95% は CI の計測で判定する"
+  - id: review
+    label: "人: owner の PR レビュー"
+    meaning: "できた PR をフラグの owner が受け入れるか判断する"
+groups:
+  - id: agents
+    label: "エージェント"
+    members: [phase1, phase2]
+  - id: humans
+    label: "人の判断"
+    members: [confirm, review]
+relationships:
+  - from: stale
+    to: phase1
+    label: "チケット"
+  - from: phase1
+    to: confirm
+    label: "値と影響ファイルの報告"
+  - from: confirm
+    to: phase2
+    label: "確認済みのフラグ"
+  - from: phase2
+    to: gate
+    label: "差分"
+  - from: gate
+    to: phase2
+    label: "失敗なら直して再試行"
+  - from: gate
+    to: review
+    label: "PR"
+omitted:
+  - item: "exclusion list (撤去しないフラグの一覧)"
+    reason: "中身が公開されておらず、図の流れの中で誰が扱うかが論文に無いため"
+  - item: "Jira、MCP、git worktree、Gradle --no-daemon、1 時間のタイムアウト"
+    reason: "人の確認点の位置を示すのに不要な実装詳細のため"
+  - item: "評価の数字 (90% / 62% など)"
+    reason: "図は人の確認点の位置だけを伝えるため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "2相の構成と人の確認点"
+  - "removal agent の手順と安全装置"
+  - "人はどこで判断しているのか"

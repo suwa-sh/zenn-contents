@@ -1,0 +1,57 @@
+type: behavior
+title: "構築ループが閉じる地点"
+message: "1周が閉じるのはテストが通ったときではなく、人が実データで振る舞いを確認したとき"
+source: "notes/zenn/articles/arxiv-abs-2610-30916-p8_20261024.md"
+steps:
+  - id: story
+    label: "ユーザーストーリー"
+    meaning: "受け入れ基準をプロンプトより前に固定する"
+  - id: spec
+    label: "プロンプト仕様"
+    meaning: "助手に渡す、実装とテストの指示書"
+  - id: tests
+    label: "テストファースト"
+    meaning: "テストを失敗から成功へ進める"
+  - id: check
+    label: "実データで人が確認"
+    meaning: "人が動く振る舞いを見る。ループが閉じる地点"
+  - id: pr
+    label: "プルリクエスト"
+    meaning: "マージ条件は CI と実データでの確認。行単位の閲読は条件にしない"
+  - id: main
+    label: "main"
+    meaning: "フックで助手は直接書けない"
+groups:
+  - id: closed
+    label: "ここで1周が閉じる"
+    members: [check]
+transitions:
+  - from: story
+    to: spec
+    label: "仕様にする"
+  - from: spec
+    to: tests
+    label: "テスト義務"
+  - from: tests
+    to: check
+    label: "実データで確認"
+  - from: check
+    to: pr
+    label: "確認後"
+  - from: pr
+    to: main
+    label: "マージ"
+omitted:
+  - item: "要求の追跡の鎖 (ペルソナ → 非交渉条件 → 受け入れ基準 → テストの断言 → 監査記録)"
+    reason: "伝えたいことはループが閉じる地点であり、要求の追跡ではないため"
+  - item: "実行時の採点の流れ (答案 → 点数案 → 教員の採用か上書き → 追記専用の記録)"
+    reason: "論文の教訓は構築時の助手に付くため"
+  - item: "6月28日夜にフックを入れる前の、ゲートが迂回された状態"
+    reason: "時系列の経緯であり、ループの構造ではないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### 開発の進め方 (構築ループの5段階、ループが閉じるのはステップ4 §4、行単位の閲読はマージ条件にしない)"
+  - "### 好みのゲートは迂回される (6月28日夜のフックで助手は main に書けない)"
+  - "### 「人が読んだか」の代わりに数えるもの (マージ条件は CI と実データでの開発者の確認)"

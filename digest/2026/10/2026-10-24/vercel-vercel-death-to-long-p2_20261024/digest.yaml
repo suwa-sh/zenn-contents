@@ -1,0 +1,61 @@
+source:
+  title: "Vercelの静的認証情報廃止論と、Stripe鍵の代行発行で短命になるもの・ならないもの"
+  url: null
+  path: "notes/zenn/articles/vercel-vercel-death-to-long-p2_20261024.md"
+  primary:
+    - title: "Death to long-lived static credentials (Vercel blog, 2026-10-22)"
+      url: "https://vercel.com/blog/death-to-long-lived-static-credentials"
+    - title: "Vercel Connect adds managed Stripe API keys (Vercel changelog, 2026-10-23)"
+      url: "https://vercel.com/changelog/vercel-connect-adds-managed-stripe-api-keys"
+    - title: "Stripe restricted API keys"
+      url: "https://docs.stripe.com/keys/restricted-api-keys"
+    - title: "Stripe Workload Identity Federation"
+      url: "https://docs.stripe.com/workload-identity-federation"
+  retrieved_at: "2026-10-25"
+archetype:
+  primary: decision
+  secondary:
+    - governance
+    - architecture
+one_liner: "Vercel の新しい Stripe 鍵（Managed API Key）は、権限を絞った鍵を Vercel が作って保管する仕組みである。期限で止まる短命トークンとして扱う根拠は、公式資料に無い。"
+key_points:
+  - claim: "10月22日の論考は、期限なしで使い回す API キーを OIDC の署名付き短命トークンと Connect の実行時取得へ置き換える方針を示した。Marketplace では、2026年11月30日までに OIDC に対応せず長寿命の秘密で認証する掲載に Not secure を付け、2027年1月に安全な認証を出さないベンダーを掲載から外すとも書いた。10月23日の changelog は Stripe コネクタの1機能であり、別の日の別の内容である。"
+    evidence: "Vercel の「長寿命な静的認証情報の廃止」論とは / 注意点「2つの発表は別の日の、別の内容です」"
+    status: fact
+  - claim: "Managed API Key は、エージェントまたはタスクごとに Stripe の制限付きキーを Vercel が利用者の口座に作って保管し、再デプロイなしでローテーションできる。口座の全権限を持つ secret key をエージェントに渡さずに済む。"
+    evidence: "Stripe の Managed API Key / 公式資料と一致する読み、一致しない読み"
+    status: fact
+  - claim: "鍵の既定の有効期限と、呼び出しごとの破棄は公式資料に書かれていない。コネクタ設定からローテーションすると、旧鍵は最大24時間有効である。"
+    evidence: "注意点「Managed API Key は『期限で止まるトークン』とは書かれていません」 / 公式資料と一致する読み、一致しない読み"
+    status: fact
+  - claim: "Stripe の支払いを金額で拒否する仕組みは公式資料に無い。AI Gateway の予算（モデル呼び出しの上限）と Spend Management の --pause（予算到達で本番デプロイを止める）は Vercel 側の制御で Stripe の支払いは止めない。"
+    evidence: "同じ時期の支出制御 / 注意点「Stripe の通信元制限は、金額の上限ではありません」"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "権限と通信元は Stripe、保管とコネクタからのローテーションと金額の上限（別システム）は Vercel と別々の場所にあるので、利用者の台帳の1行にまとめる"
+    reason_needed: "1つの鍵に全部の制御が載っていると誤読しないため。"
+example:
+  description: "changelog の例。日次売上を集計するエージェントには charges の読み取りだけ、オンボーディングのエージェントには customers の書き込みだけを許す鍵を分け、実行時に getToken で受け取って Stripe の SDK に渡す。"
+  hypothetical: false
+  evidence: "Stripe の Managed API Key"
+applicability:
+  - "エージェントに Stripe を操作させるが、口座の secret key は渡したくないとき。"
+  - "鍵のローテーションを再デプロイなしで回したいとき。"
+decision_criteria:
+  - "台帳の失効（寿命）の列に「既定失効の記載なし。ローテーション時は旧鍵が最大24時間有効」と書く。"
+  - "金額の上限は鍵とは別の列に書き、Stripe の支払いは金額では止まらない前提にする。"
+  - "身元トークンで Stripe を呼びたいなら、Stripe の WIF（private preview、AWS と Google Cloud）を使う。"
+  - "Marketplace の Stripe 連携や、Connect に自分の静的キーを登録する接続は、長寿命の鍵として台帳に載せる。"
+  - "Stripe が Vercel の OIDC を直接受けるという記述は無いので、Marketplace の期限（2026年11月30日）を Stripe 鍵の短命化が完了する日として扱わない。"
+limitations:
+  - "短命の OIDC にも窓がある。開発環境（development）のトークンは12時間有効で、vercel env pull でローカルの .env.local に書き出される。"
+  - "GitHub Actions から Vercel へのデプロイ認証には、まだ OIDC が無く、静的な VERCEL_TOKEN を使う。"
+  - "8.4% と「数千時間」は Vercel の自己申告で、方法論は公開されていない。"
+unknowns:
+  - "getToken の戻り値の接頭辞が rk_ か、呼び出しごとに発行して捨てるか、戻り値の寿命。"
+  - "changelog の restricted key と、Stripe の「managed keys are secret API keys」が同じ鍵か。"
+  - "Connect が Stripe のエージェント用の印と承認ルールを付けるか。"
+  - "Connect の2026年9月25日発効の料金が適用済みか。SLA と保管地域。"
+  - "8.4% の定義と母集団。"
+reviewed: true

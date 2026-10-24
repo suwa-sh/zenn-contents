@@ -1,0 +1,58 @@
+type: structure
+title: "閉じる列と、開いたままの列"
+message: "1Password for Agents が閉じるのは秘密の値がエージェントのモデルとコードへ返る経路で、ログイン後にサイトで何をするかは別の列で決める"
+source: "notes/zenn/articles/password-itmedia-co-jp-aiplus-p3_20261024.md"
+components:
+  - id: agent
+    label: "エージェント (モデルとコード)"
+    meaning: "ログインが必要になると 1Password にアクセス要求を出す"
+  - id: approve
+    label: "本人がアプリでログインを選んで承認"
+    meaning: "本人の端末の 1Password アプリで、どのログインを使うかを選ぶ"
+  - id: extension
+    label: "1Password の拡張がフォームへ入力"
+    meaning: "ログイン画面を開いたタブで、ブラウザ拡張がサインインフォームへ値を入れる。入力中は値がページ上にある"
+  - id: status
+    label: "返るのは成否だけ"
+    meaning: "エージェントのコードが受け取るのは入力の成否で、値ではない"
+  - id: session
+    label: "ログイン後のサイトセッション"
+    meaning: "ログイン後、エージェントがサイトの中を見たり操作したりできることがあり、範囲はエージェントとサイトによる"
+groups:
+  - id: closed
+    label: "秘密を見せる列: 閉じる"
+    members: [approve, extension, status]
+  - id: open
+    label: "ログイン後の操作を許す列: 別に決める"
+    members: [session]
+relationships:
+  - from: agent
+    to: approve
+    label: "アクセス要求"
+  - from: approve
+    to: extension
+    label: "選んだログインを付与"
+  - from: extension
+    to: status
+    label: "入力"
+  - from: status
+    to: agent
+    label: "成否"
+  - from: agent
+    to: session
+    label: "ログイン後に作業"
+omitted:
+  - item: "30 日の grant、OAuth の access token 15 分、接続の最大約 90 日などの期限"
+    reason: "期限は列を分けるという主張とは別の論点のため。digest 本文の核心ポイントと注意点に残す"
+  - item: "切断 (self:revoke) と integration key"
+    reason: "要素が増え、閉じる列と開いた列の対比が薄れるため"
+  - item: "Environments / NVIDIA OpenShell / Privileged Access との比較"
+    reason: "代替手段の比較は別の主張のため。digest 本文の確認項目に残す"
+  - item: "入力中の値をモデルが読まないよう止めるパートナーの責務"
+    reason: "拡張の要素の meaning に含め、独立の要素にしない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 1Password for Agentsとは / ### 何をする連携か / ### 全体の流れ"
+  - "## 権限表のどの列に置くか (閉じるのは秘密の値をモデルとコードへ返す経路、開いたままなのはログイン後のサイトの中)"

@@ -1,0 +1,68 @@
+source:
+  title: "1Password for Agentsが閉じる秘密の経路と、ログイン後に残る権限"
+  url: null # Zenn 下書き (published: false)。公開 URL なし
+  path: "notes/zenn/articles/password-itmedia-co-jp-aiplus-p3_20261024.md"
+  primary:
+    - title: "1Password ブログ（John Torrey、October 22, 2026）"
+      url: "https://1password.com/blog/1password-for-ai-agents"
+    - title: "1Password プレス（October 22, 2026）"
+      url: "https://1password.com/press/2026/october/1password-for-agents-trust-layer-personal-ai-agents"
+    - title: "1Password 製品ページ（個人向けエージェント連携）"
+      url: "https://1password.com/personal-ai-agent-integrations"
+    - title: "Agentic Autofill パートナー概要"
+      url: "https://www.1password.dev/agentic-autofill/partners.md"
+    - title: "Agentic Autofill セキュリティ"
+      url: "https://www.1password.dev/agentic-autofill/partners/security.md"
+  retrieved_at: "2026-10-25"
+archetype:
+  primary: architecture # 秘密の値がどこを通り、エージェントに何が返るかの経路
+  secondary: [decision] # 権限表のどの列に置き、ほかの秘密の渡し方とどう使い分けるか
+one_liner: >-
+  1Password for Agents は、本人が選んだログインを 1Password が入力し、エージェントには成否だけを返す個人向け連携。
+  閉じるのは値がモデルとコードへ返る経路で、ログイン後の操作は別に決める。
+key_points:
+  - claim: "本人が 1Password アプリでログインを選んで承認すると、ブラウザ拡張がタブのサインインフォームへ値を入力し、エージェントのコードには成否だけが返る。1Password のサーバが代わりにログインするのではない"
+    evidence: "## 1Password for Agentsとは / ### 何をする連携か (「Your code receives a status, never the values」)"
+    status: fact
+  - claim: "ITmedia の見出しの「アクセス権限を付与」の実体は、本人が選んだログインをフォームへ入力する資格であり、宛先サービスがエージェントに狭い操作権限を発行する話ではない"
+    evidence: "## 注意点 / ### 「アクセス権限の付与」はフォーム入力の資格を指す"
+    status: fact
+  - claim: "パートナー (連携を自社のエージェント製品に組み込む提供会社) 向けの文書では承認はログインごとで入力のたびではなく、承認後は grant の間、再プロンプトなしで入力できる。grant の期間は提供開始時点で 30 日 (設定で変えられるようにするのは予定)"
+    evidence: "### 承認と期限 / ### 承認は毎回とは限らない"
+    status: fact
+  - claim: "秘密の値は入力から送信までページ上にあり、その間にモデルとエージェントが DOM・スクリーンショット・タブ操作で値を読まないよう止めるのはパートナー側の責務である"
+    evidence: "### 秘密の値は入力中にページ上にある"
+    status: fact
+  - claim: "切断が止めるのは以後の入力と token・integration key で、すでにできたサイト側の cookie やセッションを切る記述は確認できない"
+    evidence: "### 入力の結果と切断 / ### 切断が止めるのは以後の入力"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "1Password for Agents が閉じるのは秘密の値がエージェントのモデルとコードへ返る経路で、ログイン後にサイトで何をするかは別の列で決める"
+    reason_needed: "閉じる経路と開いたままの経路を 1 枚で対比すると、見出しの「アクセス権限を付与」をどこまで信じてよいかが分かるため"
+example:
+  description: >-
+    入力結果の fill_submitted は、値を入力して送信し、呼び出しが戻る前にページ上の値を消したという意味で、
+    サイトがログインを受け付けたという意味ではない。
+  hypothetical: false
+  evidence: "### 入力の結果と切断"
+applicability:
+  - "1Password.com の Individual / Family にある個人のログインを、対応エージェントのフォーム入力だけに使わせたいとき"
+decision_criteria:
+  - "権限表で「秘密を見せる列」と「ログイン後の操作を許す列」を分け、後者の範囲を別に決めたか"
+  - "使うエージェントが、公式に数日以内のロールアウトとされた Meta Muse か SpaceXSI Grok Bot か、coming soon のままかを製品ページで確かめたか"
+  - "承認がログインごと 30 日か、エージェントのセッションごとか (2026 年 7 月からある Claude 向けの別連携 1Password for Claude は後者) を、その製品の説明で確かめたか"
+  - "渡したいのが実行環境の変数や企業の一時アクセスなら、Environments (実行環境の変数を管理する機能) や Privileged Access (一時付与と自動はく奪を持つ企業向け製品) を検討したか"
+limitations:
+  - "パートナー向け文書は Partner preview only の開発者向けプレビューで、エンドポイントや日付は変わり得る。一般提供日・安定版拡張の最低バージョン・可用性 SLA は未確認"
+  - "パートナー向け文書 (パートナーガイド) の Supported today は、米国の 1password.com の Individual / Family、本人だけが使う保管庫、Chromium 系ブラウザ、username / password / OTP に限る。.eu と .ca のアカウントは現時点で未対応"
+  - "単一ログインだけの取消と、1Password アプリからの切断は未提供で、切断の単位は接続全体"
+  - "有効な access token と integration key を持つ側は、本人がその場にいなくても grant の間は入力でき、複数エージェントが共有すると 1Password は区別できない"
+  - "個人向けに入力を後から一覧する監査画面は公開ヘルプで確認できない。Events API・監査ログは Business 向け機能"
+unknowns:
+  - "個人の Individual / Family で、エージェントによる入力を後から一覧する画面があるか"
+  - "Events API の Vault item agentic autofill に定義される action 名"
+  - "各パートナーが 30 日 grant をそのまま使うか"
+  - "この製品の可用性 SLA"
+  - "一般提供日と、安定版拡張の最低バージョン"
+reviewed: true

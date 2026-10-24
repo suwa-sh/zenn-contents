@@ -1,0 +1,50 @@
+type: structure
+title: "1Password の保証は入力まで"
+message: "エージェントはログイン要求を作るだけで、値は本人の承認を経て拡張からフォームへ入る。ログイン後の操作は保証の外"
+source: "notes/zenn/articles/1-password-for-agents_20261024.md"
+components:
+  - id: agent
+    label: "エージェント（値は受け取らない）"
+    meaning: "相手製品。タスクがサインインを必要とすると、サイトと理由つきのログイン要求を作る"
+  - id: approve
+    label: "本人の端末で承認"
+    meaning: "承認リンクを本人の 1Password アプリで開き、必要なログインと理由を見て承認する"
+  - id: extension
+    label: "ブラウザ拡張が入力"
+    meaning: "承認されたログインだけをフォームへ入れて送信する"
+  - id: site
+    label: "ログイン先のサイト"
+    meaning: "送信後の値は宛先サイトとそのページ上のスクリプトに渡る"
+  - id: after
+    label: "ログイン後の操作"
+    meaning: "サインイン後、エージェントがアカウント内の情報を見たり操作したりし得る"
+groups:
+  - id: guarantee
+    label: "1Password の保証（承認・入力）"
+    members: [approve, extension]
+relationships:
+  - from: agent
+    to: approve
+    label: "ログイン要求（サイトと理由）"
+  - from: approve
+    to: extension
+    label: "承認"
+  - from: extension
+    to: site
+    label: "値を入力して送信"
+  - from: agent
+    to: after
+    label: "ログイン済み画面で操作"
+omitted:
+  - item: "OAuth トークンと integration key による接続 (ガイドの 1 段階目)"
+    reason: "伝えたいことは保証の範囲であり、接続の手順ではないため"
+  - item: "保管 (ボルト) の要素"
+    reason: "保証の枠には保管も含まれるが、要素を増やすと入力経路の流れが読みにくくなるため。枠のラベルには含めない"
+  - item: "承認が 30 日残る期間と、Claude 統合のセッションごとの承認"
+    reason: "連携ごとに違い、本文の核心ポイントで扱うため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "仕組み (ガイドの 4 段階にログイン後の操作を足した図。5 番目は 1Password の入力経路の外)"
+  - "パスワード文字列とログイン後のアカウントは別 (1Password の保証は保管、承認、配送、入力まで)"

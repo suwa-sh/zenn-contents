@@ -1,0 +1,55 @@
+source:
+  title: "Claudeで「晒す必要のないコード」を減らす攻撃対象領域削減の初期研究"
+  url: null
+  path: "notes/zenn/articles/anthropic-attack-surface-reducti_20261024.md"
+  primary:
+    - title: "Using Claude to reduce the attack surface of code (Anthropic, 2026-10-20)"
+      url: "https://www.anthropic.com/research/attack-surface-reduction"
+    - title: "OpenSSH Release Notes (10.4, 10.5, 10.6)"
+      url: "https://www.openssh.org/releasenotes.html"
+  retrieved_at: "2026-10-25"
+archetype:
+  primary: research
+  secondary: [decision]
+one_liner: "欠陥を一つずつ直す代わりに、外部から届く必要のないコードを認証や設定の関門の後ろへ動かす、Anthropic の初期研究。OpenSSH では修正として取り込まれたが、件数や割合はまだ研究投稿の自己申告である。"
+key_points:
+  - claim: "攻撃面を狭め、届く必要のないコードをゲート (認証や明示的な設定などの関門) の後ろへ動かすと、未知の欠陥も含めて到達しにくくなる"
+    evidence: "## Claudeによる攻撃対象領域の削減とは / ### 何をする研究か"
+    status: fact
+  - claim: "25 の OSS で、問いごとに Claude を別々に実行し、三つの問い (既定構成で届くが意図した機能は使わないコード / 認証やプロトコルの状態を確かめる前に走る複雑なコード / 同時に有効にすると制御が黙って弱まる設定) を調べる。発見は動的トレースで確かめる"
+    evidence: "### 見ているもの / ### 作業の流れ"
+    status: fact
+  - claim: "OpenSSH 10.4 では、既定で無効な ML-DSA-44 の署名処理約 4,500 行 (投稿によれば既定の sshd の認証前コードの約 16%) に未認証の相手が届いた。許可リストの照合が鍵のパースの後ろにあったため。10.5 で鍵タイプの照合をパースより前へ移し、10.6 で鍵タイプと CA 署名タイプをパース中に照合した。投稿は、10.5 に名乗ったアルゴリズム名と鍵の型のずれ、および CA 署名を設定より前に検証する隙間が残ったと書いている"
+    evidence: "### OpenSSH での実例"
+    status: fact
+  - claim: "493 件は 25 プロジェクトで三つの問いに当たった到達の問題の件数で、脆弱性の件数ではない。この件数と約 16% は研究投稿の自己申告で、名簿・偽陽性率・モデル名は非公開"
+    evidence: "## 注意点 / ### 数字の出どころ"
+    status: fact
+  - claim: "手法をまとめた Claude skill は OSS Scanner へ統合中で、公開リポジトリ anthropics/oss-scanner の main にはまだ無く、登録プロジェクトでオンにすることは今はできない"
+    evidence: "## OSS Scannerとの関係"
+    status: fact
+mental_models:
+  - type: behavior
+    key_message: "許可リストの照合を後ろから前へ動かし、無効なはずの機能のコードが未認証の入力で動く範囲を狭める"
+    reason_needed: "「到達の順序を前へずらす」という手法の核心が、処理順の入れ替えとして一目で分かるため"
+example:
+  description: "逆引き DNS をオフにするとホスト名が得られず、ホスト名による拒否ルールを IP の文字列と比べることになって拒否が黙って発火しなくなる。無関係な 4 プロジェクトで同じ型が繰り返された"
+  hypothetical: false
+  evidence: "### 見ているもの / ### 数字で見る結果"
+applicability:
+  - "認証前に走るパーサや、既定で無効な機能を抱えるサービスをレビューするとき"
+  - "自社のコードや依存 OSS で、個別の脆弱性対応とは別に攻撃面を棚卸ししたいとき"
+decision_criteria:
+  - "投稿と同じく、発見を動的トレースで確かめているか"
+  - "既定構成の挙動を変えないゲートは、プロジェクトのテストとブラックボックスの回帰テストの結果が、変更前と同一であることで確かめているか"
+  - "493 や約 16% を自組織の期待値に使っていないか"
+limitations:
+  - "到達を難しくするだけで、未知の脆弱性は残る"
+  - "投稿の「およそ 5 分の 1」は認証前コードの約 16% を指し、行を削除した割合ではない"
+  - "OpenSSH 10.5 と 10.6 のリリースノートの前文は、AI 由来の報告の多くは現実的な脅威モデルでは影響が無いと書く。今回の取り込みを AI 報告一般の精度に延長できない"
+  - "10.6 のノートは「パースの中でできるだけ早く照合する」と書き、パース全体を許可後に限るとは書いていない (digest.md ではメンタルモデル節に記載)"
+unknowns:
+  - "約 16% の分母 (どのコードを認証前と数えたか)"
+  - "493 件のうち OpenSSH 以外でメンテナが取り込んだ数"
+  - "使ったモデル名、費用、偽陽性率"
+reviewed: true
