@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (555)
+## Articles: 下書き (556)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-24 | [🔐 Claudeで「晒す必要のないコード」を減らす攻撃対象領域削減の初期研究](articles/anthropic-attack-surface-reducti_20261024.md) | Anthropic, Claude, Security, OpenSSH, OSS |
 | 2026-10-23 | [📦 AnthropicがAgent SkillsをAgentic AI Foundationへ寄贈した](articles/anthropic-agent-skills-agentic-p1_20261023.md) | AIAgent, ClaudeCode, Anthropic, AgentSkills |
 | 2026-10-23 | [🔐 コード脆弱性の検出から修正案の配送までを行うAWS Continuum](articles/aws-pr-continuum-aws-amazon-p7_20261023.md) | AWS, Security, GitHub |
 | 2026-10-23 | [🔐 eMudhraの中間CA8件で秘密鍵が復元できる条件と開発ツールの更新先](articles/emudhra-ca8-cloudflare-emudhra-p6_20261023.md) | Security, TLS, PKI, Python, Go |
