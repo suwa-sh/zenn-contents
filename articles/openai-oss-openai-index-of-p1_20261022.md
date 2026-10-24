@@ -3,7 +3,8 @@ title: "OpenAIが提案した協調開示とPHPの致命的欠陥二件を手順
 emoji: "🛡️"
 type: "tech"
 topics: ["PHP", "OpenAI", "Security", "CVE", "OSS"]
-published: false
+published: true
+published_at: 2026-10-24
 ---
 
 2026-10-21、OpenAI は、致命的なオープンソースの欠陥について、研究者、保守側、対応側の時刻を揃える協調開示を提案しました。題材は PHP 本体の二件です。CVE（公に追跡される脆弱性の識別子）は CVE-2026-109618 と CVE-2026-109619 です。

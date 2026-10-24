@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (556)
+## Articles: 下書き (555)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -18,7 +18,6 @@
 | 2026-10-22 | [🧭 AI SREを評価する前に、既存エージェントへ調査文脈を渡す](articles/ai-sre-cncf-io-2026-before-p4_20261022.md) | Kubernetes, SRE, AIAgent, ClaudeCode |
 | 2026-10-22 | [🔁 配備済みエージェントの無人自己改修を回復可能性と検証器の強さで区切る](articles/arxiv-abs-2610-27465-p8_20261022.md) | AIAgent, LLM, Evaluation |
 | 2026-10-22 | [🔒 侵害されたアットリンクを再稼働せず別環境へ移す案内の読み方](articles/itmedia-co-jp-2610-2000002413-p9_20261022.md) | Security, IncidentResponse, Healthcare, Governance |
-| 2026-10-22 | [🛡️ OpenAIが提案した協調開示とPHPの致命的欠陥二件を手順に落とす](articles/openai-oss-openai-index-of-p1_20261022.md) | PHP, OpenAI, Security, CVE, OSS |
 | 2026-10-21 | [🔗 GMOの社内RAGが申請と登録までの処理へつながる条件](articles/gmo-rag-kn-itmedia-co-jp-p5_20261021.md) | RAG, LLM, Workflow, AIAgent |
 | 2026-10-21 | [🤖 ガバメントAI源内のエージェント環境と源内基準第1版を読む](articles/itmedia-co-jp-2610-2000002428-p3_20261021.md) | AIAgent, Security, Governance, ClaudeCode |
 | 2026-10-21 | [🔐 2026年10月のMicrosoft月例とリスクコホートの読み方](articles/microsoft-1407-xtech-nikkei-p10_20261021.md) | Security, Windows, Microsoft |
@@ -568,10 +567,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (196)
+## Articles: 公開済み (197)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-10-24 | [🛡️ OpenAIが提案した協調開示とPHPの致命的欠陥二件を手順に落とす](articles/openai-oss-openai-index-of-p1_20261022.md) | PHP, OpenAI, Security, CVE, OSS |
 | 2026-10-22 | [🔐 日本企業向け侵害の攻撃元で確認された自律型診断ARTEX](articles/artex-gmo-cybersecurity-p1_20261020.md) | Security, AIAgent, LLM, Governance |
 | 2026-10-20 | [🔬 ソースのないアプリをエージェントに逆解析させるREAの構造と証拠モデル](articles/rea_20261018.md) | ReverseEngineering, MCP, AIAgent, Ghidra, CLI |
 | 2026-10-17 | [📚 エージェントの経験を知識に変えてスキルを育てる WikiSkill の三層構造](articles/wikiskill_20261015.md) | AIエージェント, LLM, AgentSkills, Google, arXiv |
