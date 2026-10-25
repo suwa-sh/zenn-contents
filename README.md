@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (561)
+## Articles: 下書き (563)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-25 | [🔁 サブエージェントをメインループへ畳む条件](articles/anthropic-claude-resources-p1_20261025.md) | AIAgent, Claude, Anthropic, LLM |
+| 2026-10-25 | [🔒 OpenAIの最先端モデル訓練環境をインターネットから外す方針](articles/openai-techno-edge-2026-5625-p3_20261025.md) | OpenAI, Security, LLM, Sandbox |
 | 2026-10-24 | [🔐 1Password for Agentsとは何か、個人向けAIエージェントのサインインを仲介する仕組みと注意点](articles/1-password-for-agents_20261024.md) | 1Password, AIエージェント, セキュリティ, 認証, パスワード管理 |
 | 2026-10-24 | [🔐 Claudeで「晒す必要のないコード」を減らす攻撃対象領域削減の初期研究](articles/anthropic-attack-surface-reducti_20261024.md) | Anthropic, Claude, Security, OpenSSH, OSS |
 | 2026-10-24 | [🧪 コードを人が書かない開発で何が希少になるか、AI支援アジャイルの経験報告を読む](articles/arxiv-abs-2610-30916-p8_20261024.md) | AIAgent, SoftwareEngineering, Agile, Testing, LLM |
