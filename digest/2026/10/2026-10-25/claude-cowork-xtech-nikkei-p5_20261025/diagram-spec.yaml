@@ -1,0 +1,57 @@
+type: structure
+title: "計算場所と残るデータは別の確認"
+message: "新規タスクの計算場所は契約で分かれる。端末の原本と、アカウントに残る会話やコピーは、別の確認である"
+source: "notes/zenn/articles/claude-cowork-xtech-nikkei-p5_20261025.md"
+components:
+  - id: contract
+    label: "契約"
+    meaning: "Pro/Max、Team、Enterprise、HIPAA 設定適用後。新規タスクの計算場所がここで分かれる"
+  - id: compute
+    label: "新規の計算場所"
+    meaning: "契約と画面の段階で、クラウドか端末かが決まる"
+  - id: original
+    label: "端末の原本"
+    meaning: "接続フォルダの原本は端末に残る。クラウドが取りに行くのはコピー"
+  - id: account
+    label: "アカウントに残るもの"
+    meaning: "会話と、利用者へ渡したファイル、取りに行ったコピーは Claude アカウントに残る"
+  - id: leftover
+    label: "削除しても止まらないもの"
+    meaning: "統合体験で直接始めたクラウドセッションと、定期タスク。会話を消してもそれだけでは止まらない"
+groups:
+  - id: place
+    label: "計算場所"
+    members: [contract, compute]
+  - id: data
+    label: "残るデータ"
+    members: [original, account, leftover]
+relationships:
+  - from: contract
+    to: compute
+    label: "契約と画面で分かれる"
+  - from: compute
+    to: original
+    label: "原本は端末に残る"
+  - from: original
+    to: account
+    label: "コピーと会話は別に残る"
+  - from: account
+    to: leftover
+    label: "会話を消しても残る"
+omitted:
+  - item: "監視の期待（EDR、Compliance API、OpenTelemetry、監査ログ）"
+    reason: "図は計算場所と残るデータの分離だけを示す。三つ目の確認票は本文に残す"
+  - item: "Pro/Max の段階展開、Team の切替、Enterprise の付与、HIPAA 後はローカルのみ、という計算場所の分岐の中身"
+    reason: "契約から計算場所へ分かれる、という一本の関係にまとめ、分岐の中身は本文の核心ポイントに残す"
+  - item: "保持期間（削除後 30 日、学習の最大 5 年、Enterprise の既定無期限）"
+    reason: "残るデータの種類が別の行であることが主題で、期間の表は本文に残す"
+  - item: "2026年10月6日より前の既存タスク、Dispatch、統合体験の 2026年11月16日の自動オン"
+    reason: "例外と日程の列挙で、図の 1 つのメッセージに入らない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 契約ごとの実行場所（契約ごとに新しいタスクの計算場所が分かれる）"
+  - "### 端末のファイル、メモリ、許可（フォルダの原本は端末に残る。クラウドはコピーを取りに行く）"
+  - "## アカウントとコネクタに残るもの（会話と渡したファイルは Claude アカウントに残る。原本が端末にあることは、コピーや会話が残ることを消さない）"
+  - "## まとめ（会話を消しても、統合体験で直接始めたクラウドセッションと定期タスクはそれだけでは止まらない）"

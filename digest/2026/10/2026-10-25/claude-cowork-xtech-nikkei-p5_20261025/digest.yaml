@@ -1,0 +1,67 @@
+source:
+  title: "Claude Coworkの実行場所と残るデータを契約ごとに見る"
+  url: null
+  path: "notes/zenn/articles/claude-cowork-xtech-nikkei-p5_20261025.md"
+  primary:
+    - title: "Use Claude Cowork on web, desktop, and mobile"
+      url: "https://support.claude.com/en/articles/15520349-use-claude-cowork-on-web-desktop-and-mobile"
+    - title: "What to expect with Claude Cowork in the cloud"
+      url: "https://support.claude.com/en/articles/15811196-what-to-expect-with-claude-cowork-in-the-cloud"
+    - title: "Claude Cowork architecture overview"
+      url: "https://support.claude.com/en/articles/14479288-claude-cowork-architecture-overview"
+    - title: "Use Claude Cowork on Team and Enterprise plans"
+      url: "https://support.claude.com/en/articles/13455879-use-claude-cowork-on-team-and-enterprise-plans"
+    - title: "How long do you store my data?"
+      url: "https://privacy.claude.com/en/articles/10023548-how-long-do-you-store-my-data"
+  retrieved_at: "2026-10-26"
+archetype:
+  primary: decision
+  secondary: [architecture, governance]
+one_liner: "Claude Cowork の新しいタスクの計算場所は契約と画面で分かれ、端末の原本とアカウントに残る会話やコピーは別の確認項目にする。"
+key_points:
+  - claim: "「クラウド型だけ」は有料プランの Pro と Max の 2026年10月6日以降の新規タスクについて、一方の公式説明では実行場所の選択は戻せない。もう一方では、新しい Claude 体験の外に切替「Run new tasks in the cloud」が残る。段階展開の途中では、画面が分かれることがある"
+    evidence: "## 注意点 / ### クラウド型だけ、が指す範囲 / ## 契約ごとの実行場所 の表"
+    status: fact
+  - claim: "Team はクラウドが既定で所有者が切れる。Enterprise は端末が既定で、所有者がクラウド実行をオンにし、カスタムロールでグループへ付与する。HIPAA 設定を適用したあとに Cowork を再度オンにしても、実行はデスクトップアプリ上のローカル Cowork だけで、クラウドをオンにする設定はない"
+    evidence: "## 契約ごとの実行場所 の表（Team / Enterprise / Enterprise で HIPAA 設定を適用した後）"
+    status: fact
+  - claim: "接続フォルダの原本は端末に残る元のファイルで、コピーはクラウドが取りに行った複製である。渡したファイルはアカウントに残る成果で、渡さない作業ファイルはクラウドセッションの終了後に残らない。会話を消しても、Enterprise の統合体験で利用者が自分で開始したクラウドセッションはメンバーが削除するまで残り、定期タスクは止まらない"
+    evidence: "### 端末のファイル、メモリ、許可 / ## アカウントとコネクタに残るもの の表 / ## まとめ"
+    status: fact
+  - claim: "EDR は、ローカル実行の仮想マシンの中もクラウドセッションも観察できない、と公式は書く"
+    evidence: "### 懸念が減る、という見通し / ## まとめ"
+    status: fact
+  - claim: "確認は、対象アカウントのプランと、Organization settings の Cowork、クラウド実行、Chat and Cowork unified、データ保持の四つを画面で見ることから始める。画面の値がヘルプの既定と違えば画面を優先する"
+    evidence: "## 確認票を計算場所と残るデータに分ける / ## まとめ"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "新規タスクの計算場所は契約で分かれる。端末の原本と、アカウントに残る会話やコピーは、別の確認である"
+    reason_needed: "導入可否を「クラウド型に変わったか」の一行にまとめると、残るデータの行が消えるため"
+example:
+  description: "確認票は、計算場所、残るデータ、監視の期待の三つに分ける。残るデータは原本、コピー、渡したファイル、渡さない作業ファイル、利用者が開始したクラウドセッション、定期タスクを別に書く。監視は Compliance API と監査ログで見る範囲を書く"
+  hypothetical: false
+  evidence: "## 確認票を計算場所と残るデータに分ける"
+applicability:
+  - "導入可否を「クラウド型に変わったか」の一行で書こうとしているとき"
+  - "Team または Enterprise で、クラウド実行の組織設定を確認するとき"
+  - "会話の削除と、セッションや定期タスクの停止を同じ操作だと思っているとき"
+decision_criteria:
+  - "Pro と Max は、設定が無い画面か、「Run new tasks in the cloud」が残る画面のどちらを見ているか"
+  - "2026年10月6日より前のタスクと、既存のローカル定期タスクが残っているか"
+  - "HIPAA 設定の適用後に Cowork を再度オンにしても、クラウドをオンにできないか"
+  - "Enterprise の統合体験は、設定を変えておらず Chat と「Cloud code execution and file creation」が両方オンのときだけ 2026年11月16日に自動でオンになる。どちらかがオフならその日はオンにならず通知も出ないが、両方オンになった時点でオンになる。前提を満たすときは Keep disabled を選べる。ゼロデータ保持、HIPAA-ready、CMEK の組織では未提供"
+  - "ゼロデータ保持の対象一覧に、Claude for Work のチャット、Cowork、Claude Max は無い"
+limitations:
+  - "日経コンピュータの有料本文は未読である。リードの「減る懸念」と「増える懸念」が公式のどの制御を指すかは断定できない"
+  - "処理の国やリージョン、SLA、「Help improve our AI models」の既定は、根拠にしたヘルプには無い"
+  - "Amazon Bedrock、Google Cloud、Microsoft Foundry 経由で、2026年10月6日以降も端末実行のままかは未確認である"
+  - "クラウド実行を組織設定で切ったとき、進行中のセッションが止まるかは公式ヘルプに無い"
+  - "接続フォルダへの変更が端末の原本へ戻るかは、ヘルプの説明からは決まらない"
+unknowns:
+  - "消費者向け「Help improve our AI models」の既定がオンかオフか"
+  - "クラウドセッションの処理リージョンと SLA"
+  - "Bedrock、Google Cloud、Microsoft Foundry 経由の 2026年10月6日以降の実行場所"
+  - "組織設定でクラウド実行を切ったとき、進行中セッションが止まるか"
+  - "接続フォルダへの変更が端末の原本へ書き戻るか"
+reviewed: true

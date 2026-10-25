@@ -1,0 +1,59 @@
+source:
+  title: "コーディングエージェントにセキュリティ監査を任せる Cloudflare security-audit-skill"
+  url: null
+  path: "notes/zenn/articles/security-audit-skill_20261025.md"
+  primary:
+    - title: "cloudflare/security-audit-skill（照合コミット c1c8a8c、2026-09-14）"
+      url: "https://github.com/cloudflare/security-audit-skill/tree/c1c8a8c1471069fb0e188eeaff69b8e8db6564a8"
+    - title: "SKILL.md（同コミット）"
+      url: "https://github.com/cloudflare/security-audit-skill/blob/c1c8a8c1471069fb0e188eeaff69b8e8db6564a8/skills/security-audit/SKILL.md"
+    - title: "Build your own vulnerability harness（Cloudflare Blog）"
+      url: "https://blog.cloudflare.com/build-your-own-vulnerability-harness"
+  retrieved_at: "2026-10-26"
+archetype:
+  primary: architecture
+  secondary:
+    - decision
+one_liner: "security-audit-skill は、監査手順と出力の形の検査を渡す公開スキルである。質問や限定レビューが既定で、コードベース監査・ペンテスト・網羅レビュー・報告書の明示だけが 6 相を始める。"
+key_points:
+  - claim: "スキルを読み込んだだけでは、台帳・所見・報告書はできない。コードベース監査、ペンテスト、網羅レビュー、報告書のいずれかを明示したときだけ 6 相が始まり、それ以外は質問や限定レビューへの応答になる。"
+    evidence: "security-audit-skill とは / ガイダンスモード / README の依頼例"
+    status: fact
+  - claim: "台帳と所見を書けるのは親だけである。探索役はまだ検証していない候補を返し、信頼境界をまたいだかを見る検証者と共に、自分の作業領域にだけ書く。"
+    evidence: "特徴 / コンテナ図"
+    status: fact
+  - claim: "判定は 3 種類である。確定は信頼境界をまたいだ観測と深刻度を持つ。検証待ちは未解決で深刻度を付けない。却下は棄却理由を残し、同じ主張の再報告を抑える。"
+    evidence: "特徴 / 所見の 3 判定"
+    status: fact
+  - claim: "Node.js の検証器が成功しても、確かまるのは所見と台帳の形と整合である。境界をまたいだかは、探索役とは別の検証者が確かめる。"
+    evidence: "利用方法の検証コマンド / まとめ"
+    status: fact
+  - claim: "手順は 6 相で、対象は手元の 1 リポジトリである。紹介ブログの社内の実行基盤（相の数は 7 で、候補の件数やコンテナの起動フラグを含む）は別世代で、このスキルの仕様ではない。"
+    evidence: "注意点"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "共有の台帳と所見は親だけが書く。形の検証器は整合を見て、境界をまたいだかは別の検証者が確かめる。"
+    reason_needed: "検証器の成功と、指摘が実在することの担当の違いを、書き手の分離と一緒に示すため。"
+example:
+  description: "README の依頼 3 つ。コードベース監査の明示と、出力先つきの報告書依頼はフル監査。報告書を頼まない ./src の調査はガイダンス。"
+  hypothetical: false
+  evidence: "README の依頼例"
+applicability:
+  - "手元の 1 リポジトリを、ソースとローカルのダミー主体で監査する。"
+  - "脆弱性の有無を質問する、または特定の指摘を追う。"
+  - "同じリポジトリを日を分けて再実行し、前回の台帳と所見を足す。"
+decision_criteria:
+  - "小さい対象、再実行、最初の見取り（ひととおり見ること）には quick を使い、候補の検証と記録の最終検証は探索役とは別の 1 人にまとめる。"
+  - "手順書どおりの冗長性が要る対象には standard を使い、候補の検証と記録の最終検証を別人にする。"
+  - "影響や対象が大きいときは deep を使い、2 段を分け、単位にライフサイクルを含め、同じソースで覆った単位にも独立した 2 回目を付ける。"
+  - "出力先は対象リポジトリの外か。中へ書くのは、そのディレクトリを明示し、全体がバージョン管理の無視対象だと確認できるときだけで、できなければ外部のパスで止める。"
+  - "導入は npx skills add で、スキル名は security-audit か。npm install security-audit-skill は手順ではない。"
+limitations:
+  - "複数リポジトリの依存をまたぐ継続スキャンは、公開スキルの 6 相の範囲外である。"
+  - "対象コードを動かすときは、対象とツールチェーンを読み取り専用にし、探索役・検証者と対象プロセスが書けるのは作業領域だけである。外部ネットワーク無し、許可リストだけの空環境、資源の上限を含め、これを強制できないときは実行せず検証待ちにする。"
+  - "必要な Node.js の版はリポジトリが宣言していない。シンボリックリンクを追わない開き方と、待ちに入らず開く開き方の、どちらかが OS で使えないとき、検証器は入力を拒否する。"
+  - "1 回のランで対象を尽くしたとはみなさない。quick、範囲を絞った実行、起動回数の上限に達した実行、未完了の報告書は部分的なパスである。"
+unknowns:
+  - "「1 回のランが見つける割合は、繰り返しランの合計のおおよそ半分」という記述に、その割合を測った実験はリポジトリに無い。"
+reviewed: true

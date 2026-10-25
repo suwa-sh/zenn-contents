@@ -1,0 +1,46 @@
+type: structure
+title: "企業の具申は実施の決定ではない"
+message: "企業の具申は実施の決定ではない。実施を決めるのは法令上の二つの経路である"
+source: "notes/zenn/articles/yomiuri-co-jp-politics-20261024-p7_20261025.md"
+components:
+  - id: petition
+    label: "企業の具申"
+    meaning: "実施を求める申出。決定権ではない"
+  - id: police
+    label: "警察経路"
+    meaning: "執行官の認定、委員会の承認、警察の指揮"
+  - id: sdf
+    label: "自衛隊経路"
+    meaning: "内閣総理大臣の命令。前提は国家公安委員会の要請または同意"
+  - id: record
+    label: "実施の記録"
+    meaning: "政府が実施を認めた一次資料があるときだけ書く"
+groups:
+  - id: legal
+    label: "法令上の決定"
+    members: [police, sdf]
+relationships:
+  - from: petition
+    to: police
+    label: "認定の材料になり得る"
+  - from: police
+    to: record
+    label: "一次資料があるとき"
+  - from: sdf
+    to: record
+    label: "一次資料があるとき"
+omitted:
+  - item: "企業の具申から自衛隊経路への矢印"
+    reason: "元記事が判断材料として挙げるのは警職法の要件である。自衛隊法第81条の3の要請は、国家公安委員会から内閣総理大臣へのものである"
+  - item: "補償、警察への相談、捜査の開始"
+    reason: "実施の決定とは別の記録欄で、この図のメッセージ（だれが実施を決めるか）に含めない"
+  - item: "国家安全保障会議、承認を得るいとまがないときの事後通知"
+    reason: "国外または安全保障の事案、および緊急時の例外であり、二つの経路の境界を示すこの図では省く"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 企業の求めは、実施を決める申請ではない"
+  - "### 警察が措置をとるとき"
+  - "### 自衛隊が通信防護措置をとるとき"
+  - "## 侵害対応の記録は、欄を分けて残す"

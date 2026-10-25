@@ -1,0 +1,57 @@
+type: structure
+title: "共有ファイルは親だけが書く"
+message: "共有の台帳と所見は親だけが書く。形の検証器は整合を見て、境界をまたいだかは別の検証者が確かめる"
+source: "notes/zenn/articles/security-audit-skill_20261025.md"
+components:
+  - id: parent
+    label: "親エージェント"
+    meaning: "フル監査の手順を実行し、共有ファイルの唯一の書き手になる"
+  - id: hunter
+    label: "探索役"
+    meaning: "割り当てられた単位を調べ、候補を親へ返す。共有ファイルは書かない"
+  - id: checker
+    label: "境界の検証者"
+    meaning: "探索役とは別のエージェント。候補が信頼境界をまたいだかを判定して親へ返す"
+  - id: shared
+    label: "台帳と所見"
+    meaning: "カバレッジ台帳と findings。親だけが書く共有ファイル"
+  - id: form
+    label: "形の検証器"
+    meaning: "Node.js の 2 本。台帳と所見の形と整合を検査し、境界をまたいだこと自体は見ない"
+groups:
+  - id: scratch_only
+    label: "作業場所だけに書く"
+    members: [hunter, checker]
+relationships:
+  - from: parent
+    to: hunter
+    label: "探索を委譲"
+  - from: hunter
+    to: parent
+    label: "候補を返す"
+  - from: parent
+    to: checker
+    label: "検証を渡す"
+  - from: checker
+    to: parent
+    label: "判定を返す"
+  - from: parent
+    to: shared
+    label: "台帳と所見を書く"
+  - from: form
+    to: shared
+    label: "形と整合を検査"
+omitted:
+  - item: "ガイダンスモード（質問では 6 相もファイル作成も始めない）"
+    reason: "図が示すのはフル監査での書き手の分離であり、モード分岐は本文の具体例で扱うため"
+  - item: "OS 強制サンドボックスと証拠の昇格"
+    reason: "実行の条件は限界の節で扱い、書き手の分離には不要なため"
+  - item: "Skills CLI、プロファイル、6 相の名前、ブログの社内ハーネス"
+    reason: "導入・幅・別世代の注意は本文で扱い、1 枚の関係を増やさないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "特徴（共有ファイルは親だけが更新し、ハンターと検証者が書けるのは自分の scratch だけ）"
+  - "コンテナ図（親が共有 JSON と artifacts を持ち、研究エージェントと general 役は scratch だけ）"
+  - "利用方法の検証コマンド（成功は形式と台帳の整合であり、境界をまたぐことは別エージェントの検証）"

@@ -1,0 +1,43 @@
+type: behavior
+title: "畳む前に残す条件を見る"
+message: "残す条件に当たる作業は、計画を書き換えても別コンテキストに残す。当たらない連鎖だけを同じコンテキストへ畳む"
+source: "notes/zenn/articles/anthropic-claude-resources-p1_20261025.md"
+components:
+  - id: add
+    label: "作業を足す"
+    meaning: "担当を増やすか、メインループへ戻すかを決める対象"
+  - id: keep_check
+    label: "残す条件に当たるか"
+    meaning: "測れる性能低下、捨ててよい並列、ツールを選べないか指示の衝突、検証を分ける条件、会話を引き取る窓口"
+  - id: separate
+    label: "別コンテキストに残す"
+    meaning: "計画を書き換える作業でも、条件に当たればサブエージェントとして残す"
+  - id: fold
+    label: "同じコンテキストへ畳む"
+    meaning: "スキルとツールとして、1 つのモデルと 1 つのコンテキストに載せる"
+relationships:
+  - from: add
+    to: keep_check
+    label: "先に見る"
+  - from: keep_check
+    to: separate
+    label: "当たる"
+  - from: keep_check
+    to: fold
+    label: "当たらない"
+omitted:
+  - item: "外部への書き込み（課金や適用を外し、サーバが渡した ID だけを書かせ、書いたあとの状態で止める）"
+    reason: "畳むか残すかの分岐ではなく、畳んだあとの到達範囲の話だから"
+  - item: "合否が入れ替わったタスクがあれば採用しない"
+    reason: "残す条件の判定ではなく、畳んだあとの評価の合図だから"
+  - item: "tool search による定義の遅延読み込み"
+    reason: "ツール個数が原因の選択低下は、残す条件の「選べない」とは別で、サブエージェントを残す前に行うため"
+  - item: "元記事の mermaid が先に置く「前の結果で計画を変えるか」"
+    reason: "本文が、変える場合でも残す条件に当たらないときだけ同じコンテキストへ進む、と図を補正しているため。図はまとめのとおり残す条件を先に置いた"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "## まとめ（残す条件に当たる作業は、計画を変えても別コンテキストに残す。どれにも当たらない連鎖だけを同じコンテキストに載せる）"
+  - "## 探索と検証と専用の会話は残す（残す条件は、計画を変えるなら載せる、より先）"
+  - "判断の流れの mermaid への補正（「変える」は残す条件に当たらないときだけ同じコンテキストへ進む）"

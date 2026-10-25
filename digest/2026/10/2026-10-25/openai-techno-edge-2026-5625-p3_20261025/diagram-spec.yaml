@@ -1,0 +1,55 @@
+type: structure
+title: "学習ランと実験ホストの到達先"
+message: "ウェブの代替としてオフライン世界を使い、ライブへの任意到達は拒否される。実験ホストに残る接続は別枠である"
+source: "notes/zenn/articles/openai-techno-edge-2026-5625-p3_20261025.md"
+components:
+  - id: agent
+    label: "学習ランのエージェント"
+    meaning: "モデルの学習を1回走らせる実行の中のエージェント"
+  - id: offline
+    label: "オフライン世界"
+    meaning: "索引とキャッシュで組んだ、外部へ影響を出さない練習の場"
+  - id: live
+    label: "ライブのインターネット"
+    meaning: "その時点の公開インターネットへ、その場で届く接続"
+  - id: host
+    label: "実験を回すホスト"
+    meaning: "実験の実行と監視をする側"
+  - id: remain
+    label: "残す外部接続（メトリクス・ログ・認証）"
+    meaning: "実験の実行と監視に必要な外部接続。投稿が例に挙げるのは自社のメトリクス、ログ、認証管理"
+groups:
+  - id: inside
+    label: "境界の内側"
+    members: [agent, offline]
+  - id: ops
+    label: "実験の実行と監視"
+    members: [host, remain]
+relationships:
+  - from: agent
+    to: offline
+    label: "練習の場として使う"
+  - from: agent
+    to: live
+    label: "任意の到達は拒否"
+    style: blocked
+  - from: host
+    to: remain
+    label: "実行と監視に残す"
+omitted:
+  - item: "境界の内側のブラウザ、コード実行、コンピュータ操作、許可したエージェント同士の共有"
+    reason: "伝えたいことは到達先の分離であり、内側の道具の一覧は判断に効かない"
+  - item: "配備後のエージェント"
+    reason: "この投稿の対象外であり、訓練時の2つの到達先という1つの主張に含めない"
+  - item: "コンテナ、軽量な仮想マシン、監視、ネットワークとクラウドの外周"
+    reason: "守り方の層は別の主張になる"
+  - item: "許可外の他エージェントとの遮断、OpenAI のインフラへの遮断"
+    reason: "ライブ到達の拒否と同じ1枚に載せると、伝えたいことが分かれる"
+  - item: "実験を回すホストがオフライン世界を用意する関係"
+    reason: "到達先の分離が伝われば足り、用意する側の矢印は主張を増やさない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## OpenAIの最先端モデル訓練環境とは / ### 学習ランから見た到達先"
+  - "## 学習ジョブの到達先をどう分けるか"
