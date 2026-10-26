@@ -1,0 +1,62 @@
+source:
+  title: "AnthropicのSDLCプレイブックで次の作業が始まる条件"
+  url: null
+  path: "notes/zenn/articles/anthropic-sdlc-claude-ja-p1_20261026.md"
+  primary:
+    - title: "The AI-native SDLC playbook (Louis Claxton, datePublished 2026-08-21)"
+      url: "https://claude.com/resources/articles/the-ai-native-sdlc-playbook"
+    - title: "AI ネイティブの SDLC プレイブック（日本語、同じ公開日、同じ PDF）"
+      url: "https://claude.com/ja/resources/articles/the-ai-native-sdlc-playbook"
+    - title: "AI Native SDLC Playbook PDF（CreationDate 2026-09-24 02:08:23 JST、54ページ）"
+      url: "https://cdn.prod.website-files.com/6889473510b50328dbb70ae6/6aba736348bdf4f08183f463_AI%20Native%20SDLC%20Playbook_designv2%20%281%29.pdf"
+    - title: "How Anthropic secures its AI-native software development lifecycle（datePublished 2026-07-21。約80%の自己申告はこちらの別記事）"
+      url: "https://claude.com/resources/articles/how-anthropic-secures-its-ai-native-software-development-lifecycle"
+  retrieved_at: "2026-10-27"
+archetype:
+  primary: governance
+  secondary: [decision]
+one_liner: "次の作業は、本文が名指しする4つの出来事で始まる。社内手順へ写す単位は、プレイ（各段階の中の具体的なやり方）ごとの成果物、承認する役割、前提である。"
+key_points:
+  - claim: "採択済みの intent.md が要件と設計を始める。承認済みの spec.md が plan mode（Claude Code の計画モードで、計画の承認まで、このモードはファイルを編集できない）を始める"
+    evidence: "## AIネイティブSDLCプレイブックとは / ### 次が始まる4つの起動"
+    status: fact
+  - claim: "マージされた PR がパイプラインを始め、本番の制御帯域の違反が次の intent.md を書く。PR は pull request である"
+    evidence: "### 次が始まる4つの起動"
+    status: fact
+  - claim: "plan.md、差分、そのテストは次の段階が読む例には出るが、この4つの出来事には出ない。テストの証拠は作業中に貼った出力や PR の自動チェックで、独立した完了ファイルではない"
+    evidence: "### 次が始まる4つの起動"
+    status: fact
+  - claim: "手順へ写す単位は段階名ではなく、プレイごとの成果物、承認する役割、前提である。段階名だけが揃い、承認する役割が空なら、その行はまだ手順になっていない"
+    evidence: "## 次の作業が始まるときに揃えるもの"
+    status: fact
+  - claim: "完了は、人が見る前の測定できるチェック、コードオーナーの承認、本番の名前付きリリース承認の3つに分かれる。verifier subagent（完了後に、生成した前提に引きずられないよう別コンテキストで包む最終確認）と設定の eval はこの3つに入らない"
+    evidence: "## 完了は3つに分かれる"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "本文は、採択済み intent.md、承認済み spec.md、マージされた PR、制御帯域の違反を、1本の循環矢印としては書いていない"
+    reason_needed: "包括の文が挙げる受け渡しと、次を始める起動は粒が違い、4つを一周の矢印として読むと手順の開始条件を取り違えるため"
+example:
+  description: "人が見る前のチェックの例は、test_status.py のテストがすべて成功する、スクリーンショットが添付されたモックと一致する、エンドポイントが新しいフィールドで 200 を返す、である"
+  hypothetical: false
+  evidence: "## 完了は3つに分かれる / ### 人が見る前の確認"
+applicability:
+  - "プレイブックを社内の工程手順へ写すとき"
+  - "次の作業の開始を、本文が名指しした4つの出来事で決めるとき"
+decision_criteria:
+  - "始めるファイル、または PR に付く証拠が、元記事の表の行（成果物、承認する役割、前提）と対応しているか"
+  - "verifier subagent を足しても、コードオーナーの承認の代わりにはならない"
+  - "intent.md も spec.md も無いときでも plan mode は置ける（英語は if one exists）"
+  - "手順の文は、英語ページ（2026-10-26 取得）か PDF（ファイル作成 2026-09-24）のどちらから引いたかを添えているか"
+limitations:
+  - "exit criteria も完了条件も公式には無い。6段階すべてで開始と完了の成果物が対だという言い方は、二次情報（QualityLogic、2026-09-29）である"
+  - "数時間、数分、2026-07-21 の別記事の約80%、管理設定例の 2.1.193、架空例の 50 rps は、このガイドの計測結果や現行の製品制限としては書かない"
+  - "制御帯域に入れる指標の名前も、何をもって高リスクとするかの基準も、ガイドは書いていない"
+  - "コードオーナー承認を全リポジトリの必須とは、ガイドの文だけでは固定できない。ブランチ保護は worthwhile と推奨の強さで書かれ、必須の語ではない"
+unknowns:
+  - "制御帯域に入れる指標の名前"
+  - "何をもって高リスクとするかの基準"
+  - "行動境界として越えてよい行動の一覧"
+  - "Code Review の research preview の有無を、2026-10-26 の製品状態としてどちらに決めるか"
+  - "clay play の綴りが誤記かどうか。本文は断定していない"
+reviewed: true

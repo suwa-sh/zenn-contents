@@ -1,0 +1,58 @@
+type: structure
+title: "PCCの信頼境界"
+message: "端末はログ上の測定と一致したノードへだけ暗号化し、手前の中継は復号できない"
+source: "notes/zenn/articles/apple-security-pcc_20261026.md"
+components:
+  - id: device
+    label: "端末"
+    meaning: "ログの測定と一致したノードの公開鍵にだけリクエストを暗号化する"
+  - id: log
+    label: "透明性ログ"
+    meaning: "リリースの測定を載せる追記専用の公開台帳"
+  - id: relay
+    label: "第三者リレー"
+    meaning: "暗号文を運ぶ。復号する鍵を持たない"
+  - id: gateway
+    label: "PCCゲートウェイ"
+    meaning: "暗号文をノードへ渡す。復号する鍵を持たない"
+  - id: node
+    label: "検証済みノード"
+    meaning: "測定がログと一致し、リクエストを復号する"
+groups:
+  - id: outside
+    label: "信頼境界の外"
+    members: [relay, gateway]
+  - id: inside
+    label: "復号できる範囲"
+    members: [node]
+relationships:
+  - from: device
+    to: log
+    label: "測定を照合"
+  - from: device
+    to: node
+    label: "一致した公開鍵で暗号化"
+  - from: device
+    to: relay
+    label: "暗号文を渡す"
+  - from: relay
+    to: gateway
+    label: "運ぶ"
+  - from: gateway
+    to: node
+    label: "運ぶ"
+omitted:
+  - item: "ロードバランサ"
+    reason: "ゲートウェイと同じく信頼境界の外で復号鍵を持たない。図では中継の代表として第三者リレーと PCC ゲートウェイだけを残す"
+  - item: "One-Time Token、Token Granting Service、OHTTP の方式名"
+    reason: "誰が復号できるかという境界には不要なため"
+  - item: "DEK を REK へ HPKE で包む手順と、証明を高々2件選ぶ選択"
+    reason: "暗号化の相手が検証済みノードであることは残し、鍵の包み方と選択数は省くため"
+  - item: "cloudboardd、cb_jobhelper、共有の推論プロセス"
+    reason: "ノードの内側の処理分担は、信頼境界の図の対象外なため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## Private Cloud Computeとは: 端末は測定値が一致するノードの公開鍵に対してだけリクエストを暗号化し、ロードバランサやプライバシーゲートウェイは信頼境界の外"
+  - "### リクエストが流れる経路: 第三者 OHTTP リレーから PCC Gateway を経て、測定がログと一致したノードへ届く"

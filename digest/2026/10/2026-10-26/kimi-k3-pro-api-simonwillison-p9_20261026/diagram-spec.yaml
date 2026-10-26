@@ -1,0 +1,65 @@
+type: structure
+title: "ホストとモデル ID の組、キャッシュ保持時間の固定"
+message: "呼ぶ場所とモデル ID は組で固定する。キャッシュの保持時間は初回の書き込みでロックされる"
+source: "notes/zenn/articles/kimi-k3-pro-api-simonwillison-p9_20261026.md"
+components:
+  - id: direct
+    label: "直API"
+    meaning: "https://api.moonshot.ai を直接呼ぶ側。モデル ID に moonshotai/ は付けない"
+  - id: gateway
+    label: "AI Gateway"
+    meaning: "Vercel がモデル名を中継する入口。モデル ID は moonshotai/ 付き"
+  - id: pro
+    label: "本体"
+    meaning: "kimi-k3.1-pro。費用を気にするときの既定"
+  - id: fast
+    label: "Highspeed"
+    meaning: "kimi-k3.1-pro-highspeed。同じ能力をより短い待ち時間で返す別 ID。対話の待ち時間用"
+  - id: cache
+    label: "キャッシュ"
+    meaning: "プロンプト先頭の一致分。保持時間は5分か1時間。初回の書き込みで固定され、5分と1時間はエントリを共有しない"
+groups:
+  - id: callers
+    label: "呼び出し口"
+    members: [direct, gateway]
+  - id: models
+    label: "モデル ID"
+    members: [pro, fast]
+relationships:
+  - from: direct
+    to: pro
+    label: "接頭辞なし"
+  - from: direct
+    to: fast
+    label: "接頭辞なし"
+  - from: gateway
+    to: pro
+    label: "moonshotai/ 付き"
+  - from: gateway
+    to: fast
+    label: "moonshotai/ 付き"
+  - from: pro
+    to: cache
+    label: "初回の保持時間で固定"
+  - from: fast
+    to: cache
+    label: "初回の保持時間で固定"
+omitted:
+  - item: "Kimi.ai / Work / Code / 3D Make"
+    reason: "製品面の選択は API のモデル ID とは別で、ホストと ID の組という伝えたいことに関係しない"
+  - item: "Chat Completions / Responses / Messages の3経路と usage のフィールド名"
+    reason: "集計の読み分けは本文の要点に残し、図はホストと ID と保持時間の関係に絞る"
+  - item: "Formula と fiber による公式ツール"
+    reason: "モデル ID とキャッシュ保持時間の固定には関係しない"
+  - item: "重み公開の予告（2026年11月4日までの期限）"
+    reason: "ファイル URL が無い間は ID の1キー、という条件は本文で述べる。図の関係にはまだ配布物が無い"
+  - item: "料金の数値とベンチの点数"
+    reason: "数値は具体例に残し、図には単価や順位を描かない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## Kimi K3.1 Pro とは（直 API と Gateway の ID、Highspeed の定義、重みは期限）"
+  - "### モデル ID を 1 箇所に置く / ### Vercel AI Gateway（接頭辞をその場で外して送らない）"
+  - "### コンテナ のキャッシュ行 / ### 概念モデル の CacheEntry（初回書き込みで TTL がロック。5分と1時間は共有しない）"
+  - "## まとめ（費用の既定は本体、対話の待ち時間だけ Highspeed）"

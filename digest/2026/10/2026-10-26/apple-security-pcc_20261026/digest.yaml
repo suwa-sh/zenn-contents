@@ -1,0 +1,61 @@
+source:
+  title: "Apple Private Cloud Computeのセキュリティ設計を公開物から読み解く"
+  url: null
+  path: "notes/zenn/articles/apple-security-pcc_20261026.md"
+  primary:
+    - title: "Private Cloud Compute Security Guide"
+      url: "https://security.apple.com/documentation/private-cloud-compute/"
+    - title: "Expanding Private Cloud Compute（2026年6月8日）"
+      url: "https://security.apple.com/blog/expanding-pcc/"
+    - title: "apple/security-pcc"
+      url: "https://github.com/apple/security-pcc"
+    - title: "Dittmar ら、Unlocking Apple's Private Cloud Compute（WiSec 2026）"
+      url: "https://doi.org/10.1145/3765613.3811691"
+  retrieved_at: "2026-10-27"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "端末は、公開台帳に載った測定と一致するノードへだけ暗号化し、手前の中継は復号できない。ガイドとリポジトリで今確かめられる範囲は、ガイドが掲げる要件の名前より狭い。"
+key_points:
+  - claim: "端末は、透明性ログに載った測定値と一致するノードの公開鍵にだけリクエストを暗号化する。手前のロードバランサと PCC ゲートウェイは信頼境界の外にあり、復号する鍵を持たない"
+    evidence: "## Private Cloud Computeとは"
+    status: fact
+  - claim: "現行ガイドは、処理後に個人データを残さないこと、外部部品に依存せず保証を強制できる形にすること、運用スタッフ向けの特権ランタイムアクセスを置かないこと、特定のユーザだけを狙えないこと、研究者が本番と同じソフトウェアだと確かめられること、の5つを Apple silicon と Google Cloud の両方に当てはまる性質だと書く"
+    evidence: "### 5つのコア要件"
+    status: fact
+  - claim: "Apple silicon の研究用仮想マシンで本番と同じなのはユーザ空間だけで、起動とカーネルは違う。Google Cloud は GPU の高帯域メモリ上の重みと活性化を暗号化せず、NIC と PCIe スイッチのファームウェアを測定せず、Mac では再現できない"
+    evidence: "## 二つのノード方式の違い"
+    status: fact
+  - claim: "公開リポジトリのライセンスは、ダウンロードから90日、所有または管理する Apple 製コンピュータ1台、PCC のセキュリティとプライバシー特性の検証だけ、再配布禁止である。製品の依存関係や一般的なライブラリとしては使えない"
+    evidence: "### 公開範囲とライセンスの限定 / ## 業務で使うときの判断"
+    status: fact
+  - claim: "査読論文（Dittmar ら、WiSec 2026）は、端末側のクライアントが PCC のプロトコルを使っていることを確認したと書く。再現できるビルドは無く、モデルの重みは非公開である"
+    evidence: "## 第三者がどこまで検証できるか"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "端末はログ上の測定と一致したノードへだけ暗号化し、手前の中継は復号できない"
+    reason_needed: "誰が復号できるかという境界が、PCC を採用するかの判断の中心になるため"
+example:
+  description: "報奨金100万ドルはユーザデータの漏洩ではなく任意の権限を伴うリモートコード実行の上限。信頼境界の外からリクエストデータへ届くリモート攻撃の上限は25万ドル。PCC 全体が NVIDIA に移ったわけではなく Apple silicon は続く。名前付き監査報告書の URL は研究ブログに無く、ほかでも見つかっていない"
+  hypothetical: false
+  evidence: "### 用語・報道で取り違えやすい点 / ### 公開範囲とライセンスの限定"
+applicability:
+  - "Apple Intelligence を業務で使うとき、ノードの方式ごとに保証の深さを分ける"
+  - "公開リポジトリを、製品の依存や社内ライブラリとして入れるかを決める"
+decision_criteria:
+  - "使う経路は Apple silicon か Google Cloud か。後者は GPU の高帯域メモリ上の重みと活性化を暗号化せず、研究環境を Mac では再現できない"
+  - "公開リポジトリを、90日・Apple 製コンピュータ1台・PCC のセキュリティとプライバシー特性の検証・再配布禁止の外で使っていないか"
+  - "ノード証明書が透明性ログに含まれることを、リリースノートの既知事項 167793384 が Resolved になって強制しているか"
+  - "使うリリースが CVE-2026-20685 の対象（PCC Release 5E290.3 未満）に含まれるか"
+  - "開発者がサーバ側のモデルを呼ぶなら、iOS 27 / macOS 27 以降で専用の開発者資格が要り、Small Business Program に入り、いずれのアプリも初回ダウンロード200万未満であることが条件である"
+limitations:
+  - "処理後に残さないことは、推論プロセスがデータを消し、OS がアドレス空間を回収し、再起動でデータボリュームの鍵が残らない、というソフトウェアの性質である。情報理論的に痕跡が消えることではない"
+  - "複数ターンの途中状態は、端末が渡す鍵で暗号化したキャッシュとしてノードに残り得る。端末がその鍵を再送しない限り復号できない"
+  - "ノード証明書は発行元の署名を確認するが、透明性ログへの包含証明は2026年10月時点で未強制である（リリースノートの既知事項 167793384）"
+  - "「90日」は、ログ掲載から90日以内の公開と、機微な修正の公開を最大90日遅らせ得ることの二つの意味が混ざる。モデルとアダプタのイメージは測定しても透明性の公開対象外で、研究用仮想マシンのモデルは本番の重みではない"
+  - "同じ査読論文は、実験条件では TGT 派生の検査と OTT の単回性が文書より弱く、開示後に Apple は文書を明確化しただけで、プロトコルと検査は変えなかったと書く。現行の iOS / macOS 27 は TGT を廃止し、Token Granting Service が OTT を直接出す"
+unknowns:
+  - "推論プロセスを入れ替える間隔の秒数はガイド本文に無い"
+  - "レート上限、契約 SLA、リージョン選択、データ所在地、ドル建ての単価は公式ページに見当たらなかった"
+reviewed: true

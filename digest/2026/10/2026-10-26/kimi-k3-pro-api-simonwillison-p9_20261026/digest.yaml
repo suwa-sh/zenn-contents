@@ -1,0 +1,67 @@
+source:
+  title: "Kimi K3.1 ProのAPI先行公開はモデルIDとキャッシュで決まる"
+  url: null
+  path: "notes/zenn/articles/kimi-k3-pro-api-simonwillison-p9_20261026.md"
+  primary:
+    - title: "Introducing Kimi K3.1 Pro"
+      url: "https://www.kimi.ai/blog/kimi-k3-1-pro"
+    - title: "Kimi K3.1 Pro クイックスタート"
+      url: "https://platform.kimi.ai/docs/guide/kimi-k3-1-pro-quickstart"
+    - title: "Model Inference Pricing"
+      url: "https://platform.kimi.ai/docs/pricing/chat"
+    - title: "Best Practices for context caching"
+      url: "https://platform.kimi.ai/docs/guide/context-caching"
+    - title: "Simon Willison, Introducing Kimi K3.1 Pro"
+      url: "https://simonwillison.net/2026/Oct/23/kimi-k31-pro/"
+  retrieved_at: "2026-10-27"
+archetype:
+  primary: decision
+  secondary: [architecture]
+one_liner: "重みのファイル URL が載るまで、Kimi K3.1 Pro は呼ぶ ID を設定の1つに固定する。費用の既定は本体、対話の待ち時間だけ Highspeed。保持時間は初回の書き込みで決まる。"
+key_points:
+  - claim: "2026年11月4日は重み公開の期限で、2026年10月26日時点の公式ブログにファイル URL は無い。ファイル URL が載るまで、呼ぶ ID は設定の1つに閉じる。費用の既定は本体で、Highspeed は同じ能力をより短い待ち時間で返す別 ID であり、対話の待ち時間だけに使う。入力と出力は Highspeed が本体の2倍、キャッシュヒットの単価だけ同じ"
+    evidence: "## Kimi K3.1 Pro とは / ## 特徴 の料金表 / ## まとめ"
+    status: fact
+  - claim: "直 API のモデル ID に moonshotai/ は付けず、Vercel AI Gateway の ID には付ける。直 API 用は最初から接頭辞の無い文字列を別に持ち、Gateway の ID から接頭辞を削って直 API へ送らない"
+    evidence: "## Kimi K3.1 Pro とは / ### モデル ID を 1 箇所に置く / ### Vercel AI Gateway"
+    status: fact
+  - claim: "プレフィックスキャッシュは既定で有効。保持時間は5分か1時間で、初回の書き込みで決まり、5分のエントリと1時間のエントリは共有しない。ヒットすると選んだ側の期限は延びる。推論の長さを会話の途中で変えるとキャッシュは切れる。公式の受理は low / high / max で、medium は無い"
+    evidence: "## 特徴 / ### コンテナ のキャッシュ行 / ### reasoning_effort / ### プレフィックスを崩さない / ### ドキュメントと実装の差"
+    status: fact
+  - claim: "利用量のフィールド名は Chat Completions、Responses、Messages で違う。Messages の input_tokens はキャッシュの読みと書きを含まない。1つの名前に寄せて集計しない"
+    evidence: "### 情報モデル の API 別の表 / ### usage を API ごとに読む"
+    status: fact
+  - claim: "ベンチの点数は、Moonshot の自己計測、Artificial Analysis、Simon Willison の要約を同じ列に入れない。モデル ID とキャッシュの選び方には使わない"
+    evidence: "### ID と測定を分ける / ### 資料間の食い違い"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "呼び出し口とモデル ID は、接頭辞の有無が組になる。キャッシュは初回の5分か1時間のままヒットで期限が延び、その選択はエントリが生きている間は替わらない"
+    reason_needed: "直 API と Gateway で ID の接頭辞が違い、保持時間は後から切り替えられないため"
+example:
+  description: "料金カードは100万トークンあたり、本体の入力 2.00 USD・出力 10.00 USD、Highspeed の入力 4.00 USD・出力 20.00 USD、キャッシュヒットはどちらも 0.20 USD"
+  hypothetical: false
+  evidence: "## 特徴 の料金表"
+applicability:
+  - "直 API と Gateway のどちらで呼ぶかを、環境ごとに1つ固定するとき"
+  - "対話で応答を待つ呼び出しに、Highspeed を使うとき"
+  - "次のリクエストまでの時間で、キャッシュの保持時間を5分か1時間にするとき"
+decision_criteria:
+  - "ホストとモデル文字列を設定の1項目に固定し、実行時に接頭辞を付け外ししていないか"
+  - "費用の既定が本体か。遅いとき Highspeed へ自動で切り替えていないか"
+  - "同じ会話で推論の長さを変えていないか。変えるなら新しい会話としてキャッシュを取り直す"
+  - "5分以内に次が来るなら既定の5分のままか。人が間に入って5分を超えるなら1時間か"
+  - "temperature と top_p は固定値以外がエラーになるので、送っていないか"
+limitations:
+  - "1時間のキャッシュ書き込みの USD は未確認"
+  - "重みのライセンス、ファイル形式、配布 URL は、公開期限以外が一次情報に無い。2026年11月4日を、その日にファイルが置かれる日として扱わない"
+  - "Enterprise の組織アカウントは、管理者が有効化するまでオフ。個人アカウントとは別"
+  - "フラッグシップ（1 USD のチャージ後に呼べる対象）にこの2つの ID が入るかは、公式手順では決められない"
+  - "Zero Data Retention をオンにする項目名は、開いた範囲の本文に無い。thinking を送った結果がエラーか無視かも未確認で、送らない"
+unknowns:
+  - "K3.1 の1時間キャッシュ書き込みの USD"
+  - "重みのライセンス、ファイル形式、量子化、配布 URL"
+  - "この2つの ID を呼ぶ前に、最低 1 USD のチャージが要るか"
+  - "Zero Data Retention をオンにするリクエストのフィールド名"
+  - "K3.1 に thinking を送った結果がエラーか無視か"
+reviewed: true

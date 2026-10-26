@@ -1,0 +1,58 @@
+type: structure
+title: "定理が閉じる範囲"
+message: "認可の正本は Cedar で、定理が保証するのは純粋モデルの中だけ"
+source: "notes/zenn/articles/nyxis_20261026.md"
+components:
+  - id: schema
+    label: "スキーマとポリシー"
+    meaning: "人が承認する正本。エンティティ型がテーブル定義を兼ねる"
+  - id: handler
+    label: "ハンドラ"
+    meaning: "値を返すか、定義済みアクションを呼ぶだけ。主体と時刻は書き換えられない"
+  - id: kernel
+    label: "Leanの検査器"
+    meaning: "ビルドのたびに主定理を検査する"
+  - id: effects
+    label: "許可された操作"
+    meaning: "許可された効果の範囲に収まる DB 操作と外部効果の記録"
+  - id: assumptions
+    label: "前提"
+    meaning: "JWT、SQL、署名付き URL、メール、外部 API の配送。定理は述べない"
+groups:
+  - id: model
+    label: "純粋モデル"
+    members: [schema, handler, kernel, effects]
+  - id: outside
+    label: "定理の外"
+    members: [assumptions]
+relationships:
+  - from: schema
+    to: handler
+    label: "アクションを宣言"
+  - from: handler
+    to: effects
+    label: "呼ぶ"
+  - from: schema
+    to: kernel
+    label: "正本を渡す"
+  - from: kernel
+    to: effects
+    label: "範囲を検査"
+  - from: effects
+    to: assumptions
+    label: "定理は述べない"
+omitted:
+  - item: "効果 9 種の内訳と要求 1 本の処理段階"
+    reason: "伝えたいことは保証の境界であり、効果の種類や処理の順序ではないため"
+  - item: "Supabase Auth、PostgreSQL、Storage、SMTP、外部 API の個別の箱"
+    reason: "定理の外の配線として「前提」にまとめたため"
+  - item: "RLS や Data API との比較"
+    reason: "採用の対照であり、正本と定理の境界の関係ではないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## Nyxisとは（Cedar のスキーマとポリシーが正本。ハンドラの効果は認可層へのアクション呼び出しだけ）"
+  - "## Nyxisとは > 主定理が述べる9項（HTTP・JWT・SQL との対応や配送は定理が述べない）"
+  - "## Nyxisとは > 保証の層と前提（純粋モデルの 9 項と、Assumption 1〜3）"
+  - "## まとめ（保証は純粋モデルの 9 項に閉じ、現実の配線は前提）"

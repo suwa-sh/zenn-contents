@@ -1,0 +1,57 @@
+source:
+  title: "Cedarを正本にLeanで認可の安全性を証明するWebバックエンド、Nyxis"
+  url: null
+  path: "notes/zenn/articles/nyxis_20261026.md"
+  primary:
+    - title: "NyxFoundation/nyxis v0.1.1"
+      url: "https://github.com/NyxFoundation/nyxis/releases/tag/v0.1.1"
+    - title: "ASSUMPTIONS.ja.md（前提の正本）"
+      url: "https://github.com/NyxFoundation/nyxis/blob/main/ASSUMPTIONS.ja.md"
+    - title: "docs/proofs.md（証明の目録）"
+      url: "https://github.com/NyxFoundation/nyxis/blob/main/docs/proofs.md"
+  retrieved_at: "2026-10-27"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "Nyxis（v0.1.1）は、人が承認する認可の文書を基準に、ハンドラの操作が範囲内かをビルドで検査します。ログイン検証の正しさや、メールと外部呼び出しが届くことは、検査の外です。"
+key_points:
+  - claim: "人が承認する正本は Cedar のスキーマとポリシーの 2 ファイルである。エンティティ型がテーブル、属性が列、ID が主キーになり、写像用の別言語はない。"
+    evidence: "## Nyxisとは / ## 特徴"
+    status: fact
+  - claim: "効果（出してよい DB 操作や外部通信）は、宣言されたアクション 1 つにつき 1 つである。値を返すだけの分岐は持てるが、そこからは効果を出せない。主体と時刻と一意 ID は実行側が埋め、ハンドラは偽れない。"
+    evidence: "## Nyxisとは / ## 特徴"
+    status: fact
+  - claim: "ビルドのたびに Lean の検査器が見る中心は、出した操作がその主体と実行側の時刻と ID について許可された効果の範囲に収まることである。ログイン検証が正しいこと、SQL が DB 上でそのとおり実行されること、届くこと、確定失敗後に残る外部の副作用は述べない。"
+    evidence: "## Nyxisとは > 主定理が述べる9項"
+    status: fact
+  - claim: "要求 1 本は新しい接続の SERIALIZABLE トランザクションである。JWT 無しと検証失敗は匿名として同じ入口に入る。成功の応答と非同期送信は確定の後である。隔離が現実に成り立つこと自体は、SQL の分離性として前提である。"
+    evidence: "## 構造 > 要求 1 本の処理 / ## 特徴"
+    status: fact
+  - claim: "向くのは、エージェントにハンドラを書かせ、人間はスキーマとポリシーを承認する個人開発の Web API である。ブラウザから Postgres へ直接届く Data API ではなく、行の到達制御を Postgres の RLS に置く構成とは判定の場所と保証の形が違う。"
+    evidence: "## Nyxisとは > 向く場面 / 比較表"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "認可の正本は Cedar で、定理が保証するのは純粋モデルの中だけ"
+    reason_needed: "ビルドが通ることと、JWT・SQL・配送まで保証されることを取り違えると、採用判断を誤るため"
+example:
+  description: "掲示板で 1 件読むとき、ハンドラは主キーを指定して読み取りアクションを呼ぶだけである。実行側が行を取り、Cedar の判定器で許可を見て、許可された操作だけを SQL にする。検証失敗は匿名のまま進み、掲示板サンプルでは下書きが 403 になる。"
+  hypothetical: false
+  evidence: "## 構造 > コンポーネント図 / ## トラブルシューティング > ログイン後も下書きが見えない"
+applicability:
+  - "認可の範囲逸脱を、テストではなくビルドの失敗で止めたい"
+  - "外部への送信を、許可された記録についてだけにしたい"
+decision_criteria:
+  - "配置するものは、承認した 2 ファイルを埋め込んで検査を通した成果物か"
+  - "署名付き URL は、渡ったものに外部効果の記録があることまでが定理で、中身と保管先の検証は外だと分けているか"
+  - "副作用のある同期呼び出しで、一意 ID を冪等キーとして本文に載せ、送り先が尊重する前提を受け入れるか"
+  - "添付のウイルス検査とサイズ制限は、署名付き URL の発行先とアプリの責務だと分けているか"
+  - "検査を迂回する記述をビルド時の点検がすべて見つけることと、コンパイル途中の読み書きが秘密や検査の判定に触れないことは、証明されていないと理解しているか"
+limitations:
+  - "配線で証明済みの例は、主体の組み立て、許可された操作からの SQL、BEGIN から COMMIT の順、応答の再生、記録された内容についてだけ送信処理を呼ぶことである。前提のままなのは、ログイン検証が正しいこと、配送そのもの、主キーの 1 件取得がその時点のその行であること、HTTP 本文の復号、送信処理の内部である。"
+  - "取った行が判定材料を覆うなら、必要な行だけの判定は全行の判定と一致する。必要な絞り込みを取り切ったことの検査は無く、全行から状態を復元する経路は別 DB の照合用である。"
+  - "同期呼び出しのあと確定が失敗すると DB は戻り、送り先の副作用は残る。非同期は確定前に送らず、送信後の状態更新失敗は再送なので少なくとも 1 回届く。"
+  - "コアの版は v0.1.1 だが README の版バッジは v0.1.0 のままである。英語の前提文書より日本語版が正である。"
+unknowns:
+  - "この記事は v0.1.1 の文書とソースの整理であり、採用後の運用実績は書いていない。"
+reviewed: true

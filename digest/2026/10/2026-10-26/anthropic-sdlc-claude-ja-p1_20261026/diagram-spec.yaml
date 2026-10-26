@@ -1,0 +1,34 @@
+type: structure
+title: "次の作業が始まる4つの起動"
+message: "次の作業は、本文が名指しする4つの出来事が別々に始める。1本の循環にはなっていない"
+source: "notes/zenn/articles/anthropic-sdlc-claude-ja-p1_20261026.md"
+components:
+  - id: intent
+    label: "採択済み intent.md → 要件と設計"
+    meaning: "採択済みの intent.md が要件と設計を始める"
+  - id: spec
+    label: "承認済み spec.md → plan mode"
+    meaning: "承認済みの spec.md が plan mode を始める"
+  - id: pr
+    label: "マージされた PR → パイプライン"
+    meaning: "マージされた PR がパイプラインを始める"
+  - id: band
+    label: "制御帯域の違反 → 次の intent.md"
+    meaning: "本番の制御帯域の違反が次の intent.md を書く"
+groups:
+  - id: triggers
+    label: "別々の出来事（循環の矢印は無い）"
+    members: [intent, spec, pr, band]
+relationships: []
+omitted:
+  - item: "plan.md、差分、そのテスト"
+    reason: "段階がファイルを残して次が読む、という包括の例には出るが、4つの起動の矢印には出ない"
+  - item: "CLAUDE.md と Skills"
+    reason: "4つの起動が、この2つを次の開始として名指ししていない"
+  - item: "6段階の列と、3つの完了"
+    reason: "段階の列は導入順とは別であり、完了の分け方はこの図の主張ではない"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "## AIネイティブSDLCプレイブックとは / ### 次が始まる4つの起動"

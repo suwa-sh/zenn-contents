@@ -1,0 +1,67 @@
+type: structure
+title: "届く範囲を決める層"
+message: "埋め込みはファイルの OS 権限、Quack はトークン通過後のサーバセッションが届く範囲になる。agent mode は表示だけで、資格にならない"
+source: "notes/zenn/articles/duckdb-2-0-lts-quack-publickey1-p8_20261026.md"
+components:
+  - id: agent
+    label: "エージェント"
+    meaning: "分析用のデータベースを受け取る側"
+  - id: embed
+    label: "埋め込み"
+    meaning: "プロセスの中でファイルを開く使い方"
+  - id: osperm
+    label: "ファイルの OS 権限"
+    meaning: "渡したファイルに対する、そのプロセスの読み書き権限"
+  - id: token
+    label: "接続トークン"
+    meaning: "クライアントが送る文字列とサーバが持つ文字列を比べる認証の鍵"
+  - id: session
+    label: "サーバから見える表"
+    meaning: "メモリ上の表、サーバが開いているデータベースファイル、スキーマ"
+  - id: display
+    label: "agent mode"
+    meaning: "結果の省略とエラーの形。資格は発行しない"
+groups:
+  - id: file_layer
+    label: "ファイルを渡す"
+    members: [embed, osperm]
+  - id: quack_layer
+    label: "Quack でつなぐ"
+    members: [token, session]
+  - id: view_layer
+    label: "表示だけ"
+    members: [display]
+relationships:
+  - from: agent
+    to: embed
+    label: "ファイルを開く"
+  - from: embed
+    to: osperm
+    label: "届く範囲になる"
+  - from: agent
+    to: token
+    label: "トークンで入る"
+  - from: token
+    to: session
+    label: "見えるものが届く"
+  - from: agent
+    to: display
+    label: "表示だけを変える"
+omitted:
+  - item: "safe mode（最初に開いたファイル以外への到達を止める CLI のスイッチ）"
+    reason: "埋め込みの届く範囲の正本は OS 権限のままなので、別の層として描くと正本が増えて見える"
+  - item: "DuckLake（オブジェクトストレージとカタログで複数書き込みをする別経路）"
+    reason: "ネイティブファイルの OS 権限とも Quack のトークンともストレージが違い、この1枚の主張に含めない"
+  - item: "Quack の接続に付ける読み取り専用と、SQL マクロによる認可"
+    reason: "2.0.0 では届く範囲を狭める手段にしない。矢印にすると境界があるように見える"
+  - item: "手元のホストへの bind と、TLS を終端する reverse proxy"
+    reason: "外へ出すときの配置であり、届く範囲の正本ではない"
+  - item: "storage version 69"
+    reason: "ファイル形式の互換であり、誰に何が届くかの層ではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### エージェントから見た三つの経路"
+  - "### 接続の形"
+  - "## 届く範囲はどの層が決めるか"

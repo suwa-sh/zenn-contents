@@ -1,0 +1,65 @@
+source:
+  title: "DuckDB 2.0 LTSのQuackは接続トークンで届く範囲が決まる"
+  url: null
+  path: "notes/zenn/articles/duckdb-2-0-lts-quack-publickey1-p8_20261026.md"
+  primary:
+    - title: "Announcing DuckDB 2.0.0（2026年10月21日）"
+      url: "https://duckdb.org/2026/10/21/announcing-duckdb-200.html"
+    - title: "Quack overview"
+      url: "https://duckdb.org/docs/2.0/quack/overview.html"
+    - title: "Quack security"
+      url: "https://duckdb.org/docs/2.0/quack/security.html"
+    - title: "Quack FAQ"
+      url: "https://duckdb.org/quack/faq.html"
+    - title: "Concurrency"
+      url: "https://duckdb.org/docs/2.0/connect/concurrency.html"
+  retrieved_at: "2026-10-27"
+archetype:
+  primary: decision
+  secondary: [architecture]
+one_liner: "Quack の接続トークンは、そのサーバセッション全体への鍵になる。表示とエラーの形を変える agent mode は、届く範囲の境界にはならない。"
+key_points:
+  - claim: "埋め込みでは渡したファイルの OS 権限が届く範囲になる。Quack ではトークンで入ったサーバセッションが届く範囲になる"
+    evidence: "### エージェントから見た三つの経路 / ## 届く範囲はどの層が決めるか"
+    status: fact
+  - claim: "既定の認可は受け取ったクエリを書き換えずに実行する。トークンを通過したクライアントには、そのサーバセッションから見えるメモリ上の表、開いているデータベースファイル、スキーマが届く"
+    evidence: "### 接続の形"
+    status: fact
+  - claim: "2.0.0 では、接続に付ける読み取り専用を境界として使わない。その指定のまま、行の追加や更新や削除と表定義の変更が通った報告が開いている"
+    evidence: "### 文書と 2.0.0 の報告 / ## 届く範囲はどの層が決めるか"
+    status: fact
+  - claim: "公式 FAQ は Quack をまだ beta とし、プロトコル、関数名、既定値が壊れ得ると書く。長期サポートの期間は、プロトコルが変わらない期間ではない"
+    evidence: "### 本番という語と、サポート期間"
+    status: fact
+  - claim: "単一の分析ファイルは埋め込みのままにし、境界の正本をそのファイルの OS 権限にする。CLI なら safe mode を付ける。safe mode は最初に開いたファイル以外と、ホストのファイル操作とシェルを止める"
+    evidence: "## 単一の分析ファイルを渡す"
+    status: interpretation
+mental_models:
+  - type: structure
+    key_message: "届く範囲は、埋め込みならファイルの OS 権限、Quack ならトークン通過後のサーバセッションで決まる。agent mode は表示の層であり、資格にならない"
+    reason_needed: "渡し方ごとに正本が違い、表示の層を権限の境界と誤読すると届く範囲を絞ったつもりで全体が渡るため"
+example:
+  description: "サーバがトークンを指定して待ち、日付と名前の表を作る。別の DuckDB が同じトークンで手元のホストへ接続すると、そのサーバセッションからその表を読める"
+  hypothetical: false
+  evidence: "### 接続の形"
+applicability:
+  - "分析用のデータベースを受け取る側が一つで、渡すファイルも一つのとき"
+  - "DuckDB 自身のデータベースファイルを複数プロセスが同時に読み書きするときだけ、Quack を使う"
+  - "オブジェクトストレージへ複数から書くとき（Quack ではなく DuckLake が公式の別経路）"
+decision_criteria:
+  - "届く範囲の正本を、埋め込みならそのファイルの OS 権限、Quack ならサーバセッションから見える表やファイル、のどちらに置いているか"
+  - "接続に付ける読み取り専用や、セッション全体への鍵である別のトークンで、読み取りだけを分けていないか"
+  - "認可を、クライアントが書き換えられる場所に置いた、SQL として登録した関数と、トークンと利用者名を並べた表にしていないか"
+  - "Quack を外へ出すなら、サーバは手元のホストだけを待ち受け、TLS を終端する reverse proxy を前に置いているか"
+  - "agent mode の省略表示やエラーの形を、ファイル権限やトークンの代わりにしていないか"
+limitations:
+  - "FAQ が beta と書くあいだ、本番へ切り替える前は既存の負荷を追いかける試験にし、ミッションクリティカルなら発表は最初のパッチまで待ってよいと書く。1.5 のサポートは 2027年3月まで残る"
+  - "読み取り専用の指定そのものを拒否する修正は、クエリを読み取りだけに制限する仕組みではない。公開済みの 2.0.0 に入っているかは未確認である"
+  - "定義を置換できる報告の再現手順は公開前の版であり、2.0.0 正式版での再検証はその報告に無い"
+  - "2.0 が既定で作る新規ファイルは storage version 69 で、2.0 未満は読めない。プロトコルが長期サポートのあいだどこまで互換を保つかは、未確認である"
+unknowns:
+  - "読み取り専用の指定そのものを拒否する修正が、どの公開バージョンに入るか。カレンダー上の次点は 2.0.1（2026年11月18日、予定は仮）"
+  - "定義を置換できる報告が、2.0.0 正式版で再現するか"
+  - "拡張機能のスカラー関数で認可を固定する実装例が、公式の本番手順としてどこまで書かれているか"
+  - "Quack のプロトコルが、長期サポートのあいだどこまで互換を保つか"
+reviewed: true
