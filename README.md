@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (568)
+## Articles: 下書き (569)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-10-26 | [📘 AnthropicのSDLCプレイブックで次の作業が始まる条件](articles/anthropic-sdlc-claude-ja-p1_20261026.md) | ClaudeCode, SDLC, Anthropic, DevOps |
+| 2026-10-26 | [🔒 Apple Private Cloud Computeのセキュリティ設計を公開物から読み解く](articles/apple-security-pcc_20261026.md) | Apple, セキュリティ, プライバシー, AppleIntelligence |
 | 2026-10-26 | [📒 IDOMの約135億円AXを台帳の更新権が分かれてから投資対効果の分母にする](articles/idom-ax-135-xtech-nikkei-p4_20261026.md) | AIAgent, Salesforce, Governance, CRM |
 | 2026-10-25 | [🔁 サブエージェントをメインループへ畳む条件](articles/anthropic-claude-resources-p1_20261025.md) | AIAgent, Claude, Anthropic, LLM |
 | 2026-10-25 | [📋 Claude Coworkの実行場所と残るデータを契約ごとに見る](articles/claude-cowork-xtech-nikkei-p5_20261025.md) | Claude, Anthropic, Security, AIAgent |
