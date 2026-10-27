@@ -1,0 +1,62 @@
+source:
+  title: "Claude Codeチームのコードレビュー運用と公開版Code Reviewの境界"
+  url: null
+  path: "notes/zenn/articles/claude-code-team-review_20261027.md"
+  primary:
+    - title: "Claude Code チームの記事（2026-10-15）"
+      url: "https://claude.dev/blog/solving-code-review-at-anthropic.md"
+    - title: "Code Review 一般提供の発表（2026-10-15）"
+      url: "https://claude.com/resources/articles/code-review-is-now-generally-available"
+    - title: "現行ドキュメント"
+      url: "https://code.claude.com/docs/en/code-review"
+    - title: "事後報告（2026-04-23）"
+      url: "https://www.anthropic.com/research/april-23-postmortem"
+  retrieved_at: "2026-10-28"
+archetype:
+  primary: governance
+  secondary: [decision]
+one_liner: "Claude Code チームでは、バグ所見かセキュリティ所見が開いているあいだマージできない。管理 Code Review（GitHub 上の公開サービス）は所見を書くだけで止めない。"
+key_points:
+  - claim: "必要な人手は書いた人ではなく変更の危険度で決まり、エージェントの承認は人数に入らない。エージェントが書いた変更では動かした人が必須の人数のうちの 1 人になるが、Low の人手不要にその 1 人を足すかは記事は書いていない"
+    evidence: "### 変更内容で変わる人手承認"
+    status: fact
+  - claim: "管理 Code Review は Claude の Team と Enterprise 向けで、Anthropic の基盤上で動き、自分のランナーでは走らない。そのチェック Claude Code Review は失敗で終わらない"
+    evidence: "### 公開版Code Reviewとローカルの位置づけ / ## 社内の測り方と、公開製品との境界"
+    status: fact
+  - claim: "管理側の REVIEW.md は base または default ブランチから読み、PR 内の分は読まない。ローカルの /code-review は CLAUDE.md を読み、REVIEW.md は読まない"
+    evidence: "### 公開版Code Reviewとローカルの位置づけ"
+    status: fact
+  - claim: "所見ゼロはバグがないことも安全であることも意味しない。管理 Code Review は draft と fork の PR をスキップし、読み取り専用で push もビルドもしない"
+    evidence: "### 公開版Code Reviewとローカルの位置づけ"
+    status: fact
+  - claim: "「Claude が約 90% を書く」は Claude Code 自身のコードについての自己申告で、マージ済み PR の 9 割とは書いていない"
+    evidence: "## 注意点"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "止める矢印は社内運用と自分の branch protection から出る。管理 Code Review から出る矢印は所見を渡すだけである"
+    reason_needed: "同じ所見でも、社内ルールの強制と公開製品の投稿は別物で、製品を入れただけではマージは止まらないため"
+example:
+  description: "Low（docs、文言、機能フラグの後ろの追加）は社内の自動レビューとセキュリティが緑なら人手不要。Medium（通常の製品変更、system prompt）は人 1 人。High（危険度の高い変更、オーナーが指定したパス）は人 2 人"
+  hypothetical: false
+  evidence: "### 変更内容で変わる人手承認"
+applicability:
+  - "エージェントが PR を書き、人がそのリポジトリのオーナーであるとき"
+  - "管理 Code Review を入れただけではマージが止まらない、と切り分けるとき"
+  - "auth、billing、CI、リリース、インストーラを、危険度の分類器（中身は非公開）が無くても人に見させるとき"
+decision_criteria:
+  - "未解決の所見で止めるなら、スレッド解決を branch protection（マージ条件の設定）で必須にしているか"
+  - "両方に効かせる指示を、記事の指定どおり CLAUDE.md に置いているか"
+  - "エージェントの承認を必須の人数に入れず、新しいコミットで承認を外すか"
+  - "危険パスの人手を緩めるのは、人なしの期間の revert とインシデントが、人を残した期間と同等以下だと自分で測れたときだけか"
+  - "従量の利用枠（プランの枠とは別）の残高が 1 回分を下回ると、レビューをスキップする前提か"
+limitations:
+  - "割合や倍率は、工程が原因だと切り分けた実験表が公開されていない"
+  - "2026-04-23 の事後報告では、あるバグが人手と自動のレビュー、テスト、社内利用を通過し、発見まで 1 週間超かかった"
+  - "社内の自動承認を、revert 率とインシデント率で締める仕組み（記事ではサーキットブレーカー）は、公開時点では未実装である"
+  - "@claude review（PR のコメントで呼ぶレビュー）が以後の push でも走るか、所要時間と単価は、公開資料だけでは決められない"
+  - "anthropics/claude-code#100401（2026-10-27 時点で OPEN）は、Action 経由のレビューがレビュー担当を起動せず No issues found. と投稿した報告で、管理 Code Review での再現は未確認である"
+unknowns:
+  - "@claude review の購読範囲と、所要時間・単価のどちらが現在の正か"
+  - "Issue #100401 が管理 Code Review の GA で再現するか"
+reviewed: true

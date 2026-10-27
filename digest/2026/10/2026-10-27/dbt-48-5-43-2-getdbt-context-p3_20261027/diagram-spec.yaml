@@ -1,0 +1,64 @@
+type: structure
+title: "全文と自前要約で残る事実"
+message: "自前要約はスキル実行を軽くするが、新しいプロジェクトの決定は出ない"
+source: "notes/zenn/articles/dbt-48-5-43-2-getdbt-context-p3_20261027.md"
+components:
+  - id: full
+    label: "全文"
+    meaning: "通話の全文。図の基準は通話サービス側から渡した条件。倉庫から全文を読む条件は本文で述べる"
+  - id: own
+    label: "自前要約"
+    meaning: "スキル実行の前に倉庫の関数で作り、列へ置いた物語的な要約。エージェントは倉庫の列を読む"
+  - id: cost
+    label: "費用と時間"
+    meaning: "指示、ツール呼び出し、振り返りPDFの生成を含むスキル実行全体の平均。要約を作る課金は含まない"
+  - id: steps
+    label: "次の手順"
+    meaning: "出力に次のステップが出たか。中身が全部出たかではない"
+  - id: decision
+    label: "新規の決定"
+    meaning: "新しいプロジェクトまたはリポジトリに関する決定。決定一般ではない"
+groups:
+  - id: sources
+    label: "渡し方"
+    members: [full, own]
+  - id: outcomes
+    label: "この実験で見えたこと"
+    members: [cost, steps, decision]
+relationships:
+  - from: full
+    to: cost
+    label: "基準として重い"
+  - from: own
+    to: cost
+    label: "実行の平均は軽い"
+  - from: full
+    to: steps
+    label: "出る"
+  - from: own
+    to: steps
+    label: "回数が最も多い"
+  - from: full
+    to: decision
+    label: "出る"
+  - from: own
+    to: decision
+    label: "20回とも出ない"
+omitted:
+  - item: "ベンダー要約（Gong brief）"
+    reason: "図は全文と自前要約の対比に絞る。短い要約が最安で、日付・数値・肩書き・決定・次の手順が0/20であることは本文の判断に残す"
+  - item: "全文の取得元の差（通話サービス側と倉庫）"
+    reason: "品質帯は近い。費用13.6%安・時間14.4%短と、絞り込み列だけでは切り分けられないことは本文に残す"
+  - item: "肩書き 9/20、ツール名、トークン数、48.5%と43.2%"
+    reason: "数値は本文と具体例に残す。図は残る事実の関係だけを示す"
+  - item: "要約生成の課金と、ベクトル検索パッケージ"
+    reason: "生成費は未測定。この80回は分割・埋め込み・検索を測っていない。どちらも本文の注意点に残す"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 文脈実験とは / ### 4つの文脈源（全文と自前要約の中身）"
+  - "## 文脈実験とは / ### 実験記事が示した平均（費用・時間と、決定・次のステップの回数）"
+  - "## 注意点 / ### 百分率の分母（48.5%はスキル実行全体。要約生成の課金を足した記述は無い）"
+  - "## 注意点 / ### 残らなかった分類（決定は自前要約が0/20、全文は16/20と15/20）"
+  - "## 表から読める範囲（次のステップは自前要約が4条件で最良）"

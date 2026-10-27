@@ -1,0 +1,47 @@
+type: structure
+title: "所見を書くこととマージを止めることは別"
+message: "公開の管理 Code Review は所見を書くだけ。マージを止めるのは自分で足した branch protection"
+source: "notes/zenn/articles/claude-code-team-review_20261027.md"
+components:
+  - id: internal
+    label: "社内運用"
+    meaning: "所見（レビューの指摘）が開いているあいだはマージできない"
+  - id: managed
+    label: "管理 Code Review"
+    meaning: "所見を書く。承認もブロックもしない"
+  - id: protection
+    label: "自分の branch protection"
+    meaning: "スレッド解決を必須にすると、未解決のあいだマージできない"
+  - id: merge
+    label: "マージ"
+    meaning: "変更を取り込む操作"
+groups:
+  - id: public
+    label: "公開製品"
+    members: [managed]
+  - id: yours
+    label: "自分で足す設定"
+    members: [protection]
+relationships:
+  - from: internal
+    to: merge
+    label: "所見が開いていると止める"
+  - from: managed
+    to: protection
+    label: "所見を渡すだけ"
+  - from: protection
+    to: merge
+    label: "未解決なら止める"
+omitted:
+  - item: "危険パスの人手（CODEOWNERS で auth、billing、CI、リリースを人必須にする）"
+    reason: "止め方の別経路。図の主張は、所見を書くこととマージを止めることの分離に限る"
+  - item: "チェックの JSON を自前 CI で見て失敗させる経路"
+    reason: "スレッド解決と同じく自分で足す止め方なので、図は branch protection の 1 本だけにする"
+  - item: "社内の 7 層（PR 前の検証から検知とロールバックまで）"
+    reason: "層の列挙は境界の 1 枚には乗せず、本文の核心に残す"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### セキュリティとCI: バグ所見かセキュリティ所見が開いているあいだは、社内ルールではマージできません"
+  - "## 社内の測り方と、公開製品との境界: レビューは PR を承認もブロックもしない。チェック Claude Code Review は失敗で終わらない。止めたいなら、スレッド解決を branch protection で必須にする"

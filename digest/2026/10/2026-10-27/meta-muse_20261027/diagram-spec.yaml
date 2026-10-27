@@ -1,0 +1,57 @@
+type: structure
+title: "資格情報はセルの外"
+message: "本物の資格情報は隔離領域の外にあり、Sentinel が許可した出口のリクエストにだけ差し込まれる"
+source: "notes/zenn/articles/meta-muse_20261027.md"
+components:
+  - id: cell
+    label: "ランタイムセル"
+    meaning: "信頼しない入力を処理し、外部への操作を提案する。見るのは本物の代わりのトークンだけ"
+  - id: sentinel
+    label: "Sentinel"
+    meaning: "外部サービスへの接続と、ネットワーク出口を許可できる唯一の主体"
+  - id: creds
+    label: "資格情報"
+    meaning: "同じ仮想マシンの中でもセルの外に保管する本物の秘密"
+  - id: approval
+    label: "確認画面"
+    meaning: "利用者のアプリに出る承認。答えは会話の本文を通らない"
+  - id: outside
+    label: "外部サービス"
+    meaning: "メールや予定など、接続先のサービス"
+groups:
+  - id: cell_side
+    label: "信頼しない入力"
+    members: [cell]
+  - id: outside_cell
+    label: "同じ仮想マシンのセルの外"
+    members: [sentinel, creds]
+relationships:
+  - from: cell
+    to: sentinel
+    label: "操作を提案"
+  - from: sentinel
+    to: approval
+    label: "確認が要るとき聞く"
+  - from: approval
+    to: sentinel
+    label: "答えを直接返す"
+  - from: sentinel
+    to: creds
+    label: "許可したときだけ取る"
+  - from: sentinel
+    to: outside
+    label: "出口で本物を差し込む"
+omitted:
+  - item: "privsep、hatch-authd、hatch-safety、Postgres、ブラウザの操作役、推論プロキシ"
+    reason: "資格情報を出口で差し込む境界には、セル・Sentinel・資格情報・確認画面・外部サービスで足りるため"
+  - item: "Meta Model API、Link、Private Processing、Muse Code"
+    reason: "製品の仮想マシンの中の資格情報境界とは別の入口なため"
+  - item: "利用者データを読むと自動許可から外れる汚染と、Linux の隔離の識別子"
+    reason: "許可の主体が Sentinel であることと、セルが本物を持たないことは残し、自動許可の条件と仕組みの名前は省くため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 特徴: 資格情報はセルの外に保管し、エージェントが見るのは代理トークン。本物の秘密は Sentinel が出口で許可したリクエストにだけ差し込まれる"
+  - "### コンポーネント図: 承認ダイアログの答えはモデルの会話を通さず Sentinel へ戻り、許可の後に出口でだけ本物の資格情報へ置き換わる"
+  - "### コンテナ図: Sentinel は資格情報の保管へつながり、許可した通信だけが外部へ出る"

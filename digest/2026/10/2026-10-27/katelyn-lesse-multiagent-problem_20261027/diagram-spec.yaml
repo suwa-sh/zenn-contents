@@ -1,0 +1,63 @@
+type: structure
+title: "脳と手の配置"
+message: "判断・資格情報・記録・停止は未信頼コードの外に置き、外向き通信は出口プロキシだけが資格情報を足す"
+source: "notes/zenn/articles/katelyn-lesse-multiagent-problem_20261027.md"
+components:
+  - id: harness
+    label: "ハーネス"
+    meaning: "モデル呼び出し、人間の承認、セッションを置く"
+  - id: sandbox
+    label: "サンドボックス"
+    meaning: "未信頼のコードと、そのコードが触るファイルやプロセス"
+  - id: egress
+    label: "出口プロキシ"
+    meaning: "外向き通信を中継し、許可された宛先にだけ資格情報を足す"
+  - id: vault
+    label: "資格情報"
+    meaning: "トークンの保管。サンドボックスの中には仮の値だけを置く"
+  - id: record
+    label: "記録と停止"
+    meaning: "中のプロセスが消せないログと、外から止める kill switch"
+  - id: external
+    label: "外部サービス"
+    meaning: "プロキシを通った通信の宛先"
+groups:
+  - id: outside
+    label: "箱の外"
+    members: [harness, vault, egress, record]
+  - id: inside
+    label: "箱の中"
+    members: [sandbox]
+relationships:
+  - from: harness
+    to: sandbox
+    label: "実行を渡す"
+  - from: sandbox
+    to: egress
+    label: "外向き通信"
+  - from: vault
+    to: egress
+    label: "許可先へ注入"
+  - from: egress
+    to: external
+    label: "付けて転送"
+  - from: sandbox
+    to: record
+    label: "消せない記録"
+  - from: record
+    to: sandbox
+    label: "外から停止"
+omitted:
+  - item: "人間とモデル API"
+    reason: "判断とモデル呼び出しの主体はハーネスに含めた。配置の境界には不要なため"
+  - item: "セッション"
+    reason: "会話の状態としてハーネスに含めた。箱の外にあることは残し、別の箱にはしない"
+  - item: "隔離の4段階、Agent Substrate、4領域の未解決度"
+    reason: "図が伝えるのは脳と手の配置だけなため"
+  - item: "MCP と OAuth トークンという語"
+    reason: "資格情報の保管場所にまとめたため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### 本人のブログにある「脳と手を分ける」設計: ハーネスとセッションと資格情報はサンドボックスの外。出口プロキシが宛先ごとに資格情報を注入する。ログと kill switch も外。中には仮の値だけ"

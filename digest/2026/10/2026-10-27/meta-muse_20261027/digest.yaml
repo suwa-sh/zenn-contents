@@ -1,0 +1,66 @@
+source:
+  title: "Metaの個人エージェントMuseを支えるSecure VMの構造とデータ設計"
+  url: null
+  path: "notes/zenn/articles/meta-muse_20261027.md"
+  primary:
+    - title: "Introducing Muse"
+      url: "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/"
+    - title: "How We Built Safety Into Muse"
+      url: "https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse"
+    - title: "How Muse works with your guidance and approval"
+      url: "https://www.meta.com/help/artificial-intelligence/1385290430137537/"
+    - title: "Models"
+      url: "https://dev.meta.ai/docs/models"
+    - title: "Private Processing for Meta AI glasses"
+      url: "https://engineering.fb.com/2026/09/23/security/private-processing-meta-ai-glasses/"
+  retrieved_at: "2026-10-28"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "利用者ごとの仮想マシンでは、信頼しない入力は隔離領域が扱い、本物の資格情報はその外にある。外のサービスへ出すとき、本物を差し込めるのは許可を出す主体だけ。"
+key_points:
+  - claim: "各利用者に専用の Linux 仮想マシンが 1 台ある。エージェントは信頼しない入力を処理する隔離領域の中で動き、見るのは本物の代わりのトークンだけで、資格情報の正本は同じ仮想マシンでもその領域の外にある"
+    evidence: "## Muse とは / ## 特徴"
+    status: fact
+  - claim: "メールや予定などの接続と、外へ出る通信を許可できるのは Sentinel だけである。本物の秘密は、Sentinel が許可したリクエストが外へ出るときだけ差し込まれる"
+    evidence: "## Muse とは / ## 特徴"
+    status: fact
+  - claim: "購入やメール送信のような機密な書き込みは毎回の承認が要る。答えは会話の本文を通らず、利用者のアプリの確認画面から Sentinel へ直接戻る"
+    evidence: "## 特徴 / ### Connector ツールの必須区分 / ### コンポーネント図"
+    status: fact
+  - claim: "開発者が自分のアプリから呼ぶ Meta Model API はモデルへの補完だけで、製品の仮想マシンは操作できない。OpenAI 互換の基底 URL は https://api.meta.ai/v1、Anthropic 互換は https://api.meta.ai である"
+    evidence: "## Muse とは / ### チャット補完を呼ぶ"
+    status: fact
+  - claim: "公開版の Secure VM は運用上の制限であり、利用者の鍵で Meta も中身を読めない Confidential VM ではない。眼鏡型端末向けの Private Processing は別の計算基盤である"
+    evidence: "### 情報モデル / ## 注意点"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "本物の資格情報は隔離領域の外にあり、Sentinel が許可した出口のリクエストにだけ差し込まれる"
+    reason_needed: "製品を、Meta が技術的に読めない暗号の境界だと読むか、出口の許可で秘密を守る設計だと読むかで、任せてよい操作が変わるため"
+example:
+  description: "接続の操作は 3 区分ある。読み取りと書き込みは、初回のあと常時許可を選ばない限り都度確認し、今回だけ・常時許可・拒否を選べる。機密な書き込みは毎回確認で、今回だけか拒否だけで、常時許可にはできない"
+  hypothetical: false
+  evidence: "### Connector ツールの必須区分"
+applicability:
+  - "受信箱を代理人に扱わせるとき、読み取りから始め、送信は別の承認にする"
+  - "予定を代理人に扱わせるとき、読み取りから始める"
+  - "店舗での購入を任せるとき、画面に出た内容だけを今回の承認にする"
+decision_criteria:
+  - "接続の初期値が、すべての書き込みと重要な読み取りの前に聞く設定か、あらゆる操作の前に聞く設定か"
+  - "承認したあと金額、宛先、範囲が変わっていれば、新しい承認が要る"
+  - "学習への利用は、英国向けヘルプでは最初オンで、オフは過去の対話にも及ぶ"
+  - "学習に使わない muse-spark-1.3 と、単価が下がり学習に使われ得る muse-spark-1.3-contributor を取り違えない"
+  - "音声入力が要る経路は muse-spark-1.3 のままにせず、音声理解は完全ではないので代わりは muse-spark-1.2 か muse-voice-transcribe-1.0 である"
+limitations:
+  - "研究記事は、公開版では Meta が支援、安全、運用のためにデータへ到達し得ると書く。2026 年 10 月 27 日時点で、Confidential VM が一般提供へ切り替わった告知は、開いた一次ページには無かった"
+  - "製品の全利用者の既定モデルを Muse Spark 1.3 や、より新しいモデル Muse Wonder だと決めない。Wonder は、製品の加入者から入る予定である"
+  - "初期展開は米国向けである。Link の支払いは米国とカナダの消費者向けで、カナダで Muse 製品自体が一般提供かは、開いた一次ページからは決められなかった"
+  - "接続を外しても、それまでの会話と、利用者について仮想マシン内に残る記録（メモリ）は消えない。それらとファイルと進行中の仕事を消すのは Reset だが、外へ送ったメールや店の注文は Reset では取り消されない"
+  - "会話の共有 URL が発見可能だったという二次情報がある。それを止めた記述は、開いた公式ヘルプと研究記事には無かった"
+unknowns:
+  - "Confidential VM の一般提供告知は、2026 年 10 月 27 日に開いた一次ページには無かった"
+  - "Muse 製品の全利用者に対する現行モデル ID を返す公開 API は、元記事は見つけていない"
+  - "カナダの Muse 製品自体の一般提供は、開いた一次ページでは閉じていない"
+  - "会話共有リンクの不具合と停止は、公式の一次ページを今回は確認していない"
+reviewed: true

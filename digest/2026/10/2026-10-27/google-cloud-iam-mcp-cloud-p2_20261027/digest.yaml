@@ -1,0 +1,65 @@
+source:
+  title: "Google Cloud IAM HelperのスキルとMCPで権限変更を見積もる"
+  url: null # Zenn 下書き (published: false)。公開 URL なし
+  path: "notes/zenn/articles/google-cloud-iam-mcp-cloud-p2_20261027.md"
+  primary:
+    - title: "Scale agents securely with IAM Helper Agent Skills and MCP Tools（Google Cloud Blog）"
+      url: "https://cloud.google.com/blog/products/identity-security/scale-agents-securely-with-iam-helper-agent-skills-and-mcp-tools/"
+    - title: "google/skills（commit 84e8150）"
+      url: "https://github.com/google/skills/tree/84e8150e4fa71bf422d5b224e215f5ba13864aa3"
+    - title: "MCP Reference: iam.googleapis.com"
+      url: "https://docs.cloud.google.com/iam/docs/reference/mcp"
+    - title: "Policy Simulator で IAM の変更を再評価する"
+      url: "https://docs.cloud.google.com/policy-intelligence/docs/simulate-iam-policies"
+  retrieved_at: "2026-10-28"
+archetype:
+  primary: architecture # 4スキル、gcloud、公式 MCP の境界
+  secondary: [governance] # 確認、リスク段、別承認者
+one_liner: >-
+  Google Cloud の IAM Helper は、権限の診断と変更を 4 本の手順書（スキル）に分ける。
+  読み取りは原則確認なし、変更は原則、人の確認のあとで gcloud を実行する。
+key_points:
+  - claim: "4 本は、403 の診断、過去のアクセスの再評価、許可と拒否の変更、期限付きの昇格（PAM）に分かれる。読み取りは原則確認なしで、ロール一覧の検索前だけ確認する。許可の binding、拒否ポリシー、entitlement、grant の作成・更新・削除・承認・申請の拒否・取消は Yes のあと gcloud で、依頼者フローの既存 entitlement への申請だけは実行前の Yes を挟まない"
+    evidence: "## IAM Helperとは"
+    status: fact
+  - claim: "リスクの低・中・高は警告文の強さを変えるだけで、確認は省略しない。会話の Yes を出す人と、コマンドを実行するエージェントが別人である検査は手順書に無い。別人にするには、変更チケットか PAM の別の承認者を手順の外に書く"
+    evidence: "## 特徴 / ## 運用（承認の残し方）"
+    status: fact
+  - claim: "公式のリモート MCP には、403 を説明する Policy Troubleshooter と、別ホストでのプロジェクトのロール作成・拒否作成がある。手順が書くのは Troubleshooter だけ。診断専用としてエージェントへ渡すと変更ツールまで届き、手順書の Yes は直接呼ぶ別クライアントには掛からない"
+    evidence: "## 構造（コンテナ図） / ## 注意点（MCP の読み取り専用） / ## 運用（エージェント権限の棚卸し）"
+    status: fact
+  - claim: "再評価は過去 90 日のうち直近 1,000 件のアクセスログを提案した許可でやり直す。適用してよいのは、終了コードが 0、失われるアクセスと失われるかもしれないアクセスがどちらも 0 件、各要素の error と UNKNOWN_CHANGE が無いときだけ。集計は失われる側の 2 つだけを数える。error と UNKNOWN_CHANGE は件数に入らない"
+    evidence: "## 利用方法（シミュレーションと適用） / ## ベストプラクティス（シミュレーターの失敗を適用条件にしない）"
+    status: fact
+  - claim: "拒否は許可より先に評価される。同じ権限を足しても 403 が残ることがある"
+    evidence: "## 特徴 / ## トラブルシューティング（同じ権限を足しても 403 が残る）"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "読み取りは原則確認なし（ロール一覧の検索前だけ確認する）。変更は原則 Yes のあと gcloud。例外は依頼者フローの既存 entitlement への申請。手順が書く MCP は Policy Troubleshooter だけ"
+    reason_needed: "確認の位置と、手順に含む MCP と含まない MCP の境界は、文章だけでは位置関係がつかみにくいため"
+example:
+  description: >-
+    記事の位置づけ表を 3 行に縮めたもの。IAM Helper の手順書は会話上の Yes または PAM の別承認者で止まる。
+    公式の IAM MCP はツールが変更を含むかの注釈と呼び出し元の IAM で止まり、確認文はサーバー側に無い。
+    Terraform の apply はレビューと pipeline の承認で止まり、望む状態をリポジトリに残すときに向く。
+  hypothetical: false
+  evidence: "## 特徴（似た置き方との位置づけ）"
+applicability:
+  - "既存の Google Cloud の階層で、403 の解消と一時的な権限昇格を進めたいとき"
+  - "許可の変更を適用する前に、直近のアクセスが失われないか見たいとき"
+  - "エージェントに渡す権限を、診断用と変更用に分けたいとき"
+decision_criteria:
+  - "診断用の閲覧と、変更用（プロジェクトの IAM 管理、拒否管理、PAM 管理）を別の主体に付けたか。変更用は、承認のある主体に置いたか"
+  - "いまの許可ポリシーの取得が失敗した、空、または提案との差分が無いとき、再評価へ進んでいないか"
+  - "entitlement が複数なら、プロジェクト、フォルダ、組織の順で狭い方を選ぶか"
+  - "作業が終わった grant を、申請した時間で外しているか。手動では取り消さない"
+  - "未認証を含む誰でも、または認証済みなら誰でも、への owner や editor などの基本ロール付与を拒否しているか"
+limitations:
+  - "スキル原文と公開 CLI は食い違う。拒否の更新は gcloud iam policies update。スキル原文の gcloud iam deny-policies update は公開 CLI に無い。拒否の条件に使えるのはリソースタグの関数だけで、スキル例の時刻条件はそのままでは作成できない"
+  - "MCP の拒否作成はプロジェクトだけ。gcloud の拒否は組織、フォルダ、プロジェクトに付けられる"
+  - "再評価できないのは、拒否ポリシー、VPC Service Controls、一般のトラブルシュート、条件付き binding の変更"
+  - "手順の npx 接続例は公開 npm に無く起動しない。roles/basic.viewer は基本ロール一覧に無い"
+unknowns:
+  - "依頼者の申請時間 \"1h\" が gcloud の公開書式で受理されるかは確定できない"
+reviewed: true

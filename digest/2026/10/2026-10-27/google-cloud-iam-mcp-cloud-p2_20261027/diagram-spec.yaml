@@ -1,0 +1,59 @@
+type: structure
+title: "読み取りと変更の分かれ"
+message: "読み取りは確認なし、変更は人の Yes のあと gcloud。手順が MCP として書くのは診断だけ"
+source: "notes/zenn/articles/google-cloud-iam-mcp-cloud-p2_20261027.md"
+components:
+  - id: skills
+    label: "IAM Helper の4スキル"
+    meaning: "診断、再評価、許可と拒否、期限付き昇格の手順書"
+  - id: human
+    label: "確認する人"
+    meaning: "変更の Yes を出す人"
+  - id: gcloud
+    label: "gcloud"
+    meaning: "確認後の変更の実行口"
+  - id: gcp
+    label: "IAM と PAM"
+    meaning: "許可、拒否、診断、一時昇格の実体"
+  - id: pt
+    label: "Policy Troubleshooter"
+    meaning: "403 の理由を説明する公式 MCP。手順に含めるのはこれだけ"
+  - id: iam_mcp
+    label: "IAM MCP"
+    meaning: "ロール作成とプロジェクト拒否の作成を含む公式 MCP。4スキルの変更手順は使わない"
+groups:
+  - id: outside
+    label: "手順の矢印は無い"
+    members: [iam_mcp]
+relationships:
+  - from: skills
+    to: gcp
+    label: "読み取りは確認なし"
+  - from: skills
+    to: human
+    label: "変更の前"
+  - from: human
+    to: gcloud
+    label: "Yes"
+  - from: gcloud
+    to: gcp
+    label: "変更を実行"
+  - from: skills
+    to: pt
+    label: "診断の手順に含める"
+omitted:
+  - item: "Cloud Asset と Policy Assist の MCP"
+    reason: "4スキルの手順に含まれない。診断専用と誤解したときの変更到達は IAM MCP の変更ツールが主因なので、図には IAM MCP だけ残す"
+  - item: "依頼者フローで既存 entitlement への申請が Yes を挟まない例外"
+    reason: "図は原則の経路。例外は本文の核心ポイントに書く"
+  - item: "シミュレーターと補助スクリプト"
+    reason: "変更の正本が確認後の gcloud であることにまとめた"
+  - item: "開発者とパイプライン"
+    reason: "依頼の出し手は、読み取りと変更の分かれに関係しない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## IAM Helperとは（読み取りは確認なし。変更は明示的な確認のあとで gcloud）"
+  - "## 構造（コンテナ図。MCP として本文に書くのは Policy Troubleshooter だけ。変更の正本は確認後の gcloud）"
+  - "## 注意点（MCP の読み取り専用。create_role と create_deny_policy を含む）"

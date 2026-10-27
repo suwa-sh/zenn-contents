@@ -1,0 +1,65 @@
+source:
+  title: "マルチエージェントを本番で動かす4つの問題を一次資料で切り分ける"
+  url: null
+  path: "notes/zenn/articles/katelyn-lesse-multiagent-problem_20261027.md"
+  primary:
+    - title: "Katelyn Lesse の X の論考"
+      url: "https://x.com/katelyn_lesse/status/2114542280535318557"
+    - title: "Katelyn Lesse: エージェントの安全な構造とサンドボックス（2026-09-13）"
+      url: "https://www.katelynlesse.com/blog/secure-agents-architecture-and-sandboxing"
+    - title: "GKE: About Agent Substrate"
+      url: "https://docs.cloud.google.com/kubernetes-engine/ai-ml/about-agent-substrate"
+    - title: "Google Agent Identity の概要"
+      url: "https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/agent-identity-overview"
+    - title: "open-telemetry/semantic-conventions-genai"
+      url: "https://github.com/open-telemetry/semantic-conventions-genai"
+  retrieved_at: "2026-10-28"
+archetype:
+  primary: decision
+  secondary: [architecture, governance]
+one_liner: "実行基盤・身元と認可・隔離・監視と停止の未解決度は揃っていない。単一クラウドの認可には手順があり、改ざん耐性・全体停止・出口の資格情報注入は開いたままである。"
+key_points:
+  - claim: "論考の規模の表現は例えである。生きた Pod のまま大量のアイドルを置くことは Kubernetes と GKE のドキュメントが否定している。待機ワーカーへ多重化する GKE の Agent Substrate はすべての仕事の前提ではなく、その本番 GA は申請して承認された顧客だけである"
+    evidence: "## Katelyn Lesse の論考とは / ### 論考に出てくる Agent Substrate / ## 4つの問題はどこまで未解決なのか"
+    status: fact
+  - claim: "本人のブログは、ハーネス、セッション、資格情報、記録、停止をサンドボックスの外に置く。外向き通信は出口プロキシだけを通り、許可された宛先にだけ資格情報を足す。サンドボックスの中には仮の値だけを置く"
+    evidence: "### 本人のブログにある「脳と手を分ける」設計"
+    status: fact
+  - claim: "論考の「認可は空洞」は単一クラウドでは言い過ぎである。Google は 24 時間で回る証明書と、ユーザーの代わりに動いたときのエージェントとユーザーの両方の身元を残す監査を書く。Entra は、種類ごとの登録（親）への事前同意を個々のエージェント（子）がテナント内で継承する。数週間続く承認の標準も、ベンダーをまたぐ委任も、公開された仕様では閉じていない"
+    evidence: "### 「認可は空洞」は、単一のクラウドの中では言い過ぎ / ## 4つの問題はどこまで未解決なのか"
+    status: fact
+  - claim: "本人は、カーネルを共有するコンテナはセキュリティの境界ではないと書き、microVM を好む。GKE の Agent Substrate の既定は gVisor で、インストーラは microVM を構成しない。Vercel は Firecracker を境界として説明したうえで、本番サンドボックスでのホストメモリの漏えいを公開している"
+    evidence: "### 本人のブログにある「脳と手を分ける」設計 / ### 「ここ数週間の中核ソフトウェアの脆弱性」は具体的に特定されていない / ## 4つの問題はどこまで未解決なのか"
+    status: fact
+  - claim: "記録をサンドボックスの外に出すだけでは、改ざんできない監査にはならない。生成 AI 向け OpenTelemetry の span 名は Development で、エージェントが自分の span を偽造できない保証は無い。系全体を一度に止め、同時に資格情報も切る単一の制御は、確認した公開ドキュメントには無かった"
+    evidence: "### トレースの改ざん耐性と全体の停止は、仕様では保証されていない"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "判断・資格情報・記録・停止は未信頼コードの外に置き、外向き通信は出口プロキシだけが資格情報を足す"
+    reason_needed: "今期の設計制約の1番が、この配置を未信頼コードと同じファイルシステムに置かないことだから"
+example:
+  description: "Agent Substrate の自己申告は資料ごとに違う。Google Cloud Blog（2026-09-16）は再開 500 ms 未満と標準コンテナ比の密度10倍だが vCPU と RAM は無い。同じブログ（2026-10-22）はエージェント 200,000 を書く。OSS README は再開 400 ms 未満と毎秒 1,500 超の起動だがパーセンタイルは無い。GKE About は再開 1秒未満で、10倍・500 ms・200,000 はこのページに無い"
+  hypothetical: false
+  evidence: "### Agent Substrate の性能値は、資料ごとに比べている相手が違う"
+applicability:
+  - "エージェント基盤で、今期に固定する設計制約を決める"
+  - "GKE の Agent Substrate を、容量計画や資格情報の注入に使うかを決める"
+  - "停止手順を、製品ごとの止まる範囲で書く"
+decision_criteria:
+  - "資格情報の注入を、GKE の製品ドキュメントが未サポートと書いているのに、Google Cloud Blog の一文で補っていないか"
+  - "標準コンテナ比の密度10倍、エージェント数 200,000、再開 500 ms を、測定条件が公開される前に容量計画の入力にしていないか"
+  - "監査ログに、エージェントの身元と、ユーザーの代わりならユーザーの身元の両方が残るか。Google の 24 時間の証明書を即時失効の代わりにしていないか"
+  - "停止の単位（セッション、スレッド、API キー、ゲートウェイでの拒否）をランブックに分けて書いたか"
+  - "生成 AI 向け OpenTelemetry の名前を、長期の契約にしていないか"
+limitations:
+  - "論考は中核ソフトウェアの脆弱性がパッチより速いと書くが、CVE 番号は無い。時期が重なる公開 CVE は、論考の主張の裏づけには使えない"
+  - "Google のブログと OSS README は資格情報を箱の外で注入すると書き、GKE の About は出口制御と資格情報の注入を未サポートと書く。出荷済みとして読むなら製品ドキュメントを優先する。実装の実態は公開資料では決められない"
+  - "Google の Agent Identity が挙げる実行環境に GKE の Agent Substrate は入っていない。エージェントを削除しても IAM のバインディングは残る"
+  - "Claude の interrupt は、動的なワークフローを含むセッションでは run を終わらせない。人間のログアウトは API キーに影響しない。Redpanda の kill switch は呼び出しを拒否するが、ランタイムは動き続ける"
+  - "OpenSandbox の資格情報ボールトは、pause のあとサイドカーの保管庫が空になること、DNS だけの出口制御では注入を安全に有効にできないこと、プロキシが落ちると捕捉した通信は遮断側に倒れることを書いている"
+unknowns:
+  - "ブログと GKE 製品ドキュメントのどちらが、資格情報注入の実装の実態に近いかは公開資料からは決められない"
+  - "系全体の同時停止と資格情報の切断を、1つの出荷済み仕様が保証した制御は、確認した範囲では見つからなかった"
+  - "Agent Substrate の密度・再開時間の自己申告には、ハードウェア構成、パーセンタイル、スナップショットのサイズが書かれていない"
+reviewed: true
