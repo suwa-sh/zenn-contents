@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (577)
+## Articles: 下書き (578)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-10-28 | [🔐 Workers AIのGLM-5.3で別セッションのKVが応答に混入した](articles/cloudflare-workers-ai-kv-p1_20261028.md) | Cloudflare, LLM, Security, SGLang |
 | 2026-10-28 | [🔍 newmoのPR判定はコードが決め、レビュー待ちはラベルで数える](articles/newmo-pr-tech-newmo-me-entry-p2_20261028.md) | GitHub, LLM, CI, AIAgent, CodeReview |
+| 2026-10-28 | [🧭 個人向けChatGPTの業務利用を165活動で国別に見る](articles/openai-100-165-chatgpt-ai-p7_20261028.md) | ChatGPT, OpenAI, LLM |
 | 2026-10-27 | [🔍 Claude Codeチームのコードレビュー運用と公開版Code Reviewの境界](articles/claude-code-team-review_20261027.md) | claudecode, codereview, ai, cicd, githubactions |
 | 2026-10-27 | [🧪 dbt Labsが同一スキル80回で比べた文脈の渡し方](articles/dbt-48-5-43-2-getdbt-context-p3_20261027.md) | dbt, Snowflake, MCP, LLM |
 | 2026-10-27 | [🔐 Google Cloud IAM HelperのスキルとMCPで権限変更を見積もる](articles/google-cloud-iam-mcp-cloud-p2_20261027.md) | GoogleCloud, IAM, MCP, PAM |
