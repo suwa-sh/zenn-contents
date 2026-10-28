@@ -7,17 +7,18 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (578)
+## Articles: 下書き (579)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-29 | [📦 Google の Agent Skills は文言の変更を製品として出荷する](articles/google-agent-skills-agent-p1_20261029.md) | GoogleCloud, AIAgent, AgentSkills, LLM |
+| 2026-10-29 | [🔧 Vercel CIベータが選ぶタスクと残す既存CIの条件](articles/vercel-ci-ci-cd-vercel-ci-p3_20261029.md) | Vercel, Turborepo, GitHub, DevOps |
 | 2026-10-28 | [🔐 Workers AIのGLM-5.3で別セッションのKVが応答に混入した](articles/cloudflare-workers-ai-kv-p1_20261028.md) | Cloudflare, LLM, Security, SGLang |
 | 2026-10-28 | [🔍 newmoのPR判定はコードが決め、レビュー待ちはラベルで数える](articles/newmo-pr-tech-newmo-me-entry-p2_20261028.md) | GitHub, LLM, CI, AIAgent, CodeReview |
 | 2026-10-28 | [🧭 個人向けChatGPTの業務利用を165活動で国別に見る](articles/openai-100-165-chatgpt-ai-p7_20261028.md) | ChatGPT, OpenAI, LLM |
 | 2026-10-27 | [🔍 Claude Codeチームのコードレビュー運用と公開版Code Reviewの境界](articles/claude-code-team-review_20261027.md) | claudecode, codereview, ai, cicd, githubactions |
 | 2026-10-27 | [🧪 dbt Labsが同一スキル80回で比べた文脈の渡し方](articles/dbt-48-5-43-2-getdbt-context-p3_20261027.md) | dbt, Snowflake, MCP, LLM |
 | 2026-10-27 | [🔐 Google Cloud IAM HelperのスキルとMCPで権限変更を見積もる](articles/google-cloud-iam-mcp-cloud-p2_20261027.md) | GoogleCloud, IAM, MCP, PAM |
-| 2026-10-27 | [🧱 マルチエージェントを本番で動かす4つの問題を一次資料で切り分ける](articles/katelyn-lesse-multiagent-problem_20261027.md) | AIAgent, Kubernetes, Security, OpenTelemetry, Sandbox |
 | 2026-10-27 | [🪄 Metaの個人エージェントMuseを支えるSecure VMの構造とデータ設計](articles/meta-muse_20261027.md) | Meta, AIエージェント, セキュリティ, LLM, API |
 | 2026-10-26 | [📘 AnthropicのSDLCプレイブックで次の作業が始まる条件](articles/anthropic-sdlc-claude-ja-p1_20261026.md) | ClaudeCode, SDLC, Anthropic, DevOps |
 | 2026-10-26 | [🔒 Apple Private Cloud Computeのセキュリティ設計を公開物から読み解く](articles/apple-security-pcc_20261026.md) | Apple, セキュリティ, プライバシー, AppleIntelligence |
@@ -590,10 +591,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (197)
+## Articles: 公開済み (198)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-10-29 | [🧱 マルチエージェントを本番で動かす4つの問題を一次資料で切り分ける](articles/katelyn-lesse-multiagent-problem_20261027.md) | AIAgent, Kubernetes, Security, OpenTelemetry, Sandbox |
 | 2026-10-24 | [🛡️ OpenAIが提案した協調開示とPHPの致命的欠陥二件を手順に落とす](articles/openai-oss-openai-index-of-p1_20261022.md) | PHP, OpenAI, Security, CVE, OSS |
 | 2026-10-22 | [🔐 日本企業向け侵害の攻撃元で確認された自律型診断ARTEX](articles/artex-gmo-cybersecurity-p1_20261020.md) | Security, AIAgent, LLM, Governance |
 | 2026-10-20 | [🔬 ソースのないアプリをエージェントに逆解析させるREAの構造と証拠モデル](articles/rea_20261018.md) | ReverseEngineering, MCP, AIAgent, Ghidra, CLI |

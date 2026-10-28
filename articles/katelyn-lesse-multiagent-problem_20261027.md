@@ -3,7 +3,8 @@ title: "マルチエージェントを本番で動かす4つの問題を一次�
 emoji: "🧱"
 type: "tech"
 topics: ["AIAgent", "Kubernetes", "Security", "OpenTelemetry", "Sandbox"]
-published: false
+published: true
+published_at: 2026-10-29
 ---
 
 Anthropic で Platform engineering を率いる Katelyn Lesse が、2026-10-26 に X へ論考を投稿しました。テーマは、マルチエージェントシステムを本番で動かすときにエンジニアが解くべき新しい問題です。論考は問題を4つの領域に分けています。実行基盤、身元と認可、隔離、監視と停止です。
