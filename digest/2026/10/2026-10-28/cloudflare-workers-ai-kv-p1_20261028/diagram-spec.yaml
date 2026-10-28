@@ -1,0 +1,64 @@
+type: behavior
+title: "拒否後に予約ページを読む"
+message: "超過した入力は1トークンへ差し替わるが、分離したDecodeは予約した残りを前のKVのまま読んでHTTP 200を返す"
+source: "notes/zenn/articles/cloudflare-workers-ai-kv-p1_20261028.md"
+states:
+  - id: over
+    label: "超過入力"
+    meaning: "681,280トークンを超えるプロンプト。呼び出しは一回"
+  - id: reserve
+    label: "長さぶん予約"
+    meaning: "Decodeが、送った長文の長さのページを確保したままにする"
+  - id: replace
+    label: "1トークンへ差替"
+    meaning: "Prefillが拒否し、プロンプトの中身を1トークンへ置き換える。要求は列に残る"
+  - id: transfer
+    label: "1ページを転送"
+    meaning: "Prefillが1ページだけをDecodeへ渡し、完了を通知する"
+  - id: stale
+    label: "残りは前のKV"
+    meaning: "予約した幅の残りはゼロクリアされず、前の要求のKVが残る。Decodeはそれを読んで生成する"
+  - id: http
+    label: "HTTP 200"
+    meaning: "続きとして読める文章が成功に見える応答で返る"
+groups:
+  - id: decode
+    label: "Decode"
+    members: [reserve, stale]
+  - id: prefill
+    label: "Prefill"
+    members: [replace, transfer]
+transitions:
+  - from: over
+    to: reserve
+    label: "Decodeへ届く"
+  - from: over
+    to: replace
+    label: "同じ入力がPrefillへ"
+  - from: replace
+    to: transfer
+    label: "拒否のあと"
+  - from: transfer
+    to: stale
+    label: "完了を通知"
+  - from: reserve
+    to: stale
+    label: "ページは消えない"
+  - from: stale
+    to: http
+    label: "続きとして返す"
+omitted:
+  - item: "単一ノードでは同じ差し替えのあとクライアントがエラーを受け取る"
+    reason: "図は分離構成で予約ページを読む流れに絞る。単一ノードがエラーになることは本文に残す"
+  - item: "転送中断のあと、遅れた書き込みが次の要求のページへ着地する経路"
+    reason: "公表経路（拒否が毎回ハンドオフへ進み、受信側が前のページを読む）とは向きが逆の別経路。確認項目に残す"
+  - item: "155件、版番号、canary、Mooncake、RDMA"
+    reason: "件数と是正と転送の製品名は、予約幅と1ページのずれというこの図の主張に要らない"
+  - item: "finished が偽のまま入場する内部の手続き"
+    reason: "拒否を見ずに受け渡しへ進むことは本文の是正の説明に残し、図は呼び出し側から見えるページの読みに絞る"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### 拒否のあと、予約したページを読む（超過は1トークンへ差し替わるが、分離のDecodeは予約した全ページを読む）"
+  - "### 拒否のあと、予約したページを読む（図の手順。利用者の操作は入口への一回の呼び出し）"

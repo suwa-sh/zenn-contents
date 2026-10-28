@@ -1,0 +1,36 @@
+type: structure
+title: "個人プランの分類地図と、混ぜない二つの層"
+message: "この公開は個人プランの分類地図だけを出し、組織の利用量と人の判断は別の層で持つ"
+source: "notes/zenn/articles/openai-100-165-chatgpt-ai-p7_20261028.md"
+components:
+  - id: map
+    label: "個人プランの分類地図"
+    meaning: "個人向け ChatGPT の業務メッセージが、どの活動へ振られたかの国と四半期のシェア"
+  - id: org
+    label: "組織の本番利用"
+    meaning: "enterprise、API、Codex、他社ツール。この表の外"
+  - id: judgment
+    label: "人に残す判断"
+    meaning: "事実の採否、対外的な責任、例外の処理。ラベルの外で確認する"
+groups:
+  - id: published
+    label: "この公開が出す範囲"
+    members: [map]
+relationships:
+  - from: map
+    to: org
+    label: "シェアから推定しない"
+  - from: map
+    to: judgment
+    label: "ラベルは品質を示さない"
+omitted:
+  - item: "メッセージから 332 分類、165 バケット、国×四半期の行へ至る分類の流れ"
+    reason: "伝えたいことは三つの層の境界であり、集計の手順ではないため"
+  - item: "74か国の上位10の集中、日本と米国のシェア、Fleiss κ、約43%の Other IWA、プライバシー予算の ε"
+    reason: "数値は本文の判断材料であり、層の境界を示す図には載せないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 育成と評価では三つの層を混ぜない（第1層はこの公開だけ。第2層の本番利用量はシェアから推定しない。第3層の事実と対外的な責任はラベルとは別に人が持つかを書く）"
+  - "## 作業の種類で切る問いに、この表はどこまで答えるか（地図として上位の作業種類を知り、正式な項目と成果は自社の作業名と別測定で持つ）"

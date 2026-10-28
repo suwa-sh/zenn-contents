@@ -1,0 +1,63 @@
+type: behavior
+title: "承認はコードが決め、LLMは所見を返す"
+message: "生成物だけと人が必ず見る領域は機械ゲートが決め、それ以外の承認は決定式が決める。LLM は所見を返すだけである"
+source: "notes/zenn/articles/newmo-pr-tech-newmo-me-entry-p2_20261028.md"
+states:
+  - id: pr
+    label: "PR"
+    meaning: "レビューできる状態になったプルリクエスト"
+  - id: gate
+    label: "機械ゲート"
+    meaning: "パスと差分の形だけを見る最初の段。LLM は使わない"
+  - id: llm
+    label: "LLMの所見"
+    meaning: "差分を読み、業務ロジックの変化、確信度、リスクを返す。承認はしない"
+  - id: decide
+    label: "決定式"
+    meaning: "Go の純粋関数。同じ入力なら同じ結果を返し、approve か needs_human かを決める"
+  - id: ok
+    label: "approve"
+    meaning: "bot が承認する。必要承認が 1 なら、その 1 枠を埋める"
+  - id: human
+    label: "needs_human"
+    meaning: "人がレビューする。この結果と判定失敗には needs_human ラベルが付く"
+transitions:
+  - from: pr
+    to: gate
+    label: "レビュー可能になる"
+  - from: gate
+    to: ok
+    label: "生成物だけ"
+  - from: gate
+    to: human
+    label: "人が必ず見る領域、または中身が見えない"
+  - from: gate
+    to: llm
+    label: "それ以外"
+  - from: llm
+    to: decide
+    label: "所見を渡す"
+  - from: decide
+    to: ok
+    label: "どの条件にも当たらない"
+  - from: decide
+    to: human
+    label: "リスク、振る舞いの変化、確信度不足、結果が無い"
+omitted:
+  - item: "重要領域または 1,000 行超の同じ判定を 3 回（懸念は 1 票でも懸念あり、確信度は最小）"
+    reason: "伝えたいことは所見と決定の分離であり、繰り返し回数は分岐の本数を増やすため。重なりの未記載は本文の限界に残す"
+  - item: "戻しやすさ、本番での検知、検証証拠の補助評価"
+    reason: "本判定のあとで、いまは approve か needs_human かに使わない所見のため"
+  - item: "決定式の除外パス"
+    reason: "元記事の図の決定式から needs_human への矢印に名前が無い。本文の条件には残す"
+  - item: "確信度の閾値 0.80 / 0.95 と、非オーナーへの +0.10"
+    reason: "決定式の内部の数であり、矢印の意味（確信度不足で人に回る）に畳む。数値は本文の限界に残す"
+  - item: "承認の取り消しと、人のレビューや人の dismiss は自動で承認し直さない"
+    reason: "振り分けの順ではなく、承認したあとの条件のため"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "mermaid flowchart TD（機械ゲート、生成物だけ、人が必ず見る領域または中身が見えない、LLM、決定式、approve、needs_human）"
+  - "### 決定式（approve を返すのは最後の純粋関数。終了コードで CI に渡す）"
+  - "### ラベルと、見えない変更（needs_human と判定失敗にラベルを付ける）"
