@@ -1,0 +1,59 @@
+type: behavior
+title: "許可のあとに資源を押さえてから発送する"
+message: "許可は即時の発送ではない。資源を押さえられてから発送し、押さえに失敗したら発送しない"
+source: "notes/zenn/articles/arxiv-abs-2610-35978-p8_20261029.md"
+states:
+  - id: intent
+    label: "取ろうとする行為"
+    meaning: "発送前に残す、結果を伴う行為の記録"
+  - id: admit
+    label: "入場判定"
+    meaning: "権限、証拠、義務のガード。結論の優先は拒否、再承認、待ち、許可"
+  - id: no_send
+    label: "発送しない"
+    meaning: "拒否、再承認、待ち。発送せず、その事実を残す"
+  - id: reserve
+    label: "資源の確保"
+    meaning: "許可のあと、共有の予算や在庫を発送の前に押さえる"
+  - id: send
+    label: "外への発送"
+    meaning: "結果を伴う行為を外の世界へ出す"
+  - id: reconcile
+    label: "事実の照合"
+    meaning: "発送した事実に加え、拒否や待ちの事実も突き合わせる"
+transitions:
+  - from: intent
+    to: admit
+    label: "判定へ渡す"
+  - from: admit
+    to: no_send
+    label: "拒否、再承認、待ち"
+  - from: admit
+    to: reserve
+    label: "許可"
+  - from: reserve
+    to: no_send
+    label: "確保に失敗"
+  - from: reserve
+    to: send
+    label: "確保できた"
+  - from: send
+    to: reconcile
+    label: "発送した事実"
+  - from: no_send
+    to: reconcile
+    label: "拒否や待ちの事実"
+omitted:
+  - item: "判定ベクトルの7項"
+    reason: "図の主題は発送の条件であり、判定の項の一覧は本文の要点に残す"
+  - item: "人の決定が委任や承認を更新する横からの更新"
+    reason: "入場から照合までの縦の鎖が主題のため"
+  - item: "ライフサイクルのうち、確認または不明の独立した段"
+    reason: "許可が即時の発送でないことだけを示すため。提案は取ろうとする行為、準備は資源の確保に対応させ、確認または不明は図に入れない"
+  - item: "再承認の、承認へ上げる行先"
+    reason: "図の主題は発送しないことなので、拒否、再承認、待ちを発送しないへまとめた。承認へ上げる違いは本文で定義する"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### 入場判定と実行の鎖"

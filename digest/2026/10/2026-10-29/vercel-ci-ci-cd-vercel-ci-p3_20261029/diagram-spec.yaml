@@ -1,0 +1,55 @@
+type: structure
+title: "足す範囲と失敗にしない穴"
+message: "GitHub の push から ci タグのタスクを Linux で実行し、失敗だけを保護が止める。影響外は失敗にせず、範囲外は既存 CI に残す"
+source: "notes/zenn/articles/vercel-ci-ci-cd-vercel-ci-p3_20261029.md"
+components:
+  - id: push
+    label: "GitHub への git push"
+    meaning: "Vercel CI の唯一のトリガー"
+  - id: tasks
+    label: "ci タグのタスク"
+    meaning: "package#task 単位で選ばれる実行対象"
+  - id: linux
+    label: "Linux で実行"
+    meaning: "別マシンで走るか、同じ入力なら Remote Cache から復元する"
+  - id: protect
+    label: "branch protection"
+    meaning: "失敗したチェックだけがマージを止める"
+  - id: gap
+    label: "別のテスト"
+    meaning: "影響判定の漏れを見る先"
+  - id: existing
+    label: "既存の CI"
+    meaning: "Linux 以外、GitHub 以外、git push 以外の検査を残す"
+groups:
+  - id: vercel
+    label: "Vercel CI が担う"
+    members: [push, tasks, linux]
+  - id: keep
+    label: "範囲外は残す"
+    members: [existing]
+relationships:
+  - from: push
+    to: tasks
+    label: "ci タグを選ぶ"
+  - from: tasks
+    to: linux
+    label: "実行または復元"
+  - from: linux
+    to: protect
+    label: "失敗だけ止める"
+  - from: tasks
+    to: gap
+    label: "判定の漏れを見る"
+omitted:
+  - item: "CPU minute、環境変数の Strict Mode、e2e の OIDC、2〜6 倍、Hobby と Private Beta の文面差"
+    reason: "足す範囲と、失敗にしない穴が判断の中心のため"
+  - item: "既存 CI から Vercel CI への矢印"
+    reason: "記事は置き換えではなく、範囲外を残すと書く。接続関係は無い"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "冒頭 / ## Vercel CIとは / ### 操作と、push からチェックまで"
+  - "### 保護ブランチが見るもの"
+  - "## どの条件なら足すか / ### 実行できる場所"
