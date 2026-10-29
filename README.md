@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (580)
+## Articles: 下書き (581)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-30 | [🤖 手元のAI CLIを常駐チームにするOpenBotの構造とデータ設計](articles/open-bot_20261030.md) | AIエージェント, ClaudeCode, Codex, Electron, SQLite |
 | 2026-10-29 | [🧪 エージェントの業務テストに委任・義務・状態変化を含める](articles/arxiv-abs-2610-35978-p8_20261029.md) | AIAgent, Testing, LLM, SoftwareEngineering |
 | 2026-10-29 | [📦 Google の Agent Skills は文言の変更を製品として出荷する](articles/google-agent-skills-agent-p1_20261029.md) | GoogleCloud, AIAgent, AgentSkills, LLM |
 | 2026-10-29 | [🔧 Vercel CIベータが選ぶタスクと残す既存CIの条件](articles/vercel-ci-ci-cd-vercel-ci-p3_20261029.md) | Vercel, Turborepo, GitHub, DevOps |
