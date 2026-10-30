@@ -7,12 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (583)
+## Articles: 下書き (585)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-10-30 | [🧭 Amazonの開発者メモはAIの所見と採用の端を分けて残す](articles/amazon-ai-aboutamazon-company-p1_20261030.md) | Amazon, AI, SoftwareEngineering, Leadership |
 | 2026-10-30 | [🛡️ CNCFブログはエージェントの境界を許されたツール集合として整理する](articles/cncf-cncf-io-2026-boundary-p6_20261030.md) | CNCF, AIAgent, Kubernetes, Security, MCP |
+| 2026-10-30 | [🛡️ Gemini 4 Carbonの限定提供で防御チームが契約前に切る条件](articles/google-gemini-carbon-google-p10_20261030.md) | Gemini, GoogleCloud, Security, LLM |
+| 2026-10-30 | [🤖 Microsoft Copilot harnessの全社共通化とSDKの二つの実行面](articles/microsoft-copilot-sdk-forest-p9_20261030.md) | Azure, GitHub, AIAgent, Copilot |
 | 2026-10-30 | [🤖 手元のAI CLIを常駐チームにするOpenBotの構造とデータ設計](articles/open-bot_20261030.md) | AIエージェント, ClaudeCode, Codex, Electron, SQLite |
 | 2026-10-29 | [🧪 エージェントの業務テストに委任・義務・状態変化を含める](articles/arxiv-abs-2610-35978-p8_20261029.md) | AIAgent, Testing, LLM, SoftwareEngineering |
 | 2026-10-29 | [📦 Google の Agent Skills は文言の変更を製品として出荷する](articles/google-agent-skills-agent-p1_20261029.md) | GoogleCloud, AIAgent, AgentSkills, LLM |
