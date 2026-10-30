@@ -1,0 +1,51 @@
+type: structure
+title: "何ができるかの正本"
+message: "何ができるかの正本は、宣言したツール集合と呼び出しごとの認可であり、実行中の身元はその定義を書き換えられない"
+source: "notes/zenn/articles/cncf-cncf-io-2026-boundary-p6_20261030.md"
+components:
+  - id: identity
+    label: "ワークロード身元"
+    meaning: "短命で検証された認証情報。動いている処理そのものに発行する"
+  - id: declared
+    label: "宣言したツール集合"
+    meaning: "保持してよいツールを、宣言して管理する対象で決める"
+  - id: invoke
+    label: "呼び出しごとの認可"
+    meaning: "起動のたびに、してよいことを判定する"
+  - id: keystone
+    label: "要石"
+    meaning: "実行中の身元は、権限を定義するオブジェクトを書き換えられない"
+  - id: reviewed
+    label: "レビュー済みの差分"
+    meaning: "人か、エージェントの身元とは別のパイプラインだけが変更する"
+groups:
+  - id: capability
+    label: "能力の層"
+    members: [declared, invoke]
+relationships:
+  - from: identity
+    to: declared
+    label: "鍵になる"
+  - from: declared
+    to: invoke
+    label: "呼び出しごとに判定"
+  - from: keystone
+    to: declared
+    label: "変更できない"
+  - from: reviewed
+    to: declared
+    label: "変更はここだけ"
+omitted:
+  - item: "到達の環"
+    reason: "接続してよい相手を限る層であり、どのツールが見えるかの正本ではないため"
+  - item: "データの環"
+    reason: "見てよいレコードは、データを持つ系が別に強制するため"
+  - item: "プロンプトの禁止"
+    reason: "意図の記録であり、何ができるかの正本ではないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### ツールは能力の二段と要石にある"
+  - "### 層を分けた範囲で残る結論"
+  - "### 採る配置"

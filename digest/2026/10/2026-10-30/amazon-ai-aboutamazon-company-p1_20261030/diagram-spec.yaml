@@ -1,0 +1,37 @@
+type: structure
+title: "三つの記録は成果の外に置く"
+message: "所見、学習、採用の端は混ぜない。顧客と事業への影響は、その外側の成果である"
+source: "notes/zenn/articles/amazon-ai-aboutamazon-company-p1_20261030.md"
+components:
+  - id: finding
+    label: "所見"
+    meaning: "今の道具を試し、役立たなかった作業"
+  - id: learning
+    label: "学習"
+    meaning: "まだ日常の仕事に適用していない人"
+  - id: tails
+    label: "採用の端"
+    meaning: "AI採用の下位10%と上位10%"
+  - id: impact
+    label: "顧客と事業への影響"
+    meaning: "三つの外にある成果の軸"
+groups:
+  - id: records
+    label: "混ぜずに残す記録"
+    members: [finding, learning, tails]
+relationships: [] # 分離は枠の内外で示す。成果へ向かう矢印は、記録が成果になる手順に見えるため描かない
+omitted:
+  - item: "所見から成果への「解決を探す」、学習から成果への「学んで適用する」、採用の端から成果への「理由と配送の対応」"
+    reason: "元記事の図には成果へ向かう矢印がある。この1枚の伝えたいことは記録を成果の外に置くことで、矢印は記録が成果を生む手順に見えるため外した"
+  - item: "役立った作業"
+    reason: "三つの記録の名前ではなく、所見の対になる作業であるため"
+  - item: "採用の端を下位10%と上位10%の二つの箱に分けること"
+    reason: "両端は一つの組織の見方であり、下位は理由、上位は配送の増加が伴うかは本文で書くため"
+  - item: "入力指標の標的化、二次報道、frontier teams"
+    reason: "記録の分かれ方とは別の主張なので、この1枚には入れないため"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "### 三つの記録の分かれ方。顧客と事業への影響は、三つの外にある成果の軸である"
+  - "## 三つの記録を混ぜずに残す。所見、学習、採用の端は混ぜず、顧客と事業への影響はその外側の成果の軸である"

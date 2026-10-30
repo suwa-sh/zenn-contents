@@ -1,0 +1,55 @@
+type: structure
+title: "指定がログの残り先を分ける"
+message: "注文書の指定が、公開条項から先に読めるログの残り先を分ける。指定が無ければ残り日数は確定しない"
+source: "notes/zenn/articles/google-gemini-carbon-google-p10_20261030.md"
+components:
+  - id: early
+    label: "どちらでもない先行アクセス"
+    meaning: "Google Cyber Model でも Frontier Cyber でもない、指定の無い先行アクセス"
+  - id: cyber
+    label: "Google Cyber Model"
+    meaning: "節31(a)が掛かる指定"
+  - id: frontier
+    label: "Frontier Cyber"
+    meaning: "節31(b)が節34を適用する指定"
+  - id: unknown
+    label: "残り日数は未確定"
+    meaning: "公開条項だけでは、入出力が何日残るか確定しない"
+  - id: customer_log
+    label: "顧客が保持するログ"
+    meaning: "節31(a)(iv)。日数は、この公開条項の範囲には無い"
+  - id: account_30
+    label: "アカウント内 最大30日"
+    meaning: "節34。安全と契約順守の自動確認のあと削除する"
+groups:
+  - id: designation
+    label: "契約上の3択"
+    members: [early, cyber, frontier]
+  - id: retention
+    label: "ログの残り先"
+    members: [unknown, customer_log, account_30]
+relationships:
+  - from: early
+    to: unknown
+    label: "指定が無い"
+  - from: cyber
+    to: customer_log
+    label: "節31(a)(iv)が掛かる"
+  - from: frontier
+    to: account_30
+    label: "節31(b)が節34を適用"
+omitted:
+  - item: "Frontier Cyber から顧客が保持するログへの矢印"
+    reason: "節31(b)は節31(a)の(iv)を適用しない。掛かる関係だけを描き、掛からないことは図の中の説明にしない"
+  - item: "節20(h)の、アカウントの外への保存制限"
+    reason: "サービス一般の制限で、注文書の指定の違いではないため"
+  - item: "通常モデルの最大90日、開発者向け API の最大55日、ゼロデータ保持の日数"
+    reason: "Carbon の残り方としては読まず、Carbon の名はゼロデータ保持の文書に無いため"
+  - item: "節31(a)の許可用途7つと、Fairwind の頁が Argon に書く3つ"
+    reason: "伝えたいことはログの残り先であり、許可用途はダイジェスト本文に残すため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 一般提供までのログと出力: Frontier Cyber の指定から先に読めるのは節34のアカウント内30日。顧客側のログ保持は節31(a)(iv)で、Frontier Cyber だけでは前提にならない"
+  - "## 一般提供までのログと出力: 指定が公開文書に無い現時点で、Argon のゼロデータ保持を Carbon に写すことはできない"

@@ -1,0 +1,51 @@
+type: structure
+title: "プロバイダを替えても残るもの"
+message: "プロバイダを替えても会話と作業フォルダはホストに残り、ログインは CLI のホームに残る"
+source: "notes/zenn/articles/open-bot_20261030.md"
+components:
+  - id: identity
+    label: "同一性"
+    meaning: "名前、役割、指示。作業フォルダや会話とは別"
+  - id: thread
+    label: "スレッド"
+    meaning: "1 エージェントとの会話の記録"
+  - id: workspace
+    label: "作業フォルダ"
+    meaning: "~/OpenBot 上のワークスペース"
+  - id: session
+    label: "再開状態"
+    meaning: "その CLI の再開用の記録。会話とは分ける"
+  - id: login
+    label: "ログイン"
+    meaning: "各 CLI のホーム。OpenBot へはコピーしない"
+groups:
+  - id: host
+    label: "ホスト"
+    members: [identity, thread, workspace, session]
+  - id: cli
+    label: "CLI のホーム"
+    members: [login]
+relationships:
+  - from: identity
+    to: thread
+    label: "残る"
+  - from: identity
+    to: workspace
+    label: "残る"
+  - from: identity
+    to: session
+    label: "分ける"
+omitted:
+  - item: "電話、Web、Signal、アカウント API、Stripe、boat"
+    reason: "伝えたいことはデータの境界であり、接続経路ではないため"
+  - item: "チャネル、ルーチン、バックアップモデル、権限の三段階"
+    reason: "同一性と会話とログインの分離が主題のため"
+  - item: "ログインからホストへのコピーを示す矢印"
+    reason: "記事はログインを OpenBot の表へコピーしないと書くため、矢印にしない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 特徴: プロバイダを替えても、ワークスペースとスレッドは残る"
+  - "### 概念モデル: 同一性はスレッド、作業フォルダ、プロバイダセッションを分けて持つ"
+  - "### 情報モデル: プロバイダのログインは OpenBot の表にコピーせず、各 CLI のホームに置く"

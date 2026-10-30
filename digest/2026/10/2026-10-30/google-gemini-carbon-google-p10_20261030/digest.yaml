@@ -1,0 +1,65 @@
+source:
+  title: "Gemini 4 Carbonの限定提供で防御チームが契約前に切る条件"
+  url: null # Zenn 下書き (published: false)。公開 URL なし
+  path: "notes/zenn/articles/google-gemini-carbon-google-p10_20261030.md"
+  primary:
+    - title: "Koray Kavukcuoglu, Introducing Gemini 4 Carbon（Google、2026-10-28）"
+      url: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/"
+    - title: "Gemini 4 Carbon model evaluation（DeepMind、結果基準 October 2026）"
+      url: "https://storage.googleapis.com/deepmind-media/gemini/gemini_4_carbon_model_evaluation.pdf"
+    - title: "Google Cloud Service Specific Terms"
+      url: "https://cloud.google.com/terms/service-terms"
+    - title: "Fairwind Program（DeepMind）"
+      url: "https://deepmind.google/fairwind-program/"
+    - title: "FrontierCS, Gemini 4 Carbon（2026-10-29）"
+      url: "https://frontier-cs.org/blog/gemini-4-carbon/"
+  retrieved_at: "2026-10-31"
+archetype:
+  primary: governance
+  secondary: [decision]
+one_liner: "Gemini 4 Carbon（サイバーセキュリティと長い作業を強めたモデル）は、2026年10月28日の週から一部のサイバー防御者に始まる。使う前に、注文書の指定と、入出力がどこに残るかを切る。"
+key_points:
+  - claim: "外部提供は日付の無い3段階で、第1が一部のサイバー防御者、第2が Fairwind の追加パートナー、第3がガードレール改修後の開発者、企業、消費者である。先に出たモデル Argon の約2週間（9月30日から10月13日）が弱めるのは、「Carbon はずっと対象外のまま」という読みだけで、Carbon の発表は、広げる前にガードレールを直すと書いている"
+    evidence: "### 外部提供が広がる順 / ### Argon が約 2 週間で広がったこと"
+    status: fact
+  - claim: "公開のモデル文書が仕様を載せているのは Gemini 4 Argon とその防御版で、Carbon のモデル頁は 404、モデル ID は未掲載である。節31と節34は、管理画面、文書、注文書で指定されたモデルだけに掛かる"
+    evidence: "### 外部提供が広がる順 / ## Gemini 4 Carbonとは"
+    status: fact
+  - claim: "Frontier Cyber から先に読めるのは、ログがアカウント内に残る最大30日だけである。顧客がログを保持する条項は Google Cyber Model のときだけで、指定が公開文書に無いあいだ、Argon のゼロデータ保持（機能を避ける条件の束）は Carbon に写せない"
+    evidence: "## 一般提供までのログと出力"
+    status: fact
+  - claim: "提供対象外の組織と、許可された利用者以外の部門が、未検証の出力を判断の唯一の根拠にしないのは、2026年10月30日時点で元記事が勧める暫定の社内ルールであり、公開条項の禁止ではない。公開条項が禁じるのは、モデルを呼ぶ権利の共有と再配布までで、直す相手へパッチや所見を渡すことまでは禁じていない"
+    evidence: "## 防御以外の部門は出力をどう扱うか / ## 使い始める前に契約で切る点"
+    status: fact
+  - claim: "発表の順位と社内の倍率は、受け取る性能でも、使ってよい範囲でもない"
+    evidence: "## 注意点"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "注文書の指定が、公開条項から先に読めるログの残り先を分ける。指定が無ければ残り日数は確定しない"
+    reason_needed: "節31(a)の顧客側ログと節34のアカウント内30日は、指定が違うと掛かる条項が違う。文章だけだと両方に掛かると読める"
+example:
+  description: "FrontierCS 2 では 48 課題中の合格が Carbon 25、Argon 26。両方を提出した 45 課題の平均点は Carbon 57.6、Argon 52.9 で逆。25 件のうち 3 件は抜け道"
+  hypothetical: false
+  evidence: "### 他社の点数と FrontierCS"
+applicability:
+  - "限定提供の申込や注文書の前に、指定の種類とログの残り先を切るとき"
+  - "防御以外の部門が、転送されたチャットを自分の検証記録にするか、パッチや所見を受け取るかを分けるとき"
+decision_criteria:
+  - "指定が Google Cyber Model か、Frontier Cyber か、どちらでもない先行アクセスか"
+  - "防御以外の部門に渡すのが、モデルを呼ぶ権利ではなく、直す相手へのパッチや所見か"
+  - "許可用途を、Fairwind が Argon に書く脅威シミュレーション、リバースエンジニアリング、防御と学術のマルウェア解析（Carbon の参加条件としては名指しされていない）の外、製品開発一般へ広げていないか"
+  - "導入価格（100万トークンあたり入力2ドル、出力10ドル、そのあと4ドルと20ドル）の終了日は Carbon の発表に無く、2026年11月30日は公開向け Argon の一般提供ブログの脚注である"
+limitations:
+  - "社内の「2倍超」「約80%」「26%」「29%」には母数と顧客向け設定が無く、Chrome の「10倍超」には比較相手の名前、課題数、1件の数え方が無い"
+  - "Gray Swan が測った間接プロンプトインジェクションの攻撃成功率 0.0% に、試行回数は無い"
+  - "発表文のフロンティアモデルという呼び方は、注文書の Frontier とは別である。モデル ID、リージョン、要求数、文脈の長さ、computer use は 2026年10月30日時点で未確認である"
+  - "限定提供の注文書が節31または節34の指定に Carbon を入れているか、一般提供の日、残るガードレールは、公開資料では埋まらない"
+  - "公式ブログは機関名を置かない。報道が足した機関名は公式ではなく、Fairwind の「650超」は参加組織数であって Carbon を渡した数ではない"
+unknowns:
+  - "限定提供の注文書が Carbon を節31または節34の指定に入れているか"
+  - "一般提供の日と、そのときに残るガードレール"
+  - "公開のモデル ID、リージョン、1分あたりの要求数とトークン数、文脈の長さ、computer use"
+  - "Gray Swan の 0.0% の試行回数"
+  - "アクセス権の無い部門の決裁資料にしてよいかを、個別契約がどう書くか"
+reviewed: true

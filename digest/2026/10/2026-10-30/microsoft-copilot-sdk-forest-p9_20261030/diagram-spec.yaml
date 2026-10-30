@@ -1,0 +1,55 @@
+type: structure
+title: "ループの所有者で実行面が分かれる"
+message: "ループを誰が持つかで、Foundry の管理実行、SDK の組み込み、Hosted agents が分かれる"
+source: "notes/zenn/articles/microsoft-copilot-sdk-forest-p9_20261030.md"
+components:
+  - id: developer
+    label: "開発者"
+    meaning: "Foundry では作成時にハーネスを選び、SDK ではアプリのプロセスへクライアントを埋め込む"
+  - id: foundry
+    label: "Foundry の管理実行"
+    meaning: "Foundry がエージェントループと、会話ごとに割り当てる実行環境を持つ公開プレビュー"
+  - id: sdk
+    label: "SDK の組み込み"
+    meaning: "アプリがクライアントを持ち、Copilot CLI がツール利用ループを回す"
+  - id: hosted
+    label: "Hosted agents"
+    meaning: "フレームワークとループを利用者が持つ別経路。ハーネスのプレビューではない"
+  - id: providers
+    label: "モデルプロバイダ"
+    meaning: "Copilot 経由のモデル、または SDK で自分の鍵を使うときの接続先"
+groups:
+  - id: surfaces
+    label: "実行の置き場所"
+    members: [foundry, sdk, hosted]
+relationships:
+  - from: developer
+    to: foundry
+    label: "作成時にハーネスを選ぶ"
+  - from: developer
+    to: sdk
+    label: "プロセスへ埋め込む"
+  - from: foundry
+    to: providers
+    label: "モデルを呼ぶ"
+  - from: sdk
+    to: providers
+    label: "モデルを呼ぶ"
+  - from: hosted
+    to: providers
+    label: "モデルを呼ぶ"
+omitted:
+  - item: "組織管理者と Copilot 製品群"
+    reason: "ループの所有者という伝えたいことに関係しないため"
+  - item: "Hosted agents から Foundry へのホスティングの辺"
+    reason: "元記事のシステムコンテキスト図も、この関係を辺として描いていないため"
+  - item: "SDK 内部のクライアント、JSON-RPC、Copilot CLI の分解"
+    reason: "組み込み実行を一つの面にまとめたため"
+  - item: "Foundry Agent Service からプレビューへの包含"
+    reason: "管理実行を一つの面にまとめたため"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "## 構造 / ### システムコンテキスト図"
+  - "## 特徴 の選択表（ループの所有者で分かれる）"
