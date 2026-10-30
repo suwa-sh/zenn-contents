@@ -3,7 +3,8 @@ title: "CNCFブログはエージェントの境界を許されたツール集�
 emoji: "🛡️"
 type: "tech"
 topics: ["CNCF", "AIAgent", "Kubernetes", "Security", "MCP"]
-published: false
+published: true
+published_at: 2026-10-31
 ---
 
 2026年10月29日、CNCF Blog は Ambassador Post として "The boundary problem in agentic AI is a platform problem" を掲載しました。著者は William Rizzo（Field CTO、Kairos Maintainer、CNCF Ambassador）と Francesco Beltramini（Field CTO）です。掲載区分は Blog の Ambassador Post であり、Announcements ではありません。

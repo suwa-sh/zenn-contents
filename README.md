@@ -11,8 +11,8 @@
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-10-31 | [🔍 OpenAIが公開したフロンティアモデルの層状監視](articles/openai-openai-index-how-we-p2_20261031.md) | OpenAI, AIAgent, Security, LLM |
 | 2026-10-30 | [🧭 Amazonの開発者メモはAIの所見と採用の端を分けて残す](articles/amazon-ai-aboutamazon-company-p1_20261030.md) | Amazon, AI, SoftwareEngineering, Leadership |
-| 2026-10-30 | [🛡️ CNCFブログはエージェントの境界を許されたツール集合として整理する](articles/cncf-cncf-io-2026-boundary-p6_20261030.md) | CNCF, AIAgent, Kubernetes, Security, MCP |
 | 2026-10-30 | [🛡️ Gemini 4 Carbonの限定提供で防御チームが契約前に切る条件](articles/google-gemini-carbon-google-p10_20261030.md) | Gemini, GoogleCloud, Security, LLM |
 | 2026-10-30 | [🤖 Microsoft Copilot harnessの全社共通化とSDKの二つの実行面](articles/microsoft-copilot-sdk-forest-p9_20261030.md) | Azure, GitHub, AIAgent, Copilot |
 | 2026-10-30 | [🤖 手元のAI CLIを常駐チームにするOpenBotの構造とデータ設計](articles/open-bot_20261030.md) | AIエージェント, ClaudeCode, Codex, Electron, SQLite |
@@ -597,10 +597,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (198)
+## Articles: 公開済み (199)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-10-31 | [🛡️ CNCFブログはエージェントの境界を許されたツール集合として整理する](articles/cncf-cncf-io-2026-boundary-p6_20261030.md) | CNCF, AIAgent, Kubernetes, Security, MCP |
 | 2026-10-29 | [🧱 マルチエージェントを本番で動かす4つの問題を一次資料で切り分ける](articles/katelyn-lesse-multiagent-problem_20261027.md) | AIAgent, Kubernetes, Security, OpenTelemetry, Sandbox |
 | 2026-10-24 | [🛡️ OpenAIが提案した協調開示とPHPの致命的欠陥二件を手順に落とす](articles/openai-oss-openai-index-of-p1_20261022.md) | PHP, OpenAI, Security, CVE, OSS |
 | 2026-10-22 | [🔐 日本企業向け侵害の攻撃元で確認された自律型診断ARTEX](articles/artex-gmo-cybersecurity-p1_20261020.md) | Security, AIAgent, LLM, Governance |
