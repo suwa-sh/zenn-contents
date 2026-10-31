@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (586)
+## Articles: 下書き (587)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-10-31 | [🔐 Cursor拡張マーケットの改ざん版Claude Codeを配布元とハッシュで分ける](articles/cursor-claude-code-2-1-313-p1_20261031.md) | ClaudeCode, Cursor, Security, SupplyChain, VSCode |
 | 2026-10-31 | [🔍 OpenAIが公開したフロンティアモデルの層状監視](articles/openai-openai-index-how-we-p2_20261031.md) | OpenAI, AIAgent, Security, LLM |
+| 2026-10-31 | [📅 過去の記録をエージェントの記憶へ入れるとき、出来事・認知・保存の日付を分ける](articles/zenn-dev-build-anotherme-p9_20261031.md) | AIAgent, LLM, Database |
 | 2026-10-30 | [🧭 Amazonの開発者メモはAIの所見と採用の端を分けて残す](articles/amazon-ai-aboutamazon-company-p1_20261030.md) | Amazon, AI, SoftwareEngineering, Leadership |
 | 2026-10-30 | [🛡️ Gemini 4 Carbonの限定提供で防御チームが契約前に切る条件](articles/google-gemini-carbon-google-p10_20261030.md) | Gemini, GoogleCloud, Security, LLM |
 | 2026-10-30 | [🤖 Microsoft Copilot harnessの全社共通化とSDKの二つの実行面](articles/microsoft-copilot-sdk-forest-p9_20261030.md) | Azure, GitHub, AIAgent, Copilot |
