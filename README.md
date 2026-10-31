@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (587)
+## Articles: 下書き (589)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-01 | [🧩 スキル導入前に前提スキルとCLIの欠落を数える](articles/cli-agent-skills-zenn-dev-p5_20261101.md) | AgentSkills, ClaudeCode, CLI, AIAgent |
+| 2026-11-01 | [🔐 Cloudflareが分けて公開したeMudhra未パッチ接続の残存](articles/cloudflare-emudhra-cloudflare-p7_20261101.md) | Security, TLS, Cloudflare, PKI, Go |
 | 2026-10-31 | [🔐 Cursor拡張マーケットの改ざん版Claude Codeを配布元とハッシュで分ける](articles/cursor-claude-code-2-1-313-p1_20261031.md) | ClaudeCode, Cursor, Security, SupplyChain, VSCode |
 | 2026-10-31 | [🔍 OpenAIが公開したフロンティアモデルの層状監視](articles/openai-openai-index-how-we-p2_20261031.md) | OpenAI, AIAgent, Security, LLM |
 | 2026-10-31 | [📅 過去の記録をエージェントの記憶へ入れるとき、出来事・認知・保存の日付を分ける](articles/zenn-dev-build-anotherme-p9_20261031.md) | AIAgent, LLM, Database |
