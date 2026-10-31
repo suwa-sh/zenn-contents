@@ -1,0 +1,44 @@
+type: structure
+title: "先に分ける三つの表"
+message: "見る範囲、止められる操作、再開者は別の表にし、承認者はそのあと置く"
+source: "notes/zenn/articles/openai-openai-index-how-we-p2_20261031.md"
+components:
+  - id: see
+    label: "見る範囲"
+    meaning: "どの層がどのログを見るか。要約だけの層と、ネットワークログの層を混ぜない"
+  - id: stop
+    label: "止められる操作"
+    meaning: "どの面で何を自動で止められるか。警報だけ、対象外、ページ無効も同じ表に書く"
+  - id: resume
+    label: "再開者"
+    meaning: "誤って止めたあと誰が続けるか。再開手段が無い面は、その会話を捨てる操作"
+  - id: approver
+    label: "承認者"
+    meaning: "人数を増やすのは、三つの表のあと"
+groups:
+  - id: three
+    label: "先に分ける三つの表"
+    members: [see, stop, resume]
+relationships:
+  - from: see
+    to: approver
+    label: "このあと置く"
+  - from: stop
+    to: approver
+    label: "このあと置く"
+  - from: resume
+    to: approver
+    label: "このあと置く"
+omitted:
+  - item: "第0層から第3層の箱と、層のあいだの矢印"
+    reason: "図の主張は層の中身ではなく、見る・止める・再開を一つの表に混ぜないことのため"
+  - item: "webhook と API の種類"
+    reason: "止められる操作の中身であり、三つの表の分離には箱を増やさないため"
+  - item: "再生シミュレーションとライブ事案の対比"
+    reason: "実績の読み方であり、三つの表の位置関係ではないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 発注側が先に分ける三つの表"
+  - "## 見る範囲と止められる操作"

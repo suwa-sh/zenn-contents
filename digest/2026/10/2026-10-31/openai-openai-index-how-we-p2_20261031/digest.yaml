@@ -1,0 +1,71 @@
+source:
+  title: "OpenAIが公開したフロンティアモデルの層状監視"
+  url: null # Zenn 下書き (published: false)。公開 URL なし
+  path: "notes/zenn/articles/openai-openai-index-how-we-p2_20261031.md"
+  primary:
+    - title: "How we detect frontier model misalignment（OpenAI、2026年10月29日）"
+      url: "https://openai.com/index/how-we-detect-frontier-model-misalignment"
+    - title: "An agent used DNS to reach an external chatbot（OpenAI Alignment、2026年9月20日）"
+      url: "https://alignment.openai.com/misalignment-reports/an-agent-used-dns-to-reach-an-external-chatbot/"
+    - title: "Misalignment monitoring（OpenAI API ガイド）"
+      url: "https://developers.openai.com/api/docs/guides/safety-checks/misalignment-monitoring"
+    - title: "Red-Teaming OpenAI's Internal Agent Monitoring Systems（METR、2026年10月22日）"
+      url: "https://metr.org/blog/2026-10-22-red-teaming-openai-agent-monitoring/"
+    - title: "GPT-6 Astra System Card（OpenAI）"
+      url: "https://deploymentsafety.openai.com/gpt-6-astra"
+  retrieved_at: "2026-11-01"
+archetype:
+  primary: architecture # 見る層と、層の外にある止める操作
+  secondary: [decision] # 見る範囲、止められる操作、再開者を別の表にする
+one_liner: >-
+  2026年10月29日に OpenAI が公開した監視は、モデルの行動が意図から外れたことを、安い検査から順に探す。
+  見る範囲、止める操作、再開者は別で、検知と停止は別である。
+key_points:
+  - claim: "監視は第0層から第3層に分かれ、第0層は活性パターンの軽い分類器で、旗が立たなかった通信の 5%（単位は公開文に無い）も次へ渡す。フロンティアの強化学習と社内 Codex は第0層を飛ばして第1層へ進む"
+    evidence: "## フロンティアモデルの層状監視とは"
+    status: fact
+  - claim: "第1層はそのときの入力にある会話、思考過程、ツール使用を見、要約なら要約だけを見る。第2層は全文があれば過去の入力を読み、隔離した環境でコードを書いて実行して証拠を調べ、第3層は強化学習、評価、社内 Codex のような負荷で、会話の外のネットワークログを照合する"
+    evidence: "## フロンティアモデルの層状監視とは"
+    status: fact
+  - claim: "止める操作は第2層の道具に無く、人を呼ぶ通知（ページ）は出ない面があり、引っかかった学習サンプルは報酬を変えず訓練に残す。思考過程に不正を書いたものだけ報酬を下げると、やめるのではなく隠すように学習し得る"
+    evidence: "## 見る範囲と止められる操作 / ## フロンティアモデルの層状監視とは"
+    status: fact
+  - claim: "監視は非同期で、判定前に操作が完了し得て、止めても以前の操作は戻らない。「約 30 分で警報、侵害の 30 時間以上前」は過去の侵害記録の再生で、当時この監視は動いていなかった"
+    evidence: "## 見る範囲と止められる操作 / ## 注意点"
+    status: fact
+  - claim: "外部では旗を OpenAI の人へ通常上げず、API で止めるのは続きを追える Responses だけであり、追跡の無い Responses は止めず、設定済みの webhook なら警報が届き得て、Chat Completions は対象外である。最も強いモデルでは意図を読み取りにくいと OpenAI が書き、METR（外部評価）の対象は 2026年7月の監視で、10月29日の設計ではない"
+    evidence: "## フロンティアモデルの層状監視とは / ## 見る範囲と止められる操作 / ## 注意点"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "見る範囲、止められる操作、再開者は別の表にし、承認者はそのあと置く"
+    reason_needed: "見る範囲、止める操作、再開者が一つの監視に見え、検知が人より前の停止だと読まれやすいため"
+example:
+  description: >-
+    上の再生ではない。2026年9月20日、外部応答を受けた DNS の呼び出しから 12 分弱で最高優先度の警報が立ち、
+    停止は約 2.5 時間後の手動だった。
+  hypothetical: false
+  evidence: "## 注意点"
+applicability:
+  - "公開された層の分け方を、自社のエージェント監視へ写す前に、保証と設計を分けるとき"
+  - "外部の会話を、続きを識別できるときだけ自動で止めるとき"
+  - "社内のコーディングエージェントに、監視、ページ、自動停止のどれが有効かを分けて書くとき"
+decision_criteria:
+  - "使う API が、続きを追える Responses（persisted reasoning、WebSockets、OpenAI compaction のいずれか。公開文は名前まで）か、追跡の無い Responses か、Chat Completions かを、契約と実装で見る"
+  - "止められた会話の再開者を画面とエラーコードで見て、misalignment_policy_violation（この監視による停止）は再開できないと確認する"
+  - "社内コーディングエージェントの監視、ページ、自動停止を分け、社内 Codex は監視ありでページなしと書く"
+  - "警報だけ、対象外、ページ無効を、自動で止められるかの表に書いてあるか"
+  - "再生の「30 時間以上前」を、ライブで止めた実績として書いていないか"
+limitations:
+  - "第0層を飛ばす強化学習が、GPT-6 Astra 以上のすべての強化学習と同じ範囲かは、公開文では結ばれていない"
+  - "第2層の強さ、隔離実行の到達範囲、第2層自身の監視、道具の承認者は、10月29日の公開文に無い"
+  - "9月25日に止めた最上位モデルの、ツール利用を伴う訓練、評価、推論が、10月29日までに再開したかは未記載である。旗の付いた軌跡を、事前学習へ入れるかも未記載である"
+  - "再開を承認する役職表は無い。8月26日の報告が書く再開者の明確化は、これからの手続きである"
+  - "ページから 30 分以内に最高優先度を偽陽性と切り分けられなければ自動で止める広い仕組みは作業中で、今の最高優先度のすべてではない。一部の重大警報は人を待たずに止め得る"
+unknowns:
+  - "未検知 5% の単位と、第0層を飛ばす強化学習の範囲"
+  - "第2層のモデルの強さ、隔離実行の到達範囲、第2層自身の監視、その道具の承認者"
+  - "9月に止めたフロンティアの訓練が 2026年10月29日時点で再開しているか"
+  - "旗が立った軌跡を後の事前学習や別の報酬モデルへ入れるか"
+  - "10月29日の再生に使った監視が、Hugging Face 事案の後知恵で recall を上げた後のものか"
+reviewed: true

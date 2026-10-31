@@ -1,0 +1,60 @@
+type: structure
+title: "置き場が違えば許可は別の行"
+message: "同じ版の文字列でも、配布元が違えば許可は別の行になる"
+source: "notes/zenn/articles/cursor-claude-code-2-1-313-p1_20261031.md"
+components:
+  - id: ext_id
+    label: "拡張ID"
+    meaning: "Anthropic.claude-code。改ざん版もこの ID だった"
+  - id: cursor_market
+    label: "告知が外した版"
+    meaning: "Cursor の拡張マーケットに置かれ、検知後に外された 2.1.312 と 2.1.313"
+  - id: open_vsx
+    label: "Open VSX"
+    meaning: "2.1.312 のサイドカーは、告知の改ざん版とは別のハッシュ"
+  - id: official_cli
+    label: "公式CLI"
+    meaning: "npm と GitHub release。2.1.312 の記録はあり、2.1.313 の公開記録は無い"
+  - id: row_cursor
+    label: "Cursorの行"
+    meaning: "Cursor のマーケット向けの許可 1 件"
+  - id: row_ovsx
+    label: "Open VSXの行"
+    meaning: "Open VSX 向けの許可 1 件"
+  - id: row_cli
+    label: "公式CLIの行"
+    meaning: "公式 CLI 向けの許可 1 件"
+groups:
+  - id: extension_dist
+    label: "拡張の配布"
+    members: [cursor_market, open_vsx]
+relationships:
+  - from: ext_id
+    to: cursor_market
+    label: "このID"
+  - from: ext_id
+    to: open_vsx
+    label: "このID"
+  - from: cursor_market
+    to: row_cursor
+    label: "別の行"
+  - from: open_vsx
+    to: row_ovsx
+    label: "別の行"
+  - from: official_cli
+    to: row_cli
+    label: "別の行"
+omitted:
+  - item: "拡張 ID から公式 CLI への矢印"
+    reason: "元記事は、拡張 ID から線が伸びるのは Open VSX と Cursor のマーケットだけで、公式 CLI には引かないと書くため"
+  - item: "3 つの許可行を 1 つの箱にまとめること"
+    reason: "1 つの箱へ矢印が合流すると、別の行ではなく 1 行にまとまって読めるため"
+  - item: "npm と GitHub release を別ボックスにすること、VS Marketplace、2.1.314、2.1.315、修復手順、人数、署名"
+    reason: "置き場ごとに許可の行が分かれる、という 1 つのメッセージには直接要らないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### 版の文字列が並ぶ棚: 拡張 ID から線が伸びるのは Open VSX と Cursor のマーケットだけ。公式 CLI には線を引かない。公式 CLI に 2.1.313 の公開記録は無い"
+  - "### パッケージハッシュの分かれ方: Open VSX の 2.1.312 サイドカー SHA-256 は、告知の改ざん版と一致しない"
+  - "## 許可台帳で分ける列: 許可は配布元、拡張 ID、バージョン、パッケージハッシュの組で切る"

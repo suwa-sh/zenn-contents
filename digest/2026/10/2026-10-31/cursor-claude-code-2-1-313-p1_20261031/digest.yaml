@@ -1,0 +1,64 @@
+source:
+  title: "Cursor拡張マーケットの改ざん版Claude Codeを配布元とハッシュで分ける"
+  url: null
+  path: "notes/zenn/articles/cursor-claude-code-2-1-313-p1_20261031.md"
+  primary:
+    - title: "Cursor, Security notice — malicious version of Anthropic.claude-code (2.1.312 and 2.1.313)"
+      url: "https://cursor.com/blog/claude-code-extension-security-notice"
+    - title: "Cursor (@cursor_ai) の投稿（2026-10-30 07:46 UTC）"
+      url: "https://x.com/cursor_ai/status/2116074289053175808"
+    - title: "Felix Rieseberg (@felixrieseberg) の投稿（2026-10-30 14:08 UTC）"
+      url: "https://x.com/felixrieseberg/status/2116170451466543578"
+    - title: "Open VSX API Anthropic.claude-code 2.1.312"
+      url: "https://open-vsx.org/api/Anthropic/claude-code/2.1.312"
+  retrieved_at: "2026-11-01"
+archetype:
+  primary: decision
+  secondary: [incident]
+one_liner: "Cursor の拡張配布先に置かれた改ざん版は、同じ版番号の公式パッケージとは別の許可にする。許すかは、出した場所とファイルのハッシュで分ける。"
+key_points:
+  - claim: "Cursor の告知は、自社の VS Code 拡張マーケットに 2026年10月29日 午前2時27分ごろから午後1時35分（太平洋時間）まで置かれた拡張 ID Anthropic.claude-code の 2.1.312 と 2.1.313 を、Anthropic が開発していない改変版だと書く"
+    evidence: "## Cursor 拡張マーケットの Claude Code 2.1.312 と 2.1.313 とは"
+    status: fact
+  - claim: "2026年10月31日時点で、Open VSX の 2.1.312 サイドカー SHA-256 は告知の改ざん版と一致しない。GitHub の release、npm の time、Open VSX に 2.1.313 の公開記録は無い"
+    evidence: "### パッケージハッシュの分かれ方 / ### 版の文字列が並ぶ棚"
+    status: fact
+  - claim: "告知は、拡張を消しても永続化は残り得ると書く。多くのホストでトンネル経由のログインは失敗したが、鍵の追加、永続化の設置、ホスト情報の送信は起きた。確認の目印は鍵コメント svc-telemetry である"
+    evidence: "### トンネルのログインと、起きた処理は別である / ### 拡張を消しても、永続化は残ることがある"
+    status: fact
+  - claim: "影響の “at most 5,000 users” と、Claude Code for VS Code の 2.1.314 への更新指示は公式 X にあり、2026年10月31日に取得した告知 HTML には無い。v2.1.314 のリリースノートはこの改ざんも Cursor の拡張マーケットも書いていない"
+    evidence: "### 人数は上限の自己申告である / ### 2.1.314 は更新指示であり、ノートが結んだ修正版ではない"
+    status: fact
+  - claim: "公式の npm、Open VSX、VS Marketplace、GitHub のいずれかが告知の改ざん版 SHA-256 と同じバイトを配ったと一次で示されたとき、または Anthropic のアドバイザリが公式チャネルの版を対象に加えたときだけ、公式側の行を同じインシデントの対象に上げる"
+    evidence: "## 公式チャネルを同じ対象に上げる条件"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "同じ版の文字列でも、配布元が違えば許可は別の行になる"
+    reason_needed: "版番号の一括許可が、改ざん版と公式の棚を同じ行にまとめてしまうため"
+example:
+  description: "2.1.312 の darwin-arm64 では、2026年10月31日に取得した Open VSX のサイドカー SHA-256 が b851e43b35b634987ef794fbddc759a7eeabd662088511a276f6063a598373d2、告知の改ざん版が fcbb327e38e61c4fec795e0d0591f52cd1014b813d20a5912104953c3a17c364 で一致しない。2.1.313 の同平台は Open VSX が 404 でサイドカーが無く、告知だけが 80402fdcad8799285fd93044976973ca000da7995fb93363f819bb8e4f84ee6c を載せる"
+  hypothetical: false
+  evidence: "### パッケージハッシュの分かれ方"
+applicability:
+  - "該当する時間窓に、Cursor の拡張マーケットから Anthropic.claude-code の 2.1.312 または 2.1.313 を macOS か Windows へ入れたか、更新した端末を確認する"
+  - "拡張の許可を、製品名や版番号の一括ではなく、配布元・拡張 ID・バージョン・SHA-256 の組で持つか決める"
+  - "公式 CLI と IDE 拡張を、同じ行にまとめてよいか決める"
+decision_criteria:
+  - "導入または更新が、2026年10月29日 午前2時27分ごろから午後1時35分（太平洋時間）の窓に、Cursor の VS Code 拡張マーケット経由か"
+  - "拡張 ID が Anthropic.claude-code で、版が 2.1.312 または 2.1.313 か。パッケージの SHA-256 を、告知の改ざん版と公式サイドカーの両方と照合できるか"
+  - "鍵コメント svc-telemetry を告知の手順で検索したか。トンネルのログイン失敗を、検索を省く理由にしていないか"
+  - "修復は告知のスクリプトに進んだか。macOS は影響を受けたユーザーとして実行し root では実行しない。Windows は管理者として開いた PowerShell で実行する。資格情報は信頼できる別の系統から回すか"
+  - "2.1.314 への更新を、残る鍵と永続化の確認の代わりにしていないか。公式の npm、Open VSX、VS Marketplace、GitHub のいずれかが告知と同じバイトを配ったと一次で示されておらず、Anthropic のアドバイザリも公式の版をこの件の対象に加えていないのに、公式 CLI や Open VSX をこの件の対象に上げていないか"
+limitations:
+  - "“at most 5,000 users” は公式 X の上限の自己申告であり、実数でも下限でもない。数え方は投稿に無く、告知 HTML にもこの数字は無い"
+  - "環境変数については名前を収集したと告知は書き、値の一覧とは書いていない。初期送信に OAuth トークンや API キーの値が含まれた、という文は告知に無い。限定的な収集は、バックドア経由の後日の資格情報アクセスを否定しない、とも告知は書く"
+  - "署名検証が改ざん版を受け入れたか、パブリッシャーの認証情報が盗まれたか、どの認証情報だったかは、告知も Felix Rieseberg の投稿も書いていない。Open VSX の正規版に signature ファイルがあることとは別の文である。同投稿は、公式チャネルの版は影響を受けず、影響は Cursor の利用者だけだと書くが、会社ドメインのアドバイザリページではない"
+  - "2.1.314 は顧客向けの更新先として公式 X にある。リリースノートがこの改ざんの修正だと定義した版としては結べない。拡張ファイルの差し替えは、残る鍵と永続化の確認を置き換えない"
+  - "Open VSX のサイドカー値と VSIX 実体のハッシュが一致するか、Linux の IOC パスが未配布の分岐か実配布か、この件の CVE 番号があるかは、告知だけでは決まらない。無い、とは断定しない"
+unknowns:
+  - "告知が回した運営側の鍵の種類は書かれていない。攻撃者の SSH 鍵とは別である"
+  - "ローテーションする資格情報の種別は、告知が列挙しない"
+  - "直接連絡の対象がインストール済みの利用者に限るかは、公式 X の投稿に無い"
+  - "2.1.315 が GitHub と Open VSX に無く、npm の latest でもない理由は、2026年10月31日の応答だけでは分からない"
+reviewed: true

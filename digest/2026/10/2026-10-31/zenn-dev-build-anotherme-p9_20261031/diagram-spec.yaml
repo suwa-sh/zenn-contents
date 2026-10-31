@@ -1,0 +1,41 @@
+type: structure
+title: "後入れの1件は3つの時刻を分ける"
+message: "世界で真だった期間、心が知った時点、ストアが書いた時点を、同じ日付に載せない"
+source: "notes/zenn/articles/zenn-dev-build-anotherme-p9_20261031.md"
+components:
+  - id: memory
+    label: "1件の記憶"
+    meaning: "後入れする事実の1件"
+  - id: valid
+    label: "有効時点"
+    meaning: "世界でその事実が成り立っていた期間"
+  - id: known
+    label: "認知時点"
+    meaning: "その心が事実を持った瞬間"
+  - id: written
+    label: "書込時点"
+    meaning: "ストアがその行を持った瞬間"
+relationships:
+  - from: memory
+    to: valid
+    label: "世界ではいつ真だったか"
+  - from: memory
+    to: known
+    label: "その心はいつ知ったか"
+  - from: memory
+    to: written
+    label: "ストアはいつ書いたか"
+omitted:
+  - item: "保存先ごとのフィールド名（SurrealDB、Graphiti、Mem0、Letta、ファイル）"
+    reason: "伝えたいことは3つの問いの分離であり、フィールド対応は図に入れると要素が7を超える"
+  - item: "4月に有効、7月の会話、10月に保存、という時間順"
+    reason: "図は時刻の意味の構造であり、後入れの順序は具体例に残す"
+  - item: "候補と真偽の二段、および WikiSkill の3層"
+    reason: "1枚の主張（3つの問いを同じ日付に載せない）から外れる"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "冒頭（後入れの1件に3つの時刻が付く）"
+  - "## 記憶の3つの時刻とは（有効時点・認知時点・書込時点と、それぞれの問い）"
+  - "## まとめ（3つを同じ日付に載せない）"
