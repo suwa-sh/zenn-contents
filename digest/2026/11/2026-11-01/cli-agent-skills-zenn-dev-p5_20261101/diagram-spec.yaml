@@ -1,0 +1,73 @@
+type: behavior
+title: "本文を渡す前に数える辺"
+message: "止めるのは、ホストが強制する宣言と、配置で解決できない無条件の Read first だけ"
+source: "notes/zenn/articles/cli-agent-skills-zenn-dev-p5_20261101.md"
+components:
+  - id: fix
+    label: "ホストと配置を固定"
+    meaning: "渡すホストと、同じ親のスイートかフォルダ 1 つかを先に決める"
+  - id: forced
+    label: "ホストが強制する宣言"
+    meaning: "そのホストが導入前に機械的に読む宣言"
+  - id: readfirst
+    label: "無条件の Read first"
+    meaning: "本文の先頭で、条件なしに別ファイルを読めと求める参照"
+  - id: optional
+    label: "条件文・表・ランナー"
+    meaning: "条件付きの文、ヘルパー表、See Also、ランナーのパッケージ名"
+  - id: walk
+    label: "無条件参照を1段たどる"
+    meaning: "無条件の Read first と metadata.requires.skills だけを 1 段見る"
+  - id: block
+    label: "本文を渡さない"
+    meaning: "条件を満たさないので本文を渡さず止める"
+  - id: hand
+    label: "本文を渡す"
+    meaning: "強制する宣言と無条件の Read first が揃っている"
+relationships:
+  - from: fix
+    to: forced
+    label: "分類する"
+  - from: fix
+    to: readfirst
+    label: "分類する"
+  - from: fix
+    to: optional
+    label: "分類する"
+  - from: forced
+    to: block
+    label: "配置で欠ける"
+  - from: readfirst
+    to: block
+    label: "配置で欠ける"
+  - from: forced
+    to: walk
+    label: "揃っている"
+  - from: readfirst
+    to: walk
+    label: "揃っている"
+  - from: optional
+    to: hand
+    label: "欠落に数えない"
+  - from: walk
+    to: block
+    label: "1段先が解決できない"
+  - from: walk
+    to: hand
+    label: "解決できる"
+omitted:
+  - item: "版やランタイムの検査"
+    reason: "満たさないときに渡すか渡さないかを、この解釈は決めていない。止める流れに入れない"
+  - item: "センサスの百分率と requiresSkills"
+    reason: "ゲートの入力にしないと本文が言うため"
+  - item: "2 段目以降の参照"
+    reason: "完全に解決した証明にはしないため"
+  - item: "gws、HyperFrames、Lark の個別の表"
+    reason: "手順の分岐を 1 枚にするため。具体例はダイジェスト本文に残す"
+  - item: "OpenClaw readiness の AND / OR / always"
+    reason: "未確認の演算を図に足さない。強制する宣言の一例は本文に残す"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 導入前に何を数えて本文を渡さないか の手順 1〜6 と、その節の mermaid"

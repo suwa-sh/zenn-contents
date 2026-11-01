@@ -1,0 +1,51 @@
+type: structure
+title: "失効は鍵を消さない"
+message: "検証器が失効か拒否一覧を見るまで、その検証器は証明書を受理し得る"
+source: "notes/zenn/articles/cloudflare-emudhra-cloudflare-p7_20261101.md"
+components:
+  - id: weak_key
+    label: "弱い中間の鍵"
+    meaning: "eMudhra の中間 CA 8 本。P-384 の秘密鍵にあたる整数は 256 未満で、公開の証明書から復元できる"
+  - id: signed
+    label: "署名された証明書"
+    meaning: "その中間で署名された証明書。失効は鍵の列を消さない"
+  - id: browser
+    label: "ブラウザの失効一覧"
+    meaning: "ブラウザが配る迅速な失効。一覧を見れば、そのブラウザは対象を拒否できる"
+  - id: runtime
+    label: "ランタイムの拒否一覧"
+    meaning: "言語ランタイムが検証時に対象の中間を拒否する一覧。一覧が無ければ受理し得る"
+  - id: custom
+    label: "顧客の独自ストア"
+    meaning: "顧客が持つ証明書の束。更新と再起動、またはイメージの再配置まで残り得る"
+groups:
+  - id: verifiers
+    label: "検証器"
+    members: [browser, runtime, custom]
+relationships:
+  - from: weak_key
+    to: signed
+    label: "この鍵で署名"
+  - from: signed
+    to: browser
+    label: "失効を見れば拒否"
+  - from: signed
+    to: runtime
+    label: "一覧が無ければ受理し得る"
+  - from: signed
+    to: custom
+    label: "更新まで残り得る"
+omitted:
+  - item: "外向き約 22,000 件、閲覧者側約 5,000 万回、自社修正の自己申告"
+    reason: "伝えたいのは検証器ごとに残存が分かれることで、三つの計測の件数は本文の核心で扱うため"
+  - item: "TLS 用 6 本とコード署名用 2 本の分岐、Sectigo のクロス署名"
+    reason: "要素を 7 個以内に収めるため。本数の足し方は本文の注意点で扱う"
+  - item: "Go や他言語の修正版番号"
+    reason: "図の主張は版番号ではなく、拒否一覧を見るまで受理し得ることであるため。版は本文の具体例で扱う"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "### 残存は層で分かれる（失効は鍵の列を消さない。検証器が失効か denylist を見るまで下の列は残る）"
+  - "### ブラウザと、ブラウザ以外"
+  - "## 三つの計測を一つの完了にしない"

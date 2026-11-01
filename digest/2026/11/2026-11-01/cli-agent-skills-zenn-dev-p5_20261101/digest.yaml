@@ -1,0 +1,62 @@
+source:
+  title: "スキル導入前に前提スキルとCLIの欠落を数える"
+  url: null
+  path: "notes/zenn/articles/cli-agent-skills-zenn-dev-p5_20261101.md"
+  primary:
+    - title: "Agent Skills 仕様"
+      url: "https://agentskills.io/specification"
+    - title: "Skillselion センサス（データ固定 2026-10-30）"
+      url: "https://skillselion.com/research/agent-skill-dependency-census-2026-10"
+    - title: "Claude Code の skills 文書"
+      url: "https://code.claude.com/docs/en/skills.md"
+    - title: "skills-ref のパーサ（61–62 行）"
+      url: "https://github.com/agentskills/agentskills/blob/main/skills-ref/src/skills_ref/parser.py"
+  retrieved_at: "2026-11-02"
+archetype:
+  primary: decision
+  secondary: [governance]
+one_liner: "スキル本文を渡す前に止めるのは、選んだホストが強制する宣言と、置いた場所で解決できない無条件の「最初に読め」だけです。"
+key_points:
+  - claim: "前提の書き場所は、仕様の欄、ベンダーが metadata に足した欄、本文、相対リンク、実行コマンドの 5 か所である。すべてを止める対象にはしない。ホストが最初に受け取るのは名前と説明だけで、本文はそのあと、読むと決めたときに読まれる"
+    evidence: "## Agent Skills とは（前提が書かれる場所は、次の 5 つ）"
+    status: fact
+  - claim: "仕様と Claude Code は compatibility も metadata も本文を拒む理由にしない。Lark CLI は metadata.requires.skills に書いた兄弟が同じ親に無いと構成を失敗させる。この解釈では、そのとき本文を渡さない。散文は見ない"
+    evidence: "## ホストが導入前に見る範囲 の表 / ### lark-base"
+    status: interpretation
+  - claim: "無条件の Read first は、選んだ親でファイルが無ければ本文を渡さない。条件付きの文、ヘルパー表、See Also はその経路では任意である"
+    evidence: "## 導入前に何を数えて本文を渡さないか の手順 4"
+    status: interpretation
+  - claim: "センサスの百分率は、ゲートが止める割合ではない。12.8% の分母は前提の自由文一覧がある 16,798 件で全 64,756 件ではない。15.0% の分母はインストール数で、スキル件数の 15% ではない"
+    evidence: "## 注意点 の表 / 12.8% を「スキルの 12.8% が CLI に依存する」と読むのは、分母の取り違え"
+    status: fact
+  - claim: "版やランタイムは、ファイルに制約があるときだけその文を見る。満たさないときに渡すかは決めていない。ランナーのパッケージ名は PATH 上の欠落に数えない。HyperFrames の FFmpeg は cloud render があるので全コマンドの必須にしない"
+    evidence: "## 導入前に何を数えて本文を渡さないか の手順 6 と 7 / ### hyperframes-cli"
+    status: fact
+mental_models:
+  - type: behavior
+    key_message: "辺（前提のつながり）では、ホストが強制する宣言（欠けると本文を渡さないもの）と、配置で解決できない無条件の Read first だけを止める。揃っていれば 1 段たどり、1 段先の無条件の Read first が解決できなければ渡さない"
+    reason_needed: "修復コマンドの有無や、すべての相対リンク、カタログの百分率で止めると、ホストが強制していない辺まで拒否になる"
+example:
+  description: "gws-gmail-send をフォルダ 1 つだけで置くと、本文先頭の ../gws-shared/SKILL.md は無条件の Read first である。gws generate-skills は作業ディレクトリ直下の skills/ に共有スキルを書くだけで、導入先の親で実行したとき以外は、その相対パスを埋めない"
+  hypothetical: false
+  evidence: "### gws-gmail-send / 修復に見える gws generate-skills"
+applicability:
+  - "渡すホストと配置（同じ親に複数スキルを並べるか、フォルダ 1 つか）を固定してから、本文を渡すか検査する"
+  - "単体コピーを許すとき、無条件の Read first を同梱するか、条件文に変える"
+decision_criteria:
+  - "そのホストが強制する宣言が配置で欠けるなら、本文を渡さない"
+  - "Read first は、選んだ親で解決するかを、無条件参照と metadata.requires.skills の 1 段だけ見る"
+  - "条件付きリンク、表、See Also、ランナー、センサスの requiresSkills は欠落に数えない"
+  - "bins を、ホストが PATH を見ていないのに足していないか"
+  - "版の不一致で止める規則を、ファイルに無いのに足していないか"
+limitations:
+  - "この数え方は仕様の適合条件ではなく、2026-11-01 時点の解釈である。確信度は中程度で、ホストの改訂と、README と SKILL.md の不一致で判定は変わる"
+  - "記録では OpenClaw の bins はすべて必須、anyBins はどれか一つ、always は bins の検査を飛ばす印である。その演算と、Codex の dependencies.tools が PATH を止めない記録、Cursor に依存解決が無い記録は、開き直していないので未確認である"
+  - "センサスの生データは 2026-11-01 時点で入手できず、比率は再計算していない。空の一覧は依存が無い証拠ではない"
+  - "機械可読の依存欄を仕様が定義しホストが実装したとき、または導入時の相対リンク解決を文書化したときは、止める対象をその欄へ移す"
+  - "1 段より先は、解決しきったとは言わない。配列に無いコマンドを本文が名指しするときだけ、複数スキルを同じ親に置くか静的抽出の落としを受け入れ、そのコマンドは本文を渡さない理由にしない"
+unknowns:
+  - "OpenClaw の bins / anyBins / always の演算を、記録の commit の文書と実装で開き直していない"
+  - "Codex の dependencies.tools が PATH を止めないという記録と、Cursor のスキル文書に依存解決が無いという記録を開き直していない"
+  - "センサス生データ公開後の、1,034 と 16,798 の関係と言語モデルの一覧とファイル上の前提の一致率"
+reviewed: true
