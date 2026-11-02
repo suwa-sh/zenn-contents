@@ -1,0 +1,66 @@
+source:
+  title: "__usage_ai-trainingで示す生成AIの学習意向"
+  url: null
+  path: "notes/zenn/articles/openai-robots-txt-openai-p3_20261102.md"
+  primary:
+    - title: "draft-kelley-aipref-training-preference-signal-00"
+      url: "https://www.ietf.org/archive/id/draft-kelley-aipref-training-preference-signal-00.html"
+    - title: "OpenAI: Making it easier for websites to express AI training preferences"
+      url: "https://openai.com/index/helping-websites-express-ai-training-preferences"
+    - title: "Google Search Central: Supporting a shared AI training control for websites"
+      url: "https://developers.google.com/search/blog/2026/10/ai-training-control"
+    - title: "Microsoft Bing: Your content, your choice"
+      url: "https://blogs.bing.com/search/2026/10/your-content-your-choice-clearer-preferences-for-training-and-grounding/"
+    - title: "RFC 9309 Robots Exclusion Protocol"
+      url: "https://www.rfc-editor.org/rfc/rfc9309"
+  retrieved_at: "2026-11-03"
+archetype:
+  primary: governance
+  secondary: [decision]
+one_liner: "__usage_ai-training は、ページを取ってよいかとは別に、生成モデルの学習済みパラメータを更新してよいかを robots.txt で示す名前です。"
+key_points:
+  - claim: "robots.txt では、クローラ名とは別の User-Agent グループに __usage_ai-training を書く。新しい文法は無く、同じパスに複数が当たるときは、より長い指定を採る"
+    evidence: "## `__usage_ai-training` とは / 草案図1の例 / 最長一致"
+    status: fact
+  - claim: "この名前が無ければ、この名前の意向は無い。User-Agent: * の Disallow はこの名前に一致せず、取得の規則として残る。示すのは、取得した内容で学習済みパラメータを変えてよいかだけである"
+    evidence: "## `__usage_ai-training` とは / 草案 §4.2、§4.3、§4.4"
+    status: fact
+  - claim: "参照、引用、技能プロンプト、グラウンディングは、この名前の外である。すでにあるモデルや取得済みの集まりからの削除は命じない"
+    evidence: "## `__usage_ai-training` とは / ## 注意点 の箇条書き"
+    status: fact
+  - claim: "2026-11-02 に開いた一次（発表本文、草案、製品文書。発表日は 2026-10-30）は完了報告ではない。OpenAI は今後数カ月で実装し、Google は 2027 年の対応を目標にし、Microsoft は 2027-02-01 からクロールした分を尊重し始める、と書いている。定義草案の著者のメールは、Anthropic が実装を始めたと述べている"
+    evidence: "## 注意点 の表 / ## まとめ / 冒頭の一次の定義"
+    status: fact
+  - claim: "Google は Google-Extended の明示をこの名前より優先する計画である。Microsoft のページ単位（meta か応答ヘッダ）はこの名前より先である。OpenAI の GPTBot との優先は未記載である。Google-Extended は学習と応答の材料の両方を含む"
+    evidence: "## 既存の社別制御と並べて読む / ## 取得して重みを更新する側の判断 / ## 一次がまだ書いていないこと"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "1 つの robots.txt に、クローラ名のグループと __usage_ai-training が並ぶ。前者は取得してよいか、後者の一致結果はパラメータを更新してよいかである"
+    reason_needed: "取得拒否と学習拒否を同じ欄に置くと、クロールを止める規則と、重み更新への意向が混ざる"
+example:
+  description: "User-Agent: __usage_ai-training / Disallow: / / Allow: /press-kit/ 。サイト全体は学習への反対、/press-kit/ 以下は賛成。/blog/post は Disallow: /、/press-kit/logo.png は Allow: /press-kit/ が最長一致"
+  hypothetical: false
+  evidence: "## `__usage_ai-training` とは / 草案図1の例"
+applicability:
+  - "クロール拒否と、パラメータ更新への意向を分けて書きたい"
+  - "公開ウェブを取得して重みを更新するとき、取得時に残す記録を決める"
+  - "Google-Extended の明示や Microsoft のページ単位と、共通の名前の優先を読む"
+decision_criteria:
+  - "クローラ名の許可と、このグループの最長一致を別々に残し、グループが無いことを拒否にしない"
+  - "User-Agent: * の Disallow を学習拒否にしない"
+  - "Google の明示と Microsoft のページ単位を共通の名前より先にし、GPTBot との優先は未記載のままにする"
+  - "参照、引用、技能プロンプトをこの Disallow で止めず、グラウンディングは Google の計画だけ別扱いにする"
+  - "各社の開始を 1 日にまとめず、取得済みを消す条件にこの発表を使わない"
+limitations:
+  - "定義の草案は IETF 未承認。2026-10-30 に公開され、2027-05-03 に切れる。各社の終了日ではない。任意の取り組みであり、監査と救済はない"
+  - "付く意向は取得時点の robots.txt で、取得済みには遡らない。意向だけの巡回は反対の資源を取らなくてよい。取得を必ず止める規則ではない"
+  - "Microsoft は学習とグラウンディングを分け、どちらも未設定なら Allow である。ページ単位が robots.txt より優先する"
+  - "Cloudflare の Content-Signal は、User-Agent: * の下の別行であり、この名前に一致しない"
+unknowns:
+  - "OpenAI が共通トークンと GPTBot の衝突をどちら優先で実装するか"
+  - "Google のブログの 2027 年と、共通クローラーページの 2027 年初めが、同じ計画のどこを指すか"
+  - "Anthropic の製品文書がいつトークンを掲載し、ClaudeBot とどう優先するか"
+  - "語彙草案は、条件を満たす Search が AI Training を上書きしうると書く。合意前なので、社内規則へは自動で落とさない。合意後にその境界が残るかは未決"
+  - "EU の汎用AI行動規範が robots.txt を主要な手段として認める、という Google ブログの文。規範本文は未照合"
+reviewed: true

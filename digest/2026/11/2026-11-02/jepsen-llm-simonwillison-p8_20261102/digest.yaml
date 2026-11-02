@@ -1,0 +1,63 @@
+source:
+  title: "JepsenのParticleDB分析が示す、LLMが文書の信頼を削る見立て"
+  url: null
+  path: "notes/zenn/articles/jepsen-llm-simonwillison-p8_20261102.md"
+  primary:
+    - title: "Kyle Kingsbury. ParticleDB 1.1.4"
+      url: "https://jepsen.io/analyses/particledb-1.1.4"
+    - title: "Simon Willison. A quote from Kyle Kingsbury"
+      url: "https://simonwillison.net/2026/Nov/1/kyle-kingsbury/"
+    - title: "Nikhil Kala. ParticleDB: A Database Built for AI Agents"
+      url: "https://orkes.io/blog/particledb-database-built-for-ai-agents"
+    - title: "ParticleDB. Releases and client availability"
+      url: "https://particledb.ai/installation/releases/"
+  retrieved_at: "2026-11-03"
+archetype:
+  primary: decision
+  secondary: [governance]
+one_liner: "試験の記録、予測、修正を語る文は分けて受け取ります。検証は版・手順・実行日・結果が揃うまで埋めません。"
+key_points:
+  - claim: "Jepsen は ParticleDB 1.1.4 から 1.1.18.11.rc-22 で問題 96 件を報告し、うち 3 件を除き、故障を意図的に起こさない健全な単一ノードで起きたと書く。複製は未試験で、終わりの版 1.1.18.11.rc-22 では 10 件を除き解消したように見え、後続版は評価していない"
+    evidence: "## ParticleDBのJepsen分析とは（試験した版は 1.1.4 から 1.1.18.11.rc-22 / 第3章は、96 件のうち 3 件を除き / 1.1.18.11.rc-22 の時点では、10 件を除き）"
+    status: fact
+  - claim: "分析の節 4.5 は、開発で使った LLM の道具が未修正のバグを修正済みと繰り返したと断言する。続く、文書とソフトウェアと組織への信頼が削れるという予測は、業界の測定ではなく、採用した主張にも入れない"
+    evidence: "## ParticleDBのJepsen分析とは の節 4.5 引用 / ### 広い段落の書き方"
+    status: fact
+  - claim: "Willison の引用は、その予測と、正しいソフトウェアと正確な文書をどう作り品質をどう示すかという二つの問いを掲げ、正しさが要るところで得失を認め緩和すべきだという呼びかけを省く"
+    evidence: "## ParticleDBのJepsen分析とは（Willison のページは 2026-11-01） / ## まとめ"
+    status: fact
+  - claim: "96 件は試験で見つけた問題の数であり、LLM が原因だと切り分けた件数ではない。節 4.3 の三つの Perhaps は原因の候補で、試験を LLM に任せたという断定ではない"
+    evidence: "### 件数と原因の切り分け"
+    status: fact
+  - claim: "指摘はすべて対処した、のデータベースの版は、ブログが書いた 1.1.19、分析が伝える Orkes の主張 1.1.19-rc.13、2026-11-02 に開いて見たリリース履歴の現行 1.1.19-rc.16 で、rc.13 は後継に置き換わった。三つは同じ完了宣言ではない"
+    evidence: "### 版の文字列"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "出所の境界を書いても残す文は決まらず、検証は版・手順・実行日・結果が揃って初めて埋まる"
+    reason_needed: "欄があることと、第三者がやり直せる結果があることを分けるため"
+example:
+  description: "ParticleDB では、出所に開いて見たリリース履歴、ベンチマーク文書、Orkes のブログへ LLM の工程の開示が見当たらないこと、採用した主張には成熟の合図は以前より偽造しやすいという予測までを残し、信頼が削れるという文は採用した主張に入れない。検証には、既定 occ が通常運転でコミット済み書き込みを失ったこと、serializable が内部異常と Lost Update を許したことを書く"
+  hypothetical: false
+  evidence: "## 設計文書に検証の欄を置く（ParticleDB の受け取り方は、この三欄の例です）"
+applicability:
+  - "新しいデータベースの文書を、試験の記録、予測、ベンダーが修正を語る文に分けて受け取る"
+  - "自分の設計文書とリリースノートに、出所、採用した主張、検証の三欄を置く"
+  - "正しさが要る文書に限る。この記事が分類する例はデータベースだけである"
+decision_criteria:
+  - "Jepsen が ParticleDB の導入を止めて別のデータベースへ移るよう勧めた理由は、データを失うか壊す誤りの程度と、それを出した過程の両方である"
+  - "複製方式は未試験である。分析は、2026-11-02 の現行版を再試験していない"
+  - "採用した主張に残す予測は、成熟の合図は以前より偽造しやすくなった、までである。信頼が削れるという文は採用した主張に入れない"
+  - "ベンダーの修正は、対象版、再現手順、実行日、結果が揃うまで採用した主張へ上げない。版の文字列が違う三つの文書は同じ完了に束ねない"
+  - "検証に書く結果は、その版、その手順、その日に限る。試験が問題を見つけなかったことは、問題が無い証明にはならない"
+  - "追記の書き込み喪失は報告されなかった、という issue の自己申告は、その issue の報告として読み、96 件全体の確認にはしない"
+limitations:
+  - "未修正を修正済みと言った、という断言には、ツールのログ、プロンプト、特定の issue へのリンクが付いていない。追試の単位は手順つきの個々の SQL である"
+  - "脚注16は、完全な正しさを要しない用途もある、と範囲を狭める。どの用途かは一覧にしていない"
+  - "開いたリリース履歴、ベンチマーク文書、Orkes の当該ブログには、LLM をどの工程で使ったかの開示は見当たらない。サイトの他のページまでは見ていない"
+  - "資金は Orkes である。倫理のページは、ベンダー報酬が好意的な結論への圧力になると認め、公開分析の最終的な編集権は Jepsen にある、と書く。開示は利害の表示であり、観察の自動的な無効化でも実証でもない"
+  - "現行版の安全性（データを失うか壊すこと）は、この分析の範囲外である。other databases がどの分析を指すかは、本文からは特定できない"
+unknowns:
+  - "other databases がどの分析を指すかは、この分析からは特定できない"
+  - "issue コメントの成功件数 2,766,668 が二つの接続方式の合計か、各回の件数かは、文面だけでは決まらない"
+reviewed: true

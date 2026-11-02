@@ -1,0 +1,54 @@
+type: structure
+title: "隠し採点の出口は主指標"
+message: "生成物だけを隠し採点し、返すのは成功率、トークン、時間、行数である"
+source: "notes/zenn/articles/hono-agent-dx-zenn-dev-yusukebe-p7_20261102.md"
+components:
+  - id: setup
+    label: "条件と初期状態"
+    meaning: "モデル、ランタイム、課題、作業ディレクトリ"
+  - id: rails
+    label: "CLI と Skill"
+    meaning: "週次の cli + skill が名指しする足場"
+  - id: agent
+    label: "コーディングエージェント"
+    meaning: "条件を固定した会話を繰り返す側"
+  - id: tree
+    label: "生成物"
+    meaning: "生成または変更されたプロジェクト"
+  - id: grader
+    label: "隠しの決定的採点"
+    meaning: "Practical の公開手続きは tsc --noEmit と、項目が非公開の check script"
+  - id: metrics
+    label: "主指標"
+    meaning: "成功率、トークン、時間、行数"
+relationships:
+  - from: setup
+    to: agent
+    label: "渡す"
+  - from: rails
+    to: agent
+    label: "足す"
+  - from: agent
+    to: tree
+    label: "書く"
+  - from: tree
+    to: grader
+    label: "入れる"
+  - from: grader
+    to: metrics
+    label: "返す"
+omitted:
+  - item: "診断（選んだフレームワーク、CLI を呼んだか）"
+    reason: "主指標とは別欄なので、採点の出口に入れない。本文の核心ポイントに残す"
+  - item: "AGENTS.md と失敗時の JSON"
+    reason: "週次の条件名 cli + skill が名指ししない"
+  - item: "Adoption、Value、Practical の三つの名前"
+    reason: "図は採点の流れに絞る。問いの段は本文に残す"
+  - item: "外部 Pull Request の閉鎖"
+    reason: "Agent DX の点数ではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "評価の流れの mermaid（## HonoのAgent DXとは）"
+  - "### 採点が返すもの"

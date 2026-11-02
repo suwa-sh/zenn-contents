@@ -1,0 +1,50 @@
+type: structure
+title: "取得可否と学習意向は別欄"
+message: "取得してよいかと、パラメータを更新してよいかは、別のグループで決まる"
+source: "notes/zenn/articles/openai-robots-txt-openai-p3_20261102.md"
+components:
+  - id: crawl
+    label: "クローラ名のグループ"
+    meaning: "クローラ名の User-Agent グループ。取得してよいかを Allow と Disallow で示す"
+  - id: train
+    label: "__usage_ai-training"
+    meaning: "利用目的を表す User-Agent 名。生成モデルのパラメータ更新への意向を示す"
+  - id: fetch
+    label: "取得してよいか"
+    meaning: "そのクローラがそのパスを取得してよいか"
+  - id: intent
+    label: "学習への意向"
+    meaning: "最長一致の結果。グループが無いときは意向なし。Disallow は反対、Allow は賛成"
+  - id: weights
+    label: "パラメータ更新"
+    meaning: "学習への意向を、生成モデルの学習済みパラメータを更新する経路へ渡す"
+groups:
+  - id: file
+    label: "robots.txt"
+    members: [crawl, train]
+relationships:
+  - from: crawl
+    to: fetch
+    label: "取得の規則"
+  - from: train
+    to: intent
+    label: "最長一致"
+  - from: intent
+    to: weights
+    label: "更新してよいか"
+omitted:
+  - item: "社別トークンとページ単位からパラメータ更新への矢印"
+    reason: "より具体な指定を先に適用する、は確認項目に残す。図は2つのグループの分離だけを示す"
+  - item: "取得してよいかからパラメータ更新への矢印"
+    reason: "取得規則と学習意向は別欄である。つなぐと、クロール拒否が学習拒否に見える"
+  - item: "グラウンディング、技能プロンプト、参照、引用"
+    reason: "このトークンの定義の外であり、パラメータ更新の欄には置かない"
+  - item: "各社の開始時期、Cloudflare の Content-Signal、グループ不在の独立ノード"
+    reason: "時期と別信号は本文の注意点に残す。不在は学習への意向の意味に含めた"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "## `__usage_ai-training` とは / 1つの robots.txt は、取得の規則と、学習への意向を、別の User-Agent グループとして持つ"
+  - "## `__usage_ai-training` とは / 草案 §4.3 と §4.4。取得の意向と、パラメータ更新の意向は別"
+  - "## 取得して重みを更新する側の判断 / 草案 §4.3 は、利用意向と取得規則を直交だと書く"

@@ -1,0 +1,64 @@
+source:
+  title: "HonoのAgent DXは選択とレールの効果を隠し採点で測る"
+  url: null
+  path: "notes/zenn/articles/hono-agent-dx-zenn-dev-yusukebe-p7_20261102.md"
+  primary:
+    - title: "Yusuke Wada「Agent DX 〜 AI時代にフレームワークHonoは必要か」（2026-11-01）"
+      url: "https://zenn.dev/yusukebe/articles/3d3dc6605ca1b1"
+    - title: "公開結果 agent-dx.hono.dev"
+      url: "https://agent-dx.hono.dev"
+    - title: "Node.js × framework の公開履歴"
+      url: "https://agent-dx.hono.dev/adoption/node-js/framework"
+    - title: "honojs/agent-dx の README"
+      url: "https://github.com/honojs/agent-dx/blob/main/README.md"
+  retrieved_at: "2026-11-03"
+archetype:
+  primary: research
+  secondary: [decision]
+one_liner: "Hono の Agent DX は、選択と足場の効果を隠した採点で測る。定義と分母と計測日が揃う数字だけを、同じ強さで読む。"
+key_points:
+  - claim: "問いは三段である。Adoption は依頼文に Hono と書かない中立な依頼で何を選ぶか、Value は素のハンドラ（Hono を介さない書き方）と Hono の差、Practical は既存の Hono プロジェクトへの変更がレールの有無でどう変わるか。レールはエージェント向けの足場の総称で、週次の cli + skill は CLI と Skill だけを指す"
+    evidence: "### 三つの問い"
+    status: fact
+  - claim: "決定的とは、プロジェクト全体ではテスト、型チェック、import の静的解析が合否を決めることである。Practical で公開されているのは終了後の tsc --noEmit と非公開の check script だけで、合否は言語モデルに尋ねず、テストと import 解析がその中にあるかは分からない"
+    evidence: "### 採点が返すもの / ### 採点の中身"
+    status: fact
+  - claim: "主指標は成功率、トークン、時間、書いた行数である。どのフレームワークを選んだかと CLI を呼んだかは診断の記録で、成功率とは別の欄である"
+    evidence: "### 採点が返すもの"
+    status: fact
+  - claim: "Value は 2026-09-06、claude-haiku-4-5、各 10 回で、週次ではない。行数の減りは shop が約 39%、notes が約 34% で記事の「30〜40%」に入る。shop は素のハンドラ 2/10、Hono 4/10 で、成功率が半分を超えたという意味ではない"
+    evidence: "### Value の数字の読み方 の表"
+    status: fact
+  - claim: "2026-11-01 の記事にある「フレームワークを使えと言うと Node.js でも Hono を選ぶ」は、Node.js × framework の 2026-09-04 から 2026-10-26（Hono の割合は 0%）と食い違う。2026-10-26 のその履歴では Opus は 5 回とも Express である"
+    evidence: "### Node.js の公開履歴"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "条件と初期状態を渡し、Practical の cli + skill のときだけ CLI と Skill を足す。生成物だけを隠し採点へ入れ、返すのは成功率、トークン、時間、行数である。選んだフレームワークと CLI 呼び出しは、この出口には入れない"
+    reason_needed: "成功率だけを見ると、悪い足場を他プロセスの停止で回避した成功が、設計の良さに見える。採点の出口と診断の記録は別欄である"
+example:
+  description: "Practical の週次、2026-10-26 の claude-haiku-4-5、各 5 回では、開発サーバー課題の baseline（CLI も Skill も無い）が成功率 80%、69 秒、cli + skill が 100%、25 秒である"
+  hypothetical: false
+  evidence: "### Practical の開発サーバー課題 の二つの表"
+applicability:
+  - "社内ライブラリの足場を、固定した課題の成功率、トークン、時間で数える"
+  - "定義と分母と計測日が揃う数字だけを、同じ強さで読む"
+decision_criteria:
+  - "隠して走らせるテストの成功率、ハングと巻き添え停止、人間用コマンドへの追従を一列にまとめない"
+  - "福岡の講演（2026-09-12）が CLI を勧めるのは、量が多い確認と、同じ会話で仕様が続く変更に限る。一行の GET /health に足す根拠は、その結論に無い"
+  - "発見面（依存や AGENTS.md のように、探さずに目に入る場所）に無い機能は使われない、と agent-dx の README が書く範囲で読む"
+  - "2026-11-02 時点で、安定版 Workers テンプレートの dev は wrangler dev で AGENTS.md も CLI も無く、next 版は cf dev に AGENTS.md と CLI がある。混ぜない"
+  - "外部の Pull Request を閉じるかは、Agent DX の点数に入れない"
+limitations:
+  - "約 700 run と約 $200 は福岡（2026-09-12）の自己申告で、請求資料と突合できない。44 回中 24 回の巻き添え停止は Hono Conference（2026-10-11）の自己申告で、公開された表の分母と突合できない"
+  - "2026-10-26 の haiku では、refactor-routes は baseline が 100%、178k トークン、cli + skill が 80%、328k トークンである。課題本文は公開の表に無い"
+  - "package.json に hono を置いて Hono を選んだ回数は、Workers と Node.js がそれぞれ 5/5 で、週次の表に無い。再実行はしていない"
+  - "Cloudflare Connect のスライド原本は未確認である。Adoption の課題名 routes の本文は、名前以外が公開されていない"
+  - "Practical の週次履歴はモデルごとの最新セルだけである。haiku の refactor-routes が過去週にどう動いたかは未確認である"
+unknowns:
+  - "Cloudflare Connect のスライド原本と、参加者スレッド以外の差分"
+  - "package.json に hono を置いた 5/5 の生ログ、プロンプト、モデル"
+  - "check script の検査項目と、その中にテストと import 解析があるか"
+  - "routes シナリオの課題本文"
+  - "haiku の refactor-routes の過去週"
+reviewed: true

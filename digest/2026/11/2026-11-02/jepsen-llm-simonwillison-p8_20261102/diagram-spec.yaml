@@ -1,0 +1,37 @@
+type: structure
+title: "設計文書の三欄"
+message: "出所の境界を書いても残す文は決まらず、検証は版・手順・実行日・結果が揃って初めて埋まる"
+source: "notes/zenn/articles/jepsen-llm-simonwillison-p8_20261102.md"
+components:
+  - id: origin
+    label: "出所"
+    meaning: "LLM が下書きした範囲と、人が手を入れた範囲の境界"
+  - id: claim
+    label: "採用した主張"
+    meaning: "人が残すと決めた文"
+  - id: verify
+    label: "検証"
+    meaning: "対象の版、やり直す手順、実行日、結果"
+groups:
+  - id: doc
+    label: "設計文書"
+    members: [origin, claim, verify]
+relationships:
+  - from: origin
+    to: claim
+    label: "境界だけでは残す文は決まらない"
+  - from: verify
+    to: claim
+    label: "結果が違えば主張を下げる"
+omitted:
+  - item: "届く文書の三分（試験の記録、予測の文、ベンダーが修正を語る文）"
+    reason: "図は自分の設計文書の三欄に絞る。受け取り側の分類は本文の核心ポイントに残す"
+  - item: "ParticleDB の版文字列、96 件、Willison の省略"
+    reason: "三欄の関係が伝えたいことであり、個別の数値は具体例に残す"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 設計文書に検証の欄を置く の表（出所 / 採用した主張 / 検証）"
+  - "境界を書いただけでは、残す文は決まりません"
+  - "検証の欄: 結果が違ったら主張を下げる条件"
