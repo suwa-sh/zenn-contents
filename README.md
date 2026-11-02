@@ -7,11 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (591)
+## Articles: 下書き (592)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-11-02 | [🧪 HonoのAgent DXは選択とレールの効果を隠し採点で測る](articles/hono-agent-dx-zenn-dev-yusukebe-p7_20261102.md) | Hono, TypeScript, AIAgent, Cloudflare |
+| 2026-11-02 | [🔍 JepsenのParticleDB分析が示す、LLMが文書の信頼を削る見立て](articles/jepsen-llm-simonwillison-p8_20261102.md) | Jepsen, LLM, Database, Documentation |
 | 2026-11-02 | [🤖 __usage_ai-trainingで示す生成AIの学習意向](articles/openai-robots-txt-openai-p3_20261102.md) | OpenAI, RobotsTxt, IETF, GenerativeAI |
 | 2026-11-01 | [🧩 スキル導入前に前提スキルとCLIの欠落を数える](articles/cli-agent-skills-zenn-dev-p5_20261101.md) | AgentSkills, ClaudeCode, CLI, AIAgent |
 | 2026-11-01 | [🔐 Cloudflareが分けて公開したeMudhra未パッチ接続の残存](articles/cloudflare-emudhra-cloudflare-p7_20261101.md) | Security, TLS, Cloudflare, PKI, Go |
