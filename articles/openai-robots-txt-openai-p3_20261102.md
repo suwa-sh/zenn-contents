@@ -3,7 +3,8 @@ title: "__usage_ai-trainingで示す生成AIの学習意向"
 emoji: "🤖"
 type: "tech"
 topics: ["OpenAI", "RobotsTxt", "IETF", "GenerativeAI"]
-published: false
+published: true
+published_at: 2026-11-03
 ---
 
 2026-10-30、OpenAI、Google、Microsoft は、ウェブサイト運営者が生成AIの学習に関する意向を、複数の事業者へまとめて伝えられる共通の robots.txt シグナルを尊重する、とそれぞれ発表しました。2026-11-02 に確認できた一次は、対応済みの完了報告ではなく、これからの実装か、実装を始めたという本人の文です。一次とは、発表本文、草案、各社の製品文書そのものを指します。この記事では、その信号の書き方、指す範囲、各社が書いた時期、既存のクローラー制御との関係、公開ウェブを取得して生成モデルの学習済みパラメータを更新する側が残す欄を整理します。

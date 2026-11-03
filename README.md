@@ -7,13 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (592)
+## Articles: 下書き (591)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-11-02 | [🧪 HonoのAgent DXは選択とレールの効果を隠し採点で測る](articles/hono-agent-dx-zenn-dev-yusukebe-p7_20261102.md) | Hono, TypeScript, AIAgent, Cloudflare |
 | 2026-11-02 | [🔍 JepsenのParticleDB分析が示す、LLMが文書の信頼を削る見立て](articles/jepsen-llm-simonwillison-p8_20261102.md) | Jepsen, LLM, Database, Documentation |
-| 2026-11-02 | [🤖 __usage_ai-trainingで示す生成AIの学習意向](articles/openai-robots-txt-openai-p3_20261102.md) | OpenAI, RobotsTxt, IETF, GenerativeAI |
 | 2026-11-01 | [🧩 スキル導入前に前提スキルとCLIの欠落を数える](articles/cli-agent-skills-zenn-dev-p5_20261101.md) | AgentSkills, ClaudeCode, CLI, AIAgent |
 | 2026-11-01 | [🔐 Cloudflareが分けて公開したeMudhra未パッチ接続の残存](articles/cloudflare-emudhra-cloudflare-p7_20261101.md) | Security, TLS, Cloudflare, PKI, Go |
 | 2026-10-31 | [🔐 Cursor拡張マーケットの改ざん版Claude Codeを配布元とハッシュで分ける](articles/cursor-claude-code-2-1-313-p1_20261031.md) | ClaudeCode, Cursor, Security, SupplyChain, VSCode |
@@ -604,10 +603,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (199)
+## Articles: 公開済み (200)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-11-03 | [🤖 __usage_ai-trainingで示す生成AIの学習意向](articles/openai-robots-txt-openai-p3_20261102.md) | OpenAI, RobotsTxt, IETF, GenerativeAI |
 | 2026-10-31 | [🛡️ CNCFブログはエージェントの境界を許されたツール集合として整理する](articles/cncf-cncf-io-2026-boundary-p6_20261030.md) | CNCF, AIAgent, Kubernetes, Security, MCP |
 | 2026-10-29 | [🧱 マルチエージェントを本番で動かす4つの問題を一次資料で切り分ける](articles/katelyn-lesse-multiagent-problem_20261027.md) | AIAgent, Kubernetes, Security, OpenTelemetry, Sandbox |
 | 2026-10-24 | [🛡️ OpenAIが提案した協調開示とPHPの致命的欠陥二件を手順に落とす](articles/openai-oss-openai-index-of-p1_20261022.md) | PHP, OpenAI, Security, CVE, OSS |
