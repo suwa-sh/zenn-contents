@@ -1,0 +1,50 @@
+type: structure
+title: "組み立てる時間の切り方"
+message: "組み立てる時間を上長の裁量に置くと「時間がない」が残る。職務として切る先は、専門判断を含むブロックである"
+source: "notes/zenn/articles/ai-100-itmedia-co-jp-business-p8_20261103.md"
+components:
+  - id: tools
+    label: "主要AIツールの利用"
+    meaning: "ChatGPT、Gemini、Claude、Cursor、LiteLLM、Notion AI のいずれかを利用している状態"
+  - id: time
+    label: "組み立てる時間"
+    meaning: "主要AIツールを配ったあとに、エージェントを組み立てるために使う時間"
+  - id: boss
+    label: "上長のその場の裁量"
+    meaning: "上長がその場で構築の時間を止める側。口頭で正当だと伝えても「時間がない」が残る"
+  - id: block
+    label: "事前・当日・事後のブロック"
+    meaning: "会社が日程として切る役割の時間。事前2週間、当日、事後2週間の約1か月"
+  - id: human
+    label: "人が残す専門判断"
+    meaning: "コンプライアンスと、デザインや品質の最終判断。構築時間を守ることとは別"
+relationships:
+  - from: tools
+    to: time
+    label: "配ったあと"
+  - from: time
+    to: boss
+    label: "裁量に置く"
+  - from: time
+    to: block
+    label: "職務として切る"
+  - from: block
+    to: human
+    label: "中に名指しする"
+omitted:
+  - item: "全社員の場で「無駄ではない」と伝える口頭の後押し"
+    reason: "切れていない時間の側なので、上長の裁量にまとめた。図の主張は、裁量に置くと「時間がない」という反応が残ること"
+  - item: "AI Pods（役割を越えて仕様からリリースまでを少人数で閉じる開発）"
+    reason: "専門判断の手前に来る別経路だが、切る単位が約1か月のブロックであるという主張には不要"
+  - item: "CHROとCAIOの兼務、評価の再設計"
+    reason: "体制と評価は本文の判断と提案に残す。時間の切り方の関係ではない"
+  - item: "7.6倍、1.9倍、売上と利益の倍率"
+    reason: "コード変更量を成果と呼ばない注意であり、時間の切り方の構造ではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 時間が分かれる四つの行き先 / 構築時間は、ツールを配ったあとに分かれる"
+  - "## 口頭の後押しが残したもの / 口頭で時間の正当性を伝えても「時間がない」が残った"
+  - "## 切る単位は、当日の1日ではない / 切る単位は当日の1日ではない。事前と事後を含むブロックにする"
+  - "## ブロックの中に、人が残す判断を名指しする / 残った例は、コンプライアンスと、デザインや品質の最終判断"

@@ -1,0 +1,56 @@
+type: structure
+title: "個人アカウントの3つの計算"
+message: "含まれる利用枠、usage credits、月次APIクレジットは別計算で、5時間枠が無いのは確認済みUltraだけ"
+source: "notes/zenn/articles/anthropic-claude-max-x-ultra-p3_20261103.md"
+components:
+  - id: included
+    label: "含まれる利用枠"
+    meaning: "ブラウザの claude.ai、デスクトップ、モバイル、公式 Claude Code で分け合う枠"
+  - id: session
+    label: "5時間枠"
+    meaning: "確認済み Ultra には無い。Max は Pro の 5 倍。未確認 Ultra は一時的に残り、倍数はヘルプに無い"
+  - id: weekly
+    label: "週次枠"
+    meaning: "Max は Pro の 5 倍。Ultra は確認の有無にかかわらず Pro の 10 倍。アカウント固定の時刻で戻る"
+  - id: ucredits
+    label: "usage credits"
+    meaning: "含まれる上限のあと、サブスクとは別請求の従量クレジット。リセット時刻は変えない"
+  - id: apicredit
+    label: "月次APIクレジット"
+    meaning: "Max は 100 ドル、Ultra は 200 ドル。加入 7 日後から受け取れる。usage credits には入らない"
+  - id: console
+    label: "Consoleの残高"
+    meaning: "Claude API を契約する組織側の管理画面の残高"
+groups:
+  - id: account
+    label: "個人アカウント"
+    members: [included, ucredits, apicredit]
+relationships:
+  - from: included
+    to: session
+    label: "確認済みUltra以外"
+  - from: included
+    to: weekly
+    label: "常に残る"
+  - from: included
+    to: ucredits
+    label: "上限のあと"
+  - from: apicredit
+    to: console
+    label: "入る。usage creditsには入らない"
+omitted:
+  - item: "Fable 5 と Fable 5.1 の週次 50%"
+    reason: "週次枠の中の先止まりであり、3つの計算の分離とは別の判断なので本文の確認項目に残す"
+  - item: "画面ごとの共有の内訳"
+    reason: "含まれる利用枠の意味にまとめた。図の要素を 7 個以下にするため"
+  - item: "5 時間のローリングと週次の固定時刻、API の RPM と TPM、支出上限の HTTP 429"
+    reason: "リセットの種類と API 側の止まり方は本文の確認項目と注意点に残す。図は計算の分離だけを示す"
+  - item: "月次APIクレジットから usage credits への矢印"
+    reason: "入らない関係である。Console への矢印のラベルに「usage credits には入らない」と書いた"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "### 1 つのアカウントの中の枠 / 個人アカウントの中には、含まれる利用枠と、名前が似ていて別計算のクレジットがある"
+  - "### 含まれる利用枠 / 確認済みの Ultra には、5 時間ごとにリセットされるセッション上限がない。週ごとの上限は残る"
+  - "### 月次の API クレジット / 月次 API クレジットは Claude、Claude Code、Cowork の usage credits には適用されない"

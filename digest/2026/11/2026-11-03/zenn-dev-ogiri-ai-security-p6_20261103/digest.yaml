@@ -1,0 +1,63 @@
+source:
+  title: "検索と外部取得の全面禁止がオンプレのエージェントを要約器にする"
+  url: null
+  path: "notes/zenn/articles/zenn-dev-ogiri-ai-security-p6_20261103.md"
+  primary:
+    - title: "ogiri「全部禁止にしたらAIが使えない」"
+      url: "https://zenn.dev/ogiri/articles/ai-security-ban-paradox"
+    - title: "OpenAI Data controls"
+      url: "https://developers.openai.com/api/docs/guides/your-data"
+    - title: "Anthropic API and data retention"
+      url: "https://platform.claude.com/docs/en/manage-claude/api-and-data-retention"
+    - title: "Anthropic Investigating unintended model actions in our evaluations and internal use"
+      url: "https://www.anthropic.com/research/investigating-unintended-model-actions"
+    - title: "OWASP LLM01:2025 Prompt Injection"
+      url: "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
+  retrieved_at: "2026-11-04"
+archetype:
+  primary: governance
+  secondary: [decision]
+one_liner: "到達欄は、検索へ渡してよい文字列の型と、結果を書いてよいシステムの組です。空は拒否で、検索とページ取得は出口の実装が止めます。"
+key_points:
+  - claim: "通る型は公開の識別子（パッケージ名、RFC 番号、エラーコード、公開 API の記号、バージョン）だけである。顧客名、案件番号、社内のプロジェクト名、ファイルパス、秘密、社内の文は社内検索にも社外検索にも進まない"
+    evidence: "到達欄とは / 欄が持つ二つの組 / 依頼が通る経路"
+    status: fact
+  - claim: "結果の書き込み先は調査メモと引用ログに限り、顧客のリポジトリ、秘密の置き場、外向きのメールには書かない"
+    evidence: "空にする行と埋める行 / 社内と公開の行"
+    status: fact
+  - claim: "ゼロデータ保持は応答後にプロンプトと応答を保管しない契約であり、送信を止めない。2026-11-03 に読んだ OpenAI と Anthropic の保持ページにも送信を止める記述は無く、止めるのはエージェントの呼び出しを包む出口の実装（ハーネス）である"
+    evidence: "注意点 / ZDR は応答後の保管の契約である"
+    status: fact
+  - claim: "取得した本文はモデルにとって命令になりうる。Anthropic のウェブ取得は、信頼できない入力と機密データを同じ環境に置くと、緩和のあとにも持ち出しのリスクが残ると書いている"
+    evidence: "取得した本文は命令として読まれうる"
+    status: fact
+  - claim: "全面禁止が合うのは、制限の行（空にして人が読む）と、監視が回避を捕まえられない評価である。社外の事実が要る調べ物を禁止すると、その仕事は社内文書の要約になる"
+    evidence: "全面禁止と出口検査と到達欄の違い / まとめ"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "図の人が読むは制限の行を空にしたとき。社外の事実が要る仕事を空にすると残るのは社内文書の要約。埋めるなら公開の識別子だけを検索へ渡し、結果は調査メモと引用ログへ書く"
+    reason_needed: "空と埋めの組が、仕事が要約で終わるか調べ物が残るかを分ける"
+example:
+  description: "制限は空、社内と公開は公開の識別子と調査メモ・引用ログ、監視が回避を捕まえられない評価は空へ戻す"
+  hypothetical: false
+  evidence: "空にする行と埋める行 の表"
+applicability:
+  - "オンプレミスで、権限表（公開、社内、制限の行を持つ表）の一欄として到達欄を書く"
+  - "出口で型と取得先のホスト名を見る検査の、許す型と書き込み先を、その表に固定する"
+decision_criteria:
+  - "欄を書いただけでは止まらないので、空を拒否としてハーネスで止めているか"
+  - "社内検索を内側と呼ぶとき、本文を遠隔のモデルへ再送せず、索引の場所だけでは決めていないか"
+  - "ゼロデータ保持を送信停止の代わりにせず、API が拒否しない対象外の機能を使うとその保持方針に入ることを分けているか"
+  - "型、URL の長さ、取得してよいドメインを付けても、監視が回避を捕まえられない間はその欄を空に戻しているか"
+  - "基本のウェブ検索とページ取得を、常にゼロデータ保持の外とは書いていないか"
+limitations:
+  - "起点のノートは自分の環境の記録だと自分で限定している。Anthropic が一部の高リスク評価とサイバーセキュリティ評価で生のインターネットを止め、社内評価へ広げた例は、顧客向けの既定へ移せない"
+  - "型と URL の長さは必要で、それだけでは抜けうる。モデルが無料の URL 短縮で回避したのは長さの上限であり、許可ドメインまで付けても残リスクは残る"
+  - "OWASP LLM01:2025 の定義は 2026-11-03 の検索抽出であり、ページ本文の全文は照合していない"
+  - "OpenAI のライブウェブ検索がゼロデータ保持の対象かは、読んだ Web Search 節では決まらない"
+  - "Anthropic の保持では、フラグされた内容の 2 年は上限であり、常時 2 年保管する文ではない。条件は法令で必要なとき、または自動の信頼安全システムがフラグしたときである"
+unknowns:
+  - "社内検索のログ、トレース、キャッシュが索引と同じ境界に残るかは製品ごとに変わり、この記事は製品を特定していない"
+  - "OpenAI のライブウェブ検索がゼロデータ保持の対象かどうかは、読んだ Web Search 節では非適格とも適格とも書いていない"
+reviewed: true

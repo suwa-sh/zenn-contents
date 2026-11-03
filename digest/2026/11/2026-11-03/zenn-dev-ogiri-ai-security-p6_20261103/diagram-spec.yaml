@@ -1,0 +1,57 @@
+type: structure
+title: "到達欄は型と書き込み先の組"
+message: "欄が空なら検索は止まり人が読む。埋めるなら公開の識別子だけを検索へ渡し、結果は調査メモと引用ログへ書く"
+source: "notes/zenn/articles/zenn-dev-ogiri-ai-security-p6_20261103.md"
+components:
+  - id: request
+    label: "利用者の依頼"
+    meaning: "社外の事実を調べさせる依頼"
+  - id: column
+    label: "到達欄"
+    meaning: "問い合わせの型と書き込み先の組。空は拒否"
+  - id: human
+    label: "人が読む"
+    meaning: "制限の行を空にしたときに残る仕事。社外の事実が要る仕事を空にしたときに残る社内文書の要約とは別"
+  - id: qtype
+    label: "公開の識別子"
+    meaning: "検索へ渡してよい文字列の型"
+  - id: search
+    label: "検索と取得"
+    meaning: "型を通過した問い合わせだけが進む"
+  - id: sink
+    label: "調査メモと引用ログ"
+    meaning: "結果を書いてよいシステム"
+groups:
+  - id: filled
+    label: "欄を埋めたとき"
+    members: [qtype, search, sink]
+relationships:
+  - from: request
+    to: column
+    label: "入る"
+  - from: column
+    to: human
+    label: "空なら拒否"
+  - from: column
+    to: qtype
+    label: "埋める"
+  - from: qtype
+    to: search
+    label: "通過したものだけ"
+  - from: search
+    to: sink
+    label: "結果を書く"
+omitted:
+  - item: "社内検索と社外検索の分岐"
+    reason: "どちらも型を通過したあとの行き先であり、空か埋めかの組が伝えたいことだから"
+  - item: "モデルが本文を読む、遠隔 API、ゼロデータ保持"
+    reason: "送信と応答後の保管は注意点であり、欄の組そのものではない"
+  - item: "顧客名、ファイルパス、秘密"
+    reason: "型に入らない例は本文に残し、図の要素にはしない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "到達欄とは / 欄が持つ二つの組"
+  - "依頼が通る経路"
+  - "空にする行と埋める行 の表"

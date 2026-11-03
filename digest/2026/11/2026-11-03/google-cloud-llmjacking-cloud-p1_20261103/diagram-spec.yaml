@@ -1,0 +1,50 @@
+type: structure
+title: "四つの記録はプロジェクトと時間窓で揃う"
+message: "有効化、推論操作、モデル名、金額は別々の記録であり、プロジェクトと時間窓を揃えて範囲を切る"
+source: "notes/zenn/articles/google-cloud-llmjacking-cloud-p1_20261103.md"
+components:
+  - id: enable
+    label: "有効化の管理ログ"
+    meaning: "Service Usage の Admin Activity。メソッドは EnableService"
+  - id: data
+    label: "Data Access"
+    meaning: "カタログに載る推論操作。サービス名は aiplatform.googleapis.com"
+  - id: req
+    label: "リクエスト応答ログ"
+    meaning: "モデル名と API メソッド。別設定のオプトイン"
+  - id: bill
+    label: "標準請求の1時間窓"
+    meaning: "金額と使用量。resource 単位の費用は含まない"
+  - id: scope
+    label: "プロジェクトと時間窓"
+    meaning: "影響範囲を切るときに揃える先"
+groups:
+  - id: records
+    label: "別々の記録"
+    members: [enable, data, req, bill]
+relationships:
+  - from: enable
+    to: scope
+    label: "揃える"
+  - from: data
+    to: scope
+    label: "揃える"
+  - from: req
+    to: scope
+    label: "揃える"
+  - from: bill
+    to: scope
+    label: "揃える"
+omitted:
+  - item: "漏れた認証情報から LLM Mixer を経て購読者へ至る経路"
+    reason: "図の主張は記録の分離であり、転売の経路そのものではない"
+  - item: "金額の具体値と LiteLLM の CVE"
+    reason: "範囲の切り方とは別の判断なので、図には載せない"
+  - item: "予算アラートの遅れと AWS / Azure の操作名"
+    reason: "四つの記録を揃える関係に直接入らない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## LLMJackingとは（Google Cloud 側でこの流れに対応する記録は、一つのログ製品には揃っていません）"
+  - "## 影響範囲はプロジェクトと時間窓で切る（モデル名と API メソッドが要るなら、事前に有効化したリクエスト応答ログを、同じプロジェクトと時間で並べます）"

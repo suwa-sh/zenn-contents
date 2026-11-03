@@ -1,0 +1,65 @@
+source:
+  title: "侵害したクラウドのモデル利用枠を転売する LLMJacking の記録の見方"
+  url: null
+  path: "notes/zenn/articles/google-cloud-llmjacking-cloud-p1_20261103.md"
+  primary:
+    - title: "GTIG / Mandiant. The Rise of LLMJacking（2026-11-03）"
+      url: "https://cloud.google.com/blog/topics/threat-intelligence/llmjacking-monetizing-compromised-cloud-models/"
+    - title: "Agent Platform audit logs"
+      url: "https://docs.cloud.google.com/gemini-enterprise-agent-platform/machine-learning/general/audit-logging"
+    - title: "Request-response logging"
+      url: "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/capabilities/request-response-logging"
+    - title: "Standard usage cost export"
+      url: "https://docs.cloud.google.com/billing/docs/how-to/export-data-bigquery-tables/standard-usage"
+    - title: "GHSA-wxxx-gvqv-xp7p"
+      url: "https://github.com/advisories/GHSA-wxxx-gvqv-xp7p"
+  retrieved_at: "2026-11-04"
+archetype:
+  primary: incident
+  secondary: [governance]
+one_liner: "Google Cloud では、利用枠の転売は一つのログで範囲が切れません。API の有効化、推論、モデル名、金額を、同じプロジェクトと時間窓へ並べます。"
+key_points:
+  - claim: "LLMJacking はモデルへの到達を奪い、利用枠を収益化し、請求を被害側に残す手口である。LLM Mixer は購読者へ割り当て、呼び出し元を隠す中継で、引用は LiteLLM と同じとは書いていない。足がかりは、公開されたモデルの入口よりも、漏れたクラウド認証情報が多い"
+    evidence: "冒頭 / ## LLMJackingとは（到達を奪い / LLM Mixer / この三つの名と LLM Mixer の関係 / 公開されたモデルの入口よりも）"
+    status: fact
+  - claim: "有効化のログは Service Usage（serviceusage.googleapis.com）の管理操作である。監査表に載る推論は Agent Platform（aiplatform.googleapis.com）の Data Access（読み書きの監査）で、この記録を有効化するまで書かれない"
+    evidence: "## LLMJackingとは / ### サービス有効化のログ / ### Cloud Audit Logs とリクエスト応答ログ"
+    status: fact
+  - claim: "Data Access を開けば内容生成がトークン数つきで残る、とは 2026年11月3日時点の監査表からは言えない。GenerateContent と StreamGenerateContent の行は読み取り操作の一覧に無く、行が無いことはどの構成でも記録されないという意味にはならない"
+    evidence: "### Cloud Audit Logs とリクエスト応答ログ"
+    status: fact
+  - claim: "リクエスト応答ログにトークン数の専用列は無く、JSON に利用量があるかはそのページだけでは確定できない。同じ1時間に正規の利用と不正利用があれば金額と使用量だけでは分かれないので、被害側の利用増と、項目名がブログに無い LLM Mixer で推定する"
+    evidence: "### Cloud Audit Logs とリクエスト応答ログ / ### 請求エクスポートの粒度 / ## 影響範囲はプロジェクトと時間窓で切る"
+    status: fact
+  - claim: "LiteLLM の CVE-2026-40217 は、ブログの /key/regenerate で鍵をマスター資格へ上げる説明と、advisory の /guardrails/test_custom_code（既定では proxy-admin の資格が要るサンドボックス脱出）で揃わない"
+    evidence: "### LiteLLM の CVE-2026-40217"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "有効化、推論操作、モデル名、金額は別々の記録であり、プロジェクトと時間窓を揃えて範囲を切る"
+    reason_needed: "一連の手口が一つのログ製品に揃わないため、どの記録を見れば何が分かるかが判断の中心になる"
+example:
+  description: "ある主体は8時間未満に50万回を超える API 呼び出しを行い、トークン費用のほぼ100万ドルを被害組織へ回した"
+  hypothetical: false
+  evidence: "### 金額（別の主体は、8時間未満に 500,000 回）"
+applicability:
+  - "侵害後に、使われたサービスと課金を、プロジェクトと時間窓で範囲に入れる"
+  - "モデル名が要る調査の前に、リクエスト応答ログを有効にしておく"
+  - "LiteLLM を置くなら、この CVE の版を先に見る"
+decision_criteria:
+  - "Service Usage の管理操作ログは既定で有効で、無効にはできない"
+  - "Data Access が侵害前に有効だったかを確認する。有効化していない期間は後から埋まらない"
+  - "モデル名が要るなら、中身が残り得るリクエスト応答ログを事前に有効化し、保存先と保持を決める"
+  - "請求の急増は調査の開始にとどめる"
+  - "LiteLLM が 1.81.8 以上かつ 1.83.11 未満なら、proxy-admin の露出と、advisory 本文の 1.83.11 以降への更新を先に見る"
+limitations:
+  - "金額は、独立した会計監査の数字ではない"
+  - "GenerateContent が監査表以外で残るか、JSON のトークン数が安定するかは確定していない"
+  - "詳細エクスポートが Gemini のリクエスト単位になるか、その resource がエンドポイントやモデルまで落ちるかは、案内からは確定できない"
+  - "同名の GenerateContent は別サービス Business AI Code の監査表にあり、Agent Platform の推論ログではない"
+  - "有効化された側のサービス名は引用では特定していない。AWS と Azure の操作名はブログの検知候補で、現行 API との一致は未確認である"
+unknowns:
+  - "有効化された側のサービス名の値は、引用した記述では特定していない"
+  - "AWS と Azure の操作名は、各社の現行 API リファレンスとの一致を確認していない"
+  - "full_request と full_response の JSON にトークン数が安定して入るかは、引用したページでは確定していない"
+reviewed: true

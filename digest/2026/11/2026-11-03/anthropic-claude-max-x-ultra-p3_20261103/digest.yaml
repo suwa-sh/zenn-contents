@@ -1,0 +1,63 @@
+source:
+  title: "ClaudeのMax 20xはUltraになり、確認済みなら5時間枠が外れる"
+  url: null
+  path: "notes/zenn/articles/anthropic-claude-max-x-ultra-p3_20261103.md"
+  primary:
+    - title: "公式 X @claudeai（2026-10-30 17:29:07 GMT）"
+      url: "https://x.com/claudeai/status/2116220869479428500"
+    - title: "料金ページ（2026-11-03）"
+      url: "https://claude.com/pricing"
+    - title: "Ultra とは"
+      url: "https://support.claude.com/en/articles/17728952-what-is-the-ultra-plan"
+    - title: "利用上限と長さ制限"
+      url: "https://support.claude.com/en/articles/11647753-how-do-usage-and-length-limits-work"
+    - title: "usage credits"
+      url: "https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans"
+    - title: "月次 API クレジット"
+      url: "https://support.claude.com/en/articles/17154008-monthly-api-credits-for-max-ultra-and-team-plans"
+  retrieved_at: "2026-11-04"
+archetype:
+  primary: decision
+  secondary: [governance]
+one_liner: "Claude の確認済み Ultra（旧 Max 20x）だけ 5 時間枠が無く、週次の上限は残る。"
+key_points:
+  - claim: "2026-10-30 に Max 20x は Ultra（ウェブ月額 200 ドル）、Max 5x は Max（100 ドル）へ改名され、ウェブ月額は据え置き。既存契約の手続きは不要。購入リンクの識別子は max_20x のまま"
+    evidence: "冒頭 / ### 月額と契約の単位"
+    status: fact
+  - claim: "確認済み（Settings > Usage に、5 時間枠を示す Current session のバーが無い、自動判定の状態）の Ultra だけ 5 時間ごとの上限が無い。Ultra の週次は確認の有無によらず Pro の 10 倍。未確認の 5 時間側の倍率は書かれていない。Max は 5 時間と週次の両方が Pro の 5 倍"
+    evidence: "### 含まれる利用枠 / ### プランごとの公開されている上限"
+    status: fact
+  - claim: "含まれる利用枠は claude.ai、デスクトップ、モバイル、公式 Claude Code で分け合う。上限のあとは、有効にした usage credits（別請求の従量）で続き、月次の支出上限か残高で止まる。月次 API クレジット（Max 100 ドル、Ultra 200 ドル。新規は加入 7 日後）は Console の組織残高で、usage credits には入らない"
+    evidence: "### 含まれる利用枠 / ### 月次の API クレジット / ### 1 つのアカウントの中の枠"
+    status: fact
+  - claim: "Fable 5 と Fable 5.1 は Ultra と Max のモデル名で、週次上限の 50% まで含まれ、他のモデルより速くその 50% に達する"
+    evidence: "### 含まれる利用枠"
+    status: fact
+  - claim: "「週の 20 倍が 10 倍に削られた」は、2026-10-06 の料金ページの保管（その日の公式ページの記録。5 時間あたり Pro の 5 倍または 20 倍で、週次 20 倍の文は無い）と合わない。週次の絶対量が 2026-10-30 に変わったかは未確認"
+    evidence: "### 改名前の料金ページに書かれていた倍数 / ### 週次上限は残る"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "含まれる利用枠から出るのは、確認済み Ultra 以外の 5 時間枠と週次枠で、有効にした usage credits は上限のあとの別計算。月次 API クレジットは Console へ入り、usage credits には入らない"
+    reason_needed: "名前の似た 3 つの枠を 1 つの残量として読むと、Claude Code の停止時刻と API の支出上限を取り違える"
+example:
+  description: "公式 Claude Code を常駐させると、含まれる利用枠は確認済み Ultra では週次で、未確認の Ultra と Max では 5 時間と週次の先に達した方で止まる。有効にした usage credits があれば同じクライアントで従量が続き、月次の支出上限か残高で止まる"
+  hypothetical: false
+  evidence: "## 公式 Claude Code を載せるときの判断 / ### アカウントごとに見ること の 1"
+applicability:
+  - "個人の Ultra か Max に、公式 Claude Code を載せるときの停止単位を決める"
+  - "「5 時間制限が外れた」を、自分の Usage の Current session と照合する"
+decision_criteria:
+  - "Current session が無い Ultra だけ、含まれる利用枠の止まる単位を週次にし、バーがある Ultra と Max は 5 時間と週次の両方を見る"
+  - "週次の外で回すジョブは Console の API キーへ移し、商用契約、1 分あたりの件数とトークン、月間支出上限を見る"
+limitations:
+  - "5 時間制限が外れるのは確認済み Ultra に限る。チェックアウト時の電話番号確認だけでは外れない。公式 X は対象を most existing subscribers とし解除のメールに触れるが、2026-11-03 の Ultra ヘルプはどちらも繰り返していない"
+  - "週次、月次、モデル、機能の追加上限は裁量で掛かりうる。2026-11-03 に取得した消費者向け利用規約は可用性を AS IS とし、中断の無いサービスは保証しない。その本文に Ultra の名はまだ無い"
+  - "API のレート制限は別文書で、サブスク枠と同一プールだとする記述は無い。支出上限の例は自分の組織の保証値ではない"
+  - "日本では 2026-09-10 以降に買った usage credits が、購入から 6 か月で失効する"
+unknowns:
+  - "確認に何日かかるか。共有カードで遅れるか。2026-10-30 の most existing subscribers が 2026-11-03 までに終わったか"
+  - "Current session が無いアカウントに、ヘルプが書いていないセッション上限が残るか"
+  - "週次の絶対トークンが 2026-10-30 に変わったか。2026-05-06 の 2 倍化が 2026-10-06 のセッション 20 倍に含まれていたか"
+  - "日本のアプリストアの Ultra 価格。消費者規約が Ultra の名をいつ本文へ入れるか"
+reviewed: true

@@ -1,0 +1,62 @@
+source:
+  title: "AI エージェントにサイトを案内する Markdown 索引 llms.txt の仕様と使われ方"
+  url: null
+  path: "notes/zenn/articles/llms-txt_20261103.md"
+  primary:
+    - title: "The /llms.txt file, v2"
+      url: "https://llmstxt.org/index.md"
+    - title: "Changes（v2、2026-08）"
+      url: "https://llmstxt.org/changes.md"
+    - title: "AnswerDotAI/llms-txt"
+      url: "https://github.com/AnswerDotAI/llms-txt"
+    - title: "Ahrefs: llms.txt のリクエスト計測（2026-05）"
+      url: "https://ahrefs.com/blog/llmstxt-study/"
+    - title: "Google: 生成 AI 機能向け最適化ガイド"
+      url: "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide"
+  retrieved_at: "2026-11-04"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "llms.txt は、エージェントが今の質問に必要な Markdown だけを辿る短い索引です。Google 検索の順位要因にはなりません。"
+key_points:
+  - claim: "必須は H1（プロジェクト名）だけ。要約と補足（最初の H2 より前）と H2 のリンク集は任意。参照実装のパーサ（llms-txt 0.0.7）は、要約も補足も無いファイルを読めない"
+    evidence: "## 特徴 / ## データ「概念モデル」の直後、パーサの分割手順"
+    status: fact
+  - claim: "1 ファイルはそのパス以下が対象で、重なるときは最も深いパスを使う。エージェントは節とリンク行末尾のメモから項目を選び、索引のページを全部は取らない"
+    evidence: "## llms.txt とは / ## 利用方法「エージェントが索引を辿る」"
+    status: fact
+  - claim: "取得の可否は示さない。robots.txt が取得可否、sitemap.xml が網羅、llms.txt は入口の選別。llms-full.txt は仕様に定義が無い"
+    evidence: "## llms.txt とは の隣接ファイル表 / ## 注意点 の表「llms-full.txt」"
+    status: fact
+  - claim: "v2（2026-08）は最も深いパスの規則と発見用リンクを足した。HTML の link か Link ヘッダで、本文は rel=alternate type=text/markdown、そのページを覆う索引は rel=describedby"
+    evidence: "## まとめ / ## 注意点 の表「Lighthouse」 / ## 特徴「発見用のリンク関係」 / ## 構築方法「発見用リンクを足す」"
+    status: fact
+  - claim: "Google Search はこのファイルを使わない。Ahrefs ではルートの /llms.txt が 200 の Markdown だった約 38,000 ドメインの 97% は、2026-05 に誰からのリクエストも 0 件"
+    evidence: "## 運用「検索向け最適化とドキュメント向け提供を分ける」 / ## 運用「取得ログで読み手を分ける」"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "運営者は索引と本文を分けて公開し、エージェントは最も具体的な llms.txt から必要な Markdown だけを取る"
+    reason_needed: "索引を全文の連結や検索用サイトマップと置くと、必要なページだけ辿る設計が消える"
+example:
+  description: "OpenAI Developers の実ファイル（2026-11-03 取得）は、製品ごとの llms.txt と作業ページの .md を分け、ルートからより具体的な索引へ進む"
+  hypothetical: false
+  evidence: "## 利用方法「エージェントが索引を辿る」"
+applicability:
+  - "API やライブラリのドキュメントを、コーディングエージェントに必要なページだけ辿らせる"
+  - "Ahrefs の 2026-05 の対象ログでは、無い /llms.txt を AI ボットが当て推量で取った例は無く、索引の URL はドキュメントやツール設定で明示する"
+  - "検索向けサイトと開発者ドキュメントで、完了条件を分ける"
+decision_criteria:
+  - "必須のページを、節名 Optional（後回しにしてよい二次リンクで、大文字小文字まで一致）に置かない"
+  - "参照実装のパーサに通すなら、H2 の下はリンク行だけにし、メモは同じ行の : メモ、先頭の BOM は無し"
+  - "リンク先は自組織の .md か、末尾に .md を足した .html.md で 200 を返し、robots.txt が拒否していない"
+  - "HTML の link か Link ヘッダで、本文は type=text/markdown の alternate、そのページを覆う索引は describedby"
+  - "学習の拒否を llms.txt に書かず、robots.txt に書く"
+limitations:
+  - "IETF、W3C、ISO の標準ではなく、コミュニティ提案である"
+  - "v2 は Optional の機械的な意味を外したが、索引を展開する CLI は節名が Optional と完全一致する節だけを既定で外し、ほかの節は残す"
+  - "Ahrefs の 137,210 ドメインのうち約 28% がファイルを公開し、同社は技術寄りの上限だと注記している。取得は読まれた証拠ではない"
+  - "Anthropic と Gemini の掲載例は仕様から外れる。前者の索引は転送後に散文と ### があり、後者のリンク先は .md.txt"
+  - "SE Ranking（300,000 ドメイン、10.13% が所持）では、ファイルの有無は AI 引用の予測に役立たなかった。そのデータ内の相対的な重要度"
+unknowns: []
+reviewed: true

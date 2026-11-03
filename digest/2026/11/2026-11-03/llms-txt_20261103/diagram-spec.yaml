@@ -1,0 +1,44 @@
+type: structure
+title: "索引から必要なページだけ取る"
+message: "エージェントは最も具体的な索引から、必要な Markdown だけを取る"
+source: "notes/zenn/articles/llms-txt_20261103.md"
+components:
+  - id: owner
+    label: "サイト運営者"
+    meaning: "案内と本文を公開する人"
+  - id: index
+    label: "llms.txt"
+    meaning: "要点と詳細 Markdown へのリンクをまとめた索引。そのパス以下が対象で、重なるときは最も深いファイルを使う"
+  - id: page
+    label: "ページの Markdown"
+    meaning: "リンク先の本文。仕様が認める URL は .html.md か .md"
+  - id: agent
+    label: "エージェント"
+    meaning: "推論の途中で索引を読み、質問に関係する Markdown だけを取得するクライアント"
+relationships:
+  - from: owner
+    to: index
+    label: "案内を公開"
+  - from: owner
+    to: page
+    label: "本文を公開"
+  - from: agent
+    to: index
+    label: "最も具体的な索引を読む"
+  - from: index
+    to: page
+    label: "必要な項目だけ"
+omitted:
+  - item: "検索エンジンからサイトへの矢印"
+    reason: "検索は robots.txt と sitemap と HTML を読む。図の主張はエージェントが索引から必要なページだけ取ることなので外す"
+  - item: "llms-full.txt、発見リンク、展開 CLI、Optional"
+    reason: "全文連結と発見と節の落とし方は本文の注意点に残す。図は索引と本文の分離だけを示す"
+  - item: "公式パーサが読めない最小ファイル"
+    reason: "公開前の検査であり、索引からページへ辿る関係には入れない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 構造「システムコンテキスト図」運営者は案内と本文を公開し、エージェントは今の質問に必要な案内を読む"
+  - "## 構造「コンテナ図」索引は必要な項目だけをページ Markdown へつなぐ"
+  - "## 利用方法「エージェントが索引を辿る」最も具体的な llms.txt を読み、関係する項目の Markdown だけを取り、全部は取らない"
