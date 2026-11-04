@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (596)
+## Articles: 下書き (598)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-04 | [🧭 エージェントスキルを共有カタログへ入れる前に測ること](articles/google-cloud-cloud-google-p2_20261104.md) | AgentSkills, GoogleCloud, ClaudeCode, AIAgent |
+| 2026-11-04 | [🌲 OpenAIのPandoはGitのコマンドを残し格納と配信だけを替える](articles/openai-codex-git-pando-openai-p1_20261104.md) | Git, OpenAI, AIAgent, Monorepo |
 | 2026-11-03 | [🧭 利用率100%のあと、エージェントを組み立てる時間は誰の職務か](articles/ai-100-itmedia-co-jp-business-p8_20261103.md) | AIAgent, GenerativeAI, Management |
 | 2026-11-03 | [🧭 ClaudeのMax 20xはUltraになり、確認済みなら5時間枠が外れる](articles/anthropic-claude-max-x-ultra-p3_20261103.md) | Claude, Anthropic, ClaudeCode |
 | 2026-11-03 | [🛡️ 侵害したクラウドのモデル利用枠を転売する LLMJacking の記録の見方](articles/google-cloud-llmjacking-cloud-p1_20261103.md) | GoogleCloud, Security, LLM, IAM |
