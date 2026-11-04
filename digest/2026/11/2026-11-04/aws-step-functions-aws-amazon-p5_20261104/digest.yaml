@@ -1,0 +1,67 @@
+source:
+  title: "既存の Step Functions を書き換えずにエージェントのツールにする"
+  url: null
+  path: "notes/zenn/articles/aws-step-functions-aws-amazon-p5_20261104.md"
+  primary:
+    - title: "states コネクタ"
+      url: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway-target-connector-step-functions.html"
+    - title: "What's New: Step Functions workflows as AI agent tools（2026-10-29）"
+      url: "https://aws.amazon.com/about-aws/whats-new/2026/10/step-functions-workflows-ai-agent-tools/"
+    - title: "チュートリアル: Step Functions を AgentCore Gateway のターゲットにする"
+      url: "https://docs.aws.amazon.com/step-functions/latest/dg/tutorial-agentcore-gateway.html"
+    - title: "StartExecution"
+      url: "https://docs.aws.amazon.com/step-functions/latest/apireference/API_StartExecution.html"
+    - title: "StartSyncExecution"
+      url: "https://docs.aws.amazon.com/step-functions/latest/apireference/API_StartSyncExecution.html"
+  retrieved_at: "2026-11-05"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "既存の Step Functions は、定義を変えずにエージェントのツールにできる。開始の時期と入力はエージェント、順序はステートマシンが決める。"
+key_points:
+  - claim: "公開に使うのは AgentCore Gateway の組み込みコネクタで、識別子は states である。発見と呼び出しは MCP で、この公開のためだけに Lambda や自前の MCP サーバは書かない"
+    evidence: "## 既存の Step Functions をエージェントのツールにするとは"
+    status: fact
+  - claim: "権限は三者である。呼ぶ側は InvokeGateway、Step Functions API は Gateway の service role、各ステップは作成時の execution role のままである。呼ぶ側の IAM が execution role に引き継がれるとは、確認した手順に無い"
+    evidence: "## 権限はどの主体に残るか"
+    status: fact
+  - claim: "コネクタの操作は 10 個である。開始、同期開始、実行の一覧、定義の説明の 4 つは ARN を pin し、実行の説明、停止、履歴と待ちの成功、失敗、生存確認の 6 つは service role の範囲である。220 を超えるサービスは Step Functions が編める AWS サービスの説明であり、この 10 個ではない"
+    evidence: "### 公開される操作 / ### 220 を超えるサービスの読み方"
+    status: fact
+  - claim: "実行の一覧、実行の説明、履歴、停止は Standard だけである。Express は開始後に実行 ARN でたどれず、Express の非同期の結果は CloudWatch Logs である。StartExecution の結果は実行 ARN であり、業務の完了ではない"
+    evidence: "### 実行を参照できるワークフロー / ### 実行開始の応答"
+    status: fact
+  - claim: "人間の承認を残すなら、タスクトークンの届け先は今の人間側のままにする。届け先がそのエージェントで、対象をステートマシンに絞れない待ちの完了操作を呼べるなら、待ちの完了者はそのエージェントになる"
+    evidence: "## 承認はどこで切れるか"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "エージェントは時期と入力だけを決め、順序とステップの権限はステートマシン側に残る"
+    reason_needed: "ツール化の判断は、呼ぶ側と Gateway と execution role のどこに許可が残るかで分かれる"
+example:
+  description: "発表の返金例は、適格確認、上長承認、返金が定義された順序で毎回走る、という説明である。承認の主体は、トークンの届け先と、待ちを完了する操作をツールに出すかで変わる"
+  hypothetical: false
+  evidence: "### 返金例と承認の主体"
+applicability:
+  - "順序と今の execution role を残せるなら、エージェント専用の API を新しく足す前に、既存のステートマシンをツールにする"
+  - "履歴、停止、人間の承認待ちが要る手続きを Standard で出す"
+  - "5 分以内の同期応答だけを、Express の同期開始にする"
+decision_criteria:
+  - "全データを指定すると入出力や定義が入る実行の説明と定義の説明は、読ませないなら出さない"
+  - "pin できる操作は、空にせず pin を置く"
+  - "service role の届く範囲が違うワークフローは、Gateway を分ける"
+  - "Standard は実行中でなくなるまで実行の説明を見る"
+  - "同期 Express は、HTTP 200 ではなく応答の状態で成否を見る"
+limitations:
+  - "pin が version や alias の付いた ARN を受けるかは、手順に書かれていない。付いていない ARN で開始すると最新リビジョンになる"
+  - "同期 Express が HTTP 200 かつ状態 FAILED のとき、MCP のツールエラーになるかは、確認したコネクタのページに無い"
+  - "Gateway の数値の稼働率は、確認した範囲では見つかっていない。Step Functions の 99.9% を経路全体の約束として読まない"
+  - "ステップの中で呼ぶ側の IAM を条件にしているワークフローは、この公開だけではその IAM を受け取れない"
+  - "Gateway 経由の同期 Express が 60 秒で切れるか、5 分まで待つかは、確認した文書では特定できていない"
+unknowns:
+  - "pin は version ARN または alias ARN を受け付けるか"
+  - "StartSyncExecution の HTTP 200 かつ status FAILED は、MCP の isError になるか"
+  - "AgentCore Gateway の月間稼働率の数値"
+  - "Gateway 経由の同期 Express は 60 秒で切れるか、5 分まで待つか"
+  - "states ターゲットは CALLER_IAM_CREDENTIALS を受け付けるか、拒否するか"
+reviewed: true

@@ -1,0 +1,48 @@
+type: structure
+title: "不足ゼロと最短勤務は別の検査"
+message: "不足が0でも最短勤務の違反は残る。短すぎる勤務は候補から除き、不足は人数で返す"
+source: "notes/zenn/articles/zenn-dev-playpark-shift-llm-p7_20261104.md"
+components:
+  - id: zero
+    label: "不足 0"
+    meaning: "貪欲法の3シナリオで、必要人数の不足が0と報告されたこと"
+  - id: violation
+    label: "最短勤務の違反"
+    meaning: "長さが下限を下回る勤務。同じ表で22件、54件、67件"
+  - id: drop
+    label: "候補から除く"
+    meaning: "表に出してはいけない形は、勤務の開始と終了の組を作る段階で除く。営業時間そのものが短い日だけ残す"
+  - id: report
+    label: "人数で返す"
+    meaning: "0でも表にしてよい量は、時間帯と人数の不足として隠さず返す"
+groups:
+  - id: greedy
+    label: "この貪欲法"
+    members: [zero, violation]
+  - id: place
+    label: "置き方"
+    members: [drop, report]
+relationships:
+  - from: zero
+    to: violation
+    label: "0でも22・54・67件"
+  - from: violation
+    to: drop
+    label: "表に出さない"
+  - from: zero
+    to: report
+    label: "隠さず返す"
+omitted:
+  - item: "種類を混ぜた違反0を完了条件にしないこと"
+    reason: "判断基準は本文に書き、図は不足0と最短勤務が別の検査である一点を示す"
+  - item: "LLMの下書き、重み1000、秒数、変数の本数"
+    reason: "同じ判断に必須ではない"
+  - item: "営業時間が短い日という例外の名前"
+    reason: "例外は本文に残し、図では候補から除くにまとめる"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "LLMの下書きと貪欲法 の表"
+  - "ソルバに渡した規則"
+  - "業務テストを二つの一覧に分ける"

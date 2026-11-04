@@ -1,0 +1,57 @@
+source:
+  title: "エージェントスキルを共有カタログへ入れる前に測ること"
+  url: null
+  path: "notes/zenn/articles/google-cloud-cloud-google-p2_20261104.md"
+  primary:
+    - title: "Karl Weinmeister, Alan Blount. Five rules for evaluating agent skills before they bloat your context window. Google Cloud Blog"
+      url: "https://cloud.google.com/blog/topics/developers-practitioners/evaluate-agent-skills-before-they-bloat-your-context-window/"
+    - title: "Agent Skills specification"
+      url: "https://agentskills.io/specification"
+    - title: "Remigiusz Samborski. Behind the scenes, two months later: how we ship Google agent skills like products. Google Cloud Blog, 2026-10-29"
+      url: "https://cloud.google.com/blog/topics/developers-practitioners/behind-the-scenes-two-months-later-how-we-ship-google-agent-skills-like-products"
+  retrieved_at: "2026-11-05"
+archetype:
+  primary: decision
+  secondary: [governance]
+one_liner: "手順書を共有カタログへ入れる前に、説明の長さと、手順が有る状態と無い状態の差を PR に書きます。起動しなくても毎セッションに載るのは、名前と説明です。"
+key_points:
+  - claim: "エージェントスキルはディレクトリ 1 つと SKILL.md を単位にする手順書である。共有カタログは、その手順書をリポジトリやワークスペースの共通の置き場へ入れ、利用者がまとめてインストールする一覧である。チャットで一度通った手順を共有の main へ入れる操作は、全員のコンテキストを占有する変更として扱う"
+    evidence: "冒頭（ここでいうエージェントスキル / 共有カタログ / チャットで一度通った SKILL.md）"
+    status: fact
+  - claim: "読み込みは三段である。Level 1 は name と description で、セッション開始時にカタログ内の全スキル分が載る。Level 2 は SKILL.md の本文で、起動したあとに読む。Level 3 は scripts、references、assets で、起動したセッションが必要なときに読む"
+    evidence: "## 共有カタログのエージェントスキルとは（三段の表。Level 2 はそのスキルを起動したあと。Level 3 は必要なとき）"
+    status: fact
+  - claim: "本文を短くしても、説明が長ければ、一覧に載せられる文字は減る"
+    evidence: "## 文脈の費用は説明文が持つ（したがって、本文の行数を減らしても、説明を長くすれば共有の一覧予算は減ります）"
+    status: fact
+  - claim: "差は、同じ評価課題で手順が有る状態と無い状態を採点し、有る側から無い側を引いた値である。ブログの効果量は自己申告で追試データは公開されておらず、差をいくら未満で不合格にするかは、測る前に自分で PR へ書く"
+    evidence: "## 注意点（Δ は WITH から WITHOUT / 追試のデータは公開されていません） / ## マージ前に書く条件（切る幅は測る前に PR へ自分で書きます）"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "毎セッション載るのは名前と説明。本文と付属は、起動したセッションだけに載る"
+    reason_needed: "本文の行数を短くしても一覧の予算は戻らない、という判断の中心が費用の主体の分離にある"
+example:
+  description: "インシデント時の権限確認のように、平常のデプロイ課題では一度も呼ばれない手順は、平常の差が 0 でも残す。その場合も説明は短くする"
+  hypothetical: false
+  evidence: "## マージ前に書く条件（インシデント時の IAM 確認のように）"
+applicability:
+  - "スキルを共有カタログへ採用する人が、マージ前の条件を書く"
+  - "モデルを更新したあと、差が 0 に戻ったスキルを消すか残すか決める"
+  - "個人の一時メモで、共有カタログに入らないときは、マージ前の確認は過剰である"
+decision_criteria:
+  - "説明の文字数と、検索スコアで比べた類似の上位候補を書き、その類似は誤って別の手順を起動した率ではないと添える"
+  - "実際に使う、試行を流して採点する仕組みで、有る状態と無い状態を 3 回以上測って両方の実行を残し、有る状態で一度も起動しない課題は、本文の前に説明を直す"
+  - "「入れない」か、重大な検出を人が見ずに残すなら採用しない。偽陽性として残すときは理由を書く"
+  - "差がほぼ 0 で消すのは、課題セットが手順の主張する振る舞いを含んでいて、かつ稀な高損害の手順ではないときだけである"
+  - "Claude Code では、skill-reach の説明にある一覧の予算が約 30,000 文字（100 万トークンの文脈）または約 8,000 文字（20 万トークンの文脈）で、説明 1 件の上限 1,024 文字とは別である"
+limitations:
+  - "3 回の成功率（採点器が、試行は条件を満たしたと判定した割合）は 0、1/3、2/3、1 の刻みで、一回の成否で差が動く"
+  - "差が 0 であることは、その課題セットで差が出なかったことである。課題に入っていない高損害の手順が不要である証明ではない"
+  - "skill-reach（どの手順を起動するか）、SkillEvaluator（採点）、SkillSpector（静的なセキュリティ検査）は、同じ品質としては扱わない"
+  - "検査の通過だけでは、実行時の安全は証明されない"
+unknowns:
+  - "画面見出しと datePublished のどちらを編集上の公開日にするか"
+  - "72 試行の生 JSON と、p 値がシナリオ平均か試行単位か"
+  - "あるカタログの説明の合計が、30,000 文字と 8,000 文字のどちらに近いか。この記事は特定カタログの合計を計測していない"
+reviewed: true

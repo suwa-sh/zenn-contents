@@ -1,0 +1,65 @@
+source:
+  title: "OpenAIのPandoはGitのコマンドを残し格納と配信だけを替える"
+  url: null
+  path: "notes/zenn/articles/openai-codex-git-pando-openai-p1_20261104.md"
+  primary:
+    - title: "OpenAI, Scaling Git at OpenAI（2026-11-02）"
+      url: "https://openai.com/index/scaling-git-at-openai"
+    - title: "Git Documentation, packfile-uri"
+      url: "https://git-scm.com/docs/packfile-uri"
+    - title: "Anthropic, Redesigning source control at Anthropic（2026-10-13、2026-10-15 更新）"
+      url: "https://www.anthropic.com/research/redesigning-source-control"
+    - title: "GitHub Docs, Repository limits（2026-11-04 に確認）"
+      url: "https://docs.github.com/en/repositories/creating-and-managing-repositories/repository-limits"
+  retrieved_at: "2026-11-05"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "OpenAI の Pando は、Git のコマンドを残し、pack の保存と先端の記録と配信だけを別実装にします。エージェントの作業範囲は、同時ブランチ数と、同じ履歴の取得回数から見積もります。"
+key_points:
+  - claim: "クライアントのコマンドは Git のままです。サーバは pack を blob store へ、ブランチ先端の版（ref version）を metadata store へ分けて書きます。無関係なブランチの push は並列で、同じ ref への push だけが直列です"
+    evidence: "## Pandoとは / ### コマンドと格納の分離 / ### push が書くもの"
+    status: fact
+  - claim: "fetch は have と want から保存済み pack を選び、packfile-uri で配ります。応答に同梱する pack は空です"
+    evidence: "### fetch が読むもの"
+    status: fact
+  - claim: "新規の feature ブランチへの push では、クライアントへ返すブランチ名は既定で trunk だけです。積み上げブランチと同一ブランチの連続 push では、クライアントが trunk に無いオブジェクトを送り直します"
+    evidence: "### 広告は trunk だけ / 境界表の積み上げブランチ"
+    status: fact
+  - claim: "コマンドを Git のままにできるのは、OpenAI の自社モノレポでの選択としては一次記事と公開クライアントで裏付けがあります。どの組織でも台数だけ見ればバックエンドを差し替えれば足りる、とは一般化できません。Anthropic は、部分クローンとミラーを使い切ったあと、Git クライアント互換をモノレポの条件から外しています"
+    evidence: "## コマンドを残す選択の射程 / ## 同じ負荷への別の境界"
+    status: fact
+  - claim: "この作業範囲の見積もりに、Pando の導入は含めません。サーバは未公開で、提供は検討の表明までです"
+    evidence: "## 作業範囲は ref と fetch 回数から逆算する / ### 公開フォークを Pando の説明書として読まない"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "コマンドは Git のまま、pack の保存と先端の記録と配信だけを別実装にする"
+    reason_needed: "人が触るコマンドと、オブジェクトと ref の置き場の分離が、この設計の中心だから"
+example:
+  description: "フルクローンの交渉中に foo と bar が両方動くと、一方は foo の版1と bar の版2を見、もう一方は逆の組み合わせを見ることがある"
+  hypothetical: false
+  evidence: "### fetch が読むもの"
+applicability:
+  - "並走させるエージェントごとにブランチか worktree を分ける"
+  - "CI とエージェントが同じ commit を何回 fetch するかを、モデルの呼び出しとは別に数える"
+decision_criteria:
+  - "見る単位は、同時ブランチ数と、同じ ref へ同時に push する回数"
+  - "fetch が先に詰まるなら、作業範囲を広げる前に取得回数を減らす"
+  - "履歴の大きさで詰まるなら、今使えるのは履歴を浅くする取得、一部のパスだけの取得、必要なオブジェクトだけの取得で、Pando はこれらをサーバ機能として保証していない"
+  - "ホストが GitHub のままなら、台数を増やす前に、推奨の読み取り（リポジトリあたり 15回/秒）と、強制の push サイズ（2 GB）に当たるかを見る（2026-11-04 に確認した文書。Pando の測定ではない）"
+  - "Pando を採るかは、認証、フック、LFS、部分クローン、既定では packfile-uri を要求する引数を出さない stock Git での fetch の仕様が公開されてから判断する"
+limitations:
+  - "所要時間の nearly 5x 短縮と nearly 80% 減は同じ自己申告の median push で、別の改善として足せない。絶対値、テイル、移行後の merge 成功率と、作り替え前に時として 90% を下回った信頼性の分母と対象操作は非公開"
+  - "一点時刻を前提にする処理（監査やミラー）は黙って壊れることがあり、中心なら Pando のような Git 互換のバックエンドへ移る判断は保留する。OpenAI の記事は、一点時刻が無いことを、利用者は気にしないものとして書いている"
+  - "速い fetch は、packfile-uri を要求し、空の同梱 pack を理解できるクライアントが前提に読める。既定の stock Git へ通常の pack を返すのか空 pack のまま失敗するのかは記事に無い"
+  - "フック、LFS、部分クローン、リモート認証は保証の一覧に無い。記載が無いことを非対応とは断定できない"
+  - "記事中の比較図は教材であり本番値ではない。比較相手は、リポジトリ全体の一貫性を緩めた設定である"
+unknowns:
+  - "URI を要求しない stock Git に、Pando が通常の pack を返すのか、空 pack のまま失敗するのか"
+  - "サーバ側フック、LFS、--filter、shallow を、本番の Pando が受けているのか"
+  - "リモート認証の方式と、Express の pack URL を誰が取れるのか"
+  - "median の前後、push のテイル、移行後の merge 成功率"
+  - "非常に大きい push で、同期的に書く一部に新しい先端が含まれるか"
+  - "pack を全レベルで残すときの容量の上限"
+reviewed: true

@@ -1,0 +1,54 @@
+type: structure
+title: "権限は三者に分かれたまま"
+message: "エージェントは時期と入力だけを決め、順序とステップの権限はステートマシン側に残る"
+source: "notes/zenn/articles/aws-step-functions-aws-amazon-p5_20261104.md"
+components:
+  - id: caller
+    label: "呼ぶ側"
+    meaning: "開始の時期と入力を決めるエージェント"
+  - id: gateway
+    label: "Gateway の入口"
+    meaning: "InvokeGateway を評価する入口"
+  - id: gwrole
+    label: "Gateway の service role"
+    meaning: "Step Functions API を呼ぶ IAM ロール"
+  - id: execrole
+    label: "execution role"
+    meaning: "各ステップが AWS を呼ぶときの許可"
+  - id: steps
+    label: "定義済みの各ステップ"
+    meaning: "定義された順序で実行される"
+groups:
+  - id: gateway_side
+    label: "Gateway"
+    members: [gateway, gwrole]
+  - id: machine_side
+    label: "ステートマシン"
+    members: [execrole, steps]
+relationships:
+  - from: caller
+    to: gateway
+    label: "ツール呼び出し"
+  - from: gateway
+    to: gwrole
+    label: "入口を通過"
+  - from: gwrole
+    to: execrole
+    label: "Step Functions API"
+  - from: execrole
+    to: steps
+    label: "既存の順序で実行"
+omitted:
+  - item: "任意の Policy エンジン"
+    reason: "入口の追加検査であり、三者の権限の置き場所という一つのメッセージに必須ではない"
+  - item: "pin と 10 操作、Standard と Express の差"
+    reason: "別の判断であり、この図の一つのメッセージではない"
+  - item: "Step Functions API を独立した箱にする"
+    reason: "service role から execution role への矢印ラベルに畳んだ"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### 呼び出しの経路 の mermaid（呼ぶ側 → Gateway の入口 → Gateway の service role → Step Functions API → execution role → 定義済みの各ステップ）"
+  - "## 権限はどの主体に残るか の三者の表"
+  - "コネクタの説明では、エージェントが時期と入力を決め、ステートマシンが順序を決める"

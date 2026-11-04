@@ -1,0 +1,53 @@
+type: structure
+title: "常時の費用は説明文で、本文は起動したときだけ"
+message: "常時の費用は名前と説明。本文と付属は、起動したセッションだけが払う"
+source: "notes/zenn/articles/google-cloud-cloud-google-p2_20261104.md"
+components:
+  - id: catalog
+    label: "共有カタログ"
+    meaning: "手順書を共通の置き場へ入れ、利用者がまとめてインストールする一覧"
+  - id: level1
+    label: "名前と説明"
+    meaning: "セッション開始時に、カタログ内の全手順分が載る"
+  - id: owner
+    label: "カタログを入れた側"
+    meaning: "リポジトリまたはワークスペース。起動しなくてもセッションごとに払う"
+  - id: body
+    label: "本文と付属"
+    meaning: "手順書の本文と、スクリプト、参照、付属ファイル"
+  - id: session
+    label: "起動したセッション"
+    meaning: "その手順を起動したときだけ、本文と付属を読む"
+groups:
+  - id: always
+    label: "毎セッション"
+    members: [level1, owner]
+  - id: on_use
+    label: "起動したとき"
+    members: [body, session]
+relationships:
+  - from: catalog
+    to: level1
+    label: "開始時に全件載せる"
+  - from: level1
+    to: owner
+    label: "起動しなくても払う"
+  - from: level1
+    to: body
+    label: "起動したあと読む"
+  - from: body
+    to: session
+    label: "そのセッションが払う"
+omitted:
+  - item: "名前と説明を見て起動を選ぶルーター"
+    reason: "図の主張は費用を払う主体の分離であり、起動判断の中身ではない"
+  - item: "五つの規則、不合格の行、道具ごとの測定範囲"
+    reason: "採用条件の一覧であり、常時費用と起動後費用の分離とは別である"
+  - item: "一覧 30,000 文字と 8,000 文字、説明 1,024 文字"
+    reason: "閾値の区別は確認項目に残し、図の関係には入れない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 文脈の費用は説明文が持つ（Level 1 は起動しなくてもセッションごと。Level 2 と Level 3 は起動したときだけ）"
+  - "## 共有カタログのエージェントスキルとは（常時見えるのは名前と説明だけ。本文と付属ファイルは、起動したセッションが読む）"

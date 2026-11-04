@@ -1,0 +1,56 @@
+type: structure
+title: "コマンドは Git、格納と配信は別"
+message: "コマンドは Git のまま、pack の保存と先端の記録と配信だけを別実装にする"
+source: "notes/zenn/articles/openai-codex-git-pando-openai-p1_20261104.md"
+components:
+  - id: push
+    label: "git push"
+    meaning: "人が打つ書き込みのコマンド。サーバ実装が替わってもコマンドは残る"
+  - id: fetch
+    label: "git fetch"
+    meaning: "人が打つ読み取りのコマンド。have と want から pack を選ぶ入口"
+  - id: blob
+    label: "pack の保存先"
+    meaning: "受け取った pack のバイト列を不変オブジェクトとして置く blob store"
+  - id: meta
+    label: "先端の記録"
+    meaning: "ブランチ先端の版（ref version）を積む metadata store"
+  - id: express
+    label: "地域キャッシュの配信"
+    meaning: "交渉で渡した URI から、同じ pack のバイト列を配る Express"
+groups:
+  - id: commands
+    label: "Git のコマンド"
+    members: [push, fetch]
+  - id: backend
+    label: "格納と配信"
+    members: [blob, meta, express]
+relationships:
+  - from: push
+    to: blob
+    label: "pack を保存"
+  - from: push
+    to: meta
+    label: "先端の版を記録"
+  - from: meta
+    to: fetch
+    label: "版から pack を選ぶ"
+  - from: express
+    to: fetch
+    label: "URI で pack を渡す"
+omitted:
+  - item: "新規 feature ブランチでは trunk だけを広告する"
+    reason: "図の主張はコマンドと格納・配信の分離であり、広告する ref の範囲は別の判断だから"
+  - item: "compaction が L0 pack を L4 までの cover にまとめる"
+    reason: "バックグラウンドのまとめは、push と fetch の経路そのものではない"
+  - item: "リポジトリ全体の一点時刻を保証しないこと"
+    reason: "保証の欠落は具体例の節で扱い、この図の関係には矢印として描かない"
+  - item: "Anthropic の Scion と GitHub の公式上限"
+    reason: "別組織の境界と、今のホストの上限であり、Pando の格納と配信の関係ではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### コマンドと格納の分離（クライアントは git push と git fetch を出し、pack のバイト列とブランチ先端の版を別々のストアへ書く）"
+  - "### fetch が読むもの（have と want から保存済み pack を選び、Express から同じバイト列を取る。inline pack は空）"
+  - "## Pandoとは の図の説明（push は pack を blob store へ、先端の版を metadata へ書く。fetch は Express の URI から同じバイト列を取る）"
