@@ -7,11 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (601)
+## Articles: 下書き (603)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-11-05 | [🔐 FlashProveは重みの指紋で応答トークンの出所を事後に示す](articles/anthropic-anthropic-research-p2_20261105.md) | Anthropic, LLM, Security |
+| 2026-11-05 | [🐚 OpenShellをKubernetesに載せるときの境界とレビュー項目](articles/cncf-openshell-kubernetes-p6_20261105.md) | Kubernetes, Security, CNCF, OpenShell |
+| 2026-11-05 | [🐘 AlloyDB Expressは試作とエージェント作業向けのスケールゼロPostgreSQL](articles/google-postgresql-alloydb-p4_20261105.md) | PostgreSQL, GoogleCloud, AlloyDB, AIAgent |
 | 2026-11-05 | [🌲 OpenAIのPierre買収でCodexに入るファイル閲覧とGit保管](articles/openai-pierre-codex-openai-p1_20261105.md) | OpenAI, Codex, Git, GitHub |
 | 2026-11-04 | [🧩 既存の Step Functions を書き換えずにエージェントのツールにする](articles/aws-step-functions-aws-amazon-p5_20261104.md) | AWS, StepFunctions, AIAgent, MCP |
 | 2026-11-04 | [🧭 エージェントスキルを共有カタログへ入れる前に測ること](articles/google-cloud-cloud-google-p2_20261104.md) | AgentSkills, GoogleCloud, ClaudeCode, AIAgent |
