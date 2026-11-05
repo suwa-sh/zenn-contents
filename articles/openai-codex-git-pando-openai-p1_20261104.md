@@ -3,7 +3,8 @@ title: "OpenAIのPandoはGitのコマンドを残し格納と配信だけを替�
 emoji: "🌲"
 type: "tech"
 topics: ["Git", "OpenAI", "AIAgent", "Monorepo"]
-published: false
+published: true
+published_at: 2026-11-05
 ---
 
 エージェントへ並列の作業を任せるとき、1サイクルに載せる範囲は、モデルの呼び出し枠より前に、版管理が同時に受けられる量から見積もれます。OpenAI は 2026-11-02 のエンジニアリング記事で、自社モノレポの開発全体を載せる Git リポジトリのバックエンド Pando を説明しました（Aaron Friel、Taylor Blau、Ted Nyman）。記事中の数値は同社の自己申告です。この記事は、Pando がコマンドと格納と配信をどう分けたかを整理し、発注側が今の見積もりに使える単位を示します。

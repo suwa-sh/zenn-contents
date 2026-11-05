@@ -7,13 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (600)
+## Articles: 下書き (601)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-05 | [🔐 FlashProveは重みの指紋で応答トークンの出所を事後に示す](articles/anthropic-anthropic-research-p2_20261105.md) | Anthropic, LLM, Security |
+| 2026-11-05 | [🌲 OpenAIのPierre買収でCodexに入るファイル閲覧とGit保管](articles/openai-pierre-codex-openai-p1_20261105.md) | OpenAI, Codex, Git, GitHub |
 | 2026-11-04 | [🧩 既存の Step Functions を書き換えずにエージェントのツールにする](articles/aws-step-functions-aws-amazon-p5_20261104.md) | AWS, StepFunctions, AIAgent, MCP |
 | 2026-11-04 | [🧭 エージェントスキルを共有カタログへ入れる前に測ること](articles/google-cloud-cloud-google-p2_20261104.md) | AgentSkills, GoogleCloud, ClaudeCode, AIAgent |
-| 2026-11-04 | [🌲 OpenAIのPandoはGitのコマンドを残し格納と配信だけを替える](articles/openai-codex-git-pando-openai-p1_20261104.md) | Git, OpenAI, AIAgent, Monorepo |
 | 2026-11-04 | [📅 シフト作成で不足ゼロが最短勤務の違反を隠す](articles/zenn-dev-playpark-shift-llm-p7_20261104.md) | LLM, Nodejs, Optimization, Scheduling |
 | 2026-11-03 | [🧭 利用率100%のあと、エージェントを組み立てる時間は誰の職務か](articles/ai-100-itmedia-co-jp-business-p8_20261103.md) | AIAgent, GenerativeAI, Management |
 | 2026-11-03 | [🧭 ClaudeのMax 20xはUltraになり、確認済みなら5時間枠が外れる](articles/anthropic-claude-max-x-ultra-p3_20261103.md) | Claude, Anthropic, ClaudeCode |
@@ -612,10 +613,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (200)
+## Articles: 公開済み (201)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-11-05 | [🌲 OpenAIのPandoはGitのコマンドを残し格納と配信だけを替える](articles/openai-codex-git-pando-openai-p1_20261104.md) | Git, OpenAI, AIAgent, Monorepo |
 | 2026-11-03 | [🤖 __usage_ai-trainingで示す生成AIの学習意向](articles/openai-robots-txt-openai-p3_20261102.md) | OpenAI, RobotsTxt, IETF, GenerativeAI |
 | 2026-10-31 | [🛡️ CNCFブログはエージェントの境界を許されたツール集合として整理する](articles/cncf-cncf-io-2026-boundary-p6_20261030.md) | CNCF, AIAgent, Kubernetes, Security, MCP |
 | 2026-10-29 | [🧱 マルチエージェントを本番で動かす4つの問題を一次資料で切り分ける](articles/katelyn-lesse-multiagent-problem_20261027.md) | AIAgent, Kubernetes, Security, OpenTelemetry, Sandbox |
