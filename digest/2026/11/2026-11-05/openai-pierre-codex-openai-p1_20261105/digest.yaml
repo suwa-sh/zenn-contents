@@ -1,0 +1,64 @@
+source:
+  title: "OpenAIのPierre買収でCodexに入るファイル閲覧とGit保管"
+  url: null
+  path: "notes/zenn/articles/openai-pierre-codex-openai-p1_20261105.md"
+  primary:
+    - title: "OpenAI, OpenAI to acquire Pierre（2026-11-04）"
+      url: "https://openai.com/index/openai-to-acquire-pierre"
+    - title: "Code Storage, GitHub Sync"
+      url: "https://code.storage/docs/repos/github-sync.md"
+    - title: "Codex, Code review"
+      url: "https://learn.chatgpt.com/docs/code-review.md"
+    - title: "Codex, Review GitHub pull requests with Codex"
+      url: "https://learn.chatgpt.com/docs/third-party/github.md"
+    - title: "OpenAI, Scaling Git at OpenAI（2026-11-02）"
+      url: "https://openai.com/index/scaling-git-at-openai/"
+  retrieved_at: "2026-11-06"
+archetype:
+  primary: decision
+  secondary: [architecture]
+one_liner: "2026-11-04、OpenAI は Pierre（エージェント向け Git 基盤の会社）の買収合意を発表しました。その発表がいまの利用として名指しするのは Codex のファイル閲覧と差分で、完了条件は自社の手順に残します。"
+key_points:
+  - claim: "2026-11-04 の発表が今日の利用として名指しするのは、Codex アプリのファイル閲覧と変更レビューで Trees と Diffs を使っていることです。Code Storage の機能を Codex へ取り込むのはクロージング後の予告で、完了までは両社は別会社です"
+    evidence: "## OpenAIのPierre買収とは / ### ファイル閲覧と差分 / 冒頭の取引条件"
+    status: fact
+  - claim: "GitHub App で同期した通常 ref では、文書は GitHub を source of truth と呼びます。人が叩く remote は Code Storage で、通常 ref への push は GitHub へ転送し、成功後に写し戻します。ephemeral ref への push は GitHub に届かず Code Storage に残ります"
+    evidence: "### Gitで履歴を置く層 / ## コードの正本とレビュー結果の置き場"
+    status: fact
+  - claim: "public mode は一回の取り込みで、継続同期も GitHub への自動送信も自動コピーもありません。generic HTTPS は設定した外部ホストへ push を転送しますが、文書はそのホストを source of truth とは呼びません"
+    evidence: "### Gitで履歴を置く層 / 表の public mode と generic HTTPS"
+    status: fact
+  - claim: "レビューの完了は source provider へ投稿したあとの状態です。チャット上の指摘、Diffs 上の reject、Git note は、その完了に入れません"
+    evidence: "## 手順書に残す完了条件 の 2 / ## コードの正本とレビュー結果の置き場 の操作表"
+    status: fact
+  - claim: "完了条件は自社の手順に書く。製品の画面や既定値は、その手順を上書きしない入力として置く。テスト、branch protection、required approvals は残し、Code Review Rules はその代替ではない"
+    evidence: "## 手順書に残す完了条件 の 1〜4"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "GitHub App の通常 ref の正本は GitHub で、ephemeral ref は Code Storage に残る"
+    reason_needed: "clone 先が Code Storage でも、完了とみなす履歴がどのホストに届くかが判断の中心だから"
+example:
+  description: "手順では却下を 3 種類に分ける。どれを監査に残すかは手順が指定し、製品は消したあとの残り方を保証しない。Diffs 上の reject がこの 3 種類のどれかとは書いていない"
+  hypothetical: false
+  evidence: "## 手順書に残す完了条件 の 3"
+applicability:
+  - "コーディングエージェントの手順を持つテックリードが、完了条件と基準ホストを自社手順に残すかを決める"
+decision_criteria:
+  - "GitHub App の双方向同期では、完了の履歴を GitHub に届いた通常 ref にしているか"
+  - "public mode を、ホストへ自動で戻る継続同期として書いていないか"
+  - "ephemeral ref と、そこだけにある LFS オブジェクトを、ホストの正本にしていないか"
+  - "レビュー完了を source provider への投稿後に置いているか"
+  - "テスト、branch protection、required approvals を残し、Code Review Rules をその代替にしていないか"
+limitations:
+  - "クロージング後に Codex へ入る Code Storage の機能が、同期時の source of truth を変えるかは、発表がどちらとも書いていません"
+  - "削除した Git note の過去が却下の監査として残るかは、文書が保持方針を書いていません。未投稿の指摘が Code review と Review GitHub pull requests 以外に残るかも、見た範囲では未記載です"
+  - "Pando（2026-11-02 の記事）と Pierre の買収発表は、顧客向け git 層の担当をどちらも書いていません。nearly 5x と nearly 80% が同じ測定かは、Pando の本文が対応づけていません"
+  - "継続利用の文は、終了時のリポジトリ書き出しや、契約が改定されないことを意味しません"
+unknowns:
+  - "クロージング後、同期時の source of truth が Code Storage または Codex に変わるか"
+  - "削除した Git note の過去が、却下の監査として残るか"
+  - "Codex の未投稿指摘が、Code review と Review GitHub pull requests の二ページ以外に残るか"
+  - "Pando の nearly 5x と nearly 80% が同じ測定か"
+  - "顧客向けの git 層を、Pando の技術共有と Code Storage の取り込みのどちらが担うか"
+reviewed: true

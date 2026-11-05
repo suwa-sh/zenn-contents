@@ -1,0 +1,51 @@
+type: structure
+title: "破棄は delete だけ"
+message: "破棄は delete だけ。アイドルはデータとストレージ課金を残し、アップグレードは常時起動の AlloyDB になる"
+source: "notes/zenn/articles/google-postgresql-alloydb-p4_20261105.md"
+components:
+  - id: express
+    label: "Express"
+    meaning: "試作向けの単一ゾーンの PostgreSQL。アイドルでコンピュートをゼロにできる"
+  - id: delete
+    label: "delete"
+    meaning: "クラスタを消す明示的な操作"
+  - id: idle
+    label: "アイドル"
+    meaning: "コンピュート課金は止まり、データとストレージ課金は残る"
+  - id: upgrade
+    label: "アップグレード"
+    meaning: "同じクラスタを通常の AlloyDB へ上げる"
+  - id: always
+    label: "常時起動のAlloyDB"
+    meaning: "コンピュートをゼロにする動作が切れ、常時起動の料金になる"
+groups:
+  - id: endings
+    label: "終わり方"
+    members: [delete, idle, upgrade]
+relationships:
+  - from: express
+    to: delete
+    label: "クラスタを消す"
+  - from: express
+    to: idle
+    label: "データは残る"
+  - from: express
+    to: upgrade
+    label: "インプレース"
+  - from: upgrade
+    to: always
+    label: "常時課金へ"
+omitted:
+  - item: "エージェントの 1 サイクル"
+    reason: "作成の主体であり、終わり方の違いという一つのメッセージには不要"
+  - item: "公開 DNS の約 2 秒、PSC と再開の約 20 秒"
+    reason: "待ち時間の読み分けであり、終わり方の違いではない"
+  - item: "20 GB、同時接続 200、HA、バックアップ、価格"
+    reason: "採用しない条件や単価であり、終わり方の違いではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### 接続を受け付けるまで（アイドルでコンピュートがゼロになり、ストレージとデータは残る。消す操作は明示的な delete。同じクラスタを通常の AlloyDB へ上げられる）"
+  - "## 通常の AlloyDB や手元の PostgreSQL との違い（アップグレード後は接続文字列を維持し、コンピュートをゼロにする動作は切れ、常時起動の料金になる）"
+  - "### 準備時間とアイドルの分数（pause はコンピュートをゼロにするアイドルであり、削除ではない）"

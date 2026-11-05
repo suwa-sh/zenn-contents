@@ -1,0 +1,70 @@
+source:
+  title: "AlloyDB Expressは試作とエージェント作業向けのスケールゼロPostgreSQL"
+  url: null
+  path: "notes/zenn/articles/google-postgresql-alloydb-p4_20261105.md"
+  primary:
+    - title: "AlloyDB Express overview"
+      url: "https://docs.cloud.google.com/alloydb/docs/express-overview"
+    - title: "Express の作成と管理"
+      url: "https://docs.cloud.google.com/alloydb/docs/create-manage-express-clusters"
+    - title: "価格（英語）"
+      url: "https://cloud.google.com/alloydb/pricing"
+    - title: "発表ブログ（2026-11-04）"
+      url: "https://cloud.google.com/blog/products/databases/introducing-alloydb-express-for-rapid-testing-and-prototyping/"
+    - title: "同日のまとめブログ"
+      url: "https://cloud.google.com/blog/products/databases/whats-new-across-googles-agentic-data-cloud"
+  retrieved_at: "2026-11-06"
+archetype:
+  primary: decision
+  secondary: [architecture]
+one_liner: "AlloyDB Express は、使わないあいだコンピュートをゼロにする PostgreSQL 18 の Preview です。1 サイクルに作成と破棄を入れてよいのは、条件が同時に揃うときだけです。"
+key_points:
+  - claim: "約 2 秒は公開 DNS（自分のネットワークの外からつなぐ DNS 名）の接続受付だけの目安である。PSC の接続受付と、止めたコンピュートを戻す再開はどちらも約 20 秒で、クラスタとインスタンスの 2 段の作成とは別である"
+    evidence: "### 接続を受け付けるまで / ### 準備時間とアイドルの分数"
+    status: fact
+  - claim: "アイドルはコンピュート課金を止め、データとストレージ課金は残る。クラスタが消えるのは明示的な delete だけである"
+    evidence: "### 接続を受け付けるまで / ### 準備時間とアイドルの分数"
+    status: fact
+  - claim: "東京の 2026-11-05 時点の掲載値はコンピュート $0.147 / CU・時、ストレージ $0.384 / 1 Gibibyte Month である。地域を書かない $0.115 は us-west1 なので、東京の見積もりには使わない"
+    evidence: "### 掲載されている単価 / ### 価格の読み方"
+    status: fact
+  - claim: "同じクラスタは通常の AlloyDB へ上げられ、接続文字列は維持される。コンピュートをゼロにする動作は切れて常時起動の料金になり、Express へは戻れず、上げただけで HA が付くとは書かれていない"
+    evidence: "## 通常の AlloyDB や手元の PostgreSQL との違い"
+    status: fact
+  - claim: "1 サイクルに作成と破棄を入れてよいのは、合成データ、本番に届かない専用プロジェクト、作成と削除に足りてアップグレードと本番ネットワークの変更を含まない権限、終了時の delete、秘密を残さない接続が同時に揃うときだけである"
+    evidence: "## 1サイクルに作成と破棄を入れる条件"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "破棄は delete だけである。アイドルはデータとストレージ課金を残し、アップグレードは常時起動の AlloyDB になる"
+    reason_needed: "pause を破棄と取り違えるとデータと課金が残り、アップグレードは試作の器から常時起動へ移る"
+example:
+  description: "英語の価格ページの計算例は、US_CENTRAL1（us-central1）、1 CU、1 日 5 時間、ストレージ 10 GB で合計 $0.674 と書く。この地域は対応一覧に無く、コンピュートは 5 時間分、ストレージは 24 時間分である。計算例の単位は GB、表の単位は Gibibyte Month である"
+  hypothetical: false
+  evidence: "### 価格の読み方"
+applicability:
+  - "AlloyDB 独自の拡張（ベクトル検索や、SQL から Gemini を呼ぶ関数）が検証対象のとき"
+  - "結果を残さず、上限 20 GB、同時接続 200（固定）以内で終わる試作"
+decision_criteria:
+  - "本番に届かない専用プロジェクトで、作成・削除と、アップグレードおよび本番ネットワークの変更が分かれるか（分ける事前定義ロールの名前は作成手順に無く、分けるならカスタムロール）"
+  - "終了手順が delete を呼び、アイドルを破棄の代わりにしないか"
+  - "初期パスワードと、パスワードの代わりの IAM アクセストークンが、履歴、ログ、リポジトリに残らないか"
+  - "公開 DNS を使うなら、必要な CIDR だけを許すか（既定は全拒否で、更新はリスト全体の置換）"
+  - "東京で見積もるなら、2026-11-05 時点のコンピュート $0.147 とストレージ $0.384 / 1 Gibibyte Month か"
+limitations:
+  - "HA、バックアップ、ポイントインタイムリカバリ、SLA、顧客管理の暗号鍵が要る検証には使わない。SLA が無く Pre-GA なので、必須の CI の床にはしない"
+  - "Terraform での再現が採用条件なら使わない。対応は未確定なので、対応とは扱わない"
+  - "pause までの分数は、2026-11-05 に読んだ overview では未確定である。『50 compute units』（請求先あたり最初の 12 か月の毎月、ストレージ 2 GB 付き）が 50 CU・時を指すか、課金開始の文言（2026-12）との重なりも価格ページだけでは閉じない。通常版の 30 日試用はこの無料枠ではない"
+  - "300 万 queries per second などの性能主張は Express の器の話ではない。サイズは 1 vCPU か 2 vCPU、ストレージ上限は 20 GB で、同日のまとめブログが本番側のインスタンスに付けた主張である"
+  - "標準の PostgreSQL だけで足りる検証は、手元の使い捨て PostgreSQL のほうが、データを外へ出さず、プロセス終了で捨てられる"
+unknowns:
+  - "アイドルで pause するまでの分数（ブログは 15 分、overview 本文には分数が無い）"
+  - "無料枠の 50 compute units が 50 CU・時か。課金開始は 2026-12 で、最初の 12 か月との重なりは価格ページの並記だけでは閉じない"
+  - "IAM データベース認証トークンの有効秒数"
+  - "インスタンスごとの per-minute サインイン quota の回数"
+  - "Express がクラスタ数の既定クォータを消費するか"
+  - "Mutate API に Express 専用の例外、推奨バックオフ、タイムアウトがあるか"
+  - "1 vCPU のまま上げられる C4A 対応リージョンの一覧"
+  - "アップグレード後に、別操作で顧客管理の暗号鍵を付けられるか"
+  - "Express を名指しした保管場所の保証文"
+reviewed: true

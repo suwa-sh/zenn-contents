@@ -1,0 +1,69 @@
+source:
+  title: "OpenShellをKubernetesに載せるときの境界とレビュー項目"
+  url: null # Zenn 下書き (published: false)。公開 URL なし
+  path: "notes/zenn/articles/cncf-openshell-kubernetes-p6_20261105.md"
+  primary:
+    - title: "CNCF Blog: OpenShell on Kubernetes: A Guide for Platform Engineers"
+      url: "https://www.cncf.io/blog/2026/11/04/openshell-on-kubernetes-a-guide-for-platform-engineers/"
+    - title: "OpenShell Architecture（Latest v0.1.7）"
+      url: "https://docs.nvidia.com/openshell/about/architecture"
+    - title: "Kubernetes driver README（main）"
+      url: "https://github.com/NVIDIA/OpenShell/blob/main/crates/openshell-driver-kubernetes/README.md"
+    - title: "Pod Security Standards"
+      url: "https://kubernetes.io/docs/concepts/security/pod-security-standards/"
+  retrieved_at: "2026-11-06"
+archetype:
+  primary: architecture # 4層の境界と、supervisor が上流を開く配置
+  secondary: [governance] # 本番前の確認項目と、既定値の読み違い
+one_liner: >-
+  OpenShell（エージェントのコードを閉じ込める実行環境）の境界は4層で、ファイル、プロセス、ネットワーク、資格情報である。
+  Pod の標準と通信の許可は、HTTP の中身と、秘密を実値に換えることを表せない。
+key_points:
+  - claim: "ファイルは Landlock（プロセスが触れるパスを読む側と書く側に分ける仕組み）で縛る。カーネル側の版（ABI v3）が無いと起動せず、内部ディレクトリ /.openshell は必ず隠し、設定では見せない。プロセスは root では動かさず、プロセスに足す権限は持たせず、呼べるシステムコールを絞る"
+    evidence: "### 境界は4層ある"
+    status: fact
+  - claim: "ネットワークは規則が無いとき外向きを拒否し、規則は接続する実行ファイル、ホスト、ポートを名指しする。資格情報の実値は、許した接続先だけに supervisor（起動前と通信時に境界を見るプロセス）が差し込む。作成時に渡す環境変数は別経路で、sandbox 内の全プロセスから平文で読める"
+    evidence: "### 境界は4層ある / ### 秘密の平文経路は provider と別である"
+    status: fact
+  - claim: "既定では、許した接続先の中の違反は記録して通す（audit）。適用できない追加のファイル規則だけを外して起動し得る（best_effort）。ABI v3 が無ければ起動せず、/.openshell を隠す規則は残る。/sandbox は停止後も残る"
+    evidence: "### 境界は4層ある / ### 作業ディレクトリの寿命 / ### メソッド制限のデモは既定ではない / ### ディスクは stop では消えない"
+    status: fact
+  - claim: "Pod Security Standards の最も厳しい段（Restricted）と NetworkPolicy は、誰が root か、足す権限、呼べるシステムコールと、ネットワーク実装が強制するときのホストとポートまでである。実行ファイル、HTTP メソッド、書けるパス、資格情報の差し替えは、OpenShell のポリシー側で見る"
+    evidence: "## Restrictedでは表現できない境界"
+    status: fact
+  - claim: "公開ドキュメント v0.1.7 では、supervisor が workload（エージェントのコードが動く Pod）へ接続する。Kubernetes driver の新しい動かし方では、workload から対の supervisor への TCP を 1 本だけ通し、任意の外部ホストには通さない。デモがピンしている OpenShell は 0.1.3 である"
+    evidence: "### クラスタ上の部品 / ### 制御接続の向きは文書で分かれる / ### デモと公開ドキュメントは世代が違う"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "公開ドキュメントでは supervisor が workload の制御用の口を開き、許した上流だけを supervisor が開く。workload が新たに開く接続は外側の柵が拒否する"
+    reason_needed: "接続の向きが文章だけでは残りにくく、README の別世代と混ぜると逆向きに読めるため"
+example:
+  description: >-
+    メソッド制限のデモは、規則に合わない要求を拒否するモード（enforce）の動作である。
+    既定の audit は、許した接続先の中の違反を記録して通し、接続を許す規則が無いホストは通さない。
+  hypothetical: false
+  evidence: "### メソッド制限のデモは既定ではない"
+applicability:
+  - "本番の資格情報をエージェントが扱う前に、Restricted の Pod だけではメソッドと資格情報の境界になるか見るとき"
+  - "許可したツール名と、出られるホスト、書けるパス、秘密の載り方を分けてレビューするとき"
+  - "作業ファイルを次の実行に残したくないとき"
+decision_criteria:
+  - "接続先の中の違反を拒否するモード（enforce）にし、既定の audit のままメソッド制限を期待していないか"
+  - "追加のファイル規則を欠かしたくないなら、適用できないとき起動を拒むモード（hard_requirement）を検討したか。ABI v3（OpenShift なら 4.19 以降）と、NetworkPolicy を強制するネットワーク実装を前提にしたか"
+  - "秘密は、サービスと保管した秘密を対応させる部品（provider）に載せ、作成時の環境変数や workload への注入で平文を渡していないか"
+  - "作業ファイルを次の実行に残したくないなら、停止ではなく削除か、終了後に削除する指定を選んだか"
+  - "gateway の ServiceAccount と、sandbox の名前空間で Pod や NetworkPolicy を作れる権限を、OpenShell のポリシーとは別に絞ったか"
+limitations:
+  - "制御接続の向きは、公開ドキュメント v0.1.7 と driver README で文章が分かれる。v0.1.7 のリリースノートがこの切り替えを明記しているかは未確認である"
+  - "削除の応答がディスクの消失完了を待つかは、README の本文では未確認である。/tmp が Pod の終了や停止で空になるかも未確認である"
+  - "OpenShell 固有の脆弱性番号は、2026-11-05 時点で公開データベースの一次記録を確認できておらず、gateway API のレート制限も未確認である"
+  - "カーネルはノードと共有したままである。別ランタイムは実行先を名指ししたときだけ付き、利用者番号をホストの別範囲へずらす仕組みは既定で無効である"
+  - "遅延、密度、アイドル時の規模を理由に、別プロジェクトの Agent Substrate を混ぜない。混ぜる提案は 2026-11-05 時点で未完了である"
+unknowns:
+  - "v0.1.7 のリリースノートが、制御接続の向きの切り替えを明記しているか"
+  - "README が書く control port が、対の supervisor への TCP 1 本と同じ口か"
+  - "削除の API 応答が、PVC の消失完了を待つか"
+  - "一時ディレクトリ /tmp が、Pod の終了や停止で空になるか"
+  - "gateway API にレート制限があるか。OpenShell 固有の脆弱性番号が公開データベースにあるか"
+reviewed: true

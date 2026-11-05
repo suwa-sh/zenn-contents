@@ -1,0 +1,69 @@
+type: behavior
+title: "FlashProve が結ぶもの"
+message: "オフラインで重みの指紋を一度作り、終わったトークン列を事後に証明し、CPU の検証は三つの入力から最後の行を返す"
+source: "notes/zenn/articles/anthropic-anthropic-research-p2_20261105.md"
+components:
+  - id: weights
+    label: "モデル重み"
+    meaning: "証明する側が持つモデルの重み"
+  - id: cid
+    label: "コミットメント ID"
+    meaning: "オフラインで一度作る、重みの短い指紋の識別子"
+  - id: tokens
+    label: "名指ししたトークン列"
+    meaning: "プロンプトと、検査対象として名指しした出力トークン"
+  - id: proof
+    label: "証明ファイル"
+    meaning: "終わったトークン列に対して事後に作る証明"
+  - id: check
+    label: "CPU での検証"
+    meaning: "検証者は重みを持たず、CPU で検査する"
+  - id: result
+    label: "最後の行"
+    meaning: "YES、WITHIN LIMITS、NO のいずれか"
+groups:
+  - id: offline
+    label: "オフライン"
+    members: [weights, cid]
+  - id: after
+    label: "事後の証明"
+    members: [tokens, proof]
+  - id: verify
+    label: "検証"
+    members: [check, result]
+relationships:
+  - from: weights
+    to: cid
+    label: "オフラインで一度"
+  - from: cid
+    to: proof
+    label: "指紋を渡す"
+  - from: tokens
+    to: proof
+    label: "事後にまとめる"
+  - from: cid
+    to: check
+    label: "別経路で渡す"
+  - from: tokens
+    to: check
+    label: "検査対象"
+  - from: proof
+    to: check
+    label: "検査する"
+  - from: check
+    to: result
+    label: "YES / WITHIN LIMITS / NO"
+omitted:
+  - item: "応答に書かれたモデル名と思考ブロックの signature"
+    reason: "証明が結ばないものの対比は、この図の流れ（指紋を作り、事後に証明し、最後の行を返す）とは別の主張になるため"
+  - item: "速度、証明サイズ、GPU の倍率"
+    reason: "条件付きの測定値であり、結ぶ関係そのものではないため"
+  - item: "設定ファイル、依頼ファイル、トークンファイル"
+    reason: "検証者が自分で持つ入力のうち、図では名指ししたトークン列とコミットメント ID と証明ファイルにまとめ、ファイル名の列挙は判断に効かないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### 証明が結ぶもの の mermaid（重み→コミットメント ID、トークン列と ID→事後の証明、三つを CPU で検証し YES / WITHIN LIMITS / NO）"
+  - "### 事後にまとめて証明する（証明は事後。検証者は重みを持たず GPU も要らない）"
+  - "## 監査ログに先に切る欄（コミットメント ID は検査対象のサーバ以外から受け取る）"

@@ -1,0 +1,57 @@
+type: structure
+title: "通常 ref の届き先"
+message: "GitHub App の通常 ref の正本は GitHub で、ephemeral ref は Code Storage に残る"
+source: "notes/zenn/articles/openai-pierre-codex-openai-p1_20261105.md"
+components:
+  - id: person
+    label: "人"
+    meaning: "GitHub App で同期したリポジトリを操作する人。叩く remote は Code Storage"
+  - id: storage
+    label: "Code Storage"
+    meaning: "アプリが Git でコードと履歴を置く API。人が叩く remote"
+  - id: github
+    label: "GitHub の通常 ref"
+    meaning: "文書が source of truth と呼ぶホスト。完了とみなす履歴が載る"
+  - id: eph
+    label: "ephemeral ref"
+    meaning: "作業スナップショットなどの一時的な ref。push は GitHub に届かない"
+groups:
+  - id: record
+    label: "完了とみなす履歴"
+    members: [github]
+  - id: stay
+    label: "ホストの正本にしない"
+    members: [eph]
+relationships:
+  - from: person
+    to: storage
+    label: "clone、fetch、pull、push"
+  - from: storage
+    to: github
+    label: "通常 ref の push を転送"
+  - from: github
+    to: storage
+    label: "成功後に写し戻す"
+  - from: storage
+    to: eph
+    label: "push は届かず残る"
+omitted:
+  - item: "Trees と Diffs"
+    reason: "今日の閲覧と差分の利用であり、履歴の正本の置き場とは別の主張のため"
+  - item: "public mode と generic HTTPS"
+    reason: "同期の別モードであり、この図の 1 メッセージ（GitHub App の通常 ref と ephemeral ref）に含めないため"
+  - item: "チャット上の指摘、Diffs の reject、Git note、source provider への投稿"
+    reason: "レビュー完了の置き場は別の主張のため。本文の表に残す"
+  - item: "Codex から Code Storage への線"
+    reason: "発表が二つの層を同じ取引に置いていることの図示であり、機能がすでに入ったことではない。正本の図に足すと取り込み済みに読めるため"
+  - item: "CI の矢印"
+    reason: "元記事が、図の向きと本文（webhook や note を受け取る側）が揃っていないと書いているため"
+  - item: "Pando、料金、SLA、LFS の経路"
+    reason: "通常 ref と ephemeral ref の届き先という 1 メッセージに直接関係しないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### Gitで履歴を置く層"
+  - "## コードの正本とレビュー結果の置き場 の表（GitHub App の通常 ref、ephemeral ref）"
+  - "## 手順書に残す完了条件 の 1"

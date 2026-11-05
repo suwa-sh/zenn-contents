@@ -1,0 +1,62 @@
+source:
+  title: "FlashProveは重みの指紋で応答トークンの出所を事後に示す"
+  url: null
+  path: "notes/zenn/articles/anthropic-anthropic-research-p2_20261105.md"
+  primary:
+    - title: "Progress on provable inference for large language models"
+      url: "https://www.anthropic.com/research/provable-inference"
+    - title: "anthropics/FlashProve"
+      url: "https://github.com/anthropics/FlashProve"
+    - title: "Responsible Scaling Policy updates"
+      url: "https://www.anthropic.com/responsible-scaling-policy/updates"
+    - title: "Thinking"
+      url: "https://platform.claude.com/docs/en/build-with-claude/thinking"
+  retrieved_at: "2026-11-06"
+archetype:
+  primary: research
+  secondary: [decision]
+one_liner: "FlashProve は公開した重みの指紋と名指ししたトークン列を事後の短い証明で結ぶ。公開された速度は、次の 1 トークンを検査した条件の数字である。"
+key_points:
+  - claim: "証明ファイルは zkSNARK（短く、CPU で検査でき、重みも中間値も漏れない、と研究ブログが説明する方式）である。結ぶのは応答に書かれたモデル名ではなく、コミットメント ID（オフラインで一度作る、重みの短い指紋の識別子）と、検査対象として名指ししたトークン列である。検証者は重みも GPU も要らない"
+    evidence: "冒頭 / ## FlashProveとは / ### 証明が結ぶもの"
+    status: fact
+  - claim: "証明は事後で、終わったテキストをまとめて読み、バッチで証明する。研究ブログは、完成した研究計画の報告ではなく途中経過の共有だと書いている"
+    evidence: "冒頭 / ### 事後にまとめて証明する"
+    status: fact
+  - claim: "公開された速度とサイズは、長い返答の全文を 1 つの証明が覆った費用ではない。4bit の Llama 4 Maverick で、1024 トークンのプロンプトに対する次の 1 トークンを検査し、生成しない条件の数字である"
+    evidence: "### 事後にまとめて証明する / ### 速度とサイズの数え方"
+    status: fact
+  - claim: "YES は、検査した各トークンが整数モデル（主測定の 4bit の Llama 4 Maverick を整数演算で動かし、各位置の第一候補を選ぶモデル）の第一候補であることである。WITHIN LIMITS は、clipped-gap（完全一致より緩く、定めた限度を満たせば受理するポリシー）の限度を満たすことしか言わない。どちらも終了コードは 0 である"
+    evidence: "### 証明が結ぶもの / ### 受理は二段ある"
+    status: fact
+  - claim: "2026-11-05 時点で確認した Claude の Messages API（応答を返す公式 API）、Amazon Bedrock、Google Cloud 上の Claude、Microsoft Foundry の応答に、証明ファイルやコミットメント ID が付くとは書かれていない。思考ブロックの signature（完全な思考過程の暗号化した写し）は、思考を改変せず再送するためのもので、重みの証明ではない"
+    evidence: "## ホスト済み API の応答に何が付くか / ### 思考ブロックの signature"
+    status: fact
+mental_models:
+  - type: behavior
+    key_message: "オフラインで重みの指紋を一度作り、終わったトークン列を事後に証明し、CPU の検証はコミットメント ID とトークン列と証明ファイルから最後の行を返す"
+    reason_needed: "証明ファイルだけ、または応答のモデル名だけで出所が済む、と読むと、検証者が別に持つべき入力と、最後の行の区別が落ちる"
+example:
+  description: "主測定は H100 が 1 枚、CPU は 24 コア、4bit の Llama 4 Maverick。1024 トークンのプロンプトに対する次の 1 トークンを検査し、生成はしない。24 件の証明は約 223 秒、1 件 18.78 MB。毎秒約 110 はプロンプト 1024 トークンを数え、生成トークンは数えない。検証は 24 スレッドで 17 秒、1 スレッドで 21 秒。オフライン段階の検査を含むが、元記事はその中身を書かず、指紋を作る約 39 分とは別。指紋のファイルは約 6.5 MB で、コミットメント ID そのものではない"
+  hypothetical: false
+  evidence: "### 事後にまとめて証明する"
+applicability:
+  - "監査ログに、モデル名とは別の計算の識別欄を先に切る"
+  - "自前の公開重みで、後から検査できる欄を試す"
+  - "確認した応答先の本文を、計算した重みの証明として扱ってよいか決める"
+decision_criteria:
+  - "コミットメント ID は、検査するサーバ以外から受け取る"
+  - "ポリシーが完全一致か clipped-gap かを残し、後者なら限度も残す。残す結果は YES か WITHIN LIMITS"
+  - "上の測定では、証明 1 件が十 MB 級、GPU 時間は推論の数十倍である"
+  - "検証成功を完了条件にするのは、ホスト済み API がコミットメント ID と検査範囲と証明参照を応答か取得できる台帳に載せるか、使うモデルとポリシーの証明を自前で残し、最後の行を完了記録に含め、その費用を引き受けるときである"
+  - "signature を、重みの証明の欄へ入れない"
+limitations:
+  - "検査していない位置は覆わない。証明は、依頼した人も時刻も名指ししない"
+  - "整数モデルの第一候補は、比較相手の 16bit モデル（公開の 4bit 版そのものとは書かれていない）と 6.81% の位置で違い、その差は証明の外にある。6.81% は、速度を測った重みが証明対象からずれる意味ではない（測定は Python 実装）"
+  - "限度が緩い、または重みが平坦なら、WITHIN LIMITS ではほぼ任意の出力が通り得る。二つの既存エンジンの正直な返答 96 件ずつはどれも完全一致を通らず、採点は整数モデルの Python 実装で、証明されておらず、リリースされたプログラム上ではない"
+  - "C++ の検証器と CUDA の証明器自体は証明されておらず、Lean（性質を機械検査した証明支援系）と論文と実行コードの一致も保証されない。リポジトリは研究物で、保守せず、貢献も受け付けない"
+unknowns:
+  - "NO が不合格なのか、検査不能なのかは、確認した文書に書かれていない"
+  - "中身の定義が確認した研究ブログとガイドに無い変換への二つの公開攻撃が、検証の YES をどう変えるかは判断できない"
+  - "顧客が、別プロジェクトの内部のトークン交通への署名を取得できるかは未確認である"
+reviewed: true

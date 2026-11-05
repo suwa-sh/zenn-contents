@@ -1,0 +1,42 @@
+type: structure
+title: "supervisor が上流を開く"
+message: "公開ドキュメントでは supervisor が workload の制御用の口を開き、許した上流だけを supervisor が開く。workload が新たに開く接続は外側の柵が拒否する"
+source: "notes/zenn/articles/cncf-openshell-kubernetes-p6_20261105.md"
+components:
+  - id: supervisor
+    label: "supervisor"
+    meaning: "起動前と通信時に境界を確認するプロセス"
+  - id: workload
+    label: "workload"
+    meaning: "エージェントのコードが動く Pod"
+  - id: upstream
+    label: "上流"
+    meaning: "ポリシーが許した接続先"
+groups:
+  - id: fence
+    label: "NetworkPolicy（新たに開く接続を拒否）"
+    members: [workload]
+relationships:
+  - from: supervisor
+    to: workload
+    label: "制御用の口を開く"
+  - from: workload
+    to: supervisor
+    label: "確立した経路で戻す"
+  - from: supervisor
+    to: upstream
+    label: "許した上流を開く"
+omitted:
+  - item: "gateway、Kubernetes driver、Agent Sandbox、作業用 PVC"
+    reason: "作成経路とディスクの寿命であり、接続の向きという一つのメッセージではない"
+  - item: "runtime-initiated（workload から対の supervisor への TCP 1 本）"
+    reason: "図は公開ドキュメント v0.1.7 の向きに合わせる。README の新しい実行系は任意ホストへの許可ではないが、混ぜると向きが二つになる"
+  - item: "ファイル、プロセス、資格情報の層"
+    reason: "4層のうち、この図はネットワークの仲介だけを示す"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### クラスタ上の部品 の本文（supervisor が workload の boundary へ接続し、workload は確立した経路で要求を戻し、supervisor が許した上流を開く）"
+  - "同節の mermaid（supervisor から workload へ boundary を開く、workload から supervisor へ確立した経路で戻す、supervisor から上流 API へ許した上流を開く、NetworkPolicy は workload に付く）"
+  - "同節の注記（図の向きは公開ドキュメント v0.1.7 が書く、supervisor が workload へ接続する構成）"
