@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (606)
+## Articles: 下書き (607)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-07 | [🛡️ 国家サイバー統括室の注意喚起で先に見える基本対策の残件](articles/ai-soumu-go-jp-menu-kyotsuu-p2_20261107.md) | Security, AIAgent, Vulnerability, SupplyChain |
+| 2026-11-07 | [🏢 年間数億円規模SaaSの本番置換は非機能の引き受けが条件になる](articles/saas-zenn-dev-ttake-p9_20261107.md) | SaaS, AI, AWS, Security |
 | 2026-11-06 | [🔀 Bloombergのリポジトリ移行は決定的処理とLLMを段階で分ける](articles/bloomberg-llm-arxiv-abs-p6_20261106.md) | LLM, Python, CMake, DevOps |
-| 2026-11-06 | [🗄️ GitHubが単一リポジトリの同時push向けに再設計したGit格納](articles/github-push-git-github-inside-p1_20261106.md) | GitHub, Git, AIAgent, Azure |
 | 2026-11-06 | [🔐 OpenAIがLinuxカーネルで数えた権限昇格の修正案948件](articles/openai-linux-948-openai-index-p4_20261106.md) | Linux, Security, OpenAI, LLM |
 | 2026-11-05 | [🔐 FlashProveは重みの指紋で応答トークンの出所を事後に示す](articles/anthropic-anthropic-research-p2_20261105.md) | Anthropic, LLM, Security |
 | 2026-11-05 | [🐚 OpenShellをKubernetesに載せるときの境界とレビュー項目](articles/cncf-openshell-kubernetes-p6_20261105.md) | Kubernetes, Security, CNCF, OpenShell |
@@ -618,10 +619,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (201)
+## Articles: 公開済み (202)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-11-07 | [🗄️ GitHubが単一リポジトリの同時push向けに再設計したGit格納](articles/github-push-git-github-inside-p1_20261106.md) | GitHub, Git, AIAgent, Azure |
 | 2026-11-05 | [🌲 OpenAIのPandoはGitのコマンドを残し格納と配信だけを替える](articles/openai-codex-git-pando-openai-p1_20261104.md) | Git, OpenAI, AIAgent, Monorepo |
 | 2026-11-03 | [🤖 __usage_ai-trainingで示す生成AIの学習意向](articles/openai-robots-txt-openai-p3_20261102.md) | OpenAI, RobotsTxt, IETF, GenerativeAI |
 | 2026-10-31 | [🛡️ CNCFブログはエージェントの境界を許されたツール集合として整理する](articles/cncf-cncf-io-2026-boundary-p6_20261030.md) | CNCF, AIAgent, Kubernetes, Security, MCP |

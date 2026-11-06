@@ -3,7 +3,8 @@ title: "GitHubが単一リポジトリの同時push向けに再設計したGit�
 emoji: "🗄️"
 type: "tech"
 topics: ["GitHub", "Git", "AIAgent", "Azure"]
-published: false
+published: true
+published_at: 2026-11-07
 ---
 
 2026年11月5日、GitHubは単一リポジトリへ多数の書き込みが同時に届く前提で組んだGit格納を、公式記事で説明しました。設計名はProject Rubiconです。著者はKarthik RamanとBrian Celenzaです。中核は[Inside GitHub's new Git storage architecture](https://github.blog/engineering/architecture-optimization/inside-githubs-new-git-storage-architecture/)です。前段として、2026年10月6日の[Building Git infrastructure for agent-scale development](https://github.blog/engineering/architecture-optimization/building-git-infrastructure-for-agent-scale-development/)と、2026年10月21日の[The bridge to agent-scale Git infrastructure](https://github.blog/engineering/architecture-optimization/the-bridge-to-agent-scale-git-infrastructure/)があります。
