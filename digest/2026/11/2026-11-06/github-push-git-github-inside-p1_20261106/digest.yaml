@@ -1,0 +1,65 @@
+source:
+  title: "GitHubが単一リポジトリの同時push向けに再設計したGit格納"
+  url: null # Zenn 下書き (published: false)。公開 URL なし
+  path: "notes/zenn/articles/github-push-git-github-inside-p1_20261106.md"
+  primary:
+    - title: "Inside GitHub's new Git storage architecture"
+      url: "https://github.blog/engineering/architecture-optimization/inside-githubs-new-git-storage-architecture/"
+    - title: "The bridge to agent-scale Git infrastructure"
+      url: "https://github.blog/engineering/architecture-optimization/the-bridge-to-agent-scale-git-infrastructure/"
+    - title: "Building Git infrastructure for agent-scale development"
+      url: "https://github.blog/engineering/architecture-optimization/building-git-infrastructure-for-agent-scale-development/"
+  retrieved_at: "2026-11-07"
+archetype:
+  primary: architecture # pack の保存と参照更新を分けた格納
+  secondary: [decision] # 同時 push が直列になる層と、数値の読み分け
+one_liner: >-
+  Project Rubicon（同時push向けのGit格納）はpack（オブジェクトをまとめたファイル）の保存と参照更新を分ける。
+  同じ参照への同時更新は、記録に残るのが1本だけ。
+key_points:
+  - claim: "入口の Spokes の下で、耐久する状態は二箇所である。pack の実体は Azure Blob Storage、参照と pack manifest は Ref-CAS にある。virtual replica はどの台に着地しても正しさは変わらない"
+    evidence: "## GitHubの新しいGit格納とは"
+    status: fact
+  - claim: "virtual replica は pack を索引して Blob へ上げ、その後 Ref-CAS へ pack 一覧の追記と参照更新を 1 回確定する。ロックは触った参照だけで、Ref-CAS がその更新を記録するログの複製の過半数が記録すると可視になる。参照はすでに耐久化したオブジェクトだけを指す"
+    evidence: "### 書き込みの順"
+    status: fact
+  - claim: "直列の境界は参照である。trunk、release train、merge queue はすべての merge を 1 本の参照へ戻し、ブランチを分けても直列は残る"
+    evidence: "## 書き込みが直列になる層"
+    status: fact
+  - claim: "5,000 同時エージェントと毎秒 7,200 push は 2026-11-05 の内部試験である。本番の最忙は毎秒数十件の書き込みが短いバーストで届く。別の文の毎秒数万件は参照状態だけの処理で、push の完了数ではない"
+    evidence: "## 注意点"
+    status: fact
+  - claim: "人のレビューは Ref-CAS のロック時間としては書かれておらず、保護ブランチと必須レビューは残る。速くなった倍率はレビューが短くなった証拠にならず、所要時間の前後は無い"
+    evidence: "## レビュー待ちの時計"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "pack の保存に書き手同士の合意は要らない。合意が要るのは、その後の参照更新だけである"
+    reason_needed: "受信側の容量と直列の境界を、コマンド単位と取り違えると、同じ参照への push が並列に通ると読めるため"
+example:
+  description: "エージェント A が feature-a へ、エージェント B が feature-b へ push すると参照が別なので互いを待たせない。同じ main へ 2 本が同時に進むと、ログに載るのは 1 本である。fast-forward でも同じ参照なら 1 本だけである"
+  hypothetical: false
+  evidence: "## 書き込みが直列になる層"
+applicability:
+  - "エージェントを同じリポジトリへ並べ、ブランチを分ける前に、受信側の直列を書きたいとき"
+  - "毎秒 7,200 push を、一般提供の容量として設計の前提に置く前"
+  - "push の応答と、保護ブランチ側のレビュー待ちを、別のカウンタにするとき"
+decision_criteria:
+  - "分離単位をコマンドではなく、push が更新する参照にしているか"
+  - "default branch、release train、merge queue が 1 本の参照に戻ることを、ブランチ分割で消せると思ってないか"
+  - "容量の前提に、内部試験（7,200 と 5,000）と本番の最忙（毎秒数十件の短いバースト）と limited private preview を並べているか"
+  - "失敗した push を、同期応答と保護ブランチのレビュー待ちで別に数えるか"
+  - "lookup が pack 数で少し高くなる、という一般論と、畳む上限の数値を混ぜていないか。上限の数値は記事に無い"
+limitations:
+  - "7,200 と 5,000 は内部試験で、pack の大きさ、同一参照の割合、遅延のミリ秒、本番かは本文に無い。10月6日の書き込み速度の最大35倍（基準の件数は本文に無い）と、10月21日の別参照への書き込みの3〜4倍は、7,200とは足せない"
+  - "失敗した push が受け取るエラー文字列と、監査に残るかは公式 3 本に無い。non-fast-forward の Docs が同じ文字列を返すとも書いていない"
+  - "ログに載らなかった pack をその場で消すとは書いておらず、到達できないオブジェクトの消し方も本文に無い"
+  - "入った秘密を探す検査を push 応答の外へ出した待ち時間は、本文に無い"
+  - "提供は limited private preview で、現行のどのリポジトリが Rubicon かは分からない。99.99999% は Azure と自社データセンターの両方にコピーがあるリポジトリの割合であり、展開率ではない"
+unknowns:
+  - "compare-and-swap に外れた push のエラー文字列と、監査に残るか"
+  - "compaction の pack 数、バイト、年齢の上限と、遅れたときの挙動。garbage collection の安全手順"
+  - "7,200 の試験の pack サイズ、同一参照の割合、レイテンシのミリ秒"
+  - "limited private preview の対象と、現行のどのリポジトリが Rubicon か"
+  - "secret scanning を ack の外へ出したあとの待ち時間と、レビュー待ちの公式の before と after"
+reviewed: true

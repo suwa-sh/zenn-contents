@@ -1,0 +1,48 @@
+type: structure
+title: "合意が要るのは参照だけ"
+message: "pack の保存に書き手同士の合意は要らない。合意が要るのは、その後の参照更新だけである"
+source: "notes/zenn/articles/github-push-git-github-inside-p1_20261106.md"
+components:
+  - id: spokes
+    label: "Spokes"
+    meaning: "Git、API、Web の要求をリポジトリへ渡す入口"
+  - id: replica
+    label: "virtual replica"
+    meaning: "pack を索引して Blob へ上げる、使い捨ての計算ノード"
+  - id: blob
+    label: "Blob Storage"
+    meaning: "pack の実体。内容アドレスで不変なので、保存に書き手同士の合意は要らない"
+  - id: cas
+    label: "Ref-CAS"
+    meaning: "参照と pack 一覧。触った参照だけをロックし、同じ参照の更新は 1 本だけ通る"
+groups:
+  - id: durable
+    label: "耐久する状態"
+    members: [blob, cas]
+relationships:
+  - from: spokes
+    to: replica
+    label: "要求を渡す"
+  - from: replica
+    to: blob
+    label: "pack を上げる"
+  - from: replica
+    to: cas
+    label: "触った参照だけを更新"
+omitted:
+  - item: "compaction と、シャードの lease"
+    reason: "要求経路の外で pack を畳む仕組みであり、合意が参照だけだという一つのメッセージではない"
+  - item: "quorum のログ複製と LSN"
+    reason: "参照更新が可視になる条件であり、保存と参照の境界そのものではない"
+  - item: "trunk、release train、merge queue"
+    reason: "同じ参照に戻る運用の例であり、格納の構成要素ではない"
+  - item: "secret scanning と object connectivity"
+    reason: "ロックの外に残る重い仕事であり、合意の境界ではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## GitHubの新しいGit格納とは（Spokes が入口、耐久する状態は Blob Storage と Ref-CAS の二箇所、virtual replica はどの台でも正しさが変わらない）"
+  - "同節の mermaid（client から Spokes、Spokes から virtual replica、replica から Blob と Ref-CAS）"
+  - "### 書き込みの順（pack を上げてから参照を 1 トランザクションでコミットする。オブジェクトは内容アドレスで不変なので、pack の保存に書き手同士の合意は要らない）"
+  - "## 書き込みが直列になる層（トランザクションは触った参照だけをロックし、同じ参照への 2 本は 1 本だけがログに載る）"

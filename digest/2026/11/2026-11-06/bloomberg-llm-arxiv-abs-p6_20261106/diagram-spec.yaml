@@ -1,0 +1,58 @@
+type: structure
+title: "ビルド記述の揃い方でLLMの成果物を分ける"
+message: "LLMが書いてよいものは、ビルド記述が揃っているほど検査できる形に狭める。揃い切った型はLLMを通さない"
+source: "notes/zenn/articles/bloomberg-llm-arxiv-abs-p6_20261106.md"
+components:
+  - id: repo
+    label: "1リポジトリ"
+    meaning: "対象はリポジトリ1件。ビルド記述の揃い方で型が分かれる"
+  - id: full
+    label: "定義まで揃ったC++"
+    meaning: "会社の中で定義まで揃ったビルド設定。決定的な生成器だけが変換し、LLMを通さない"
+  - id: cpp
+    label: "CppBuildの定型"
+    meaning: "CMakeへ移す前のC++ビルド方式の仮名。LLMはJSONを抽出する"
+  - id: template
+    label: "テンプレート"
+    meaning: "抽出したJSONからCMakeLists.txtを書く。ファイルを書くのはLLMではない"
+  - id: py
+    label: "Pythonの包装"
+    meaning: "包装のばらつきが大きく、LLMがファイルを直接編集する"
+groups:
+  - id: no_llm
+    label: "LLMを通さない"
+    members: [full]
+  - id: extract
+    label: "LLMは抽出だけ"
+    members: [cpp, template]
+  - id: edit
+    label: "LLMがファイルを書く"
+    members: [py]
+relationships:
+  - from: repo
+    to: full
+    label: "定義が揃う"
+  - from: repo
+    to: cpp
+    label: "定型"
+  - from: cpp
+    to: template
+    label: "JSONを渡す"
+  - from: repo
+    to: py
+    label: "ばらつく"
+omitted:
+  - item: "分類、文脈の収集、プロンプトの組み立て、検証、PR説明、再実行（上限3回）"
+    reason: "伝えたいことは成果物の形の違いであり、共通の5段階を入れると要素が7を超える"
+  - item: "検証の届く範囲（スキーマとビルドと単体テスト、過去の失敗の規則と--helpの前後差分）"
+    reason: "成果物の形が主メッセージであり、検査の違いは本文の要点に残す"
+  - item: "中央チームの束ね確認と所有チームのレビュー"
+    reason: "着地の段であり、LLMが書くものの境界ではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## Automated Upliftとは の2つ目の図（ビルド記述の揃い方）"
+  - "定義まで揃った C++ は LLM を通さない決定的な生成器"
+  - "C++ の定型は LLM が JSON を抽出し、CMakeLists はテンプレートが書く"
+  - "Python の包装は LLM がファイルを直接編集する"

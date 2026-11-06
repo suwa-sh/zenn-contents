@@ -1,0 +1,59 @@
+type: structure
+title: "948は修正案の件数"
+message: "948は1,169本を畳んだ修正案であり、開示304件や取り込み件数ではない"
+source: "notes/zenn/articles/openai-linux-948-openai-index-p4_20261106.md"
+components:
+  - id: repro
+    label: "再現 1,724"
+    meaning: "KASAN を有効にした隔離 VM で再現した件数"
+  - id: lpe
+    label: "動作した権限昇格 1,169"
+    meaning: "緩和を有効にした環境で root shell が取れたローカル権限昇格"
+  - id: patch
+    label: "異なる修正案 948"
+    meaning: "動作した権限昇格 1,169 本をバリアント分析で畳んだ修正案"
+  - id: disclosed
+    label: "開示した重大な所見 304"
+    meaning: "11月5日の記事が、修正案つきでメンテナに開示したと書いた数"
+  - id: merge
+    label: "取り込み件数は公開されていない"
+    meaning: "この実行について、メンテナが取り込んだ件数は公開されていない"
+groups:
+  - id: pipeline
+    label: "パイプラインが作る"
+    members: [repro, lpe, patch]
+  - id: disclosed_to
+    label: "メンテナへ開示した"
+    members: [disclosed]
+  - id: maintainer
+    label: "メンテナが取り込む"
+    members: [merge]
+relationships:
+  - from: repro
+    to: lpe
+    label: "権限昇格だけを実証"
+  - from: lpe
+    to: patch
+    label: "バリアント分析で畳む"
+  - from: patch
+    to: disclosed
+    label: "別の数（全件ではない）"
+  - from: disclosed
+    to: merge
+    label: "件数は公開されていない"
+omitted:
+  - item: "情報漏えいの候補 313 と PoC 291"
+    reason: "948 に含まれず、修正案の件数という一つのメッセージではない"
+  - item: "費用、仮の賞金額、kernelCTF、過去の実行との倍率"
+    reason: "条件付きの倍率であり、四つの状態の区別ではない"
+  - item: "10日時点の 61、43、299"
+    reason: "OpenAI の修正案の採用数としては置けないと記事が書いており、図の状態に足すと採用率に見える"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "## Linuxカーネル向け自律パイプラインとは の表（動的検証の再現 1,724、動作したローカル権限昇格 1,169、異なる修正案 948）"
+  - "同節の図の直後（948 は 1,169 本を畳んだ修正案で、情報漏えいの PoC 291 件は 948 に含まれない）"
+  - "## 注意点 の冒頭（見出しは 948 を動作したエクスプロイトとも呼ぶが、引用するときは修正案の件数とする）"
+  - "### 送った件数と、取り込んだ件数（304 は開示した側の数で、948 全件を送ったとは書いておらず、取り込み件数でもない）"
+  - "## 四つの状態で書く（同じ組織の人の確認は、メンテナの取り込みの代わりにならない）"
