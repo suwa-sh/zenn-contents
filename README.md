@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (605)
+## Articles: 下書き (606)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-06 | [🔀 Bloombergのリポジトリ移行は決定的処理とLLMを段階で分ける](articles/bloomberg-llm-arxiv-abs-p6_20261106.md) | LLM, Python, CMake, DevOps |
 | 2026-11-06 | [🗄️ GitHubが単一リポジトリの同時push向けに再設計したGit格納](articles/github-push-git-github-inside-p1_20261106.md) | GitHub, Git, AIAgent, Azure |
 | 2026-11-06 | [🔐 OpenAIがLinuxカーネルで数えた権限昇格の修正案948件](articles/openai-linux-948-openai-index-p4_20261106.md) | Linux, Security, OpenAI, LLM |
 | 2026-11-05 | [🔐 FlashProveは重みの指紋で応答トークンの出所を事後に示す](articles/anthropic-anthropic-research-p2_20261105.md) | Anthropic, LLM, Security |
