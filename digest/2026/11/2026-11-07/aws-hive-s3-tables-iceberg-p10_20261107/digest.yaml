@@ -1,0 +1,63 @@
+source:
+  title: "Hive外部表をS3 TablesのIceberg表へ移す仕組み"
+  url: null
+  path: "notes/zenn/articles/aws-hive-s3-tables-iceberg-p10_20261107.md"
+  primary:
+    - title: "Amazon S3 Tables now offer managed migration of Apache Hive tables to Apache Iceberg（News Blog、2026-11-04）"
+      url: "https://aws.amazon.com/blogs/aws/amazon-s3-tables-now-offer-managed-migration-of-apache-hive-tables-to-apache-iceberg/"
+    - title: "How it works（S3 Tables migration）"
+      url: "https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-migrate-how-it-works.html"
+    - title: "Prescriptive Guidance: Migrating existing tables to Iceberg"
+      url: "https://docs.aws.amazon.com/prescriptive-guidance/latest/apache-iceberg-on-aws/table-migration.html"
+    - title: "CompleteTableMigration"
+      url: "https://docs.aws.amazon.com/AmazonS3/latest/API/API_s3Buckets_CompleteTableMigration.html"
+  retrieved_at: "2026-11-08"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "Hive 外部表のコピーが終わっても、読み書きの正本は Hive のまま。"
+key_points:
+  - claim: "操作は Start、Sync、Complete の三つ。Start は宛先表を作ってコピーし、Sync は差分を足す。Complete は宛先を読み書きできる表にし、以後の Sync はできない"
+    evidence: "### 三つの操作"
+    status: fact
+  - claim: "移行ジョブのあいだ、ソースのオブジェクトは移動せず読み書きできる。宛先は Complete まで問い合わせ専用で、書き込みと maintenance は無効"
+    evidence: "### 移行中にできること"
+    status: fact
+  - claim: "型の互換ポリシーの既定は fail と fail。宛先に無い列や変換できない値があると移行全体が失敗する。以前に移したオブジェクトの上書きも、内容が同じでも Sync を失敗させる"
+    evidence: "### 型の変換 / ## 注意点"
+    status: fact
+  - claim: "succeeded は計画したオブジェクトの移行完了であり、無損失の証明ではない。drop や setNull でも成功しうる。Complete は failed や cancelled でも呼べ、部分コピーが読み書き可能になる"
+    evidence: "## 注意点 / ## 公式資料が支えている範囲"
+    status: fact
+  - claim: "読み書きの正本を Iceberg へ移すのは、succeeded、失敗オブジェクト 0、照合、上書きの停止、Complete の確認、カタログの切替、Hive に writer を残さないことが同じ窓で揃ってから。hidden partitioning への設計変更はこの機能が代行しない"
+    evidence: "## 読み書きの正本を移す条件 / ## ほかの移行方式との違い"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "移行中の読み書きの正本は Hive のまま。宛先は Complete まで問い合わせ専用で、正本は確認の条件が揃った窓で移す"
+    reason_needed: "コピー完了と正本の切替を同じ出来事と読むと、failed の Complete や上書きによる Sync 失敗を見落とす"
+example:
+  description: "掲載例は米国東部（バージニア北部）、1 TB・Snappy の Parquet 25 万個を 4 か月で移し、合計 1.0082 ドル。内訳は宛先の PUT と無料枠を超えた Sync の 2 行で、保管料は含まない"
+  hypothetical: false
+  evidence: "### 料金の掲載例"
+applicability:
+  - "Glue の Hive 外部表（Parquet）を、同じアカウント・同じリージョンの S3 Tables へ、計算資源を用意せずコピーする"
+  - "移行中もソースの読み書きを続け、差分は Sync で足す。一度移したオブジェクトの上書きは Sync を失敗させる"
+  - "パーティションは identity のままでよく、hidden partitioning へ設計し直す必要がない"
+decision_criteria:
+  - "最新の移行が succeeded で、失敗したオブジェクトは 0。ポリシーは既定の fail と fail。drop や setNull なら欠ける列と値を明示して受ける"
+  - "行数、パーティション数、値のサンプルがソースと宛先で合う。行数だけでは drop と setNull の欠落は見えない"
+  - "正本を移す前に、移し済みオブジェクトを上書きする writer を止めてあるか、最後に成功した Sync が最後の上書きより後である。移行中の書き込みそのものは止めなくてよい"
+  - "Complete の成功は HTTP 204。ConflictException と BadRequestException だけでは完了と判定しない"
+  - "Complete のあと writer を Hive に残さず、参照先を Hive から Iceberg へ移す。Sync はもうできない"
+limitations:
+  - "「切替時の数分」は発表文の表現であり、ユーザーガイドの所要時間の約束ではない。どの操作がソースの writer を止めるかはガイドに無い。Complete のときサービスは writer を止めない"
+  - "10 GiB 超、要リストアのストレージクラス、Parquet 以外、ソース側の Lake Formation 登録、クロスアカウント、別リージョン、SSE-C は対象外。宛先を Lake Formation で制御することは別"
+  - "列名の照合は大文字小文字を無視する。スキーマを指定しない推論が Glue の列名をそのまま使うなら、大文字が宛先に残りえる。その場合、Glue 経由の Athena から表が見えない可能性がある。これは二つの公式記述からの推論であり、移行 API の実測ではない"
+  - "宛先の最新スナップショットは Hive の現在の中身と同じではない。残す記録の既定は最小 3 本、最大年齢 120 時間。Start で指定し、後の Sync では変えられない"
+  - "古いオブジェクトを削除し、新しいオブジェクト名で書く更新が、すべての Hive レイアウトで Sync の成功条件を満たすかは未確認"
+unknowns:
+  - "切替時の停止が何分で、どの操作がソース書き込みを止めるか"
+  - "削除して新しいキーで書く更新が、すべての Hive レイアウトで Sync に成功するか"
+  - "この機能固有の CVE、移行時間の SLO、in-place で S3 Tables へ移せる例外"
+reviewed: true

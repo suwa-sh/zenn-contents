@@ -1,0 +1,67 @@
+source:
+  title: "Anthropic のエージェントメモリの4層構造と Dreams API の使い方"
+  url: null # Zenn 下書き (published: false)。公開 URL なし
+  path: "notes/zenn/articles/components-of-agent-memory_20261107.md"
+  primary:
+    - title: "The components of agent memory"
+      url: "https://www.anthropic.com/research/components-of-agent-memory"
+    - title: "Dreams"
+      url: "https://platform.claude.com/docs/en/managed-agents/dreams"
+    - title: "Using agent memory"
+      url: "https://platform.claude.com/docs/en/managed-agents/memory"
+    - title: "How Claude remembers your project"
+      url: "https://code.claude.com/docs/en/memory"
+  retrieved_at: "2026-11-08"
+archetype:
+  primary: architecture # トランスクリプトから注入までの4層
+  secondary: [decision] # どの製品にどの層を持たせ、dreaming を何に使うか
+one_liner: >-
+  エージェントメモリ（セッションをまたぐコンテキスト）は4層に分かれる。
+  Dreams（別ストアへ再構成するジョブ）は入力を書き換えない。
+key_points:
+  - claim: "4層はトランスクリプト（検索できるイベントログ）、メモリノート（セッション中の観察と規則）、記憶表現（相互リンクしたページ群。投稿の例は wiki）、注入コンテキスト（毎セッションの先頭に載る小さい索引）である。重みの更新は定義の外で、同じ会話の中の学習や古いターンの要約はセッションを越えない"
+    evidence: "## エージェントメモリとは"
+    status: fact
+  - claim: "記憶は、将来のセッションが再び必要とするものの予測である。CL-Bench のデータベース課題で失敗だけを記録させると、平均報酬の上乗せは、その指定が無いときと比べ Opus 5 で 0.234、Opus 4.7 で 0.150 減った"
+    evidence: "### 記憶は将来の予測である / ### 強いモデルには目的だけを伝える / ### 失敗だけを記録する規則を置かない"
+    status: fact
+  - claim: "約 35 万ファイルの社内文書 25 問では、wiki 単独は 48% までで検索ツールだけの 53% を下回る。再構成を増やすと wiki と検索の併用は 54% から 61% へ上がる。合併の 24 問で、複数文書の結合や判断や計算を要する項目の成績は wiki 参照 87%、検索のみ 73% で、これは併用の点数ではない"
+    evidence: "### wiki は検索の代替ではなく併用相手である / ### 表現と検索を併用する"
+    status: fact
+  - claim: "memory tool と Managed Agents の memory store はどちらもメモリノートの置き場だがパスは互換ではない。記憶表現を書くのは Dreams の別出力ストアで、注入の行数とサイズの上限を文書に持つのは Claude Code の auto memory（MEMORY.md の先頭 200 行または 25 KB）だけである"
+    evidence: "### 製品上の 4 つの実装面 / ### 前提と 3 つの実装面"
+    status: fact
+  - claim: "ストア API の agent-memory-2026-07-22 にセッション用 managed-agents-2026-04-01 を同時に付けると 400 になる。Dreams は後者に dreaming-2026-04-21 を足す。各文書は 100 kB、1 ストアは 1 万件まで、セッションに付けるストアは作成時だけ最大 8 個である"
+    evidence: "### 前提と 3 つの実装面 / ### 製品の dream は入力ストアを書き換えない / ### ストア上限とマウント競合"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "dreaming はトランスクリプトを読み、入力のノートを変えずに、再構成を別の出力ストアへ書く"
+    reason_needed: "投稿は既存ノートの書き換えと説明するが、製品の Dreams は入力ストアを変更しない。ストアの付け替えと注入層への昇格も別である"
+example:
+  description: "Pokémon Red の洞窟 Mt. Moon で、誤ノートが PokéCenter を東と書き探索済みと更新していた。未訂正のランは一方通行の崖を 3 回落ち Pewter City で終わり、トランスクリプトと照合して直したあとは累積行動 1,935 で Cerulean に着いた"
+  hypothetical: false
+  evidence: "### dreaming がノートを直すと進行が変わる"
+applicability:
+  - "セッションを分けても、同じ利用者や同じコーパスへ戻る仕事"
+  - "画面やツールの結果から、その場で再計算できない規則を残す仕事"
+  - "複数文書を横断する質問"
+decision_criteria:
+  - "強いモデルには記憶の目的だけを伝え、書く項目の固定リストを置いていないか"
+  - "画面から毎ターン再読できる値を、メモに残していないか"
+  - "dream の指示は残す方針に留め、文の修正は出力ストアの更新で行い、採用まで本番のマウントを変えていないか"
+  - "ストア作成、セッションへの装着、dream で、ベータヘッダを混ぜていないか"
+  - "欠落が結果に直結する項目を、1 文書につき 1 つの書き手が 1 ページへ逐語で残し、同じページへ同時に書いていないか"
+limitations:
+  - "数値は Anthropic の社内実験で、公開リーダーボードの単一スコアではない。約 10,000 ステップ時点の比較は各モデル 1 ランで、CL-Bench の 30 問が窓幅か系列の長さかは投稿に無い"
+  - "本文は dreaming を 2 セッションから 128 へ増やしたと書き、図 10 の横軸は dreaming トークン 2M から 128M である。換算は投稿に無く、1 文書の文字列検索で足りる仕事へ wiki を足すと維持コストが先に立つ"
+  - "投稿は既存ノートを照合して書き換えると書くが、Dreams API は入力ストアを変更しない。文単位の置換命令は対象外で、失敗やキャンセルの出力には止まった時点までの中身が残る"
+  - "注入は誤ったノートも全セッションへ運び、載ることと守られることは別である。MEMORY.md は上限を超えても書け、次に読むとき超過分は載らない。この上限を起動時の CLAUDE.md へ当てない"
+  - "その場で書くと本作業から注意がそれ、dream へ遅らせると出力はすぐには使えない。環境が変わると記憶は陳腐化し、どのモデルも将来のターンを本当には知らない"
+unknowns:
+  - "CL-Bench の 30 問が移動平均の窓幅か、系列の長さか。反復回数と信頼区間"
+  - "Pokémon のシードを変えた反復の分布。Opus 5.5 のファイル数と文字数"
+  - "Stainless の買収年と、25 問の採点ルーブリック原文"
+  - "dream の input_memory_store_too_large のバイト数やトークン数の閾値"
+  - "Dreams を Zero Data Retention の対象にできるか。記事は対象外と書く"
+reviewed: true

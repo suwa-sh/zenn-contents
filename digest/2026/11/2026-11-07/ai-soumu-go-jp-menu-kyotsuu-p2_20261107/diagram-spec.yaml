@@ -1,0 +1,43 @@
+type: structure
+title: "残件の未完了は新しい権限を止める"
+message: "残件が未完了なら新しい権限は渡さない。ログ確認とデータ削減は横で並行する。この確認は新しい防御製品の購入条件にしない。"
+source: "notes/zenn/articles/ai-soumu-go-jp-menu-kyotsuu-p2_20261107.md"
+components:
+  - id: residuals
+    label: "認証情報・公開面・期限・委託先"
+    meaning: "到達範囲を広げる前に見える化する4つの残件。認証情報の置き場、管理画面・デバッグ・検証環境の公開、インターネットから到達する既知悪用脆弱性とサポート終了の期限、委託先の接続経路と保守アカウント"
+  - id: reach
+    label: "新しい権限"
+    meaning: "AIエージェントに新たに渡す権限と、その権限で触れるシステムの範囲"
+  - id: parallel
+    label: "ログ確認とデータ削減"
+    meaning: "2026年8月以降を優先したログ確認と、必要な範囲を超えた個人データの削減。残件の確認と並行する"
+  - id: purchase
+    label: "新しい防御製品"
+    meaning: "残件の確認を、買う前に必ず終える関門にはしない対象"
+relationships:
+  - from: residuals
+    to: reach
+    label: "未完了なら渡さない"
+  - from: parallel
+    to: residuals
+    label: "横で並行"
+  - from: residuals
+    to: purchase
+    label: "購入条件にしない"
+omitted:
+  - item: "運用・管理、設計・開発、サプライチェーンの3本柱と、各柱の対策例"
+    reason: "伝えたいことは残件と権限・購入の関係であり、柱の内訳は本文に残す"
+  - item: "4つの残件を別々の箱に分けた配置"
+    reason: "要素を7個以内に収め、関係を1枚で示すため、4つを1つのラベルにまとめた"
+  - item: "ソフトウェアの部品表、ゼロトラスト、委託先評価制度"
+    reason: "残件の棚卸しのあとの別計画であり、権限を止める関係ではない"
+  - item: "露出機器、標的型メール、大量通信、攻撃側AIの確定"
+    reason: "4つの残件の外に残る事項であり、この図の関係ではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "残件の確認を購入条件にしない"
+  - "到達範囲を広げる前に行う確認"
+  - "4つの残件例では文書の射程を覆えない"

@@ -1,0 +1,50 @@
+type: structure
+title: "コピー完了は正本の切替ではない"
+message: "移行中の読み書きの正本は Hive のまま。宛先は Complete まで問い合わせ専用で、正本は確認の条件が揃った窓で移す"
+source: "notes/zenn/articles/aws-hive-s3-tables-iceberg-p10_20261107.md"
+components:
+  - id: hive
+    label: "Hive 外部表"
+    meaning: "移行中の読み書きの正本。ファイルは移動しない"
+  - id: copy
+    label: "Start と Sync"
+    meaning: "宛先へコピーし、差分を足す。移したオブジェクトの上書きは Sync を失敗させる"
+  - id: iceberg
+    label: "Iceberg 表"
+    meaning: "Complete まで問い合わせ専用。書き込みと maintenance は無効"
+  - id: complete
+    label: "Complete"
+    meaning: "読み書きと maintenance を有効にする。以後 Sync はできない。failed でも呼べる"
+  - id: cutover
+    label: "正本の切替"
+    meaning: "succeeded、失敗ゼロ、照合、上書き停止、参照先の切替、書き手を残さないことが揃った窓で writer を移す"
+groups:
+  - id: during
+    label: "移行ジョブのあいだ"
+    members: [hive, copy, iceberg]
+relationships:
+  - from: hive
+    to: copy
+    label: "コピー元のまま残る"
+  - from: copy
+    to: iceberg
+    label: "table bucket へ書く"
+  - from: iceberg
+    to: complete
+    label: "移行を終える"
+  - from: complete
+    to: cutover
+    label: "条件が揃ったときだけ"
+omitted:
+  - item: "型変換、クォータ、料金、ほかの移行方式の比較"
+    reason: "正本がいつ移るか、という一つのメッセージに関係しない"
+  - item: "状態 new から cancelled までの一覧"
+    reason: "succeeded と failed の意味は本文に残し、図は正本の境界だけにする"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### 三つの操作（Start は宛先を作りコピー、Sync は差分、Complete まで宛先は問い合わせ専用、Complete 後は読み書きでき以後の Sync はできない）"
+  - "### 移行中にできること（ソースは読み書きでき、宛先への書き込みと maintenance は Complete まで無効）"
+  - "## 読み書きの正本を移す条件（succeeded、失敗 0、照合、上書き停止、Complete、カタログ切替、Hive に writer を残さない、が同じ窓）"
+  - "## 注意点（Complete は failed や cancelled でも呼べる。サービスは Complete のときにソースの writer を止めない）"

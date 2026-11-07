@@ -1,0 +1,54 @@
+type: structure
+title: "入力は書き換えず別ストアへ出す"
+message: "dreaming はトランスクリプトを読み、入力のノートを変えずに、再構成を別の出力ストアへ書く"
+source: "notes/zenn/articles/components-of-agent-memory_20261107.md"
+components:
+  - id: transcript
+    label: "トランスクリプト"
+    meaning: "セッションのイベントログ。ノートの真偽を確かめる根拠"
+  - id: input_notes
+    label: "入力のノート"
+    meaning: "セッション中に書いた観察と規則。製品の Dreams はここを書き換えない"
+  - id: dreaming
+    label: "dreaming"
+    meaning: "セッションのあいだにログを読み返す再構成"
+  - id: output_store
+    label: "出力ストア"
+    meaning: "再構成したノートと記憶表現。入力とは別のストア"
+groups:
+  - id: inputs
+    label: "入力（書き換えない）"
+    members: [transcript, input_notes]
+  - id: offline
+    label: "オフライン"
+    members: [dreaming]
+  - id: separate
+    label: "別ストア"
+    members: [output_store]
+relationships:
+  - from: dreaming
+    to: transcript
+    label: "読む"
+  - from: dreaming
+    to: input_notes
+    label: "読む"
+  - from: dreaming
+    to: output_store
+    label: "別ストアへ書く"
+omitted:
+  - item: "注入コンテキストと、そこへの昇格候補"
+    reason: "毎セッションの先頭に載せる索引の話であり、ストアの付け替えとは別なので、この図の1つのメッセージには入れない"
+  - item: "memory tool、memory store、Claude Code の実装面"
+    reason: "どの製品がどの層を持つかは別のメッセージである"
+  - item: "ノートと記憶表現、記憶表現と注入の双方向矢印"
+    reason: "上位層のあいだの参照であり、書き込み先が別ストアだという主張ではない"
+  - item: "検索ツール"
+    reason: "wiki との併用は成績の話であり、この図の書き込み境界ではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### コンテナ図（dream はトランスクリプトを読み、ノートと表現の再構成は別ストアへ書く）"
+  - "### 製品の dream は入力ストアを書き換えない（出力は別ストア。採用前に人がレビューできる）"
+  - "### Dream の進捗確認と出力ストアの採用（出力ストアの付け替えは、注入層への昇格そのものではない）"
+  - "### ドキュメントと実装の乖離（投稿は既存ノートの書き換えと説明するが、Dreams API は入力ストアを変更しない）"

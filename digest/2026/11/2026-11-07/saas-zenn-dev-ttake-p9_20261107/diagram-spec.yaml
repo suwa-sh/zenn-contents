@@ -1,0 +1,50 @@
+type: structure
+title: "切替を止める署名欄"
+message: "機能の到達は完了の定義に入れない。署名欄が、四つの非機能の不合格だけで切替を止める。"
+source: "notes/zenn/articles/saas-zenn-dev-ttake-p9_20261107.md"
+components:
+  - id: reach
+    label: "機能の到達"
+    meaning: "旧挙動の正解係が受け入れた状態。完了の定義からは外す"
+  - id: signature
+    label: "署名欄（別人）"
+    meaning: "実装を指示した人とは別の名前。非機能の不合格だけで切替を止められる契約上の記入欄"
+  - id: nfr
+    label: "四つの非機能"
+    meaning: "性能、セキュリティ、運用、デプロイ"
+  - id: stop
+    label: "切替を止める"
+    meaning: "四つの不合格だけを理由に、本番への切替を止める"
+groups:
+  - id: outside
+    label: "完了の定義に入れない"
+    members: [reach]
+  - id: gate
+    label: "切替の前に足す"
+    members: [signature, nfr]
+relationships:
+  - from: signature
+    to: nfr
+    label: "不合格にする"
+  - from: nfr
+    to: stop
+    label: "不合格だけで止める"
+omitted:
+  - item: "同時実行の重複記録"
+    reason: "四項目のどれか一つとは記事が書いていない。署名欄の不合格理由に足さない"
+  - item: "SMFL のプロンプト制御、独自検証、認証と権限、会見が足す関門"
+    reason: "出典が分かれ、この1枚が伝える署名欄の関係ではない"
+  - item: "行数、金額、診断の緊急・高はゼロ"
+    reason: "見積もりの根拠にしない数字で、図の関係ではない"
+  - item: "各非機能の中身（資源の食い合い、信頼境界、データを止めずに捨てる手順、古いフロント資産の 404）"
+    reason: "四つの名前にまとめた。中身は本文の具体例と核心に残す"
+  - item: "旧挙動の正解係と実装の指示者を別ボックスにすること"
+    reason: "機能の到達にまとめた。役割の差は本文に残す"
+  - item: "試作をサンドボックスに閉じる条件と、標準製品の外だけの差"
+    reason: "別名義を先に置かなくても関門が揃う条件で、この1枚の関係ではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "## 非機能の不合格で切替を止める欄"
+  - "### 止める対象を四つに揃える"
