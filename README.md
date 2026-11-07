@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (608)
+## Articles: 下書き (609)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-11-07 | [🛡️ 国家サイバー統括室の注意喚起で先に見える基本対策の残件](articles/ai-soumu-go-jp-menu-kyotsuu-p2_20261107.md) | Security, AIAgent, Vulnerability, SupplyChain |
 | 2026-11-07 | [🧊 Hive外部表をS3 TablesのIceberg表へ移す仕組み](articles/aws-hive-s3-tables-iceberg-p10_20261107.md) | AWS, S3, Iceberg, Glue |
+| 2026-11-07 | [🧠 Anthropic のエージェントメモリの4層構造と Dreams API の使い方](articles/components-of-agent-memory_20261107.md) | Claude, AI, LLM, AIエージェント |
 | 2026-11-07 | [🏢 年間数億円規模SaaSの本番置換は非機能の引き受けが条件になる](articles/saas-zenn-dev-ttake-p9_20261107.md) | SaaS, AI, AWS, Security |
 | 2026-11-06 | [🔀 Bloombergのリポジトリ移行は決定的処理とLLMを段階で分ける](articles/bloomberg-llm-arxiv-abs-p6_20261106.md) | LLM, Python, CMake, DevOps |
 | 2026-11-06 | [🔐 OpenAIがLinuxカーネルで数えた権限昇格の修正案948件](articles/openai-linux-948-openai-index-p4_20261106.md) | Linux, Security, OpenAI, LLM |
