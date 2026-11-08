@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (613)
+## Articles: 下書き (615)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-09 | [📋 AIで作ったアプリの引き渡しを、動作・結果・失敗時・運用の4段階で切る](articles/ai-zenn-dev-techstudiolab-p7_20261109.md) | AI, Python, Testing, Quality |
+| 2026-11-09 | [🧪 変異を生成してもテストの穴は件数では決まらない](articles/zenn-dev-miyakona-mutation-p8_20261109.md) | Python, Testing, Git |
 | 2026-11-08 | [🧭 GitHub Copilotの4工程で人が受け取る計画と差分と調査](articles/github-github-ai-ml-copilot-p3_20261108.md) | GitHubCopilot, AIAgent, CodeReview, DevOps |
 | 2026-11-08 | [🧪 GitHub NextのPDD Kitが証明する対象と止まる条件](articles/github-next-pdd-kit-ai-explain-p2_20261108.md) | GitHub, Rust, Verus, AIAgent |
 | 2026-11-08 | [🏪 残高だけを成績にした自販機エージェントの実験記録](articles/itmedia-co-jp-2611-2000002899-p4_20261108.md) | AI, LLM, AIAgent |
