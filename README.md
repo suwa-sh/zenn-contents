@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (609)
+## Articles: 下書き (611)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-08 | [🧭 GitHub Copilotの4工程で人が受け取る計画と差分と調査](articles/github-github-ai-ml-copilot-p3_20261108.md) | GitHubCopilot, AIAgent, CodeReview, DevOps |
+| 2026-11-08 | [🧪 GitHub NextのPDD Kitが証明する対象と止まる条件](articles/github-next-pdd-kit-ai-explain-p2_20261108.md) | GitHub, Rust, Verus, AIAgent |
 | 2026-11-07 | [🛡️ 国家サイバー統括室の注意喚起で先に見える基本対策の残件](articles/ai-soumu-go-jp-menu-kyotsuu-p2_20261107.md) | Security, AIAgent, Vulnerability, SupplyChain |
 | 2026-11-07 | [🧊 Hive外部表をS3 TablesのIceberg表へ移す仕組み](articles/aws-hive-s3-tables-iceberg-p10_20261107.md) | AWS, S3, Iceberg, Glue |
 | 2026-11-07 | [🧠 Anthropic のエージェントメモリの4層構造と Dreams API の使い方](articles/components-of-agent-memory_20261107.md) | Claude, AI, LLM, AIエージェント |
