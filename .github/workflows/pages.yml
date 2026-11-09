@@ -54,7 +54,13 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment-retry.outputs.page_url }}
     steps:
+      # deploy-pages の timeout は上限 10 分固定。~500MB の artifact は Pages 側の
+      # syncing_files が稀に 10 分を超えるため、失敗時は 1 回だけ再試行する
       - id: deployment
+        uses: actions/deploy-pages@v5
+        continue-on-error: true
+      - id: deployment-retry
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v5
