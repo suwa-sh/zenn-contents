@@ -1,0 +1,60 @@
+type: structure
+title: "共有の色は今日だれが動くか"
+message: "共有ノートに出すのは赤、黄、緑と青だけである。白は見えていない範囲で共有には出さず、赤でなくても実行者と操作は技術レポートに残す"
+source: "notes/zenn/articles/zenn-dev-stock-inc-ai-daily-p7_20261108.md"
+components:
+  - id: read
+    label: "朝の読み取り"
+    meaning: "平日の朝に、許可された読み取りだけを行う"
+  - id: red
+    label: "赤"
+    meaning: "すぐ人が動く"
+  - id: yellow
+    label: "黄"
+    meaning: "人の確認待ち。被害は未確認"
+  - id: calm
+    label: "緑と青"
+    meaning: "緑は防げているか説明がつく。青は何も起きていない。担当は付けない"
+  - id: white
+    label: "白"
+    meaning: "見られていない範囲。走査が届かなかった残りも、黄とは別で、共有ノートには出さない"
+  - id: tech
+    label: "技術レポート"
+    meaning: "実行者、操作、未確認、スキャン量を残す"
+groups:
+  - id: shared
+    label: "共有ノート"
+    members: [red, yellow, calm]
+relationships:
+  - from: read
+    to: red
+    label: "すぐ動く"
+  - from: read
+    to: yellow
+    label: "確認待ち"
+  - from: read
+    to: calm
+    label: "担当なし"
+  - from: read
+    to: white
+    label: "見えていない"
+  - from: white
+    to: tech
+    label: "共有に出さない"
+  - from: read
+    to: tech
+    label: "赤でなくても残す"
+omitted:
+  - item: "WAF、ロードバランサー、ログイン、証跡、既存アラームの4系統"
+    reason: "読む対象の内訳であり、色と二つの出口の関係が伝えたいことだから"
+  - item: "直近7日の中央値、多要素認証、操作名だけの誤検知"
+    reason: "色の意味を誤って読まないための注意であり、出口の構造そのものではない"
+  - item: "SRE の page と ticket、Security Hub の重要度と調査の進行"
+    reason: "色と公式の別軸の対応は本文に残し、図の要素にはしない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "五つの色"
+  - "二つの出口"
+  - "完了条件"

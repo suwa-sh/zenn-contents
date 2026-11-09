@@ -1,0 +1,43 @@
+type: structure
+title: "人が受け取る成果物が工程の出口"
+message: "4工程の出口は、人が受け取る成果物であり、次の工程へ渡る"
+source: "notes/zenn/articles/github-github-ai-ml-copilot-p3_20261108.md"
+components:
+  - id: plan
+    label: "Plan"
+    meaning: "計画、受け入れ基準、分割した issue"
+  - id: build
+    label: "Build"
+    meaning: "実装の判断と、焦点を絞った差分"
+  - id: verify
+    label: "Verify"
+    meaning: "検査結果と、人が見る差分"
+  - id: observe
+    label: "Observe"
+    meaning: "根拠つきの次の issue"
+relationships:
+  - from: plan
+    to: build
+    label: "計画を渡す"
+  - from: build
+    to: verify
+    label: "差分を渡す"
+  - from: verify
+    to: observe
+    label: "出荷後に調べる"
+  - from: observe
+    to: plan
+    label: "次の計画の材料"
+omitted:
+  - item: "設定が人を出口に残す側と外す側に分かれる分岐"
+    reason: "受け取る成果物が次へ渡る関係とは別の判断なので、図では1つに絞った"
+  - item: "週次のコミット数、400%、441%"
+    reason: "出口の数値にしない、という否定であり、流れの要素ではない"
+  - item: "Plan の3つの承認操作、Agent Merge、auto-merge"
+    reason: "Plan と Verify の注意であり、4工程の受け取り物そのものではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "GitHub Copilotの4工程とは（工程と受け取り物の表）"
+  - "4工程のつながり"

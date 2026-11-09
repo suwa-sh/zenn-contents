@@ -1,0 +1,68 @@
+source:
+  title: "GitHub Copilotの4工程で人が受け取る計画と差分と調査"
+  url: null
+  path: "notes/zenn/articles/github-github-ai-ml-copilot-p3_20261108.md"
+  primary:
+    - title: "Nick Liffen, Philip Holleran. Beyond code generation: A developer’s guide to agentic engineering. GitHub Blog. 2026-11-06."
+      url: "https://github.blog/ai-and-ml/github-copilot/beyond-code-generation-a-developers-guide-to-agentic-engineering/"
+    - title: "GitHub Staff. Octoverse: Commits, pushes, reach new highs in 2026 as developers build with agents. GitHub Blog. 2026-10-28公開、2026-11-06更新."
+      url: "https://github.blog/news-insights/octoverse/octoverse-commits-pushes-reach-new-highs-in-2026-as-developers-build-with-agents/"
+    - title: "Faros AI. AI Acceleration Whiplash: Takeaways. 2026-04-12."
+      url: "https://www.faros.ai/blog/ai-acceleration-whiplash-takeaways"
+    - title: "GitHub Docs. Getting pull requests ready to merge with Agent Merge."
+      url: "https://docs.github.com/en/copilot/how-tos/copilot-on-github/use-copilot-agents/watch-and-fix-pull-requests"
+    - title: "Hao He ほか. AI Writes Faster Than Humans Can Review. arXiv:2607.01904v2. 2026-10-27."
+      url: "https://arxiv.org/html/2607.01904"
+  retrieved_at: "2026-11-09"
+archetype:
+  primary: decision
+  secondary: [governance]
+one_liner: "GitHub Copilot の4工程は、人が受け取る成果物で工程を区切る見出しです。週次のコミット数、400%、441% は、工程を終えたことの数値にしません。"
+key_points:
+  - claim: "4工程は Plan（計画）、Build（実装）、Verify（差分の確認）、Observe（出荷後の調査）である。人が受け取るものは、Plan が計画と受け入れ基準と分割した issue、Build が実装上の判断と焦点を絞った差分、Verify が検査結果と人が意図と壊れ方を見る差分、Observe が根拠つきの調査と次の issue の草案である"
+    evidence: "GitHub Copilotの4工程とは（工程と受け取り物の表）"
+    status: fact
+  - claim: "人が承認するまで実装へ渡さない、と解説が書いているのは Plan だけである。Build は人が席を外したあともクラウドサンドボックスで続き、Observe は人が何を変えるかを決める。Verify では、設定次第で検証通過後に Copilot がマージしうると書くので、人の確認を必須と読むのは弱まる"
+    evidence: "工程を終えてよい条件"
+    status: fact
+  - claim: "設定は、人をレビューの出口に残す側と外す側に分かれる。残すのは Issue 自動化の Full control、計画だけの承認、Copilot の承認を必須レビューに数えない既定である。外すのは Cautious の高 confidence、Local の Start with Autopilot、必須承認ゼロ、Copilot の承認を必須レビューに数える設定である"
+    evidence: "設定が人を出口に残すとき"
+    status: fact
+  - claim: "Agent Merge を有効にしても auto-merge は有効にならない。公式手順が挙げる操作は、失敗した GitHub Actions を直すことと、マージ競合を解くことである。解説がレビューコメントにも手を入れると書く点は、この手順ページとずれる"
+    evidence: "Agent Merge と auto-merge"
+    status: fact
+  - claim: "導入の完了は、生成が速くなったことでは置かない。各工程の成果物が、チームの手順の出口に入ったことで置く"
+    evidence: "生成の速度を完了条件にした記録 / チームの手順に残すこと"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "4工程の出口は、人が受け取る成果物であり、次の工程へ渡る"
+    reason_needed: "完了を時間や件数で見ず、受け取るものの名前で見る、という関係が判断の中心だから"
+example:
+  description: "Plan は受け入れ基準が文章になり人が計画を承認したら終えてよい。Build は範囲を絞った差分が渡っていること、Verify は意図と壊れうる点への人のコメントである。Observe は根拠と受け入れ基準と回帰テストが issue に入り、回帰テストが無ければ無いと書いてあることである"
+  hypothetical: false
+  evidence: "工程を終えてよい条件"
+applicability:
+  - "Copilot の4工程を、自チームの手順の見出しにするとき"
+  - "コミット数や生成の速さを、導入の完了条件に置こうとしているとき"
+  - "Issue の自動変更、自動承認、必須承認、auto-merge の向きを手順に書くとき"
+decision_criteria:
+  - "4工程それぞれに、成果物の名前と、人が終えてよい条件が1行あるか"
+  - "差分以外を出口にする工程があれば、その成果物の名前を書いたか"
+  - "自分のリポジトリで人を出口に残すか外すかを手順に併記し、必須承認がゼロならその旨を書いたか"
+  - "auto-merge がオンでも人が必須承認を満たすならその旨を書き、Agent Merge とは分けたか"
+  - "1.2 billion、400%、441% を、工程を終えたことの数値にしていないか"
+limitations:
+  - "解説の週次コミット（2026年10月の1週間で 1.2 billion 超、前年同期比で over 400% more）には集計方法も図もリンクもない。over 400% more はその週の5倍より多く、1.2 billion は下限である。Octoverse の 34.3 billion は 2025-10-01 から 2026-09-30 の公開と非公開の合計で、解説の1週間でも暦年でもなく、比較先の2025年通年の定義は解説にない"
+  - "441% は、各組織の中で AI 採用が最も低い期間と最も高い期間を比べた Faros の Median time in review 441.5% 増の丸めであり、GitHub は中央値とも 441.5 とも書いていない。199.6% 増（code review に費やした平均時間）、156.6% 増（最初の pull request レビューまでの中央値）、レビュー無しマージの 31.3% 増は別指標である。データ規模は Faros の自己申告で、全文 PDF の他指標は未確認である"
+  - "解説が Agent Merge はレビューコメントにも手を入れると書く点は、公式手順（失敗した GitHub Actions とマージ競合）とずれる。既定にする初期値は手順ページになく、GitHub Universe 2026 でブログに無い停止条件が話されたかは本文から分からない"
+  - "Issue 自動化のしきい値は issue の属性を自動で書き換えるかの話である。承認はサーバ側の境界ではなく、境界にするならリポジトリとエージェントの権限を使う。複雑さの低い issue を Copilot に割り当てる条件と同一かは参照ページにない。Implement with Autopilot は選んだ承認レベルに従うので、Local の Start with Autopilot のように確認が消えるわけではない"
+  - "生成速度を完了条件にして問題が起きなかった事例は、参照した記録の範囲では見当たらない。arXiv:2607.01904v2 はレビュアーあたりの負荷がおよそ倍になったと書き、品質コストは除外できないとする。2026-09-14 の記録は測定ではなく、そのチームの設計の説明である"
+unknowns:
+  - "比較先の2025年通年が、どのリポジトリ集合の、どの週境界の、どのコミット定義かは、解説にない"
+  - "Faros の全文 PDF にある、本文で確認していない他の指標"
+  - "自分が作る pull request で Agent Merge を既定にする設定の初期値"
+  - "GitHub Universe 2026 のセッションで、ブログ本文に無い停止条件が話されたか"
+  - "Issue 自動化のしきい値と、複雑さの低い issue を Copilot に割り当てる条件が同一の設定か"
+  - "引用した計画の節は、承認レベル名の一覧を書いていない"
+reviewed: true

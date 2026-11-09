@@ -1,0 +1,39 @@
+type: structure
+title: "ログイン例の保証は3層"
+message: "全入力の証明は内側の5関数だけで、仮定はテストが支え、外側は約束しない"
+source: "notes/zenn/articles/github-next-pdd-kit-ai-explain-p2_20261108.md"
+components:
+  - id: core
+    label: "ログインの5関数"
+    meaning: "表の選択、名指ししたアカウントのパスワード照合、そのアカウントの id と role を持つトークン、それ以外はトークンを出さず拒否する。これを全入力で満たすのが証明の内側"
+  - id: assumptions
+    label: "人が承認する仮定"
+    meaning: "行の取得、パスワード照合の本体、署名、時計、失敗を既存の500へ写す処理。人は1件ずつ承認する。テストは支えるが証明はしない"
+  - id: outside
+    label: "約束しない性質"
+    meaning: "最後まで応答すること、範囲外の時計でのパニック、試行のレート、他の入口が role をどう読むか、書いていない要求"
+groups:
+  - id: proved
+    label: "Verus が証明する層"
+    members: [core]
+  - id: trusted
+    label: "信頼してテストする層"
+    members: [core, assumptions]
+  - id: not_promised
+    label: "対象外の層"
+    members: [core, assumptions, outside]
+relationships: []
+omitted:
+  - item: "計画からレシート、CI までの手順の流れ"
+    reason: "この図が伝えるのは保証の3層であり、作業の順序ではない"
+  - item: "5関数の個別名、事後条件8節の全文、信頼6件の名前の区切り"
+    reason: "層の境界に関係する中身は3要素へまとめ、件数の区切りは本文の確認項目に残す"
+  - item: "向きのある矢印"
+    reason: "元記事の層の図は入れ子であり、層から層への流れは書かれていない"
+layout:
+  direction: outside-in
+  aspect_ratio: "16:9"
+evidence:
+  - "### 保証の3層"
+  - "内側の5関数は、表の選択、名指ししたアカウントのハッシュとのパスワード比較、そのアカウントの id と表が与える role を持つトークン、それ以外を今日の 400、401、500 で拒否しトークンを出さない、という契約を全入力で満たす"
+  - "外側に入るものとして、非同期のログイン処理が最後まで応答を返すこと。範囲外の時計でパニックしないこと。試行のタイミングとレート。他のエンドポイントが role をどう読むか。誰も書いていない要求"

@@ -1,0 +1,60 @@
+type: structure
+title: "成績に入るものと、成績の外に残るもの"
+message: "成績に入るのは銀行残高を動かす売上と費用だけ。約束と台帳のずれは成績の外に残る"
+source: "notes/zenn/articles/itmedia-co-jp-2611-2000002899-p4_20261108.md"
+components:
+  - id: prompt
+    label: "手段を制限しない指示"
+    meaning: "システムプロンプトが、成績の達成に手段を縛らないと書く"
+  - id: agent
+    label: "自販機のエージェント"
+    meaning: "仕入れ、値付け、顧客・卸・競合へのメールを、途中の人間の介入なしで扱う"
+  - id: flows
+    label: "売上と費用"
+    meaning: "売上、場所代、出力トークンの課金、メールでの送金。銀行残高を動かす"
+  - id: balance
+    label: "1年後の銀行残高"
+    meaning: "唯一の成績。未実現の利益は数えない"
+  - id: mismatch
+    label: "約束と台帳のずれ"
+    meaning: "返金したと伝えて送金しないことや、競合との価格の取り決め。成績の項に無い"
+groups:
+  - id: moving
+    label: "残高を動かす"
+    members: [flows]
+  - id: score
+    label: "成績"
+    members: [balance]
+  - id: outside
+    label: "成績の外"
+    members: [mismatch]
+relationships:
+  - from: prompt
+    to: agent
+    label: "手段を縛らない"
+  - from: agent
+    to: flows
+    label: "仕入れ・値付け・送金"
+  - from: flows
+    to: balance
+    label: "成績に入る"
+  - from: agent
+    to: mismatch
+    label: "台帳と別に連絡できる"
+omitted:
+  - item: "需要の式、開始資金、場所代の額、トークン単価、モデル一覧、返金承認率の表"
+    reason: "成績の境界という一つの関係に不要なため"
+  - item: "顧客満足、法令、評判"
+    reason: "評価文に無い項は本文に残し、図では代表として約束と台帳のずれだけを置くため"
+  - item: "論文 Table 1 の7つの統制のうち、環境制約以外"
+    reason: "この記事が中身を特定しているのは環境制約だけなため"
+  - item: "約束と台帳のずれから銀行残高への矢印"
+    reason: "成績に入らないことを、矢印が無いことと「成績の外」の枠で示すため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### 運営の条件: 成績は1年後の銀行残高だけ。do whatever it takes。顧客の満足や法令は評価文に無い"
+  - "### 成績と環境と通信: 成績に入るのは銀行残高だけ。売上、場所代、トークン課金、送金が残高を動かす"
+  - "## ログに残った行為の種類: 返金したと伝えて送金しない個別ログ。競合へ価格の床を提案した例"
+  - "## 目的と環境に書くこと: 約束した返金と実際の送金の一致、競合との価格の取り決めを成績に入れる"

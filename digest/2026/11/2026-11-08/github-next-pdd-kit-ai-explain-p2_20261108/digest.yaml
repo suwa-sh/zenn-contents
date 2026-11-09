@@ -1,0 +1,63 @@
+source:
+  title: "GitHub NextのPDD Kitが証明する対象と止まる条件"
+  url: null
+  path: "notes/zenn/articles/github-next-pdd-kit-ai-explain-p2_20261108.md"
+  primary:
+    - title: "GitHub Next. PDD Kit."
+      url: "https://githubnext.com/projects/pdd-kit/"
+    - title: "Microsoft Research. Formally verifying agent-written full-stack web apps with PDD Kit."
+      url: "https://www.microsoft.com/en-us/research/blog/formally-verifying-agent-written-full-stack-web-apps-with-pdd-kit/"
+    - title: "GitHub Next. Chopin README."
+      url: "https://github.com/githubnext/chopin"
+    - title: "itai-gendler/pdd-kit"
+      url: "https://github.com/itai-gendler/pdd-kit"
+    - title: "promptdriven/pdd"
+      url: "https://github.com/promptdriven/pdd"
+  retrieved_at: "2026-11-09"
+archetype:
+  primary: architecture
+  secondary: [decision, research]
+one_liner: "人が意図と信頼の境界を承認し、Verus は承認した仕様に対するコードだけを全入力で検査する。手順を踏んだことはその証明とは別である。"
+key_points:
+  - claim: "人が先に承認するのは意図と仕様で、証明の外の仮定は別に承認する。Verus が検査するのは承認した事後条件で、仕様が意図と違えば証明は通ったまま間違ったコードを正しいことにする"
+    evidence: "### 計画からレシートまでの流れ / ## コードの性質と手順のゲート"
+    status: fact
+  - claim: "公開例で証明する5関数の外に、行の取得そのものとパスワード照合の本体がある。ログインの流れ（login_flow）の事後条件は8節で、うち4節は著者が頼んでいない現行の拒否である。admin の権限は、メールが無くユーザー名で見つかった管理者の行だけが持ち、メールでのログインのトークンは必ず顧客の権限である"
+    evidence: "### ログイン例で並ぶもの / ## 注意点"
+    status: fact
+  - claim: "保証は3層である。内側だけが全入力の証明、中間は人が承認してテストする仮定、外側は計画が対象外と書いた性質（応答の完了、範囲外の時計でのパニック、試行のレート、他の入口が role をどう読むか、書いていない要求）である"
+    evidence: "### 保証の3層"
+    status: fact
+  - claim: "止まる条件は5つである。事後条件が破れる、要求に証明も経験的な確認も無い、仕様の自己矛盾、固定した版の Verus で非同期を書けない、1つの条件がそれだけを壊す変更を拒否できない。矛盾は人の決定へ戻り、機械はどちらも選ばない。非同期を書けないときは同期へ逃がさず、契約（事前条件と事後条件）を弱めず、質問で止まる"
+    evidence: "## 失敗したときに止まる条件"
+    status: fact
+  - claim: "合否を決めるのは Verus の実行であり、証明も経験的な確認も無い要求を探す言語モデルの工程は合否を決めない。実装前の質問やレシートを踏んだことは、5関数が仕様を満たす証明とは別である。インストールできる同名の pdd-kit は Product-Driven Development または Prompt Driven Development で、この研究プロトタイプではない"
+    evidence: "## 失敗したときに止まる条件 / ## コードの性質と手順のゲート / ### 同名の別プロジェクト"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "全入力の証明は内側の5関数だけである。中間はパスワード照合の本体と行の取得そのものなど人が承認してテストする仮定、外側は計画が約束しない性質である"
+    reason_needed: "緑のチェックを一つにまとめると、仮定や対象外まで証明済みと読んでしまう"
+example:
+  description: "公開例は自作の Pet Store のログインである。要求は「正しいパスワードのときだけトークン」「admin だけが admin トークン」の2文で、例は前者を両方向（誤ったパスワードは拒否し、正しいパスワードならトークンが出る）で選んだ"
+  hypothetical: false
+  evidence: "### ログイン例で並ぶもの"
+applicability:
+  - "Rust で、承認した仕様に対する全入力の証明が要る範囲を、実装の前に切りたい"
+  - "パスワード照合やトークン署名のように証明が届かない処理を、人が仮定として承認し、テストを残せる"
+decision_criteria:
+  - "証明が満たす相手は承認した仕様か。意図どおりかは、人が計画と信頼の承認で見る"
+  - "照合の本体、署名、時計を証明済みと読んでいないか。公開例では仮定である"
+  - "メールとユーザー名の行取得を2件と数えると信頼は6件になり、リクエストの中身を渡すだけの入口はその6件の外に残る。もう一方の数え方は入口を6件目に含める。どちらの数え方でも、この入口は証明する5関数ではない"
+  - "パスワード照合のテストを通過済みと読んでいないか。公開手順では実行前の予定のままである"
+  - "同名で入る pdd-kit を、この PDD Kit と読んでいないか。入るものは、製品モデルの Markdown を置く手法か、プロンプトをソースにする手法である"
+limitations:
+  - "段階は Research Prototype である。2026-11-08 の gh 検索では githubnext と microsoft に PDD Kit のリポジトリは 0 件で、プロジェクトページにインストール手順は無い。PDD Kit を載せる Chopin の README は一般向けインスタンスを提供しないと書く"
+  - "レビュー時間、欠陥件数、CI から削ったテスト本数の表は公開ページに無い。見出しの「ソフトウェアの50%」は、同じ投稿の脚注にある職種の回答割合であり、ソフトウェアの量ではない"
+  - "信頼のうち重みの大半はパスワード照合と2つの行取得にあり、テストは支えるが証明はしない。Verus、Rust コンパイラ、Z3、標準ライブラリ vstd も、ログインの6件とは別に証明の外である"
+  - "仕様が意図と違えば、証明は通ったまま間違ったコードを正しいことにする。デモに第三者の本番採用を示す語は無い"
+unknowns:
+  - "At a glance の既存バグは想定例で、変異チェックとは別の欠陥かは未決である。症状、入力、差分の一覧は無い"
+  - "planned の信頼テストが、公開後に実行記録へ更新されたか。ウォークスルーの check_password は planned のまま読める"
+  - "ピン留めした Verus で非同期を表現できず人に戻した実例が、どのリビジョンで起きたか"
+reviewed: true
