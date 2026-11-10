@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (615)
+## Articles: 下書き (617)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-10 | [🧩 日常の設定変更が崩すハーネスの実行順と保持状態](articles/arxiv-abs-2611-09088-p2_20261110.md) | AIAgent, LLM, SoftwareEngineering |
+| 2026-11-10 | [🧭 エージェント開発で意図的なペースが監督機会を残す条件](articles/arxiv-abs-2611-09550-p3_20261110.md) | AIAgent, LLM, SoftwareEngineering |
 | 2026-11-10 | [🧭 Claudeの現行4モデルはどれから使い始めるか、価格とeffortと落とし穴で整理する](articles/which-claude-model-should-you-bu_20261110.md) | Claude, ClaudeCode, Anthropic, LLM, AI |
 | 2026-11-09 | [📋 AIで作ったアプリの引き渡しを、動作・結果・失敗時・運用の4段階で切る](articles/ai-zenn-dev-techstudiolab-p7_20261109.md) | AI, Python, Testing, Quality |
 | 2026-11-09 | [🧪 変異を生成してもテストの穴は件数では決まらない](articles/zenn-dev-miyakona-mutation-p8_20261109.md) | Python, Testing, Git |
