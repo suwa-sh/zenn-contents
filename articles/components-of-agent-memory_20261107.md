@@ -3,7 +3,8 @@ title: "Anthropic のエージェントメモリの4層構造と Dreams API の�
 emoji: "🧠"
 type: "tech"
 topics: ["Claude", "AI", "LLM", "AIエージェント"]
-published: false
+published: true
+published_at: 2026-11-10
 ---
 
 Anthropic Research は 2026 年 11 月 6 日に、投稿「The components of agent memory」(執筆: Lance Martin) を公開しました。エージェントメモリは、エージェントが利用者とのやり取りやタスクから得た知識のうち、セッションをまたいで残り、あとから読めるコンテキストです。投稿はこれを、トランスクリプト、メモリノート、記憶表現、注入コンテキストの 4 層で整理し、セッションのあいだに記憶を再構成する「dreaming」を提案しています。投稿が示す実験値は Anthropic の社内実験であり、公開リーダーボードの単一スコアではありません。
