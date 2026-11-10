@@ -1,0 +1,64 @@
+source:
+  title: "Kubernetes上のエージェント実行基盤と gVisor の CNCF 寄贈"
+  url: null
+  path: "notes/zenn/articles/kubernetes-gvisor-cncf-jp-p5_20261110.md"
+  primary:
+    - title: "Sandboxing Untrusted AI Agents at Scale"
+      url: "https://opensource.googleblog.com/2026/11/sandboxing-untrusted-ai-agents-at-scale.html"
+    - title: "Powering open infrastructure for autonomous agents"
+      url: "https://cloud.google.com/blog/products/containers-kubernetes/open-infrastructure-for-autonomous-agents-comes-to-cncf"
+    - title: "agent-substrate/substrate README"
+      url: "https://github.com/agent-substrate/substrate/blob/main/README.md"
+    - title: "docs/security/security.md"
+      url: "https://github.com/agent-substrate/substrate/blob/main/docs/security/security.md"
+    - title: "CVE-2026-95702"
+      url: "https://nvd.nist.gov/vuln/detail/CVE-2026-95702"
+  retrieved_at: "2026-11-11"
+archetype:
+  primary: decision
+  secondary: [architecture, governance]
+one_liner: "「10倍」は、休止が大半の対話エージェントへの自己申告です。隔離の選び方と gVisor（ユーザー空間のカーネル）の版は自社に残し、CNCF への寄贈は申請が閉じた段階までと読みます。"
+key_points:
+  - claim: "Agent Substrate は、メモリとファイルと識別子を持つ Actor を、起動したまま待つ Pod の枠である Worker に載せて実行し、終わると保存して戻し、空いた枠を Worker の集まりへ返す。専用 Pod の課金と、ゼロからの起動が 20秒を超えることのあいだに置く、と記事は整理している"
+    evidence: "Agent Substrate とは / 1回のターンの進み方"
+    status: fact
+  - claim: "「10倍」は条件の表が無い自己申告が複数あり、同じ数を指していない。信じてよい範囲は、休止が大半のとき専用 Pod を置きっぱなしにするより多く詰め込める、という Google の自己申告までである"
+    evidence: "「10倍」は出典ごとに指すものが違う"
+    status: fact
+  - claim: "2026-11-10 時点で gVisor、Agent Substrate、OpenRL の CNCF Sandbox 申請は閉じており、可決の印が表にあるのは gVisor と Agent Substrate だけである。受け入れ手続きは終わっておらず、gVisor のリポジトリは Google の組織のままである"
+    evidence: "寄贈はどこまで進んでいるか"
+    status: fact
+  - claim: "隔離は Worker のプールごとに gVisor か Cloud Hypervisor の microVM かを自分で選ぶ。gVisor プロジェクトが GPU を持つことと、GKE 上の Substrate が Actor のコンテナへ GPU を通さずライブの CUDA コンテキストをスナップショットできないことは、同じこととしては読めない"
+    evidence: "隔離と実行と学習の分担"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "10倍の自己申告は休止が大半の対話だけに使い、隔離は gVisor か microVM を自分で選ぶ"
+    reason_needed: "常時稼働や GPU を同じ倍率の対象と読むと、アイドルが大半という前提から外れる。寄贈は隔離クラスを代わりに選ばない"
+example:
+  description: "数百万は休止中のスナップショットを含む規模の自己申告で、1ノードの同時数ではない。GKE の概要は 1ノードおよそ 800 超でファイル監視枠と通信相手のアドレス表の既定を超えうると書き、README はおよそ 1,000 超でそのアドレス表の閾値を上げると書いている"
+  hypothetical: false
+  evidence: "10倍は何と比べた数字か"
+applicability:
+  - "休止が大半の対話エージェントを、専用 Pod を残すのでもリクエストごとにゼロから起動するのでもなく、Kubernetes に載せるか決めるとき"
+  - "2026年11月の寄贈を、保守の主体が移り終わった印として読んでよいか決めるとき"
+  - "共有の Worker に乗せたあとも、隔離のクラスと権限と版を自社の文章に残すとき"
+decision_criteria:
+  - "休止が大半の対話だけを 10倍の対象にし、常時稼働、GPU、TPU、サイドカー付きの Pod、Arm、Autopilot は Agent Sandbox 側に分ける"
+  - "プールごとに gVisor か microVM を 1 つ指定し、素の Linux コンテナは選ばない。microVM は x86 の入れ子仮想化か物理マシンが要り、Arm の microVM はこの経路では不可"
+  - "atespace、外向きの接続先、秘密情報を入れる主体、保存した状態を置くバケットの権限を書き、atespace を切っただけでは分離が閉じたことにしない"
+  - "観測を休止数、ノードあたりの同時数、駐車（既定 5秒、同時 1024、超過で 503）、復元の遅れに分け、およそ 800 同時の前後でファイル監視とアドレス表の閾値を誰が上げるかを書く"
+  - "Worker のイメージを固定し、gVisor が 20260831.0 以降かを確認する"
+limitations:
+  - "10倍の比較相手、ホストの機種、Actor のメモリ量の表は一次資料に無い。200,000 体の実験、1ホストの休止 1,000 超、デモの約 250 Actor を 8 Pod に載せる例が同じ条件かはつながっていない"
+  - "Linux カーネルへ出す I/O のパッチは未マージで、寄贈は性能の完成を意味しない。パッチの無い利用者では一部の I/O が重い仕事で素の性能が落ちやすく、I/O 全般が重いとは書いていない"
+  - "次の Actor に渡す前に前の世代の残りを消す処理は進行中である。Actor ごとの暗号化、呼び出しとメモリと帯域の上限、Actor 間の認可、危殆化した休止状態への印はこれからで、Worker は root のまま SYS_ADMIN と NET_ADMIN を持ち user namespace は未である"
+  - "gVisor 20260831.0 未満には CVE-2026-95702 があり、サンドボックス内オーバーレイの use-after-free からホスト上の Sentry でコード実行できる。NVD は Sentry がホストのシステムコール制限と名前空間の外へ出るとは書いておらず、状態は分析待ちである"
+  - "導入を急ぐ根拠にはしない。乗るとしたら README が 1.0 で壊さないと書いた公開 API、CLI、設定形式の範囲で、隔離を自分で選べるときに限る。隔離をまたぐライフサイクル API がこの公開 API と同一だとは書いていない"
+unknowns:
+  - "200,000 の実験、1ホスト 1,000 超の休止、デモの約 250 Actor を 8 Pod に載せる例が同じ条件かは、資料のあいだでつながっていない"
+  - "KubeCon NA 2026 のセッション資料があとから公開される可能性は、記事が残している"
+  - "契約上の稼働率のパーセントは、2026-09-16 の記事と 2026-11-06 の記事からは確認できない"
+  - "OpenRL の申請名 gke-labs/open-rl を引くと openrl-dev/openrl が返り、改名の告知が挙げた資料にあるかは確認できない"
+  - "スナップショット用バケットと階層ストレージを、同じ保存先だとは挙げた資料は書いていない"
+reviewed: true

@@ -1,0 +1,57 @@
+type: structure
+title: "Stage 6 に渡るものと渡らないもの"
+message: "Stage 6 は親の会話と読書リストを外し、設計文書とペルソナは渡す。指示ファイルはホスト次第である"
+source: "notes/zenn/articles/github-google-elephant-goldfish-p4_20261110.md"
+components:
+  - id: spec
+    label: "設計文書"
+    meaning: "Elephant が書いた設計文書、またはその行範囲"
+  - id: persona
+    label: "ペルソナと規格"
+    meaning: "その段の読み方を決める役割定義と、指摘の書き方を決める文書規格"
+  - id: parent
+    label: "親の会話"
+    meaning: "それ以前の会話。Goldfish へコピーしない"
+  - id: reading
+    label: "読書リスト"
+    meaning: "設計文書とは別に渡す、作業ディレクトリ内の参照ファイルの一覧"
+  - id: hostfiles
+    label: "指示ファイル"
+    meaning: "ホストが子へ注入するプロジェクトや利用者の指示。技能が隠した入力ではない"
+  - id: goldfish
+    label: "Goldfish（Stage 6）"
+    meaning: "親の会話をコピーせず新しく起動し、理解テストとして言い換えを先に書くサブエージェント"
+groups:
+  - id: passed
+    label: "Stage 6 で渡す"
+    members: [spec, persona]
+  - id: withheld
+    label: "Stage 6 で渡さない"
+    members: [parent, reading]
+  - id: host
+    label: "ホスト次第"
+    members: [hostfiles]
+relationships:
+  - from: spec
+    to: goldfish
+    label: "渡す"
+  - from: persona
+    to: goldfish
+    label: "渡す"
+  - from: hostfiles
+    to: goldfish
+    label: "ホスト次第"
+omitted:
+  - item: "Elephant と概念メモ"
+    reason: "伝えたいことは Stage 6 の境界であり、誰が文書を書くかではない"
+  - item: "Stage 5、7、8、9 への個別の矢印"
+    reason: "Stage 6 との差は読書リストの有無に集約する。段ごとの差はダイジェストの表に残す"
+  - item: "読取ツール"
+    reason: "Stage 6 がファイルを技術的に閉じないという注意は、何を渡すかという図の主張と別である"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "段ごとに分かれる受け渡し"
+  - "四つの層"
+  - "ホストが足す文脈"

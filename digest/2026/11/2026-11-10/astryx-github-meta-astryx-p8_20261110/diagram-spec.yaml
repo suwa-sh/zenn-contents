@@ -1,0 +1,59 @@
+type: structure
+title: "契約は三箇所に分かれる"
+message: "共作の契約は、コンポーネント文書・プロジェクト手順・承認済み仕様の三箇所に分かれ、人が見るカタログは別の出口である"
+source: "notes/zenn/articles/astryx-github-meta-astryx-p8_20261110.md"
+components:
+  - id: mcp
+    label: "公開MCP"
+    meaning: "エージェントが文書を引く入口。search と get でコンポーネント文書を返す"
+  - id: cli
+    label: "利用者のCLI"
+    meaning: "入っている版のコマンド。コンポーネント文書を返し、初期化で手順を書く"
+  - id: doc
+    label: "コンポーネント文書"
+    meaning: "型、例、助言を含む利用文書"
+  - id: procedure
+    label: "プロジェクト手順"
+    meaning: "初期化が利用者プロジェクトへ書く、テンプレートの始め方と CLI の引き方"
+  - id: spec
+    label: "承認済み仕様"
+    meaning: "実装とレビューを拘束する。利用側の取得応答には載らない"
+  - id: tests
+    label: "検証するテスト"
+    meaning: "承認済み仕様が検証先として列挙したテスト"
+  - id: catalog
+    label: "人のカタログ"
+    meaning: "文書サイトと、人がブラウザで見る画面見本。契約の三箇所には入らない"
+groups:
+  - id: contracts
+    label: "契約の三箇所"
+    members: [doc, procedure, spec]
+relationships:
+  - from: mcp
+    to: doc
+    label: "返す"
+  - from: cli
+    to: doc
+    label: "返す"
+  - from: cli
+    to: procedure
+    label: "初期化が書く"
+  - from: doc
+    to: catalog
+    label: "文書から出る"
+  - from: spec
+    to: tests
+    label: "検証先を列挙"
+omitted:
+  - item: "リポジトリ内の AGENTS.md（Astryx 自体を変更する人向け）"
+    reason: "利用者プロジェクトへ書く手順とは別ファイルで、三箇所の読み分けには不要"
+  - item: "版番号、Beta、コントラスト比、onPress、Swift の入力欄"
+    reason: "伝えたいこと（契約の三箇所とカタログの分離）の関係ではない"
+  - item: "承認済み仕様からコンポーネント文書への矢印"
+    reason: "記事の図では仕様はテストへつながり、コンポーネント文書とは別の線である"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "三つの出口という概念構造（mermaid と、人が見るカタログは契約の三箇所に入らない、という文）"
+  - "契約は三箇所に分かれるときの読み方（三箇所の表と、Storybook はどれでもない、という文）"

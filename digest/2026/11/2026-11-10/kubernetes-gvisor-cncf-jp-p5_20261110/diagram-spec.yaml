@@ -1,0 +1,54 @@
+type: structure
+title: "10倍は休止が大半の対話だけ"
+message: "10倍の自己申告は休止が大半の対話だけに使い、隔離は gVisor か microVM を自分で選ぶ"
+source: "notes/zenn/articles/kubernetes-gvisor-cncf-jp-p5_20261110.md"
+components:
+  - id: idle
+    label: "休止が大半の対話"
+    meaning: "休止が大半の対話エージェント。10倍の自己申告の対象"
+  - id: always
+    label: "常時稼働やGPU"
+    meaning: "常時稼働、GPU、TPU、サイドカーを含む完全な Pod、Arm、Autopilot"
+  - id: substrate
+    label: "Agent Substrate"
+    meaning: "Actor の状態をスナップショットし、温かい Worker を使い回す実行基盤"
+  - id: sandbox
+    label: "Agent Sandbox"
+    meaning: "Pod ごとにエージェントを隔離する、GKE 上の別の製品"
+  - id: gvisor
+    label: "gVisor"
+    meaning: "システムコールをユーザー空間で受けるアプリケーションカーネル"
+  - id: microvm
+    label: "microVM"
+    meaning: "Cloud Hypervisor の小さな仮想マシンによる隔離"
+groups:
+  - id: isolation
+    label: "隔離（自分で選ぶ）"
+    members: [gvisor, microvm]
+relationships:
+  - from: idle
+    to: substrate
+    label: "10倍の対象"
+  - from: always
+    to: sandbox
+    label: "こちらの条件"
+  - from: substrate
+    to: gvisor
+    label: "隔離に選ぶ"
+  - from: substrate
+    to: microvm
+    label: "隔離に選ぶ"
+omitted:
+  - item: "OpenRL"
+    reason: "学習のサンプルと更新と保存は密度の倍率と隔離の選択に関係しないため"
+  - item: "atenet-router、階層ストレージ、Gateway"
+    reason: "1回のターンの手順であり、10倍の適用範囲を示す図のメッセージに関係しないため"
+  - item: "寄贈の進み具合、atespace、CVE-2026-95702"
+    reason: "判断の確認項目と注意点に残し、図の1つのメッセージから外すため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "10倍は何と比べた数字か: 休止が大半の対話だけを10倍の自己申告の対象にし、常時稼働、GPU、TPU、完全な Pod、Arm、Autopilot は Agent Sandbox 側の条件として分ける"
+  - "隔離と実行と学習の分担: Worker のプールの隔離は gVisor か microVM かを指定し、寄贈のあとでもこの選択は残る"
+  - "Agent Substrate とは: 状態を持つ Actor と、計算を担う Worker を分ける"

@@ -1,0 +1,51 @@
+type: structure
+title: "有効なプラグインと、関係を運ぶ順と状態"
+message: "プラグインは有効なまま残る。通常操作が呼ばれる順と残る状態を書き換え、指定政策へ届かなくなる"
+source: "notes/zenn/articles/arxiv-abs-2611-09088-p2_20261110.md"
+components:
+  - id: plugin
+    label: "プラグイン"
+    meaning: "有効なまま残る。載っていることだけでは、指定政策へ届く関係を運ばない"
+  - id: op
+    label: "通常操作"
+    meaning: "提供者のコードを変えずに、順や状態を変えうる操作。再適用、開始時の登録、許可の保存"
+  - id: order
+    label: "呼ばれる順"
+    meaning: "プラグインが呼ばれる列。先が列を終えると、後ろの政策へ届かない"
+  - id: state
+    label: "残る状態"
+    meaning: "保存した同意や、インスタンス内の出典ラベル。判断の資格と寿命を決める"
+  - id: policy
+    label: "指定政策"
+    meaning: "対象動作の実行前に、禁止を判断するよう指定された規則"
+groups:
+  - id: carrier
+    label: "関係を運ぶもの"
+    members: [order, state]
+relationships:
+  - from: op
+    to: order
+    label: "末尾へ再登録する"
+  - from: op
+    to: state
+    label: "許可を保存する"
+  - from: order
+    to: policy
+    label: "先に終わると届かない"
+  - from: state
+    to: policy
+    label: "既許可だと棄権する"
+omitted:
+  - item: "プラグインから指定政策への矢印"
+    reason: "有効なまま残ることを示す箱であり、到達を運ぶ関係ではない。矢印を足すと、載っていれば届く、と読める"
+  - item: "来歴ラベルの解釈ずれ、直接経路、期限なしのメンバーキャッシュ、満たした割当の個別条件"
+    reason: "伝えたいことは順と状態が政策への到達を外すことであり、各損失の個別条件は本文の確認項目に残す"
+  - item: "要件の3つの出どころ、PatternOps の判定ラベル、ホスト5種の版表"
+    reason: "図の1つの主張に関係しない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### ホスト、アセンブリ、割当: キャリアは接続の順と残る状態。プラグインが有効なまま損失が起きる"
+  - "### コールバック順が政策の前で終わる: 再登録は末尾へ付き、承認が先に列を終えると政策へ届かない"
+  - "### 保存した許可がレビュー資格を外す: always が許可を残すと Reviewer は棄権する"

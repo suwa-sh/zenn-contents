@@ -1,0 +1,65 @@
+source:
+  title: "Claudeの現行4モデルはどれから使い始めるか、価格とeffortと落とし穴で整理する"
+  url: null
+  path: "notes/zenn/articles/which-claude-model-should-you-bu_20261110.md"
+  primary:
+    - title: "Which Claude model should you build with?"
+      url: "https://claude.dev/blog/which-claude-model-should-you-build-with/"
+    - title: "Choosing a model"
+      url: "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
+    - title: "Pricing"
+      url: "https://platform.claude.com/docs/en/about-claude/pricing"
+    - title: "Optimizing for cost and intelligence"
+      url: "https://platform.claude.com/docs/en/about-claude/models/optimizing-for-cost-and-intelligence"
+    - title: "Preserved thinking"
+      url: "https://platform.claude.com/docs/en/build-with-claude/preserved-thinking"
+  retrieved_at: "2026-11-11"
+archetype:
+  primary: decision
+  secondary: [research]
+one_liner: "能力を先に置くなら Opus 5.5 の medium から始め、同じモデルで effort を上げ、xhigh か max でも足りないときだけ Fable 5.2 の high を試す。"
+key_points:
+  - claim: "現行4モデルは価格と能力の順に Haiku 5.5、Sonnet 5.5、Opus 5.5、Fable 5.2 である。公式の始め方は2つで、費用と遅延を先に置くなら Haiku、能力を先に置くなら Opus である。多くのワークロードが Opus から始まる、という文は唯一の開始点ではなく、母数も示されていない"
+    evidence: "4モデルの位置づけ / 公式の開始点は一つではない"
+    status: fact
+  - claim: "effort は応答に使う仕事量の指定で、値は low、medium、high、xhigh、max である。thinking（回答前の推論）のオンオフとは別である。API の既定は Haiku と Opus が medium、Sonnet と Fable が high で、Claude Code は4モデルとも medium を送る"
+    evidence: "effort と thinking / Claude Code の effort"
+    status: fact
+  - claim: "公開されている点数はいずれも Anthropic の自己測定で、問題集合と effort と試行数が測定ごとに違う。別の表の数字を並べて比べることはできない"
+    evidence: "点数は自己測定で、分母が違う"
+    status: fact
+  - claim: "会話の途中でモデルを下げると、それまでの thinking はエラーにならずに落ち、請求にも入力トークンにも入らない。入力と出力のリスト価格では Opus は Fable の半分なので、モデルを替える前に同じモデルで effort を上げる"
+    evidence: "thinking ブロックの引き継ぎ / どのモデルから始めるか"
+    status: fact
+  - claim: "会話の途中で effort を変えると、会話履歴のキャッシュが切れる。既定と同じ値を明示しても切れない。Haiku 5.5 だけ、入力トークン全体（キャッシュの読み書きを含む）が 100,000 を超えると入出力とキャッシュの単価が 5 倍になり、ちょうど 100,000 は安い方である"
+    evidence: "effort を変えるとキャッシュが切れる / 長い Haiku は短い Haiku の単価ではない"
+    status: fact
+mental_models:
+  - type: behavior
+    key_message: "能力を先に置くときは Opus 5.5 の medium から始め、足りなければ同じモデルで effort を上げ、xhigh か max でも足りないときだけ Fable 5.2 の high を試す"
+    reason_needed: "モデルを上げてから戻すと thinking が静かに落ちるため、替える前の順序を1枚で示す"
+example:
+  description: "SWE-bench Pro の 478 問の部分集合では、Opus 5.5 の high が 95.3% で 1 タスク $0.29 である。medium は約 2.5 点低く、費用は high の約 70% である。公開リーダーボードとは比べられない"
+  hypothetical: false
+  evidence: "点数は自己測定で、分母が違う（SWE-bench Pro の 478 問の部分集合）"
+applicability:
+  - "コーディングと知識作業で、能力を先に置く"
+  - "試作、遅延、費用、大量の単純な処理を先に置く"
+  - "日常のコーディングで、速度と能力の釣り合いが要る"
+decision_criteria:
+  - "自分の課題で Opus 5.5 の medium と high を少数回比べているか。約 2.5 点の差は 478 問の部分集合の値である"
+  - "会話の途中で effort を変えると、会話履歴のキャッシュを作り直す前提で見積もっているか"
+  - "Haiku の見積もりが、入力 100,000 トークン以下の単価のまま長文を含んでいないか"
+  - "Foundry で opus のような短い名前を固定していないなら、無指定は現行より前の Sonnet 4.5 になる"
+  - "ゼロデータ保持を維持するなら、Anthropic の承認が無い限り Fable 5.2 を候補から外しているか"
+limitations:
+  - "高い effort は持っていない知識や技能を与えない、という文は解説記事の但し書きで、公式の Effort のページに同じ文はない。知識の基準日は 2026年6月で、effort で動くとは書かれていない"
+  - "知識作業の Elo では Opus 5.5 が 1866、Fable 5.2 が 1831 である。DeepResearch Bench II では既定 effort で、Fable は Opus の 2.9 倍の費用で 1.9 点低く、採点できたのは 44 タスクである"
+  - "Opus 5.5 の high に Fable 5.1 の助言役を足すと、370 のリポジトリ課題で正答率は 88.4% から 90.1% になり、1 タスクの費用は $1.38 から $2.92 になる。1.7 点は実行ごとのばらつきの端だとページが書いている"
+  - "安全分類器が拒むと API は HTTP 200 のまま拒否で終わる。Claude Code は Fable と Opus 5.5 を、サイバーセキュリティなら Opus 4.8、生物学なら Opus 5 で再実行し、セッションはそのモデルのまま続く。戻すには /model が要る。Sonnet 5.5 のサイバーセキュリティは Sonnet 5、生物学には切り替え先がない"
+  - "tool_choice の any と名前指定は Sonnet、Opus、Fable でエラーになる。auto と none は使える。Haiku の high 以下を除く thinking の無効化はエラーになる。FrontierCode 2.0 では Fable 5.2 の max（45.7%）は xhigh（49.1%）より低く、Fable の max を既定にする理由はない"
+unknowns:
+  - "モデルを変えるとキャッシュが分かれるかは、公式の無効化の表に行がない"
+  - "Haiku 5.5 がツール強制の指定を拒むかは、公式ドキュメントの対象一覧に記載がない"
+  - "「多くのワークロードは Opus 5.5 から」の母数は示されていない"
+reviewed: true

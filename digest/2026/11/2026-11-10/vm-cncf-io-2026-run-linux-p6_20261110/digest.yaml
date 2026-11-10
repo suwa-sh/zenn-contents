@@ -1,0 +1,64 @@
+source:
+  title: "生成直後のコードをHyperlightのマイクロVMで隔離する"
+  url: null
+  path: "notes/zenn/articles/vm-cncf-io-2026-run-linux-p6_20261110.md"
+  primary:
+    - title: "Run Linux applications in hypervisor-isolated micro-VMs with Hyperlight"
+      url: "https://www.cncf.io/blog/2026/11/09/run-linux-applications-in-hypervisor-isolated-micro-vms-with-hyperlight/"
+    - title: "hyperlight-dev/hyperlight-unikraft"
+      url: "https://github.com/hyperlight-dev/hyperlight-unikraft"
+    - title: "hyperlight-dev/hyperlight"
+      url: "https://github.com/hyperlight-dev/hyperlight"
+    - title: "Introducing Hyperlight"
+      url: "https://opensource.microsoft.com/blog/2024/11/07/introducing-hyperlight-virtual-machine-based-security-for-functions-at-scale/"
+  retrieved_at: "2026-11-11"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "生成直後の Linux 実行ファイルは、小さなカーネルを載せたマイクロ VM の中で動かし、入る前に依存のイメージ、見せるファイル、ネットワークの範囲を固定する。"
+key_points:
+  - claim: "Hyperlight はホストのプロセスに組み込む仮想マシンモニタである。Linux の実行ファイルを移植せず載せる経路が hyperlight-unikraft で、システムコールは Unikraft が受け、仮想マシンの外へ出るのはホストが登録した関数だけである"
+    evidence: "Hyperlightとは / Linux バイナリを載せる経路 / ゲストの中の配置"
+    status: fact
+  - claim: "入る前に固定できるのは、依存のイメージ、マウント、ネットワークの範囲の 3 つである。許可を付けない限りホストのファイルもソケットも通らない。マウントとネットワークはスナップショットに焼かず、復元のたびに起動側が渡す"
+    evidence: "起動前に固定する境界 / Linux バイナリを載せる経路"
+    status: fact
+  - claim: "Linux アプリの時間として使うのは、写しから測った、プロセス起動を含む筆者の表だけである。hello world は 22 ms（ネイティブはマイクロ VM を通さず 17 ms）、numpy と pandas と scikit-learn の import は 45 ms（ネイティブは読み込み直しで 1,119 ms）である。どちらも Azure 上の 8 vCPU、入れ子の KVM、1 台の中央値である。1〜2 ms は OS を持たない Hyperlight 本体が仮想マシンを作る時間で、この表の区間ではない"
+    evidence: "起動時間の区間"
+    status: fact
+  - claim: "Python 3.12 では、fork の直呼び、疑似端末、epoll に頼る非同期、スレッドが時間どおり起きることに依存するコードが既知の穴である。ネットワークを開くと、依存をイメージに固定する境界と、ホストのループバックからゲストを離す境界が同時に弱くなる"
+    evidence: "CPython 3.12 の既知の失敗 / 注意点"
+    status: fact
+  - claim: "エージェントの Python を毎回ホストの権限で直接動かしているなら、起動単位をこのマイクロ VM へ切り替える材料は足りている。足りているのはコードが既知の穴の外で通ることではなく、起動単位を切り替える判断である。通常の Linux と同じプロセスモデルが要るならゲスト OS 付きの仮想マシンに戻し、ホストが登録した関数だけで足りるなら OS を持たない本体の方が攻撃面は小さい"
+    evidence: "生成された1本の起動単位"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "生成した Linux の実行ファイルはマイクロVMの中で動き、外へ出るのはホスト関数だけである。依存・マウント・ネットワークは入る前に渡す"
+    reason_needed: "ホスト権限で直接動かすのと、どこで切るかが、この記事の判断の中心だから"
+example:
+  description: "ClickHouse との連携は処理のかたまりごとにスナップショットから復元し、呼び出しのあいだに状態を残さない。smolagents との連携はセッションにつき 1 つのマイクロ VM を維持し、捨てるときに初期化済みの写しへ戻す。どちらもマウントとネットワークは復元のたびに起動側が渡す"
+  hypothetical: false
+  evidence: "起動前に固定する境界"
+applicability:
+  - "チームの誰も書いていない直前の Python や、顧客が上げたプラグインを、ホストの権限から切り離したい"
+  - "依存をイメージに焼き、実行中の追加インストールを既定では拒みたい"
+  - "重い初期化をスナップショットに閉じ、呼び出しのたびに読み込み直したくない"
+decision_criteria:
+  - "起動単位を、システムコールを持たない本体ではなく、hyperlight-unikraft のマイクロ VM にしているか"
+  - "依存はイメージに焼き、実行中にパッケージを足す仕事だけネットワークを付けるか"
+  - "ネットワークを付けるなら、名前とアドレスを列挙して許す方針か。外向きを原則すべて許す方針はホストのループバックに届く。クラウドのインスタンス情報（メタデータ）用のアドレスは、どの方針でも拒否する"
+  - "入力ディレクトリは読み取り専用のマウントか。マウントしないことが、ホストのファイルを見せない境界である"
+  - "既知の失敗に当たるコードを、このマイクロ VM の外へ分けているか。子プロセスは一部の経路だけ通る"
+limitations:
+  - "22 ms と 45 ms は、プロセス起動を含む筆者の表の、1 台の中央値である。約 850 回/秒は、同じ機械で写し 1 つを 8 つのマイクロ VM が共有したときの呼び出し回数である。どちらも第三者の再現は一次資料としては確認できない"
+  - "既知の穴の外のテストが通るかは、適合試験の結果としては示されていない。上流のテストとベンチを継続的に追う段階なのは Python だけである"
+  - "ネットワークを開くと、依存をイメージに固定する境界とループバックからの分離が同時に弱くなる。拒否する名前の一覧は、その名前が今指していないアドレスを拒否できない。外向きをすべて許す方針がループバックを許すのは、ホストのサービスが自分自身のアドレスを信頼するからである"
+  - "OS を持たない本体が想定する攻撃の範囲に、ホストのファイルを見せる経路とホストの実ソケットを見せる経路は含まれない。ライブラリが既にいるプロセスでの約 3 ms の復元は、上の表の時間ではない"
+  - "大きなイメージの復元時間は、仮想マシンを動かす機構で変わり、2026-11-10 時点で未解決である。再シードされないのは、コードが作って持つ乱数オブジェクト、プロセス間の認証キー、文字列のハッシュの種、呼び出しをまたぐスレッドである。random のモジュール関数は再シードされる。macOS では 1 プロセスに仮想マシンは 1 つで、マウントが起点より上のパスを拒むかは書いていない"
+unknowns:
+  - "macOS のマウントが、起点より上のパスへ解決しない境界を持つか"
+  - "known_failures に無い CPython のテストが実際に通るか。公開された適合試験の結果は示されていない"
+  - "対応するシステムコール番号の一覧。2026-11-10 に見た README と docs には無い"
+  - "22 ms と約 850 回/秒の、第三者による再現"
+reviewed: true

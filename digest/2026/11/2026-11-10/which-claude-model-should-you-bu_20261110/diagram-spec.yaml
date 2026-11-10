@@ -1,0 +1,53 @@
+type: behavior
+title: "能力を先に置くときの開始順"
+message: "能力を先に置くときは Opus 5.5 の medium から始め、モデルを上げる前に同じモデルで effort を上げる。xhigh か max でも足りないときだけ Fable 5.2 の high を試す"
+source: "notes/zenn/articles/which-claude-model-should-you-bu_20261110.md"
+components:
+  - id: start
+    label: "能力を先に置く"
+    meaning: "コーディングと知識作業で、能力を先に確保する"
+  - id: opus
+    label: "Opus 5.5 の medium"
+    meaning: "API も Claude Code も、Opus 5.5 の既定 effort は medium"
+  - id: raise
+    label: "同じモデルで effort を上げる"
+    meaning: "別のモデルへ移る前に、同じ Opus で effort を上げる"
+  - id: check
+    label: "xhigh か max でも足りないか"
+    meaning: "同じモデルの高い effort で評価し、まだ足りないかを見る"
+  - id: stay
+    label: "Opus のまま使う"
+    meaning: "xhigh か max の評価で足りる"
+  - id: fable
+    label: "Fable 5.2 の high"
+    meaning: "xhigh か max でも足りないときだけ試す。max を既定にはしない"
+relationships:
+  - from: start
+    to: opus
+    label: "始める"
+  - from: opus
+    to: raise
+    label: "足りなければ"
+  - from: raise
+    to: check
+    label: "評価する"
+  - from: check
+    to: stay
+    label: "足りる"
+  - from: check
+    to: fable
+    label: "足りない"
+omitted:
+  - item: "Haiku 5.5 と Sonnet 5.5 からの開始"
+    reason: "費用と遅延、速度と能力の釣り合いは別の開始点で、この図が伝える能力優先の順序には含めない"
+  - item: "thinking が静かに落ちることと、入力と出力のリスト価格"
+    reason: "モデルを替える前に effort を上げる理由は本文に残し、図の矢印にはしない"
+  - item: "Microsoft Foundry の既定とゼロデータ保持"
+    reason: "開始順そのものではなく、その判断が外れる条件なので本文の確認項目に残す"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "どのモデルから始めるか の表（能力を先に置くなら Opus 5.5。API も Claude Code も既定は medium。足りなければ同じモデルで上げる）"
+  - "どのモデルから始めるか の mermaid（Opus 5.5 の medium → 同じモデルで effort を上げる → xhigh か max でも足りないときだけ Fable 5.2 の high、足りるなら Opus のまま）"
+  - "Fable 5.2 を使う場合も max を既定にする理由はない。FrontierCode 2.0 では max は xhigh より低い"

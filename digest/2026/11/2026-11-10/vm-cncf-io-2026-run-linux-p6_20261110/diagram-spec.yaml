@@ -1,0 +1,65 @@
+type: structure
+title: "生成したコードはマイクロVMの中で動く"
+message: "生成した Linux の実行ファイルはマイクロVMの中で動き、外へ出るのはホスト関数だけである。依存・マウント・ネットワークは入る前に渡す"
+source: "notes/zenn/articles/vm-cncf-io-2026-run-linux-p6_20261110.md"
+components:
+  - id: host
+    label: "ホストアプリ"
+    meaning: "Hyperlight を組み込むプロセス"
+  - id: vmm
+    label: "Hyperlight"
+    meaning: "プロセス内の仮想マシンモニタ"
+  - id: uk
+    label: "Unikraft"
+    meaning: "単一アプリ向けの小さなカーネル"
+  - id: bin
+    label: "Linuxの実行ファイル"
+    meaning: "生成直後のコード"
+  - id: hf
+    label: "ホスト関数"
+    meaning: "仮想マシンの外へ呼ぶためにホストが登録した関数"
+  - id: fix
+    label: "起動前の固定"
+    meaning: "依存のイメージ、マウント、ネットワークの範囲"
+groups:
+  - id: hostproc
+    label: "ホストプロセス"
+    members: [host, vmm]
+  - id: guest
+    label: "マイクロVM"
+    members: [uk, bin]
+relationships:
+  - from: host
+    to: vmm
+    label: "組み込む"
+  - from: vmm
+    to: uk
+    label: "VMを作る"
+  - from: uk
+    to: bin
+    label: "載せて実行"
+  - from: bin
+    to: hf
+    label: "外へ出る"
+  - from: hf
+    to: host
+    label: "ファイルとソケット"
+  - from: fix
+    to: vmm
+    label: "入る前に渡す"
+omitted:
+  - item: "ファイルは cap-std のマウント、ソケットはホストOSの実ソケット、という分かれ"
+    reason: "外へ出るのがホスト関数だけ、という関係にまとめた"
+  - item: "スナップショットへの焼き込みの有無と、状態を残すか残さないかの 2 形"
+    reason: "起動前に渡す矢印で足り、残し方は具体例に置いた"
+  - item: "ランタイムの段階、起動時間の表、既知の失敗、ネットワーク方針の種類"
+    reason: "境界の形ではなく、判断と注意の側にある"
+  - item: "KVM などのハイパーバイザの種類、CVE のデモ、containerd からの駆動"
+    reason: "この 1 枚の関係に使わない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "ゲストの中の配置"
+  - "起動前に固定する境界"
+  - "ゲストから外へ出る経路"

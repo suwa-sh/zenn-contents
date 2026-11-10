@@ -1,0 +1,35 @@
+type: structure
+title: "意味のある監督の2条件"
+message: "意味のある監督は、理解できる情報とその時点の影響が揃って初めて成立する"
+source: "notes/zenn/articles/arxiv-abs-2611-09550-p3_20261110.md"
+components:
+  - id: info
+    label: "理解できる情報"
+    meaning: "関係する決定を理解できる情報がある"
+  - id: influence
+    label: "その時点で影響できる"
+    meaning: "その時点で決定に影響を与えられる"
+  - id: meaningful
+    label: "意味のある監督"
+    meaning: "2つの条件が揃った状態。片方だけでは論文が置く意味には届かない"
+relationships:
+  - from: info
+    to: meaningful
+    label: "条件の1つ"
+  - from: influence
+    to: meaningful
+    label: "条件の1つ"
+omitted:
+  - item: "意図的なペースから分かれる3つの調整（実装前に止める、後続を遅らせる、見せる時点を変える）"
+    reason: "監督が意味を持つ条件が図の主張であり、調整の一覧は本文の核心ポイントに残す"
+  - item: "速度からペース、ペースから意図的なペースへの定義の連鎖"
+    reason: "図の手前の定義で、2条件の関係には矢印を足さない"
+  - item: "実行を止めない監督（進行中を見る、完了後に見る）"
+    reason: "意図的なペースの外にある比較相手で、本文のメンタルモデルの説明に残す"
+  - item: "要求の確認、実装のレビュー、テストオラクルは互いに代わりにならない"
+    reason: "確認の位置の別主張なので、核心ポイントに残し図には入れない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "意味のある監督"
