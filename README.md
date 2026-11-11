@@ -7,12 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (623)
+## Articles: 下書き (625)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-11-11 | [🧪 Claude Fable 5.2の料金と、世代更新で固定するテスト](articles/claude-fable-5-2-anthropic-p1_20261111.md) | Claude, Anthropic, LLM, API |
 | 2026-11-11 | [📐 富士通FDEの対価は人月、利用料、成果連動で行が分かれる](articles/fde-xtech-nikkei-atcl-nxt-p2_20261111.md) | AIAgent, Management, Palantir |
+| 2026-11-11 | [🔐 Gitの6件の脆弱性修正と、エージェントが許可する操作](articles/git-clone-import-github-open-p5_20261111.md) | Git, Security, GitHub, AIAgent |
+| 2026-11-11 | [🔐 Notionが通知したFireworks AIインシデントで委託先に残ったデータの境界](articles/notion-fireworks-ai-notion-p4_20261111.md) | Security, Notion, AI, Privacy |
 | 2026-11-10 | [🧩 日常の設定変更が崩すハーネスの実行順と保持状態](articles/arxiv-abs-2611-09088-p2_20261110.md) | AIAgent, LLM, SoftwareEngineering |
 | 2026-11-10 | [🧭 エージェント開発で意図的なペースが監督機会を残す条件](articles/arxiv-abs-2611-09550-p3_20261110.md) | AIAgent, LLM, SoftwareEngineering |
 | 2026-11-10 | [🎨 Astryxは人とエージェントの共作に契約を三箇所へ分ける](articles/astryx-github-meta-astryx-p8_20261110.md) | React, CSS, DesignSystem, StyleX, AIAgent |
