@@ -1,0 +1,56 @@
+type: structure
+title: "露出と書かれた中身と、返す経路"
+message: "露出と書かれた中身は Insights の文字起こしで、本文は事後の CSV が返す。公開の監査ログは操作の事実までである"
+source: "notes/zenn/articles/notion-fireworks-ai-notion-p4_20261111.md"
+components:
+  - id: insights
+    label: "Insights の分類"
+    meaning: "Fireworks を使う分類ジョブ。文字起こしがデータセットに含まれたと書かれている経路"
+  - id: dataset
+    label: "11月8日のデータセット"
+    meaning: "Fireworks が確定した影響データセット。分析結果として Insights 用チャット文字起こしの文言"
+  - id: analysis
+    label: "Notion の分析"
+    meaning: "データセットを Notion が分析し、影響を受けた顧客へ連絡する"
+  - id: csv
+    label: "確認用 CSV"
+    meaning: "ワークスペース内で所有者経由で中身を見せる経路"
+  - id: audit
+    label: "公開の監査ログ"
+    meaning: "チャットの作成や閲覧、AI のオンオフなど操作の事実まで。本文と送付先は公開説明に無い"
+groups:
+  - id: contents
+    label: "データセットの中身"
+    members: [dataset]
+  - id: return_path
+    label: "中身を返す"
+    members: [analysis, csv]
+  - id: ops
+    label: "操作の事実まで"
+    members: [audit]
+relationships:
+  - from: insights
+    to: dataset
+    label: "文字起こしが含まれる"
+  - from: dataset
+    to: analysis
+    label: "分析する"
+  - from: analysis
+    to: csv
+    label: "所有者へ返す"
+omitted:
+  - item: "オープンウェイトモデルの推論"
+    reason: "利用経路としては並ぶが、11月8日のデータセットの中身としては書かれていない。この図はデータセットに書かれた中身と返す経路だけを示す"
+  - item: "LEAP の過去の学習実験"
+    reason: "利用経路としては並ぶが、11月8日のデータセットへの含有は書かれていない"
+  - item: "11月2日夜の合成テストデータ"
+    reason: "顧客データを含まない別データセットであり、最終データセットの中身ではない"
+  - item: "注釈付き CSV と共有リンクのプラン差"
+    reason: "返す主体は同じ確認用 CSV の経路である。粒度の差はこの図の 1 つのメッセージに入れない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "通知が分けている三つの経路"
+  - "文字起こしの区分"
+  - "中身を戻す経路は監査ログと事後のCSVで分かれる"

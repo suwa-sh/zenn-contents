@@ -1,0 +1,68 @@
+source:
+  title: "Notionが通知したFireworks AIインシデントで委託先に残ったデータの境界"
+  url: null
+  path: "notes/zenn/articles/notion-fireworks-ai-notion-p4_20261111.md"
+  primary:
+    - title: "Notion, Fireworks AI incident (updated November 10, 2026)"
+      url: "https://www.notion.com/security/advisories/security-incident-involving-a-third-party-ai-vendor"
+    - title: "Notion Help, Notice about the Fireworks AI incident"
+      url: "https://www.notion.com/help/security-incident-involving-a-third-party-ai-vendor"
+    - title: "Fireworks AI, Update on October 2026 security incident (Last updated November 9, 2026)"
+      url: "https://fireworks.ai/security/bulletins/october-2026-security-incident-update"
+    - title: "Notion Help, Notion AI security & privacy practices"
+      url: "https://www.notion.com/help/notion-ai-security-practices"
+    - title: "Notion Developers, Audit log events"
+      url: "https://developers.notion.com/compliance/audit-log-events"
+  retrieved_at: "2026-11-12"
+archetype:
+  primary: incident
+  secondary: [decision]
+one_liner: "Notion が露出したと書いた中身は Insights 用のチャット文字起こしで、その文言は事後の CSV が返し、公開の監査ログは操作までである。"
+key_points:
+  - claim: "11月8日に確定したデータセットには Insights 用のチャット文字起こしが含まれ、他の Notion 機能とワークスペース内のその他のデータは影響なし、と公式は書く。影響を受けた可能性があるのはワークスペースの 1% 未満で、整数の件数は公開文に無い。調査は継続し、Insights は無効である"
+    evidence: "通知が書いている範囲"
+    status: fact
+  - claim: "アドバイザリは、影響を受けたワークスペースの大半（vast majority）では unattributable だったと書く。unattributable とは、発言者とワークスペースのラベルが無く、ツール呼び出しの結果も無いことである。全員の文字起こしにラベルが無かった、という意味ではない"
+    evidence: "通知が書いている範囲 / 文字起こしの区分 / 注意点"
+    status: fact
+  - claim: "Fireworks（今回の委託先）への経路は、Insights の分類、Fireworks 経由の推論、LEAP の過去の学習として並ぶ。11月8日のデータセットの中身として書かれているのは文字起こしである"
+    evidence: "通知が分けている三つの経路 / 通知が書いている範囲"
+    status: fact
+  - claim: "中身をワークスペースへ戻しているのは、Notion が分析したあとの確認用 CSV である。公開の監査ログの説明は、チャットの作成や閲覧、AI のオンオフといった操作の事実までで、本文と送付先は書いていない。説明に無い項目がエクスポートに無い、とまでは断定しない"
+    evidence: "中身を戻す経路は監査ログと事後のCSVで分かれる"
+    status: fact
+  - claim: "オープンウェイトモデルを Fireworks 経由で提供するのも止まっている。この語の定義は通知に無く、通知が指すのは製品内で Fireworks 経由で出していたモデルである"
+    evidence: "通知が書いている範囲"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "露出と書かれた中身は Insights の文字起こしで、本文は事後の CSV が返す。公開の監査ログは操作の事実までである"
+    reason_needed: "三つの利用経路、データセットの中身、監査ログ、事後 CSV を同じ露出として読まないため"
+example:
+  description: "11月2日夜に渡されたセットは合成テストデータで顧客データを含まない、という文である。11月8日に確定したセットには Insights 用のチャット文字起こしがある。前者はあの夜のセットについての文であり、後者を閉じない"
+  hypothetical: false
+  evidence: "日付の流れ / 注意点"
+applicability:
+  - "今回のワークスペースは、公式の案内に沿って連絡の有無を見、来ていればモバイル以外で確認し、渡されたデータを露出したものとして扱う"
+  - "次の契約は、サブプロセッサの目的を「LLM の提供」の一行で受けず、分類、推論、学習のどれに、プロンプト、文書、ツール結果のどれを出すかを経路ごとに書かせる"
+  - "自社で動かすエージェントは、操作ログ（開いたか、有効にしたか）と送付台帳（どの経路がどの委託先へ何を出したか）を分ける"
+decision_criteria:
+  - "連絡が無いことを監査の終了にせず、ヘルプの「影響なし」とアドバイザリの「未特定、調査継続」の両方を読んでいるか"
+  - "開始日と終了日が公式に無いので、自社の日付で対象外にせず、Notion AI へ貼った資格情報は日付で切らず替えているか"
+  - "「Enterprise なら委託先に残らない」と読まず、ZDR のモデルは応答後に残さず、ZDR でないモデルは所有者の opt-in（明示してオン）のときだけ限られた期間保持し得て、Free、Plus、Business は 30 日以内に削除、と分けているか"
+  - "11月2日の「顧客データは含まれない」を、11月8日の最終データセットにまで広げていないか"
+  - "注釈付き CSV を、Enterprise でメンバーを管理している所有者だけと読み、他プランは本人分、管理が無い Enterprise はヘルプに未記載、と分けているか"
+limitations:
+  - "対象チャットの開始日と終了日は公式に無い。Fireworks が書く 10月6日、10月23日、10月24日、10月25日は同社の資格情報と開発マシンの記述であり、Notion のチャット期間としては書かれていない"
+  - "Fireworks が製品名として並べる Inference、Training SDK、Nexus（中身は更新に書かれていない）への影響未検出は、オープンウェイト推論のプロンプトがデータセットに無い証明ではない"
+  - "LEAP の学習データが 11月8日のデータセットに含まれるかは、入ったとも入っていないとも書かれていない"
+  - "Notion が Fireworks の Response API を使ったかは公開文に無い。その API は store=True が既定で、プロンプトと応答を最大 30 日保持し得ると書かれ、この保持はその API に限る"
+  - "現行 DPA の侵害通知の期限は、2026年11月11日の確認では条項まで辿れていない。廃止版の期限は使わない。両社とも調査は継続であり、範囲の記述は後から増え得る"
+unknowns:
+  - "対象チャットの開始日と終了日"
+  - "大半以外でラベル付きだった件数"
+  - "現行 DPA の侵害通知期限"
+  - "LEAP の学習データが 11月8日のデータセットに含まれるか"
+  - "Notion が Response API を使ったか"
+  - "監査ログのエクスポートに、公開説明に無い本文フィールドがあるか"
+reviewed: true

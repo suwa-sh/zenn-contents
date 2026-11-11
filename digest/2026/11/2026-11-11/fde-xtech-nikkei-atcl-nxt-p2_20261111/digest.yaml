@@ -1,0 +1,63 @@
+source:
+  title: "富士通FDEの対価は人月、利用料、成果連動で行が分かれる"
+  url: null
+  path: "notes/zenn/articles/fde-xtech-nikkei-atcl-nxt-p2_20261111.md"
+  primary:
+    - title: "大西俊介氏、IR Day、2026年9月16日"
+      url: "https://resources.global.fujitsu/prir/2026/09/2026-IRDay-03-ja.pdf"
+    - title: "高橋美波氏、IR Day、2026年9月16日"
+      url: "https://resources.global.fujitsu/prir/2026/09/2026-IRDay-04-ja.pdf"
+    - title: "Fujitsu Data Intelligence Premium 仕様書 GC0052-EN001"
+      url: "https://global.fujitsu/-/media/Project/Fujitsu/Fujitsu-HQ/documents/terms-and-conditions/ss-fujitsu-data-intelligence-premium/v1/ss-fujitsu-data-intelligence-premium-en001.pdf"
+    - title: "日経クロステック「富士通の FDE」公開リード、2026年11月10日"
+      url: "https://xtech.nikkei.com/atcl/nxt/mag/nc/18/110400579/110400001/"
+  retrieved_at: "2026-11-12"
+archetype:
+  primary: decision
+  secondary: [governance]
+one_liner: "富士通の FDE の対価は、利用料という一語にはならない。作る費用、従量、成果連動に分かれ、成果が止んだ月に固定が残るかは別の行である。"
+key_points:
+  - claim: "Wayfinders（顧客の課題と成長機会を見つける役）が課題文を作り、FDE（Forward Deployed Engineer。顧客の現場で実装まで担う技術者）が実装と価値の検証を担い、知見を自社の技術へ戻す。2026年9月16日の IR Day（投資家向け説明会）は、この二つをスライド上で別の役として描いている"
+    evidence: "富士通のFDEとは / 課題を見つける役と、実装する役"
+    status: fact
+  - claim: "同じ日の価格方針は、人月（人数と期間を掛けて積む見積の単位）から、Outcome Base（成果に対する課金）と Usage Base（従量に対する課金）へ比重を移す、というものである。利用料だけへの置き換えではない"
+    evidence: "対価の二つの箱 / 注意点 / リードが一つにしていること"
+    status: fact
+  - claim: "約1,500億円は、高橋氏の資料の「FY2030 売上試算」にある「FDE を起点としたビジネス創出」の額である。同じ資料が2030年度に置く Uvance（その売上計画の事業名）全体の 1.7兆円超とは別である"
+    evidence: "比率と、一つの利用仕様 / 注意点 / リードが一つにしていること"
+    status: fact
+  - claim: "Foundry を使う Fujitsu Data Intelligence Premium の仕様書 GC0052-EN001 は、利用単位を FCU（Foundry Compute Unit。Foundry の利用枠の単位）とし、数と期間を Exhibit（数量と期間を書く別紙）に置く。超過分は、月末締めの超過数に単価を掛け、その月の利用料とする。1 FCU が何を数えるかは、確認した条項には書かれていない"
+    evidence: "比率と、一つの利用仕様"
+    status: fact
+  - claim: "見積の品名が利用料でも、作るときの費用や、成果が止んだ月を含む七行へ分解してから署名する。分解できない行は、人月の見積が名前だけ変わったものとして扱う"
+    evidence: "見積に置く七つの行 / 署名の前に見ること"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "Wayfinders が課題文を渡し、FDE が作った業務上のエージェントから、対価が作る費用、従量、成果連動に分かれて戻りうる。知見は自社の技術へ戻る"
+    reason_needed: "公開リードの「人月ではなく利用料」を、対価が一つの行に置き換わる話として読まないため"
+example:
+  description: "富士通の資料の物流では、機能開発などの行がプロジェクト費＋利用料、サービス提供の行が利用料（マッチング収益）である。マッチング収益は、成功報酬とは測る対象が違う"
+  hypothetical: false
+  evidence: "事例に並ぶ価格と期間"
+applicability:
+  - "利用料という品名の提案を、作るときの費用や成果が止んだ月を含む行に分解してから署名する"
+  - "富士通の記事の無料の書き出しにある「2カ月でエージェント」と、別記事の「1〜5人」を、契約条件へ写さない"
+  - "成果が続く月だけ払う契約かを、無料で読める書き出しの一文から決めない"
+decision_criteria:
+  - "課題文の確定者は Wayfinders、顧客、FDE のどれで、顧客側の確認と承認は誰が残すか"
+  - "プロジェクト費、実装費、月額固定が、従量や成功報酬と別に残るか"
+  - "動いているときの費用は、超過、マッチング、段階別従量のどれか"
+  - "成果が止んだ月に固定が残るか"
+  - "理由を定めずに途中で解約できるか"
+limitations:
+  - "約1,500億円は2026年9月16日の売上試算である。実績として使うのは、決算で FDE 起点の売上が区分して開示されたときだけである"
+  - "2カ月でエージェントは、日経の公開リード（無料で読める書き出し）の期間であり、標準工期ではない"
+  - "1〜5人と、既存職種の改名だけのエセ FDE は、特集の別記事の公開リードである。有料本文は未読で、富士通の契約条件としては見つかっていない"
+  - "成果が止んだ月に固定も利用料もゼロになる、という条文は、ここまでの公開資料にはない。Hybrid 課金（固定部分と、成果指標に連動する料金の組み合わせ）は固定が残りうる。富士通または顧客がその条文を示したら、止まった月の行をその条文に合わせる"
+  - "FCU の 1 単位が何を数えるかは、確認した条項にない。この仕様は FDE 案件のすべてではない。理由を定めない途中解約ができないのは、その仕様が名指しする Data Mesh と Exceed である"
+unknowns:
+  - "個別の SOW（作業範囲を書く文書）で、成果がゼロの月の固定費、最低利用料、解約金がどう残るか。公開された IR には条文がない"
+  - "1 FCU が何を数えるか。AIP の課金単位と同じかは、確認した範囲には書かれていない"
+  - "有料特集本文が「2カ月」をどの事例の期間として書いているか。本文は未読である"
+reviewed: true

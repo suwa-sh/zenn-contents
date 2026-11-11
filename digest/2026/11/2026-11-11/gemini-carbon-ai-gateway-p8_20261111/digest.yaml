@@ -1,0 +1,72 @@
+source:
+  title: "Gemini 4 Carbonの提供面と、2026年11月30日までの公開単価"
+  url: null
+  path: "notes/zenn/articles/gemini-carbon-ai-gateway-p8_20261111.md"
+  primary:
+    - title: "Gemini 4 Carbon is now available"
+      url: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/"
+    - title: "What's new in Gemini 4 Carbon"
+      url: "https://aistudio.google.com/docs/whats-new-gemini-4-carbon"
+    - title: "Google AI Studio pricing"
+      url: "https://aistudio.google.com/docs/pricing"
+    - title: "Vertex Model Garden pricing"
+      url: "https://cloud.google.com/model-garden/pricing"
+    - title: "Gemini 4 Carbon now available on AI Gateway"
+      url: "https://vercel.com/changelog/gemini-4-carbon-now-available-on-ai-gateway"
+  retrieved_at: "2026-11-12"
+archetype:
+  primary: decision
+  secondary: []
+one_liner: "公開向けの Gemini 4 Carbon は 2026年11月30日までの導入単価で、公開されただけでは今使っているモデルを切り替えない。"
+key_points:
+  - claim: "公開向けの標準は AI Studio の Standard（選ばないときの料金区分）である。100万トークンあたり、2026年11月30日まで入力 $2.00、出力 $10.00、キャッシュ $0.10。2026年12月1日から入力 $4.00、出力 $20.00、キャッシュ $0.20。Free tier は Not available"
+    evidence: "公開向け標準の単価 / 経路ごとに残る単価（Standard の行）"
+    status: fact
+  - claim: "Vercel AI Gateway の changelog は 2026年11月30日まで 50% off と書く。同日のモデル頁の表示は入力 $2、出力 $10 で、Google の導入単価と同じ額である。導入単価のさらに半分（入力 $1、出力 $5）はこの表示価格ではない。changelog は、この 50% が Google の導入価格そのものだとは書かない"
+    evidence: "Gateway の「50% off」"
+    status: fact
+  - claim: "入り方は四つに分かれる。有料の Gemini API、Vercel AI Gateway、Google AI Ultra のアプリ面、Fairwind 経由の Carbon for cyber。Ultra は API のトークン表とは別の購読で、対象は Gemini app、Search の AI Mode、Antigravity であり、購読者への段階提供である。Fairwind はサイバー防御者向けの申請プログラムで、申請は残っている"
+    evidence: "四つの提供面"
+    status: fact
+  - claim: "Vertex の料金表は 11月30日までの Global に入力 $2、出力 $10 と印字する。同じ頁の注は promotional pricing を、対象モデルの純支出へ 50% のクレジットを戻すことと定義する。AI Studio の What's new は $2.00 を導入価格として書き、credits back とは書かない。印字を同じ請求書単価だと一つにまとめない。Cyber Permissive には promotional pricing が適用されず、11月30日までのプロモ行には無い。12月1日の行と組になる"
+    evidence: "Vertex の $2 と、AI Studio の $2.00 / Cyber Permissive はプロモの外"
+    status: fact
+  - claim: "What's new は、Carbon と Argon のトークン単価は同じで、難しい問題では思考トークンを多く使い、1 ターンでも Argon より多い、と書く。思考トークンは応答の前の推論で、出力料金に含まれる。既定の実装経路も防御経路も、2026年11月10日の提供拡大だけを理由には切り替えない"
+    evidence: "Gemini 4 Carbonとは / 既定を動かす条件"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "公開向けの有料 API と Vercel AI Gateway は 2026年11月30日まで同じ導入単価の行に載る。Google AI Ultra と Fairwind は、その行の金額ではない"
+    reason_needed: "四つの入り方を一つのトークン単価にまとめると、購読と申請と公開 API を同じ予算にしてしまう"
+example:
+  description: "AI Studio の Gemini 4 Carbon 節では、Standard は 11月30日まで入力 $2.00、出力 $10.00、キャッシュ $0.10。同じ期限の Batch と Flex は $1.00 / $5.00 / $0.05。12月1日からは Batch と Flex も $2.00 / $10.00 / $0.10。キャッシュ $0.10 は、4,096 トークン以上のプロンプトで暗黙キャッシュがヒットした入力の額。経路の既定は Standard の行で決め、半額は Standard の請求が自動で半分になるという意味ではない"
+  hypothetical: false
+  evidence: "経路ごとに残る単価（AI Studio のタブ表）"
+applicability:
+  - "公開の Gemini API か Vercel AI Gateway の予算を、2026年11月30日までの導入単価で置く"
+  - "既定のモデルを、Carbon が公開されたことだけでは替えない"
+  - "難しい問題で思考トークンが Argon より多い Carbon を使うときだけ、支出上限を付けて、今のモデルとは別に置く"
+decision_criteria:
+  - "見る金額が Standard の行か。Batch と Flex の半額を、選んでいない経路の既定にしていないか"
+  - "Gateway の 50% off を、表示額 $2 / $10 のさらに半分と読んでいないか"
+  - "Vertex の印字を、credits back の注があるまま請求書の額として写していないか"
+  - "防御経路を動かす前に、Fairwind の申請条件と Cyber Permissive の単価を、その日の頁で読むか"
+  - "2026年11月30日に、AI Studio の Carbon 標準、Gateway の表示、Vertex の Global と非グローバルを取り直すか"
+limitations:
+  - "2026年12月1日以降に Gateway が $4 と $20 を表示するかは、changelog の二文からの推論で、未来のカタログは未確認"
+  - "Gateway のモデル頁はコンテキスト 1,000,000、最大出力 1,000,000 と書く。API の共有窓は 1,048,576 で、同期の最大出力は 65,536。Gateway 経由の実行時上限がどちらなのかは、この日の頁では未確認"
+  - "2026年11月11日の Fairwind のプログラム頁は、技術の節と FAQ で Gemini 4 Argon を名指しし、本文は Carbon を名乗らない。再配布を禁じる文は残っている"
+  - "Vertex の料金表は、2026年11月13日から、Gemini 4 の completion が 32K トークンを超えてタイムアウトで失敗しても、取得可能なトークン使用量を課金する、と書く。AI Studio や Gateway の請求が同じかは、この注の外。Carbon 専用の値上げ日ではない"
+  - "65,536 を超える出力は background=true と max_output_tokens の両方が要る。What's new は、background を true にしても max_output_tokens を書かないとサーバは 64K トークンで止まると書く。llm-gemini 0.36 は、65,000 トークン超の long continuation を担わない"
+unknowns:
+  - "Carbon 専用の RPM、TPM、RPD の数値行は、2026年11月11日の公開表に無い"
+  - "2026年11月30日のタイムゾーン"
+  - "Google AI Pro が Carbon を含むか。この一次には、含むとも除くとも無い"
+  - "Fairwind の頁が Argon を名指ししているのは、更新前の頁か、Carbon for cyber が別契約のままか"
+  - "Gateway の 12月1日以降の表示額"
+  - "AI Studio の Contributor タブの金額と招待条件"
+  - "CodeMender の Carbon 単価。料金表で確認できた行は Argon 側"
+  - "SLA とデータの所在"
+  - "Argon の Flex 請求の不具合が Carbon に及ぶか。フォーラムの報告は二次情報"
+  - "AI Studio 側の Grounding with Google Search の 1日 1,500 リクエスト上限が、Carbon 標準の paid 列を指すか"
+reviewed: true

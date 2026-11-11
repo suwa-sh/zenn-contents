@@ -1,0 +1,66 @@
+source:
+  title: "Claude Fable 5.2の料金と、世代更新で固定するテスト"
+  url: null
+  path: "notes/zenn/articles/claude-fable-5-2-anthropic-p1_20261111.md"
+  primary:
+    - title: "Claude Fable 5.2 と Mythos 5.2 の発表"
+      url: "https://www.anthropic.com/claude-fable-and-mythos-5-2"
+    - title: "料金"
+      url: "https://platform.claude.com/docs/en/about-claude/pricing"
+    - title: "移行ガイド"
+      url: "https://platform.claude.com/docs/en/models/fable-5-2/migration-guide"
+    - title: "プロンプトガイド"
+      url: "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-2"
+    - title: "システムカード"
+      url: "https://www.anthropic.com/document/claude-fable-5-2-mythos-5-2-system-card"
+  retrieved_at: "2026-11-12"
+archetype:
+  primary: decision
+  secondary: []
+one_liner: "Fable 5.2 の標準料金は、トークン量が同じなら 5.1 の 0.8 倍。止めるのは自前履歴のターン間変更、Bedrock 以外の旧操作ツール、5.1 の相談役。"
+key_points:
+  - claim: "Fable 5.2 と Mythos 5.2 は同じ基盤モデルである。Fable は一般に出し、Mythos はライフサイエンスとサイバーの審査プログラム経由である。標準料金はどちらも 100万トークンあたり入力 8 ドル、出力 40 ドルで、Fable 5.1 は入力 10 ドル、出力 50 ドルだった"
+    evidence: "Claude Fable 5.2とは / 標準料金と、足される単価"
+    status: fact
+  - claim: "トークン量が同じとき、標準料金は入力も出力も Fable 5.1 の 0.8 倍である。fast mode と、コードを自分のものと名乗る一文は、この 2 割引きの外である。戻すときに思考が落ちる経路は、次のターンで費用と待ち時間が増え得る"
+    evidence: "費用は同じトークン量と、増える行に分ける"
+    status: fact
+  - claim: "失敗して止まるのは三点である。自前の履歴でシステムプロンプト、ツール、過去のメッセージのどれかをターンのあいだで変えること、Bedrock 以外のコンピュータ操作の旧ツール、作業側に残した Fable 5.1 の相談役。他のモデルが 5.2 の思考を読めないことは、リクエストが成功する別の経路である"
+    evidence: "世代更新で固定する確認 / 止める条件と測り直す条件"
+    status: fact
+  - claim: "製品が会話履歴を持つ経路で見るのは、モデル名と相談役の組である。effort の点数、所有者の一文、委任を誘う仕組みは測り直す項目である"
+    evidence: "世代更新で固定する確認（経路の表） / 止める条件と測り直す条件"
+    status: fact
+  - claim: "API の effort の既定は high で、Fable 5.1 から変わらない。claude.ai と Claude Code の既定は Medium である。effort を書かないテストは、API の契約と同じではない"
+    evidence: "呼び出しの既定 / 止める条件と測り直す条件"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "5.1 から 5.2 へ進む確認は、失敗する変更、名前の確認、測り直しに分かれる"
+    reason_needed: "製品が履歴を持つ経路まで止める条件に入れると、移行ガイドの範囲を超えるため"
+example:
+  description: "同じ CSV パーサを料金表で 1 回にすると、medium の Fable 5.2 は 0.0761 ドル、5.1 は 0.0428 ドル、約 1.8 倍だった。5.2 の出力にだけ思考があり、トークン量は同じではない"
+  hypothetical: false
+  evidence: "費用は同じトークン量と、増える行に分ける（日本トレカセンター Tech Blog）"
+applicability:
+  - "トークン量が同じ前提で、5.1 から 5.2 の標準料金を予算に置く"
+  - "自前の履歴で、システム、ツール、過去のメッセージのどれかをターンのあいだで変えると 400 になるかをテストに固定する"
+  - "呼び出し元ごとの旧操作ツールと、作業側に残した相談役を別に確認する"
+decision_criteria:
+  - "自前の履歴で、システムプロンプト、ツール、過去のメッセージのどれかを、ターンのあいだで変えると 400 になるか"
+  - "旧コンピュータ操作は使っている面だけで見る。Bedrock 以外は 400 で、Bedrock では旧ツールが残る"
+  - "5.2 の作業側に 5.1 の相談役を付けると 400 になるか。受け付ける相談役は Fable 5.2 か Mythos 5.2 だけ"
+  - "所有者の一文は、構造を任せるプロンプトに入っているときだけ、差分と出力トークンを見る"
+  - "委任を誘う仕組みがあるときだけ、渡す先の既定モデルを見る。誘っていなければ対象外"
+limitations:
+  - "「タスクあたりおよそ半分の費用」は、High effort の Fable 5.2（45.3%）と Opus 5.5 の最高点（45.5%）を比べた初期テストである。標準単価は Opus 5.5（入力 4 ドル、出力 20 ドル）の 2 倍で、自分の予算の半額には使わない"
+  - "出力が最大 30% 速い条件（呼び出し元、effort、初回トークンまでか、標本）は本文に無く、図だけにある可能性が残る。料金表の別の約 30% はトークンが増える話で、5.1 も 5.2 も新しい側である"
+  - "5.2 の思考を読めないモデルへ戻すと、リクエストは成功し、落とした入力は課金されない。次のターンは、費用と待ち時間が増え得る"
+  - "名乗る一文を入れた小さい課題では出力が約 1.5 倍、出力単価 0.8 倍と掛けると出力費は 1.2 倍である。入力増は書かれておらず、本番の保証ではない。最後までやらせる文は、medium の記録済みセッションに足すと出力トークンが約 3 割増える"
+  - "許可の無いゼロデータ保持では API は 400 である。5.2 専用レート制限の件数と、データの所在は、まだ数値がない"
+unknowns:
+  - "最大 30% 高速の、呼び出し元と effort と初回トークンまでかと標本。本文には無く、図だけにある可能性が残る"
+  - "Fable 5.2 専用レート制限の RPM、ITPM、OTPM"
+  - "SLA と、データの所在リージョンの契約文"
+  - "自社の本番で、所有者の一文が出力を約 1.5 倍にするか"
+reviewed: true

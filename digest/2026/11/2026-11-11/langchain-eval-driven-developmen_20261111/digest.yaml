@@ -1,0 +1,66 @@
+source:
+  title: "LangChain が整理した Eval-Driven Development の手順と始め方"
+  url: null
+  path: "notes/zenn/articles/langchain-eval-driven-developmen_20261111.md"
+  primary:
+    - title: "What Is Eval-Driven Development?"
+      url: "https://www.langchain.com/blog/what-is-eval-driven-development"
+    - title: "AI Evals FAQ"
+      url: "https://hamel.dev/blog/posts/evals-faq/"
+    - title: "Demystifying evals for AI agents"
+      url: "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents"
+    - title: "LangSmith usage and billing"
+      url: "https://docs.langchain.com/langsmith/usage-and-billing"
+    - title: "LangChain Pricing"
+      url: "https://www.langchain.com/pricing"
+  retrieved_at: "2026-11-12"
+archetype:
+  primary: decision
+  secondary: [research]
+one_liner: "EDD は一つの行動を先に採点できる例にし、変更の前後を例ごとに比べる。成功条件を文章にできる行動に限り、そのまま採用する。"
+key_points:
+  - claim: "EDD は、何が良いかを定義し、評価を実装より先に書き、変更後は平均点だけでなく例ごとに比べる、の3段階である"
+    evidence: "Eval-Driven Development とは / 概要"
+    status: fact
+  - claim: "一度に扱うのは一つの行動で、仕様はいつ動くか、何をするか、何をしないか、壊してはいけない既存の動作の4つである。採点は最終回答だけでなく、途中の一つのステップ、ツール呼び出し、会話全体も対象になる"
+    evidence: "Eval-Driven Development とは / 特徴"
+    status: fact
+  - claim: "同じ入力が同じ出力になるとは限らないため、テスト駆動開発と違う。期待するツール呼び出しや出力形式のように性質として書ける検査はコードの評価器、一つの正解が無い文章の品質は人の合否と一致するか確かめた LLM の評価器に分ける"
+    evidence: "Eval-Driven Development とは / TDD との違い"
+    status: fact
+  - claim: "LangChain の 2026-11-09 の記事は、2023 年頃からある評価の考え方を、一つの行動の仕様と LangSmith に当てた説明であり、効果の測定結果ではない"
+    evidence: "注意点 / 測定済みの改善ではなく、手順の説明として読む。名前も考え方も新しくはない"
+    status: fact
+  - claim: "AI Evals FAQ は、失敗を事前に列挙しきれないため、実装より先に評価器を書くやり方にたいてい否と答える。成功条件が最初から文章の行動だけ評価を先に書き、失敗の種類をまだ書けないときは実行記録を読んでから評価器を足す"
+    evidence: "注意点 / 「評価を先に書く」への反対意見"
+    status: fact
+mental_models:
+  - type: behavior
+    key_message: "一つの行動を先に例と評価器にし、変更前の実験を基準に例ごとに比べ、人が確認した失敗だけを次の例に戻す"
+    reason_needed: "平均点ではなく、仕様から本番の失敗が次の例に戻るまでの循環で採否が決まるため"
+example:
+  description: "ドキュメント検索とウェブ検索を持つエージェントにチケット作成を足すと、VPN の設定手順を聞かれただけなのにチケットを作った。チケット作成ツールの説明を狭めたら用意した例は全部通った。平均点が上がったとは書かれているが、その数値は本文に無い"
+  hypothetical: false
+  evidence: "注意点 / 測定済みの改善ではなく、手順の説明として読む"
+applicability:
+  - "成功条件をすでに文章にできる、一つの行動を直す"
+  - "期待するツール呼び出しや出力形式を、テストが落ちることで変更を止めたい"
+  - "同じ例の差を画面に残したい、テスト結果を LangSmith の例の集合へ同期したい、本番の実行記録を採点したい、のどれかなら LangSmith を足す"
+decision_criteria:
+  - "次に直す行動は一つで、4つの仕様を数行で書いたか"
+  - "その行動の例を10件ほど作り、コードで落ちる検査を一つ付け、変更の前に一度走らせたか"
+  - "調整に使った例とは別に、取り置きの例を置いたか"
+  - "平均点の改善が2〜3ポイントなら、1回の実行で採否を決めていないか"
+  - "本番の採点を付けるなら、採点の対象にした実行記録が既定で180日保持に上がる費用を入れ、見合わなければ採点する割合を絞ったか。公式の例は10%である"
+limitations:
+  - "同じエージェント向けベンチマークでも、1回の試行で正解した割合は実行のたびに2.2〜6.0ポイント動く。公開研究の値であり、2〜3ポイントの改善を1回の実行で採用しない理由になる"
+  - "取り置きの問題と意味が重なるデータで訓練すると、取り置きの精度が最大22ポイント上がりうると、別の公開研究が書いている。モデル訓練の研究なので、取り置きだけでは未知の入力の証明にならない"
+  - "LangSmith では experiment（一つの版の結果）の実行記録は180日保持が既定で、新しい本番採点は対象の実行記録を既定で同じ保持に上げる（opt-out 可）。無課金で月5000件の実行記録を超えるか、1時間あたりの送信量の上限（例は500MB）に達すると拒否されることがある"
+  - "小さな例の集合での全問正解は、過学習の合図になりうると記事自身が警告している"
+  - "IssueBench は15タスクで、精度も再現率も本文に無く、実データをどこで混ぜたかは読み取れない"
+unknowns:
+  - "作例で平均点がいくら上がったかは本文に無い"
+  - "IssueBench の実データをどこで混ぜたかは読み取れない"
+  - "Deep Agents のベンチマークで機能や system prompt を削った後の悪化幅は出ていない"
+  - "Harbor が Terminal-Bench の公式ハーネスだと裏付けられるのは 2.0 までで、LangChain の記事は版を書いていない"
+reviewed: true

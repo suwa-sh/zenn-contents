@@ -1,0 +1,61 @@
+type: behavior
+title: "一つの行動を例にして比べ、失敗を次の例に戻す"
+message: "一つの行動を先に例と評価器にし、変更の前後を例ごとに比べ、本番の失敗を次の例に戻す"
+source: "notes/zenn/articles/langchain-eval-driven-developmen_20261111.md"
+components:
+  - id: spec
+    label: "一つの行動の仕様"
+    meaning: "いつ動くか、何をするか、何をしないか、壊してはいけない既存の動作"
+  - id: examples
+    label: "例と評価器"
+    meaning: "入力と期待する答えを持つ例と、コードまたは人の合否と突き合わせた LLM の採点"
+  - id: baseline
+    label: "変更前の実験"
+    meaning: "変更前に同じ例で一度走らせた基準"
+  - id: change
+    label: "エージェントを変える"
+    meaning: "仕様に沿ってエージェントを変更する"
+  - id: compare
+    label: "例ごとに比べる"
+    meaning: "同じ例で、悪化した例と改善した例を分ける。平均点だけでは採否を決めない"
+  - id: ship
+    label: "CI と本番"
+    meaning: "コードで書ける検査はテストの失敗で止め、本番の実行記録の一部を採点する"
+relationships:
+  - from: spec
+    to: examples
+    label: "先に書く"
+  - from: examples
+    to: baseline
+    label: "変更前に測る"
+  - from: baseline
+    to: change
+    label: "基準にする"
+  - from: change
+    to: compare
+    label: "同じ例で測る"
+  - from: compare
+    to: change
+    label: "もう一度変える"
+  - from: compare
+    to: ship
+    label: "通ったら進む"
+  - from: ship
+    to: examples
+    label: "失敗を例に戻す"
+omitted:
+  - item: "annotation queue（人が確認する待ち行列）"
+    reason: "失敗を例に戻す前に人が確認する、という本文の条件は図の外に残し、矢印は記事の流れ図と同じく失敗から例へ戻す一本にする"
+  - item: "取り置きの例、平均点、過学習への警告"
+    reason: "採否を例ごとにするという図の流れには足さず、本文の確認項目と注意点に残す"
+  - item: "LangSmith の dataset、experiment、保持期間と料金"
+    reason: "循環そのものは製品を前提にしない。製品名と費用は本文に残す"
+  - item: "テスト駆動開発との違い、コード評価器と LLM 評価器の使い分け"
+    reason: "評価器の中身の分け方であり、循環の順序ではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "全体の流れ の mermaid（仕様 → データセット → 評価器 → 変更前の実験 → エージェントを変更 → 例ごとに比較。比較から変更へ戻り、通ったものは CI と本番へ進み、失敗はデータセットに戻る）"
+  - "特徴（一回に一つの行動。変更前にベースラインを取る。本番の失敗を次の例にする）"
+  - "個人・少人数チームの始め方（変更の前に一度走らせ、落ちた例と通った例を一件ずつ確認する。平均点だけで採否を決めない）"

@@ -1,0 +1,41 @@
+type: structure
+title: "版の確認で許可を分ける"
+message: "実バイナリが系列の下限以上と確認できるまで、6操作を既定許可に置かない。確認後も3つは戻さない"
+source: "notes/zenn/articles/git-clone-import-github-open-p5_20261111.md"
+components:
+  - id: binary
+    label: "起動中の git"
+    meaning: "配布物に同梱されたものも含め、実際に起動するバイナリの版"
+  - id: below
+    label: "下限未満は6操作を外す"
+    meaning: "系列の下限未満なら、表の6操作をエージェントの既定許可に置かない"
+  - id: above
+    label: "下限以上は6操作を戻す"
+    meaning: "下限以上なら、この6件を理由に表の右端の停止を続けない"
+  - id: stay
+    label: "確認後も戻さない3つ"
+    meaning: "信頼できないストリームへの危険フラグ、helper の import、git 以外の実装"
+relationships:
+  - from: binary
+    to: below
+    label: "下限未満"
+  - from: binary
+    to: above
+    label: "下限以上"
+  - from: above
+    to: stay
+    label: "ただし残す"
+omitted:
+  - item: "6件それぞれの CVE 番号と効果"
+    reason: "図が伝えるのは許可の分岐であり、効果の対応は本文の要点に残す"
+  - item: "系列ごとの修正版の一覧"
+    reason: "下限の具体値は確認項目に書く。図は分岐だけを示す"
+  - item: "GitHub の配備とホステッド runner"
+    reason: "イメージの版で示されたあと CI の列を更新する条件であり、許可の分岐そのものではない"
+  - item: "conflict-marker-size の回避"
+    reason: "下限を確認できないあいだの回避であり、許可の分岐ではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "実バイナリの版で許可を分ける（手順 1〜3 と逆転する条件）"

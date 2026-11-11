@@ -1,0 +1,63 @@
+type: structure
+title: "実装の対価は三つの行に分かれて戻る"
+message: "Wayfinders が課題文を渡し、FDE が作ったエージェントから対価が作る費用、従量、成果連動に分かれて戻りうる。知見は自社の技術へ戻る"
+source: "notes/zenn/articles/fde-xtech-nikkei-atcl-nxt-p2_20261111.md"
+components:
+  - id: wayfinders
+    label: "Wayfinders"
+    meaning: "顧客の課題と成長機会を見つける役。課題文を作る"
+  - id: fde
+    label: "FDE"
+    meaning: "顧客の現場で実装と価値の検証を担う技術者"
+  - id: agent
+    label: "エージェント"
+    meaning: "FDE が現場の業務に実装したもの"
+  - id: build
+    label: "作る費用"
+    meaning: "プロジェクト費、実装費、月額固定など、作るときに戻りうる対価"
+  - id: usage
+    label: "従量"
+    meaning: "利用が増えると収益が伸びる課金。Usage Base"
+  - id: outcome
+    label: "成果連動"
+    meaning: "成果に対する課金。Outcome Base"
+  - id: ip
+    label: "自社技術"
+    meaning: "実装で得た知見が戻る先"
+groups:
+  - id: fees
+    label: "対価の行"
+    members: [build, usage, outcome]
+relationships:
+  - from: wayfinders
+    to: fde
+    label: "課題文を渡す"
+  - from: fde
+    to: agent
+    label: "実装する"
+  - from: agent
+    to: build
+    label: "作るときに戻りうる"
+  - from: agent
+    to: usage
+    label: "利用で戻りうる"
+  - from: agent
+    to: outcome
+    label: "成果で戻りうる"
+  - from: fde
+    to: ip
+    label: "知見を戻す"
+omitted:
+  - item: "顧客の事業部門"
+    reason: "課題文の起点だが、対価が三つの行に分かれることが伝えたいことのため"
+  - item: "Palantir の AIP・Foundry と富士通の基盤"
+    reason: "実装の入力であり、対価の分岐そのものではないため"
+  - item: "止まった月の固定、FCU、約1,500億円、2カ月、1〜5人"
+    reason: "契約で空欄にする確認や、契約条件に使わない数字であり、この図の関係ではないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "役割から対価へ戻る流れ（本文の図と、その直後の段落）"
+  - "対価の二つの箱"
+  - "事例に並ぶ価格と期間"

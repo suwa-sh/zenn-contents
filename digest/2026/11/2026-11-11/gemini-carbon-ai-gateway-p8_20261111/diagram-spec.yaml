@@ -1,0 +1,63 @@
+type: structure
+title: "公開向けは同じ導入単価"
+message: "公開向け API と AI Gateway は 11月30日まで同じ導入単価。Ultra と Fairwind はその行ではない"
+source: "notes/zenn/articles/gemini-carbon-ai-gateway-p8_20261111.md"
+components:
+  - id: carbon
+    label: "Gemini 4 Carbon"
+    meaning: "2026年11月10日に提供範囲を広げた Gemini 4 のモデル。API のモデル ID は gemini-4-carbon"
+  - id: api
+    label: "公開向けの有料 API"
+    meaning: "AI Studio の paid tier と Gemini for business"
+  - id: gateway
+    label: "Vercel AI Gateway"
+    meaning: "モデル ID は google/gemini-4-carbon。表示額は導入単価と同じ"
+  - id: intro
+    label: "11月30日まで $2 / $10"
+    meaning: "100万トークンあたりの公開向け導入単価。入力 $2、出力 $10"
+  - id: ultra
+    label: "Google AI Ultra"
+    meaning: "アプリ面への段階提供。API のトークン表とは別の購読"
+  - id: fairwind
+    label: "Fairwind の申請"
+    meaning: "Carbon for cyber。サイバー防御者向けの申請が残る入り方"
+groups:
+  - id: public
+    label: "公開向けの導入単価"
+    members: [api, gateway, intro]
+  - id: separate
+    label: "この金額の行ではない"
+    members: [ultra, fairwind]
+relationships:
+  - from: carbon
+    to: api
+    label: "載る"
+  - from: carbon
+    to: gateway
+    label: "載る"
+  - from: api
+    to: intro
+    label: "導入単価"
+  - from: gateway
+    to: intro
+    label: "表示は同じ額"
+  - from: carbon
+    to: ultra
+    label: "別の購読"
+  - from: carbon
+    to: fairwind
+    label: "申請が残る"
+omitted:
+  - item: "2026年12月1日からの入力 $4 / 出力 $20"
+    reason: "公開向け標準の日付境界だが、Gateway がその日に同じ額を表示するかは未確認なので、図に入れると確定したように見える"
+  - item: "Vertex の料金表と Cyber Permissive"
+    reason: "四つの提供面とは別の料金表。印字と請求額の区別は、この図のメッセージと別"
+  - item: "Batch、Flex、Priority"
+    reason: "既定は Standard の行。半額のタブは具体例で扱う"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "四つの提供面"
+  - "公開向け標準の単価"
+  - "Gateway の「50% off」"

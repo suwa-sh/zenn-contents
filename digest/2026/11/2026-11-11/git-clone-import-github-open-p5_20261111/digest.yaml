@@ -1,0 +1,66 @@
+source:
+  title: "Gitの6件の脆弱性修正と、エージェントが許可する操作"
+  url: null
+  path: "notes/zenn/articles/git-clone-import-github-open-p5_20261111.md"
+  primary:
+    - title: "Git security vulnerabilities announced"
+      url: "https://github.blog/open-source/git/git-security-vulnerabilities-announced-7/"
+    - title: "Git RelNotes 2.56.1"
+      url: "https://raw.githubusercontent.com/git/git/v2.56.1/Documentation/RelNotes/2.56.1.adoc"
+    - title: "Git RelNotes 2.50.2"
+      url: "https://raw.githubusercontent.com/git/git/v2.50.2/Documentation/RelNotes/2.50.2.adoc"
+    - title: "GHSA-vp2w-7xxj-jvxr"
+      url: "https://github.com/git/git/security/advisories/GHSA-vp2w-7xxj-jvxr"
+  retrieved_at: "2026-11-12"
+archetype:
+  primary: decision
+  secondary: [governance, incident]
+one_liner: "起動している git が系列の下限以上と確認できるまで、6件の対象操作をエージェントの既定許可に置かない。コード実行と書かれているのは再帰 clone の1件だけ。"
+key_points:
+  - claim: "6件は別々の入力が別々の git 操作に届く。コード実行と書いているのは再帰 clone の CVE-2026-111760 だけである。残りは範囲外の書き込み、スタック破壊によるサービス拒否、範囲外読みによるクラッシュ、ヒープ破壊、fast-import 経由のファイル読み書きである"
+    evidence: "注意点（冒頭の束ね方の否定）"
+    status: fact
+  - claim: "告知と RelNotes が示す下限は 2.56.1、2.55.1、2.54.1、2.53.1、2.52.1、2.51.3、2.50.2 である。2.51.0 から 2.51.2、2.50.0 と 2.50.1、2.49.1 以前は告知の修正版ではない。同じ日の GHSA は patched_versions が none のままで、未修正の根拠にはしない"
+    evidence: "修正が入った版 / 注意点（版のデータベース）"
+    status: fact
+  - claim: "許可は二段である。起動している実バイナリが下限未満なら、表の6操作をエージェントの既定から外す。CI はそのジョブが呼ぶ操作だけ外す。下限以上なら、この6件を理由にその停止は続けない。戻さないのは、信頼できないストリームへの --allow-unsafe-features、import capability の remote-helper が開く fast-import、git 以外の実装である"
+    evidence: "実バイナリの版で許可を分ける（手順 1〜3 と逆転する条件）"
+    status: fact
+  - claim: "github.com、GitHub Enterprise Cloud、data residency 付き Enterprise Cloud は修正を配備済みである。手元の git とセルフホストの runner はその配備の外である。GitHub Actions と Codespaces は告知時点では未来形で、イメージの版で修正済みと示されるまで修正済みにしない"
+    evidence: "GitHub への配備 / 注意点（サーバ側処理とホステッド runner）"
+    status: fact
+  - claim: "決まった GitHub リモートへの非再帰 clone は CVE-2026-111760 の到達条件の外である。未知サーバへの clone は CVE-2026-113408 の側に残る"
+    evidence: "実バイナリの版で許可を分ける（手順 2）"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "実バイナリが系列の下限以上と確認できるまで6操作を既定許可に置かず、確認後も3つは戻さない"
+    reason_needed: "6件を同じコード実行として一律に止めると告知より広く、版を見ずに戻すと未修正のバイナリへ操作を許す"
+example:
+  description: "信頼できない URL への clone --recurse-submodules は CVE-2026-111760 で、パス名の長さが約 4 GiB 級だとコード実行になりうる。submodule.recurse=true だけでは clone は再帰しない。信頼できない URL では、版を確認するまでフラグを付けない"
+  hypothetical: false
+  evidence: "注意点（CVE-2026-111760）/ 実バイナリの版で許可を分ける（表の再帰 clone の行）"
+applicability:
+  - "エージェントが信頼できないリポジトリへ起動する git の許可を決めるとき"
+  - "CI が再帰 clone、未知サーバへの clone、署名付き tag のマージ、三方マージ、バイナリパッチの適用、fast-import のどれを呼ぶか決めるとき"
+  - "スキャナーの GHSA や MITRE の範囲を、未修正か修正済みかの根拠にするか決めるとき"
+decision_criteria:
+  - "git --version が系列の下限以上か。2.51 系は 2.51.3、2.50 系は 2.50.2 以上。2.49.1 以前は下限未満"
+  - "下限未満なら6操作をエージェントの既定から外し、CI はジョブが呼ぶ操作だけ外しているか"
+  - "下限以上でも、信頼できないストリームへの --allow-unsafe-features、import capability の remote-helper、git 以外の実装は戻していないか"
+  - "Actions と Codespaces を、GitHub がイメージの版で修正済みと示すまで修正済みにしていないか"
+  - "GHSA の patched_versions: none と MITRE の 2.49.1 未満をそのまま採用していないか。2.49.1 の xmerge.c は int size のまま"
+limitations:
+  - "6件を同じコード実行として止めると告知より広い。効果は操作ごとに違う"
+  - "表の右端が止めている未知サーバへの操作は clone である。fetch を同じ停止に含めるかは表の記載からは決まらない"
+  - "CVE-2026-113408 の書き込みは、空リポジトリを protocol v2 で clone したあとの files reference backend の参照更新と書いてある。空でないリポジトリで起きるかは告知の到達に無く、reftable で残るかは一次資料に無い"
+  - "三方マージの出力サイズの足し算が溢れると本文はヒープを壊すと書く。NVD と work item 814 は最低でもクラッシュで、ヒープ破壊はより悪い可能性だとする。バイナリパッチは宣言した展開後サイズが 1023 MiB 以上のとき範囲外読みでクラッシュしうる。fast-import は入力中の 3 機能が任意ファイルを読むか、指定パスを作るか追記する"
+  - "libgit2、go-git、JGit は Blog と RelNotes の対象外で、git の版番号では塞がらない"
+  - "回避の * conflict-marker-size=7 は、下限を確認できないあいだのもので、修正の代わりにはならない"
+unknowns:
+  - "protocol v2 の参照名を検証したあと、reftable backend で同じパストラバーサルの書き込みが残るか"
+  - "GitHub Actions と Codespaces のランナーイメージが、告知の will receive をどのビルドで満たしたか"
+  - "GitHub Desktop と Copilot app の調整中リリースが、どの版番号で出荷されたか"
+  - "libgit2、go-git、JGit が同等のバグを持つか"
+  - "CVE が NVD と MITRE に載るまでの間、スキャナーがレコード無しを影響無しと表示するか"
+reviewed: true
