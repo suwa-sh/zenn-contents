@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (628)
+## Articles: 下書き (627)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -16,7 +16,6 @@
 | 2026-11-11 | [📐 富士通FDEの対価は人月、利用料、成果連動で行が分かれる](articles/fde-xtech-nikkei-atcl-nxt-p2_20261111.md) | AIAgent, Management, Palantir |
 | 2026-11-11 | [🧭 Gemini 4 Carbonの提供面と、2026年11月30日までの公開単価](articles/gemini-carbon-ai-gateway-p8_20261111.md) | Gemini, GoogleCloud, Vercel, LLM |
 | 2026-11-11 | [🔐 Gitの6件の脆弱性修正と、エージェントが許可する操作](articles/git-clone-import-github-open-p5_20261111.md) | Git, Security, GitHub, AIAgent |
-| 2026-11-11 | [🧪 LangChain が整理した Eval-Driven Development の手順と始め方](articles/langchain-eval-driven-developmen_20261111.md) | LangChain, LangSmith, LLM, AIAgent, Evaluation |
 | 2026-11-11 | [🔐 Notionが通知したFireworks AIインシデントで委託先に残ったデータの境界](articles/notion-fireworks-ai-notion-p4_20261111.md) | Security, Notion, AI, Privacy |
 | 2026-11-10 | [🧩 日常の設定変更が崩すハーネスの実行順と保持状態](articles/arxiv-abs-2611-09088-p2_20261110.md) | AIAgent, LLM, SoftwareEngineering |
 | 2026-11-10 | [🧭 エージェント開発で意図的なペースが監督機会を残す条件](articles/arxiv-abs-2611-09550-p3_20261110.md) | AIAgent, LLM, SoftwareEngineering |
@@ -640,10 +639,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (203)
+## Articles: 公開済み (204)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-11-12 | [🧪 LangChain が整理した Eval-Driven Development の手順と始め方](articles/langchain-eval-driven-developmen_20261111.md) | LangChain, LangSmith, LLM, AIAgent, Evaluation |
 | 2026-11-10 | [🧠 Anthropic のエージェントメモリの4層構造と Dreams API の使い方](articles/components-of-agent-memory_20261107.md) | Claude, AI, LLM, AIエージェント |
 | 2026-11-07 | [🗄️ GitHubが単一リポジトリの同時push向けに再設計したGit格納](articles/github-push-git-github-inside-p1_20261106.md) | GitHub, Git, AIAgent, Azure |
 | 2026-11-05 | [🌲 OpenAIのPandoはGitのコマンドを残し格納と配信だけを替える](articles/openai-codex-git-pando-openai-p1_20261104.md) | Git, OpenAI, AIAgent, Monorepo |

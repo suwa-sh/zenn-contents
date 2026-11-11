@@ -3,7 +3,8 @@ title: "LangChain が整理した Eval-Driven Development の手順と始め方"
 emoji: "🧪"
 type: "tech"
 topics: ["LangChain", "LangSmith", "LLM", "AIAgent", "Evaluation"]
-published: false
+published: true
+published_at: 2026-11-12
 ---
 
 LLM エージェントを直したとき、「良くなったのか、悪くなったのか」を目視だけで判断するのは、例が増えるとすぐに難しくなります。LLM アプリ開発のフレームワークを提供する LangChain は 2026-11-09 のブログ記事 [What Is Eval-Driven Development?](https://www.langchain.com/blog/what-is-eval-driven-development) で、この問題への進め方を Eval-Driven Development（EDD）としてまとめました。
