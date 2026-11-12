@@ -1,0 +1,51 @@
+type: structure
+title: "成果物に残る指示は両端に割れる"
+message: "変更後のファイルに痕跡が残る指示だけが検査対象になり、検査できた指示は常に守るか一度も守らないかに割れる"
+source: "notes/zenn/articles/agents-md-arxiv-abs-2611-13709-p6_20261112.md"
+components:
+  - id: sentences
+    label: "指示の文"
+    meaning: "指示ファイルから取り出した候補の文"
+  - id: trace
+    label: "成果物に残る"
+    meaning: "変更後のファイルだけで遵守を判定できる指示"
+  - id: always
+    label: "常に守る"
+    meaning: "適用したコミットのすべてで守られた指示"
+  - id: never
+    label: "一度も守らない"
+    meaning: "適用したコミットのどれでも守られなかった指示"
+  - id: partial
+    label: "一部だけ"
+    meaning: "守るコミットと守らないコミットが混ざる指示"
+groups:
+  - id: measured
+    label: "検査できた指示"
+    members: [always, never, partial]
+relationships:
+  - from: sentences
+    to: trace
+    label: "痕跡が残るものだけ"
+  - from: trace
+    to: always
+    label: "多い"
+  - from: trace
+    to: never
+    label: "次いで多い"
+  - from: trace
+    to: partial
+    label: "少ない"
+omitted:
+  - item: "候補文から観測可能ラベルまでの段（14,902 件から 6,552 件）"
+    reason: "伝えたいことは、痕跡が残る指示が検査対象になり両端に割れることなので、途中の段は外した"
+  - item: "カテゴリ差とエージェント差"
+    reason: "割れの形が主題で、どの種類・どのエージェントが高いかは図の外に残す"
+  - item: "フック、CI、permissions.deny への置き分け"
+    reason: "検査の対象になるかの関係が主題で、置き場の判断は本文に残す"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "### 遵守率の分布（常に守る 54.4%、一度も守らない 37.3%、中間 8.3%）"
+  - "### 平均と中央値の分母"
+  - "## ファイルに残すものと外で止めるもの（成果物だけで合否が決まるかで分ける）"

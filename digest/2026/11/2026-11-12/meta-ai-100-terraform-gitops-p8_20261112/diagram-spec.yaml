@@ -1,0 +1,62 @@
+type: structure
+title: "人が編集する正本と、クラスタが見る記録は別"
+message: "人が編集する正本と、クラスタが見る Git の記録は別で、クラスタは記録へ合わせる"
+source: "notes/zenn/articles/meta-ai-100-terraform-gitops-p8_20261112.md"
+components:
+  - id: cfg
+    label: "Configerator"
+    meaning: "Meta の実行時設定。人が編集する正本の一つ"
+  - id: tf
+    label: "Terraform"
+    meaning: "基盤の情報を持つ。人が編集する正本の一つ"
+  - id: short
+    label: "短いアプリ定義"
+    meaning: "所有、成果物、配備先、検証チェックなどを書いた入力"
+  - id: gitin
+    label: "Gitの入力"
+    meaning: "選ばれた設定と基盤情報を一方向でコピーした、バージョン付きの入力"
+  - id: kargo
+    label: "Kargo"
+    meaning: "環境のあいだの昇格を進め、望ましいリリース記録を Git に書き戻す"
+  - id: gitrel
+    label: "リリース記録"
+    meaning: "クラスタが見る、Git 上の望ましいリリースの完全な記録"
+  - id: wl
+    label: "ワークロードクラスタ"
+    meaning: "Argo CD がリリース記録へ合わせる先"
+groups:
+  - id: sources
+    label: "人が編集する正本"
+    members: [cfg, tf, short]
+relationships:
+  - from: cfg
+    to: gitin
+    label: "選ばれた出力を一方向でコピー"
+  - from: tf
+    to: gitin
+    label: "基盤情報を一方向でコピー"
+  - from: short
+    to: gitrel
+    label: "マニフェストへ変換"
+  - from: gitin
+    to: gitrel
+    label: "入力を変換に使う"
+  - from: kargo
+    to: gitrel
+    label: "記録を書き戻す"
+  - from: gitrel
+    to: wl
+    label: "Argo CDが記録へ合わせる"
+omitted:
+  - item: "Terraform がクラウド資源とクラスタを作る経路"
+    reason: "伝えたいことは人が編集する正本とクラスタが見る記録の分離であり、基盤の作成は別の経路のため"
+  - item: "一方向コピーの箱と、プラットフォーム変換の箱"
+    reason: "矢印のラベルに畳んだ。コピー元へ書き戻す矢印は事例に無い"
+  - item: "環境間の昇格の段、Mononoke、設定の層、集中 Argo CD への移行"
+    reason: "記録を書く役と合わせる役が分かれれば足り、段の数やリポジトリの実装は主張に関係しないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "編集の正本とクラスタが見る記録"
+  - "入力からマニフェストまで"

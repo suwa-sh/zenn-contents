@@ -1,0 +1,50 @@
+type: structure
+title: "予算科目と資産計上は別"
+message: "予算科目は支払いのラベル。資産になるかは契約の中身で決まる"
+source: "notes/zenn/articles/pyf-product-yosan-kamoku-fit_20261112.md"
+components:
+  - id: budget
+    label: "顧客の年度予算"
+    meaning: "支出を計画した年間の枠"
+  - id: line
+    label: "用途別の予算科目"
+    meaning: "研修費、業務委託費、広告宣伝費、設備投資などの用途のラベル。勘定科目ではない"
+  - id: offer
+    label: "契約と提供形態"
+    meaning: "自社が変えられる、どの科目に載せるかの形"
+  - id: asset
+    label: "資産計上の判定"
+    meaning: "取得、機械への組み込み、特定された資産のリースのときだけ資産になる"
+  - id: account
+    label: "会計の勘定科目"
+    meaning: "財務会計の記録。予算科目とは別物で、矢印ではつながらない"
+groups:
+  - id: plan
+    label: "顧客の年度計画"
+    members: [budget, line]
+  - id: books
+    label: "会計の記録"
+    members: [account, asset]
+relationships:
+  - from: budget
+    to: line
+    label: "用途で分ける"
+  - from: offer
+    to: line
+    label: "どの科目から払えるか"
+  - from: offer
+    to: asset
+    label: "中身を変えたときだけ"
+omitted:
+  - item: "研修費、業務委託費、広告宣伝費、システム投資の個別の箱"
+    reason: "用途別の予算科目にまとめた。個別の費目名はこの図の区別に不要"
+  - item: "勘定科目から予算科目への点線"
+    reason: "別物であることは、会計の記録の枠に置いて矢印を付けないことで示す。流れの矢印にすると、勘定が科目を生むように誤読される"
+  - item: "フィットジャーニーの6段階、BANT、MEDDICC"
+    reason: "既存枠との差分は文章で足り、この図の1メッセージではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "概念構造: 顧客の年度予算は用途別の予算科目に分かれる。自社の契約と提供形態が、どの科目から払えるかを決める。会計の勘定科目は別"
+  - "実務上の結論: 提案書の費目だけを設備投資と書いても資産計上にはならない。取得、機械への組み込み、特定された資産のリースのいずれかに契約を変えたときだけ資産になる"

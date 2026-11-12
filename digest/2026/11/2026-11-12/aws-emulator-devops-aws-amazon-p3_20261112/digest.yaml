@@ -1,0 +1,62 @@
+source:
+  title: "AWS Emulatorでエージェントのクラウド操作をローカルで受ける"
+  url: null
+  path: "notes/zenn/articles/aws-emulator-devops-aws-amazon-p3_20261112.md"
+  primary:
+    - title: "What is AWS Emulator?"
+      url: "https://docs.aws.amazon.com/emulator/latest/userguide/what-is-service.html"
+    - title: "Security in AWS Emulator"
+      url: "https://docs.aws.amazon.com/emulator/latest/userguide/security.html"
+    - title: "Pointing your AWS SDK at AWS Emulator"
+      url: "https://docs.aws.amazon.com/emulator/latest/userguide/point-sdk-to-emulator.html"
+    - title: "Test your applications against AWS locally with AWS Emulator"
+      url: "https://aws.amazon.com/blogs/aws/test-your-applications-against-aws-locally-with-aws-emulator/"
+  retrieved_at: "2026-11-13"
+archetype:
+  primary: decision
+  secondary: [architecture]
+one_liner: "AWS Emulator は CLI と SDK の呼び出しを自分のマシンや CI で受ける。短い作成と入力検証はここを既定にし、権限とアカウントやリージョンの分離は実 AWS に残す。"
+key_points:
+  - claim: "AWS Emulator は自分のマシンや CI で AWS の API を受ける。既定の待受は 127.0.0.1:9297 の HTTPS で、資源はプロセスのメモリにあり停止すると消える。アカウントは要らず、追加料金も無い"
+    evidence: "AWS Emulatorとは / 1つのエンドポイントで受ける / 状態はプロセスのメモリだけ"
+    status: fact
+  - claim: "未実装の操作は HTTP 501（未実装）で落ちる。実装した操作は AWS と同じ結果を目指すが、忠実度（応答が AWS と揃う度合い）はサービスと機能でばらつく"
+    evidence: "1つのエンドポイントで受ける / 注意点 / 同じ結果、という一文の範囲"
+    status: fact
+  - claim: "AWS が拒否する要求は成功しえ、許可する要求は失敗しうる。起動のたびにエミュレータが書く署名用の鍵で署名した要求は拒否しない"
+    evidence: "注意点 / IAM とリソースポリシー / 1つのエンドポイントで受ける"
+    status: fact
+  - claim: "エミュレータが動かす関数コードはマシンから隔離されず、実行ユーザーの権限でファイルを読み書きできる"
+    evidence: "状態はプロセスのメモリだけ / 注意点 / サンドボックスという語"
+    status: fact
+  - claim: "アカウントやリージョンを変えても状態は分かれない。権限、その分離、試験がカバーしない挙動、本番前の通し確認は実 AWS に残す"
+    evidence: "試行をどの段に置くか / 実行環境を二段にする"
+    status: interpretation
+mental_models:
+  - type: structure
+    key_message: "短い作成と入力検証はエミュレータのメモリへ、権限と境界の確認は実 AWS へ分ける"
+    reason_needed: "呼び出しの向け先を一段にすると、エミュレータ上の成功を権限や境界の正しさと取り違えるため"
+example:
+  description: "起動直後に aws sts get-caller-identity を実行する。Account が 000000000000 でなければ、エミュレータではなく実 AWS を呼んでいるので止める"
+  hypothetical: false
+  evidence: "実行環境を二段にする / 推奨する分け方"
+applicability:
+  - "S3 のバケットや DynamoDB のテーブルを作り、不正な名前が AWS と同じ検証エラーになるかを見て、次の修正へ進む短い試行"
+  - "呼び出しの形は CLI と SDK のまま、向ける先だけをローカルにしたいとき"
+decision_criteria:
+  - "使う操作が、公開されている忠実度の試験一覧（各試験が呼ぶサービスと操作）にあるか"
+  - "get-caller-identity の Account が 000000000000 か"
+  - "権限の成否を、どのサービスでもエミュレータの成功で終えていないか"
+  - "仕事が最初から権限の上限やアカウント間の拒否を見ることなら、エミュレータを既定にしていないか"
+  - "使う操作の大半が 501 か、使う版の試験で失敗が集まっているなら最初から実 AWS にし、サービス全体の合格の割合だけでは判断していないか"
+limitations:
+  - "製品ページは同じ結果と同じエラー、ネットワークの無いサンドボックスとも書くが、User Guide で応答がいちばん近いのは資源の作成・参照・更新・削除・一覧である。テレメトリは操作の回数、結果の区分、OS、SDK の種類などを送り、要求と応答の中身は送らず、既定でオンである"
+  - "AWS_ENDPOINT_URL が無いと、見つかった資格情報で実 AWS を呼ぶ。AWS_ENDPOINT_URL に localhost を使うと、JavaScript、Java、Go はバケット名をホスト名に載せ、エミュレータは受けないので、値は 127.0.0.1 にする"
+  - "User Guide の分数は、そのサービスの試験件数のうちの合格件数で、同じ版どうしだけで比べる。1 つの割合を忠実度とは呼ばず、公開ファイルの 1 行が公式の 1 試験かは未確認である"
+  - "データプレーンを一括で実 AWS に置けとは User Guide は書いていない"
+  - "KMS の鍵ポリシーと S3 のバケットポリシーは見ない。IAM のユーザーとロールを違うやり方で評価するのは一部のサービスだけで、サービス名も日本語版との差も未確認である"
+unknowns:
+  - "どのサービスがエミュレータ内の IAM を評価するかは security の頁で名指しされていない"
+  - "User Guide の日本語版は未確認で、英語版との差は不明"
+  - "公開されているスコアファイルの 1 行を公式の 1 fidelity test と呼べるかは突合していない"
+reviewed: true

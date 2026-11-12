@@ -1,0 +1,65 @@
+source:
+  title: "A2UI 1.0はホストが許可した部品だけでエージェント画面を描く"
+  url: null
+  path: "notes/zenn/articles/google-a2ui-1-0-ui-developers-p2_20261112.md"
+  primary:
+    - title: "A2UI Protocol v1.0"
+      url: "https://a2ui.org/specification/v1.0-a2ui/"
+    - title: "A2UI 1.0: Build delightful, fast, reliable agentic experiences"
+      url: "https://developers.googleblog.com/a2ui-10-build-delightful-fast-reliable-agentic-experiences/"
+    - title: "Renderer support"
+      url: "https://github.com/a2ui-project/a2ui/blob/main/docs/public/reference/renderers.md"
+    - title: "GHSA-72qq-p3r5-f7wq"
+      url: "https://github.com/a2ui-project/a2ui/security/advisories/GHSA-72qq-p3r5-f7wq"
+    - title: "who-is-it-for（リポジトリ原稿）"
+      url: "https://github.com/a2ui-project/a2ui/blob/main/docs/public/introduction/who-is-it-for.md"
+  retrieved_at: "2026-11-13"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "A2UI 1.0 は、ホストが許可した部品名の JSON だけで画面を組むプロトコルで、公式表で v1.0 が Stable な実装は React、Lit、Angular である。"
+key_points:
+  - claim: "エージェントは見た目を描かない。カタログに無い部品は描かず、対応すると宣言したカタログの一覧へはフォールバックしない"
+    evidence: "A2UIとは / 責任は 3 層に分かれる / どの面を 1.0 の契約にするか"
+    status: fact
+  - claim: "文字入力、スライダー、チェックはデータモデルの更新だけで、その操作だけでは新しい会話ターンを始めない。新しい会話は action が始める。ホストに実装が無い関数は、action とは別のメッセージで実行を依頼する"
+    evidence: "責任は 3 層に分かれる（操作の見え方の表）"
+    status: fact
+  - claim: "公式表の v1.0 が Stable なのは React、Lit、Angular だけである。Flutter と SwiftUI は Alpha、Jetpack Compose 向けの A2UI 1.0 は Planned で、Stable と同じ完成度にはしない"
+    evidence: "レンダラーの対応 / 告知が触れる面と公式表の列"
+    status: fact
+  - claim: "カタログの protocolVersion を省略すると既定は 0.9 である。1.0 では 1.0 の明示が必須である。部品 id は UAX #31 に従い、ハイフンや数字始まりは無効である"
+    evidence: "メッセージは version と本体キー 1 つ / 基本カタログは参照実装"
+    status: fact
+  - claim: "実行可能コードをメッセージに載せないのは配送の形である。action には利用者が入れた値が載る。sendDataModel が true でも打鍵のたびには送らず、次にレンダラーが出すメッセージに画面全体の値が、その画面を作ったエージェントへ付く"
+    evidence: "実行可能コードをメッセージに載せない契約の出口 / CVE-2026-10032 は告知より前に修正版がある"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "描く部品はホストのカタログに限られ、新しい会話は action だけが始める"
+    reason_needed: "描画の許可範囲と、入力が会話になる条件は別の境界であり、一つにまとめると打鍵のたびにエージェントへ送ると読める"
+example:
+  description: "文字入力はデータモデルの更新だけ、確認や送信のボタンは action、URL を開くなどの関数はホストに実装があれば会話を始めない。告知の「確認するまで何も送られない」は物語で、確認、編集、送信という予約名は無い"
+  hypothetical: false
+  evidence: "責任は 3 層に分かれる（操作の見え方の表） / 入力と送信と関数は別の層"
+applicability:
+  - "自前のデザインシステムを持ち、未知の部品を拒否できるホストなら、A2UI 1.0 を画面のメッセージの形にする"
+  - "最初に繋ぐレンダラーを React、Lit、Angular のいずれかに限る"
+  - "部品を置けない遠隔画面は A2UI にせず、A2UI の原稿が示す iframe（外の画面の埋め込み）にする"
+decision_criteria:
+  - "protocolVersion は 1.0 とし、0.9 のカタログは 1.0 の実行環境へ載せない"
+  - "部品 id は UAX #31（例: submit_btn）にし、公式例のハイフンはコピーしない"
+  - "sendDataModel は、画面全体の値をその画面を作ったエージェントへ渡してよいときだけ true にする"
+  - "openUrl と Markdown の画像とリンクは、javascript: を拒むだけでは足りず、許可する接続先を仕様とは別に決める"
+  - "Web の共有パッケージ @a2ui/web_core は、javascript: を拒む 0.10.2 以降を使う"
+limitations:
+  - "告知では Gemini が今日描くプロトコルは 0.9.1 である。非 Web と Gemini Enterprise の 1.0 は先送りで、公開情報だけでは後者がどのビルドで完了するかは決まっていない"
+  - "公式例のハイフン付き id は、JSON Schema の検証だけでは落とせない"
+  - "レンダラー同士を同じ意味の部品の木に揃える適合試験は未完である"
+  - "遠隔画面を iframe にするという A2UI の原稿の公開ページは、2026-11-12 時点で確認できていない"
+  - "Atlassian と Bloomberg の本番のプロトコル版は、この記事には無い"
+unknowns:
+  - "Gemini Enterprise の 1.0 更新がどのビルドで完了するか"
+  - "who-is-it-for の原稿を公開サイトが 2026-11-12 時点で配信しているか"
+  - "Atlassian と Bloomberg が本番で使っているプロトコル版"
+reviewed: true

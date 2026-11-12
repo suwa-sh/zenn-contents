@@ -1,0 +1,53 @@
+type: structure
+title: "A2UI 1.0 の画面の境界"
+message: "描く部品はホストのカタログに限られ、新しい会話は action だけが始める"
+source: "notes/zenn/articles/google-a2ui-1-0-ui-developers-p2_20261112.md"
+components:
+  - id: agent
+    label: "エージェント"
+    meaning: "画面の意図を、部品名の JSON で出す側。見た目は描かない"
+  - id: catalog
+    label: "部品カタログ"
+    meaning: "ホストが許可した部品と関数の名前の契約"
+  - id: renderer
+    label: "レンダラー"
+    meaning: "契約に合う JSON だけを、ホストの部品で描く実装"
+  - id: screen
+    label: "画面"
+    meaning: "利用者が見る一枚の画面領域"
+  - id: model
+    label: "データモデル"
+    meaning: "画面の値をエージェントへ送る前に置く場所"
+groups:
+  - id: host
+    label: "ホスト"
+    members: [catalog, renderer, screen, model]
+relationships:
+  - from: agent
+    to: renderer
+    label: "version 1.0 の JSON"
+  - from: catalog
+    to: renderer
+    label: "許可した部品と関数"
+  - from: renderer
+    to: screen
+    label: "登録済み部品で描く"
+  - from: screen
+    to: model
+    label: "入力はローカル更新"
+  - from: screen
+    to: agent
+    label: "action が新しい会話を始める"
+omitted:
+  - item: "callAgentFunction と callRendererFunction"
+    reason: "伝えたいことは描画の許可範囲と、会話が始まる条件であり、関数の往復は別の出口だから"
+  - item: "deleteSurface など残りのメッセージ種別"
+    reason: "画面を開く、描く、入力を留める、action で会話を始める、の関係に不要なため"
+  - item: "レンダラー対応表（Stable / Alpha / Planned）"
+    reason: "どの実装面を 1.0 とみなすかは別の判断で、この図の関係ではないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "責任は 3 層に分かれる（エージェント、カタログ、レンダラーの図と、操作の見え方の表）"
+  - "A2UIとは（入力はデータモデルにたまり、新しい会話は action）"

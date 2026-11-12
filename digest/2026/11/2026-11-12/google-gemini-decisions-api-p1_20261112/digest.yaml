@@ -1,0 +1,65 @@
+source:
+  title: "閉じた判断を校正済み確率で返すGemini Decisions API"
+  url: null
+  path: "notes/zenn/articles/google-gemini-decisions-api-p1_20261112.md"
+  primary:
+    - title: "Decisions API"
+      url: "https://aistudio.google.com/docs/decisions-api"
+    - title: "Gemini Decision 1"
+      url: "https://aistudio.google.com/docs/models/gemini-decision-1"
+    - title: "Gemini Decisions API: Fast, calibrated multimodal decisions"
+      url: "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/"
+    - title: "Pricing の Gemini Decision 節"
+      url: "https://aistudio.google.com/docs/pricing"
+    - title: "Rate limits の Gemini Decision 節"
+      url: "https://aistudio.google.com/docs/rate-limits"
+  retrieved_at: "2026-11-13"
+archetype:
+  primary: architecture
+  secondary:
+    - decision
+one_liner: "Gemini Decisions API は、共有入力へ、答えの型を限った質問を当て、文章の代わりに数値を返す。返すのは確率か、段階の添字の期待値で、実行の閾値は呼び出し側が持つ。"
+key_points:
+  - claim: "noul は yes の確率、choice は合計 1 の選択肢の確率、score は低い方から高い方へ並べたレベル添字の期待値である。1 回に 1 件から 1,000 件を同時に評価するが、質問は互いの答えを見ず、結果を対応づける名前はモデルに渡らないので、質問文は instructions に書く"
+    evidence: "Gemini Decisions APIとは / 特徴（モデルは質問キーを見ない）"
+    status: fact
+  - claim: "生成が必要な要約、抽出、引数付きツール呼び出しは Interactions API に残す"
+    evidence: "Gemini Decisions APIとは / 特徴の向く API の表"
+    status: fact
+  - claim: "confidence は勝ち筋の確率そのものである。noul では max(noul, 1 - noul)、choice と score では最大確率。noul は 0.01 以上 0.99 以下で、noul の confidence も 0.99 が上限になる。0.99 より大きいことを noul の実行条件にすると、その条件は一度も真にならない"
+    evidence: "特徴 / トラブルシューティング「閾値を超えても自動実行されない」"
+    status: fact
+  - claim: "出力トークンは常に 0 で、課金対象は入力トークンだけである。有料枠はテキスト、画像、動画、音声、PDF を通して 100 万トークンあたり 0.10 米ドル。共有入力は質問数にかかわらず 1 回だけ数える。キャッシュは無く、再送はそのたびに全入力トークンを数える"
+    evidence: "特徴 / トークンと料金 / 入力の寿命と再送"
+    status: fact
+  - claim: "モデルは gemini-decision-1 である。公開面は Gemini Developer API の v1beta だけである。2026 年 11 月以降の Google Gen AI SDK の既定は v1 で、Decisions の呼び出しは v1beta を指定する"
+    evidence: "特徴 / トラブルシューティング「v1 へ送って失敗する」"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "全質問が同じエンコード結果を見て、互いの答えは渡らない"
+    reason_needed: "質問を足すと他の答えが変わると読むと、依存する判断を同じリクエストに載せてしまう"
+example:
+  description: "ガイドの複数質問の例は、同じ注文と顧客の文へ、欠陥か（noul）、次の対応（choice）、解約の段階（score）を同時に聞く。応答例は欠陥確率 0.94、次の対応で一番高い選択肢の確率 0.76、解約は 4 段階（添字 0 から 3）の期待値 2.99。ガイドがこの例で使う 0.9 と 0.6 は、欠陥の確率が 0.9 より大きいことと、次の対応の confidence が 0.6 より大きいことであり、業務の閾値ではない"
+  hypothetical: false
+  evidence: "複数質問"
+applicability:
+  - "同じ入力を、ツール、キュー、モデル、エージェントのどれへ渡すかを確率で切る"
+  - "多数のポリシー条文を 1 つの入力へ同時に当てる"
+  - "候補を、score の段階で並べる"
+decision_criteria:
+  - "払戻しと権限の変更は、確率が高くても人または第二の検査に残しているか"
+  - "ツール実行の許可を、一番有力な選択肢や noul の 0.99 だけでは渡さず、閾値、保留、差し戻しをアプリ側に持っているか"
+  - "閾値を、正解を付けた自前の呼び出しで、偽陽性と偽陰性の損失から決めているか"
+  - "choice はどれにも合わなくても確率を配るので、confidence の閾値か、別の noul による範囲確認か、説明付きの受け皿を持っているか"
+limitations:
+  - "校正済みは公開ガイドがこの確率につける呼び方である。0.01 から 0.99 の区間とも、実測の頻度との対応とも、ガイドは結びつけて書いていない"
+  - "テキスト生成、関数呼び出し、キャッシュ、Batch API は対応外である"
+  - "公開ブログの首位や nearly 5 倍安いという倍率は、同じ記事の図のとおりではなく、入力単価の式でもない。図では精度 9 行のうち 1 位は 7 行、7 つの共有評価の合計は約 4.7 倍で、Jev 列は Decision 1 より安い"
+  - "レイテンシがほぼ平坦という記述の条件は、マルチモーダル入力、質問 1 件から 100 件、コンテキスト 16K トークンまでである。上限の 1,000 件と 262,144 トークンへ延ばす記述は API ガイドに無い"
+  - "Vertex AI のエンドポイントと、gemini-decision-1 の画像や動画の解像度ごとのトークン数は、2026-11-12 時点の公開ガイドに無い。安全フィルタが共有入力だけを見るのか、各質問の文も見るのかは未確認である"
+unknowns:
+  - "安全フィルタが共有入力だけを見るのか、各質問の instructions も見るのか"
+  - "Decision 1 の解像度ごとのトークン数。Gemini 3 と Gemini 4 の表を適用できるかは未確認"
+  - "Vertex AI のエンドポイント。ブログの coming soon は Google Cloud の Gemini で、公開ガイドに Vertex AI という名前のエンドポイントは無い"
+reviewed: true

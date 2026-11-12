@@ -1,0 +1,68 @@
+source:
+  title: "MetaのAI基盤がアプリ配備をTerraformからGitOpsへ分けた設計"
+  url: null
+  path: "notes/zenn/articles/meta-ai-100-terraform-gitops-p8_20261112.md"
+  primary:
+    - title: "CNCF case study: Meta"
+      url: "https://www.cncf.io/case-studies/meta/"
+    - title: "Kargo verification"
+      url: "https://docs.kargo.io/user-guide/how-to-guides/verification"
+    - title: "Kargo working with freight"
+      url: "https://docs.kargo.io/user-guide/how-to-guides/working-with-freight"
+    - title: "Argo CD Resource Health"
+      url: "https://argo-cd.readthedocs.io/en/stable/operator-manual/health/"
+    - title: "DaemonSet health implementation (master, retrieved 2026-11-12)"
+      url: "https://raw.githubusercontent.com/argoproj/argo-cd/master/gitops-engine/pkg/health/health_daemonset.go"
+  retrieved_at: "2026-11-13"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "Meta の Cloud Foundation は Terraform に基盤を残し、アプリの望ましいリリース記録を Git に置いてクラスタを合わせる。経路を分けるのは、更新頻度が違い、共有 workspace が無関係なリリースを待たせているときだけ。"
+key_points:
+  - claim: "以前は Helm の values の 1 行も共有の Terraform workspace に乗り、止まった 1 本が他の数十本を遅らせ得た。ドライバや values の定常更新は 4 時間超で、クラウド資源が変わらない values の 1 行も同じ経路だった、と事例は書いている"
+    evidence: "Meta のアプリ配備の役割分担とは / 注意点 / 更新時間"
+    status: fact
+  - claim: "いまの分担は、Terraform がクラウド資源とクラスタを持ち、Kargo が望ましいリリースの完全な記録を Git に書き戻し、Argo CD がクラスタをその記録へ合わせる、の三つである。プラットフォームが短いアプリ定義と Git の入力をマニフェストへ変換し、その結果と Kargo の書き戻しがリリース記録になる。人が編集するのは Configerator と Terraform と短いアプリ定義で、選ばれた設定と基盤情報のコピーは一方向である"
+    evidence: "Meta のアプリ配備の役割分担とは / 編集の正本とクラスタが見る記録"
+    status: fact
+  - claim: "4 時間超が数分になった、という記述に、分の値、パーセンタイル、試行回数、移行済みの割合、イメージビルドを含めるかは無い。数分も、クラスタの外に置く共有の Argo CD も、採用の理由にしない"
+    evidence: "注意点 / 更新時間 / 経路を分けるときの判断 / 採る前に分ける権限と確認"
+    status: interpretation
+  - claim: "経路を分ける既定は、アプリの更新頻度が基盤と違い、共有 workspace が無関係なリリースを待たせているときだけである。エンドポイント、IAM、ノードプールを同じリリースで要する変更は、Terraform の適用と Argo CD の合わせを同じ昇格に残す"
+    evidence: "経路を分けるときの判断 / 採る前に分ける権限と確認"
+    status: interpretation
+  - claim: "DaemonSet の Healthy は Pod の可用性までで、OnDelete では更新完了前に Healthy を返し得る。GPU が割り当てられることは見ていないので、ドライバの昇格では見たい事実を検証チェックへ明示する"
+    evidence: "注意点 / 健全性の三層 / 採る前に分ける権限と確認"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "人が編集する正本と、クラスタが見る Git の記録は別で、クラスタは記録へ合わせる"
+    reason_needed: "コピーの向きと、記録を書く役と合わせる役が分かれないと、Git を編集の唯一の正本と誤読するため"
+example:
+  description: "クラウド資源が変わらない Helm の values の 1 行が、以前は設定の生成、社内のビルドと検証、Terraform の plan、昇格を通っていた"
+  hypothetical: false
+  evidence: "Meta のアプリ配備の役割分担とは"
+applicability:
+  - "昇格の承認者は、その昇格の検証と soak を飛ばせる例外口なので、Terraform を変える人とは分ける"
+  - "ドライバの昇格で、GPU が割り当てられることを検証チェックに書きたい"
+decision_criteria:
+  - "直近の Helm 変更が、Terraform の列で何を待っていたかを 1 件取り出したか"
+  - "成功条件を、操作の完了、Application の Healthy、見たい事実の検証、のどれにするか決めたか"
+  - "承認者と、Terraform を変える人と、アプリ定義を変える人を分けたか"
+  - "同じリリースで Terraform の出力を要する変更を、適用と同期を同じ昇格に残したか"
+  - "望ましいリリースの記録を Git に残し、Git を残さずライブの Application だけを更新する昇格を避けたか"
+limitations:
+  - "分の値、パーセンタイル、試行回数、移行済みの割合、イメージビルドを数分に含めるかは、発表にも事例にも無い。約 100 は対象クラスタの規模であり、測った母数とは書かれていない"
+  - "復旧、リリースの分離、ドリフト修復は、事例ではこれから検証する対象で、手順は書かれていない"
+  - "DaemonSet の Healthy は Pod の可用性までである。OnDelete では更新完了前に Healthy を返し得る。GPU が割り当てられることは見ていない"
+  - "設定コンパイラと一方向コピーは非公開である。Argo CD と Kargo だけを入れても、事例と同じ結果にはならない"
+  - "コピーが遅れたとき、Git と Terraform のどちらが新しいかを知る方法は公開されていない。Git への書き戻しが人のレビューを迂回するなら、権限を直すまで経路は分けない"
+unknowns:
+  - "数分に、イメージと Helm chart の社内ビルドが含まれるか"
+  - "約 100 クラスタのうち、新しい経路に乗っている割合と、アプリの種類"
+  - "ドライバとスケジューラの検証チェックが何を見ているか。GPU の allocatable を見ているかは非公開"
+  - "復旧の検証が終わる前の、いまの戻し方"
+  - "一方向コピーが遅れたとき、Git と Terraform のどちらが新しいかをどうやって知るか"
+  - "集中 Argo CD が本番のどの範囲に入り、障害の範囲がクラスタごとに置いた Argo CD とどう変わるか"
+  - "Kargo による Git への書き戻しが、人の commit と同じレビューを通るか"
+reviewed: true

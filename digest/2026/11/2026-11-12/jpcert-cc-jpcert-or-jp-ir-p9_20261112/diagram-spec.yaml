@@ -1,0 +1,49 @@
+type: structure
+title: "最終報告は業務再開の合格ではない"
+message: "最終報告は委託範囲への答えであり、業務を戻す合格ではない"
+source: "notes/zenn/articles/jpcert-cc-jpcert-or-jp-ir-p9_20261112.md"
+components:
+  - id: agree
+    label: "事前合意"
+    meaning: "目的、優先、対象、判断できない事項を、記録が残る形で依頼側と作成側が合意する"
+  - id: report
+    label: "報告書"
+    meaning: "最終報告と書いてあっても、委託範囲の問いに答えた、または答えられない理由を書いた状態"
+  - id: review
+    label: "受領確認"
+    meaning: "目的ごとの答えか不能理由、対象外、根拠、残るリスクを見る"
+  - id: ops
+    label: "運用側の判断"
+    meaning: "停止の影響と残リスクを見て、業務を戻すかをシステムを運用する側が決める。チェックリストにその欄は無い"
+groups:
+  - id: checklist
+    label: "チェックリストの範囲"
+    members: [agree, report, review]
+relationships:
+  - from: agree
+    to: report
+    label: "合意して依頼"
+  - from: report
+    to: review
+    label: "突き合わせる"
+  - from: review
+    to: ops
+    label: "材料にする"
+omitted:
+  - item: "依頼側と作成側の項番の対応、必須・推奨・任意の数"
+    reason: "図が伝えるのは最終報告と業務再開の境界であり、項の強さのずれは注意点に残す"
+  - item: "報告書に最低限含める5つの章の名前"
+    reason: "事前合意の中身であり、境界の図には載らない"
+  - item: "個人情報の漏えい等報告の速報・確報の期限"
+    reason: "調査の納期とは別、という具体例に残す。図のメッセージは業務再開との境界である"
+  - item: "表示-継承 4.0 とライセンスファイルの欠落"
+    reason: "改変版を渡すときの未決着であり、受領から運用判断への流れではない"
+  - item: "内部不正での3か所の書き方のずれ"
+    reason: "サンプルを流用しない条件であり、ネットワーク侵害の受領から運用判断への流れではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "報告書が揃っても運用再開は決まらない"
+  - "最終報告という表示"
+  - "収束の合格条件は置いていない"

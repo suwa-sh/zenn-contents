@@ -1,0 +1,49 @@
+type: structure
+title: "試行をエミュレータと実 AWS に分ける"
+message: "短い作成と入力検証はエミュレータのメモリへ、権限と境界の確認は実 AWS へ分ける"
+source: "notes/zenn/articles/aws-emulator-devops-aws-amazon-p3_20261112.md"
+components:
+  - id: agent
+    label: "コーディングエージェント"
+    meaning: "AWS CLI または AWS SDK で呼び出す"
+  - id: emulator
+    label: "AWS Emulator"
+    meaning: "127.0.0.1:9297 で API を受けるローカルのプロセス"
+  - id: memory
+    label: "メモリ上の資源（停止で消える）"
+    meaning: "プロセスのメモリに置く。停止すると消える"
+  - id: realaws
+    label: "実 AWS"
+    meaning: "権限、アカウント間、リージョン差、カバー外、本番前を確認する"
+groups:
+  - id: default_stage
+    label: "既定の試行"
+    members: [emulator, memory]
+  - id: promote_stage
+    label: "実 AWS で確認"
+    members: [realaws]
+relationships:
+  - from: agent
+    to: emulator
+    label: "短い作成と入力検証"
+  - from: emulator
+    to: memory
+    label: "資源を置く"
+  - from: agent
+    to: realaws
+    label: "権限と境界を確認"
+omitted:
+  - item: "待受ポート、署名鍵、ヘルス確認、テレメトリ、埋め込みモード"
+    reason: "二段の置き場が伝えたいことで、接続の手順は本文に残すため"
+  - item: "未実装は HTTP 501 で落ちる"
+    reason: "成功に見えないことは本文で書き、図の関係を増やさないため"
+  - item: "関数コードが隔離されないこと、S3 Control やホスト接頭辞で届かない呼び出し"
+    reason: "図の分割を崩す落とし穴なので、限界・注意点に残すため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "試行をどの段に置くか"
+  - "実行環境を二段にする / 推奨する分け方"
+  - "状態はプロセスのメモリだけ"
+  - "1つのエンドポイントで受ける"

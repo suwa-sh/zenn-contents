@@ -1,0 +1,57 @@
+type: structure
+title: "共有入力を質問が並列に見る"
+message: "全質問が同じエンコード結果を見て、互いの答えは渡らない"
+source: "notes/zenn/articles/google-gemini-decisions-api-p1_20261112.md"
+components:
+  - id: input
+    label: "共有入力"
+    meaning: "テキスト、画像、音声、動画、PDF を 1 つに束ねた入力"
+  - id: encoder
+    label: "エンコーダ"
+    meaning: "共有入力を 1 回エンコードする"
+  - id: noul
+    label: "noul"
+    meaning: "yes の確率を返す。他の質問の結果は見ない"
+  - id: choice
+    label: "choice"
+    meaning: "選択肢ごとの確率を返す。他の質問の結果は見ない"
+  - id: score
+    label: "score"
+    meaning: "レベル添字の期待値を返す。他の質問の結果は見ない"
+  - id: answers
+    label: "回答"
+    meaning: "リクエストの質問キーをそのまま応答キーにする"
+groups:
+  - id: parallel
+    label: "並列採点"
+    members: [noul, choice, score]
+relationships:
+  - from: input
+    to: encoder
+    label: "1回エンコード"
+  - from: encoder
+    to: noul
+    label: "同じ結果"
+  - from: encoder
+    to: choice
+    label: "同じ結果"
+  - from: encoder
+    to: score
+    label: "同じ結果"
+  - from: noul
+    to: answers
+    label: "yesの確率"
+  - from: choice
+    to: answers
+    label: "選択肢の確率"
+  - from: score
+    to: answers
+    label: "添字の期待値"
+omitted:
+  - item: "入力安全フィルタ、usage、Files API、人のレビュア、Interactions API"
+    reason: "伝えたいことは、質問が同じエンコードを見て互いの答えを渡さないこと。分岐の出口と非対応機能は本文に書く"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "コンポーネント図: 全質問が同じエンコード結果を見る。質問の結果は互いに渡らない"
