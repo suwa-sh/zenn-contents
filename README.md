@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (630)
+## Articles: 下書き (631)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-12 | [📐 AGENTS.mdなどの指示は成果物検査で守られるものと守られないものに分かれる](articles/agents-md-arxiv-abs-2611-13709-p6_20261112.md) | AIAgent, ClaudeCode, GitHubCopilot, SoftwareEngineering |
 | 2026-11-12 | [🧪 AWS Emulatorでエージェントのクラウド操作をローカルで受ける](articles/aws-emulator-devops-aws-amazon-p3_20261112.md) | AWS, Docker, DevOps, Security |
 | 2026-11-12 | [🧩 A2UI 1.0はホストが許可した部品だけでエージェント画面を描く](articles/google-a2ui-1-0-ui-developers-p2_20261112.md) | A2UI, AIAgent, Google, React, UI |
 | 2026-11-12 | [🎯 閉じた判断を校正済み確率で返すGemini Decisions API](articles/google-gemini-decisions-api-p1_20261112.md) | Gemini, LLM, AIAgent, GoogleAI |
