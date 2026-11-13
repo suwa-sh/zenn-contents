@@ -7,11 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (635)
+## Articles: 下書き (637)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-13 | [🛡️ Claude Enterpriseの個人アカウント遮断と送信前検査](articles/anthropic-claude-enterprise-p7_20261113.md) | Claude, Anthropic, Security, ClaudeCode |
 | 2026-11-13 | [🧭 コーディングエージェントでGemini 4 Hydrogenを実装帯の既定にする条件](articles/google-gemini-hydrogen-google-p1_20261113.md) | Gemini, LLM, AIAgent, GoogleAI |
+| 2026-11-13 | [📐 10年物PHP基幹を865行のルールと差分比較でJavaへ移した手順](articles/php-865-java-zenn-dev-soliperse-p6_20261113.md) | PHP, Java, AI, Cursor |
 | 2026-11-13 | [🔐 Ubieの内製クラウドエージェントを全社へ広げるときの権限と停止](articles/ubie-zenn-dev-ubie-45501469-p5_20261113.md) | AIAgent, Security, GoogleCloud, LLM |
 | 2026-11-12 | [📐 AGENTS.mdなどの指示は成果物検査で守られるものと守られないものに分かれる](articles/agents-md-arxiv-abs-2611-13709-p6_20261112.md) | AIAgent, ClaudeCode, GitHubCopilot, SoftwareEngineering |
 | 2026-11-12 | [🧪 AWS Emulatorでエージェントのクラウド操作をローカルで受ける](articles/aws-emulator-devops-aws-amazon-p3_20261112.md) | AWS, Docker, DevOps, Security |
