@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (637)
+## Articles: 下書き (636)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -19,7 +19,6 @@
 | 2026-11-12 | [🧪 AWS Emulatorでエージェントのクラウド操作をローカルで受ける](articles/aws-emulator-devops-aws-amazon-p3_20261112.md) | AWS, Docker, DevOps, Security |
 | 2026-11-12 | [🧩 A2UI 1.0はホストが許可した部品だけでエージェント画面を描く](articles/google-a2ui-1-0-ui-developers-p2_20261112.md) | A2UI, AIAgent, Google, React, UI |
 | 2026-11-12 | [🎯 閉じた判断を校正済み確率で返すGemini Decisions API](articles/google-gemini-decisions-api-p1_20261112.md) | Gemini, LLM, AIAgent, GoogleAI |
-| 2026-11-12 | [📋 JPCERT/CCの調査報告書チェックリストで委託範囲を確認する](articles/jpcert-cc-jpcert-or-jp-ir-p9_20261112.md) | Security, IncidentResponse, Forensics |
 | 2026-11-12 | [🚢 MetaのAI基盤がアプリ配備をTerraformからGitOpsへ分けた設計](articles/meta-ai-100-terraform-gitops-p8_20261112.md) | Kubernetes, Terraform, GitOps, ArgoCD, Helm |
 | 2026-11-12 | [💰 PYF（プロダクト予算科目フィット）とは何か、BtoB新規事業での使いどころ](articles/pyf-product-yosan-kamoku-fit_20261112.md) | BtoB, Marketing, Startup, ProductManagement, Sales |
 | 2026-11-11 | [🧪 Claude Fable 5.2の料金と、世代更新で固定するテスト](articles/claude-fable-5-2-anthropic-p1_20261111.md) | Claude, Anthropic, LLM, API |
@@ -649,10 +648,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (204)
+## Articles: 公開済み (205)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-11-14 | [📋 JPCERT/CCの調査報告書チェックリストで委託範囲を確認する](articles/jpcert-cc-jpcert-or-jp-ir-p9_20261112.md) | Security, IncidentResponse, Forensics |
 | 2026-11-12 | [🧪 LangChain が整理した Eval-Driven Development の手順と始め方](articles/langchain-eval-driven-developmen_20261111.md) | LangChain, LangSmith, LLM, AIAgent, Evaluation |
 | 2026-11-10 | [🧠 Anthropic のエージェントメモリの4層構造と Dreams API の使い方](articles/components-of-agent-memory_20261107.md) | Claude, AI, LLM, AIエージェント |
 | 2026-11-07 | [🗄️ GitHubが単一リポジトリの同時push向けに再設計したGit格納](articles/github-push-git-github-inside-p1_20261106.md) | GitHub, Git, AIAgent, Azure |

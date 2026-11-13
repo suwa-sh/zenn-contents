@@ -3,7 +3,8 @@ title: "JPCERT/CCの調査報告書チェックリストで委託範囲を確認
 emoji: "📋"
 type: "tech"
 topics: ["Security", "IncidentResponse", "Forensics"]
-published: false
+published: true
+published_at: 2026-11-14
 ---
 
 2026年11月11日、一般社団法人JPCERTコーディネーションセンター（JPCERT/CC）は、「インシデント調査報告書チェックリスト」を公開しました。被害を受けた組織が、外部の調査委託先と、調査の目的、範囲、報告書の中身を、同じ項目で確認するための補助ツールです。
