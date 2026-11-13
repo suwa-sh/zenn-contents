@@ -1,0 +1,53 @@
+type: structure
+title: "仕事の種類で置き場が分かれる"
+message: "新規は Hydrogen、多くの思考は Carbon、既存は確認まで残す"
+source: "notes/zenn/articles/google-gemini-hydrogen-google-p1_20261113.md"
+components:
+  - id: new_job
+    label: "実装、調査、ツール選択"
+    meaning: "新規に組む Gemini 系の実装、調査、ツール選択"
+  - id: hydrogen
+    label: "Hydrogen"
+    meaning: "日常の既定にするモデル。ID は gemini-4-hydrogen"
+  - id: heavy
+    label: "設計、デバッグ、監査"
+    meaning: "設計、難しいデバッグ、セキュリティ監査。図の語は本文の三つの仕事を短くしたもの"
+  - id: carbon
+    label: "Carbon"
+    meaning: "より多くの思考を使う別モデル。監査は調査でもこちらから始める"
+  - id: flash
+    label: "既存の Flash"
+    meaning: "2026-12-31 までの既存の 3.8 Flash Standard"
+  - id: checks
+    label: "置換前の確認"
+    meaning: "確認が済むまで一括では替えない"
+groups:
+  - id: new_band
+    label: "新規"
+    members: [new_job, hydrogen]
+  - id: heavy_band
+    label: "多くの思考"
+    members: [heavy, carbon]
+  - id: stay_band
+    label: "既存"
+    members: [flash, checks]
+relationships:
+  - from: new_job
+    to: hydrogen
+    label: "既定にする"
+  - from: heavy
+    to: carbon
+    label: "最初から"
+  - from: flash
+    to: checks
+    label: "確認まで残す"
+omitted:
+  - item: "考える量の medium、high、xhigh"
+    reason: "置き場の分かれが伝えたいことであり、量の指定は具体例の表に書く"
+  - item: "Argon、検索製品、音声、料金、65,536 の数え方"
+    reason: "置き場の三つの枠に関係しない。本文の核心と限界に残す"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "日常の実装帯に置く: 新規は gemini-4-hydrogen、設計と監査は Carbon、2026-12-31 までの既存 Flash は確認まで一括で替えない"

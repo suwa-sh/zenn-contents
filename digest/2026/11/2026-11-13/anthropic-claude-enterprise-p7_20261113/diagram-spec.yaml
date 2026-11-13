@@ -1,0 +1,56 @@
+type: structure
+title: "三つの制御は届く出口が別"
+message: "所属の固定、直前の検査、事後の記録は、届く出口が別です"
+source: "notes/zenn/articles/anthropic-claude-enterprise-p7_20261113.md"
+components:
+  - id: mail
+    label: "企業メール"
+    meaning: "検証済みドメインの個人アカウントを、請求で組織へ移す"
+  - id: device
+    label: "管理端末"
+    meaning: "サインインの前から、組織を固定できる"
+  - id: network
+    label: "社内ネット"
+    meaning: "ヘッダを付けた通信を、入口で止める"
+  - id: prompt
+    label: "推論の前"
+    meaning: "拒否なら、その内容はモデルへ届かない"
+  - id: tool
+    label: "ツールの前"
+    meaning: "拒否なら、その応答のツールは実行前に止まる"
+  - id: after
+    label: "事後の記録"
+    meaning: "ログと端末内の報告。操作は止めない"
+groups:
+  - id: who
+    label: "所属"
+    members: [mail, device, network]
+  - id: inspect
+    label: "直前検査"
+    members: [prompt, tool]
+  - id: later
+    label: "事後"
+    members: [after]
+relationships:
+  - from: prompt
+    to: tool
+    label: "進む"
+omitted:
+  - item: "持ち込みのAPI鍵を起動時に止める管理設定"
+    reason: "管理端末の固定に含まれる。図は三つの出口の境界を伝える"
+  - item: "サインアウトがAPIキーと実行中の作業を残すこと"
+    reason: "所属の固定とは別の操作であり、三つの枠の境界ではない"
+  - item: "Security center、コンプライアンスAPI、端末内センサーの個別名"
+    reason: "事後の記録にまとめた。止めないことはラベルの意味に残す"
+  - item: "失敗時に通す既定、抽選、画像と生データ"
+    reason: "直前検査の届く範囲であり、枠の境界の図には載らない"
+  - item: "Desktopのトグルが初回サインインの前を覆わないこと"
+    reason: "管理端末はサインイン前から固定できる設定として描く。トグルの穴は本文の確認項目に残す"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "三つの置き場所"
+  - "inference hooks"
+  - "あとから読む経路"
+  - "検知したときに止まる操作"

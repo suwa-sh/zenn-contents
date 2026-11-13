@@ -1,0 +1,39 @@
+type: structure
+title: "完了条件の3枚"
+message: "受け入れは3枚に分ける。3枚に無い挙動は、誰が目で見るかを決める"
+source: "notes/zenn/articles/php-865-java-zenn-dev-soliperse-p6_20261113.md"
+components:
+  - id: ban
+    label: "禁止リスト"
+    meaning: "見た誤りを1件ずつ足したルール。865行はその時点の行数"
+  - id: fields
+    label: "比べる項目"
+    meaning: "同じリクエストの応答を、PHP と Java で項目ごとに比べる範囲"
+  - id: drop
+    label: "無視と比べない対象"
+    meaning: "意図して落とす不一致と、応答に出なければ比較の外に置けるもの"
+  - id: eyes
+    label: "目視の担当"
+    meaning: "3枚に無い挙動を、誰が目で見るか"
+groups:
+  - id: acceptance
+    label: "完了条件"
+    members: [ban, fields, drop]
+relationships: []
+omitted:
+  - item: "禁止リストから目視への矢印、および3枚のあいだの矢印"
+    reason: "3枚は並ぶ完了条件で、手順の流れではない。3枚に無い挙動は枠の外の担当として示す"
+  - item: "ルールの分類名（翻訳、シリアライズ、性能、工程、操作、追跡）"
+    reason: "禁止リストにまとめた。分類の中身はこの図の分け方に不要"
+  - item: "差の3型（値の不一致、項目の欠落、型の不一致）と、2段比較の分岐"
+    reason: "比べる項目の中の仕組みであり、完了条件を3枚に分けるメッセージではない"
+  - item: "公開の段取り（影子検証、小流量、分批切替、全量、観察）と、リスクの3層"
+    reason: "受け入れの3枚とは別の話"
+  - item: "注文件数、行数、営収、ツール費"
+    reason: "完了条件の分け方ではなく、具体例と限界で扱う"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "受け入れを3枚に分ける: 1枚目は禁止リスト。2枚目は差分コマンドが比べる項目。3枚目は無視する項目と、比べない対象"
+  - "発注側の次の一手: この3枚に無い挙動を、誰が目で見るかを決める"

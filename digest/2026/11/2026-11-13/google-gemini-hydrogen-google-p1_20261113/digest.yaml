@@ -1,0 +1,68 @@
+source:
+  title: "コーディングエージェントでGemini 4 Hydrogenを実装帯の既定にする条件"
+  url: null
+  path: "notes/zenn/articles/google-gemini-hydrogen-google-p1_20261113.md"
+  primary:
+    - title: "What's new in Gemini 4 Hydrogen"
+      url: "https://aistudio.google.com/docs/whats-new-gemini-4-hydrogen"
+    - title: "Gemini 4 Hydrogen model"
+      url: "https://aistudio.google.com/docs/models/gemini-4-hydrogen"
+    - title: "Gemini Developer API pricing"
+      url: "https://aistudio.google.com/docs/pricing"
+    - title: "Introducing Gemini 4 Hydrogen"
+      url: "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/"
+    - title: "Gemini 4 in Google Search"
+      url: "https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/"
+  retrieved_at: "2026-11-14"
+archetype:
+  primary: decision
+  secondary:
+    - architecture
+one_liner: "新規の実装、調査、ツール選択は Gemini 4 Hydrogen を既定にし、考える量は呼び出しごとに指定します。"
+key_points:
+  - claim: "呼び出す ID は gemini-4-hydrogen である"
+    evidence: "Gemini 4 Hydrogenとは / モデル ID と思考水準"
+    status: fact
+  - claim: "入力、思考トークン、出力は 1,048,576 トークンの一つの窓を共有する"
+    evidence: "トークン窓"
+    status: fact
+  - claim: "設計、難しいデバッグ、セキュリティ監査は Carbon から始める。セキュリティ監査は調査に含めても Hydrogen に残さない"
+    evidence: "日常の実装帯に置く"
+    status: fact
+  - claim: "2026-12-31 までの既存の 3.8 Flash Standard は、確認が済むまで一括で替えない"
+    evidence: "日常の実装帯に置く / いま一括で替えない条件"
+    status: fact
+  - claim: "Google 検索への搭載は、開発者向け API でモデルを選ぶこととは別である"
+    evidence: "三つの提供面 / 提供面を一つの契約に読まない"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "新規は Hydrogen、多くの思考は Carbon、既存は確認まで残す"
+    reason_needed: "提供面や隣のモデルを一つの既定にまとめると、契約と置き場を取り違える"
+example:
+  description: "考える量の既定は high である。速さのツール往復は medium、品質を見る本処理は high、high で足りない複数ステップだけ xhigh にする。複数ステップの xhigh とは別に、品質が足りないときの上げ先は xhigh か Carbon で、追加条件は無い"
+  hypothetical: false
+  evidence: "日常の実装帯に置く"
+applicability:
+  - "新規の実装、調査、ツール選択の既定を決める"
+  - "既存の更新元モデルを残す期間を判断する"
+  - "音声生成、画像生成、音声対話が要る仕事を外す"
+decision_criteria:
+  - "失敗したツールからの回復を見たか"
+  - "既定が medium から high に変わる費用を測ったか"
+  - "既定が medium から high に変わる挙動を測ったか"
+  - "明示キャッシュを外した入力費用を見たか"
+  - "温度指定が無視されるかを見たか"
+limitations:
+  - "既定の high ではタスク完了が 2.5 倍速い。比較相手は本文だけでは特定できない"
+  - "2026 年末まで Hydrogen Standard は、同じトークン数なら 3.8 Flash 導入価格の約 2 倍である。思考の既定が high になると費用差はさらに開き得る。増分は未測定である"
+  - "並列の関数呼び出しでは、応答に付いた署名のコピーと、履歴の先頭の削除は HTTP 400 になり得る"
+  - "不当な拒否は 3.8 Flash 比で 5.57 ポイント増である。人手の再確認では、悪化の多くは偽陽性か深刻ではない"
+  - "Agent Platform の退役日と、Gemini API の停止日は、どちらも未発表である"
+unknowns:
+  - "タスク完了 2.5 倍の比較相手"
+  - "同期 1 回の 65,536 を、出力と数える資料と思考と回答の合計と数える資料のどちらに合わせるか"
+  - "独立した遅延の実測"
+  - "思考トークン増分による費用差"
+  - "Agent Platform の退役日と Gemini API の停止日"
+reviewed: true

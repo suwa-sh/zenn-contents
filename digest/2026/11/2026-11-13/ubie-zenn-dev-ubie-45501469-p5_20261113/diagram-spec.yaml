@@ -1,0 +1,39 @@
+type: structure
+title: "全社へ広げる前に書く5つの分離"
+message: "全社へ広げる前に、5つの分離を項目ごとに書く"
+source: "notes/zenn/articles/ubie-zenn-dev-ubie-45501469-p5_20261113.md"
+components:
+  - id: subject
+    label: "誰の資格情報か"
+    meaning: "起動経路ごとに、誰の資格情報で動くか"
+  - id: room
+    label: "誰に見えるか"
+    meaning: "その場に誰がいるかで付ける閲覧範囲。宣言はその場の所有者"
+  - id: data
+    label: "データをどこへ保存し送るか"
+    meaning: "保存するか、どの法の執行が及ぶ機器に置くか、どのモデルへ送るか"
+  - id: blast
+    label: "どこまで届くか"
+    meaning: "隔離環境に資格情報を置かず、許可した宛先への通信にだけ載せる"
+  - id: override
+    label: "何が後戻りできるか"
+    meaning: "何が後戻りでき、誰が事後に覆すか。基盤を作るチームの外に置く"
+groups:
+  - id: owners
+    label: "項目ごとに書く人を分ける"
+    members: [subject, room, data, blast, override]
+relationships: []
+omitted:
+  - item: "個人の認可と共有の場の資格情報の対比、サンドボックス内は承認不要という文"
+    reason: "主体と届く範囲の枠に含み、承認を外す条件は本文の核心に残すため"
+  - item: "開発の手順一式、プロンプト上の規範、先行システムの自己申告の割合"
+    reason: "写す対象ではなく、図の5枠を増やさないため"
+  - item: "ガイドラインの条文と、製品のサンドボックス既定"
+    reason: "データの経路と届く範囲の中身であり、図に条文を載せないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "全社へ広げるときに分ける5つ"
+  - "広げる前に、別の所有者で書く5つ"
+  - "権限が分かれる層"
