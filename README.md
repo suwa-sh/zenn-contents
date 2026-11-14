@@ -7,12 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (638)
+## Articles: 下書き (640)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-14 | [🛡️ AIペネトレーション試験オーケストレータを公開面の防御で観測する](articles/ai-cloudflare-adapting-to-p6_20261114.md) | Security, Cloudflare, WAF, API |
 | 2026-11-14 | [🧩 Agent Skillsで共有する手順と、ホストに残すツールと権限](articles/github-ai-ml-copilot-build-p3_20261114.md) | AIAgent, GitHubCopilot, ClaudeCode, GitHub |
 | 2026-11-14 | [🍋 Granite 4.1のLLMONは指示と外部文を別ブロックで渡す](articles/granite-4-1-llm-llmon-co-p4_20261114.md) | LLM, PromptInjection, Granite, Security |
+| 2026-11-14 | [🪁 エージェント向けブラウザエンジン Kitesurf の実行場所と再現範囲](articles/kitesurf-cloudflare-kitesurf-p5_20261114.md) | Cloudflare, CloudflareWorkers, Browser, CDP, AIAgent |
 | 2026-11-13 | [🛡️ Claude Enterpriseの個人アカウント遮断と送信前検査](articles/anthropic-claude-enterprise-p7_20261113.md) | Claude, Anthropic, Security, ClaudeCode |
 | 2026-11-13 | [🧭 コーディングエージェントでGemini 4 Hydrogenを実装帯の既定にする条件](articles/google-gemini-hydrogen-google-p1_20261113.md) | Gemini, LLM, AIAgent, GoogleAI |
 | 2026-11-13 | [📐 10年物PHP基幹を865行のルールと差分比較でJavaへ移した手順](articles/php-865-java-zenn-dev-soliperse-p6_20261113.md) | PHP, Java, AI, Cursor |
