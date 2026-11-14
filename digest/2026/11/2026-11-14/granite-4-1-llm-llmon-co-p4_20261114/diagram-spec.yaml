@@ -1,0 +1,55 @@
+type: structure
+title: "指示と外部文は別ブロック"
+message: "信頼する指示と外部文を分け、実行ポインタがモデルへ結ぶ"
+source: "notes/zenn/articles/granite-4-1-llm-llmon-co-p4_20261114.md"
+components:
+  - id: app
+    label: "アプリ"
+    meaning: "信頼する指示と外部文を分けて渡す側"
+  - id: instr
+    label: "指示"
+    meaning: "実行する指示として結ぶブロック"
+  - id: data
+    label: "外部文"
+    meaning: "メール、検索結果、チケット本文、ツール結果を置く読む材料"
+  - id: ptr
+    label: "実行ポインタ"
+    meaning: "実行する指示と読む材料を指す印"
+  - id: model
+    label: "モデル"
+    meaning: "Granite 4.1 LLMONの実験公開"
+groups:
+  - id: spans
+    label: "別ブロック"
+    members: [instr, data]
+relationships:
+  - from: app
+    to: instr
+    label: "指示を置く"
+  - from: app
+    to: data
+    label: "外部文を置く"
+  - from: instr
+    to: ptr
+    label: "実行する指示"
+  - from: data
+    to: ptr
+    label: "読む材料"
+  - from: ptr
+    to: model
+    label: "結んだ読み方"
+omitted:
+  - item: "ポインタが指さないブロック"
+    reason: "文脈には残るが、実行対象として結ぶ関係ではない"
+  - item: "モデルの出力"
+    reason: "伝えたいことは、入力をどう分けるかであるため"
+  - item: "入力欄への平文化"
+    reason: "境界が残らない失敗の形であり、正しい分け方の図には入れない"
+  - item: "ツール結果を外部文と分けた箱"
+    reason: "どちらも読む材料なので、外部文にまとめた"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "指示と外部文がモデルに届くまで"
+  - "外部文を渡すときに分けるもの"

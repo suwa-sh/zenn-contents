@@ -1,0 +1,64 @@
+source:
+  title: "Granite 4.1のLLMONは指示と外部文を別ブロックで渡す"
+  url: null
+  path: "notes/zenn/articles/granite-4-1-llm-llmon-co-p4_20261114.md"
+  primary:
+    - title: "IBM Granite ブログ（2026-11-12）"
+      url: "https://huggingface.co/blog/ibm-granite/llmon-an-llm-native-markup-language-now-in-granite"
+    - title: "Shbita ほか、Post-Training Large Language Models with LLMON、arXiv:2610.38120v1"
+      url: "https://arxiv.org/abs/2610.38120"
+    - title: "granite-4.1-3b-llmon-preview"
+      url: "https://huggingface.co/ibm-granite/granite-4.1-3b-llmon-preview"
+    - title: "ツールキット generative-computing/llmon"
+      url: "https://github.com/generative-computing/llmon"
+  retrieved_at: "2026-11-15"
+archetype:
+  primary: decision
+  secondary: [architecture, research]
+one_liner: "IBMのGranite 4.1 LLMONでは、アプリが指示と外部文を別ブロックで渡します。"
+key_points:
+  - claim: "LLMONは、指示と外部文をタグで区切る印であり、実行する指示と読む材料を別々に指す"
+    evidence: "LLMONとは / タグと、実行を指すポインタ"
+    status: fact
+  - claim: "チャットの入力欄に書いた文は、実行する指示1件になる"
+    evidence: "チャットテンプレートが描くもの"
+    status: fact
+  - claim: "タスクの本文に混ぜた命令が通る割合は、通常のチャットよりおおよそ3桁下がる"
+    evidence: "間接注入の攻撃成功率はベンチで違う"
+    status: fact
+  - claim: "道具が返した文に混ぜた命令は、3Bという名前で5.6%、8Bという名前で3.1%残る"
+    evidence: "間接注入の攻撃成功率はベンチで違う / Table 2 ASB"
+    status: fact
+  - claim: "利用者自身が書く命令は、外部文と分ける対象にならない"
+    evidence: "赤チームの数字は頑健性である"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "信頼する指示と外部文を分け、実行ポインタがモデルへ結ぶ"
+    reason_needed: "入力欄へまとめると全体が実行する指示になり、外部文を読む材料として分けた境界が残らない"
+example:
+  description: "題名を提案する指示と、返金を求めるメール本文は、別の枠である。これは説明用の例で、チャットの入力欄の実物ではない"
+  hypothetical: false
+  evidence: "タグと、実行を指すポインタ"
+applicability:
+  - "メールや検索結果を、この実験公開へ渡すとき"
+  - "出力した要約を、次の入力へ戻す前"
+  - "外部文にすでに入っている命令を、この分け方で防ぐとき"
+decision_criteria:
+  - "外部文は、読む材料の側に置いていますか。"
+  - "戻す要約やログは、次の入力で指示の側に入っていませんか。"
+  - "防ぐ相手は、外部文にすでに入っている命令ですか。"
+  - "道具の実行権限は、別に狭めていますか。"
+  - "送る前の検査は、別に残していますか。"
+limitations:
+  - "会話を重ねる攻撃は、この分け方の対象外である"
+  - "メール本文などは、中身を検査せず、読む材料の枠へ足される"
+  - "このモデルは、探索と評価のための実験公開である"
+  - "分けた読み方を、モデルが必ず守る保証はない"
+  - "日本語で外部文に混ぜた命令の成功率は、この論文の範囲外である"
+unknowns:
+  - "混ぜた命令を読む材料に置いたのか、ポインタが指さない区間に置いたのかは、論文の説明が一致しない"
+  - "他のモデル系列へ、同じ幅の改善が移るか"
+  - "区切り文字列を材料へ混ぜたときの実害"
+  - "Issue #16の自己申告を、同じ条件で再生した成功率"
+reviewed: true

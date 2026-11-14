@@ -1,0 +1,63 @@
+source:
+  title: "エージェント向けブラウザエンジン Kitesurf の実行場所と再現範囲"
+  url: null
+  path: "notes/zenn/articles/kitesurf-cloudflare-kitesurf-p5_20261114.md"
+  primary:
+    - title: "Cloudflare Blog、Kitesurf をオープンソース化（2026-11-13）"
+      url: "https://blog.cloudflare.com/kitesurf-open-source/"
+    - title: "Browser Run の Kitesurf（製品ドキュメント、最終更新 2026-11-13）"
+      url: "https://developers.cloudflare.com/browser-run/kitesurf/"
+    - title: "cloudflare/kitesurf AGENTS.md（コミット 4a2903813a22b08d4f3cc64a4b35339d0293a5d1）"
+      url: "https://github.com/cloudflare/kitesurf/blob/4a2903813a22b08d4f3cc64a4b35339d0293a5d1/AGENTS.md"
+    - title: "Browser Run FAQ（最終更新 2026-11-13）"
+      url: "https://developers.cloudflare.com/browser-run/faq/"
+  retrieved_at: "2026-11-15"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "CloudflareのKitesurfは、ページのスクリプトと絵を分ける実験ブラウザです。"
+key_points:
+  - claim: "操作する側からの接続で、ページのスクリプトと絵を頼みます。Workers（手元もクラウドも同じ）上で、その二つを分けます。"
+    evidence: "Kitesurfとは / クッキー、ファイル、外向き通信（手元もデプロイ先も同じWorkersランタイム）"
+    status: fact
+  - claim: "Kitesurfは、手元、自分のWorkers、Cloudflareが管理する場所で動かします。"
+    evidence: "四つの実行場所"
+    status: fact
+  - claim: "クッキーは接続のあいだだけ残ります。接続をまたぐ保存は対象外です。"
+    evidence: "クッキー / AGENTS.md が対象外にしているもの"
+    status: fact
+  - claim: "公開できるURLに置いたこのブラウザには、認証も回数制限もありません。"
+    evidence: "公開 URL には認証を先に置く / SECURITY.md"
+    status: fact
+  - claim: "Cloudflareは、自社で動かすKitesurfへのリクエストをbotと識別します。"
+    evidence: "Browser Run FAQ"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "1つの接続が、ページのスクリプトと絵をWorkers上で分ける"
+    reason_needed: "実行場所を選ぶ前に、何がエンジンの中で分かれるかを見せるため"
+example:
+  description: "TodoMVCとWikipediaは、動くか試す例として挙がります。"
+  hypothetical: false
+  evidence: "エージェントに置くときの基準"
+applicability:
+  - "短い公開ページで、絵が違っても判断が変わらないときです。"
+  - "Cloudflareが管理する場所で、botで止まらないページを読むときです。"
+  - "Workersの有料契約で、自分のWorkersへ載せるときです。"
+decision_criteria:
+  - "欲しいのが画面の絵か、ページ内の実行かを分けましたか。"
+  - "Cloudflareが管理するChromiumへ、ログインの継続を分けましたか。"
+  - "公開URLの前に認証を置きましたか。"
+  - "手元のこのブラウザを、自分のChromeのプロファイルと分けていますか。"
+  - "対象のページが動くと分かっていますか。"
+limitations:
+  - "動画とページ内の3Dは、Cloudflareが管理するChromiumです。相手が接続の最初に見る特徴で止まる作業も同じです。"
+  - "漢字が簡体字になり、ハングルが欠ける、という報告は未解決です。"
+  - "残した絵を、Chromeの画面や、相手が返したバイトの記録にはしません。"
+  - "公開名が内部のアドレスに解決されても止めません。"
+  - "38ページの計測では、動かした場所が手元か自分のアカウントかCloudflareの管理か分かっていません。"
+unknowns:
+  - "38ページの計測で、Kitesurfの列が手元か、自分のアカウントか、Cloudflareの管理かは分かっていません。"
+  - "wranglerのremote: trueが、手元とCloudflareのどちらを呼ぶかは分かっていません。"
+  - "ナビゲーションごとのWorker作成が請求件数になるのは、価格ページとコードからの解釈です。"
+reviewed: true

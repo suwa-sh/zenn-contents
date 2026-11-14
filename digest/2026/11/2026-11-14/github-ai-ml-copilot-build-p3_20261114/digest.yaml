@@ -1,0 +1,65 @@
+source:
+  title: "Agent Skillsで共有する手順と、ホストに残すツールと権限"
+  url: null
+  path: "notes/zenn/articles/github-ai-ml-copilot-build-p3_20261114.md"
+  primary:
+    - title: "Build once, run on any agent: A practical guide to agent skills（GitHub Blog、2026-11-12）"
+      url: "https://github.blog/ai-and-ml/github-copilot/build-once-run-on-any-agent-a-practical-guide-to-agent-skills/"
+    - title: "Agent Skills specification"
+      url: "https://agentskills.io/specification"
+    - title: "Adding agent skills for GitHub Copilot"
+      url: "https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills"
+    - title: "Custom skills（Copilot SDK）"
+      url: "https://docs.github.com/en/copilot/how-tos/copilot-sdk/use-copilot-sdk/custom-skills"
+    - title: "Extend Claude with skills"
+      url: "https://code.claude.com/docs/en/skills"
+  retrieved_at: "2026-11-15"
+archetype:
+  primary: decision
+  secondary: [architecture, governance]
+one_liner: "Agent Skillsは手順のファイルを共有します。ツールと権限は実行する製品が持ちます。"
+key_points:
+  - claim: "共有できるのは、SKILL.md を中心にした手順のファイルである"
+    evidence: "Agent Skillsとは / ディレクトリと、読む順番 / まとめ"
+    status: fact
+  - claim: "ツール、資格情報、接続先、権限の最終判断はホストが持つ"
+    evidence: "スキルが持つものと、ホストが足すもの / まとめ"
+    status: fact
+  - claim: "許可の指定（allowed-tools）の効果は、ホストごとに違う"
+    evidence: "allowed-tools の効果は文書ごとに違う / まとめ"
+    status: fact
+  - claim: "見本の生成は、metadata.agent-tools が無いと read と search を入れ、入れる先は Copilot向けの tools である"
+    evidence: "手で直すのは SKILL.md だけ"
+    status: fact
+  - claim: "Copilot のコードレビューは、プルリクエストの変更ブランチのスキルを読む"
+    evidence: "レビューが読むブランチ"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "手順のファイルはスキルに置き、権限の最終判断はホストが持つ"
+    reason_needed: "手順を共有すれば権限も同じ、と読むと、allowed-tools の効果がホストごとに違うことを見落とす"
+example:
+  description: "許可の指定に書いたツールは、Copilot では確認なしで使え、Claude Code ではその確認なしが次のメッセージで消え、Copilot SDK では権限を付与せず要求ごとに許可を決める処理が判断する"
+  hypothetical: false
+  evidence: "allowed-tools の効果は文書ごとに違う / まとめ"
+applicability:
+  - "同じ手順を複数のホストへ配る前"
+  - "Copilot以外のCLIでも動くとカタログへ書く前"
+decision_criteria:
+  - "別ホストで同じ手順が落ちたとき、見つからないことが原因ですか。"
+  - "別ホストで同じ手順が落ちたとき、許可の扱いが原因ですか。"
+  - "別ホストで同じ手順が落ちたとき、生成した tools と元の差が原因ですか。"
+  - "資格情報をスキルのファイルへ書いていませんか。"
+  - "導入前にスキルの中身を見ましたか。"
+limitations:
+  - "Claude Codeは、管理ルールだけの設定で、プロジェクトスキルと個人スキルの許可指定を無視する。対象は v2.1.282 以降"
+  - "Claude Codeは未検証のGitフォルダで、gitを含むBashとパースできないBashの許可だけを無視する"
+  - "Claude Codeは、載っていないツールを禁止しない"
+  - "手順に同梱した実行ファイルは、コマンドの許可の指定と重なると、確認なしで動く"
+  - "CodexとGemini CLIの許可指定の扱いは、一次資料に無い"
+unknowns:
+  - "Codex と Gemini CLI が allowed-tools を付与、無視、報告のどれにするか"
+  - "Copilot code review が、自動で読んだスキルの allowed-tools を確認スキップとして適用するか"
+  - "metadata の配列値を参照バリデータ skills-ref が拒否するか"
+  - "custom agent の runCommands が、どの製品で有効なツール名か"
+reviewed: true

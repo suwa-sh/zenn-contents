@@ -1,0 +1,58 @@
+type: structure
+title: "1つの接続がスクリプトと絵を分ける"
+message: "ページのスクリプトと絵は、Workers上で別々に処理される"
+source: "notes/zenn/articles/kitesurf-cloudflare-kitesurf-p5_20261114.md"
+components:
+  - id: client
+    label: "操作する側"
+    meaning: "CDPのWebSocketでエンジンを外から操作するクライアント"
+  - id: engine
+    label: "公開面"
+    meaning: "WebSocket、HTTP、その接続のセッション状態を持つEngine"
+  - id: script
+    label: "ページのスクリプト"
+    meaning: "ページごとに立つPageScript。DOMとそのページのJavaScriptを持つ"
+  - id: render
+    label: "絵の描画"
+    meaning: "状態を持たないPageRenderer。シーンを描き、完成フレームをクライアントへ渡す"
+  - id: web
+    label: "外のサイト"
+    meaning: "ページが取得するhttpとhttps"
+groups:
+  - id: workers
+    label: "Workers上"
+    members: [engine, script, render]
+relationships:
+  - from: client
+    to: engine
+    label: "WebSocket"
+  - from: engine
+    to: script
+    label: "ページごと"
+  - from: engine
+    to: render
+    label: "シーン"
+  - from: script
+    to: web
+    label: "httpとhttps"
+  - from: render
+    to: client
+    label: "完成した絵"
+omitted:
+  - item: "out-of-process iframeごとのPageScript"
+    reason: "ページごとのスクリプトにまとめた。iframeの分離はこの図のメッセージではない"
+  - item: "Boa（eval、new Function、計算されたimportのWasm）"
+    reason: "スクリプトと絵の分離が伝えたいことであり、evalの処理系は別の話"
+  - item: "SandboxOutboundという名前、クッキーjar、CORS、ブラウザ型のヘッダ"
+    reason: "外向きの経路はhttpとhttpsの矢印にまとめた"
+  - item: "PNG、JPEG、PDFという形式名"
+    reason: "完成した絵の戻りにまとめた"
+  - item: "4つの実行場所、認証、bot識別、端末側に描画を置く構成"
+    reason: "実行場所の選び方と端末クライアントは、この接続の分離とは別のメッセージ"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "一つの接続の中の流れ: CDPクライアントからEngineへ繋がり、EngineがPageScriptとPageRendererを持つ"
+  - "PageRenderer: 途中フレームはレンダラ側で合成され、CDPクライアントには完成フレームが渡る"
+  - "Kitesurfとは: 外向きのネットワークに触れるのはSandboxOutboundだけで、行き先はhttpとhttps"

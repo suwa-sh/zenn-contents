@@ -1,0 +1,59 @@
+type: structure
+title: "手順はスキル、判断はホスト"
+message: "手順のファイルはスキルに置き、権限の最終判断はホストが持ちます"
+source: "notes/zenn/articles/github-ai-ml-copilot-build-p3_20261114.md"
+components:
+  - id: procedure
+    label: "手順"
+    meaning: "SKILL.md を中心にした手順のファイル。起動時に読むのは名前と説明"
+  - id: allow
+    label: "許可の指定"
+    meaning: "任意の allowed-tools。確認を飛ばすかどうかに効く"
+  - id: paths
+    label: "見つける場所"
+    meaning: "ホストがスキルを探すパス"
+  - id: perm
+    label: "権限の判断"
+    meaning: "ツールを使う要求を許可するかを決める処理"
+  - id: tools
+    label: "ツールと接続先"
+    meaning: "ホストが持つツールの一覧と MCP の接続先"
+  - id: creds
+    label: "資格情報"
+    meaning: "ホストが持つ。スキルのファイルには書かない"
+groups:
+  - id: skill
+    label: "スキル"
+    members: [procedure, allow]
+  - id: host
+    label: "ホスト"
+    members: [paths, perm, tools, creds]
+relationships:
+  - from: procedure
+    to: paths
+    label: "名前と説明"
+  - from: procedure
+    to: tools
+    label: "手順が参照"
+  - from: allow
+    to: perm
+    label: "効果はホストごと"
+  - from: creds
+    to: tools
+    label: "ホストが使う"
+omitted:
+  - item: "scripts と references"
+    reason: "手順のファイルに含めた。別ノードにすると、枠の境界以外の要素が増える"
+  - item: "MCP という名前"
+    reason: "ツールと接続先に含めた。スキルに書かずホストが持つ接続先である"
+  - item: "マニフェストと生成スクリプト"
+    reason: "プロジェクト名の置き場所と生成物の差であり、スキルとホストの境界そのものではない"
+  - item: "permission handler の製品名"
+    reason: "権限の判断にまとめた"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "スキルが持つものと、ホストが足すもの"
+  - "allowed-tools の効果は文書ごとに違う"
+  - "まとめ"

@@ -1,0 +1,57 @@
+source:
+  title: "AIペネトレーション試験オーケストレータを公開面の防御で観測する"
+  url: null
+  path: "notes/zenn/articles/ai-cloudflare-adapting-to-p6_20261114.md"
+  primary:
+    - title: "Cloudflare, Adapting to AI penetration testing orchestrators"
+      url: "https://blog.cloudflare.com/adapting-to-ai-penetration-testing-orchestrators/"
+    - title: "Cloudflare Docs, Rate limiting rules"
+      url: "https://developers.cloudflare.com/waf/rate-limiting-rules/"
+    - title: "Cloudflare Docs, Schema validation"
+      url: "https://developers.cloudflare.com/api-shield/security/schema-validation/"
+    - title: "NIST, SP 800-61 Rev. 3"
+      url: "https://csrc.nist.gov/pubs/sp/800/61/r3/final"
+  retrieved_at: "2026-11-15"
+archetype:
+  primary: governance
+  secondary: [decision]
+one_liner: "届く連続試行は許可した試験の送信元で分け、公開アプリ以外の入口は先に消します。"
+key_points:
+  - claim: "止める候補は、同じ発信元が短い時間に、パスや結果を変えながら続く試行です。"
+    evidence: "検知の単位"
+    status: fact
+  - claim: "公開アプリ以外の管理画面、診断用の入口、遠隔操作の入口は、止めるルールより先に消します。"
+    evidence: "到達する通信と到達させない面 / まとめ"
+    status: fact
+  - claim: "受け付けるデータの形で通信を止めるには、止めるルールを別に書きます。"
+    evidence: "到達する通信と到達させない面（スキーマ検証）"
+    status: fact
+  - claim: "許可した試験の送信元と当日のログが一致しないものは、その試験として通しません。"
+    evidence: "正規の診断との境界"
+    status: fact
+  - claim: "当番がその場で遮断と解除を出せないなら、その連続試行はアラートです。"
+    evidence: "遮断と解除の権限 / まとめ"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "連続試行は、許可した送信元と当日のログが一致するかで、試験の記録と遮断の判断に分かれる"
+    reason_needed: "ツール名で許可した試験と許可のない試行を分けると、頼んだ試験も同じ印になる"
+example:
+  description: "ある事後調査では、期限の無いAPIトークンが使われていた。観測は分あたり69を超えるリクエストと、時間あたり400件の、データベースの中身をまとめて取り出す要求である。"
+  hypothetical: false
+  evidence: "公表された観測 / あるインシデントでは"
+applicability:
+  - "公開を続けるアプリの検知を見直すとき"
+  - "期限もIPアドレスの制限も無いトークンを探すとき"
+  - "公式の件数制限だけで連続試行を止めようとするとき"
+decision_criteria:
+  - "同じ発信元が短時間にパスや結果を変える列を、1件と別に数えていますか。"
+  - "管理画面は、止めるルールより前にインターネットから消していますか。"
+limitations:
+  - "公式の件数制限が止めるのは、件数で表せる部分だけです。"
+  - "具体例の件数は、自社のしきい値には写しません。"
+  - "公式の件数制限は、データセンタごとに集計し、更新に数秒遅れます。"
+  - "期限もIPアドレスの制限も無いトークンは、インターネットから使えるままには置きません。"
+unknowns:
+  - "無効にするか、IPアドレスの制限を足すかは、一つの手順にはなっていません。"
+reviewed: true
