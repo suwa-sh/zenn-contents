@@ -17,7 +17,7 @@ source:
 archetype:
   primary: architecture
   secondary: [decision]
-one_liner: "A2UI 1.0 は、ホストが許可した部品名の JSON だけで画面を組むプロトコルで、公式表で v1.0 が Stable な実装は React、Lit、Angular である。"
+one_liner: "A2UI 1.0 は、ホスト（画面を持つアプリ）が許可した部品だけでエージェントの画面を描くプロトコルです。"
 key_points:
   - claim: "エージェントは見た目を描かない。カタログに無い部品は描かず、対応すると宣言したカタログの一覧へはフォールバックしない"
     evidence: "A2UIとは / 責任は 3 層に分かれる / どの面を 1.0 の契約にするか"

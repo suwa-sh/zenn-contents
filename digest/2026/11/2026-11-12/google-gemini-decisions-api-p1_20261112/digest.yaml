@@ -18,7 +18,7 @@ archetype:
   primary: architecture
   secondary:
     - decision
-one_liner: "Gemini Decisions API は、共有入力へ、答えの型を限った質問を当て、文章の代わりに数値を返す。返すのは確率か、段階の添字の期待値で、実行の閾値は呼び出し側が持つ。"
+one_liner: "Gemini Decisions API は、1 つの入力に型を限った質問を当て、確率などの数値を返します。"
 key_points:
   - claim: "noul は yes の確率、choice は合計 1 の選択肢の確率、score は低い方から高い方へ並べたレベル添字の期待値である。1 回に 1 件から 1,000 件を同時に評価するが、質問は互いの答えを見ず、結果を対応づける名前はモデルに渡らないので、質問文は instructions に書く"
     evidence: "Gemini Decisions APIとは / 特徴（モデルは質問キーを見ない）"
