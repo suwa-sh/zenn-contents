@@ -1,0 +1,54 @@
+source:
+  title: "コーディングエージェントに今のWebプラットフォームの書き方を渡すModern Web Guidance"
+  url: null
+  path: "notes/zenn/articles/modern-web-guidance_20261115.md"
+  primary:
+    - title: "Modern Web Guidance"
+      url: "https://developer.chrome.com/docs/modern-web-guidance"
+    - title: "Modern Web Guidance 1.0"
+      url: "https://developer.chrome.com/blog/modern-web-guidance-v1"
+    - title: "GoogleChrome/modern-web-guidance"
+      url: "https://github.com/GoogleChrome/modern-web-guidance"
+    - title: "GoogleChrome/modern-web-guidance-src"
+      url: "https://github.com/GoogleChrome/modern-web-guidance-src"
+  retrieved_at: "2026-11-16"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "ChromeのModern Web Guidanceは、画面実装のときだけ該当ガイドを渡します。"
+key_points:
+  - claim: "画面のHTML、CSS、クライアント側JavaScriptのときだけ該当ガイドを読む"
+    evidence: "Modern Web Guidanceとは"
+    status: fact
+  - claim: "既定は主要ブラウザで広く使える機能で、まだ広く使えない機能は非対応でも動く形で足すか条件付きの短い代替にする"
+    evidence: "特徴"
+    status: fact
+  - claim: "試験公開と、出荷から3か月以内かまだ安定していない単一エンジンだけの機能は検索に出るが、本文は人が許可するまで返さない"
+    evidence: "特徴 / ゲートと Baseline"
+    status: fact
+  - claim: "検索は英語の2語から5語程度の動作で、1つの機能に分ける"
+    evidence: "利用方法 / search / ベストプラクティスのクエリの書き方"
+    status: fact
+  - claim: "検索文字列は既定で送られ、DISABLE_TELEMETRY の 1 か true で止まる"
+    evidence: "運用 / テレメトリ"
+    status: fact
+mental_models:
+  - type: behavior
+    key_message: "常駐は短く、画面実装のときだけ該当ガイドを取る"
+    reason_needed: "常時載る紹介をガイド全文と読むと、タスクのたびに全ガイドを渡す仕組みに見える"
+example:
+  description: "公開された評価では、同じ作業の採点合格率がガイドなしより27から36ポイント高い"
+  hypothetical: false
+  evidence: "運用 / 評価の見方"
+applicability: []
+decision_criteria:
+  - "検索した文字列の送信を止めるか、決めましたか。"
+limitations:
+  - "ガイド本文の対応状況は、そのパッケージを作った時点の値で、取得のたびに最新を問い合わせない"
+  - "CLIで入れた1.0.0の更新は、人が update を実行したときだけ"
+  - "対応範囲の引数に baseline と書くと newly（新しい機能まで）として保存され、既定へ戻すときは widely（広く使える）を渡す"
+unknowns:
+  - "週次公開が月曜 14:50 UTC に必ず出るかは、その週の run を見ないと分からない"
+  - "legacy-scan の静的精度 80% 以上、検証後 90% 以上は、公開物だけでは再計測できない"
+  - "利用者向けに完成した CI レシピは、1.0.0 の公開物には無い"
+reviewed: true

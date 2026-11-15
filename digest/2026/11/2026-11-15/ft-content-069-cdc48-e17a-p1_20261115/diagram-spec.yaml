@@ -1,0 +1,65 @@
+type: structure
+title: "外部操作の3分類"
+message: "公式接続が覆い識別子が拒まれない操作だけ、人が承認する別の接続口に任せる"
+source: "notes/zenn/articles/ft-content-069-cdc48-e17a-p1_20261115.md"
+components:
+  - id: op
+    label: "足す操作"
+    meaning: "分類の単位。サービス全体ではない"
+  - id: no_api
+    label: "人のログインしか無い"
+    meaning: "公式APIも限定アクセス権も接続先の公開一覧も無い"
+  - id: refused
+    label: "別ソフトの接続を拒む"
+    meaning: "規約、検知、または明示の拒否"
+  - id: covered
+    label: "公式接続が覆う"
+    meaning: "公式API、限定アクセス権、または接続先の公開一覧がその操作を覆い、識別子が拒まれない"
+  - id: human
+    label: "人の画面"
+    meaning: "通常経路。パスワード共有は定常にしない"
+  - id: client
+    label: "別の接続口"
+    meaning: "人が承認し、エージェントは自己識別する"
+groups:
+  - id: human_path
+    label: "人の画面が通常経路"
+    members: [no_api, refused, human]
+  - id: agent_path
+    label: "別の接続口に任せる"
+    members: [covered, client]
+relationships:
+  - from: op
+    to: no_api
+    label: "口が無い"
+  - from: op
+    to: refused
+    label: "拒まれる"
+  - from: op
+    to: covered
+    label: "拒まれない"
+  - from: no_api
+    to: human
+    label: "通常経路"
+  - from: refused
+    to: human
+    label: "通常経路"
+  - from: covered
+    to: client
+    label: "人が承認"
+omitted:
+  - item: "読み取りと資金移動の許可分離"
+    reason: "3分類の行き先とは別の判断なので、本文の核心ポイントに残す"
+  - item: "Poppyの層（発見、セッション、サインイン、チャネル）"
+    reason: "分類3の形の中身であり、分岐図のメッセージを二つにしないため"
+  - item: "手元のツール許可と相手サービスの受入の分離"
+    reason: "分類の外の確認項目であり、図には入れない"
+  - item: "支払口座の免許事業者と意見の責任4分割"
+    reason: "分類を上げる条件ではなく、図のメッセージに関係しない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "外部操作を3つに分ける"
+  - "採用する結論"
+  - "確認の順序"

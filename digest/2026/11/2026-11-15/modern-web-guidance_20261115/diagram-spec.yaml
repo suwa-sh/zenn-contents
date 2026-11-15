@@ -1,0 +1,51 @@
+type: behavior
+title: "画面実装のときだけガイドを取る"
+message: "常駐は短く、画面実装のときだけ該当ガイドを取ります"
+source: "notes/zenn/articles/modern-web-guidance_20261115.md"
+components:
+  - id: request
+    label: "依頼"
+    meaning: "開発者がコーディングエージェントへ出す作業の依頼"
+  - id: preface
+    label: "短い前置き"
+    meaning: "エージェントにいつも付く短い紹介。ガイド本文は含まない"
+  - id: search
+    label: "検索"
+    meaning: "英語の短い動作で、タスクに合うガイドを探す"
+  - id: guide
+    label: "ガイド本文"
+    meaning: "一致したガイドだけを取得した本文"
+  - id: code
+    label: "実装"
+    meaning: "取得したガイドの書き方で画面を書く"
+groups:
+  - id: path
+    label: "実行の経路"
+    members: [preface, search, guide]
+relationships:
+  - from: request
+    to: preface
+    label: "いつも付く"
+  - from: preface
+    to: search
+    label: "画面実装のとき"
+  - from: search
+    to: guide
+    label: "見つかった名前"
+  - from: guide
+    to: code
+    label: "ガイドの書き方"
+omitted:
+  - item: "テレメトリ、評価、レガシー走査、Chrome拡張の第二スキル"
+    reason: "画面実装のときにガイドを取る順序ではない"
+  - item: "短い代替と、試験公開の許可と Baseline のバナー"
+    reason: "代替が付く条件は本文の核心ポイントに残し、図はガイドを取る順序だけにする"
+  - item: "応答末尾の適用ガイドの開示"
+    reason: "実装のあとに残す記録で、ガイドを取る流れの箱ではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "Modern Web Guidanceとは（常駐スキルは約205トークンで本文を含まず、ウェブUIの実装のときだけガイドを検索して取得する）"
+  - "特徴（広く使える機能を優先し、未到達には短い代替が付く）"
+  - "利用方法（search のクエリは英語の2語から5語程度の動作）"

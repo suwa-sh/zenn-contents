@@ -1,0 +1,51 @@
+type: structure
+title: "1通の状態が決まってから再送を判断する"
+message: "期限の無いメールの同じ文面は、Failed か未達通知のあとで送る"
+source: "notes/zenn/articles/microsoft-365-xtech-nikkei-p4_20261115.md"
+components:
+  - id: accept
+    label: "受理"
+    meaning: "Graph の sendMail が返す 202。処理の完了ではない"
+  - id: pending
+    label: "配送の途中"
+    meaning: "Pending または Getting status。同じ文面は再送しない"
+  - id: delivered
+    label: "Delivered"
+    meaning: "意図した宛先へ配送できた状態。迷惑メールや検疫でもなり得る"
+  - id: failed
+    label: "Failed か未達通知"
+    meaning: "配送できなかった状態、または送信者へ未達通知が返った状態。再送のきっかけ"
+groups:
+  - id: open
+    label: "まだ完了でない"
+    members: [accept, pending]
+  - id: decided
+    label: "状態が確定した"
+    members: [delivered, failed]
+relationships:
+  - from: accept
+    to: pending
+    label: "処理が続く"
+  - from: pending
+    to: delivered
+    label: "状態が確定"
+  - from: pending
+    to: failed
+    label: "状態が確定"
+omitted:
+  - item: "サービス全体の復帰投稿"
+    reason: "1通の完了信号ではない。図は再送判断の状態だけを示す"
+  - item: "Getting status"
+    reason: "Pending と同じく未確定なので、配送の途中にまとめた"
+  - item: "Quarantined と Filtered as spam"
+    reason: "照合の終了条件に入っておらず、再送判断の矢印にしない"
+  - item: "コネクタ、MX、送信経路"
+    reason: "再送の状態遷移ではなく、Pending のあいだ変えない設定だから"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "送信 API が返す受理"
+  - "メッセージトレースの状態"
+  - "障害窓の通常メールは、状態が確定してから再送する"
+  - "完了の信号は、その1通の記録である"
