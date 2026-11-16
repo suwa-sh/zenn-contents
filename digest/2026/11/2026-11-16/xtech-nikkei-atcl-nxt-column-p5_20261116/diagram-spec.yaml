@@ -1,0 +1,54 @@
+type: structure
+title: "見積の三つの行"
+message: "人月で下へ流す行だけが、従業員9人以下の受託開発へ届く"
+source: "notes/zenn/articles/xtech-nikkei-atcl-nxt-column-p5_20261116.md"
+components:
+  - id: prime
+    label: "元請け"
+    meaning: "発注側から直接仕事を受け、見積を三つの行に分ける側"
+  - id: down
+    label: "人月で下へ流す行"
+    meaning: "人数と月数で積み、より小さい会社へ渡す行"
+  - id: agent
+    label: "エージェントで持つ行"
+    meaning: "コード生成、テストコード、文書の支援を、人月で外へ出さずに持つ行"
+  - id: duty
+    label: "責任が残る行"
+    meaning: "要件の受け入れ、移行の判断、結合の合否、本番運用、セキュリティと損害賠償の境界"
+  - id: micro
+    label: "従業員9人以下の受託開発"
+    meaning: "人月で下へ流す行の行き先。法的倒産が集中する層"
+groups:
+  - id: lines
+    label: "見積の行"
+    members: [down, agent, duty]
+relationships:
+  - from: prime
+    to: down
+    label: "分ける"
+  - from: prime
+    to: agent
+    label: "分ける"
+  - from: prime
+    to: duty
+    label: "分ける"
+  - from: down
+    to: micro
+    label: "渡す"
+omitted:
+  - item: "中間の受託"
+    reason: "見積の三つの行の分かれ方には出てこない。商流の並びは元記事の別の図にある"
+  - item: "発注側"
+    reason: "伝えたいことは、元請けが見積を分けたあと、どの行が数人規模へ届くかであるため"
+  - item: "設計・実装・テストを外部へ出す企業の割合63.4%"
+    reason: "従業員9人以下へ渡る割合ではない、と元記事が断っている。図に置くと行き先の割合に読める"
+  - item: "コード生成、テストコード、文書支援の内訳"
+    reason: "エージェントで持つ行の1要素にまとめた"
+  - item: "要件の受け入れ、移行判断、結合の合否、本番運用、セキュリティと損害賠償の内訳"
+    reason: "責任が残る行の1要素にまとめた"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "見積に残す三つの行"
+  - "多重下請けの同時進行とは（元請けと従業員9人以下の受託開発）"

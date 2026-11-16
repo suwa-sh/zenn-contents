@@ -1,0 +1,70 @@
+source:
+  title: "大手の受注は伸び、数人規模の受託の倒産は上期最多ペース"
+  url: null
+  path: "notes/zenn/articles/xtech-nikkei-atcl-nxt-column-p5_20261116.md"
+  primary:
+    - title: "日経クロステック「大手堅調の裏で倒産最多のIT業界、AIが引き起こす多重下請け構造の崩壊」（公開リード）"
+      url: "https://xtech.nikkei.com/atcl/nxt/column/18/03792/110500001/"
+    - title: "東京商工リサーチ、2026年7月14日"
+      url: "https://www.tsr-net.co.jp/data/detail/1203052_1527.html"
+    - title: "東京商工リサーチ、2026年10月27日"
+      url: "https://www.tsr-net.co.jp/data/detail/1203376_1527.html"
+    - title: "JISA 2026年1月から6月の編成（2026年7月22日）"
+      url: "https://www.jisa.or.jp/Portals/0/resource/news/1529/101.pdf"
+    - title: "JUAS『企業IT動向調査報告書2026』"
+      url: "https://juas.or.jp/cms/media/2026/04/JUAS_IT2026.pdf"
+    - title: "NTTデータグループ 2026年度第2四半期決算説明"
+      url: "https://www.nttdata.com/global/ja/-/media/nttdataglobal-ja/files/investors/ir_events/2026/2q/20272qpre_j01.pdf"
+    - title: "帝国データバンク、2026年3月9日"
+      url: "https://www.tdb.co.jp/report/industry/20260309-softwaretousan/"
+    - title: "PwC Japanグループ、2026年11月4日"
+      url: "https://www.pwc.com/jp/ja/press-room/2026/ai-driven-development-transformation.html"
+    - title: "日本経済新聞、2026年11月12日"
+      url: "https://www.nikkei.com/article/DGXZQOUC125MK0S6A111C2000000/"
+  retrieved_at: "2026-11-17"
+archetype:
+  primary: decision
+  secondary: [research]
+one_liner: "2026年の情報サービス業は、売上と大手受注が伸び、倒産は従業員9人以下に集中し、上期は10年で最多ペースです。"
+key_points:
+  - claim: "売上と大手の受注が伸びる時期に、負債1,000万円以上の法的倒産は従業員9人以下の受託開発へ集まっている"
+    evidence: "多重下請けの同時進行とは / 倒産の件数 / 売上と受注"
+    status: fact
+  - claim: "暦年上期は166件、年度上期は174件である。どちらも10年でその期間の最多で、年度の月は原文にない"
+    evidence: "倒産の件数 / 注意点 / 倒産件数は一つの数にまとまらない / 2026年通年の最多はまだ確定していない"
+    status: fact
+  - claim: "確認した大手2社の2026年度上期の説明資料に外注費の行はなく、中小への発注が減ったとは書けない"
+    evidence: "注意点 / 大手から中小への発注減は決算では未確認である"
+    status: fact
+  - claim: "見積の分け方は三行である。人月で下へ流す行、エージェントで持つ行（コード生成などを内製）、責任が残る行（要件の受け入れなど）である"
+    evidence: "見積に残す三つの行"
+    status: interpretation
+mental_models:
+  - type: structure
+    key_message: "人月で下へ流す行だけが、従業員9人以下の受託開発へ届く"
+    reason_needed: "見積の三つの行のうち、どこが数人規模の受託へ渡るかを取り違えないため"
+example:
+  description: "システムを使う側の企業の調査では、設計・実装・テストを外部へ出す企業の割合が63.4%である。これは企業数の割合で、従業員9人以下へ渡る割合ではない"
+  hypothetical: false
+  evidence: "内製と外部委託の割合 / 見積に残す三つの行"
+applicability:
+  - "見積を、三つの行に分けて出す"
+  - "下請けの稼働を前提にした工期を、そのまま使わない"
+  - "倒産件数を、崩れた量として計画に使わない"
+decision_criteria:
+  - "下へ流す行だけを、人月にしているか"
+  - "コード生成などの作業だけを、エージェントで持つ行にしているか"
+  - "責任が残る行を、人月を削った余りとして消していないか"
+  - "自社支援で出た工数削減を、ほかの行の係数にしていないか"
+  - "取適法（中小受託の法律）の線なら、書面と支払期日を残しているか"
+limitations:
+  - "2026年通年の最多は、まだ確定していない。2025年通年の284件は、別の集計の最多である"
+  - "70%は自社支援の工数削減の上限である。30%は設計からテストの削減目標で、原文は未確認である"
+  - "業界団体の調査では、2024年度まで外注費率が上がっている。人月の行が消えた証拠にはならない"
+  - "倒産の原因は調査ごとに違う。販売不振、簡易な開発の内製化、多層委託で賃上げを転嫁できないことが並ぶ"
+  - "実装、試験、移行、結合の工程別の時間は、測られていない"
+unknowns:
+  - "2026年通年の倒産が、東京商工リサーチとJISAのそれぞれの定義で10年最多になるか"
+  - "大手から会員外の小さい会社への発注額が、2026年4月から9月に減ったか"
+  - "減っている時間があるとして、実装か、試験か、移行か、結合か"
+reviewed: true

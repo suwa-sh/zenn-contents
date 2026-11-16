@@ -1,0 +1,56 @@
+source:
+  title: "定型インシデントを自動化したあと、稀な障害の技能をどこで残すか"
+  url: null
+  path: "notes/zenn/articles/gigazine-20261115-ai-isnt-p4_20261116.md"
+  primary:
+    - title: "Elizabeth. AI Isn't Replacing SREs. It's Deskilling Them. Observability Real Talk. 2026-02-28"
+      url: "https://newsletter.signoz.io/p/ai-isnt-replacing-sres-its-deskilling"
+    - title: "GIGAZINE. 2026-11-15"
+      url: "https://gigazine.net/news/20261115-ai-isnt-replacing-sres-its-deskilling/"
+    - title: "Budzyń K, et al. Lancet Gastroenterology & Hepatology. 2025;10:896-903"
+      url: "https://doi.org/10.1016/S2468-1253(25)00133-5"
+    - title: "Bainbridge L. Ironies of Automation. Automatica. 1983;19(6):775-779"
+      url: "https://doi.org/10.1016/0005-1098(83)90046-8"
+    - title: "Widdowson A. Accelerating SREs to On-Call and Beyond. Google SRE Book, chapter 28"
+      url: "https://sre.google/sre-book/accelerating-sre-on-call/"
+  retrieved_at: "2026-11-17"
+archetype:
+  primary: decision
+  secondary: [research]
+one_liner: "障害対応の当番では、新規の障害の技能を被害の出ない訓練で残します。"
+key_points:
+  - claim: "定型の障害対応は AI が実行し、人はその出力を受け取ります。新規の障害は人の仮説から始まります。"
+    evidence: "インシデント対応の分担とは / 仕事の流れ"
+    status: fact
+  - claim: "練習の中心は、被害を切り離した訓練だけに置きます。"
+    evidence: "練習の主枠をどこに置くか"
+    status: interpretation
+  - claim: "本番の記録は、AI が実行した手順と、人が下した判断に分けます。"
+    evidence: "練習の主枠をどこに置くか / 運行記録では、エージェントが実行した手順と、人が下した判断を分けます"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "1件の記録を、AI が実行した手順と人の判断に分け、判断から訓練の仮説を評価へ残す"
+    reason_needed: "技能を残す置き場が、本番の定型ではなく記録の分割と被害の出ない訓練だと示すため"
+example:
+  description: "利用者に影響しない環境で、障害を1回再現します。AI の出力を隠して仮説を書いてから、その出力を開きます。"
+  hypothetical: false
+  evidence: "評価項目に残す記録 / 直近のアクション 2"
+applicability:
+  - "定型の障害対応を自動化したあとです。"
+  - "当番の評価項目を決めるときです。"
+  - "本番の定型を、人の練習にするか迷うときです。"
+decision_criteria:
+  - "予定した訓練で、出力を見る前の仮説が原因とどこまで対応したかを残しますか。"
+  - "採用するか却下するかの理由を、1行残していますか。"
+  - "仮説と理由の欄は、当番を見守った回数とは別ですか。"
+limitations:
+  - "障害対応の担当で、AI を入れる前後の診断の技能を測った研究は、確認できていません。"
+  - "記録の分割は、技能が落ちた証拠にも、戻った証拠にもなりません。"
+  - "自チームか公開研究で、定型を人に戻した前後と切り離した訓練を比べます。戻した方が新規の障害の診断が良く、サービスの目標の悪化が許容内と示されたら、見直します。"
+  - "記録を分けても、AI の文面を原因のまま使う割合が下がらないなら、採用前に自分の仮説を先に書きます。"
+unknowns:
+  - "障害対応の担当で、AI 導入の前後に診断技能を測った研究は確認できていない"
+  - "三層の文言が、名指しされた事業者の自社ページにあるかは未確認"
+  - "誤った原因分析を手順書に採用したあと、同じ誤りが再現する割合は取っていない"
+reviewed: true

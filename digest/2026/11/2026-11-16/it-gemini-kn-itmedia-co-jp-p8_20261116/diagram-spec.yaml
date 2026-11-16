@@ -1,0 +1,40 @@
+type: structure
+title: "コードの生成と画面の実行は別の層"
+message: "コードの生成と画面の実行は別の層"
+source: "notes/zenn/articles/it-gemini-kn-itmedia-co-jp-p8_20261116.md"
+components:
+  - id: dept
+    label: "事業部門"
+    meaning: "自然言語で要件を出す運輸部や営業部"
+  - id: gemini
+    label: "Gemini"
+    meaning: "コードと原稿を生成する"
+  - id: server
+    label: "画面のサーバ"
+    meaning: "Streamlitのサーバ。画面を見ている端末ではなく、サーバ側で計算する"
+groups:
+  - id: audit
+    label: "監査ログ"
+    members: [gemini]
+relationships:
+  - from: dept
+    to: gemini
+    label: "要件を出す"
+  - from: gemini
+    to: server
+    label: "コードを渡す"
+omitted:
+  - item: "Gemini Notebookと安全資料のコピー"
+    reason: "生成と実行の層の分離とは別の境界なので、本文の核心ポイントに残した"
+  - item: "デジタル変革推進部から事業部門への内製支援"
+    reason: "全社の役割は本文の核心ポイントに残し、図は生成と実行の境界に絞った"
+  - item: "運輸部と営業部の画面の内訳"
+    reason: "どちらも要件を出す事業部門としてまとめた"
+  - item: "AppSheetの共有制限"
+    reason: "顧客事例の利用サービスに無く、画面のサーバには付かない。監査の枠の外という一点に含めた"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "三つの層 / 事業部門が要件を出し、Geminiがコードを渡し、Streamlitのサーバが画面を動かす"
+  - "実行中の画面は Gemini 監査の外 / 監査ログの案内は Gemini アプリと Workspace アプリで、画面のサーバは含まれない"

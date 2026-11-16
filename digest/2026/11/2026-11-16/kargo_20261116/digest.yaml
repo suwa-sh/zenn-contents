@@ -1,0 +1,58 @@
+source:
+  title: "GitOpsの環境間プロモーションをStageの列で自動化するKargoの構造とデータ"
+  url: null
+  path: "notes/zenn/articles/kargo_20261116.md"
+  primary:
+    - title: "Kargo ドキュメント"
+      url: "https://docs.kargo.io/"
+    - title: "akuity/kargo"
+      url: "https://github.com/akuity/kargo"
+    - title: "Release v1.12.5"
+      url: "https://github.com/akuity/kargo/releases/tag/v1.12.5"
+  retrieved_at: "2026-11-17"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "Kargo は成果物の組を Stage の列で進め、クラスタへの同期は Argo CD に任せます。"
+key_points:
+  - claim: "Warehouse はイメージ、Git、Helm 包みを 1 つの Freight にします。"
+    evidence: "Kargoとは / リソース表（Warehouse, Freight）"
+    status: fact
+  - claim: "下流の候補になるのは、上流で検証を通過した Freight です。"
+    evidence: "Kargoとは / 流れの 5"
+    status: fact
+  - claim: "待ち時間を課したときだけ、上流に載り続けた時間がそれに達するまで下流へ出せません。"
+    evidence: "ベストプラクティス「soak time を本番の前に置く」（requiredSoakTime）"
+    status: fact
+  - claim: "自動で進めるかは ProjectConfig（進めるかの設定）で決め、省略すると進みません。"
+    evidence: "特徴 / データ「Project と ProjectConfig」（autoPromotionEnabled の省略時は偽）"
+    status: fact
+  - claim: "クラスタを Git に合わせ続けるのは Argo CD か Flux です。"
+    evidence: "Kargoとは / 境界の表の直後"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "Kargo は版の組を上流から下流へ進め、Git への書き戻しの先をクラスタへ合わせるのは Argo CD です。"
+    reason_needed: "Stage の列と、クラスタへ同期する役が分かれないと、Kargo がクラスタを直接合わせると読めるため"
+example:
+  description: "test は Warehouse の Freight を直接受け取ります。uat は test で検証を通過した Freight だけを受け取ります。プロモーション手順を書くと、Stage 用ブランチへあるべき状態を書き、Argo CD に同期させます。"
+  hypothetical: false
+  evidence: "利用方法 / Stage とプロモーション手順"
+applicability:
+  - "同じ成果物の組を dev から本番まで規則どおり進める"
+  - "環境間コピーを CI のジョブから Stage の定義へ移す"
+  - "モノレポでアプリごとに監視するパスを分けて進める"
+decision_criteria:
+  - "低い環境だけ自動で進むようにしたか"
+  - "書き戻し先を、Warehouse が見る対象から外したか"
+  - "本番の前に上流での待ち時間を置いたか"
+  - "失敗から戻すときは、人がその Stage へ載せ直す手順にしたか"
+limitations:
+  - "自動ロールバックと時間帯の窓は、OSS では無視されることがあります。動くかはクラスタで確認します。"
+  - "出力パスを Warehouse が見ていると、書き戻しのたびに新しい Freight が生まれます。"
+  - "成否の検査を書くときは、Argo Rollouts（検査の定義元）が要ります。無いと、その Stage の検証は失敗します。"
+  - "手動承認した Freight は、その Stage では上流の検証と待ち時間を飛ばせます。"
+  - "本番トラフィックの割合を広げるのは Argo Rollouts です。"
+unknowns:
+  - "自動ロールバックと時間帯の窓が、型コメントどおり OSS の自分のクラスタで無視されるか"
+reviewed: true

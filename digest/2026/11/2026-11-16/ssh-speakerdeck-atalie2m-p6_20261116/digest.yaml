@@ -1,0 +1,65 @@
+source:
+  title: "人のSSH鍵をエージェントに渡さない資格情報の分離"
+  url: null
+  path: "notes/zenn/articles/ssh-speakerdeck-atalie2m-p6_20261116.md"
+  primary:
+    - title: "さようならSSH鍵、こんにちはゼロトラスト"
+      url: "https://speakerdeck.com/atalie2m/goodbye-ssh-key-jisabakan-2026"
+    - title: "Machine & Workload Identity Configuration Reference"
+      url: "https://goteleport.com/docs/reference/machine-workload-identity/configuration/"
+    - title: "Machine & Workload Identity with Server Access"
+      url: "https://goteleport.com/docs/machine-workload-identity/access-guides/ssh/"
+    - title: "Generating an installation access token for a GitHub App"
+      url: "https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-an-installation-access-token-for-a-github-app"
+    - title: "NIST CSRC Glossary, Zero Trust"
+      url: "https://csrc.nist.gov/glossary/term/zero_trust"
+  retrieved_at: "2026-11-17"
+archetype:
+  primary: decision
+  secondary: [architecture, governance]
+one_liner: "この記事は、コードを書く機械を、非rootの別OSユーザーの短期SSH証明書で入れます。"
+key_points:
+  - claim: "接続先が信頼するのは、証明書に署名した認証局である"
+    evidence: "人のSSH鍵を渡さない接続とは"
+    status: fact
+  - claim: "機械は、非rootの別OSユーザーと、人とは別の短期証明書で入る"
+    evidence: "人間、エージェント、Ansible の名義"
+    status: fact
+  - claim: "機械向けの資格情報は、Teleportの既定で1時間、20分ごとに更新する"
+    evidence: "証明書の寿命と、出力先のファイル"
+    status: fact
+  - claim: "機械向けの資格情報をディレクトリへ書くと、秘密鍵ファイルも残る"
+    evidence: "注意点 / 接続例は、ディスクから秘密鍵を消していない"
+    status: fact
+  - claim: "GitHubのアプリ鍵は発行役に残り、機械のGit認証に使うのは1時間のトークンである"
+    evidence: "Git の秘密鍵と、短い root / 人間、エージェント、Ansible の名義"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "人の秘密鍵は渡さず、名義と寿命を分ける"
+    reason_needed: "SSHの別名義と、Gitの秘密鍵を残す場所が、同じ分離だと読めないと、鍵を渡さない範囲を誤る"
+example:
+  description: "接続例のログイン名は domus-coding-agent である。資格情報の場所は ./bot/identity である。人の秘密鍵の場所は、この例にない"
+  hypothetical: false
+  evidence: "人間、エージェント、Ansible の名義"
+applicability:
+  - "人と機械が同じサーバへSSHするときです。"
+  - "GitHubのアプリ鍵を、機械のディスクに置かないときです。"
+  - "今の認証局の短いSSH証明書だけでは、足りないときです。"
+decision_criteria:
+  - "更新を止めても、発行済み証明書を無効化しますか。"
+  - "ディレクトリへ書いた資格情報を、機械のプロセスだけが読めますか。"
+  - "署名鍵を、人のSSH認証鍵とは別の鍵にしていますか。"
+  - "基盤停止の単一障害点を、受け入れると決めましたか。"
+limitations:
+  - "30秒などの期限は、実装未確認の自己申告である"
+  - "コマンドごとの許可は、今後の課題である"
+  - "アプリ鍵とは別のコミット署名鍵は、種類、寿命、置き場所が不明である"
+  - "監査が画面の収録か、コマンド単位かは、未確認である"
+  - "1時間の証明書は、ゼロトラストの定義そのものではない"
+unknowns:
+    - "アプリ鍵とは別のコミット署名鍵の種類、寿命、置き場所"
+  - "監査抜粋の「コマンドの実行」が疑似端末の出力か、コマンド単位の記録か"
+  - "参加方法が未記載のため、世代カウンタの自動ロックが効くか"
+  - "自作ブローカーの30秒などが、公開されたコードと一致するか"
+reviewed: true

@@ -1,0 +1,60 @@
+type: structure
+title: "版の組は Stage の列を進み、同期は Argo CD"
+message: "Kargo は版の組を上流から下流へ進め、Git への書き戻しの先をクラスタへ合わせるのは Argo CD"
+source: "notes/zenn/articles/kargo_20261116.md"
+components:
+  - id: warehouse
+    label: "Warehouse"
+    meaning: "イメージ、Git、Helm 包みの新しい版を見つける"
+  - id: freight
+    label: "Freight"
+    meaning: "見つけた版を 1 つにまとめた組"
+  - id: upstream
+    label: "上流 Stage"
+    meaning: "Warehouse の Freight を直接受け取り、検証する"
+  - id: downstream
+    label: "下流 Stage"
+    meaning: "上流で検証を通過した Freight を受け取る"
+  - id: git
+    label: "Git"
+    meaning: "Stage が書き戻す、あるべき状態"
+  - id: argocd
+    label: "Argo CD"
+    meaning: "Git を読んでクラスタをその状態へ合わせる"
+groups:
+  - id: kargo
+    label: "Kargo"
+    members: [warehouse, freight, upstream, downstream]
+relationships:
+  - from: warehouse
+    to: freight
+    label: "まとめる"
+  - from: freight
+    to: upstream
+    label: "直接受け取る"
+  - from: upstream
+    to: downstream
+    label: "検証後に渡す"
+  - from: upstream
+    to: git
+    label: "書き戻す"
+  - from: downstream
+    to: git
+    label: "書き戻す"
+  - from: git
+    to: argocd
+    label: "読んで合わせる"
+omitted:
+  - item: "クラスタの箱"
+    reason: "Argo CD の役割に畳んだ。同期先を別箱にすると要素が 7 を超えるため"
+  - item: "待ち時間、手動承認、ProjectConfig、Promotion リソース、AnalysisRun"
+    reason: "伝えたいことは版の組が Stage 列を進み Git へ書き戻すことであり、関門の種類は本文に残すため"
+  - item: "CI、Argo Rollouts、shard、Helm、OCI への push"
+    reason: "役割の境界は本文の核心に書き、図は 1 本の昇格の通り道だけにするため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "Kargoとは / リソース表と、流れの 1 から 5"
+  - "Kargoとは / Kargo、GitOps エージェント、CI、カナリアの境界"
+  - "利用方法 / Stage とプロモーション手順（test は direct、uat は stages: test、git-push と argocd-update）"

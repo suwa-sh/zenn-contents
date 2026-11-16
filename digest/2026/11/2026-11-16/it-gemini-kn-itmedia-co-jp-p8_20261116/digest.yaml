@@ -1,0 +1,57 @@
+source:
+  title: "非IT部門がGeminiで業務アプリを内製するときの責任の置き方"
+  url: null
+  path: "notes/zenn/articles/it-gemini-kn-itmedia-co-jp-p8_20261116.md"
+  primary:
+    - title: "Google Workspace 顧客事例「JR九州、Google Workspace with Gemini を導入」（2026-10-30）"
+      url: "https://workspace.google.com/blog/ja/customer-stories/jr-kyushu-implements-google-workspace-with-gemini"
+    - title: "Gemini in Workspace プライバシーハブ（最終更新 2026-10-06）"
+      url: "https://knowledge.workspace.google.com/admin/gemini/generative-ai-in-google-workspace-privacy-hub?hl=en"
+    - title: "Workspace サービス固有の利用規約（最終更新 2026-02-05）"
+      url: "https://workspace.google.com/intl/ja/terms/service-terms-20260716/"
+    - title: "Streamlit アーキテクチャ"
+      url: "https://docs.streamlit.io/develop/concepts/architecture/architecture"
+  retrieved_at: "2026-11-17"
+archetype:
+  primary: governance
+  secondary: [decision]
+one_liner: "内製を認める文書は、完成月数とは別に、実行の所有者、障害の一次受け、改修の所有者を空欄にしません。"
+key_points:
+  - claim: "非ITの運輸部担当者が、Geminiの出力を検証しながら画面を作りました。"
+    evidence: "事業部門が作った画面 / 上城氏の発言"
+    status: fact
+  - claim: "画面の実行は、Geminiの監査ログの外です。"
+    evidence: "実行中の画面は Gemini 監査の外"
+    status: fact
+  - claim: "実行の所有者、障害の一次受け、改修の所有者は、公開本文にありません。"
+    evidence: "公開資料が名指ししていないこと / まとめ"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "コードの生成と画面の実行は別の層"
+    reason_needed: "コード生成の監査ログと、画面を動かすサーバを分けて読むため"
+example:
+  description: "乗客を乗せている間の車両データは画面で見ます。この画面は定期検査を置き換える前の検証で、検査そのものは一定間隔で続きます。"
+  hypothetical: false
+  evidence: "事業部門が作った画面 / Q-monitor と検査の周期は維持されている"
+applicability:
+  - "非IT部門に画面の内製を認める前"
+  - "完成月数の実績だけで本番継続を決めるとき"
+  - "影響が作った部署の外へ出る画面のとき"
+decision_criteria:
+  - "実行の所有者は書いてありますか。"
+  - "プロンプトへ貼ってよいかは書いてありますか。"
+  - "障害の一次受けは書いてありますか。"
+  - "改修の所有者は書いてありますか。"
+  - "定期検査の代わりになる機能は、試作のままですか。"
+limitations:
+  - "完成までの月数は、測定方法のない自己申告です。"
+  - "公開資料に無いことを、社内に取り決めが無いこととしては扱いません。"
+  - "Geminiの出力は、法令上の義務を満たす設計ではありません。"
+unknowns:
+  - "コード生成に使った製品が Gemini in Workspace か Gemini アプリか。分かるまでプロンプトの保持期間は当てはめられない"
+  - "この画面と、2026年4月に発表された車両データ基盤が同一か"
+  - "AppSheet Enterprise Plus を契約しているか"
+  - "2023年5月のガイドライン本文が事故の報告先を書いているか"
+  - "告示別表の検査周期と、対象車種"
+reviewed: true

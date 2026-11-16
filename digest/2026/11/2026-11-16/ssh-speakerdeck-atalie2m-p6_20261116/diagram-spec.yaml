@@ -1,0 +1,65 @@
+type: structure
+title: "人の鍵は渡さず名義と寿命を分ける"
+message: "人の秘密鍵は渡さず、名義と寿命を分ける"
+source: "notes/zenn/articles/ssh-speakerdeck-atalie2m-p6_20261116.md"
+components:
+  - id: human
+    label: "人間"
+    meaning: "本人確認で短期証明書を取る人"
+  - id: human_cert
+    label: "人の短期証明書"
+    meaning: "人のOSユーザーで入る証明書"
+  - id: agent
+    label: "コードを書く機械"
+    meaning: "人の秘密鍵を受け取らない接続元"
+  - id: bot_cert
+    label: "機械の短期証明書"
+    meaning: "別名義の機械用OSユーザーで入る証明書"
+  - id: broker
+    label: "発行役"
+    meaning: "GitHubのアプリ鍵を持つ発行元"
+  - id: app_key
+    label: "GitHubのアプリ鍵"
+    meaning: "発行役だけが保持する、期限が切れない鍵"
+  - id: token
+    label: "1時間のトークン"
+    meaning: "エージェントがGitの認証に使う短期トークン"
+groups:
+  - id: ssh
+    label: "SSHの接続"
+    members: [human, human_cert, agent, bot_cert]
+  - id: git
+    label: "Gitの発行"
+    members: [broker, app_key, token]
+relationships:
+  - from: human
+    to: human_cert
+    label: "本人確認で取得"
+  - from: agent
+    to: bot_cert
+    label: "常駐で取得"
+  - from: broker
+    to: app_key
+    label: "保持"
+  - from: app_key
+    to: token
+    label: "発行"
+  - from: agent
+    to: token
+    label: "認証に使う"
+omitted:
+  - item: "Ansibleの別Bot"
+    reason: "伝えたい分離は人とエージェントとGitの秘密であり、管理作業用の第三名義は同じ型の繰り返しのため"
+  - item: "Tailscale SSHとstep-ca"
+    reason: "採らない代替の比較であり、渡すものと残すものの関係図には不要なため"
+  - item: "rootの秒数、lock、認証局のローテーション"
+    reason: "失効とコマンド許可の手順であり、名義と寿命の分離そのものではないため"
+  - item: "署名されたコミットと、App鍵とは別の署名鍵"
+    reason: "署名鍵の種類と寿命がスライドに無く、図に置くと根拠のない要素になるため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "人間、エージェント、Ansible の名義"
+  - "Git の秘密鍵と、短い root"
+  - "人のSSH鍵を渡さない接続とは"

@@ -1,0 +1,55 @@
+type: structure
+title: "1件の記録を実行と判断に分け、訓練の仮説を評価する"
+message: "1件の記録を実行と判断に分け、判断から訓練の仮説を評価へ残す"
+source: "notes/zenn/articles/gigazine-20261115-ai-isnt-p4_20261116.md"
+components:
+  - id: incident
+    label: "1件の対応"
+    meaning: "1件のインシデント。記録を分ける起点"
+  - id: executed
+    label: "実行した手順"
+    meaning: "エージェントが行った手順"
+  - id: judged
+    label: "人の判断"
+    meaning: "人が下した判断。受け入れるか戻すかと、その理由"
+  - id: drill
+    label: "被害の出ない訓練"
+    meaning: "利用者から切り離した場で、支援を見る前に仮説を書く"
+  - id: score
+    label: "評価項目"
+    meaning: "見る前の仮説が、あとから分かった原因とどこまで対応したかを残す欄"
+groups:
+  - id: record
+    label: "対応の記録"
+    members: [executed, judged]
+relationships:
+  - from: incident
+    to: executed
+    label: "分ける"
+  - from: incident
+    to: judged
+    label: "分ける"
+  - from: judged
+    to: drill
+    label: "見る前に仮説"
+  - from: drill
+    to: score
+    label: "原因との対応"
+omitted:
+  - item: "本番の定型を人に戻す置き場"
+    reason: "練習の主枠にしない判断であり、残す流れの図に入れない"
+  - item: "定型を実行役が行い、要約と原因候補が人の入力になる流れ"
+    reason: "この図は、記録の分割から評価までの置き場を1枚で示す"
+  - item: "週次、四半期、24暦月、36暦月"
+    reason: "このチームの周期にしない"
+  - item: "95% と 5%、隣の検査の発見率"
+    reason: "この職務の技能の測定値ではない"
+  - item: "誤った原因を手順として覚える機構"
+    reason: "記録の列は痕跡にはなるが、図の矢印の本筋ではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "技能を残す三つの置き場 / 1件のインシデントから評価項目までの図"
+  - "練習の主枠をどこに置くか / 運行記録を2列に分ける"
+  - "評価項目に残す記録 / 支援を見る前に書いた仮説"
