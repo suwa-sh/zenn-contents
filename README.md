@@ -7,11 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (644)
+## Articles: 下書き (646)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-16 | [🧭 定型インシデントを自動化したあと、稀な障害の技能をどこで残すか](articles/gigazine-20261115-ai-isnt-p4_20261116.md) | SRE, Observability, IncidentResponse, AI |
 | 2026-11-16 | [🚚 GitOpsの環境間プロモーションをStageの列で自動化するKargoの構造とデータ](articles/kargo_20261116.md) | Kargo, GitOps, ArgoCD, Kubernetes, CICD |
+| 2026-11-16 | [📐 大手の受注は伸び、数人規模の受託の倒産は上期最多ペース](articles/xtech-nikkei-atcl-nxt-column-p5_20261116.md) | Software, Outsourcing, AI, Management |
 | 2026-11-15 | [🔐 エージェントを人に見せかけない接続口 Poppy](articles/ft-content-069-cdc48-e17a-p1_20261115.md) | AIAgent, OAuth, API, Security |
 | 2026-11-15 | [📬 Microsoft 365復旧後のメール遅配を1通の配送状態で切り分ける](articles/microsoft-365-xtech-nikkei-p4_20261115.md) | Microsoft365, ExchangeOnline, Email, IncidentResponse |
 | 2026-11-15 | [🧭 コーディングエージェントに今のWebプラットフォームの書き方を渡すModern Web Guidance](articles/modern-web-guidance_20261115.md) | Chrome, AIAgent, Frontend, CSS, HTML |
