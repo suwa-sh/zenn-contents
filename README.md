@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (648)
+## Articles: 下書き (647)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -18,7 +18,6 @@
 | 2026-11-16 | [📐 大手の受注は伸び、数人規模の受託の倒産は上期最多ペース](articles/xtech-nikkei-atcl-nxt-column-p5_20261116.md) | Software, Outsourcing, AI, Management |
 | 2026-11-15 | [🔐 エージェントを人に見せかけない接続口 Poppy](articles/ft-content-069-cdc48-e17a-p1_20261115.md) | AIAgent, OAuth, API, Security |
 | 2026-11-15 | [📬 Microsoft 365復旧後のメール遅配を1通の配送状態で切り分ける](articles/microsoft-365-xtech-nikkei-p4_20261115.md) | Microsoft365, ExchangeOnline, Email, IncidentResponse |
-| 2026-11-15 | [🧭 コーディングエージェントに今のWebプラットフォームの書き方を渡すModern Web Guidance](articles/modern-web-guidance_20261115.md) | Chrome, AIAgent, Frontend, CSS, HTML |
 | 2026-11-14 | [🛡️ AIペネトレーション試験オーケストレータを公開面の防御で観測する](articles/ai-cloudflare-adapting-to-p6_20261114.md) | Security, Cloudflare, WAF, API |
 | 2026-11-14 | [🧩 Agent Skillsで共有する手順と、ホストに残すツールと権限](articles/github-ai-ml-copilot-build-p3_20261114.md) | AIAgent, GitHubCopilot, ClaudeCode, GitHub |
 | 2026-11-14 | [🍋 Granite 4.1のLLMONは指示と外部文を別ブロックで渡す](articles/granite-4-1-llm-llmon-co-p4_20261114.md) | LLM, PromptInjection, Granite, Security |
@@ -660,10 +659,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (205)
+## Articles: 公開済み (206)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-11-17 | [🧭 コーディングエージェントに今のWebプラットフォームの書き方を渡すModern Web Guidance](articles/modern-web-guidance_20261115.md) | Chrome, AIAgent, Frontend, CSS, HTML |
 | 2026-11-14 | [📋 JPCERT/CCの調査報告書チェックリストで委託範囲を確認する](articles/jpcert-cc-jpcert-or-jp-ir-p9_20261112.md) | Security, IncidentResponse, Forensics |
 | 2026-11-12 | [🧪 LangChain が整理した Eval-Driven Development の手順と始め方](articles/langchain-eval-driven-developmen_20261111.md) | LangChain, LangSmith, LLM, AIAgent, Evaluation |
 | 2026-11-10 | [🧠 Anthropic のエージェントメモリの4層構造と Dreams API の使い方](articles/components-of-agent-memory_20261107.md) | Claude, AI, LLM, AIエージェント |

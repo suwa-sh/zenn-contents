@@ -3,7 +3,8 @@ title: "コーディングエージェントに今のWebプラットフォーム
 emoji: "🧭"
 type: "tech"
 topics: ["Chrome", "AIAgent", "Frontend", "CSS", "HTML"]
-published: false
+published: true
+published_at: 2026-11-17
 ---
 
 Modern Web Guidance は、Google Chrome が公開している、コーディングエージェント向けのスキル群です。この記事では、2026-11-15 時点のバージョン 1.0.0 について、仕組み、データの形、導入、コマンドの使い方、運用までを整理します。読み終えると、自分のプロジェクトへ導入し、エージェントにどう使わせるかを判断できます。
