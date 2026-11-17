@@ -1,0 +1,51 @@
+source:
+  title: "GTIGが観測したexploit_agentはパッチ差分から実行までを一つの構成にしていた"
+  url: null
+  path: "notes/zenn/articles/google-cloud-google-topics-p1_20261117.md"
+  primary:
+    - title: "GTIG AI Threat Tracker: Agentic Threat Activity Crosses a Significant Threshold"
+      url: "https://cloud.google.com/blog/topics/threat-intelligence/agentic-threat-activity-crosses-a-significant-threshold/"
+  retrieved_at: "2026-11-18"
+archetype:
+  primary: decision
+  secondary: [incident]
+one_liner: "Googleの脅威調査は、攻撃側の処理を、差分から人の介在なしの実行までの一つの構成として観測しました。"
+key_points:
+  - claim: "exploit_agent は、見えていた作業用サーバ上で、複数の言語モデルへつながる枠組みの名前です。順は、パッチ前後の差分、脆弱性の候補、草案、実行です。"
+    evidence: "exploit_agentとは"
+    status: fact
+  - claim: "同じサーバに、持ち出されたデータ、侵害後のスクリプト、被害側の記録がありました。"
+    evidence: "exploit_agentとは / 構成の表"
+    status: fact
+  - claim: "初めて確認したのは、発見と実行の両方を人の介在なしで進める枠です。範囲はこの調査の追跡の中で、業界の先行の有無までは含みません。"
+    evidence: "注意点 / 「初めて」が指す範囲"
+    status: fact
+  - claim: "サーバ上の記録が示すのは、データがあったことと、フランスのメディア・エンタメと教育のサイトへの関心の推定です。被害先で工程が終わったログではありません。"
+    evidence: "注意点 / サーバ上の物が示す範囲"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "見えていた作業用サーバから回収した処理と同居物は一つの枠に入れ、被害先の完走ログへは矢印を引かない"
+    reason_needed: "作業用サーバの回収物を一つの案件に結び、被害先で工程が終わったログと混ぜないため"
+example:
+  description: "この枠組みが検査していた対象の例は、WordPress のプラグイン Spectra 2.19.25 です。検査していたのは、そのアクセス制御です。"
+  hypothetical: false
+  evidence: "公開記事が説明した処理 / 図4のキャプション"
+applicability:
+  - "同じサーバの回収物では、スキャン、侵入、資格情報の使用を一つの案件にします。"
+  - "パッチのあと、人の操作なしの実行が公開アプリへ向かうかを見ます。"
+decision_criteria:
+  - "結ぶ単位を、同じサーバの回収物にしましたか。"
+  - "被害先のログを、この構成の証拠から外しましたか。"
+  - "「初めて」を、その追跡の中の確認に置きましたか。"
+limitations:
+  - "被害先で工程が終わったログの種類は、公開記事にありません。"
+  - "実行前にファイルへ置く鍵は、実行中の介入を示しません。"
+  - "侵害の件数は、公開記事にありません。"
+  - "同じ中身を、別の組織が公開資料で確認したかは、分かっていません。"
+unknowns:
+  - "被害先のどのログで、無人の一連が終わったか。"
+  - "枠組み内部の役割の固有名。"
+  - "運営者がどの組織か。フランスのサイトで何件が侵害されたか。"
+  - "同じサーバの中身を、第三者が独立に確認した公開資料があるか。"
+reviewed: true

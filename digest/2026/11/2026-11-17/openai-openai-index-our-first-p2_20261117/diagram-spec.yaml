@@ -1,0 +1,53 @@
+type: structure
+title: "所見の置き場は分かれる"
+message: "報告は全員が無修正で委員会へ渡り、公開版と社内改善は分かれる"
+source: "notes/zenn/articles/openai-openai-index-our-first-p2_20261117.md"
+components:
+  - id: publishers
+    label: "Apollo・METR・Transluce"
+    meaning: "公開版を編集する3組織"
+  - id: goodfire
+    label: "Goodfire"
+    meaning: "訓練中のモデル内部を見る組織"
+  - id: ssc
+    label: "安全の委員会"
+    meaning: "無修正の報告を受け取る SSC"
+  - id: public
+    label: "公開版"
+    meaning: "評価者が編集する公開文書"
+  - id: internal
+    label: "社内の研究者"
+    meaning: "Goodfireの主な読み手"
+groups:
+  - id: assessors
+    label: "評価する側"
+    members: [publishers, goodfire]
+  - id: sinks
+    label: "報告の置き場"
+    members: [ssc, public, internal]
+relationships:
+  - from: publishers
+    to: ssc
+    label: "無修正で渡す"
+  - from: goodfire
+    to: ssc
+    label: "無修正で渡す"
+  - from: publishers
+    to: public
+    label: "編集する"
+  - from: goodfire
+    to: internal
+    label: "改善に使う"
+omitted:
+  - item: "引用できない会話"
+    reason: "伝えたいこと（無修正・公開・社内改善の分岐）に対し、会話の層は別の境界のため"
+  - item: "4組織それぞれの対象の中身"
+    reason: "図のメッセージは所見の置き場であり、見る対象は本文の核心に書いたため"
+  - item: "不同意の上げ先"
+    reason: "止める権限の経路は別の主張のため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "対象と所見の置き場 / 所見の置き場の図"
+  - "所見が判断に入る経路 / 無修正の報告と Goodfire の社内研究者"

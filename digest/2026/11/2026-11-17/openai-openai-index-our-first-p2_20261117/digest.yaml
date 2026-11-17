@@ -1,0 +1,64 @@
+source:
+  title: "OpenAIの埋め込み評価は、訓練と社内利用を4組織が分担して見る"
+  url: null
+  path: "notes/zenn/articles/openai-openai-index-our-first-p2_20261117.md"
+  primary:
+    - title: "OpenAI: Our first phase of embedded assessments（2026-11-16）"
+      url: "https://openai.com/index/our-first-phase-of-embedded-assessments/"
+    - title: "Apollo Research: A Pilot Towards Embedded Evaluations（2026-11-16）"
+      url: "https://www.apolloresearch.ai/blog/pilot-towards-embedded-evaluations"
+    - title: "Transluce: Announcing an Embedded Assessment Pilot with OpenAI（2026-11-16）"
+      url: "https://transluce.org/embedded-assessment-pilot-with-openai"
+    - title: "OpenAI: Priorities and principles for effective third party assessments（2026-09-22）"
+      url: "https://openai.com/index/priorities-principles-third-party-assessments/"
+  retrieved_at: "2026-11-18"
+archetype:
+  primary: governance
+  secondary: [decision]
+one_liner: "OpenAIは、4組織が訓練中と社内のモデルを期間を限って見ると合意しました。"
+key_points:
+  - claim: "Apolloは、そのモデルか次のモデルへの制御を外そうとするかを見ます。"
+    evidence: "embedded assessments とは / Apollo はモデル自身または後継モデルの制御を覆そうとするかを見る"
+    status: fact
+  - claim: "METRは、最大の強化学習の実行1本の不整合（アライメントが外れた状態）を見ます。既存の検査と監視が見逃した失敗も含みます。"
+    evidence: "embedded assessments とは / METR は最大の強化学習ラン1本の不整合"
+    status: fact
+  - claim: "Goodfireは、訓練中の内部を、振る舞いの記録とは別に見ます。"
+    evidence: "embedded assessments とは / Goodfire は訓練中のモデル内部。内部信号の定義"
+    status: fact
+  - claim: "Transluceは、訓練後の評価の範囲と質を見ます。"
+    evidence: "embedded assessments とは / Transluce は事後訓練の整合性評価の範囲と品質"
+    status: fact
+  - claim: "評価者は、訓練や出荷を止められません。不同意は期限内に Safety Advisory Group と幹部へ上がり、残りは安全の委員会が解決します。"
+    evidence: "アクセスと会話の境界 / 不同意の経路。社内エージェントの評価者は出荷前の下流だけに置かない"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "報告は全員が無修正で委員会へ渡り、公開版と社内改善は分かれる"
+    reason_needed: "4組織を1つの採点と読むと、公開版と社内改善の分岐が消えるため"
+example:
+  description: "Apolloは6人で4か月です。訓練を見る分では、関連するコードとデータ、推論の記録、強化学習の一連の出力、途中モデルへの問い合わせを扱えます。ほかは未合意で、範囲の内でも技術的にできないとき、セキュリティ、知的財産では保留でき、不利だからだけでは保留しません。"
+  hypothetical: false
+  evidence: "4組織の条件 / Apollo の行"
+applicability:
+  - "危険な振る舞いを報いるかは、コード、データ、一連の出力、途中モデルで見ます。"
+  - "評価が本番を代表するかは、定義と結果と記録で見ます。"
+decision_criteria:
+  - "実行、評価一式、監視記録、話せる人を事前に書きましたか。"
+  - "不同意の上げ先を、実装チームの外に書きましたか。"
+  - "不同意の期限を書きましたか。"
+  - "出せない範囲の理由を、書面で残しましたか。"
+  - "公開版に、削除が結論へ影響したかを書けるようにしましたか。"
+limitations:
+  - "2026年11月16日時点で、4件の評価結果は出ていません。"
+  - "METRの別の監視は、広げる方向で暫定合意され、範囲は相互の合意待ちです。"
+  - "社員に近い水準を満たした文は、この合意にありません。"
+  - "Transluceが公開できるのは、公開済みモデルの評価です。会話は、認められた文だけ出せます。"
+  - "2027年前半のTransluceとの後続では、OpenAIがリリース判断の入り方を見ます。その詳細は未確定です。"
+unknowns:
+  - "METRが最大とする基準は、参照した公開資料に無い"
+  - "METRの別の監視評価の範囲は相互合意待ち"
+  - "Goodfireの人数、期間、話せる人、端末、公開の相互合意"
+  - "White House Accord の条文原文は、参照した公開資料に含まれていない"
+  - "報酬が結論を曲げた事例は、4件が結果公開前なので無い"
+reviewed: true

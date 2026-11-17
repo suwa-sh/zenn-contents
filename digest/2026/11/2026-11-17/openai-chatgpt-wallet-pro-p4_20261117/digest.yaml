@@ -1,0 +1,68 @@
+source:
+  title: "ChatGPT Walletは店へ券面番号を渡さず仮想番号で支払う"
+  url: null
+  path: "notes/zenn/articles/openai-chatgpt-wallet-pro-p4_20261117.md"
+  primary:
+    - title: "OpenAI, Introducing ChatGPT Wallet"
+      url: "https://openai.com/index/introducing-chatgpt-wallet/"
+    - title: "OpenAI Help Center, Making purchases with ChatGPT Wallet"
+      url: "https://help.openai.com/en/articles/20001654-making-purchases-with-chatgpt-wallet"
+    - title: "OpenAI, ChatGPT Wallet terms"
+      url: "https://openai.com/policies/chatgpt-wallet-terms/"
+    - title: "OpenAI, ChatGPT Wallet Privacy Notice"
+      url: "https://openai.com/policies/chatgpt-wallet-privacy-notice/"
+    - title: "OpenAI Developers, Accept payments"
+      url: "https://developers.openai.com/commerce/guides/accept-payments.md"
+  retrieved_at: "2026-11-18"
+archetype:
+  primary: decision
+  secondary: [governance]
+one_liner: "ChatGPT Walletは印字された番号を店へ渡さず、承認後の仮想番号で支払います。"
+key_points:
+  - claim: "OpenAIの受領範囲に、印字された番号の全桁は入りません。集めるのは決済事業者です。"
+    evidence: "登録できるカードと、番号の入れ方 / Privacy Notice の受領例"
+    status: fact
+  - claim: "承認後に店のフォームへ入るのは、仮想番号（印字された番号の代わり）です。"
+    evidence: "承認と、店が受け取るもの / 事業者ガイドの FAQ（ネットワークトークン）"
+    status: fact
+  - claim: "今の画面は表示された一回の確認だけで、上限、品目、期間を事前に置く画面は手順の説明にありません。"
+    evidence: "購入ごとの生体認証の外側 / 承認の粒度"
+    status: fact
+  - claim: "利用契約は、あらかじめ承認を任せることを含みます。"
+    evidence: "購入ごとの生体認証の外側（Terms §1）"
+    status: fact
+  - claim: "店は、同意した定期の資格を保存して再び請求できます。"
+    evidence: "購入ごとの生体認証の外側（同意した定期）"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "保管、承認、取消は別の境界として読む"
+    reason_needed: "画面が無いことと、契約や定期が開いていることを、同じ未対応にまとめると読みを誤るため"
+example:
+  description: "利用者は、決済事業者が番号を集めるフォームでカードを登録します。購入前に店、品目、合計、使うカードを確認し、対応端末で生体認証します。承認後の番号は、選んだカードへの請求に使われます。"
+  hypothetical: false
+  evidence: "ChatGPT Walletとは / 承認と、店が受け取るもの"
+applicability:
+  - "エージェントに支払いを任せる設計を読む"
+  - "この Wallet の導入可否を文書で判断する"
+  - "あらかじめ承認を任せる設計を読む"
+decision_criteria:
+  - "全桁の受領先を、OpenAIと決済事業者で分けて書いたか"
+  - "店へ渡すのが印字された番号か別番号かを分けたか"
+  - "上限の画面が無いことと、事前に任せる承認を分けたか"
+  - "定期の再請求の主体が店かを確認したか"
+  - "承認後の取消を、店と発行者で分けたか"
+limitations:
+  - "対象は米国在住18歳以上のPro（有料プランの名前）より狭く、機能が未表示のこともあります。カードは米国発行かつ米国の請求先で、使えるのは支払いの会話だけです。"
+  - "登録時のトークン（全桁の代わり）と、承認後の仮想番号が同一かは未記載です。"
+  - "承認完了の表示のあとでも、店が注文を受けたとは限りません。"
+  - "取消の窓口は、成立した注文なら店、保留や身に覚えのない請求なら発行者です。"
+  - "仮想番号が会話本文に残るかは未記載です。"
+unknowns:
+  - "仮想番号がモデルの入力に入るか、ブラウザ操作のメモリに留まるか"
+  - "トークンが単回か、失敗後に再利用できるか、有効時間はどれか"
+  - "Terms §1 の事前付与に対応する画面が、すでに一部のアカウントで有効か"
+  - "生体認証が何回失敗すると無効になるか。無効にする主体はどこか"
+  - "仮押さえが落ちるまでの時間"
+  - "日本を含む提供拡大の時期"
+reviewed: true

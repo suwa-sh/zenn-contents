@@ -1,0 +1,57 @@
+type: structure
+title: "保管、承認、取消は別の境界"
+message: "保管、承認、取消は別の境界として読む"
+source: "notes/zenn/articles/openai-chatgpt-wallet-pro-p4_20261117.md"
+components:
+  - id: psp
+    label: "決済事業者"
+    meaning: "券面の全桁を集める"
+  - id: openai
+    label: "OpenAI"
+    meaning: "登録時に、全桁の代わりのトークンと下4桁などを受け取る"
+  - id: checkout
+    label: "仮想番号"
+    meaning: "承認後に店のフォームへ入る番号"
+  - id: screen
+    label: "今の画面"
+    meaning: "表示された一回の購入を確認する"
+  - id: preauth
+    label: "事前の承認"
+    meaning: "利用契約が、あらかじめ承認を任せることを含む"
+  - id: recurring
+    label: "同意した定期"
+    meaning: "店が資格を保存して再び請求する"
+  - id: cancel
+    label: "取消の窓口"
+    meaning: "成立した注文は店、身に覚えのない請求は発行者"
+groups:
+  - id: storage
+    label: "保管"
+    members: [psp, openai, checkout]
+  - id: approval
+    label: "承認"
+    members: [screen, preauth, recurring]
+  - id: revoke
+    label: "取消"
+    members: [cancel]
+relationships:
+  - from: psp
+    to: openai
+    label: "トークンと下4桁など"
+omitted:
+  - item: "OpenAI から仮想番号への矢印"
+    reason: "登録時の番号と承認後の仮想番号が同じ一つとは文書が書いていないため"
+  - item: "店、発行者、利用者、生体認証、別端末の箱"
+    reason: "店は仮想番号の行先として本文に残し、発行者は取消の窓口に畳んだ。生体と別端末は一回の確認の手段であり、三つの枠の分離には要らないため"
+  - item: "Forwarded ヘッダ、PAR、カードブランド、デビット不可、Instant Checkout、ドル残高"
+    reason: "三つの境界を一つにまとめない、という伝えたいことに関係しないため"
+  - item: "画面と契約を結ぶ矢印"
+    reason: "同じ未対応にまとめる誤読を避けるため、矢印ではなく別の枠で分ける"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "支払い設計で分ける三つの境界（保管場所、承認の粒度、取り消し）"
+  - "登録できるカードと、番号の入れ方（決済事業者が券面を集め、OpenAI はトークンと下4桁）"
+  - "承認の粒度（今の画面は一回分。契約の事前付与と同意済み定期は現行の文面）"
+  - "承認のあと、取消の窓口は分かれます"

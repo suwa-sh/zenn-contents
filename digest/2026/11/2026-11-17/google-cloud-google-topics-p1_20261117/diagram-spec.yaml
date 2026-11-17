@@ -1,0 +1,51 @@
+type: structure
+title: "回収物は一つの枠、完走ログは枠の外"
+message: "見えていた作業用サーバから回収した処理と同居物は一つの枠に入れ、被害先の完走ログへは矢印を引かない"
+source: "notes/zenn/articles/google-cloud-google-topics-p1_20261117.md"
+components:
+  - id: diff
+    label: "パッチ差分"
+    meaning: "パッチ告知の前後のコードを継続して比べる段"
+  - id: find
+    label: "候補の特定"
+    meaning: "差分の所見から脆弱性の候補を特定する段"
+  - id: draft
+    label: "草案"
+    meaning: "候補のあとに実行手順の草案を作る段"
+  - id: exec
+    label: "実行"
+    meaning: "草案にした実行を行う段。人の介在なしという記述は本文に残す"
+  - id: cohabit
+    label: "同居物"
+    meaning: "同じサーバにあったデータ、侵害後のスクリプト、被害側の記録"
+  - id: victim
+    label: "被害先の完走ログ"
+    meaning: "被害先で全工程が終わったことを示すログ。公開記事には種類が無い"
+groups:
+  - id: server
+    label: "見えていた作業用サーバ"
+    members: [diff, find, draft, exec, cohabit]
+relationships:
+  - from: diff
+    to: find
+    label: "特定"
+  - from: find
+    to: draft
+    label: "草案にする"
+  - from: draft
+    to: exec
+    label: "実行"
+omitted:
+  - item: "複数の外部モデルと手元のモデルへの接続、鍵をファイルへ人が置くコメント"
+    reason: "実行前の設定は本文の注意点に残し、図は回収物の枠と処理の順だけにするため"
+  - item: "Spectra の検査、図1の5段、別節の他の枠組み、PaperCut と PHP、10月30日の別記事の実行記録"
+    reason: "この構成の役割名や段の記録と混ぜない、という判断は本文に残し、図の要素にしないため"
+  - item: "被害先のログへの矢印"
+    reason: "公開記事は、被害先で無人の全工程が終わったログの種類を示していないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "パッチ差分から実行までの流れ（差分、候補、起草、人の介在なしの実行）"
+  - "運用で結ぶ単位 / 運用ホストに同居していた物"
+  - "注意点 / サーバ上の物が示す範囲（被害先の完走ログは示されない）"
