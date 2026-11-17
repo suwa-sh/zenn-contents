@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (650)
+## Articles: 下書き (652)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-18 | [🔁 複数のクライアントが同じセッションを共有するAgent Host Protocol](articles/github-agent-host-protocol-p2_20261118.md) | GitHub, Copilot, VSCode, AI |
+| 2026-11-18 | [🧭 GPT-6.2 AstraとSolを作業の種類で経路に分ける](articles/openai-gpt-6-2-astra-sol-p1_20261118.md) | OpenAI, Codex, LLM, ChatGPT |
 | 2026-11-17 | [🛡️ GTIGが観測したexploit_agentはパッチ差分から実行までを一つの構成にしていた](articles/google-cloud-google-topics-p1_20261117.md) | Security, GoogleCloud, LLM, AIAgent |
 | 2026-11-17 | [💳 ChatGPT Walletは店へ券面番号を渡さず仮想番号で支払う](articles/openai-chatgpt-wallet-pro-p4_20261117.md) | OpenAI, AIAgent, Security, Privacy |
 | 2026-11-17 | [🔍 OpenAIの埋め込み評価は、訓練と社内利用を4組織が分担して見る](articles/openai-openai-index-our-first-p2_20261117.md) | OpenAI, LLM, AIAgent, Security |
