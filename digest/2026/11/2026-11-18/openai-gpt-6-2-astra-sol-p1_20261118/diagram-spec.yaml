@@ -1,0 +1,70 @@
+type: structure
+title: "作業の種類からモデル ID へ"
+message: "作業の種類で gpt-6.2-sol と gpt-6.2-astra を分ける"
+source: "notes/zenn/articles/openai-gpt-6-2-astra-sol-p1_20261118.md"
+components:
+  - id: short
+    label: "短い編集"
+    meaning: "リポジトリ内で閉じる短い編集と、通常のエージェントループ"
+  - id: tested
+    label: "テストで確認できる変更"
+    meaning: "完了条件とテストが機械的に確認できる中程度の変更"
+  - id: human
+    label: "途中を人が見る変更"
+    meaning: "既存コードの複数段の変更で、途中結果を人が画面か長い差分で見る"
+  - id: doc
+    label: "テンプレート文書"
+    meaning: "テンプレートどおりのスライド、表、文書"
+  - id: vision
+    label: "見た目判断の画面操作"
+    meaning: "スクリーンショットや視覚判断に依存する Computer Use"
+  - id: sol
+    label: "gpt-6.2-sol"
+    meaning: "より低いコストの複雑な作業に置くモデル ID"
+  - id: astra
+    label: "gpt-6.2-astra"
+    meaning: "最も要求の高い作業の候補にするモデル ID"
+groups:
+  - id: work
+    label: "作業"
+    members: [short, tested, human, doc, vision]
+  - id: models
+    label: "モデル ID"
+    members: [sol, astra]
+relationships:
+  - from: short
+    to: sol
+    label: "置く"
+  - from: tested
+    to: sol
+    label: "まず置く"
+  - from: tested
+    to: astra
+    label: "落ちたら上げる"
+  - from: human
+    to: astra
+    label: "候補"
+  - from: doc
+    to: astra
+    label: "候補"
+  - from: vision
+    to: astra
+    label: "候補"
+omitted:
+  - item: "文章、調査、エージェントの定常作業"
+    reason: "短い編集と同じく Sol に置く作業で、図の Sol 側を増やさないため"
+  - item: "見た目が主でない画面操作から Sol への矢印"
+    reason: "図の画面操作は見た目判断が主のものに限る。主でない作業は本文で Sol と書くため"
+  - item: "公開単価、272,000 の倍率、Ultrafast、課金段"
+    reason: "伝えたいことはモデル ID の置き分けであり、単価の境は本文に残すため"
+  - item: "ChatGPT の GUI、Responses API、Agents API の三つの操作面"
+    reason: "モデル ID の置き分けとは別の関係であり、実行者の違いは本文に残すため"
+  - item: "gpt-6-astra、gpt-6.2-astra-law、Daybreak"
+    reason: "経路に混ぜない ID と、セキュリティ試験の前提であり、作業から ID への矢印ではないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "先に Sol を置く作業（短い編集、テストで確認できる変更はまず Sol）"
+  - "Astra を候補にする作業（途中を人が見る複数段、テンプレート文書、視覚判断の Computer Use）"
+  - "まとめ（落ちたものだけ Astra に上げる）"

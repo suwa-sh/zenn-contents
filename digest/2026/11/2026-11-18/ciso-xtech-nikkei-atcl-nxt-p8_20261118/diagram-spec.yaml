@@ -1,0 +1,62 @@
+type: structure
+title: "設置と停止の決裁者は別の箱"
+message: "CISOの設置と、対外サービスを止める決裁者は別の箱です"
+source: "notes/zenn/articles/ciso-xtech-nikkei-atcl-nxt-p8_20261118.md"
+components:
+  - id: setup
+    label: "CISOの設置"
+    meaning: "役職を置くこと。役割の明確化の起点"
+  - id: action
+    label: "操作の種類"
+    meaning: "何を止めるかで、実施者の欄を分ける"
+  - id: low
+    label: "端末の切り離し"
+    meaning: "端末を切り離す操作。マルウェアの隔離と、感染したコンテナの停止も同じ側"
+  - id: high
+    label: "対外サービス"
+    meaning: "顧客へ出すサービス。先に停止を検討するシステムも同じ側"
+  - id: pre
+    label: "実施する人"
+    meaning: "名前を書いた対応者。自動措置も同じ側"
+  - id: named
+    label: "名前のある決める人"
+    meaning: "高影響の停止を、平時に名前で残す人"
+groups:
+  - id: targets
+    label: "止める対象"
+    members: [low, high]
+relationships:
+  - from: setup
+    to: action
+    label: "操作へ"
+  - from: action
+    to: low
+    label: "端末側"
+  - from: action
+    to: high
+    label: "サービス側"
+  - from: low
+    to: pre
+    label: "事前に渡す"
+  - from: high
+    to: named
+    label: "名前を残す"
+omitted:
+  - item: "上限時間、再開する人、記録"
+    reason: "設置と決裁者の分離の後段で、両側に共通するため"
+  - item: "マルウェアの隔離、感染したコンテナの停止の個別の箱"
+    reason: "端末の切り離しと同じ側なので図の箱は一つにし、図の説明で結び付ける"
+  - item: "自動措置の個別の箱"
+    reason: "実施する人と同じ側なので、本文の核心ポイントに残す"
+  - item: "外部事業者への自動封じ込め、法務へ上げる条件、最初の連絡先"
+    reason: "設置と決裁者の分離に直接関係しない"
+  - item: "基幹という語"
+    reason: "先に停止を検討するシステムにまとめた"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "文書を読み分けた六つの箱（mermaid）"
+  - "事前に名前を渡しておく操作"
+  - "名前のある経営者の決裁が合うとき"
+  - "権限表に書く列（採るのは2。この記事の設計案）"

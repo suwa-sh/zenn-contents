@@ -1,0 +1,60 @@
+source:
+  title: "Claude Codeチームが並列の前に置く検証と失敗した検査の渡し方"
+  url: null
+  path: "notes/zenn/articles/claude-code-e2e-claude-dev-p5_20261118.md"
+  primary:
+    - title: "Addy Osmani, How the Claude Code team thinks about verification"
+      url: "https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/"
+    - title: "Addy Osmani, Morgan Westlee Lunt, Qing Wang, How the Claude Code team does code review"
+      url: "https://claude.dev/blog/solving-code-review-at-anthropic.md"
+    - title: "Claude Managed Agents"
+      url: "https://claude.com/blog/claude-managed-agents"
+  retrieved_at: "2026-11-19"
+archetype:
+  primary: decision
+  secondary: []
+one_liner: "この解説は、並列の前に検査の名前と失敗の渡し方を自分で書くよう求めています。"
+key_points:
+  - claim: "人が変更を全部見なくても確認を続けられる仕組みが無いとき、同時に動かすエージェントは1つか2つです。"
+    evidence: "検証ループと同時に走らせる数"
+    status: fact
+  - claim: "1種類なら E2E（操作の一連）を選びます。"
+    evidence: "投資するテストは3種"
+    status: fact
+  - claim: "プロパティテストと差分テストの間に、順位はありません。"
+    evidence: "要約が一本につないだもの"
+    status: fact
+  - claim: "アプリを最後まで動かすことを、テストより上に置きます。"
+    evidence: "検証はアプリを最後まで動かすこと"
+    status: fact
+  - claim: "チームは、失敗が続いた検査を、3回のあとでも失敗なら人へ渡します。1回が、修正か、検査の実行か、レビューの往復かは未定義です。"
+    evidence: "Claude Codeチームの検証とは / 文章からまだ決まらないこと"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "並列の前に書く4つが、確認の仕組みの中身になる"
+    reason_needed: "確認の仕組みという条件だけを読んで、検査の名前と失敗の渡し方を空のまま並列を増やすと、記事の求める準備を飛ばすため"
+example:
+  description: "セッション内で、検証の無い commit を2回止めたら、次の commit は通します。原因が分からない不安定なテストは、消して理由を残します。"
+  hypothetical: false
+  evidence: "commit に付ける検証の印 / 見逃しをルールにする方法と、揺れるテスト"
+applicability:
+  - "エージェントの並列数を増やす前"
+  - "失敗した検査を人へ渡す規則を書く"
+  - "記事の回数を自分の通過条件にする前"
+decision_criteria:
+  - "ゲートにする検査の名前を書いたか"
+  - "1回の完了を自分で定義したか"
+  - "人へ渡す回数を自分で書いたか"
+limitations:
+  - "約90%は、書く割合と、書いてレビューした割合の、別々の文です。どちらも自己申告で、分母は文章にありません。"
+  - "最大10ポイントは、別対象の内部テストで、通常のプロンプトの往復よりタスク成功が上がった幅の自己申告の上限です。標本数と分母は、文章にありません。"
+  - "失敗した検査の3回は、製品の既定ではありません。レビュー記事の3回は、著者に再考を求める回数です。"
+  - "人へ渡す3回は、一時的な失敗の再試行とは別です。"
+  - "39項目の中身と、止める仕組みの off と observe の動作は、公開ページにありません。"
+unknowns:
+  - "1回が、修正の試行か、検査の実行か、レビューの往復か"
+  - "39項目の中身と、commit gate の off と observe の動作"
+  - "約90%と最大10ポイントの分母、期間、標本数"
+  - "three rounds を入れたあと、revert やインシデントがどう変わったか"
+reviewed: true

@@ -1,0 +1,63 @@
+type: structure
+title: "二つのファイルをサイドバーと電話が読む"
+message: "進捗の正本は二つのファイルです。サイドバーと電話は両方を読み、次の指示はターミナル送信へ集まります"
+source: "notes/zenn/articles/orca-milestone_20261118.md"
+components:
+  - id: claude
+    label: "Claude"
+    meaning: "ホームのタスクファイルへ進捗を書く"
+  - id: codex
+    label: "Codex"
+    meaning: "起動時に足すサーバー経由で進捗 JSON を書く"
+  - id: files
+    label: "二つのファイル"
+    meaning: "Claude のタスクファイルと Codex の進捗 JSON。図の上では一つの箱"
+  - id: panel
+    label: "サイドバー"
+    meaning: "Orca のプラグイン Milestone の画面。二つのファイルを読んでカードを出す"
+  - id: phone
+    label: "電話の常駐"
+    meaning: "Claude と Codex のファイルを読み、電話のボタンを受ける"
+  - id: send
+    label: "ターミナル送信"
+    meaning: "押した時点の依頼文を orca terminal send で渡す"
+groups:
+  - id: writers
+    label: "書く側"
+    members: [claude, codex]
+  - id: readers
+    label: "読む側"
+    members: [panel, phone]
+relationships:
+  - from: claude
+    to: files
+    label: "タスクを書く"
+  - from: codex
+    to: files
+    label: "進捗を書く"
+  - from: files
+    to: panel
+    label: "読む"
+  - from: files
+    to: phone
+    label: "読む"
+  - from: panel
+    to: send
+    label: "カードから送る"
+  - from: phone
+    to: send
+    label: "ボタンから送る"
+omitted:
+  - item: "開発者と Orca 本体の箱"
+    reason: "伝えたいことはファイルが正本であることなので、人はカードとボタンの矢印に畳んだ"
+  - item: "起動時の足し込み、許可の残り、危険コマンドの二度押し"
+    reason: "送る経路の形には不要で、本文の核心と限界に残すため"
+  - item: "FCM、APNs、status.json、Orca orchestration"
+    reason: "電話の常駐に畳んだ。orchestration は別経路で、この図の送信先ではないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "構造 / コンテナ図（Claude と progress-server がファイルを書き、ワーカーと publisher が読む）"
+  - "Orca Milestoneとは（カード押下は orca terminal send。POST /next は同じ送信規則）"
+  - "利用方法 / カードの種類と送るもの（押した時点で回答を読み直して terminal send）"

@@ -1,0 +1,57 @@
+source:
+  title: "Orca Milestoneで複数のClaude CodeとCodexの進捗をサイドバーに集める仕組み"
+  url: null
+  path: "notes/zenn/articles/orca-milestone_20261118.md"
+  primary:
+    - title: "andoshin11/orca-milestone"
+      url: "https://github.com/andoshin11/orca-milestone"
+    - title: "andoshin11/agent-status-panel"
+      url: "https://github.com/andoshin11/agent-status-panel"
+    - title: "stablyai/orca"
+      url: "https://github.com/stablyai/orca"
+  retrieved_at: "2026-11-19"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "Orca のプラグイン Milestone は、進捗を集め、カードで次の指示を送ります。"
+key_points:
+  - claim: "Claude の進捗は、Claude が手元に書くタスクファイルです。"
+    evidence: "構造 / コンテナ図（Claude tasks と jsonl）。データ / ClaudeTaskFile は ~/.claude/tasks"
+    status: fact
+  - claim: "Codex の進捗は、起動時に足した処理が書く JSON です。"
+    evidence: "構造 / コンテナ図（progress-server が Codex progress JSON を書く）"
+    status: fact
+  - claim: "ターンが変わったカードは送りません。"
+    evidence: "利用方法 / カードの種類と送るもの（ターンが変わるとオファー ID も変わる。古い ID では terminal send を呼ばない）"
+    status: fact
+  - claim: "起動時に足すのは、そのセッションのコマンドと環境変数だけです。"
+    evidence: "特徴 / 設定ファイルを書き換えない。利用方法 / 起動時に足されるもの"
+    status: fact
+  - claim: "Mac 上の電話向け常駐は、Claude と Codex のファイルを読みます。"
+    evidence: "Orca Milestoneとは / agent-status-panel。構造 / コンテナ図（publisher は Mac 上で tasks と progress を読む）"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "進捗の正本はファイルです。サイドバーと電話の常駐は Claude と Codex のファイルを読み、次の指示はターミナル送信へ集まります。"
+    reason_needed: "サイドバーと電話を別のデータ源と読むと、どちらが進捗を持つか判断できないため"
+example:
+  description: "生きているメインが 1 つで、状態が done、アーカイブされていないときだけ、末尾の next をカードにします。押すと、その時点の返信から依頼文を読み直して送ります。送るコマンドは orca terminal send です。"
+  hypothetical: false
+  evidence: "利用方法 / カードの種類と送るもの"
+applicability:
+  - "複数 worktree のゴールと未完了を 1 枚で見ます。"
+  - "返答が終わって待っているセッションへ、候補を 1 つ送ります。"
+  - "外出先でタスクの件数と状態だけ見るときは、電話の常駐を使います。"
+decision_criteria:
+  - "新しいセッションを Orca のターミナルから起動しましたか。"
+  - "依頼文はサイドバーか電話のボタンだけで送りますか。"
+  - "エージェントの読み取りと書き込みだけを、そのターンでまとめて許しますか。"
+  - "手順に書く版を、配布版と新しいソースで分けましたか。"
+limitations:
+  - "起動時の足し込みは、すでに動いているセッションには掛かりません。"
+  - "必要な Orca は 1.4.248 以上で、1.4.247 は範囲外です。"
+  - "入力欄に文字があると、Codex への提案は送りません。"
+  - "同じタブの Claude を代表へまとめるのは、新しいソースのチーム起動だけです。"
+unknowns:
+  - "iPhone アプリのソースは、2026-11-18 時点の公開先が見つかりません。"
+reviewed: true

@@ -1,0 +1,68 @@
+source:
+  title: "CISO設置は過半数でも、サービスを止める権限は別に残る"
+  url: null
+  path: "notes/zenn/articles/ciso-xtech-nikkei-atcl-nxt-p8_20261118.md"
+  primary:
+    - title: "日経クロステック（公開部分）"
+      url: "https://xtech.nikkei.com/atcl/nxt/column/18/00138/111202148/"
+    - title: "金融庁・日本銀行 要請 PDF"
+      url: "https://www.fsa.go.jp/news/r7/sonota/20260522-5/01.pdf"
+    - title: "NRI・NRIセキュア 2026年10月22日 PDF"
+      url: "https://www.nri.com/jp/news/newsrelease/files/000067194.pdf"
+    - title: "NIST SP 800-61r3"
+      url: "https://doi.org/10.6028/NIST.SP.800-61r3"
+    - title: "UTRGV ISO-100-S1"
+      url: "https://www.utrgv.edu/is/forms-and-policies/policies/ciso-investigative-access-authority-standard/index.htm"
+    - title: "GMOインターネットグループ 第3報"
+      url: "https://group.gmo/info/alert/20261023/"
+  retrieved_at: "2026-11-19"
+archetype:
+  primary: governance
+  secondary: [decision, incident]
+one_liner: "CISO（セキュリティ責任者）を置いただけでは、対外サービスを止める権限はその肩書へ移ったとは読めません。"
+key_points:
+  - claim: "設置は役職を置くことである。停止の権限は、操作ごとに実施する人と上限時間を別の欄へ書くことである"
+    evidence: "CISOの設置とサービス停止の権限とは"
+    status: fact
+  - claim: "渡せるのは端末の切り離し、マルウェア隔離、感染コンテナの停止である。人か自動措置が、その権限と戻す条件と上限時間を平時の文書で持つときに限る"
+    evidence: "事前に名前を渡しておく操作"
+    status: interpretation
+  - claim: "対外サービスと、先に停止を検討するシステムの停止は、名前を書いた決める人へ残す"
+    evidence: "名前のある経営者の決裁が合うとき"
+    status: interpretation
+  - claim: "この分け方は、文書が共通して命じる配置ではなく、この記事の設計案である"
+    evidence: "権限表に書く列（採るのは2）"
+    status: fact
+  - claim: "CISOの名前を書くのは、その操作の実施する人か決める人として文書にあるときだけである"
+    evidence: "権限表に書く列 / 設置だけでは対外サービスの停止権限は肩書へ移らない"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "CISOの設置と、対外サービスを止める決裁者は別の箱である"
+    reason_needed: "設置率や肩書を、停止の決裁者と同一視すると、操作ごとの権限表が空のまま残る"
+example:
+  description: "GMOの公開記録には、新規申し込みを止めた事実がある。決める人の氏名も、CISOがいたかも書いていない"
+  hypothetical: false
+  evidence: "設置だけでは対外サービスの停止権限は肩書へ移らない（GMO第3報）"
+applicability:
+  - "有事の停止権限を、操作ごとに表へ書くとき"
+  - "対外サービスの停止を、平時に名前で残すとき"
+  - "最初の連絡先で、実施する人と決める人を分けるとき"
+decision_criteria:
+  - "端末の切り離しを戻す条件は、平時に書いてあるか"
+  - "対外サービスの停止を決める人の名前があるか"
+  - "実施する人と決める人が違うとき、引継ぎの経路があるか"
+  - "自動で止めるとき、人が覆す条件があるか"
+  - "再開を決める人の名前は書いてあるか"
+limitations:
+  - "設置率57.5%は、日経の図の説明がそう書く範囲までである。設問の定義は未照合である"
+  - "日経本文の続きは未確認である。日経がどの結論にしたかは、この範囲外である"
+  - "金融庁と日本銀行の要請は、金融機関等の文書である。全産業の法令としては読まない"
+  - "端末を切り離す権限を、セキュリティ責任者の職務として書いている文書はある。その文書に、対外サービスの停止時間と、再開を決める人は無い"
+  - "停止の記録だけでは、権限が無かったとは読めない"
+unknowns:
+  - "設置率57.5%の設問が、専任か兼務か、停止権限を持つ役員かを含むか"
+  - "日経本文が、GMOの権限表をどう書いたか"
+  - "GMOにCISOがあり、10月20日と10月21日の停止をその人が決めたか"
+  - "経営ガイドライン付録Fの細目"
+reviewed: true

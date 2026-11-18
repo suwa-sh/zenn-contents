@@ -1,0 +1,47 @@
+type: structure
+title: "複数の画面はホストの共有状態を購読する"
+message: "複数の画面は、ホストが持つ共有状態へ操作を送り、更新を受け取って揃える"
+source: "notes/zenn/articles/github-agent-host-protocol-p2_20261118.md"
+components:
+  - id: screen_a
+    label: "画面A"
+    meaning: "ホストへ接続し、共有状態を購読して描く画面"
+  - id: screen_b
+    label: "画面B"
+    meaning: "同じセッションを見る別の画面"
+  - id: state
+    label: "共有状態"
+    meaning: "ホストが権威として持つチャネルの状態"
+groups:
+  - id: host
+    label: "ホスト"
+    members: [state]
+relationships:
+  - from: screen_a
+    to: state
+    label: "操作を送る"
+  - from: state
+    to: screen_a
+    label: "更新を配る"
+  - from: screen_b
+    to: state
+    label: "操作を送る"
+  - from: state
+    to: screen_b
+    label: "更新を配る"
+omitted:
+  - item: "トークン、認可サーバー、接続ごとの認証"
+    reason: "認証は共有状態の外にある。図が伝えるのは画面がホストの状態を購読して揃えることであり、認証の置き場は本文に残すため"
+  - item: "エージェント実行系、ACP、MCP、トランスポート"
+    reason: "ホストの下流やプロトコルの外であり、画面とホストの共有境界には不要なため"
+  - item: "root、session、chat の個別の箱と、terminal などの任意チャネル"
+    reason: "必須チャネルは共有状態に畳む。種類の一覧は本文に残すため"
+  - item: "clientSeq、serverSeq、pending、再接続の replay と snapshot"
+    reason: "確定と再接続の手順は本文の核心に残し、図は画面とホストの関係だけにするため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "特徴「チャネルが機能の最大単位。状態変更の唯一の経路はアクション。購読するとスナップショットと以降のアクションを受け取る」"
+  - "構造 / コンテナ図（ホストの内側に root、session、chat）"
+  - "まとめ「状態の権威はエージェントホストにあり、クライアントはチャネルを購読してアクションを送る」"

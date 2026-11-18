@@ -1,0 +1,57 @@
+source:
+  title: "複数のクライアントが同じセッションを共有するAgent Host Protocol"
+  url: null
+  path: "notes/zenn/articles/github-agent-host-protocol-p2_20261118.md"
+  primary:
+    - title: "Building the Agent Host Protocol for sessions that continue across devices"
+      url: "https://github.blog/engineering/engineering-principles/building-the-agent-host-protocol-for-sessions-that-continue-across-devices/"
+    - title: "microsoft/agent-host-protocol"
+      url: "https://github.com/microsoft/agent-host-protocol"
+    - title: "Agent Host Protocol ドキュメント"
+      url: "https://microsoft.github.io/agent-host-protocol/"
+    - title: "Write-Ahead Reconciliation"
+      url: "https://microsoft.github.io/agent-host-protocol/guide/reconciliation"
+  retrieved_at: "2026-11-19"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "Agent Host Protocol は、複数の画面がホスト上の同じセッションを同じ状態で見る規格です。"
+key_points:
+  - claim: "状態の権威はホストにあります。"
+    evidence: "まとめ / 冒頭「状態の権威はエージェントホストにあり」"
+    status: fact
+  - claim: "画面は状態を購読し、操作で更新します。"
+    evidence: "特徴「チャネルが機能の最大単位」「状態変更の唯一の経路はアクション」"
+    status: fact
+  - claim: "自分の操作は先に画面へ出し、ホストが返した同じ操作で確定します。"
+    evidence: "特徴「write-ahead reconciliation」"
+    status: fact
+  - claim: "再接続の応答では、未確定の操作を捨ててホストの状態に合わせます。"
+    evidence: "運用 / 再接続「replay でも snapshot でも pendingActions を空にする」"
+    status: fact
+  - claim: "認可の証は、画面ごとにホストへ渡します。共有の状態には入りません。"
+    evidence: "データ「Bearer トークンは RootState に置かない」/ ベストプラクティス「端末ごとに authenticate」"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "複数の画面は、ホストが持つ共有状態へ操作を送り、更新を受け取って揃える。"
+    reason_needed: "画面とホストのどちらが状態を持つかが決まらないと、セッションを画面側に複製すると読めるため"
+example:
+  description: "承認を待っている 1 件は、画面のあいだで共有されます。別の画面が先に承認すると、その 1 件が有効です。後から送った承認は拒否されます。"
+  hypothetical: false
+  evidence: "構造「chat/toolCallConfirmed は最初の 1 件が有効」/ ベストプラクティス「別端末から承認でき、最初の承認が有効」"
+applicability:
+  - "複数の画面で同じセッションを見る"
+  - "切れた接続から同じセッションへ戻る"
+  - "別の画面へ承認を移す"
+decision_criteria:
+  - "画面がホストへ、実装した版だけを示しますか。"
+limitations:
+  - "文書例の 0.3.0 は現行の版ではありません。公開タグは 1.1.0 です。"
+  - "承認を移したくないセッションには、別の画面を購読させません。"
+  - "1 つの画面からエージェントを直接動かす用途は、この規格の外です。"
+  - "Kotlin の例は、公開の配布物が見つかりませんでした。使う前に配布元を見ます。"
+unknowns:
+  - "Kotlin の座標が公開停止なのか、座標の相違なのかは公開資料だけでは分かれていない"
+  - "GitHub 側ホストの公開ソースの場所は示されていない"
+reviewed: true

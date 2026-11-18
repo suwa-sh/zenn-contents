@@ -1,0 +1,42 @@
+type: structure
+title: "並列の前に書く4つ"
+message: "並列の前に書く4つが、確認の仕組みの中身になる"
+source: "notes/zenn/articles/claude-code-e2e-claude-dev-p5_20261118.md"
+components:
+  - id: loop
+    label: "確認の仕組み"
+    meaning: "人が変更の全部を見なくても確認を続けられる仕組み。並列の条件"
+  - id: name
+    label: "検査の名前"
+    meaning: "ゲートにする検査。動くアプリを見るのか、テストスイートが終了コード 0 なのか"
+  - id: round
+    label: "1回の完了"
+    meaning: "修正1回か、検査の実行1回か、レビューの往復1回か。記事は定義していない"
+  - id: count
+    label: "人へ渡す回数"
+    meaning: "まだ失敗している検査を人へ渡すまでの回数。チームの例を写さず自分で決める"
+  - id: escape
+    label: "例外を許すか"
+    meaning: "検証の無い commit を2回止めたら次は通すか。原因不明の不安定なテストは消すか"
+groups:
+  - id: before
+    label: "並列の前に書く"
+    members: [name, round, count, escape]
+relationships:
+  - from: name
+    to: loop
+    label: "中身を決める"
+omitted:
+  - item: "1回の完了、人へ渡す回数、例外を許すかから確認の仕組みへの同ラベルの矢印"
+    reason: "4項は同じ向きなので、枠から確認の仕組みへ向かう1本にまとめた"
+  - item: "E2E、プロパティテスト、差分テスト、アプリを最後まで動かす、失敗したら直す"
+    reason: "確認の流れとテストの選び方は本文に残し、図は並列の前に書く4項に絞ったため"
+  - item: "three rounds、約90%、最大10ポイント、REVIEW.md、39項目"
+    reason: "図に回数や割合を置くと、製品の既定として写す読みになるため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "並列を増やす前に自分で書くこと（ゲートの検査名、1 round の完了、人に渡す round 数、抜け道）"
+  - "検証ループと同時に走らせる数（検証ループが並列の条件）"
+  - "並列を増やす前に自分で書くこと（4行は検証ループそのものではなく、ループの中身を決める項目）"

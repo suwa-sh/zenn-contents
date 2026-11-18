@@ -1,0 +1,62 @@
+source:
+  title: "GPT-6.2 AstraとSolを作業の種類で経路に分ける"
+  url: null
+  path: "notes/zenn/articles/openai-gpt-6-2-astra-sol-p1_20261118.md"
+  primary:
+    - title: "OpenAI, Introducing GPT-6.2 Astra and Sol"
+      url: "https://openai.com/index/introducing-gpt-6-2-astra-sol"
+    - title: "OpenAI, Pricing"
+      url: "https://developers.openai.com/api/docs/pricing.md"
+    - title: "OpenAI, Computer use"
+      url: "https://developers.openai.com/api/docs/guides/tools-computer-use.md"
+    - title: "OpenAI, Computer Use（ChatGPT Work / Codex）"
+      url: "https://learn.chatgpt.com/docs/computer-use"
+    - title: "OpenAI, GPT-6.2 System Card"
+      url: "https://deploymentsafety.openai.com/gpt-6-2-astra-sol"
+  retrieved_at: "2026-11-19"
+archetype:
+  primary: decision
+  secondary: [architecture]
+one_liner: "OpenAIのGPT-6.2は、最も要求の高い作業をAstra、低コストの複雑作業をSolに置きます。"
+key_points:
+  - claim: "モデル ID は gpt-6.2-astra と gpt-6.2-sol です。gpt-6-astra を残すと前世代が動きます。"
+    evidence: "経路に置くモデル ID の基準 / まとめ"
+    status: fact
+  - claim: "短い編集は Sol に置きます。テストで確認できる中程度の変更はまず Sol で試し、テストと差分で落ちたら Astra に上げます。"
+    evidence: "先に Sol を置く作業 / まとめ"
+    status: fact
+  - claim: "テンプレートどおりのスライド、表、文書は Astra の候補です。区切りをまたぐ既存コードは、途中を画面か長い差分で人が見るとき候補です。"
+    evidence: "Astra を候補にする作業"
+    status: fact
+  - claim: "見た目が主でない画面操作は Sol に置き、権限とレビューは Astra と同じです。視覚判断の画面操作は Astra の候補です。"
+    evidence: "先に Sol を置く作業 / Astra を候補にする作業"
+    status: fact
+  - claim: "通常料金で、入力 272,000 トークン以下なら、Sol の入力単価と出力単価は Astra の 4 分の 1 です。取得日は 2026-11-18 です。"
+    evidence: "100万トークンあたりの公開単価 / タスクあたりコストと公開単価"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "作業の種類で gpt-6.2-sol と gpt-6.2-astra を分ける"
+    reason_needed: "既定を 1 つに固定すると、短い編集と見た目判断の画面操作を同じ ID に置くため"
+example:
+  description: "リポジトリ内の関数を 1 つ直し、テストが緑なら完了です。モデル ID は gpt-6.2-sol です。"
+  hypothetical: false
+  evidence: "先に Sol を置く作業"
+applicability:
+  - "モデル ID を書く箇所を決めるときに使う"
+  - "画面操作の実行者を書き分けるときに使う"
+  - "長い入力の単価を見積もるときに使う"
+decision_criteria: []
+limitations:
+  - "FrontierCode 2.0 の最大設定では、Sol の費用は Astra の約 5 分の 1 です。掲載側の自己申告で、公開単価の比とは別です。"
+  - "入力が 272,000 を超えると、リクエスト全体にそれ以下の単価の倍率をかけます。入力と、再利用する入力の読取が 2 倍、出力が 1.5 倍です。"
+  - "速度を上げる高速料金（Ultrafast）のプロモ単価は、2027-02-28 太平洋時間までです。その翌日からのリスト価格は別です。"
+  - "用意したブラウザやデスクトップは、呼び出し側が操作します。許可した画面は、ChatGPT のデスクトップが操作します。"
+  - "reasoning effort（考えさせる量）の high 以上は、両モデルで未確定です。拒否と明記があるのは none（無しの値）だけです。"
+unknowns:
+  - "reasoning effort の high、xhigh、max が両モデルで受理されるか。拒否と明記があるのは none だけ"
+  - "Ultrafast の RPM と TPM、Batch と background の queue 枠の具体数"
+  - "6.2 固有の稼働率 SLA と、FedRAMP のモデル ID 別の提供"
+  - "gpt-6-astra と gpt-6.1-sol の廃止日"
+  - "ChatGPT Work が、直接 API に無い Codex の developer prompt と同等の省略対策を全経路に載せるか"
+reviewed: true
