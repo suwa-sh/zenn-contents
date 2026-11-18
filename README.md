@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (652)
+## Articles: 下書き (654)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-18 | [🔐 CISO設置は過半数でも、サービスを止める権限は別に残る](articles/ciso-xtech-nikkei-atcl-nxt-p8_20261118.md) | Security, Governance, IncidentResponse, NIST |
+| 2026-11-18 | [🧪 Claude Codeチームが並列の前に置く検証と失敗した検査の渡し方](articles/claude-code-e2e-claude-dev-p5_20261118.md) | ClaudeCode, Testing, CodeReview, Anthropic |
 | 2026-11-18 | [🔁 複数のクライアントが同じセッションを共有するAgent Host Protocol](articles/github-agent-host-protocol-p2_20261118.md) | GitHub, Copilot, VSCode, AI |
 | 2026-11-18 | [🧭 GPT-6.2 AstraとSolを作業の種類で経路に分ける](articles/openai-gpt-6-2-astra-sol-p1_20261118.md) | OpenAI, Codex, LLM, ChatGPT |
 | 2026-11-17 | [🛡️ GTIGが観測したexploit_agentはパッチ差分から実行までを一つの構成にしていた](articles/google-cloud-google-topics-p1_20261117.md) | Security, GoogleCloud, LLM, AIAgent |
