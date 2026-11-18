@@ -3,7 +3,8 @@ title: "Claude Codeチームが並列の前に置く検証と失敗した検査�
 emoji: "🧪"
 type: "tech"
 topics: ["ClaudeCode", "Testing", "CodeReview", "Anthropic"]
-published: false
+published: true
+published_at: 2026-11-19
 ---
 
 Addy Osmani が 2026-11-16 に claude.dev で公開した [How the Claude Code team thinks about verification](https://claude.dev/blog/how-the-claude-code-team-thinks-about-verification/) は、Claude Code チームが変更を証拠で確認するときのテストの選び方と、確認が失敗したときの人への渡し方を書いています。肩書は Member of Technical Staff です。出典は、チームの運用を著者本人が書いた文章です。

@@ -7,12 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (655)
+## Articles: 下書き (654)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-11-18 | [🔐 CISO設置は過半数でも、サービスを止める権限は別に残る](articles/ciso-xtech-nikkei-atcl-nxt-p8_20261118.md) | Security, Governance, IncidentResponse, NIST |
-| 2026-11-18 | [🧪 Claude Codeチームが並列の前に置く検証と失敗した検査の渡し方](articles/claude-code-e2e-claude-dev-p5_20261118.md) | ClaudeCode, Testing, CodeReview, Anthropic |
 | 2026-11-18 | [🔁 複数のクライアントが同じセッションを共有するAgent Host Protocol](articles/github-agent-host-protocol-p2_20261118.md) | GitHub, Copilot, VSCode, AI |
 | 2026-11-18 | [🧭 GPT-6.2 AstraとSolを作業の種類で経路に分ける](articles/openai-gpt-6-2-astra-sol-p1_20261118.md) | OpenAI, Codex, LLM, ChatGPT |
 | 2026-11-18 | [🚩 Orca Milestoneで複数のClaude CodeとCodexの進捗をサイドバーに集める仕組み](articles/orca-milestone_20261118.md) | orca, claudecode, codex, aiagent, worktree |
@@ -667,10 +666,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (206)
+## Articles: 公開済み (207)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-11-19 | [🧪 Claude Codeチームが並列の前に置く検証と失敗した検査の渡し方](articles/claude-code-e2e-claude-dev-p5_20261118.md) | ClaudeCode, Testing, CodeReview, Anthropic |
 | 2026-11-17 | [🧭 コーディングエージェントに今のWebプラットフォームの書き方を渡すModern Web Guidance](articles/modern-web-guidance_20261115.md) | Chrome, AIAgent, Frontend, CSS, HTML |
 | 2026-11-14 | [📋 JPCERT/CCの調査報告書チェックリストで委託範囲を確認する](articles/jpcert-cc-jpcert-or-jp-ir-p9_20261112.md) | Security, IncidentResponse, Forensics |
 | 2026-11-12 | [🧪 LangChain が整理した Eval-Driven Development の手順と始め方](articles/langchain-eval-driven-developmen_20261111.md) | LangChain, LangSmith, LLM, AIAgent, Evaluation |
