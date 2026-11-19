@@ -7,12 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (656)
+## Articles: 下書き (658)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-11-19 | [🧭 業務語を渡すオントロジーは、定義と計算と操作の置き場が製品で分かれる](articles/atmarkit-itmedia-co-jp-ait-p1_20261119.md) | Ontology, AIAgent, DataGovernance, SemanticLayer |
+| 2026-11-19 | [🧩 Claude CodeのCode Modeでツール呼び出しをJavaScriptにまとめる仕組みと設定](articles/claude-code-mode_20261119.md) | ClaudeCode, AIAgent, JavaScript, DeveloperTools |
 | 2026-11-19 | [🔒 Codexのローカル実行に残るファイルとネットワークの制限](articles/codex-openai-index-inside-p2_20261119.md) | Codex, OpenAI, Security, AIAgent |
+| 2026-11-19 | [🦀 curlのRust書き換えと、止まらない本流の並走をどう数えるか](articles/curl-rust-300-simonwillison-p5_20261119.md) | Rust, Curl, OSS, AIAgent |
 | 2026-11-18 | [🔐 CISO設置は過半数でも、サービスを止める権限は別に残る](articles/ciso-xtech-nikkei-atcl-nxt-p8_20261118.md) | Security, Governance, IncidentResponse, NIST |
 | 2026-11-18 | [🔁 複数のクライアントが同じセッションを共有するAgent Host Protocol](articles/github-agent-host-protocol-p2_20261118.md) | GitHub, Copilot, VSCode, AI |
 | 2026-11-18 | [🧭 GPT-6.2 AstraとSolを作業の種類で経路に分ける](articles/openai-gpt-6-2-astra-sol-p1_20261118.md) | OpenAI, Codex, LLM, ChatGPT |
