@@ -1,0 +1,52 @@
+type: structure
+title: "モデルへ戻るのは最後の式だけ"
+message: "モデルへ戻るのは、コード片の最後の式だけ"
+source: "notes/zenn/articles/claude-code-mode_20261119.md"
+components:
+  - id: model
+    label: "モデル"
+    meaning: "JavaScript を 1 本書く。次に読むのは戻り値だけ"
+  - id: piece
+    label: "コード片"
+    meaning: "1 回分の JavaScript。中からツールを呼ぶ"
+  - id: gate
+    label: "権限ゲート"
+    meaning: "コード内の各呼び出しを、ツール名で拒否と確認のルールと実行前フックにかける"
+  - id: tools
+    label: "ツール"
+    meaning: "公式例が名指しする Bash と Edit"
+  - id: back
+    label: "戻り値"
+    meaning: "コード片の最後の式。モデルが次に読む部分"
+relationships:
+  - from: model
+    to: piece
+    label: "書く"
+  - from: piece
+    to: gate
+    label: "呼び出しごと"
+  - from: gate
+    to: tools
+    label: "ツール名で通す"
+  - from: piece
+    to: back
+    label: "最後の式"
+  - from: back
+    to: model
+    label: "次に読む"
+omitted:
+  - item: "auto mode の分類器"
+    reason: "コード片を実行前に見る点は本文の核心ポイントに残し、図は戻り値の経路に絞ったため"
+  - item: "トランスクリプトの Code 行、管理設定、機能フラグ"
+    reason: "オンオフとコードの見方は本文に残し、図の関係を増やさないため"
+  - item: "Read と、ツール結果がコード片の途中で使われる矢印"
+    reason: "公式例が名指しするのは検索と edit で、モデルへ直接戻るのは最後の式だけのため"
+  - item: "完了待ちの 10 分と背景実行の 2 時間"
+    reason: "上限は本文の注意点に残し、図は呼び出しの経路だけにするため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "Code Modeとは（1 つのコード片が、並列、前の結果の利用、必要な部分の返却をまとめる）"
+  - "コンポーネント図（JavaScript 片が $ と edit を呼び、最後の式が Claude への戻り値になる）"
+  - "特徴（コード内の各呼び出しはツールの通常名で deny / ask と PreToolUse を通る）"

@@ -1,0 +1,40 @@
+type: structure
+title: "同じ指標を3列で見る"
+message: "導入前に、同じ指標を定義・計算・操作の3列で見る。"
+source: "notes/zenn/articles/atmarkit-itmedia-co-jp-ait-p1_20261119.md"
+components:
+  - id: metric
+    label: "指標の1行"
+    meaning: "導入前に見る単位。製品名ではない"
+  - id: definition
+    label: "定義の正本と版"
+    meaning: "その指標が何を指すかと、エージェントが参照してよい版"
+  - id: formula
+    label: "計算の置き場"
+    meaning: "その指標の数字をどのエンジンが返すか"
+  - id: action
+    label: "状態を変える操作と適用者"
+    meaning: "外のシステムを変えてよい操作と、それを適用できる者"
+relationships:
+  - from: metric
+    to: definition
+    label: "列"
+  - from: metric
+    to: formula
+    label: "列"
+  - from: metric
+    to: action
+    label: "列"
+omitted:
+  - item: "5社それぞれの操作の置き場"
+    reason: "図は3列の見方だけを示し、製品差は本文の核心に残すため"
+  - item: "所有者を独立した箱にする関係"
+    reason: "定義の列に含めて数え、要素を7個以下に保つため"
+  - item: "91%、preview の日付、未確認の問い"
+    reason: "3列の関係ではなく、本文の具体例と限界に置くため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "同じ指標を3列で見る（表の3列）"
+  - "導入は指標の1行で切る"

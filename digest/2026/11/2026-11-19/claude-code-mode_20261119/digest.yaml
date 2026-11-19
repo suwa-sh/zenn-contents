@@ -1,0 +1,55 @@
+source:
+  title: "Claude CodeのCode Modeでツール呼び出しをJavaScriptにまとめる仕組みと設定"
+  url: null
+  path: "notes/zenn/articles/claude-code-mode_20261119.md"
+  primary:
+    - title: "Run tool calls from code with Code Mode"
+      url: "https://code.claude.com/docs/en/code-mode"
+    - title: "Claude Code v2.1.323"
+      url: "https://github.com/anthropics/claude-code/releases/tag/v2.1.323"
+  retrieved_at: "2026-11-20"
+archetype:
+  primary: architecture
+  secondary: []
+one_liner: "Claude Code の Code Mode は、ツール呼び出しを JavaScript にまとめる実験機能です。"
+key_points:
+  - claim: "オンにする変数は CLAUDE_CODE_EXPERIMENTAL_CODE_MODE です。場所は、シェル、ユーザー設定、起動時に渡すファイルだけです。"
+    evidence: "特徴 / 導入の置き場所ごとの効き方"
+    status: fact
+  - claim: "既定はオフです。0 が他の 1 より優先するのは、シェル、ユーザー設定、起動時に渡すファイル、管理設定です。"
+    evidence: "ユーザー設定に固定する / 置き場所ごとの効き方"
+    status: fact
+  - claim: "各呼び出しは、Bash などのツール名で拒否と確認のルールと、実行前フックを通ります。"
+    evidence: "特徴 / ツールごとの権限"
+    status: fact
+  - claim: "auto mode の分類器はコード片を実行前に見るので、実行時に計算した値は見えません。"
+    evidence: "特徴 / 自動モードの分類器"
+    status: fact
+  - claim: "公開されている形は、検索して編集し、最後の式だけを返す 1 例です。"
+    evidence: "利用方法 / 公式例の呼び出し"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "モデルへ戻るのは、コード片の最後の式だけ"
+    reason_needed: "会話に出るツール呼び出しだけを見ると、コードが何をまとめ、何をモデルへ戻すかが分からないため"
+example:
+  description: "公式例は、retryPolicy を含むファイルを検索します。先頭のファイルで、maxAttempts を 3 から 5 へ替え、テストを走らせます。Claude に戻るのは、編集したパスとテスト結果だけです。"
+  hypothetical: false
+  evidence: "利用方法 / 公式例の呼び出し"
+applicability:
+  - "多数のファイルへ同じ変更を繰り返すとき"
+  - "検索結果を絞ってから読ませるとき"
+  - "独立したコマンドを同時に進めるとき"
+decision_criteria:
+  - "止めたい呼び出しを、拒否か確認のルール、またはフックに残したか"
+  - "再開するターミナルでも、値が 1 か"
+  - "コード片自体を、フックの照合名 REPL で検査するか"
+limitations:
+  - "トークン削減の数値では、導入を判断しません。"
+  - "載っている例は、順番に実行します。"
+  - "完了待ちは 10 分で、許可待ちを含みます。待たずに続ける実行は、開始が auto mode か確認を出さない権限のとき最長 2 時間です。"
+  - "使うには、対話ターミナルから Anthropic の API へ直接つなぐ。"
+  - "組織の管理設定が 1 のときは、シェルの 1 が無視されます。オンにするにはユーザー設定の 1 が要ります。"
+unknowns:
+  - "並列実行の書き方は、掲載例に無い"
+reviewed: true

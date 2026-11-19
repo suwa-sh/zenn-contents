@@ -1,0 +1,59 @@
+type: structure
+title: "モデルとツールと実行主体の経路"
+message: "経路の宣言がプロキシへ渡り、プロキシが3つの行き先へ分ける"
+source: "notes/zenn/articles/envoy-mcp-cloud-google-products-p6_20261119.md"
+components:
+  - id: caller
+    label: "呼び出し元"
+    meaning: "OpenAI 互換クライアント、またはツール呼び出しのクライアント"
+  - id: control
+    label: "経路の宣言"
+    meaning: "Agent Router がモデル経路とツール経路を宣言する制御プレーン"
+  - id: proxy
+    label: "プロキシ"
+    meaning: "受信した要求へ経路を適用する Envoy"
+  - id: model
+    label: "モデル"
+    meaning: "ホステッドまたは自前のモデル提供者"
+  - id: tool
+    label: "ツールサーバ"
+    meaning: "MCP サーバ。ツールと資源の側"
+  - id: actor
+    label: "実行主体"
+    meaning: "Agent Substrate が一時停止と再開の単位にするアクター"
+groups:
+  - id: upstream
+    label: "行き先"
+    members: [model, tool, actor]
+relationships:
+  - from: control
+    to: proxy
+    label: "宣言を渡す"
+  - from: caller
+    to: proxy
+    label: "要求"
+  - from: proxy
+    to: model
+    label: "モデルへ"
+  - from: proxy
+    to: tool
+    label: "ツールへ"
+  - from: proxy
+    to: actor
+    label: "実行主体へ"
+  - from: actor
+    to: proxy
+    label: "出口を通す"
+omitted:
+  - item: "レート制限、認可、Endpoint Picker"
+    reason: "判定の内部であり、3つの行き先の分かれ方ではない"
+  - item: "二段のゲートウェイ"
+    reason: "外側と内側の段は、行き先を3つに分ける図の伝えたいことと別"
+  - item: "トークンの事後課金"
+    reason: "時間の流れなので、この構造図には入れない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "構造「システムコンテキスト図」。呼び出し元は Envoy に入り、モデル、MCP サーバ、Agent Substrate へ出る。Agent Substrate から外への通信も、もう一度 Envoy を通る"
+  - "Envoy agentic stackとは。Agent Router は Envoy の上の制御プレーン"

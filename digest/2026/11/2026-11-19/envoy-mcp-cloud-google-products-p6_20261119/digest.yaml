@@ -1,0 +1,56 @@
+source:
+  title: "Envoyに載せるモデルとトークンとMCPの経路"
+  url: null
+  path: "notes/zenn/articles/envoy-mcp-cloud-google-products-p6_20261119.md"
+  primary:
+    - title: "Building an agentic stack in Envoy: routing models, tokens, and MCP"
+      url: "https://cloud.google.com/blog/products/networking/the-envoy-agentic-stack-routing-models-tokens-and-mcp/"
+    - title: "Agent Router"
+      url: "https://github.com/theagentrouter/agent-router"
+    - title: "MCP Streamable HTTP (2026-07-28)"
+      url: "https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http"
+    - title: "Agent Substrate"
+      url: "https://github.com/agent-substrate/substrate"
+  retrieved_at: "2026-11-20"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "Google Cloud は、モデルと使用量とツール経路を Envoy に載せると発表しました。"
+key_points:
+  - claim: "Agent Router が経路を宣言し、プロキシがモデル、ツールサーバ、エージェントの置き場へ分けます。"
+    evidence: "構造「制御プレーンが経路を宣言し、Envoy が受信した要求へ適用します」/ システムコンテキスト図"
+    status: fact
+  - claim: "使用量の枠は、着いたときに、すでに課金した分だけを見ます。"
+    evidence: "運用「トークン超過の見え方」「到着時に見るのは、すでに課金された使用量です」"
+    status: fact
+  - claim: "ツール呼び出しを拒めるのは、経路のルール、プロキシの認可、ツールサーバ、古い中継です。"
+    evidence: "ベストプラクティス「同じ要求で拒否点を4つに分ける」"
+    status: fact
+  - claim: "世代の違うクライアントを両方受けるときだけ、版のヘッダで入口を分けます。"
+    evidence: "ベストプラクティス「世代を1つに固定する」「両方のクライアントを受けるなら、版ヘッダでリスナーを分けます」"
+    status: fact
+  - claim: "エージェントの資格情報は、プロキシの出口で足します。"
+    evidence: "運用「出口で資格情報を注入する」「アクターは API キーとクラウドトークンを持ちません」"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "経路の宣言はプロキシへ渡り、プロキシがモデル、ツールサーバ、エージェントの置き場へ分ける。"
+    reason_needed: "モデル呼び出し、ツール、実行主体の器が同じ入口の先で分かれるため"
+example:
+  description: "空の 1,000 トークンの時間枠へ入った要求が、1,200 トークンを流し切ります。その枠の次の要求から 429 になります。"
+  hypothetical: false
+  evidence: "運用「トークン超過の見え方」"
+applicability:
+  - "設定変更でモデルの提供元を切り替える"
+  - "ツール名で呼び出しを止める"
+  - "使っていないエージェントの置き場を共有する"
+decision_criteria:
+  - "初回の長い要求を、モデルの前で止める手段が別にありますか。"
+limitations:
+  - "Model Armor と ShieldGemma は、設定項目の名前としては未確認です。"
+  - "会話の本文とツール引数はプロキシのアクセスログに無く、正本にするときは別に置きます。"
+  - "クォータを判定するサービスが無いとき、判定できない要求は通します。"
+unknowns:
+  - "Model Armor と ShieldGemma は Agent Router 1.2 の CRD 名としては未確認"
+  - "QuotaPolicy の defaultAction に相当する、MCPRoute の defaultAction の既定値は例に無い"
+reviewed: true

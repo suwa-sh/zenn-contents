@@ -1,0 +1,45 @@
+type: structure
+title: "凍結した採点と、動く本流"
+message: "採点は凍結した C の試験で行い、本流のその後は別の時計で数える"
+source: "notes/zenn/articles/curl-rust-300-simonwillison-p5_20261119.md"
+components:
+  - id: c_tree
+    label: "残した C"
+    meaning: "rust-rewrite に残した C の lib と src。試験の採点基準であり、追い続ける本流ではない"
+  - id: suite
+    label: "同じツリーの試験"
+    meaning: "残した C のビルドと Rust のビルドの両方で通す、curl 自身の試験"
+  - id: rust
+    label: "Rust 書き換え"
+    meaning: "同じ試験で採点される Rust のツリー"
+  - id: master
+    label: "本流"
+    meaning: "curl/curl の master。共有コミットのあとにもコミットを積む"
+  - id: later
+    label: "その後のコミット"
+    meaning: "共有コミットより後に本流だけが積んだコミット"
+groups:
+  - id: frozen
+    label: "凍結した基準"
+    members: [c_tree, suite, rust]
+relationships:
+  - from: c_tree
+    to: suite
+    label: "採点基準"
+  - from: rust
+    to: suite
+    label: "同じ試験"
+  - from: master
+    to: later
+    label: "共有のあと"
+omitted:
+  - item: "差分台帳、進捗の四つの欄、変換した行数"
+    reason: "図が示すのは二つの時計の分離だけで、欄の中身は本文に残すため"
+  - item: "urlx、uutils、脆弱性件数、star 数、試験 96 と 558、先行 2,379 と遅れ 366"
+    reason: "二つの時計という一つのメッセージに、件数を足すと別の主張になるため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "curlのRust書き換えと本流の並走とは / mermaid（残した C、試験、Rust、本流のその後）"
+  - "同節 / SCOPE.md と CLAUDE.md「C は基準であり upstream ではない」"

@@ -1,0 +1,55 @@
+source:
+  title: "業務語を渡すオントロジーは、定義と計算と操作の置き場が製品で分かれる"
+  url: null
+  path: "notes/zenn/articles/atmarkit-itmedia-co-jp-ait-p1_20261119.md"
+  primary:
+    - title: "@IT、一色政彦「オントロジーの定義範囲と実行範囲がベンダーで分かれる」（2026年11月19日）"
+      url: "https://atmarkit.itmedia.co.jp/ait/articles/2611/19/news008.html"
+    - title: "Palantir, Why Ontology"
+      url: "https://palantir.com/docs/foundry/ontology/why-ontology/"
+    - title: "Snowflake, Business Ontology（2026年11月3日）"
+      url: "https://www.snowflake.com/en/blog/business-ontology-context/"
+    - title: "Databricks, Announcing GA of Genie Ontology（2026年11月11日）"
+      url: "https://www.databricks.com/blog/announcing-ga-genie-ontology"
+    - title: "NVIDIA/auto-ontology#268"
+      url: "https://github.com/NVIDIA/auto-ontology/issues/268"
+  retrieved_at: "2026-11-20"
+archetype:
+  primary: decision
+  secondary: [architecture, governance]
+one_liner: "Palantir など5社が業務の言葉をエージェントへ渡す層は、定義と計算と操作の置き場が分かれます。"
+key_points:
+  - claim: "見る単位は、指標ごとの1行です。"
+    evidence: "導入は指標の1行で切る"
+    status: fact
+  - claim: "行には、定義の正本と版、計算の置き場、状態を変える操作と適用者（操作できる人）を並べます。"
+    evidence: "同じ指標を3列で見る / 導入は指標の1行で切る"
+    status: fact
+  - claim: "Palantir は、状態を変える操作を層の中に置きます。"
+    evidence: "維持できる結論と、それを弱める材料「Palantir は、Action をオントロジーの動詞として公式に置いています」"
+    status: fact
+  - claim: "Snowflake、Databricks、NVIDIA、Microsoft は、その操作を層の外に置きます。"
+    evidence: "同じ指標を3列で見る の表（Snowflake / Databricks / NVIDIA / Microsoft の操作の列）"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "導入前に、同じ指標を定義・計算・操作の3列で見る。"
+    reason_needed: "製品名で選ぶと、定義と計算と状態変更のどれが層の中にあるかが決まらないため"
+example:
+  description: "Snowflake では、承認した業務の言葉が定義の正本です。計算の定義は指標用のビューにあり、この層はその計算を変えません。その層は、2026年11月3日時点で private preview、public preview は soon です。"
+  hypothetical: false
+  evidence: "Snowflake Business Ontology / 同じ指標を3列で見る の Snowflake の行"
+applicability:
+  - "操作と権限を層の中に置き、外へ書き戻すなら、Palantir の資料を見ます。"
+  - "言葉の承認を計算より前に置くなら、Snowflake の資料を見ます。"
+  - "読み取りだけをこの層に置くなら、NVIDIA の資料を見ます。"
+limitations:
+  - "3列をまたいで、複数の製品を組み合わせてよいです。"
+  - "人の承認は、回答のたびに未承認を止める保証ではありません。"
+  - "Databricks では、書き込み前の都度承認は一部だけです。"
+  - "NVIDIA の Auto-Ontology（概念へ写すライブラリ）の質問は、SELECT 以外を拒むか未確認です。更新を止める場所にはしません。"
+  - "Webhook 失敗時に、Palantir 側のオブジェクト編集が戻るかは未確認です。書き戻しを1トランザクションとはみなしません。"
+unknowns:
+  - "NVIDIA の Auto-Ontology で、質問が SELECT 以外の SQL を拒むか。"
+  - "Webhook が失敗したとき、Palantir 側のオブジェクト編集が戻るか。"
+reviewed: true

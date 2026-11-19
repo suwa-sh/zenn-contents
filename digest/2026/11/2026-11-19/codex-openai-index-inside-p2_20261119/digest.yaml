@@ -1,0 +1,54 @@
+source:
+  title: "Codexのローカル実行に残るファイルとネットワークの制限"
+  url: null
+  path: "notes/zenn/articles/codex-openai-index-inside-p2_20261119.md"
+  primary:
+    - title: "Inside the Codex sandbox"
+      url: "https://openai.com/index/inside-the-codex-sandbox"
+    - title: "Permissions"
+      url: "https://learn.chatgpt.com/codex/permissions.md"
+    - title: "Sandboxing"
+      url: "https://learn.chatgpt.com/codex/sandboxing.md"
+    - title: "Security cookbook"
+      url: "https://learn.chatgpt.com/codex/enterprise/security-cookbook.md"
+  retrieved_at: "2026-11-20"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "Codexが自分のマシンで隔離して起動するコマンドは、読めるパス、書けるパス、通信先の3欄です。"
+key_points:
+  - claim: "Codex は、隔離するコマンドを名前付きの権限方針で起動します。子プロセスも、同じ制限を引き継ぎます。"
+    evidence: "Codexのローカルサンドボックスとは / 冒頭「permission profile を渡してコマンドを起動する」「子プロセスは同じ制約を引き継ぎます」"
+    status: fact
+  - claim: "通常は、作業フォルダへの書き込みと、その外の読み取りを同時に許します。その代わり、別の場所の秘密も読めます。"
+    evidence: "組み込みプロファイル「:workspace」/ 「コンパイラと SDK はリポジトリの外を読む」「API キーを含む設定ファイルのように、マシン上の別のファイルも読める」"
+    status: fact
+  - claim: "通信先の規則は、転送する仕組みが有効なときだけコマンドの宛先を見ます。"
+    evidence: "ネットワークの3態 / 「ドメイン規則が効くのは、ネットワークが有効で、proxy も有効なとき」「proxy は、ドメイン規則を見て転送する中継」"
+    status: fact
+  - claim: "資格情報と権限を上げたコマンドは、3欄の外です。入出力でつなぐ外部ツールは、既定では外です。"
+    evidence: "権限は3欄で書く / 「資格情報、MCP、昇格…は、欄の外」/ 「require_escalated を許可したコマンドは、サンドボックスの外で動きます」/ 「stdio MCP の起動は、ハーネスが既定ではサンドボックスしません」"
+    status: fact
+  - claim: "同じ設定でも、制限の効き方は OS の実装ごとに違います。"
+    evidence: "注意点 / 「同じ TOML が、OS ごとに同じ到達結果になる保証は、文書にありません」/ OSで3欄の届き方を確かめる"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "手元コマンドの境界は3欄です。ファイルはOSが強制し、通信先は中継が有効なときだけ中継が見ます。"
+    reason_needed: "ファイル制限と通信先制限の担い手が違うと、中継なしの有効化を通信制限と読めるため"
+example:
+  description: "編集を止めるなら :read-only（書き込み停止）です。通常の作業は :workspace です。作業フォルダの外の秘密を拒むなら、公式例の workspace-only（外の秘密を拒否）です。"
+  hypothetical: false
+  evidence: "権限は3欄で書く / 「編集させない閲覧は :read-only」「通常の実装は :workspace」「ワークスペース外の秘密を読めなくする用途には workspace-only」"
+applicability:
+  - "自分のマシンの Codex で、ファイルの範囲を決める"
+  - "通信先をドメインで制限する"
+decision_criteria:
+  - "ネットワークを有効にするなら、転送する仕組みも有効ですか。"
+limitations:
+  - "書き込んだファイルを、あとから別の道具が欄の外で実行できます。"
+  - "Linux と Windows の一部では、読み取りの拒否は起動時に具体的なパスへ広がります。その後に増えたファイルは、そのプロセスでは拒否されません。"
+  - "Windows の実験的な転送は、テスト前には使いません。"
+unknowns:
+  - "Windows の experimental_network は、テスト前の適用を避ける対象である。実測は参照した文書に無い"
+reviewed: true

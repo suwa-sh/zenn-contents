@@ -1,0 +1,64 @@
+type: structure
+title: "手元コマンドの境界は3欄"
+message: "手元コマンドの境界は3欄です。ファイルはOSが強制し、通信先は中継が有効なときだけ中継が見ます。"
+source: "notes/zenn/articles/codex-openai-index-inside-p2_20261119.md"
+components:
+  - id: profile
+    label: "権限方針"
+    meaning: "読めるパス、書けるパス、通信先を1つにまとめた名前付きの方針"
+  - id: read
+    label: "読めるパス"
+    meaning: "コマンドが読めるファイルとディレクトリ"
+  - id: write
+    label: "書けるパス"
+    meaning: "コマンドが作成、変更、削除できるパス"
+  - id: net
+    label: "通信先"
+    meaning: "コマンドが出られる通信先"
+  - id: os
+    label: "OSのファイル強制"
+    meaning: "ファイルの読み書きをOSの仕組みが強制する側"
+  - id: proxy
+    label: "中継"
+    meaning: "有効なときだけ通信先の規則を見る中継"
+groups:
+  - id: columns
+    label: "3欄"
+    members: [read, write, net]
+relationships:
+  - from: profile
+    to: read
+    label: "含める"
+  - from: profile
+    to: write
+    label: "含める"
+  - from: profile
+    to: net
+    label: "含める"
+  - from: read
+    to: os
+    label: "強制する"
+  - from: write
+    to: os
+    label: "強制する"
+  - from: net
+    to: proxy
+    label: "有効なとき見る"
+omitted:
+  - item: "use_default、with_additional_permissions、require_escalated と auto-review"
+    reason: "承認と昇格は3欄の外にある。図が伝えるのは欄と強制の担い手であり、要求の種類は本文に残すため"
+  - item: ":read-only、:workspace、:danger-full-access、workspace-only、extends"
+    reason: "どの方針を選ぶかは具体例に残し、図は方針が3欄をまとめる関係だけにするため"
+  - item: "macOS Seatbelt、Linux bubblewrap、Windows の mxc、elevated、unelevated"
+    reason: "OSごとの実装差は本文の核心に残し、図ではファイル強制を1つのOSにまとめるため"
+  - item: "config.toml、requirements.toml、managed configuration の合成"
+    reason: "方針ができる前の設定の重ね方は、3欄の境界には不要なため"
+  - item: "資格情報、stdio MCP、ブラウザ、Web検索、Codex Cloud、書き込み後の別実行"
+    reason: "いずれも3欄の外であり、欄と強制の担い手を示す図には不要なため"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "権限は3欄で書く / 「読めるパス、書けるパス、出られる通信先」"
+  - "設定が1つのプロファイルに集まる / 「ファイルは OS のサンドボックスが強制します。通信先は、proxy を有効にしたときだけ proxy が見ます」"
+  - "ネットワークの3態 / 「ドメイン規則が効くのは、ネットワークが有効で、proxy も有効なとき」"

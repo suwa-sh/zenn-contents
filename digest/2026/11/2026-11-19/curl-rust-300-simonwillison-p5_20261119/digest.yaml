@@ -1,0 +1,56 @@
+source:
+  title: "curlのRust書き換えと、止まらない本流の並走をどう数えるか"
+  url: null
+  path: "notes/zenn/articles/curl-rust-300-simonwillison-p5_20261119.md"
+  primary:
+    - title: "Actual curl rewrites in rust"
+      url: "https://daniel.haxx.se/blog/2026/11/17/actual-curl-rewrites-in-rust/"
+    - title: "Daniel Stenberg on rewriting curl in Rust"
+      url: "https://simonwillison.net/2026/Nov/18/daniel-stenberg/"
+    - title: "curl/curl master と kov:rust-rewrite の compare"
+      url: "https://github.com/curl/curl/compare/master...kov:rust-rewrite"
+  retrieved_at: "2026-11-20"
+archetype:
+  primary: decision
+  secondary: [research]
+one_liner: "curl の Rust 書き換えは、止めて残した C を試験の採点基準にします。"
+key_points:
+  - claim: "書き換え側は、止めて残した C を試験の採点基準にします。動く本流は、追い続ける相手ではありません。"
+    evidence: "curlのRust書き換えと本流の並走とは / SCOPE.md と CLAUDE.md「C は基準であり upstream ではない」"
+    status: fact
+  - claim: "2026年11月19日時点で、書き換えだけのコミットが 2,379、本流だけのコミットが 366 です。"
+    evidence: "curlのRust書き換えと本流の並走とは / GitHub compare（先行 2,379、遅れ 366）"
+    status: fact
+  - claim: "本流だけのコミット数は、欠けた修正の件数ではありません。"
+    evidence: "注意点 / 3 件は差分台帳が既に書いている。並走中の進捗を四つの欄で見る / 件数の上限は見直しの引き金"
+    status: fact
+  - claim: "進捗は四つの欄で見ます。C と書き換えの両方で通った試験、本流だけのコミット、取り込み前のセキュリティ修正、差分の記録です。"
+    evidence: "並走中の進捗を四つの欄で見る / 全面書き換えの方針に書くこと「進捗の欄は四つ」"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "採点は止めて残した C の試験で行い、本流のその後のコミットは別の進みとして数えます。"
+    reason_needed: "残した C と動く本流を一つの時計に重ねると、遅れ件数を欠けた修正の件数と読めるため"
+example:
+  description: "本流だけの 366 件のうち 3 件は、書き換え側の差分の記録が同じ結果を既に書いています。"
+  hypothetical: false
+  evidence: "注意点 / 2ba56e30、a40772f2、73835a3e"
+applicability:
+  - "生きた本流を、全面的に移す計画を書きます。"
+  - "進捗を、行数やコミット数だけで報告します。"
+  - "今日の代替か、基準時点の写しかを決めます。"
+decision_criteria:
+  - "採点の基準を、日付とコミットで特定しましたか。"
+  - "本流だけのコミットが上限を超えたら、見直しますか。"
+  - "動作一致から外す試験を、名前で書きましたか。"
+  - "セキュリティを変える本流のコミットを、分けましたか。"
+  - "今日の代替と呼ぶ期間を、決めましたか。"
+limitations:
+  - "2026年10月20日から11月17日までの公開アドバイザリは 0 件です。未公開の報告は見ていません。"
+  - "試験が全部通る、という宣言は、再実行の結果ではありません。"
+  - "3 件の差分の記録を、対応する本流のコミットより前に書いたかは、公開の記録では分かりません。"
+unknowns:
+  - "8,600 USD の資料本文は取得できていません。"
+  - "81 件と 14 件の内訳は、公開の vuln.json と HTML からは再現しません。"
+  - "3 件の差分の記録を、対応する本流コミットより前に書いたかは、公開の記録からは特定できません。"
+reviewed: true
