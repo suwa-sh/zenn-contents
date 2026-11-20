@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (660)
+## Articles: 下書き (661)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-11-20 | [📘 OKF v0.3で知識の適合規則と検証状態を受け渡しに固定する](articles/google-okf-v0-cloud-google-p4_20261120.md) | GoogleCloud, AIAgent, Markdown, GitHub |
 | 2026-11-20 | [🔐 Microsoft Agent FrameworkのPyPI配布物に混入した認証情報収集](articles/microsoft-agent-framework-p2_20261120.md) | Python, Security, Azure, AIAgent, SupplyChain |
+| 2026-11-20 | [📋 Vercel Boardで複数エージェントの担当と作業記録を共有する](articles/vercel-board-vercel-introducing-p5_20261120.md) | Vercel, AIAgent, GitHub, Slack |
 | 2026-11-19 | [🧭 業務語を渡すオントロジーは、定義と計算と操作の置き場が製品で分かれる](articles/atmarkit-itmedia-co-jp-ait-p1_20261119.md) | Ontology, AIAgent, DataGovernance, SemanticLayer |
 | 2026-11-19 | [🧩 Claude CodeのCode Modeでツール呼び出しをJavaScriptにまとめる仕組みと設定](articles/claude-code-mode_20261119.md) | ClaudeCode, AIAgent, JavaScript, DeveloperTools |
 | 2026-11-19 | [🔒 Codexのローカル実行に残るファイルとネットワークの制限](articles/codex-openai-index-inside-p2_20261119.md) | Codex, OpenAI, Security, AIAgent |
