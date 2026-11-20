@@ -1,0 +1,62 @@
+source:
+  title: "OKF v0.3で知識の適合規則と検証状態を受け渡しに固定する"
+  url: null
+  path: "notes/zenn/articles/google-okf-v0-cloud-google-p4_20261120.md"
+  primary:
+    - title: "Google Cloud Blog, What's new in OKF v0.3"
+      url: "https://cloud.google.com/blog/products/data-analytics/introducing-okf-v0-3/"
+    - title: "OKF SPEC v0.3, commit 527e81aff55992be21507e97004286789126f88c"
+      url: "https://github.com/open-knowledge-format/open-knowledge-format/blob/527e81aff55992be21507e97004286789126f88c/SPEC.md"
+    - title: "旧組織の SPEC（取得時点で Version 0.2）"
+      url: "https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md"
+    - title: "David R. Oliver, AI-XF E9 results"
+      url: "https://github.com/DavidROliverBA/ai-xf-format/blob/main/experiments/e9-knowledgex/e9-results.md"
+  retrieved_at: "2026-11-21"
+archetype:
+  primary: governance
+  secondary: [decision]
+one_liner: "Google の OKF v0.3（知識を渡す仕様）は、どの確認の記録を有効にするかを受け渡しに固定します。"
+key_points:
+  - claim: "規範の本文は、open-knowledge-format の 2026-11-18 のコミットです。"
+    evidence: "注意点「告知が指すファイルと、規範バイト」"
+    status: fact
+  - claim: "ブログが指す GoogleCloudPlatform の本文は、取得時点で v0.2 のままです。"
+    evidence: "注意点「告知が指すファイルと、規範バイト」"
+    status: fact
+  - claim: "信頼区分は、知識ファイルの更新時刻以降の確認だけから計算します。"
+    evidence: "OKF v0.3とは「消費者が読む欄」「概念から計算する状態」"
+    status: fact
+  - claim: "日付だけの確認は、その日の UTC 0時として比較されます。"
+    evidence: "OKF v0.3とは「消費者が読む欄」/ 注意点「適合が揃えないもの」"
+    status: fact
+  - claim: "受け取り検査は、空の欄と壊れたリンクを通します。"
+    evidence: "注意点「適合が揃えないもの」"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "信頼区分は、更新時刻以降の確認だけから出る。"
+    reason_needed: "更新時刻と確認履歴の両方が、採用する確認を決めるため"
+example:
+  description: "日付だけにしたコピーでは、人が確認済みが 5件から 0件になりました。日時を残した版は 5件のまま、書き手の件数と一致しました。v0.3 の比較式は、Google の公式測定ではない公開前の実験のこの減りを、仕様側で再現します。"
+  hypothetical: false
+  evidence: "注意点「適合が揃えないもの」の AI-XF 実験 E9"
+applicability:
+  - "複数の組織が同じ知識を編集する"
+  - "エージェントが書き換えたら、その前の人の確認を区分から外したいとき"
+decision_criteria:
+  - "組織間の合意文書に、2026-11-18 のコミットを書きましたか。"
+  - "ルート index.md の okf_version は 0.3 ですか。"
+  - "別ファイルを指す欄を、先頭の / で書きましたか。"
+  - "確認時刻を、オフセット付きの日時にしましたか。"
+limitations:
+  - "人を示すラベルは、本人確認ではありません。"
+  - "更新時刻の意味は、生産者の判断です。"
+  - "更新の記録が無いときは、残った確認を現行にします。"
+  - "廃止したファイルが指す次のファイルが輪になるか欠けたとき、止まり方は仕様にありません。"
+  - "open-knowledge-format の Release は、取得時点で 0件です。"
+unknowns:
+  - "以後 Release が増えるかは、2026-11-20 時点では未確認"
+  - "旧組織の issue が新しい組織へ移ったかは、同じ時点では未確認"
+  - "なりすましの実害報告は、参照した仕様・公式ツール・公開 issue の範囲では未確認"
+  - "通知のない降格が業務を止めた当事者報告は、同じ範囲では未確認"
+reviewed: true

@@ -1,0 +1,56 @@
+type: structure
+title: "追加ファイルは環境の秘密へ届く"
+message: "対象2版の追加ファイルは、通常起動でアプリが読み込む前に、環境の秘密へ届く"
+source: "notes/zenn/articles/microsoft-agent-framework-p2_20261120.md"
+components:
+  - id: boot
+    label: "通常起動"
+    meaning: "サイトパッケージの起動時設定を処理する Python の起動"
+  - id: hook
+    label: "追加ファイル"
+    meaning: "1.26.1 と 1.26.2 だけが足す、通常起動でアプリが読み込む前に動くファイル"
+  - id: ambient
+    label: "環境の秘密"
+    meaning: "同じユーザーの環境変数と資格情報ファイル、他プロセスの環境、クラウドの窓口"
+  - id: agent
+    label: "エージェント"
+    meaning: "正規の実行単位。コアの依存先に実装がある"
+  - id: given
+    label: "渡した鍵"
+    meaning: "アプリケーションが引数としてエージェントへ渡す秘密"
+groups:
+  - id: malicious
+    label: "対象の2版だけ"
+    members: [hook]
+  - id: clean
+    label: "正規の実行"
+    members: [agent, given]
+relationships:
+  - from: boot
+    to: hook
+    label: "読み込む前"
+  - from: hook
+    to: ambient
+    label: "届く"
+  - from: boot
+    to: agent
+    label: "読み込んだあと"
+  - from: given
+    to: agent
+    label: "引数で渡す"
+omitted:
+  - item: "持ち出し先の URL と送信の形"
+    reason: "再発行と除去の判断に宛先の全文は不要で、全文はアドバイザリを正とするため"
+  - item: "追加ファイルの個別名、ファイル数の上限、User-Agent"
+    reason: "図は正規の実行と追加ファイルの枝の分離に絞るため"
+  - item: "コア、統合パッケージ、Lab"
+    reason: "依存が 1.26.0 のままである事実は本文に残し、図の要素を増やさないため"
+  - item: "クラウドの窓口と CI 変数の個別名"
+    reason: "環境の秘密にまとめたため"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "構造 / コンポーネント図（正規の実行経路と、1.26.1 と 1.26.2 の追加は別の枝。pth は import より前に動く）"
+  - "データ / 概念モデル（アプリが渡す秘密はエージェントへ、環境に残る秘密は起動フックへ）"
+  - "まとめ（メモリ上だけに渡した値を読む経路は、収集対象には書かれていない）"

@@ -1,0 +1,43 @@
+type: structure
+title: "記録の正本は3つに分ける"
+message: "タスク状態は Board、コードと取り消せない承認は GitHub、会話の到達は Slack と Linear が正本です。"
+source: "notes/zenn/articles/vercel-board-vercel-introducing-p5_20261120.md"
+components:
+  - id: github
+    label: "GitHub：コードと取り消せない承認"
+    meaning: "コード、取り消せない承認、実行結果の正本"
+  - id: board
+    label: "Board：タスク状態"
+    meaning: "タスク状態と出来事の記録の正本"
+  - id: chat
+    label: "Slack と Linear：会話"
+    meaning: "会話が届いたことの正本"
+relationships:
+  - from: github
+    to: board
+    label: "PR と issue を入れる"
+  - from: board
+    to: github
+    label: "指定した内容だけ戻す"
+  - from: board
+    to: chat
+    label: "会話を写す"
+  - from: chat
+    to: board
+    label: "会話を写す"
+omitted:
+  - item: "7 つのタスク状態と、取得の競合、前提が失敗したときの待ち"
+    reason: "図が伝えるのは正本の分け方であり、状態の遷移は本文の核心に残すため"
+  - item: "担当時間の上限 5 分と、切れたあとの表示の遅れ"
+    reason: "ホストの付与と表示の遅れは本文の核心と限界に残し、正本の境界には不要なため"
+  - item: "初期の許可、preview、実験提供、保存地域、PR 過半数"
+    reason: "採用を弱める条件は本文の限界に残し、図は記録の置き場だけにするため"
+  - item: "配送の再試行、編集の best-effort、コネクタの転送先 3 つ"
+    reason: "写しの失敗条件は本文に残し、矢印は既定で写る向きと戻す条件だけにするため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "いま置ける結論「コードと取り消せない承認の正本は GitHub に残します。会話が届いたかどうかは、Slack または Linear の複製として扱います」"
+  - "層ごとの正本（タスク状態は Board、コードと承認は GitHub、会話の到達は Slack と Linear）"
+  - "外部のスレッドとの結びつき「Slack と Linear は双方向の mirror。GitHub の既定は into。戻すには deliver()」"

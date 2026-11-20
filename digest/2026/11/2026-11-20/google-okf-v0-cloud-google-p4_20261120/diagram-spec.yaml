@@ -1,0 +1,47 @@
+type: structure
+title: "信頼区分の出どころ"
+message: "信頼区分は、更新時刻以降の確認だけから出る"
+source: "notes/zenn/articles/google-okf-v0-cloud-google-p4_20261120.md"
+components:
+  - id: concept
+    label: "知識ファイル"
+    meaning: "type を持つ Markdown。記事のいう概念ファイル"
+  - id: generated
+    label: "更新時刻"
+    meaning: "本文が意味のある変更を受けた時刻。生産者が書く"
+  - id: history
+    label: "確認履歴"
+    meaning: "誰がいつ内容を確認したかの記録"
+  - id: current
+    label: "現行の確認"
+    meaning: "更新時刻以降の確認。図は更新時刻があるとき"
+  - id: tier
+    label: "信頼区分"
+    meaning: "現行の確認だけから計算する区分"
+relationships:
+  - from: concept
+    to: generated
+    label: "持つ"
+  - from: concept
+    to: history
+    label: "持つ"
+  - from: generated
+    to: current
+    label: "以降だけ残す"
+  - from: history
+    to: current
+    label: "から選ぶ"
+  - from: current
+    to: tier
+    label: "を決める"
+omitted:
+  - item: "鮮度、ライフサイクル、出典、計算の照合、ライセンス、パス解決"
+    reason: "伝えたいことは信頼区分の計算元であり、これらの欄は区分を決める矢印に乗らないため"
+  - item: "更新時刻が無いとき、残った確認を現行にする例外"
+    reason: "図は更新時刻があるときの並びだけを示す。例外はダイジェストの限界に書く"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "OKF v0.3とは「消費者が読む欄」"
+  - "OKF v0.3とは「概念から計算する状態」"

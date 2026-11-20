@@ -1,0 +1,60 @@
+source:
+  title: "Vercel Boardで複数エージェントの担当と作業記録を共有する"
+  url: null
+  path: "notes/zenn/articles/vercel-board-vercel-introducing-p5_20261120.md"
+  primary:
+    - title: "Introducing Vercel Board"
+      url: "https://vercel.com/blog/introducing-vercel-board"
+    - title: "Board 概要"
+      url: "https://vercel.com/docs/board"
+    - title: "同期"
+      url: "https://vercel.com/docs/board/concepts/sync"
+    - title: "Public Beta Agreement"
+      url: "https://vercel.com/docs/release-phases/public-beta-agreement"
+    - title: "SPEC（fef19e5）"
+      url: "https://github.com/vercel/board/blob/fef19e5bb1e17551f119be11f7af8ed3387892bb/SPEC.md"
+  retrieved_at: "2026-11-21"
+archetype:
+  primary: decision
+  secondary: [architecture]
+one_liner: "Vercel の Board は、複数の実行環境が同じタスク状態を読む共有ログです。"
+key_points:
+  - claim: "同じタスクを取れるのは 1 件だけです。"
+    evidence: "取得、依存、人の確認待ち「同一 ID への claim が競合すると 1 件だけ成功し、残りは task_claimed になります」"
+    status: fact
+  - claim: "依存している次のタスクは、前が失敗または取り消されると待ちのままです。"
+    evidence: "取得、依存、人の確認待ち「失敗または cancel した前提は、後続を ready にしません」"
+    status: fact
+  - claim: "取ったタスクを持っていられる長さを 1 時間と指定しても、Vercel 上の Board が渡すのは 5 分までです。"
+    evidence: "リースの要求とホストの付与「ホストが与える上限は 5 分」「ブログの例は renew --lease 1h です。これは要求です」"
+    status: fact
+  - claim: "GitHub の既定は、PR と issue を Board へ入れる向きです。戻るのは、戻すと指定した内容だけです。"
+    evidence: "外部のスレッドとの結びつき「GitHub の repos() の既定は into」「ボードから戻すのは、sync 関数が deliver() したイベントだけ」／直近の置き方「GitHub へ戻す文は、sync 関数の deliver() に明示します」"
+    status: fact
+  - claim: "preview（検証用の配備）は、最初から Slack、GitHub、Linear へ、相手の利用者として書けます。"
+    evidence: "外部のスレッドとの結びつき「preview を含む任意ブランチの deployment が g2 を初期状態で持ちます」「g2 の sync は、同期先の利用者として書けます」"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "タスク状態は Board、コードと取り消せない承認は GitHub、会話の到達は Slack と Linear が正本です。"
+    reason_needed: "3 層を 1 つの正本にすると、担当と承認と会話の到達が別々の記録に残るため"
+example:
+  description: "長い計画は、複数回の書き込みに分かれます。先に書いた分は、続きが書き終わる前に取られることがあります。"
+  hypothetical: false
+  evidence: "取得、依存、人の確認待ち「長い計画は複数の write に分かれます。前の write の ready は、後続が着地する前に取得されうる」"
+applicability:
+  - "持っていられる期限のあと、別の実行環境が取る"
+  - "会話の到達をチャット側の写しで見る"
+decision_criteria:
+  - "取り消せない承認は GitHub のレビューに置きますか。"
+  - "渡された、持っていられる長さを見ますか。"
+  - "タスクの本文を書ける相手は、本番環境と名前を指定した人だけですか。"
+  - "公開の Slack に繋ぐチャネルは、公開してよい内容ですか。"
+limitations:
+  - "長さが切れたあとは、次に取るか一覧するまで、持ったままの表示が残ります。"
+  - "実験提供です。データの喪失がありえ、提供を続ける義務はありません。"
+  - "人の確認待ちでは、返信した人の承認権限を API が確かめません。"
+  - "保存先は米国のみです。"
+unknowns:
+  - "PR を過半数マージした割合の分母、期間、マージの定義は一次資料にない"
+reviewed: true

@@ -1,0 +1,58 @@
+source:
+  title: "Microsoft Agent FrameworkのPyPI配布物に混入した認証情報収集"
+  url: null
+  path: "notes/zenn/articles/microsoft-agent-framework-p2_20261120.md"
+  primary:
+    - title: "GHSA-764m-3ppc-5m73"
+      url: "https://github.com/advisories/GHSA-764m-3ppc-5m73"
+    - title: "OSV MAL-2026-20101"
+      url: "https://osv.dev/vulnerability/MAL-2026-20101"
+    - title: "PyPI JSON agent-framework"
+      url: "https://pypi.org/pypi/agent-framework/json"
+  retrieved_at: "2026-11-21"
+archetype:
+  primary: incident
+  secondary: [architecture]
+one_liner: "agent-framework の 1.26.1 と 1.26.2 は、起動時に資格情報を集めて外へ送る版です。"
+key_points:
+  - claim: "2026-11-20 の正規最新は 1.26.0 です。対象は同じ配布名の 1.26.1 と 1.26.2 だけです。"
+    evidence: "Microsoft Agent Framework とは / まとめ"
+    status: fact
+  - claim: "対象版は、通常起動でアプリが読み込む前に動く追加ファイルを足します。対象版の依存先は、1.26.0 のままです。"
+    evidence: "Microsoft Agent Framework とは / 特徴"
+    status: fact
+  - claim: "同じユーザーの環境変数とファイル、他プロセス、クラウドの窓口を集め、外へ送ります。"
+    evidence: "Microsoft Agent Framework とは / まとめ"
+    status: fact
+  - claim: "1.26.2 は、GitHub Actions のジョブ権限で短命トークンを取りに行けます。"
+    evidence: "運用 / 到達した資格情報の再発行"
+    status: fact
+  - claim: "レジストリの最新が 1.26.0 でも、ロックやイメージは別に残ります。"
+    evidence: "導入 / 導入履歴の確認"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "対象2版の追加ファイルは、通常起動でアプリが読み込む前に、環境の秘密へ届く"
+    reason_needed: "正規のエージェントへ渡した鍵だけを見ると、起動時の追加ファイルが環境に残る秘密へ届くことが分からないため"
+example:
+  description: "版情報の名前が agent-framework で、版が 1.26.1 か 1.26.2 なら対象です。"
+  hypothetical: false
+  evidence: "導入 / 導入履歴の確認"
+applicability:
+  - "同じ配布名を入れた Python 環境を点検するときです。"
+  - "クラウドの計算資源で、対象版を起動したときです。"
+  - "同じアカウントで、人の資格情報ファイルが見えるときです。"
+decision_criteria:
+  - "調べて除き、再発行が終わるまで、その Python を起動していませんか。"
+  - "対象版を、記録してから除きますか。"
+  - "対象版を入れたか、その Python を起動したホストの秘密を再発行しますか。"
+  - "戻す先を、1.26.0 のハッシュで固定しますか。"
+  - "インストール用ジョブに、本番の権限が無いか。"
+limitations:
+  - "後継の修正版は、アドバイザリ上ありません。"
+  - "再発行は、変数名の部分一致だけでは絞りません。"
+  - "アプリがメモリ上だけに渡した値を読む経路は、収集対象に書かれていません。"
+unknowns:
+  - "追加コードとは別に、従来どおり動くかは未確認です。"
+  - "他言語の別の改ざんは、未確認です。"
+reviewed: true
