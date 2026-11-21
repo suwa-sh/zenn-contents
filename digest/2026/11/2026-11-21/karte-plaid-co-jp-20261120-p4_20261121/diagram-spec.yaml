@@ -1,0 +1,70 @@
+type: behavior
+title: "再開前に戻す列の決め方"
+message: "既定は戻さない。4つの条件をすべて満たす列だけを許可リストに載せる"
+source: "notes/zenn/articles/karte-plaid-co-jp-20261120-p4_20261121.md"
+steps:
+  - id: columns
+    label: "自社が送っていた列"
+    meaning: "計測タグ、API、紐付けテーブルで KARTE へ送るデータ項目"
+decisions:
+  - id: purpose
+    label: "① 目的が来訪者向けの説明に今も残る"
+    meaning: "プライバシーポリシー等の利用目的と契約第27条の委託目的が一致する"
+  - id: needed
+    label: "② その目的に必要"
+    meaning: "その列が目的の達成に要る"
+  - id: ledger
+    label: "③ 別の台帳に置けない"
+    meaning: "KARTE 以外の自社台帳で用を足せない"
+  - id: detail
+    label: "④ 自社分の詳細データと矛盾しない"
+    meaning: "11月24日以降に届く詳細データと突き合わせて確定する"
+states:
+  - id: allow
+    label: "許可リスト（再開後に送る）"
+    meaning: "計測と法務が文書化した例外の列"
+  - id: block
+    label: "戻さない（既定）"
+    meaning: "判断表の初期判断"
+transitions:
+  - from: columns
+    to: purpose
+    label: "1列ずつ"
+  - from: purpose
+    to: needed
+    label: "はい"
+  - from: needed
+    to: ledger
+    label: "はい"
+  - from: ledger
+    to: detail
+    label: "はい"
+  - from: detail
+    to: allow
+    label: "はい"
+  - from: purpose
+    to: block
+    label: "いいえ"
+  - from: needed
+    to: block
+    label: "いいえ"
+  - from: ledger
+    to: block
+    label: "いいえ"
+  - from: detail
+    to: block
+    label: "いいえ"
+omitted:
+  - item: "外部サービスのシークレットキーとアクセストークン"
+    reason: "条件判定を通さず再開前に失効する別の作業で、列の許可判断の流れに乗らないため。digest の確認項目に書く"
+  - item: "行ごとの追加条件（生年月日を単独で戻すときの文書化、結合キーに氏名やメールを使わない）"
+    reason: "4条件への上乗せで、図の 1 メッセージ（既定と 4 条件）から外れるため"
+  - item: "詳細データ到着前の仮決め"
+    reason: "④の確定タイミングの補足で、分岐の構造は変わらないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "「何も戻さない」とは言い切れない理由（例外の条件 1〜4）"
+  - "再開前に、どの列を戻さないか（初期状態は戻さない）"
+  - "再開前にやること 手順 2・4"

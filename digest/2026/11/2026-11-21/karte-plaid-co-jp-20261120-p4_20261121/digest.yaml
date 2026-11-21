@@ -1,0 +1,62 @@
+source:
+  title: "KARTE侵害の調査公表から、再開前にKARTEへ戻さない列を決める"
+  url: null
+  path: "notes/zenn/articles/karte-plaid-co-jp-20261120-p4_20261121.md"
+  primary:
+    - title: "プレイド「KARTEへの不正アクセスに関する調査結果およびサービス再開の見通しのお知らせ」（2026-11-20）"
+      url: "https://plaid.co.jp/news/20261120/"
+    - title: "プレイド 適時開示（2026-11-20）"
+      url: "https://pdf.irpocket.com/C4165/xoA3/Laiu/rVla/otGG.pdf"
+    - title: "KARTE利用契約書（2024年2月15日改定版）"
+      url: "https://plaid.co.jp/assets/pdf/terms/KARTE%E5%88%A9%E7%94%A8%E5%A5%91%E7%B4%84%E6%9B%B8%EF%BC%882024%E5%B9%B42%E6%9C%8815%E6%97%A5%E6%94%B9%E5%AE%9A%E7%89%88%EF%BC%89.pdf"
+    - title: "KARTE Developers: 紐付け行の更新API"
+      url: "https://developers.karte.io/reference/post_v2beta-track-reftable-row-upsert"
+  retrieved_at: "2026-11-22"
+archetype:
+  primary: incident
+  secondary: [decision, governance]
+one_liner: "KARTE 侵害の公表を基に、再開時は既定でどの項目も送らず、条件を満たす項目だけ例外にする判断を示します。"
+key_points:
+  - claim: "プレイドのマーケティング支援ツール KARTE は、11月13日の不正アクセス以降止まっています。"
+    evidence: "KARTEとは / 2026年11月20日の公表内容「何が起きたか」"
+    status: fact
+  - claim: "プレイドは11月24日から、自社分の詳細データ（自社の漏えい範囲の詳細）を順次渡す予定です。"
+    evidence: "冒頭（企業ごとの詳細データ）"
+    status: fact
+  - claim: "記事は、再開時に KARTE へ送る項目を既定で「送らない」とし、例外を4条件で絞ります。"
+    evidence: "再開前に、どの列を戻さないか / 「何も戻さない」とは言い切れない理由"
+    status: interpretation
+  - claim: "4条件は、目的を今も来訪者に説明・項目が必要・KARTE 以外の自社台帳で代われない・詳細データと矛盾しない、です。"
+    evidence: "「何も戻さない」とは言い切れない理由（例外の条件 1〜4）"
+    status: interpretation
+  - claim: "スキーマも主キーも未設定の紐付けテーブルは、最初に送った値で構成と主キーが決まります。"
+    evidence: "送る側から見たデータの形「紐付けテーブルの行を更新するAPI」"
+    status: fact
+mental_models:
+  - type: behavior
+    key_message: "既定は戻さない。4条件をすべて満たす列だけ許可リストへ"
+    reason_needed: "例外の条件が 4 つの AND で、1 つでも外れると既定に落ちる流れを一目で示すため"
+example:
+  description: "氏名・メール・電話番号は送らず、配信を続けるなら宛先だけ例外候補。生年月日も送らず、単独なら例外候補で、照合できないことを法務が文書化する。顧客管理番号は自社データとの突き合わせに必要で、氏名やメールを鍵にしないときだけ例外候補。"
+  hypothetical: false
+  evidence: "再開前に、どの列を戻さないか（判断表）"
+applicability:
+  - "KARTE の再開前に、送る項目を決めるとき"
+  - "計測担当と法務で、送る項目の一覧を固めるとき"
+decision_criteria:
+  - "自社が KARTE へ送っていた項目の一覧を出しましたか。"
+  - "KARTE に預けた連携先の鍵を、再開を待たずに失効しましたか。"
+  - "有効に戻す前に、計測コードと API の項目が停止前と同じか確かめましたか。"
+limitations:
+  - "記事は11月21日時点で書かれ、自社分の詳細データを反映していません。"
+  - "削除の条項があっても、契約終了企業のデータは残っていました。"
+  - "計測コードの項目定義は、KARTE のサポートページが取得できず未確認です。"
+  - "再開は2027年1月中旬が目標で、変わりえます。"
+  - "送信を止めても、預けたデータの削除・連絡・報告は別に残ります。"
+unknowns:
+  - "自社分の詳細データに何がどの粒度で載るか"
+  - "identify と attribute の現行フィールド定義"
+  - "どの列が台湾・米国・東京のどのリージョンに保管されるか"
+  - "再開後に既存の紐付けテーブルのスキーマと主キーが残るか"
+  - "該当利用料金の明細と、11月分の既請求を返金するか"
+reviewed: true

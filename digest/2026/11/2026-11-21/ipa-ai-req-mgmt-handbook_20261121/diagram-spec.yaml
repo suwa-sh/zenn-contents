@@ -1,0 +1,56 @@
+type: behavior
+title: "自信を持って通常と誤判定した重大案件は、人の確認を通らない"
+message: "自信を持って通常と誤判定した重大案件は人の確認から漏れ、分類別の再現率で気付く"
+source: "notes/zenn/articles/ipa-ai-req-mgmt-handbook_20261121.md"
+components:
+  - id: inquiry
+    label: "問い合わせ"
+    meaning: "窓口に届く個々の問い合わせ"
+  - id: classify
+    label: "AIによる分類"
+    meaning: "問い合わせを分類し、高リスクかどうかと自信の度合いを出す"
+  - id: human
+    label: "人の確認"
+    meaning: "高リスクと分類した案件と、自信が境界値を下回った案件を人が確認する"
+  - id: normal
+    label: "通常処理"
+    meaning: "自信が境界値以上で通常案件と判定した問い合わせ。誤判定した重大案件もここに入る"
+  - id: evalset
+    label: "正解付きの評価データ"
+    meaning: "正しい分類を付けた評価用の問い合わせ"
+  - id: monthly
+    label: "月次評価"
+    meaning: "評価データでの AI の判定結果を正解と照らし、分類別の再現率を測る"
+relationships:
+  - from: inquiry
+    to: classify
+    label: "分類"
+  - from: classify
+    to: human
+    label: "高リスク / 自信が境界値未満"
+  - from: classify
+    to: normal
+    label: "通常と判定 (自信が境界値以上)"
+  - from: evalset
+    to: classify
+    label: "評価用に分類"
+  - from: classify
+    to: monthly
+    label: "評価データの判定結果"
+  - from: evalset
+    to: monthly
+    label: "正解"
+omitted:
+  - item: "分類できない案件を未分類として記録する経路"
+    reason: "伝えたいこと (重大案件の見逃しと気付き方) に関係しないため"
+  - item: "新しい傾向が増えたときの分類区分の見直し"
+    reason: "元記事では月次評価と別の行として書かれ、月次評価の結果との因果は書かれていないため"
+  - item: "受付の設計自体を見直す選択肢"
+    reason: "本文の限界・注意点に残し、図は分類と確認の経路に絞ったため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "問い合わせ分類の受入条件に何を書くか (表: 人へ渡す条件 / 重大案件の扱い / 評価対象と頻度)"
+  - "問い合わせ分類の受入条件に何を書くか (重大案件の再現率は、人が確認する前に AI が重大と判定した割合で測る)"
+  - "問い合わせ分類の受入条件に何を書くか (「高リスクと判定したら人が確認する」という条件だけでは、通常と誤判定した重大案件は確認対象から外れる)"

@@ -1,0 +1,67 @@
+type: structure
+title: "UAP の定義と適用"
+message: "ポリシーは、バインディングが対象を指したときに効く"
+source: "notes/zenn/articles/cloud-google-products-identity-p2_20261121.md"
+components:
+  - id: policy
+    label: "アクセスポリシー"
+    meaning: "許可と拒否のルールを入れる定義。作っただけでは効かない"
+  - id: allow_rule
+    label: "ALLOW ルール"
+    meaning: "列挙した権限の使用を許すルール"
+  - id: deny_rule
+    label: "DENY ルール"
+    meaning: "列挙した権限の使用を拒むルール"
+  - id: binding
+    label: "バインディング"
+    meaning: "定義済みのポリシーを 1 つの対象資源へ接続する結びつき"
+  - id: crm
+    label: "組織・フォルダ・プロジェクト"
+    meaning: "Resource Manager の資源。子孫の IAM 権限にも効く"
+  - id: registry
+    label: "Agent Registry のアプリ"
+    meaning: "Agent Registry の AI アプリケーション"
+  - id: gateway
+    label: "Agent Gateway"
+    meaning: "エージェントの通信を仲介するゲートウェイ"
+groups:
+  - id: definition
+    label: "定義"
+    members: [policy, allow_rule, deny_rule]
+  - id: targets
+    label: "適用先 (1 ポリシーで最大 5 対象)"
+    members: [crm, registry, gateway]
+relationships:
+  - from: policy
+    to: allow_rule
+    label: "持つ"
+  - from: policy
+    to: deny_rule
+    label: "持つ"
+  - from: binding
+    to: policy
+    label: "参照する"
+  - from: binding
+    to: crm
+    label: "接続する"
+  - from: binding
+    to: registry
+    label: "接続する"
+  - from: binding
+    to: gateway
+    label: "接続する"
+omitted:
+  - item: "評価の段 (PAB → deny → allow)"
+    reason: "伝えたいことは定義と適用の分離であり、評価順はダイジェストの核心ポイントに書く"
+  - item: "ルールに付ける条件 (タグ・Eventarc・IAP の宛先)"
+    reason: "定義と適用の関係に効かないため"
+  - item: "子孫の資源 (バケット・データセットなど)"
+    reason: "要素数を 7 に収めるため。組織・フォルダ・プロジェクトの説明で子孫に効くことを示す"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "Unified Access Policiesとは"
+  - "Unified Access Policiesとは「直接バインドできる対象」"
+  - "Unified Access Policiesとは「ルールに書けること」"
+  - "公式の上限 (1 つの UAP をバインドできる対象は 5)"

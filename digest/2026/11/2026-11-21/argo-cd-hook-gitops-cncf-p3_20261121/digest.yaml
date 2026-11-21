@@ -1,0 +1,60 @@
+source:
+  title: "Argo CDのself-healが同期窓の後にマイグレーションHookを飛ばす条件"
+  url: null
+  path: "notes/zenn/articles/argo-cd-hook-gitops-cncf-p3_20261121.md"
+  primary:
+    - title: "CNCF Blog「When a sync window closes: how Argo CD self-heal skipped the migration hook」（Afzal Ansari, 2026-11-20）"
+      url: "https://www.cncf.io/blog/2026/11/20/when-a-sync-window-closes-how-argo-cd-self-heal-skipped-the-migration-hook/"
+    - title: "Argo CD v3.6.2 controller/appcontroller.go"
+      url: "https://github.com/argoproj/argo-cd/blob/v3.6.2/controller/appcontroller.go"
+    - title: "Argo CD v3.6.2 controller/sync.go"
+      url: "https://github.com/argoproj/argo-cd/blob/v3.6.2/controller/sync.go"
+    - title: "argoproj/argo-cd#26044"
+      url: "https://github.com/argoproj/argo-cd/pull/26044"
+  retrieved_at: "2026-11-22"
+archetype:
+  primary: incident
+  secondary: [algorithm, decision]
+one_liner: "Argo CD は同期窓の後、self-heal が DB 移行の Hook を飛ばしても正常に見えることがあります。"
+key_points:
+  - claim: "同期を禁じる窓の間も比較は続き、新しい commit の SHA がアプリの状態欄 (status.sync.revision) に書かれます。"
+    evidence: "同期窓「deny 窓などで同期が止められているあいだも、比較は止まらない」/ 窓が開いたあとの分岐 1"
+    status: fact
+  - claim: "窓明けに、その状態欄の SHA と比べる比較 (CompareWithRecent) が先に来ると、一致して「変化なし」になります。"
+    evidence: "窓が開いたあとの分岐 2〜4 / self-heal"
+    status: fact
+  - claim: "直前の同期が成功なら、self-heal はずれた分だけを指定して同期します。この部分同期は Hook を作りません。"
+    evidence: "窓が開いたあとの分岐 5 / 根拠表 sync.go 389 行"
+    status: fact
+  - claim: "Hook は Synced・Healthy の判定に含まれません。通常のリソースが Git と一致すれば、表示は正常になりえます。"
+    evidence: "status と履歴の扱い / 選択同期が成功したときのメッセージ"
+    status: fact
+  - claim: "部分同期でも、最後に適用した版の記録 (syncResult.revision) は進みます。そのため、周期的な再比較を待っても Hook は走りません。"
+    evidence: "窓が開いたあとの分岐 6 /「周期的な再比較を待っても、Hook はそのあと実行されません」"
+    status: fact
+mental_models:
+  - type: behavior
+    key_message: "窓明けに最初に同期を許された比較の種類で、Hook が走るかが分かれる"
+    reason_needed: "2 つの比較レベルと self-heal の分岐は、文章だけでは経路を追いにくいため"
+example:
+  description: "CNCF Blog の顧客事例では、5 つの region のうち 2 つで移行が走らなかった（著者の報告）。"
+  hypothetical: false
+  evidence: "注意点 > ブログの数字は著者の報告"
+applicability:
+  - "同期窓・self-heal・Hook での DB 移行を併用する構成"
+decision_criteria:
+  - "直近の operation の sync.resources が空か"
+  - "status.history の最後の revision が出した commit と一致するか (選択同期は履歴を残さない)"
+  - "スキーマの版がリリースの期待値か"
+  - "回避策（Job を sync-wave の通常リソースにする / 移行用 Application の selfHeal を切る）のどちらを選ぶか"
+limitations:
+  - "どちらの比較が先に来るかは毎回変わる。通常の CompareWithLatest が先なら full sync になり、Hook は走る"
+  - "事例は CNCF Blog の報告で Argo CD の版は不明。件数と時間は著者の報告で再実験していない。分岐は v3.6.2 のソースの読解"
+  - "selfHeal を切ると、次の full sync まで OutOfSync と手動のドリフトが残る"
+  - "移行 Job を sync-wave の通常リソースにすると選択同期の対象に入るが、版ごとの Job 名と失敗時の再実行手順を自分で持つ"
+  - "Hook の種別変更 (PreSync 等)、窓の短縮、未マージの RunHooksOnPartialSync (PR #26044) のどれでも、この経路は残る"
+unknowns:
+  - "実行中の operation を窓のあとで再開したとき、Hook タスクを作り直すか"
+  - "Hook を外した Job が失敗したあと、同名 Job を再実行できるか"
+  - "失敗する移行での sync wave 方式の挙動"
+reviewed: true

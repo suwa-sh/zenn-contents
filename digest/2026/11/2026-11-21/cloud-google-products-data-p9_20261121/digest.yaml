@@ -1,0 +1,57 @@
+source:
+  title: "データエージェントを本番に繋げずに試す、Google Cloudの「風洞」データシミュレータ"
+  url: null
+  path: "notes/zenn/articles/cloud-google-products-data-p9_20261121.md"
+  primary:
+    - title: "Frontier and Center: Why your data agents need a “wind tunnel” (Google Cloud Blog, 2026-11-21)"
+      url: "https://cloud.google.com/blog/products/data-analytics/a-data-simulator-to-test-agents/"
+    - title: "BigQuery: Use row-level security with other BigQuery features"
+      url: "https://docs.cloud.google.com/bigquery/docs/using-row-level-security-with-features"
+    - title: "Conversational Analytics API: Connect to BigQuery"
+      url: "https://docs.cloud.google.com/gemini/data-agents/conversational-analytics-api/connect-bigquery"
+  retrieved_at: "2026-11-22"
+archetype:
+  primary: decision
+  secondary: [architecture, governance]
+one_liner: "Google Cloudが社内で使う風洞は、データエージェントの意味の誤りを本番なしで試します。"
+key_points:
+  - claim: "風洞は短い組織パターンから構造の似た架空の会社を作り、スキーマ・行・文書・難しい問い・回答キーを一式で生成する"
+    evidence: "## データシミュレータ「風洞」とは"
+    status: fact
+  - claim: "言語モデルで真を決めるのは青写真の段階だけで、表と正解 SQL は青写真と乱数の種から決定的に生成される"
+    evidence: "### 生成の 4 段階"
+    status: fact
+  - claim: "エージェントの道具は読み取り SQL・スキーマ閲覧・文書検索の 3 つで、青写真と回答キーは見えない"
+    evidence: "## データシミュレータ「風洞」とは"
+    status: fact
+  - claim: "風洞が担当するのは意味の面 (定義の食い違い、訂正、重複行、存在しない指標への棄権)"
+    evidence: "### 問いと正解 / ## 受入試験を三つの面に分ける"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "風洞で試せるのは意味の面だけ。権限と資源は別のデータで試す"
+    reason_needed: "受入の範囲の切り分けが記事の結論で、3 面と試す場所の対応は図で一目に分かる"
+example:
+  description: "Calder Brakes (ブレーキ 2 工場の架空会社) で欠陥件数を問う。再試行重複を COUNT(DISTINCT) で除いた正解は 240。重複を除かない COUNT(*) や、第 2 シフト監督の定義に従い段取り替えを除いた SQL は別の数になる"
+  hypothetical: false
+  evidence: "### 入力は短い組織パターン / ### 問いと正解"
+applicability:
+  - "公式定義と現場の定義がずれる指標を試すとき"
+  - "開発者が本番データに触れられないとき"
+decision_criteria:
+  - "受入の問いを意味・権限・資源の 3 面に仕分けたか"
+  - "権限は行ポリシーとポリシータグを付けたフィクスチャで試したか"
+  - "権限の合格条件を、例外の有無とは別に書いたか (0 行の成功・名指し列の拒否・マスクは別々の合格条件)"
+  - "パターン文の公式定義を本番の指標所有者が承認したか"
+  - "回答キーをプロンプトと学習データから外したか"
+limitations:
+  - "風洞の製品ページ、API、料金、同名リポジトリは 2026-11-21 時点で見つからない。自前の評価で同じ作り方を取る前提"
+  - "公開された検証は、社内の人手ベンチマークと精度の方向と順位が揃った、まで。本番との精度差・試行数は無い"
+  - "行フィルタ、列マスク、本番に無い結合の検出、遅いクエリはブログに書かれておらず、風洞が試すかは不明 (非公開の実装が返すかも不明)"
+  - "BigQuery の行アクセスポリシーは、対象外の利用者にエラーではなく 0 行の成功を返す (公式例)"
+  - "シミュレータの乱れ方への過学習と、事業の青写真からのドリフトへの手当ては「定期的に実地と合わせる」の一文だけで、頻度も止める条件も無い"
+unknowns:
+  - "社内評価の精度差、試行数、比較した人手ベンチマークの中身"
+  - "評価ハーネスが SQL エンジンのエラーを不正解として数えるか"
+  - "マスクされた値が平文で返る経路を、どの検査が見るか"
+reviewed: true

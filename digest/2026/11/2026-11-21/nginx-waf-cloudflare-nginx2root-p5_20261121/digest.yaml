@@ -1,0 +1,60 @@
+source:
+  title: "nginx2rootの5件を、WAFではなく到達経路と修正ビルドで台帳に載せる"
+  url: null
+  path: "notes/zenn/articles/nginx-waf-cloudflare-nginx2root-p5_20261121.md"
+  primary:
+    - title: "Cloudflare Blog: nginx2root"
+      url: "https://blog.cloudflare.com/nginx2root/"
+    - title: "Xint: nginx2root remote code execution"
+      url: "https://xint.io/blog/nginx2root-remote-code-execution"
+    - title: "AWS Security Bulletin 2026-192"
+      url: "https://aws.amazon.com/security/security-bulletins/2026-192-aws/"
+    - title: "Ubuntu USN-9159-1"
+      url: "https://ubuntu.com/security/notices/USN-9159-1"
+  retrieved_at: "2026-11-21"
+archetype:
+  primary: decision
+  secondary: [incident]
+one_liner: "F5 と nginx.org が直した脆弱性5件（nginx2root）は、到達経路と修正ビルドで管理します。"
+key_points:
+  - claim: "5件は、HTTP/2・HTTP/3・resolver・メールプロキシという別々の機能で経路になります。"
+    evidence: "nginx2rootとは「5件は別々の機能にぶら下がる」"
+    status: fact
+  - claim: "5件に一致する WAF のシグネチャはありません。"
+    evidence: "注意点の表「WAF が修正までの隙間を埋める」/ WAFとプロキシで塞がるもの、残るもの 冒頭"
+    status: fact
+  - claim: "HTTP/2・HTTP/3 の3件は、終端するプロキシと直接接続の封鎖が揃うときだけ塞がります。"
+    evidence: "WAFとプロキシで塞がるもの、残るもの「塞がると言ってよい条件」"
+    status: interpretation
+  - claim: "resolver とメールの2件は、プロキシでは閉じません。オリジンの設定と待受で判断します。"
+    evidence: "nginx2rootとは「どの欠陥が、どこまで届くか」/「プロキシ配下でも残る面」"
+    status: fact
+  - claim: "修正済みかは、配布元が fixed と言うビルドで判断します。"
+    evidence: "修正済みをどう見分けるか"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "プロキシで塞がるのは、終端を通る HTTP/2・HTTP/3 の経路だけ"
+    reason_needed: "塞がる経路と、迂回・resolver・メールで残る経路の分かれ方が、判断の中心にあるため"
+example:
+  description: "Ubuntu 24.04 の修正版は 1.24.0-2ubuntu7.20 です。上流の修正版 1.30.7 より小さい番号です。番号の比較だけでは、修正済みを未修正と誤判定します。"
+  hypothetical: false
+  evidence: "修正済みをどう見分けるか「2026年11月21日時点のパッケージ」の Ubuntu USN-9159-1 の行"
+applicability:
+  - "修正版を入れるまで、何で守れるか決めるとき"
+  - "脆弱性台帳に、nginx のパッケージやイメージごとの行を作るとき"
+decision_criteria:
+  - "nginx.org 版を、系列別に 1.30.7・1.31.9 と比べましたか。"
+  - "gRPC など、別の HTTP/2 待受を洗い出しましたか。"
+  - "修正版を入れた後、古いワーカの終了を確かめましたか。"
+  - "resolver で同じ名前の解決が内部リクエストと重ならないか確かめましたか。"
+limitations:
+  - "コード実行は、ASLR が無効か回避された場合の条件付きです。クラッシュは ASLR に関係なく起き得ます。"
+  - "Cloudflare のグローバル AOP は全アカウント共通の証明書で、直接接続を閉じた証拠になりません。"
+  - "名前の root は、カーネル SCTP の欠陥との連鎖です。カーネルの修正は、11月21日時点で確認できません。"
+  - "http2 off の一時退避は、HTTP/3・resolver・メールの件には効きません。"
+unknowns:
+  - "終端プロキシ経由でオリジンに届いた実証と KEV 掲載は、2026-11-21 時点の公開資料で確認できない"
+  - "カーネル SCTP の欠陥の CVE 番号と修正状況は、同じ時点で確認できない"
+  - "OpenResty と kubernetes/ingress-nginx の5件への対応は、同じ時点で出ていない"
+reviewed: true

@@ -1,0 +1,59 @@
+type: structure
+title: "プロキシの終端で塞がる経路と残る経路"
+message: "プロキシで塞がるのは、終端を通る HTTP/2・HTTP/3 の経路だけ"
+source: "notes/zenn/articles/nginx-waf-cloudflare-nginx2root-p5_20261121.md"
+components:
+  - id: attacker
+    label: "攻撃者"
+    meaning: "未認証の遠隔クライアント"
+  - id: proxy
+    label: "終端するプロキシ"
+    meaning: "HTTP/2 と HTTP/3 の接続を自分で終わらせ、オリジンへ接続を開き直すプロキシ (例: Cloudflare)"
+  - id: bypass
+    label: "直接接続・L4 透過・別ソケット"
+    meaning: "オリジン IP への直接接続、L4 でそのまま通す転送、gRPC など別の HTTP/2 待受"
+  - id: http
+    label: "HTTP/2・HTTP/3 の3件"
+    meaning: "HTTP/2 フロー制御、HTTP/2 と HTTP/3 の外向き接続の欠陥"
+  - id: resolver
+    label: "resolver の1件"
+    meaning: "同じ名前の解決がサブリクエストと重なる欠陥"
+  - id: mail
+    label: "メール待受の1件"
+    meaning: "メールプロキシの use-after-free"
+groups:
+  - id: origin
+    label: "未修正の nginx (オリジン)"
+    members: [http, resolver, mail]
+relationships:
+  - from: attacker
+    to: proxy
+    label: "HTTP/2・HTTP/3"
+  - from: proxy
+    to: http
+    label: "組み立て直したフレームだけ (塞がる)"
+  - from: attacker
+    to: bypass
+    label: "プロキシを通らない"
+  - from: bypass
+    to: http
+    label: "攻撃者のフレームが届く (残る)"
+  - from: proxy
+    to: resolver
+    label: "完全には守らない (残る)"
+  - from: attacker
+    to: mail
+    label: "メール待受に届く (残る)"
+omitted:
+  - item: "グローバル Authenticated Origin Pulls と Cloudflare の IP 許可リスト"
+    reason: "直接接続を閉じた証拠にならない点は限界・注意点で扱い、図は経路の分かれ方だけに絞るため"
+  - item: "カーネル SCTP の欠陥 (名前の root の部分)"
+    reason: "nginx の5件とは別の行で扱うものであり、プロキシでの塞がり方に関係しないため"
+  - item: "http2 off による一時退避"
+    reason: "修正までの退避手段であり、到達経路の構造ではないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "nginx2rootとは「どの欠陥が、どこまで届くか」(mermaid 図)"
+  - "WAFとプロキシで塞がるもの、残るもの「塞がると言ってよい条件」「プロキシ配下でも残る面」"

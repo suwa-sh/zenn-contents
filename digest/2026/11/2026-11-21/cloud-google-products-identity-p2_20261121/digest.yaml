@@ -1,0 +1,56 @@
+source:
+  title: "Unified Access Policiesで許可と拒否を1つのポリシーにまとめる"
+  url: null
+  path: "notes/zenn/articles/cloud-google-products-identity-p2_20261121.md"
+  primary:
+    - title: "How to simplify cloud access with Unified Access Policies, now in preview"
+      url: "https://cloud.google.com/blog/products/identity-security/how-to-simplify-cloud-access-with-unified-access-policies/"
+    - title: "Unified Access Policies"
+      url: "https://docs.cloud.google.com/iam/docs/unified-access-policies"
+    - title: "Create and apply Unified Access Policies"
+      url: "https://docs.cloud.google.com/iam/docs/unified-access-policies-create-apply"
+    - title: "IAM Quotas and limits"
+      url: "https://docs.cloud.google.com/iam/quotas"
+  retrieved_at: "2026-11-21"
+archetype:
+  primary: decision
+  secondary: [architecture, governance]
+one_liner: "Google Cloud IAM の UAP は、許可と拒否を 1 つのポリシーに書き、バインドした対象に効かせます。"
+key_points:
+  - claim: "ポリシーは、バインディングが指したプロジェクトなどと、その子孫にだけ効きます。"
+    evidence: "Unified Access Policiesとは"
+    status: fact
+  - claim: "UAP は既存の allow・deny ポリシーと併せて評価され、deny が先に効きます。祖先の deny は子孫の allow でも消えません。"
+    evidence: "Unified Access Policiesとは「評価の段」"
+    status: fact
+  - claim: "ポリシーごとの公式上限は、主体 500、バインド先 5 です。告知ブログのバインド先 25 は公式上限ではありません。"
+    evidence: "注意点「ブログの規模と公式の上限は別の数字です」"
+    status: fact
+  - claim: "AI エージェントが外部ツールへ出る通信の権限だけなら、ポリシーは GA です。データアクセスの権限を含むと Preview です。"
+    evidence: "Unified Access Policiesとは / データアクセスとツール出口を同じポリシーに置ける範囲"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "ポリシーは、バインディングが対象を指したときに効く"
+    reason_needed: "定義と適用が別資源に分かれる点が、従来の allow / deny との最大の違いのため"
+example:
+  description: "テスト用プロジェクトに、リソースタグ条件のデータ用ポリシーと、egressViaIAP だけのツール通信用ポリシーを分けて置き、ツール通信用は dry-run から始める。データ用は本番の緊急遮断に使わない。"
+  hypothetical: false
+  evidence: "プレビュー期間にどこまで試すか (試す手順 2〜3)"
+applicability:
+  - "テスト用プロジェクトで、UAP を先に試すとき"
+  - "エージェントのツール通信だけを、先に確かめたいとき"
+decision_criteria:
+  - "既存の allow と deny を残しましたか。"
+  - "データアクセスの GA など見直し条件が揃うまで、全社の権限を移さずにいますか。"
+  - "ツール通信用を dry-run に戻すかバインドを外す手順を、先に書きましたか。"
+limitations:
+  - "Policy Troubleshooter は UAP を説明しません。祖先のバインディングを手で見ます。"
+  - "カスタムロールは、ルールから参照できません。"
+  - "組織のポリシーで UAP のバインドを禁止しても、既存の適用は残ります。"
+  - "データアクセスを含む UAP は Pre-GA の条項で、予告なく変更・停止され得ます。"
+unknowns:
+  - "許可・拒否の判定ログにポリシー名が残るか (参照した公式文書に記載なし)"
+  - "1 ルールに複数サービスの条件を置いたとき、AND か OR か (参照した文書に記載なし)"
+  - "グループやドメインが 500 の中で 1 件とだけ数えられるか (制限表の UAP 行に記載なし)"
+reviewed: true

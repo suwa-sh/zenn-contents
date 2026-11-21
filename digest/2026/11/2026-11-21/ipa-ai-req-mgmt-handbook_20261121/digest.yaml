@@ -1,0 +1,48 @@
+source:
+  title: "問い合わせ分類を例に読む、IPA「AI時代の要求管理ハンドブック」"
+  url: null
+  path: "notes/zenn/articles/ipa-ai-req-mgmt-handbook_20261121.md"
+  primary:
+    - title: "IPA「AI時代の要求管理ハンドブック」公開ページ"
+      url: "https://www.ipa.go.jp/digital/kaihatsu/youkyu-kanri.html"
+    - title: "IPA「AI時代の要求管理ハンドブック」Ver.1.0.0（PDF）"
+      url: "https://www.ipa.go.jp/digital/kaihatsu/rqr7mi000000f5up-att/req-mgmt-hb.pdf"
+  retrieved_at: "2026-11-22"
+archetype:
+  primary: governance
+  secondary: [decision]
+one_liner: "IPA の要求管理ハンドブックを、問い合わせ分類 AI の受入条件と要求の承認に当てはめた記事です。"
+key_points:
+  - claim: "ハンドブックは、困りごとを「要望」、実現したいことを「要求」、確かめ方を「要件」と書き分けます。"
+    evidence: "「AI時代の要求管理ハンドブック」とは (要望 / 要求 / 要件の表)"
+    status: fact
+  - claim: "ハンドブックにある再現率90%は、要件の書き方を示す例です。受入の値は、許せる誤りを現場と話して決めます。"
+    evidence: "注意点 (第5.3節の再現率90%は、要件の書き方を示す例)"
+    status: fact
+  - claim: "「AI が高リスクと分類したら人が確認」だけでは、AI が通常と誤判定した重大案件が確認から漏れます。分類別の再現率で、この見逃しに気付きます。"
+    evidence: "問い合わせ分類の受入条件に何を書くか (重大案件を通常案件と誤判定した場合)"
+    status: fact
+  - claim: "要求整理を手伝う AI が会議記録から抽出した要求文は、候補です。人が承認した版（ベースライン）を、以後の変更の基準にします。"
+    evidence: "要求案を誰が承認し、変更後に何を確かめるか (ベースライン / 第6章)"
+    status: fact
+mental_models:
+  - type: behavior
+    key_message: "自信を持って通常と誤判定した重大案件は人の確認から漏れ、分類別の再現率で気付く"
+    reason_needed: "人の確認の条件と月次評価の役割の違いは、経路を並べないと見落としやすいため"
+example:
+  description: "重大案件 10 件のうち 9 件を拾えば、重大案件の再現率は 90% です。"
+  hypothetical: false
+  evidence: "注意点 (評価用の問い合わせ100件に重大案件が10件ある例)"
+applicability:
+  - "AI の受入条件を、精度の数字 1 つで合意しかけているとき"
+  - "AI 導入と受付フォームの変更などの別の手段を、同じ要求で比べるとき"
+decision_criteria:
+  - "AI が判断を保留した重大案件も、拾えなかった件に数えるか"
+  - "AI が高リスクと分類した案件は、全件を人が確認するか"
+  - "「重大案件」の範囲を変えたら、評価データの正解と人の確認条件をたどれるか"
+limitations:
+  - "月次評価は、個々の見逃しを救済しません。見逃しを許せない業務では、受付の設計も検討対象にします。"
+  - "ハンドブックは、要求管理の予算にプロジェクト総コストの2〜5%を示します。これは出発点で、手戻りや影響調査の時間を見て調整します。"
+unknowns:
+  - "自信の境界値の決め方は、記事に書かれていません。"
+reviewed: true

@@ -1,0 +1,69 @@
+type: structure
+title: "データエージェントの受入を3面に分ける"
+message: "風洞で試せるのは意味の面だけ。権限と資源は別のデータで試す"
+source: "notes/zenn/articles/cloud-google-products-data-p9_20261121.md"
+components:
+  - id: accept
+    label: "データエージェントの受入"
+    meaning: "受入試験を一つのデモにまとめず、3 面に分ける"
+  - id: meaning
+    label: "意味の面"
+    sublabel: "定義の食い違い・無い指標"
+    meaning: "公式定義と現場定義の食い違い、後からの訂正、重複行、存在しない指標への棄権"
+  - id: permission
+    label: "権限の面"
+    sublabel: "見えない行・禁じた列"
+    meaning: "見えてはいけない行、禁じられた列、マスク"
+  - id: resource
+    label: "資源の面"
+    sublabel: "件数・遅いクエリ"
+    meaning: "件数、結合の増幅、遅いクエリ"
+  - id: tunnel
+    label: "風洞（合成データ）"
+    meaning: "本番と行を共有しない合成エステート"
+  - id: policy_fixture
+    label: "本番のポリシーを写した試験データ"
+    meaning: "行ポリシーとポリシータグを付けたフィクスチャ。中身の行は合成でよい"
+  - id: sized_table
+    label: "件数と偏りを指定した表"
+    meaning: "件数、キーの偏り、結合の増幅を指定して作った表"
+groups:
+  - id: in_scope
+    label: "風洞の範囲"
+    members: [meaning, tunnel]
+  - id: out_of_scope
+    label: "ブログの範囲外"
+    members: [permission, policy_fixture, resource, sized_table]
+relationships:
+  - from: accept
+    to: meaning
+    label: "分ける"
+  - from: accept
+    to: permission
+    label: "分ける"
+  - from: accept
+    to: resource
+    label: "分ける"
+  - from: meaning
+    to: tunnel
+    label: "ここで試す"
+  - from: permission
+    to: policy_fixture
+    label: "ここで試す"
+  - from: resource
+    to: sized_table
+    label: "ここで試す"
+omitted:
+  - item: "風洞の生成 4 段階 (青写真の凍結 → 表の生成 → 文書の描画 → 評価)"
+    reason: "伝えたいこと (受入の範囲の切り分け) に関係しないため。本文の核心ポイントで扱う"
+  - item: "各面の失敗の形 (間違った数 / 0 行の成功 / 実行時間・走査量)"
+    reason: "要素数を 7 個に抑えるため。サブラベルに要点だけ残した"
+  - item: "指標所有者による青写真の承認"
+    reason: "責任分担は別の主張のため。適用と判断で扱う"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "## 受入試験を三つの面に分ける (3 面の表)"
+  - "## 行フィルタと列マスクは風洞で試せるか / ### 無い結合と遅いクエリも範囲外"
+  - "ブログの風洞が担当すると書いた範囲は、意味の面です。"

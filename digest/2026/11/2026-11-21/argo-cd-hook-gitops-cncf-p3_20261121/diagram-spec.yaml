@@ -1,0 +1,62 @@
+type: behavior
+title: "窓明けの最初の比較で Hook の有無が決まる"
+message: "窓明けに最初に同期を許された比較の種類で、移行 Hook が走るかが分かれる。"
+source: "notes/zenn/articles/argo-cd-hook-gitops-cncf-p3_20261121.md"
+steps:
+  - id: commit
+    label: "禁止の窓の間に新しい commit"
+    meaning: "同期は止まるが比較は続き、新しい SHA が status に書かれる"
+  - id: open
+    label: "窓が明ける"
+    meaning: "同期が許可される"
+decisions:
+  - id: first
+    label: "最初に同期を許された比較は?"
+    meaning: "直近の結果と比べる比較か、最新 commit を解決する通常の比較か"
+  - id: partial
+    label: "ずれたリソースだけを部分同期"
+    meaning: "「変化なし」判定 + self-heal 有効のとき"
+  - id: skipped
+    label: "Hook を作らず、版だけ進む"
+    meaning: "Synced・Healthy に見え、後の再比較でも Hook は走らない"
+  - id: full
+    label: "全リソースを同期"
+    meaning: "「変化あり」判定のとき"
+  - id: hooks
+    label: "Hook を実行"
+    meaning: "移行 Job が走る"
+transitions:
+  - from: commit
+    to: open
+    label: ""
+  - from: open
+    to: first
+    label: ""
+  - from: first
+    to: partial
+    label: "変化なし + self-heal"
+  - from: partial
+    to: skipped
+    label: ""
+  - from: first
+    to: full
+    label: "変化あり"
+  - from: full
+    to: hooks
+    label: ""
+omitted:
+  - item: "self-heal 無効時に operation を作らず、次の通常の比較で全体同期になる分岐"
+    reason: "伝えたいこと (Hook を飛ばす経路と走る経路の対比) を 2 本に絞るため。本文の限界・注意点と判断に残す"
+  - item: "直前の同期の成功・backoff・Application 全体の OutOfSync という self-heal の条件"
+    reason: "要素を 7 個以下に保つため。左分岐の矢印ラベル「self-heal」に含めて扱う"
+  - item: "status.sync.revision と syncResult.revision の 2 つの revision の名前"
+    reason: "読者の判断には「版だけ進む」で足りるため"
+  - item: "実行中の operation が窓で止まる別経路"
+    reason: "窓の間に operation が始まっていない場合の分岐だけを示すため"
+layout:
+  direction: top-to-bottom, then branches left (Hook skipped) and right (Hook runs)
+  aspect_ratio: "16:9"
+evidence:
+  - "Argo CD の同期窓・self-heal・Resource Hook とは > 窓が開いたあとの分岐 (mermaid 図と手順 1〜6)"
+  - "「窓が開いた直後に Recent と Latest のどちらが先に同期を許されるかで、Hook が走るかどうかが分かれます」"
+  - "「周期的な再比較を待っても、Hook はそのあと実行されません」"
