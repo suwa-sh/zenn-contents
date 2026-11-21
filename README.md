@@ -7,13 +7,15 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (663)
+## Articles: 下書き (665)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-11-21 | [🪝 Argo CDのself-healが同期窓の後にマイグレーションHookを飛ばす条件](articles/argo-cd-hook-gitops-cncf-p3_20261121.md) | ArgoCD, Kubernetes, GitOps, CICD |
+| 2026-11-21 | [🌀 データエージェントを本番に繋げずに試す、Google Cloudの「風洞」データシミュレータ](articles/cloud-google-products-data-p9_20261121.md) | GoogleCloud, AIAgent, BigQuery, DataEngineering, Testing |
 | 2026-11-21 | [🔐 Unified Access Policiesで許可と拒否を1つのポリシーにまとめる](articles/cloud-google-products-identity-p2_20261121.md) | GoogleCloud, IAM, Security, AIAgent |
 | 2026-11-21 | [🔐 KARTE侵害の調査公表から、再開前にKARTEへ戻さない列を決める](articles/karte-plaid-co-jp-20261120-p4_20261121.md) | KARTE, Security, Privacy, DataGovernance |
+| 2026-11-21 | [🧱 nginx2rootの5件を、WAFではなく到達経路と修正ビルドで台帳に載せる](articles/nginx-waf-cloudflare-nginx2root-p5_20261121.md) | Nginx, Security, Cloudflare, HTTP2, WAF |
 | 2026-11-20 | [📘 OKF v0.3で知識の適合規則と検証状態を受け渡しに固定する](articles/google-okf-v0-cloud-google-p4_20261120.md) | GoogleCloud, AIAgent, Markdown, GitHub |
 | 2026-11-20 | [🔐 Microsoft Agent FrameworkのPyPI配布物に混入した認証情報収集](articles/microsoft-agent-framework-p2_20261120.md) | Python, Security, Azure, AIAgent, SupplyChain |
 | 2026-11-20 | [📋 Vercel Boardで複数エージェントの担当と作業記録を共有する](articles/vercel-board-vercel-introducing-p5_20261120.md) | Vercel, AIAgent, GitHub, Slack |
