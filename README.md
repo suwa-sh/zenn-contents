@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (660)
+## Articles: 下書き (662)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-21 | [🪝 Argo CDのself-healが同期窓の後にマイグレーションHookを飛ばす条件](articles/argo-cd-hook-gitops-cncf-p3_20261121.md) | ArgoCD, Kubernetes, GitOps, CICD |
+| 2026-11-21 | [🔐 Unified Access Policiesで許可と拒否を1つのポリシーにまとめる](articles/cloud-google-products-identity-p2_20261121.md) | GoogleCloud, IAM, Security, AIAgent |
 | 2026-11-20 | [📘 OKF v0.3で知識の適合規則と検証状態を受け渡しに固定する](articles/google-okf-v0-cloud-google-p4_20261120.md) | GoogleCloud, AIAgent, Markdown, GitHub |
 | 2026-11-20 | [🔐 Microsoft Agent FrameworkのPyPI配布物に混入した認証情報収集](articles/microsoft-agent-framework-p2_20261120.md) | Python, Security, Azure, AIAgent, SupplyChain |
 | 2026-11-20 | [📋 Vercel Boardで複数エージェントの担当と作業記録を共有する](articles/vercel-board-vercel-introducing-p5_20261120.md) | Vercel, AIAgent, GitHub, Slack |
