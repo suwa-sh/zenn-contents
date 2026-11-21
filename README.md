@@ -7,14 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (661)
+## Articles: 下書き (660)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-11-20 | [📘 OKF v0.3で知識の適合規則と検証状態を受け渡しに固定する](articles/google-okf-v0-cloud-google-p4_20261120.md) | GoogleCloud, AIAgent, Markdown, GitHub |
 | 2026-11-20 | [🔐 Microsoft Agent FrameworkのPyPI配布物に混入した認証情報収集](articles/microsoft-agent-framework-p2_20261120.md) | Python, Security, Azure, AIAgent, SupplyChain |
 | 2026-11-20 | [📋 Vercel Boardで複数エージェントの担当と作業記録を共有する](articles/vercel-board-vercel-introducing-p5_20261120.md) | Vercel, AIAgent, GitHub, Slack |
-| 2026-11-19 | [🧭 業務語を渡すオントロジーは、定義と計算と操作の置き場が製品で分かれる](articles/atmarkit-itmedia-co-jp-ait-p1_20261119.md) | Ontology, AIAgent, DataGovernance, SemanticLayer |
 | 2026-11-19 | [🧩 Claude CodeのCode Modeでツール呼び出しをJavaScriptにまとめる仕組みと設定](articles/claude-code-mode_20261119.md) | ClaudeCode, AIAgent, JavaScript, DeveloperTools |
 | 2026-11-19 | [🔒 Codexのローカル実行に残るファイルとネットワークの制限](articles/codex-openai-index-inside-p2_20261119.md) | Codex, OpenAI, Security, AIAgent |
 | 2026-11-19 | [🦀 curlのRust書き換えと、止まらない本流の並走をどう数えるか](articles/curl-rust-300-simonwillison-p5_20261119.md) | Rust, Curl, OSS, AIAgent |
@@ -673,10 +672,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (207)
+## Articles: 公開済み (208)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-11-21 | [🧭 業務語を渡すオントロジーは、定義と計算と操作の置き場が製品で分かれる](articles/atmarkit-itmedia-co-jp-ait-p1_20261119.md) | Ontology, AIAgent, DataGovernance, SemanticLayer |
 | 2026-11-19 | [🧪 Claude Codeチームが並列の前に置く検証と失敗した検査の渡し方](articles/claude-code-e2e-claude-dev-p5_20261118.md) | ClaudeCode, Testing, CodeReview, Anthropic |
 | 2026-11-17 | [🧭 コーディングエージェントに今のWebプラットフォームの書き方を渡すModern Web Guidance](articles/modern-web-guidance_20261115.md) | Chrome, AIAgent, Frontend, CSS, HTML |
 | 2026-11-14 | [📋 JPCERT/CCの調査報告書チェックリストで委託範囲を確認する](articles/jpcert-cc-jpcert-or-jp-ir-p9_20261112.md) | Security, IncidentResponse, Forensics |

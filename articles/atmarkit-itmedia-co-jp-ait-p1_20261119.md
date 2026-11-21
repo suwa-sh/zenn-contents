@@ -3,7 +3,8 @@ title: "業務語を渡すオントロジーは、定義と計算と操作の置
 emoji: "🧭"
 type: "tech"
 topics: ["Ontology", "AIAgent", "DataGovernance", "SemanticLayer"]
-published: false
+published: true
+published_at: 2026-11-21
 ---
 
 2026年10月から11月にかけて、Palantir、NVIDIA、Snowflake、Databricks、Microsoft は、業務の言葉をエージェントへ渡す層を公開または更新しました。以下の製品記述は、各社が公開している公式文書に沿っています。
