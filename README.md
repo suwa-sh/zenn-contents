@@ -11,7 +11,7 @@
 
 | create date | title | topics |
 |-------------|-------|--------|
-| 2026-11-23 | [🗺️ AIによるコード解析を、一過性の回答から、再利用できる情報資産へ](articles/as-built-atlas_20261123.md) | AI, MCP, LegacyCode, CodeAnalysis, OSS |
+| 2026-11-23 | [🗺️ as-built-atlasで、AIによるコード解析を一過性の回答から再利用できる情報資産へ](articles/as-built-atlas_20261123.md) | AI, MCP, LegacyCode, CodeAnalysis, OSS |
 | 2026-11-23 | [🔁 既存コードからAIエージェント向けの仕様を起こすreverse-spec-flowの構造と使い方](articles/reverse-spec-flow_20261123.md) | AWS, AIAgent, ClaudeCode, SpecDrivenDevelopment, Modernization |
 | 2026-11-22 | [🧭 Databricks上のエージェント誤答を4種のコンテキスト失敗に切り分ける](articles/databricks-zenn-dev-y0shidahr-p9_20261122.md) | Databricks, AIAgent, LLM, MLflow |
 | 2026-11-22 | [🔍 FDEを名乗る国内40社の公開記載から契約前に確認する10項目](articles/fde-itmedia-co-jp-enterprise-p7_20261122.md) | AI, DX, FDE |

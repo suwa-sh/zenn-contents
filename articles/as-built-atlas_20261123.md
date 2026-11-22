@@ -1,5 +1,5 @@
 ---
-title: "AIによるコード解析を、一過性の回答から、再利用できる情報資産へ"
+title: "as-built-atlasで、AIによるコード解析を一過性の回答から再利用できる情報資産へ"
 emoji: "🗺️"
 type: "tech"
 topics: ["AI", "MCP", "LegacyCode", "CodeAnalysis", "OSS"]
@@ -408,7 +408,7 @@ docker run --rm -v "$PWD:/ws/analysis" -w /ws/analysis ghcr.io/suwa-sh/as-built-
 4. 承認済みの入口 1 件ごとに、skill `abatlas-analyze-entry` が結果 YAML を書き、機械チェックに通し、別のエージェントがレビューする
 5. `build` で集計し、画面と MCP を起動する
 
-`init` 後の分析リポジトリでは、README の手順と同じく `docker compose` 経由でコマンドを実行します。
+`init` は分析リポジトリに `compose.yaml` も置くので、以降のコマンドは `docker compose` 経由で実行します。
 
 ## 使い方：実際に何ができるのか
 
@@ -505,6 +505,78 @@ query_mart(name="mart_data_access", filters={}, limit=200)
 ```
 
 応答は 1 回で最大 `limit` 行です。行数の多い表は、`offset` を進めて続きを取ります。
+
+#### 実際に MCP で問い合わせてみる
+
+ことり書店の見本を v0.6.0 のイメージ（`ghcr.io/suwa-sh/as-built-atlas:0.6.0`）で `build` し、`docker compose up -d api` で起動した MCP サーバーに問い合わせた結果です（2026-11-23 実行）。`initialize` に対してサーバーは `as-built-atlas` と名乗り、`tools/list` は 6 ツールを返しました。
+
+`describe_mart` で `mart_data_access` を見ると、全体は 206 行です。`shop.orders` に触る入口を `query_mart` で絞ると 10 件が返り、操作 `ops` に `U`（更新）を含むのは次の 2 行でした（応答の `rows` から抜粋）。
+
+```json
+{
+  "name": "mart_data_access",
+  "filters": { "resource_path__contains": "shop/orders" }
+}
+```
+
+```json
+[
+  {
+    "entry_id": "daily.close_day",
+    "path": "/daily/close_day",
+    "kind": "rdb",
+    "resource_path": "/rdb/db.internal/postgresql/kotori/shop/orders",
+    "ops": "RU",
+    "io_count": 3,
+    "has_unknown": false
+  },
+  {
+    "entry_id": "daily.sales.settle_orders",
+    "path": "/daily/sales/settle_orders",
+    "kind": "rdb",
+    "resource_path": "/rdb/db.internal/postgresql/kotori/shop/orders",
+    "ops": "RU",
+    "io_count": 2,
+    "has_unknown": false
+  }
+]
+```
+
+この表には根拠の行がありません。根拠は処理の段ごとの呼び出しの並びを持つ `mart_sequence` から取ります。売上確定ジョブを絞ると、`shop.orders` の read と update が根拠の行付きで返りました（抜粋）。
+
+```json
+[
+  {
+    "seq": 5,
+    "from_node": "jobs.settle_orders",
+    "to_node": "/rdb/db.internal/postgresql/kotori/shop/orders",
+    "message": "read",
+    "status": "fact",
+    "evidence": "jobs/settle_orders.py:25"
+  },
+  {
+    "seq": 8,
+    "from_node": "jobs.settle_orders",
+    "to_node": "/rdb/db.internal/postgresql/kotori/shop/orders",
+    "message": "update",
+    "status": "fact",
+    "evidence": "jobs/settle_orders.py:39"
+  }
+]
+```
+
+次に、コーディングエージェント（Claude Code の非対話モード `claude -p`）にこの MCP サーバーだけを渡し、「`shop.orders` を更新する入口と、その根拠のファイルと行を、ソースコードを読まずに MCP の集計表だけで答えて」と頼みました。エージェントは `describe_atlas` → `list_marts` → `describe_mart` → `query_mart`（`mart_data_access`、`mart_sequence`、`mart_field_access`）の順に呼び、次のように答えました（回答の一部を抜粋）。
+
+> ことり書店のバッチで shop.orders を更新する入口は **2 件**あります。ただし更新している処理の実体は `jobs/settle_orders.py` の 1 か所だけです。
+>
+> | 入口 (Flow) | 更新の経路 | 更新の根拠 |
+> |---|---|---|
+> | `/daily/sales/settle_orders` | 自分で直接実行する | `jobs/settle_orders.py:39` |
+> | `/daily/close_day` | `settle_orders` を Subflow として呼ぶ | `flows/daily/close_day.yaml:20` で呼び出し → `jobs/settle_orders.py:39` |
+>
+> すべての段が確定した事実 (fact) で、不明 (unknown) はありません。
+
+ソースを確かめると、`flows/daily/close_day.yaml` は `settle_orders` を Subflow として呼び（20 行目が `flowId: settle_orders`）、`jobs/settle_orders.py` の 39 行目は `UPDATE shop.orders SET status = 'settled', settled_at = now() WHERE id = %s` でした。エージェントはコードを探索せずに、入口をまたいだ更新元と、確かめに行くべき行を挙げています。
 
 ここで想定している組み合わせ方は、エージェントがまず集計表で「どの入口がどのデータを触るか」を掴み、そこから根拠のファイルを開いて確かめる流れです。オンデマンドの Agent Search と競合するものではなく、探索の起点になる参照可能な情報基盤として組み合わせます。v0.6.0 に、会話中のコード探索専用の連携機能はありません。
 
