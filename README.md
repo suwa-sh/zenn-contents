@@ -7,11 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (667)
+## Articles: 下書き (669)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-22 | [🔔 外部イベントの購読でエージェントを起こすMCP Events拡張の構造とデータ](articles/mcp-events-beta-mcp-io-events-p1_20261122.md) | MCP, AIAgent, Webhook, ChatGPT, Security |
 | 2026-11-22 | [🚦 PHPの緊急修正で、サービスを止める範囲と再開の条件をどう決めるか](articles/php-itmedia-co-jp-2611-p3_20261122.md) | PHP, Security, SRE, 脆弱性 |
+| 2026-11-22 | [🧭 Copilot Chatの進捗表示と受け入れ判定は別の成果物になる](articles/zenn-dev-heftykoo-cf9c142df8f81-p5_20261122.md) | GitHubCopilot, VisualStudio, AIAgent, CodeReview |
 | 2026-11-21 | [🪝 Argo CDのself-healが同期窓の後にマイグレーションHookを飛ばす条件](articles/argo-cd-hook-gitops-cncf-p3_20261121.md) | ArgoCD, Kubernetes, GitOps, CICD |
 | 2026-11-21 | [🌀 データエージェントを本番に繋げずに試す、Google Cloudの「風洞」データシミュレータ](articles/cloud-google-products-data-p9_20261121.md) | GoogleCloud, AIAgent, BigQuery, DataEngineering, Testing |
 | 2026-11-21 | [🔐 Unified Access Policiesで許可と拒否を1つのポリシーにまとめる](articles/cloud-google-products-identity-p2_20261121.md) | GoogleCloud, IAM, Security, AIAgent |
