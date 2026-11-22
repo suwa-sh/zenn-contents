@@ -1,0 +1,62 @@
+source:
+  title: "PHPの緊急修正で、サービスを止める範囲と再開の条件をどう決めるか"
+  url: null
+  path: "notes/zenn/articles/php-itmedia-co-jp-2611-p3_20261122.md"
+  primary:
+    - title: "The PHP Group: News Archive - 2026"
+      url: "https://www.php.net/archive/2026.php"
+    - title: "php/php-src security advisories"
+      url: "https://github.com/php/php-src/security/advisories"
+    - title: "The PHP Group: Supported Versions"
+      url: "https://www.php.net/supported-versions.php"
+    - title: "財務省: ホームページのメンテナンスによる一部機能停止"
+      url: "https://www.mof.go.jp/public_relations/ohter/2026111901.html"
+  retrieved_at: "2026-11-23"
+archetype:
+  primary: decision
+  secondary: [incident]
+one_liner: "11月の PHP 修正は、求め方で止める範囲を切り、再開は修正版と欠陥ごとの確認の両方です。"
+key_points:
+  - claim: "11月18日の予告（公開前の知らせ）が求めるのは、公開後の速やかな更新です。"
+    evidence: "2026年11月19日の PHP セキュリティリリースとは / 予告と深刻度"
+    status: fact
+  - claim: "10月21日の別の修正は、更新だけが安全な選択です。この求め方のときは、公開前に外向きの受付を止めます。"
+    evidence: "10月と11月で、何が違ったか / ベンダーの動詞。公開窓の前に、止める範囲をどう切るか / 手段の1"
+    status: interpretation
+  - claim: "入れ替えたパッケージだけでは、再起動前の処理は古い実行ファイルのままです。"
+    evidence: "4つの層で見る / ワーカーはディスク上のファイルとは別に読み込まれた世代として残る"
+    status: fact
+  - claim: "再開は、全ワーカー（処理プロセス）の修正版と、公開後の確認リスト（欠陥ごとの確認）の両方です。"
+    evidence: "再開してよいと言える条件は何か / 冒頭の2条件"
+    status: fact
+  - claim: "既定でない設定か一般的でない構成を要する知らせが、速やかな更新を求めるときです。そのとき修正が出る版で、接続の使い回しが無く回避が動いている処理に入れば、直後の修正版への再起動で全面停止を省けます。"
+    evidence: "公開窓の前に、止める範囲をどう切るか / 手段の2（11月型）"
+    status: interpretation
+mental_models:
+  - type: behavior
+    key_message: "再開は、止める範囲のあと、修正版の読み込みと公開後の確認リストの両方で決める"
+    reason_needed: "止める範囲と、再開の二つの条件の順序が、この記事の判断そのものだから"
+example:
+  description: "財務省は、一部の機能だけを修正の公開前から止めました。再開時期は、知らせの時点で未定でした。"
+  hypothetical: false
+  evidence: "注意点 / 2回の停止で「定型」とは言えない / 財務省"
+applicability:
+  - "公開前の知らせから、止める範囲を切るとき"
+  - "修正版のあと、再開してよいかを判定するとき"
+  - "修正が無い版で、止め続けるかサービスを終えるかを決めるとき"
+decision_criteria:
+  - "知らせは、更新だけが安全ですか。"
+  - "全ワーカーが修正版を読んでいますか。"
+  - "公開後の説明で、欠陥ごとに届くかを確かめましたか。"
+  - "PHP への接続の使い回しは止まっていますか。"
+limitations:
+  - "1件の回避は、その1件だけを塞ぎます。"
+  - "本番用の設定例だけでは、全面停止を省く条件を満たしません。"
+  - "届く範囲が予告より広がった件は、公開後の説明で再開を判定します。"
+  - "普段の設定でも、別の条件が揃うと届く欠陥があります。"
+  - "PHP 8.6 がこの修正を含むかは、知らせから分かりません。止めている間は再開を保留します。"
+unknowns:
+  - "PHP 8.6.0 が11月19日のセキュリティ修正を含むかは、告知本文から確認できない。止めている場合は確認できるまで再開しない"
+  - "11月の critical について、悪用成功の一次記録は 2026-11-22 時点で確認できない。悪用されていないと断定はできない"
+  - "PHP 8.2 のセキュリティサポートは 2026-12-31 まで。期限後は上流の修正パッケージが無い側に入る"
+reviewed: true

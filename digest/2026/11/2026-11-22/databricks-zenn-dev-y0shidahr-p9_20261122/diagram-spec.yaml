@@ -1,0 +1,55 @@
+type: behavior
+title: "誤答を不足と害に分ける"
+message: "誤答は、本文が残っていて必要事実があるときだけ、害の主と副に進む。"
+source: "notes/zenn/articles/databricks-zenn-dev-y0shidahr-p9_20261122.md"
+steps:
+  - id: trace
+    label: "誤答のトレースを開く"
+    meaning: "モデルを替える前に、呼び出しと入出力の記録を開く"
+decisions:
+  - id: text
+    label: "本文は残っているか"
+    meaning: "誤りを生んだ本文がトレースに残っているか"
+  - id: facts
+    label: "必要事実はあるか"
+    meaning: "必要事実がコンテキストにあるか"
+  - id: hold
+    label: "ラベルを確定しない"
+    meaning: "要約しか無いときは、4つのどれかに決めたと記録しない"
+  - id: lack
+    label: "不足"
+    meaning: "必要事実が無い失敗。4つの名前の外"
+  - id: harm
+    label: "害（主と副）"
+    meaning: "事実があるうえで害があるとき、主ラベルと副ラベルを書く。順位は付けない"
+transitions:
+  - from: trace
+    to: text
+    label: ""
+  - from: text
+    to: hold
+    label: "残っていない"
+  - from: text
+    to: facts
+    label: "残っている"
+  - from: facts
+    to: lack
+    label: "無い"
+  - from: facts
+    to: harm
+    label: "ある"
+omitted:
+  - item: "Poisoning、Distraction、Confusion、Clash の個別の箱"
+    reason: "図が伝えるのは分岐の順である。4つの名前と出所は核心ポイントに残す"
+  - item: "system.ai、session と memory、Triggered sync、ジャッジ名などの直し先"
+    reason: "製品の操作は分岐の本体ではなく、本文の適用と判断と限界に残す"
+  - item: "論文の残存率、トークン長、試験の単一選択"
+    reason: "手順の分岐に使わないと元記事が分けているため"
+layout:
+  direction: top-to-bottom, then left for ラベルを確定しない and 不足, right for 害（主と副）
+  aspect_ratio: "16:9"
+evidence:
+  - "同じ質問で分ける手順 > mermaid「誤答のトレースを開く」から、本文の有無、必要事実の有無、不足、害へ分岐する"
+  - "「残す3行は、不足、害の主ラベルと副ラベル、材料が残っているか」"
+  - "「compaction や tool result clearing のあとで要約しか無いなら、4つのどれかに決めたと記録しない」"
+  - "「必要な情報がコンテキストに無い失敗は、4つの名前の外にあります」"

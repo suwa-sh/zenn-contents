@@ -1,0 +1,57 @@
+source:
+  title: "FDEを名乗る国内40社の公開記載から契約前に確認する10項目"
+  url: null
+  path: "notes/zenn/articles/fde-itmedia-co-jp-enterprise-p7_20261122.md"
+  primary:
+    - title: "ITmedia エンタープライズ「『名ばかりFDE』を見抜けるか？　依頼検討時に確認したい10項目」（2026-11-20）"
+      url: "https://www.itmedia.co.jp/enterprise/articles/2611/20/news028.html"
+    - title: "ゴムマリ「FDEを名乗る国内40社の公式サイトを調査、名前だけでは何を頼めるか分からない実態」"
+      url: "https://gomumari.com/knowledge/fde-tanomu-mae-2026/"
+    - title: "IPA「情報システム・モデル取引・契約書（第二版）」"
+      url: "https://www.ipa.go.jp/digital/model/model20201222.html"
+  retrieved_at: "2026-11-23"
+archetype:
+  primary: decision
+  secondary:
+    - research
+one_liner: "発注側は、見積の前に10項目の所在を4つの値で残します。"
+key_points:
+  - claim: "対象は、公式サイトで現場に入る技術者の語を確認した43社のうち、説明を読めた40社です。"
+    evidence: "公開ページを数えた調査"
+    status: fact
+  - claim: "数えているのは、選んだ公式ページの文面だけです。"
+    evidence: "FDEとは / 公開ページを数えた調査"
+    status: fact
+  - claim: "作った物の権利か、納めて渡すことは5社、発注側が用意することは7社、最低期間か区切りは14社です。"
+    evidence: "10項目と社数"
+    status: fact
+  - claim: "各項目は、サイト、見積か提案、契約、未確認の4つの値で残します。未確認は、やっていないことではありません。"
+    evidence: "公開ページと見積・契約を突き合わせる"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "10項目は、公開ページ・見積・契約のどこにあるかを4つの値で残す"
+    reason_needed: "社数と、見積・契約の所在は別の記録であり、1枚で分かれる"
+example:
+  description: "注意例では、置き場の持ち主を発注側へ移したあと、持ち主にしか直せない設定がありました。頼んだ相手は、頼まれても直せませんでした。対象は置き場の管理権限です。"
+  hypothetical: false
+  evidence: "公開ページと見積・契約を突き合わせる"
+applicability:
+  - "発注側が、現場に入る技術者を名乗る提案を受ける前です。"
+  - "公開ページの記載と契約書を突き合わせるときです。"
+decision_criteria:
+  - "終わりの基準を、内容と水準まで数字で書きましたか。"
+  - "区切りでやめたとき、手元に残る物を決めましたか。"
+  - "作った物の権利は、IPAの3案のどれに近いかを聞きましたか。"
+  - "支援が止まった後、誰がどの設定を直せるかを決めましたか。"
+  - "見積にある項目を、契約の条項と分けて残しましたか。"
+limitations:
+  - "公開ページに無いことは、契約に無いことの証明にはなりません。"
+  - "この社数は、利用規約・見積・契約書だけにある権利や期間を含めていません。"
+  - "月額20万円から60万円は、月額で読めた8社の最も低いプランです。相場でも、実際の取引金額でもありません。"
+  - "社名と読んだページの対応は、参考のゴムマリの本文にはありません。"
+  - "契約書に権利や期間が何社分あるかは、この調査は測っていません。"
+unknowns:
+  - "契約書に権利や期間がある会社が40社のうち何社かは不明です。"
+  - "ガートナーの2026年9月の文面は未照合です。"
+reviewed: true

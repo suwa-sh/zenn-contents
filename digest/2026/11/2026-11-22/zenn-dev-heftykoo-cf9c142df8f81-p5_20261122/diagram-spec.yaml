@@ -1,0 +1,57 @@
+type: structure
+title: "進捗ログと受け入れ判定は別欄"
+message: "1回の作業は進捗ログと受け入れ判定に分かれ、欄の中身が違う"
+source: "notes/zenn/articles/zenn-dev-heftykoo-cf9c142df8f81-p5_20261122.md"
+components:
+  - id: work
+    label: "1回の作業"
+    meaning: "レビューに渡す前の、チャット上の1回の作業"
+  - id: steps
+    label: "ステップ結果"
+    meaning: "ステップが返した内容。見るための表示"
+  - id: command
+    label: "コピーしたコマンド"
+    meaning: "人がもう一度実行できるコマンド文字列"
+  - id: model
+    label: "モデルと途中表示"
+    meaning: "サブエージェントのモデル名と、実行中のステップ"
+  - id: expected
+    label: "期待結果"
+    meaning: "テストが通ること、壊さない既存の成功、観測できる状態"
+  - id: verify
+    label: "実行した検証"
+    meaning: "実行したコマンド、対象、環境、返ったもの"
+  - id: open
+    label: "未確認項目"
+    meaning: "失敗したとき、またはツールが拒否されたときに未確認の項目"
+groups:
+  - id: progress
+    label: "進捗ログ"
+    members: [steps, command, model]
+  - id: verdict
+    label: "受け入れ判定"
+    members: [expected, verify, open]
+relationships:
+  - from: work
+    to: steps
+    label: "進捗に残す"
+  - from: work
+    to: expected
+    label: "判定に分ける"
+omitted:
+  - item: "完了の文面を判定欄へ入れない関係"
+    reason: "入れない向きの矢印は流入に誤読されやすい。禁止は本文の確認項目に残す"
+  - item: "Pending、クレジット、会話モード、ツール承認の選び方"
+    reason: "欄の中身の違いという1つのメッセージに、選択の組合せまで載せない"
+  - item: "ベンチマークの数値、GitHub 上の別画面、隣接製品の完了"
+    reason: "数値の読み分けと製品面の違いは本文に残し、図は欄の境界だけにする"
+  - item: "作業からコマンド、モデル、検証、未確認への個別の矢印"
+    reason: "同じ向きの矢印を増やさず、枠の所属で中身を示す"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "レビューに渡すとき、進捗ログと受け入れ判定を分ける / 人へ渡す成果物の表"
+  - "同節の mermaid（作業から進捗ログと受け入れ判定へ分かれる）"
+  - "判定欄に書く三つの番号リスト（期待結果、実行した検証、失敗時の未確認項目）"
+  - "進捗欄に残してよいもの（ステップが返した内容、コピーできるコマンド、モデル名、ライブステップ）"

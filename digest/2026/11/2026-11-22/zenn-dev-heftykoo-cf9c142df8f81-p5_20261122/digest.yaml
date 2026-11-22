@@ -1,0 +1,64 @@
+source:
+  title: "Copilot Chatの進捗表示と受け入れ判定は別の成果物になる"
+  url: null
+  path: "notes/zenn/articles/zenn-dev-heftykoo-cf9c142df8f81-p5_20261122.md"
+  primary:
+    - title: "Visual Studio Blog「Copilot in Visual Studio just got a major upgrade」（2026-11-10）"
+      url: "https://devblogs.microsoft.com/visualstudio/copilot-in-visual-studio-just-got-a-major-upgrade/"
+    - title: "Learn「Use GitHub Copilot Chat in Visual Studio」"
+      url: "https://learn.microsoft.com/en-us/visualstudio/ide/visual-studio-github-copilot-chat?view=visualstudio"
+    - title: "Visual Studio 2026 release notes（18.12.0 は 2026-11-10）"
+      url: "https://learn.microsoft.com/en-us/visualstudio/releases/2026/release-notes"
+    - title: "GitHub Docs「Manage agent sessions」（記事の取得日 2026-11-22）"
+      url: "https://docs.github.com/en/copilot/how-tos/copilot-on-github/use-copilot-agents/manage-and-track-agents"
+  retrieved_at: "2026-11-23"
+archetype:
+  primary: decision
+  secondary: [governance]
+one_liner: "Copilot Chat の進捗表示は、人が書く受け入れ判定とは別の欄に残します。"
+key_points:
+  - claim: "コピーしたコマンドは、人がもう一度実行するための文字列です。"
+    evidence: "画面の表示と、もう一度実行する材料 / 表の exact command"
+    status: fact
+  - claim: "ベンチマークの採点は、失敗していたテストが通り、既に通っていたテストを壊さないことです。"
+    evidence: "注意点 / resolved の定義の引用"
+    status: fact
+  - claim: "Autopilot は、エージェントが完了とみなすまで続けます。"
+    evidence: "注意点 / リリースノート 18.12.0 の引用"
+    status: fact
+  - claim: "完了とみなして止めたことは、ベンチマークの採点と同じ意味ではありません。"
+    evidence: "注意点 / resolved の定義はベンチマークの段落に閉じ、チャットの停止は別の文"
+    status: fact
+  - claim: "完了まで続ける設定と実行前の確認を同時に選ぶと、自動承認の無いツールは確認を待たずに拒否されます。"
+    evidence: "Visual Studio 2026 の新しい Copilot Chat とは / Autopilot と Manual を同時に選ぶ"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "1回の作業は進捗ログと受け入れ判定に分かれ、欄の中身が違う"
+    reason_needed: "進捗に残すものと、判定欄に書くものの境界が、文章だけでは混ざりやすいため"
+example:
+  description: "チャット画面の説明文にある 19 件の作業は、ベンチマークの 157 件とは別です。"
+  hypothetical: false
+  evidence: "注意点の表「9.0 credits、worked on 19 tasks」と「157」"
+applicability:
+  - "Copilot Chat の作業を人のレビューに渡すとき"
+  - "画面の完了表示で合否を決める前"
+decision_criteria:
+  - "判定欄に期待結果を書いたか"
+  - "実行した検証を書いたか"
+  - "失敗か拒否のとき、未確認の項目を残したか"
+  - "進捗の記録を残しているか"
+  - "完了の一文を判定の理由にしていないか"
+limitations:
+  - "ステップ結果が生の出力か、要約か、終了コードを含むかは、公開ページから決まっていない"
+  - "コマンド文字列が作業ディレクトリを含むかは、公開ページに無い"
+  - "エージェントが完了とみなす内部の条件は、公開ページに無い"
+  - "ベンチマークの数値は Microsoft の自己申告で、この記事は測り直していない"
+  - "公式の定義が 18.12 のチャットに付くまで、完了文面は判定にしない。ステップ結果を終了コードとテスト出力の保存とするか、完了文面が期待結果とコマンドを構造化して引用すること"
+unknowns:
+  - "ステップの results が生の出力か、要約か、終了コードを含むか"
+  - "コピーしたコマンドに作業ディレクトリが埋まるか"
+  - "18.12 の既定画面に Keep / Undo / Restore が残るか"
+  - "Autopilot が完了とみなす内部条件"
+  - "棒グラフの alt が本文と独立に生成された説明文か"
+reviewed: true

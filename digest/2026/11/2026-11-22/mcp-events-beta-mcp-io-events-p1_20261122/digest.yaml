@@ -1,0 +1,58 @@
+source:
+  title: "外部イベントの購読でエージェントを起こすMCP Events拡張の構造とデータ"
+  url: null
+  path: "notes/zenn/articles/mcp-events-beta-mcp-io-events-p1_20261122.md"
+  primary:
+    - title: "MCP Events beta specification (events.mdx)"
+      url: "https://github.com/modelcontextprotocol/ext-events/blob/main/specification/beta/events/events.mdx"
+    - title: "SEP-3415 Events Extension"
+      url: "https://modelcontextprotocol.io/seps/3415-events-extension.md"
+  retrieved_at: "2026-11-23"
+archetype:
+  primary: architecture
+  secondary: [governance]
+one_liner: "MCP（問いと応答の手順）の作業部会は、上流の出来事でエージェントを起こす拡張を Beta で公開しました。"
+key_points:
+  - claim: "イベント型は、購読引数と配送データと配送モードを名前ごとに持ちます。"
+    evidence: "MCP Events 拡張とは。events/list が名前、inputSchema、payloadSchema、配送モードを公開する"
+    status: fact
+  - claim: "クライアントは、型が掲げるモードのうち、実行できる1つを選びます。"
+    evidence: "特徴の表。配送モードは空でない部分集合でどれも必須ではない / コンテナ図「モード選択は型が掲げる部分集合のうち実行できる1つ」"
+    status: fact
+  - claim: "カーソルは、クライアントが再開に使う不透明な位置です。"
+    evidence: "特徴「切断後に再開できます。カーソルはサーバが定義する不透明な配送位置で、クライアントが保持する」"
+    status: fact
+  - claim: "購読台帳の正本はクライアントです。"
+    evidence: "特徴「購読台帳の正本はクライアントが持ちます。サーバに購読一覧メソッドはありません」"
+    status: fact
+  - claim: "届いた中身は信頼しない入力です。"
+    evidence: "特徴「ペイロードはツール結果と同じく信頼しない入力です」"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "クライアントが購読し、サーバが選ばれたモードで発生を受け取る側へ届ける。"
+    reason_needed: "poll と push はクライアントへ、webhook だけが受信端を通るため"
+example:
+  description: "メール到着を poll し、一覧が空ならホストはターンを始めません。"
+  hypothetical: false
+  evidence: "利用方法「ポーリング」。events が空なのは通常系で、モデルは起こさない"
+applicability:
+  - "購読者ごとの状態を持たないサーバでは poll を使います。"
+  - "つなぎっぱなしのクライアントでは push を使います。"
+  - "クライアントが長寿命接続を持てない遠隔では webhook を使います。"
+decision_criteria:
+  - "対象は beta 仕様に合わせますか。"
+  - "カーソルを購読ごとに耐久保存しますか。"
+  - "載っていない中身を取る呼び出しは、発生とは別に認可しますか。"
+  - "webhook の秘密はクライアントが作りますか。"
+  - "欠落が問題なら、上流の状態を読み直しますか。"
+limitations:
+  - "正確に1回の配送は保証しません。"
+  - "公式 SDK と適合試験は、2026-11-22 時点で未マージです。"
+  - "再送できない型では、欠落した出来事は戻りません。"
+  - "ChatGPT の対応は webhook だけで、poll と push は対象外です。"
+  - "3モード対応とされた唯一のクライアントが、beta どおりかは未確認です。"
+unknowns:
+  - "MCPJam の CHECK が、3モードの配送そのものを beta 本文に合わせているかは未確認"
+  - "mcp-webhook-events の確認した版以外の適合範囲は、SEP の記述としてのみ確認できる"
+reviewed: true

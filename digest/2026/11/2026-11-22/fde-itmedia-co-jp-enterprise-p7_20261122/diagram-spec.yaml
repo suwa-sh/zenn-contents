@@ -1,0 +1,54 @@
+type: structure
+title: "10項目は4つの値で残す"
+message: "10項目は、公開ページ・見積・契約のどこにあるかを4つの値で残す"
+source: "notes/zenn/articles/fde-itmedia-co-jp-enterprise-p7_20261122.md"
+components:
+  - id: items
+    label: "10項目"
+    meaning: "依頼前に確かめる欄。見積依頼の欄にする"
+  - id: site
+    label: "サイトにあり"
+    meaning: "選んだ公開ページに、数えた書き方がある"
+  - id: quote
+    label: "見積にある"
+    meaning: "見積書または提案書にある。まだ合意した条項ではない"
+  - id: contract
+    label: "契約にある"
+    meaning: "利用規約、契約書、または契約に組み込まれた文書にある"
+  - id: unknown
+    label: "未確認"
+    meaning: "上のどれにもまだ見つからない。やっていない、とは書かない"
+groups:
+  - id: values
+    label: "残す4つの値"
+    members: [site, quote, contract, unknown]
+relationships:
+  - from: items
+    to: site
+    label: "公開ページにある"
+  - from: items
+    to: quote
+    label: "まだ合意ではない"
+  - from: items
+    to: contract
+    label: "合意した条項"
+  - from: items
+    to: unknown
+    label: "まだ見つからない"
+omitted:
+  - item: "40社の社数（権利や渡し方5、発注側の用意7、最低期間か区切り14）"
+    reason: "図が伝えるのは4つの値の突き合わせであり、社数の内訳は本文の核心に残す"
+  - item: "項目1から10の個別の中身"
+    reason: "要素が7個を超える。判断に使う代表は本文の確認項目に残す"
+  - item: "候補から43社、説明を読めた40社への絞り込み"
+    reason: "社数の母数であり、4つの値の関係ではない"
+  - item: "見積書・契約書・利用規約を社数の入力にしない点線"
+    reason: "社数の作り方は本文に残し、図は契約前の残し方に絞る"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "公開ページと見積・契約を突き合わせる: サイトにあり / 見積・提案にある / 契約にある / 未確認"
+  - "見積書や提案書にあるだけでは、契約条件として合意したことにはしません。"
+  - "未確認: 上のどれにも、まだ見つからない。やっていない、とは書かない"
+  - "発注側は、FDE を名乗る提案を受ける前に、上の10項目を見積依頼の欄にします。"

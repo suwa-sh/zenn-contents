@@ -1,0 +1,51 @@
+type: behavior
+title: "予告から再開までの流れ"
+message: "再開は、止める範囲のあと、修正版の読み込みと公開後の確認リストの両方で決める"
+source: "notes/zenn/articles/php-itmedia-co-jp-2611-p3_20261122.md"
+components:
+  - id: notice
+    label: "予告"
+    meaning: "セキュリティ修正の公開予定を観測する"
+  - id: scope
+    label: "止める範囲"
+    meaning: "全面停止、機能停止、設定の暫定、パッケージ適用のどれを選ぶか"
+  - id: workers
+    label: "全ワーカーの修正版"
+    meaning: "リクエストを処理しているプロセスが、すべて修正ビルドを読んでいる"
+  - id: checklist
+    label: "公開後の確認リスト"
+    meaning: "公開後のアドバイザリから作り直した確認項目"
+  - id: resume
+    label: "再開"
+    meaning: "利用者へサービスを戻す"
+groups:
+  - id: gate
+    label: "再開条件"
+    members: [workers, checklist]
+relationships:
+  - from: notice
+    to: scope
+    label: "求め方で切る"
+  - from: scope
+    to: workers
+    label: "適用する"
+  - from: scope
+    to: checklist
+    label: "公開後に作る"
+  - from: workers
+    to: resume
+    label: "満たす"
+  - from: checklist
+    to: resume
+    label: "満たす"
+omitted:
+  - item: "10月型と11月型の分岐、上流の修正が無いときの終了"
+    reason: "動詞で範囲を切る矢印に畳む。終了は再開の流れと別の出口のため"
+  - item: "critical 7件の個別の到達条件と各社の停止時刻"
+    reason: "1枚の判断順序に関係しないため"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "公開窓の前に、止める範囲をどう切るか / 予告は停止を検討する合図であり、手段は告知の動詞で選ぶ"
+  - "再開してよいと言える条件は何か / 修正ビルドを全ワーカーが読み込んでいることと、公開後のアドバイザリから作った確認リストの両方"

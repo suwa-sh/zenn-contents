@@ -1,0 +1,59 @@
+type: structure
+title: "出来事が受け取る側へ届く経路"
+message: "クライアントが購読し、サーバが選ばれたモードで発生を受け取る側へ届ける"
+source: "notes/zenn/articles/mcp-events-beta-mcp-io-events-p1_20261122.md"
+components:
+  - id: upstream
+    label: "上流"
+    meaning: "メール、リポジトリ、インシデントなど、出来事の源"
+  - id: server
+    label: "MCPサーバ"
+    meaning: "イベント型を公開し、選ばれたモードで配送する側"
+  - id: client
+    label: "MCPクライアント"
+    meaning: "モードを選び、カーソルと購読台帳を持つ側"
+  - id: receiver
+    label: "受信端"
+    meaning: "webhook の署名付き POST を受ける HTTPS エンドポイント。クライアント本体と別でもよい"
+  - id: host
+    label: "ホスト"
+    meaning: "発生を受けて新しいターンを始める実行環境"
+groups:
+  - id: receiving
+    label: "受け取る側"
+    members: [client, receiver, host]
+relationships:
+  - from: client
+    to: server
+    label: "購読と再開"
+  - from: server
+    to: upstream
+    label: "出来事を取得"
+  - from: server
+    to: client
+    label: "poll と push"
+  - from: server
+    to: receiver
+    label: "署名付きPOST"
+  - from: receiver
+    to: host
+    label: "発生を渡す"
+omitted:
+  - item: "利用者"
+    reason: "配送の経路ではなく、購読の意図をホストへ渡す人のため"
+  - item: "受信端からホストへ渡る欠落と終了"
+    reason: "矢印ラベルは発生の到着に絞る。記事のラベルは発生・欠落・終了の引き渡し"
+  - item: "認可、外向き HTTP の IP 検査、HMAC 署名"
+    reason: "webhook の内部手順で、モードごとの到着先とは別"
+  - item: "Tasks とリソース更新通知"
+    reason: "隣接する仕組みとの比較で、この経路の要素ではない"
+  - item: "poll の取得動作そのもの"
+    reason: "クライアント起点の取りに行きは「購読と再開」に含め、矢印は発生の到着先だけを示す"
+layout:
+  direction: "left-to-right: 上流、MCPサーバ、受け取る側。受け取る側の中はクライアント、受信端、ホスト"
+  aspect_ratio: "16:9"
+evidence:
+  - "構造「システムコンテキスト図」。client→server は購読と再開、server→upstream は出来事の取得、server→receiver は署名付きPOST、receiver→host は発生・欠落・終了の引き渡し"
+  - "特徴の表。poll はクライアントが取りに行き発生は応答でクライアントへ届く。push は長寿命のリクエストでサーバがクライアントへ流し続ける。webhook はサーバが署名付き POST を送る"
+  - "構造「システムコンテキスト図」の要素表。ホストは発生を受けて新しいターンを始める。受信端はクライアント本体と別でもよい"
+  - "構造「コンテナ図」。購読台帳とカーソル保管はクライアントが持つ"

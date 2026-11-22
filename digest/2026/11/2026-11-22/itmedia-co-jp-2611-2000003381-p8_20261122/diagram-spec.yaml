@@ -1,0 +1,47 @@
+type: structure
+title: "許した相手と、実際のアクセス"
+message: "見るずれは、許した相手の集合と実際のアクセス主体の差"
+source: "notes/zenn/articles/itmedia-co-jp-2611-2000003381-p8_20261122.md"
+components:
+  - id: users
+    label: "政府機関等の利用者"
+    meaning: "政府共通のファイル共有を使う政府機関等の利用者"
+  - id: partners
+    label: "組織外の関係者"
+    meaning: "事業者など、正規の共有相手として入る組織外の関係者"
+  - id: files
+    label: "共有ファイル"
+    meaning: "会議資料などの大容量ファイル"
+  - id: outsider
+    label: "相手以外の主体"
+    meaning: "正規の共有相手以外からアクセスした主体"
+groups:
+  - id: allowed
+    label: "許した相手"
+    members: [users, partners]
+relationships:
+  - from: users
+    to: files
+    label: "正規の共有"
+  - from: partners
+    to: files
+    label: "正規の共有"
+  - from: outsider
+    to: files
+    label: "相手以外からのアクセス"
+omitted:
+  - item: "2026年11月12日の検知、提供停止、外部通信の遮断"
+    reason: "時系列は別のメッセージになるため"
+  - item: "2026年9月11日のVPNと保守運用アカウントの公表"
+    reason: "別ページの事案で、この図の許した相手とアクセス主体の差に関係しないため"
+  - item: "報道の25機関、約15万人、機密性2"
+    reason: "2026年11月22日時点で一次資料がなく、図の主張に不要なため"
+  - item: "個人情報保護委員会への報告要件"
+    reason: "報告の有無は、許した相手とアクセス主体の差を示す図に不要なため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "ガバメントソリューションサービスのファイル共有とは: 利用者と組織外の関係者が正規の共有相手になり、許可集合は正規の共有相手先の集合"
+  - "11月20日の公表が確認している範囲: 正規の共有相手以外からのアクセス"
+  - "共有の許可を運用で持つ境界 の 1: 見るべきずれは組織の内外ではなく、許した相手の集合と実際にアクセスした主体の差"
