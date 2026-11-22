@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (671)
+## Articles: 下書き (672)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-22 | [🧭 Databricks上のエージェント誤答を4種のコンテキスト失敗に切り分ける](articles/databricks-zenn-dev-y0shidahr-p9_20261122.md) | Databricks, AIAgent, LLM, MLflow |
 | 2026-11-22 | [🔍 FDEを名乗る国内40社の公開記載から契約前に確認する10項目](articles/fde-itmedia-co-jp-enterprise-p7_20261122.md) | AI, DX, FDE |
 | 2026-11-22 | [🔒 政府共通のファイル共有で、正規の相手以外のアクセスが7月30日から11月12日まで確認された](articles/itmedia-co-jp-2611-2000003381-p8_20261122.md) | Security, Privacy, Governance |
 | 2026-11-22 | [🔔 外部イベントの購読でエージェントを起こすMCP Events拡張の構造とデータ](articles/mcp-events-beta-mcp-io-events-p1_20261122.md) | MCP, AIAgent, Webhook, ChatGPT, Security |
