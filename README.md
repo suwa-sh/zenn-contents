@@ -7,12 +7,14 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (674)
+## Articles: 下書き (676)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-23 | [🏭 ソフトウェアファクトリー3か月で1.5倍の中身は起動の外にある](articles/1-5-zenn-dev-z-maruhira-factory-p7_20261123.md) | GitHub, AIAgent, Claude, Scrum |
 | 2026-11-23 | [🗺️ as-built-atlasで、AIによるコード解析を一過性の回答から再利用できる情報資産へ](articles/as-built-atlas_20261123.md) | AI, MCP, LegacyCode, CodeAnalysis, OSS |
 | 2026-11-23 | [🔁 既存コードからAIエージェント向けの仕様を起こすreverse-spec-flowの構造と使い方](articles/reverse-spec-flow_20261123.md) | AWS, AIAgent, ClaudeCode, SpecDrivenDevelopment, Modernization |
+| 2026-11-23 | [📐 AIの生成テストの前に置く、Quintの不変条件](articles/tla-zenn-dev-karamage-73027-p5_20261123.md) | Quint, TLAPlus, Testing, LLM |
 | 2026-11-22 | [🧭 Databricks上のエージェント誤答を4種のコンテキスト失敗に切り分ける](articles/databricks-zenn-dev-y0shidahr-p9_20261122.md) | Databricks, AIAgent, LLM, MLflow |
 | 2026-11-22 | [🔍 FDEを名乗る国内40社の公開記載から契約前に確認する10項目](articles/fde-itmedia-co-jp-enterprise-p7_20261122.md) | AI, DX, FDE |
 | 2026-11-22 | [🔒 政府共通のファイル共有で、正規の相手以外のアクセスが7月30日から11月12日まで確認された](articles/itmedia-co-jp-2611-2000003381-p8_20261122.md) | Security, Privacy, Governance |
