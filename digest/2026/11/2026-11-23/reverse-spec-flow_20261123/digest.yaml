@@ -1,0 +1,56 @@
+source:
+  title: "既存コードからAIエージェント向けの仕様を起こすreverse-spec-flowの構造と使い方"
+  url: null
+  path: "notes/zenn/articles/reverse-spec-flow_20261123.md"
+  primary:
+    - title: "aws-samples/sample-reverse-spec-flow README"
+      url: "https://github.com/aws-samples/sample-reverse-spec-flow/blob/main/README.md"
+    - title: "AWS ブログ Reverse Spec Flow の紹介（2026-11-21）"
+      url: "https://aws.amazon.com/jp/blogs/news/aidm-introducing-reverse-spec-flow/"
+  retrieved_at: "2026-11-24"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "AWS の reverse-spec-flow は、既存ソースから検査付きの仕様を作ります。"
+key_points:
+  - claim: "成果物は、解析対象の隣にある独立した git リポジトリです。"
+    evidence: "reverse-spec-flowとは / init.sh が解析対象の隣に独立した git リポジトリを作る"
+    status: fact
+  - claim: "解析対象は参照専用です。"
+    evidence: "特徴 > 解析対象を変えない / 位置づけの表「フレームワークは対象を変更しない」"
+    status: fact
+  - claim: "完了の必要条件は、gates.sh（完了の検査）の成功です。"
+    evidence: "特徴 > 機械判定を完了の必要条件にする"
+    status: fact
+  - claim: "見積りと再構築では、今の実装の事実と本質層（技術に依存しない層）に分かれます。"
+    evidence: "特徴 > 2 層に分ける / 概念モデル「本質層は purpose が maintenance のときは作らない」"
+    status: fact
+  - claim: "コードグラフ（モジュール、入口、境界の一覧）に未着手か分析中が残ると、完了にしません。"
+    evidence: "特徴 > 先に分母を作る / purpose の表「コードグラフの未着手・分析中が 0」"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "解析対象は変えず、隣の仕様リポジトリで検査の成功を完了の必要条件にする"
+    reason_needed: "書く場所と、完了を決める検査の位置が記事の境界になるため"
+example:
+  description: "目的は保守、見積り、再構築で、完了条件が違います。"
+  hypothetical: false
+  evidence: "データ > purpose と生成物の対応"
+applicability:
+  - "仕様が無いか、古くなった仕様を保守するとき"
+  - "再構築の見積りで、本質層の概要まで欲しいとき"
+  - "仕様を入力に、作り直すとき"
+decision_criteria:
+  - "目的を、保守、見積り、再構築から選びましたか。"
+  - "解析対象は、reverse-spec-flow と別のディレクトリにありますか。"
+  - "作業は、生成先のリポジトリで開いていますか。"
+  - "書く側は Claude Code、Kiro IDE、Kiro CLI ですか。"
+  - "仕様リポジトリを、公開リモートへ送っていませんか。"
+limitations:
+  - "起動や画面操作、データベースへの問い合わせは、やらなくても進められます。"
+  - "範囲を縮めるときや工程の境界では、人の確認を挟みます。"
+  - "監査を終えた宣言と、再構築できる宣言には、独立検証と人の確認が要ります。"
+  - "動的な振る舞いは、仕様だけでは確定できません。"
+unknowns:
+  - "v2.2.0 以降、再構築の検査時間は公開資料にありません。"
+reviewed: true

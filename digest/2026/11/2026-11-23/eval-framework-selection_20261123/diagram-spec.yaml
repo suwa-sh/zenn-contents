@@ -1,0 +1,47 @@
+type: structure
+title: "採点単位から実行の形で棚を選ぶ"
+message: "先に採点単位を決め、実行の形で棚を選ぶ"
+source: "notes/zenn/articles/eval-framework-selection_20261123.md"
+components:
+  - id: unit
+    label: "採点単位"
+    meaning: "最終テキスト、ツール選択、検索順位、生成の根拠のどれを採点するか"
+  - id: code
+    label: "code-first"
+    meaning: "Python の関数で評価を定義して回す棚。例は Inspect、DeepEval、Pydantic Evals"
+  - id: config
+    label: "config-first"
+    meaning: "YAML で評価を定義して回す棚。例は Promptfoo、lm-evaluation-harness"
+  - id: rag
+    label: "RAG指標"
+    meaning: "検索結果と回答の関係を指標クラスで見る棚。例は Ragas"
+groups:
+  - id: shelves
+    label: "棚"
+    members: [code, config, rag]
+relationships:
+  - from: unit
+    to: code
+    label: "Pythonの関数"
+  - from: unit
+    to: config
+    label: "YAML"
+  - from: unit
+    to: rag
+    label: "指標クラス"
+omitted:
+  - item: "eval-first（LangSmith の experiment）と observability（本番トレース）"
+    reason: "6 製品の選び方ではなく、棚の表の周辺例のため"
+  - item: "各棚の製品名（Inspect、DeepEval、Pydantic Evals、Promptfoo、lm-eval、Ragas）"
+    reason: "図は実行の形 1 つに絞る。製品名は本文の核心ポイントに残すと 7 要素を超える"
+  - item: "Data、Target、Judgment、Run の 4 部品"
+    reason: "伝えたいことは棚の選び方であり、部品の所有関係は別の主張のため"
+  - item: "CI の終了コードと採点モデルの分離"
+    reason: "選び方の図に、運用の注意を重ねないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "ベストプラクティス > 採点粒度を先に決める"
+  - "ベストプラクティス > 棚の選び方（実行単位の表）"
+  - "まとめの 2 点目（code-first / config-first / RAG 指標）"

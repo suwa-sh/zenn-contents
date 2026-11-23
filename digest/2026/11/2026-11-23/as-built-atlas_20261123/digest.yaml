@@ -1,0 +1,55 @@
+source:
+  title: "as-built-atlasで、AIによるコード解析を一過性の回答から再利用できる情報資産へ"
+  url: null
+  path: "notes/zenn/articles/as-built-atlas_20261123.md"
+  primary:
+    - title: "as-built-atlas（GitHub）"
+      url: "https://github.com/suwa-sh/as-built-atlas"
+    - title: "README 日本語（v0.6.0）"
+      url: "https://github.com/suwa-sh/as-built-atlas/blob/v0.6.0/README.ja.md"
+  retrieved_at: "2026-11-24"
+archetype:
+  primary: architecture
+  secondary: []
+one_liner: "as-built-atlas は、AIのコード解析を根拠付きデータとして残し、人とエージェントが読む OSS です。"
+key_points:
+  - claim: "推論は、入口（ジョブ・画面・APIなど）1 件の結果を書くまでです。"
+    evidence: "as-built-atlasとは / 入口とは、バッチのジョブ、画面、API など。特徴 / 分析の単位は入口 1 件"
+    status: fact
+  - claim: "集計は、同じ結果から同じ集計表を作ります。"
+    evidence: "特徴 / 決定論的な集計が保証するのは同じ入力から同じ表ができることまで"
+    status: fact
+  - claim: "事実と解釈には、ファイルと行の根拠が要ります。"
+    evidence: "特徴 / fact と interpretation は evidence が必須。unknown は理由キー"
+    status: fact
+  - claim: "画面と、エージェントが読む口は、同じ集計表を読みます。"
+    evidence: "特徴 / 人とエージェントが同じ API を読む。コンテナ図 / Webapp と MCP"
+    status: fact
+  - claim: "不明は、決まった理由の語で残します。"
+    evidence: "根拠付きの構造化データ / 不明の理由は 7 つの語彙に固定"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "AIの推論は分析結果まで。人とエージェントは同じ集計表を読む"
+    reason_needed: "質問のたびにコードを探す方式と、事前解析して同じ集計を再利用する方式の境界が、文章だけだと分かれにくいため"
+example:
+  description: "架空の見本、ことり書店では、売上確定と、それを呼ぶ入口が shop.orders を更新します。更新の実体は settle_orders.py の 39 行だけです。エージェントは集計表だけで、この 2 件と根拠行を答えました。"
+  hypothetical: false
+  evidence: "使い方 / MCP 経由でエージェントに分析結果を参照させる / 実際に MCP で問い合わせてみる"
+applicability:
+  - "どの処理がどのデータを書くか、入口をまたいで見たいとき"
+  - "根拠の行から、対象のソースを開きたいとき"
+  - "コード探索の前に、集計表をエージェントへ渡したいとき"
+decision_criteria:
+  - "対象技術のプロファイル（層・入口・分類）はありますか。"
+  - "分析する入口を、人が先に承認しますか。"
+  - "集計のあと、根拠のファイルと行へ戻りますか。"
+  - "影響を見て、再分析か残すかを記録しますか。"
+limitations:
+  - "検査を通っても、解釈が対象の挙動と一致するとは限りません。"
+  - "根拠の行があっても、結果の説明はソースの条件とずれることがあります。"
+  - "同梱の見本に費用の記録は無いので、対象の規模に合わせて少数の入口を試して見積もります。"
+  - "コードが変わると結果は古くなります。"
+unknowns:
+  - "ことり書店の適合率と再現率は、リポジトリに公開されていません。"
+reviewed: true

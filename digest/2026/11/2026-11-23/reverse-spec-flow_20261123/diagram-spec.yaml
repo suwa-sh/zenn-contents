@@ -1,0 +1,52 @@
+type: structure
+title: "仕様は隣で検査する"
+message: "解析対象は変えず、隣の仕様リポジトリで検査の成功を完了の必要条件にする"
+source: "notes/zenn/articles/reverse-spec-flow_20261123.md"
+components:
+  - id: source
+    label: "解析対象"
+    meaning: "読み取り専用。フレームワークは対象を変更しない"
+  - id: writer
+    label: "書く側のAI"
+    meaning: "仕様を書く実行環境。対応はホストで宣言する"
+  - id: fw
+    label: "reverse-spec-flow"
+    meaning: "init.sh で、解析対象の隣に独立した git リポジトリを作る配布物"
+  - id: specs
+    label: "仕様"
+    meaning: "納品単位。実装事実層と、目的によっては本質層を置く"
+  - id: gates
+    label: "gates.sh"
+    meaning: "完了判定の実行体。exit 0 が完了の必要条件"
+groups:
+  - id: specrepo
+    label: "仕様リポジトリ"
+    members: [specs, gates]
+relationships:
+  - from: writer
+    to: source
+    label: "参照する"
+  - from: fw
+    to: specs
+    label: "初期化する"
+  - from: writer
+    to: specs
+    label: "書く"
+  - from: gates
+    to: specs
+    label: "判定する"
+omitted:
+  - item: "開発者と HOLD"
+    reason: "人の停止点は限界に残す。図が伝えるのはリポジトリの境界と完了判定"
+  - item: "仕様を使う側のAI"
+    reason: "書き終えたあとの読み手であり、作る境界の本体ではない"
+  - item: "Phase 0 から Phase 4、Playbook、purpose"
+    reason: "工程と目的別の厳しさは核心ポイントと具体例に残す"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "システムコンテキスト図: AI ツールは解析対象ソース（参照専用）と仕様リポジトリへ矢印。フレームワークは仕様リポジトリへ矢印"
+  - "コンテナ図: init.sh から specs へ、gates.sh から specs へ"
+  - "特徴: gates.sh の exit 0 を完了の必要条件にする。解析対象は参照専用"
+  - "init.sh: 解析対象の隣に独立した git リポジトリを作る"

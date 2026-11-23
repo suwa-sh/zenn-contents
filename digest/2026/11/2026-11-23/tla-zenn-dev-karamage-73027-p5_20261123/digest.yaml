@@ -1,0 +1,62 @@
+source:
+  title: "AIの生成テストの前に置く、Quintの不変条件"
+  url: null
+  path: "notes/zenn/articles/tla-zenn-dev-karamage-73027-p5_20261123.md"
+  primary:
+    - title: "【TLA+】AIにテストケースを書かせるな。ルールを書け"
+      url: "https://zenn.dev/karamage/articles/73027ee36796dc"
+    - title: "Checking Properties"
+      url: "https://quint.sh/docs/checking-properties"
+    - title: "Understanding the Simulator"
+      url: "https://quint.sh/docs/simulator"
+    - title: "Model-based Testing"
+      url: "https://quint.sh/docs/model-based-testing"
+    - title: "Use of Formal Methods at Amazon Web Services"
+      url: "https://lamport.azurewebsites.net/tla/formal-methods-amazon.pdf"
+  retrieved_at: "2026-11-24"
+archetype:
+  primary: decision
+  secondary: [research]
+one_liner: "karamage氏は、生成テスト（AIが書くテスト）の前に、破ってはいけない条件の式を置きます。"
+key_points:
+  - claim: "Quint で式を検査し、操作列を実装で実行して仕様との一致を見ます。"
+    evidence: "生成テストの前に置くルールとは"
+    status: fact
+  - claim: "チケット例の式は1本で、販売数が初期在庫を超えないことです。"
+    evidence: "チケット仕様に書いてあるもの"
+    status: fact
+  - claim: "その式は、販売数3・在庫-1の売り越しを落とします。"
+    evidence: "再実行で残ったもの"
+    status: fact
+  - claim: "販売数と在庫の和の式は、在庫を減らして販売数を増やす売り越しを通します。"
+    evidence: "安全の式と、売らない仕様"
+    status: fact
+  - claim: "利用者3人・在庫2枚の世界を、ランダム実行と TLC が見ます。"
+    evidence: "チケット仕様に書いてあるもの / 先に置くテストと、そのあとの検査"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "安全の式、起きてほしい観察、説明の例、実装再生は別々に置く"
+    reason_needed: "条件の種類で置く検査が分かれ、緑の意味も分かれるため"
+example:
+  description: "在庫を確認したあとなら在庫を見ずに1枚売り、修正は在庫が残るときだけ同じ更新をし、無ければ枚数を変えず売切にする。"
+  hypothetical: false
+  evidence: "チケット仕様に書いてあるもの"
+applicability:
+  - "複数の利用者の操作順が、結果を変えるときです。"
+  - "生成テストの採点元を、条件の式へ戻すときです。"
+  - "操作が混ざる順の代わりに並んだ成功例を、式へ移すときです。"
+decision_criteria:
+  - "売らない実装を、初期在庫まで売れたかで落とせますか。"
+  - "採点に使う式の文面を、人が読みましたか。"
+  - "操作順が結果を変える箇所だけを、状態を尽くす検査にしますか。"
+  - "仕様を、実装の変更に追随させますか。"
+limitations:
+  - "1枚も売らない実装は、販売数が初期在庫を超えない式を満たします。"
+  - "ランダム実行の成功は、試した実行に違反が無かったことまでです。"
+  - "実装への再生は、コードが正しいことの証明にはなりません。"
+  - "検査器を指定しない検証は、記事が使った TLC とは別です。"
+unknowns:
+  - "1000本中578件の不一致は、実装を再生していないため未再現です。"
+  - "記事に書かれた実行時間の数値が、どのコマンドのものかは対応づけていません。"
+reviewed: true

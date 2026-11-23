@@ -1,0 +1,65 @@
+type: structure
+title: "条件を検査へ割り当てる"
+message: "安全の式、起きてほしい観察、説明の例、実装再生は別々に置く"
+source: "notes/zenn/articles/tla-zenn-dev-karamage-73027-p5_20261123.md"
+components:
+  - id: condition
+    label: "要件の条件"
+    meaning: "要件に書いた、破ってはいけないことと、起きてほしいこと"
+  - id: safety
+    label: "安全の式"
+    meaning: "販売数が初期在庫を超えない式。売り越しを落とす"
+  - id: observe
+    label: "到達の観察"
+    meaning: "販売数が初期在庫に達するかを見る。売らない実装を落とす"
+  - id: sample
+    label: "逐次の成功例"
+    meaning: "割り込みのない動作を、読み手向けの説明として残す"
+  - id: replay
+    label: "実装への再生"
+    meaning: "モデルと実装の振る舞いが一致するかを見る"
+groups:
+  - id: drop
+    label: "落ちる検査"
+    members: [safety, observe]
+  - id: explain
+    label: "説明"
+    members: [sample]
+  - id: match
+    label: "一致の検査"
+    members: [replay]
+relationships:
+  - from: condition
+    to: safety
+    label: "売り越しを落とす"
+  - from: condition
+    to: observe
+    label: "売らない実装を落とす"
+  - from: condition
+    to: sample
+    label: "説明として残す"
+  - from: condition
+    to: replay
+    label: "一致を見る"
+omitted:
+  - item: "シミュレータの成功と TLC の成功の違い"
+    reason: "図は条件の割り当て先に絞る。緑の意味は本文に残す"
+  - item: "販売数と在庫の和の式が売り越しを通すこと"
+    reason: "安全の式の強さの注意であり、割り当て先の図には入れない"
+  - item: "quint verify の既定が Apalache であること"
+    reason: "記事の TLC 指定との違いであり、この図の関係ではない"
+  - item: "プロパティベーステスト"
+    reason: "単一関数へ同じ式を置く代替であり、4つの割り当て先には入れない"
+  - item: "式の文面を人が読むこと"
+    reason: "採点の主体の話であり、検査の種類の図には入れない"
+  - item: "状態数 55 と 29、不一致 578 件"
+    reason: "再実行の数値であり、割り当ての関係には不要"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "条件を検査の種類へ割り当てる: 要件の条件を、落ちる検査の種類へ割り当てる"
+  - "同節 1: 安全の式は、販売数が初期在庫を超えない式で売り越しを落とす"
+  - "同節 2: 起きてほしいことは別の検査にする。売らない実装は安全の式を通し、販売数が初期在庫に達する観察で落とす"
+  - "同節 3: 逐次の例は、読み手向けの動作説明として残す"
+  - "同節 6: 実装への再生は、モデルと実装が同じ振る舞いをするかの検査である"

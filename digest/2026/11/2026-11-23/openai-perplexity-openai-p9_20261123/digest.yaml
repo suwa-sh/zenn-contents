@@ -1,0 +1,63 @@
+source:
+  title: "OpenAIがperplexityをモデル進捗の共有指標として整理した"
+  url: null
+  path: "notes/zenn/articles/openai-perplexity-openai-p9_20261123.md"
+  primary:
+    - title: "Jakub Pachocki, Perplexity and Intelligence (OpenAI, 2026-11-22)"
+      url: "https://openai.com/index/perplexity-and-intelligence"
+    - title: "OpenAI, What affects chain-of-thought monitorability across the model lifecycle? (2026-11-10)"
+      url: "https://openai.com/safety-alignment/cot-monitorability-model-lifecycle/"
+    - title: "Megan Kinniment ほか, AI R&D-relevant model capabilities are improving rapidly and are getting harder to measure (METR, 2026-11-20)"
+      url: "https://metr.org/blog/2026-11-20-q4-2026-capability-update/"
+    - title: "Sabrina J. Mielke, Can you compare perplexity across different segmentations? (2019-04-23)"
+      url: "https://sjmielke.com/comparing-perplexities.htm"
+  retrieved_at: "2026-11-24"
+archetype:
+  primary: decision
+  secondary: [research]
+one_liner: "OpenAIは、社内コードで次のトークンを予測した損失を、進捗を話す指標として公開しました。"
+key_points:
+  - claim: "名前はlog-perplexityで、低いほど次のトークンの予測が良いです。"
+    evidence: "perplexityとは"
+    status: fact
+  - claim: "測るのは、事前学習を終えたモデルが、学習に使っていない社内コードで出した値です。"
+    evidence: "perplexityとは / ベンダーの列は残し、受け入れは別欄にする"
+    status: fact
+  - claim: "本文の約の数、元記事の図の測定値、その注記は、別々に残します。"
+    evidence: "注意点 / 本文の「約」と図の value"
+    status: fact
+  - claim: "この損失の0.68から0.70は、さらなる能力を期待する区間です。合意した停止線としては書かれていません。"
+    evidence: "0.68から0.70は期待する窓 / 本文が並べる損失と能力"
+    status: fact
+  - claim: "モデル更新の採否では、ベンダーの進捗欄と自社の受け入れ欄を分けます。"
+    evidence: "更新台帳に残す2欄 / ベンダーの列は残し、受け入れは別欄にする"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "ベンダーの損失は進捗欄に残し、受け入れは別欄にする"
+    reason_needed: "損失の低下を、自社の受け入れ合格に読み替える読みを止めるため"
+example:
+  description: "本文の約0.99は、元記事の図の0.986に対応します。"
+  hypothetical: false
+  evidence: "本文の「約」と図の value"
+applicability:
+  - "モデル更新の採用で、ベンダーの損失を見るときです。"
+  - "この損失を、他社の損失と並べるときです。"
+  - "この損失の0.68から0.70を、停止線と読む前です。"
+decision_criteria:
+  - "測ったデータを、進捗欄に残しましたか。"
+  - "事前学習を終えた時点の値かを、進捗欄に残しましたか。"
+  - "根拠が出力に含まれるかを、受け入れ欄で見ましたか。"
+  - "失敗したときに止まれるかを、受け入れ欄で見ましたか。"
+  - "明確で速いフィードバックが無い選択での振る舞いを、受け入れ欄で見ましたか。"
+limitations:
+  - "文章を区切る単位が違う他社の損失は、同じ尺度ではありません。"
+  - "元記事の図では、次の世代で損失が上がる点があります。"
+  - "答える前に考えを書かせる使い方は、能力が上がってもこの損失を下げません。"
+  - "図の「数学の問題を解いた」がどの問題かは、未照合です。"
+unknowns:
+  - "行動の監視が基準に達するまでの上限の数値は何か。"
+  - "他社が同じ固定データと同じ区切りで数を出すか。"
+  - "図の「数学の問題を解いた」が、どの問題のどの主張に対応するか。"
+  - "監視の記事の損失と、今回の社内コードの値が同一系列か。"
+reviewed: true

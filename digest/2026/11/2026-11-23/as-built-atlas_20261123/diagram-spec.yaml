@@ -1,0 +1,58 @@
+type: structure
+title: "解析は結果まで、利用は同じ集計"
+message: "AIの推論は分析結果まで。人とエージェントは同じ集計表を読む"
+source: "notes/zenn/articles/as-built-atlas_20261123.md"
+components:
+  - id: code
+    label: "対象コード"
+    meaning: "読み取り専用の対象 Git。作業定義に固定コミットを書く"
+  - id: analyst
+    label: "分析するエージェント"
+    meaning: "入口から処理・依存・読み書きを辿り、結果 YAML を書く"
+  - id: yaml
+    label: "結果YAML"
+    meaning: "入口 1 件の正本。事実・解釈・不明と、根拠のファイルと行"
+  - id: mart
+    label: "集計表"
+    meaning: "検査を通した YAML からツールが作る派生物"
+  - id: web
+    label: "画面"
+    meaning: "保守担当が集計表を読む Webapp"
+  - id: mcp
+    label: "MCP"
+    meaning: "結果を使うエージェントが同じ集計表を読む入口"
+groups:
+  - id: inference
+    label: "推論はここまで"
+    members: [analyst, yaml]
+  - id: reuse
+    label: "同じ集計を読む"
+    members: [web, mcp]
+relationships:
+  - from: code
+    to: analyst
+    label: "読む"
+  - from: analyst
+    to: yaml
+    label: "根拠付きで書く"
+  - from: yaml
+    to: mart
+    label: "検査後に集計"
+  - from: mart
+    to: web
+    label: "人が読む"
+  - from: mart
+    to: mcp
+    label: "エージェントが読む"
+omitted:
+  - item: "入口の列挙、人の承認、別セッションのレビュー、鮮度管理"
+    reason: "伝えたいこと（推論を分析結果で区切り、同じ集計を再利用する）に直接関係しないため"
+  - item: "DuckDB、dbt、serve プロセス"
+    reason: "集計表と、画面・MCP の読み口にまとめたため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "発想の転換：質問される前に解析しておく / AI の使いどころの 3 段階"
+  - "特徴 / AI の推論を分析結果を作るところに閉じ込め、人とエージェントが同じ API を読む"
+  - "構造とアーキテクチャ / コンテナ図 / 正本は YAML。Webapp と MCP は同じ集計表 API を読む"

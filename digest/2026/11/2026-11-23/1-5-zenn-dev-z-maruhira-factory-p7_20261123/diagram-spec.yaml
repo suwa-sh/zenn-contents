@@ -1,0 +1,51 @@
+type: structure
+title: "1.5倍の置き場所"
+message: "丸平氏は1.5倍を、Issueを流す流れの外に置く"
+source: "notes/zenn/articles/1-5-zenn-dev-z-maruhira-factory-p7_20261123.md"
+components:
+  - id: startup
+    label: "Issueを流す"
+    meaning: "GitHub Issueを10分ごとに拾い、設計と実装のプルリクエストを順に出す。記事の「起動」はこの作業を指す"
+  - id: words
+    label: "手順を言葉にする"
+    meaning: "流れ、Issue、手順、ルールを言葉にしたこと。自分で動かすときにも効く、と著者は置いている"
+  - id: parallel
+    label: "並列の習慣"
+    meaning: "ファクトリーの仕事と自分の仕事を重ねる習慣"
+  - id: merge
+    label: "直接マージ"
+    meaning: "マージ権限のある人が、Issueを流した人以外のプルリクエストを直接マージする"
+  - id: gain
+    label: "1.5倍"
+    meaning: "1スプリントで1人がこなせる仕事の点数が1.5倍になった、という1人の3か月の自己申告"
+groups:
+  - id: convenient
+    label: "便利という程度"
+    members: [startup]
+  - id: outside
+    label: "自動化の外"
+    members: [words, parallel, merge]
+relationships:
+  - from: words
+    to: gain
+    label: "増分を置く"
+  - from: parallel
+    to: gain
+    label: "増分を置く"
+  - from: merge
+    to: gain
+    label: "増分を置く"
+omitted:
+  - item: "Issueを流すから1.5倍への矢印"
+    reason: "著者は起動そのものを便利という程度とし、増分の置き場所を外の3つにしている。矢印を足すと主因に読める"
+  - item: "赤・黄・緑の予想、夜と休日、7割と3割、設計と実装の見る範囲"
+    reason: "図が伝えるのは増分の置き場所だけである。流れと予想と欠測は本文に残す"
+  - item: "外部の待ち時間、マージ率、他社の工場"
+    reason: "この1.5倍へ重ねない、と記事が分けているため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "まとめ「著者は、1.5倍の増分を、起動そのものより、手順を言葉にしたこと、並列の習慣、レビュアーの直接マージに置いています」"
+  - "1.5倍を組織の指標に写さない「起動そのものは便利という程度だとし、3つの要因は理屈の上ではファクトリーがなくても手に入る」"
+  - "1.5倍を組織の指標に写さない「3つの要因は、手順を言葉にしたこと、並列に進める習慣、レビュアーが直接マージできることです」"

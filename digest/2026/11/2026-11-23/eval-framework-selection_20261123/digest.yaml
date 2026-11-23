@@ -1,0 +1,52 @@
+source:
+  title: "LLMとエージェントの評価フレームワークを採点の単位と実行の形で選び分ける"
+  url: null
+  path: "notes/zenn/articles/eval-framework-selection_20261123.md"
+  primary:
+    - title: "How to pick an eval framework that checks what you ship"
+      url: "https://x.com/sermakarevich/status/2124210425331921148"
+  retrieved_at: "2026-11-24"
+archetype:
+  primary: decision
+  secondary:
+    - architecture
+one_liner: "評価の仕組みは、採点する対象と実行の形で選びます。"
+key_points:
+  - claim: "先に、最終回答、呼んだ道具、検索順位、資料に沿うかのどれを採点するか決めます。"
+    evidence: "ベストプラクティス > 採点粒度を先に決める / まとめ"
+    status: fact
+  - claim: "Python の関数で書くのは、Inspect、DeepEval、Pydantic Evals です。"
+    evidence: "ベストプラクティス > 棚の選び方"
+    status: fact
+  - claim: "YAML で書くのは、Promptfoo と lm-evaluation-harness です。"
+    evidence: "ベストプラクティス > 棚の選び方"
+    status: fact
+  - claim: "RAG指標は、検索と回答の関係を見る Ragas です。"
+    evidence: "ベストプラクティス > 棚の選び方"
+    status: fact
+  - claim: "採点に使うモデルは、採点されるモデルと分けて指定します。"
+    evidence: "ベストプラクティス > 判定器を評価対象と分ける"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "先に採点単位を決め、実行の形で棚を選ぶ"
+    reason_needed: "6 製品の差は機能一覧より、採点単位と実行単位の対応で決まるため"
+example:
+  description: "期待値 Paris、出力 Not Paris では、Inspect の末尾一致と Promptfoo の包含は通り、Pydantic Evals の全体の等値は落ちる。"
+  hypothetical: false
+  evidence: "ベストプラクティス > 採点粒度を先に決める"
+applicability:
+  - "採点する単位が未決のときです。"
+  - "検索順位と、回答が資料に沿うかを分けたいときです。"
+  - "CI の失敗を終了コードに合わせるときです。"
+decision_criteria:
+  - "定義を、Python の関数か YAML に決めましたか。"
+  - "終了コードの意味を製品ごとに見ていますか。"
+limitations:
+  - "クラス名、必須項目、CLI の形は、公式文書のあいだで食い違います。"
+  - "Promptfoo の終了コード 100 は、採点される側の停止も含みます。"
+  - "inspect eval は、失敗ログでもプロセスを成功で終えます。"
+  - "正解が無く実際の回答がある適合率は、ContextUtilization です。"
+unknowns:
+  - "記事例のモデル名（gpt-6-luna など）が、読者の環境で提供されているか。ダイジェスト本文にはモデル名を載せていない。"
+reviewed: true

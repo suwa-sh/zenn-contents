@@ -1,0 +1,53 @@
+type: structure
+title: "ベンダー進捗と自社の受け入れ"
+message: "ベンダーの損失は進捗欄に残し、受け入れは別欄にする"
+source: "notes/zenn/articles/openai-perplexity-openai-p9_20261123.md"
+components:
+  - id: snapshot
+    label: "社内コード"
+    meaning: "固定した社内コードのスナップショット。損失を測るデータ。"
+  - id: loss
+    label: "ベースの損失"
+    meaning: "事前学習を終えたモデルの、学習に使っていない社内コード上の log-perplexity。事後学習のあとの値ではない。"
+  - id: vendor
+    label: "ベンダー進捗"
+    meaning: "指標名、データ、日付、ベースか事後かをセットで残す欄。"
+  - id: judgment
+    label: "確かめにくい選択"
+    meaning: "成否をすぐ確かめられない選択。受け入れ欄に置く例。"
+  - id: accept
+    label: "自社の受け入れ"
+    meaning: "根拠が出力に含まれるか、失敗したときに止まれるか、薄い判断でどう振る舞うか。"
+groups:
+  - id: progress
+    label: "進捗の列"
+    members: [snapshot, loss, vendor]
+  - id: acceptance
+    label: "受け入れの列"
+    members: [judgment, accept]
+relationships:
+  - from: snapshot
+    to: loss
+    label: "測る"
+  - from: loss
+    to: vendor
+    label: "残す"
+  - from: judgment
+    to: accept
+    label: "例として置く"
+omitted:
+  - item: "prompting、finetuning、強化学習で潜在能力を引き出す流れ"
+    reason: "伝えたいことは採用台帳の2欄であり、能力が現れる経路ではないため"
+  - item: "0.68から0.70の期待する窓、本文の約、図の測定値、図の注記"
+    reason: "進捗欄に何を書くかの中身であり、2欄の関係そのものではないため"
+  - item: "損失から受け入れへの矢印"
+    reason: "記事は、損失の低下を受け入れの合格に読み替えない、と書いているため。矢印を足すと逆の関係になる"
+  - item: "METR という組織名と、時間軸の数値"
+    reason: "受け入れ欄に置く例は、フィードバックが薄い選択での成否であり、組織名は図の関係に不要なため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "更新台帳に残す2欄: ベンダー進捗は指標名、データセット、日付、ベースモデルか事後学習後かをセットで残す。OpenAI のこの発表なら社内コードの固定スナップショット上のベースモデル log-perplexity と書く"
+  - "更新台帳に残す2欄: 自社の受け入れは、根拠が出力に含まれるか、失敗したときに止まれるか、明確なフィードバックが無い選択でどう振る舞うか。METR の判断タスクはこの欄の外部の例"
+  - "ベンダーの列は残し、受け入れは別欄にする: perplexity が下がったことを、受け入れの合格に読み替えない"
