@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (677)
+## Articles: 下書き (678)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-11-23 | [🏭 ソフトウェアファクトリー3か月で1.5倍の中身は起動の外にある](articles/1-5-zenn-dev-z-maruhira-factory-p7_20261123.md) | GitHub, AIAgent, Claude, Scrum |
 | 2026-11-23 | [🗺️ as-built-atlasで、AIによるコード解析を一過性の回答から再利用できる情報資産へ](articles/as-built-atlas_20261123.md) | AI, MCP, LegacyCode, CodeAnalysis, OSS |
+| 2026-11-23 | [🧪 LLMとエージェントの評価フレームワークを採点の単位と実行の形で選び分ける](articles/eval-framework-selection_20261123.md) | LLM, Evaluation, AIAgent, RAG, Python |
 | 2026-11-23 | [📊 OpenAIがperplexityをモデル進捗の共有指標として整理した](articles/openai-perplexity-openai-p9_20261123.md) | OpenAI, LLM, Evaluation |
 | 2026-11-23 | [🔁 既存コードからAIエージェント向けの仕様を起こすreverse-spec-flowの構造と使い方](articles/reverse-spec-flow_20261123.md) | AWS, AIAgent, ClaudeCode, SpecDrivenDevelopment, Modernization |
 | 2026-11-23 | [📐 AIの生成テストの前に置く、Quintの不変条件](articles/tla-zenn-dev-karamage-73027-p5_20261123.md) | Quint, TLAPlus, Testing, LLM |
