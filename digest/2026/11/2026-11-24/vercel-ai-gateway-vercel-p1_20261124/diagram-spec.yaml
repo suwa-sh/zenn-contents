@@ -1,0 +1,68 @@
+type: structure
+title: "依頼を止める三つの枠"
+message: "いま使える止め方は自己申告のゼロ保持です。公開監査は報告書待ち、試験は記録です。"
+source: "notes/zenn/articles/vercel-ai-gateway-vercel-p1_20261124.md"
+components:
+  - id: req
+    label: "チームの依頼"
+    meaning: "チームがモデルの窓口へ送る推論の依頼"
+  - id: gate
+    label: "モデルの窓口"
+    meaning: "複数のモデルを一つのAPIで呼ぶ AI Gateway"
+  - id: zdr
+    label: "自己申告のゼロ保持"
+    meaning: "応答後に本文を残さない、という自己申告の経路絞り"
+  - id: label
+    label: "公開監査のラベル"
+    meaning: "独立監査の報告書が公開された提供元へ付くラベル"
+  - id: canary
+    label: "試験の記録"
+    meaning: "Vercelが別に送る、他に無いURLの試験"
+  - id: prov
+    label: "提供元"
+    meaning: "モデルの推論を実行する事業者"
+groups:
+  - id: now
+    label: "いま止める"
+    members: [zdr]
+  - id: wait
+    label: "報告書待ち"
+    members: [label]
+  - id: record
+    label: "Vercelの記録"
+    members: [canary]
+relationships:
+  - from: req
+    to: gate
+    label: "送る"
+  - from: gate
+    to: zdr
+    label: "経路を絞る"
+  - from: zdr
+    to: prov
+    label: "先が無ければ失敗"
+  - from: gate
+    to: label
+    label: "報告書のあと寄せる"
+  - from: label
+    to: prov
+    label: "公開前は対象なし"
+  - from: canary
+    to: gate
+    label: "試験を別に送る"
+omitted:
+  - item: "自己申告のゼロ保持から公開監査のラベルへ続く直列の矢印"
+    reason: "本文は二つのフィルタを別々の寄せ先として並べている。図の直列は採用しない"
+  - item: "試験URLを提供元が取りに来たときの記録と、プロバイダ・モデル・実行の調査"
+    reason: "伝えたいことは試験が顧客の依頼と別であること。試験の内部手順は外す"
+  - item: "許可リスト、リージョン指定、例外キー"
+    reason: "顧客の別の停止単位。三つの枠の関係には使わない"
+  - item: "検索、一時保存、一括依頼、自分の鍵、学習禁止"
+    reason: "経路の穴と別設定。ダイジェストの具体例と注意点に残す"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "顧客の経路と試験の経路: 二つのフィルタは別々の寄せ先。試験は顧客の依頼と分かれる"
+  - "発注側が触る設定: 公開監査のトグルは、公開された監査を満たす提供元だけへ寄せる"
+  - "依頼を止める単位: いま使える止め方は自己申告のゼロ保持。先が無ければ依頼は失敗する。試験は記録して調査する"

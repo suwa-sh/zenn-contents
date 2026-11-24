@@ -1,0 +1,62 @@
+source:
+  title: "OpenAIのPerformance Factoryは性能劣化の発見と修正をどこまで機械に渡すか"
+  url: null
+  path: "notes/zenn/articles/openai-performance-factory-p2_20261124.md"
+  primary:
+    - title: "Okay Zed, Cyrus Forbes, How OpenAI’s Performance Factory keeps ChatGPT fast (OpenAI, 2026-11-19)"
+      url: "https://openai.com/index/how-openai-performance-factory-keeps-chatgpt-fast/"
+    - title: "同記事の日本語版 (OpenAI, 2026-11-19)"
+      url: "https://openai.com/ja-JP/index/how-openai-performance-factory-keeps-chatgpt-fast/"
+    - title: "記事に埋め込まれたタスクレポート例の画像 (REG-482)"
+      url: "https://images.ctfassets.net/kftzwdyauwt9/5w8KpwlFR3tNfJbAStImkG/ee5f1df65a302cb09dde0a7d52d09138/performance-factory-worker-startup-report.png"
+  retrieved_at: "2026-11-25"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "OpenAIの社内の仕組みは、性能の調査と確認をエージェントに渡し、出荷の判断は人に残します。"
+key_points:
+  - claim: "検出は性能アラート、調査と修正案と基準の確認はエージェント、レビューとデプロイは人です。"
+    evidence: "Performance Factoryとは / まとめ（検出はシステム。調査・修正提案・復旧確認はエージェント。レビューとデプロイはエンジニア）"
+    status: fact
+  - claim: "診断と修正案は、作った実行とは別の実行が誤りを探してから人に渡します。"
+    evidence: "Performance Factoryとは（診断と修正案は、それぞれ別の Codex セッションが反証する）"
+    status: fact
+  - claim: "デプロイ後は以前の基準と比べます。戻れば解決、一部なら元のタスクを閉じて残りを新タスク、改善が無ければ調査へ戻します。"
+    evidence: "Performance Factoryとは（デプロイ後の確認は3分岐）"
+    status: fact
+  - claim: "3か月余りで調査は1,700件を超えました。これは処理した量です。"
+    evidence: "Performance Factoryとは（英語版は3か月余りで調査が1,700件を超えた） / 注意点（件数は調査の処理量）"
+    status: fact
+  - claim: "同じ型の土台は、メトリクス、トレース、プロファイルと、アラートからタスクを起こす遷移です。"
+    evidence: "自組織で同じ型を始めるとき"
+    status: fact
+mental_models:
+  - type: behavior
+    key_message: "調査と確認はエージェントが進める。出荷の判断は人が持つ。"
+    reason_needed: "処理量の数字を、人の出荷判断まで機械に渡した証拠と読まないため"
+example:
+  description: "元記事の例では、社内ワーカーの起動時間の中央値が20.6秒から45〜50秒になりました。翌日の切り戻しで基準に戻りました。予防の修正は草案のままです。"
+  hypothetical: false
+  evidence: "注意点（埋め込まれたタスクレポートの例、REG-482）"
+applicability:
+  - "アラートのあと、別の担当が調査を再開するときです。"
+  - "修正案を、人のレビューなしでマージする前です。"
+  - "調査件数を、待ち時間の成果と読む前です。"
+decision_criteria:
+  - "悪化の開始時点を、タスクに残しましたか。"
+  - "同種が遅くなったのか、もともと遅い割合の増加かを分けましたか。"
+  - "修正案を、別の実行が見ましたか。"
+  - "速度以外の副作用を、受け入れ前に書きましたか。"
+  - "改善が無ければ、そのタスクを閉じていませんか。"
+limitations:
+  - "70%は、原因候補100件を自社が正確と採点した割合です。"
+  - "低リスクな変更の無人出荷は、今後の検討です。"
+  - "キャッシュは速くなりえて、古いデータを返しえます。"
+  - "利用者から見た待ち時間の前後差は、公開されていません。"
+unknowns:
+  - "使用している Codex のモデル ID と、評価に使った過去インシデントの期間。"
+  - "600件超のうち、マージされた修正の件数と、エージェント原稿のままの件数。"
+  - "利用者から見た待ち時間の、導入前後の差。"
+  - "低リスクな変更の無人出荷を、どの条件で始めるか。"
+  - "Regression Workflow が現に動いているサービス群。"
+reviewed: true

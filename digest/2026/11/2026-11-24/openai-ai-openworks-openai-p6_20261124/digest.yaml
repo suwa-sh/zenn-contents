@@ -1,0 +1,64 @@
+source:
+  title: "OpenAI OpenWorksの公開条件で見る費用主体と終了後の権限"
+  url: null
+  path: "notes/zenn/articles/openai-ai-openworks-openai-p6_20261124.md"
+  primary:
+    - title: "OpenWorks"
+      url: "https://openai.com/openworks/"
+    - title: "OpenAI Services Agreement"
+      url: "https://openai.com/policies/services-agreement/"
+    - title: "ChatGPT 料金"
+      url: "https://openai.com/business/chatgpt-pricing/"
+    - title: "2026年9月の別提携"
+      url: "https://openai.com/index/helping-small-businesses-put-ai-to-work/"
+  retrieved_at: "2026-11-24"
+archetype:
+  primary: decision
+  secondary: [governance]
+one_liner: "OpenWorksはOpenAIが地域の担当者へ資金を出す支援です。アカウントとファイルの所在は公開条件で決まりません。"
+key_points:
+  - claim: "OpenAIが資金と道具を地域の担当者へ渡します。"
+    evidence: "三つの当事者と二つの流れ"
+    status: fact
+  - claim: "事業者の参加は無料です。"
+    evidence: "OpenWorksとは / 三つの当事者と二つの流れ"
+    status: fact
+  - claim: "事業者は、ChatGPT Business（有料の席）を3か月無償で受け取ります。"
+    evidence: "OpenWorksとは / 終了のあと"
+    status: fact
+  - claim: "事例の数値は、見積と発言です。"
+    evidence: "事例の数値は見積と発言である"
+    status: fact
+  - claim: "現場支援は、費用の支払者と、終了時のアカウントとファイルの所在で分けます。"
+    evidence: "発注側が現場投入を比べる軸"
+    status: interpretation
+mental_models:
+  - type: structure
+    key_message: "OpenAIが担当の支給を持ち、終了後の戻し先は公開条件では決まらない"
+    reason_needed: "費用の流れと、公開条件が書いていない戻し先を、1枚で分けるため"
+example:
+  description: "OpenAIの2026年9月の別提携は、既存の支援機関の人を訓練する型です。その提携では、訓練する相手の給与主体は書かれていません。事業者が費用を払う顧問は、終了時の戻し方を契約に書けます。"
+  hypothetical: false
+  evidence: "似た現場支援は費用の主体で分かれる"
+applicability:
+  - "独立所有の米国中小が、この支援を受ける前です。"
+  - "費用の出し方で、現場の支援を比べる前です。"
+  - "無償期間のあと席を続けるか決める前です。"
+decision_criteria:
+  - "秘密保持の相手を書きましたか。"
+  - "在庫や会計の認証情報を渡さないと書きましたか。"
+  - "成果ファイルを店のツールに置きますか。"
+  - "3か月後に席を続けるか止めるかを決めましたか。"
+  - "事業者が契約上の顧客ですか。"
+limitations:
+  - "地域の担当者への資金は月8,000ドルが上限です。雇用、業務委託、助成のどれかと、支払月数は書かれていません。"
+  - "入力と出力は、事業者が契約上の顧客であるとき、その事業者のものです。"
+  - "日本の事業者への申込案内は、今回の公開条件にはありません。"
+  - "アカウントの所有者と席数は、公開面で決まっていません。"
+  - "OpenWorksと同じ名前の清掃会社の条項は、この支援には使えません。"
+unknowns:
+  - "地域担当の支給が、雇用、業務委託、助成のどれで払われるか。"
+  - "3か月の契約上の顧客、所有者、席の種類と数。"
+  - "支給の実額、支払月数、パイロットの終了日。"
+  - "日本を含む米国外を、後日の募集で対象にするか。"
+reviewed: true

@@ -1,0 +1,68 @@
+type: behavior
+title: "性能劣化の担当の分かれ方"
+message: "調査と確認はエージェントが進める。出荷の判断は人が持つ。"
+source: "notes/zenn/articles/openai-performance-factory-p2_20261124.md"
+components:
+  - id: alert
+    label: "性能アラート"
+    meaning: "しきい値超過でタスクを開くシステム側の起点"
+  - id: investigate
+    label: "調査"
+    meaning: "いつ悪化したか、どのリクエストか、変更が届いたかを見る"
+  - id: challenge
+    label: "別実行の反証"
+    meaning: "診断と修正案を、作った実行とは別の実行が突き返す"
+  - id: human
+    label: "レビューとデプロイ"
+    meaning: "エンジニアが採否を決め、デプロイする"
+  - id: verify
+    label: "基準の確認"
+    meaning: "デプロイ後、別のエージェントが以前の性能基準と比べる"
+  - id: done
+    label: "解決か残件"
+    meaning: "全部戻れば解決。一部なら元のタスクを閉じて、残りを新しいタスクにする"
+groups:
+  - id: agents
+    label: "エージェント"
+    members: [investigate, challenge, verify]
+  - id: people
+    label: "人"
+    members: [human]
+relationships:
+  - from: alert
+    to: investigate
+    label: "タスクを開く"
+  - from: investigate
+    to: challenge
+    label: "診断を渡す"
+  - from: challenge
+    to: human
+    label: "修正案"
+  - from: human
+    to: verify
+    label: "デプロイ後"
+  - from: verify
+    to: done
+    label: "全部か一部"
+  - from: verify
+    to: investigate
+    label: "改善がなければ"
+omitted:
+  - item: "タスクサービス、ディスパッチループ、クラウド実行、サブスクリプション"
+    reason: "担当の分かれ方が主題であり、4つの構成部品は流れの理解に不要なため"
+  - item: "診断の反証と修正案の反証を別々の箱にすること"
+    reason: "どちらも別実行が突き返す同じ役割なので、1つの箱にまとめた"
+  - item: "調査件数、70%の採点、ツールの種類数"
+    reason: "処理量の読み方は本文の限界に残し、図の流れには不要なため"
+  - item: "手作業から Performance Factory までの6段の履歴"
+    reason: "いまの担当分担が主題なため"
+  - item: "調査ツール自身の故障を直す自己修復タスク"
+    reason: "性能劣化対応の本流ではないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "Performance Factoryとは: 検出はシステム。原因調査、修正提案、復旧確認はエージェント。レビューとデプロイはエンジニア"
+  - "Performance Factoryとは: 診断と修正案は、それぞれ別の Codex セッションが反証する"
+  - "Performance Factoryとは: デプロイ後の確認は3分岐。戻れば解決、一部だけなら残りの新タスク、改善がなければ調査へ戻す"
+  - "性能劣化対応の流れの mermaid: アラートから調査、反証、修正案、人のレビューとデプロイ、ベースライン比較"

@@ -1,0 +1,61 @@
+type: structure
+title: "group_id の実体は保存先で分かれる"
+message: "分離の単位は group_id。FalkorDB ではグラフ名、ほかの保存先では同じデータベースのプロパティ"
+source: "notes/zenn/articles/graphiti-0-32-github-getzep-p9_20261124.md"
+components:
+  - id: caller
+    label: "呼び出し"
+    meaning: "エピソードを渡すアプリケーション"
+  - id: gid
+    label: "group_id"
+    meaning: "呼び出しが持つ分離キー"
+  - id: falkor
+    label: "FalkorDB"
+    meaning: "既定以外の group_id をグラフ名へ写す保存先"
+  - id: graph
+    label: "グラフ名"
+    meaning: "その group_id の文字列を database 名にしたグラフ"
+  - id: others
+    label: "Neo4j・Neptune・Relate"
+    meaning: "同じデータベースに group_id を残す保存先"
+  - id: prop
+    label: "group_id プロパティ"
+    meaning: "同じデータベース上の分離用プロパティ"
+groups:
+  - id: by_graph
+    label: "グラフで分ける"
+    members: [falkor, graph]
+  - id: by_prop
+    label: "プロパティで分ける"
+    members: [others, prop]
+relationships:
+  - from: caller
+    to: gid
+    label: "渡す"
+  - from: gid
+    to: falkor
+    label: "既定の '_' 以外"
+  - from: falkor
+    to: graph
+    label: "名前にする"
+  - from: gid
+    to: others
+    label: "同じデータベース"
+  - from: others
+    to: prop
+    label: "プロパティにする"
+omitted:
+  - item: "FalkorDB の '_' が default_db になる分岐"
+    reason: "矢印を既定以外に限定した。'_' 自体の行き先は図の主張（既定以外がグラフ名）の例外詳細のため"
+  - item: "core の空文字、参照 MCP の main"
+    reason: "既定文字列の違いは図の分離実体ではなく、本文の核心で扱うため"
+  - item: "並行取り込みの Admit から Enrich"
+    reason: "伝えたいことは保存先ごとの分離実体であり、取り込みの段階ではないため"
+  - item: "clone の 3 分岐と Kuzu の削除"
+    reason: "グラフ名になること以上の実装分岐と、廃止ストアの棚卸しは図の 1 メッセージに不要なため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "保存先ごとの実体 / 分離キーは呼び出しの group_id。FalkorDB では database 名がグラフ名。Neo4j、Neptune、Relate は同じデータベースの group_id プロパティ"
+  - "境界は group_id で切る / FalkorDB では既定以外の id がグラフ名になり、'_' は default_db。Neo4j、Neptune、Relate では同じデータベースのプロパティ"

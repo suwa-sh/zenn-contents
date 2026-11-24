@@ -1,0 +1,60 @@
+type: structure
+title: "費用の主体と終了後の戻し先"
+message: "OpenAIが担当の支給を持ち、終了後の戻し先は公開条件では決まらない"
+source: "notes/zenn/articles/openai-ai-openworks-openai-p6_20261124.md"
+components:
+  - id: openai
+    label: "OpenAI"
+    meaning: "地域担当へ資金と道具を渡し、事業者へ製品の無償期間を渡す主体。"
+  - id: partner
+    label: "地域担当"
+    meaning: "OpenWorks Partner。事業者が選んだ作業に並走する人。"
+  - id: smb
+    label: "米国の中小"
+    meaning: "独立所有の米国の中小。参加費は無料。作業は自分で選ぶ。"
+  - id: files
+    label: "アカウントとファイル"
+    meaning: "終了後に誰の手元へ戻るかを、公開条件が固定していないもの。"
+  - id: memo
+    label: "着手メモ"
+    meaning: "受入側が着手前に書く欄。公開条件はその代わりを書いていない。"
+groups:
+  - id: published
+    label: "公開条件の流れ"
+    members: [openai, partner, smb]
+  - id: after
+    label: "終了後"
+    members: [files, memo]
+relationships:
+  - from: openai
+    to: partner
+    label: "資金と道具"
+  - from: openai
+    to: smb
+    label: "製品を3か月"
+  - from: partner
+    to: smb
+    label: "並走"
+  - from: memo
+    to: files
+    label: "受入側が書く"
+omitted:
+  - item: "事業者が選んだ作業の矢印"
+    reason: "伝えたいことは費用の主体と終了後の戻し先であり、作業の中身ではないため"
+  - item: "地域担当と事業者のあいだの参加費"
+    reason: "記事の図にその矢印は無く、参加費は無料だと書いているため"
+  - item: "月1回のワークショップと、掲載20コミュニティ"
+    reason: "費用の主体と戻し先の関係に直接入らないため"
+  - item: "月あたり最大8,000ドル、事例の見積、席の料金"
+    reason: "流れの中身の数値であり、誰から誰へ渡るかの関係そのものではないため"
+  - item: "2026年9月の別提携と、事業者が費用を払う顧問"
+    reason: "図は OpenWorks の当事者だけを示し、比べる型は本文の具体例に置くため"
+  - item: "着手メモの四点の内訳"
+    reason: "図が示すのは、戻し先を受入側が書くことであり、項目の一覧は本文の確認項目に置くため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "三つの当事者と二つの流れ: お金と道具は OpenAI から Partner へ。無償の製品期間は OpenAI から事業者へ。Partner と事業者のあいだに参加費の矢印はない"
+  - "終了のあと / 公開条件だけでは戻し先が決まらない: 無償の期間は ChatGPT Business の3か月。アカウントとファイルの戻し先は公開条件だけでは決まらない"
+  - "着手のメモに書く四点: 公開の OpenWorks は四点を受入側の代わりに書いていない。米国の対象事業者は四点を着手のメモに書く"

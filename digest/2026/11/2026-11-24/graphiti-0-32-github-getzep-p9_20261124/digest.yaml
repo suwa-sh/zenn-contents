@@ -1,0 +1,62 @@
+source:
+  title: "Graphiti 0.32のグループ分離と並行取り込み"
+  url: null
+  path: "notes/zenn/articles/graphiti-0-32-github-getzep-p9_20261124.md"
+  primary:
+    - title: "タグ v0.32.0"
+      url: "https://github.com/getzep/graphiti/releases/tag/v0.32.0"
+    - title: "並行取り込み"
+      url: "https://help.getzep.com/graphiti/core-concepts/concurrent-ingestion"
+    - title: "Kuzu ドライバの削除"
+      url: "https://github.com/getzep/graphiti/pull/2151"
+    - title: "1 グラフの並行取り込み"
+      url: "https://github.com/getzep/graphiti/pull/2154"
+  retrieved_at: "2026-11-25"
+archetype:
+  primary: architecture
+  secondary:
+    - decision
+one_liner: "Graphiti 0.32 は、エージェントの記憶を知識グラフにする枠組みです。"
+key_points:
+  - claim: "知識グラフの分離の単位は、呼び出しが渡す group_id（分離キー）です。"
+    evidence: "境界は group_id で切る / テナント境界は、呼び出しが知っている group_id として設計します"
+    status: fact
+  - claim: "FalkorDB では、'_' 以外だけが別のグラフ名になります。"
+    evidence: "境界は group_id で切る / FalkorDB では、既定以外の id がグラフ名になり、'_' は default_db になります"
+    status: fact
+  - claim: "Neo4j、Neptune、Relate では、同じデータベースのプロパティです。"
+    evidence: "保存先ごとの実体 / 分離の実体は group_id プロパティ。境界は group_id で切る"
+    status: fact
+  - claim: "同梱の見本サーバの既定 main は、ライブラリの空文字とも FalkorDB の '_' とも違います。"
+    evidence: "group_id / core の空文字、FalkorDB の '_'、MCP の main は、別の文字列です"
+    status: fact
+  - claim: "並行取り込みは、同時実行の指定を渡したときだけ有効です。"
+    evidence: "並行取り込みの進み方 / ConcurrentIngestionConfig を渡したときだけ有効。既定の None は直列"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "分離の単位は group_id。FalkorDB ではグラフ名、ほかの保存先では同じデータベースのプロパティ"
+    reason_needed: "同じ group_id でも、保存先によってグラフ名になるかプロパティになるかが分かれるため"
+example:
+  description: "support-team は、英数字とハイフンだけなので呼び出し側の group_id として通ります。"
+  hypothetical: false
+  evidence: "group_id / support-team のように英数字とハイフンだけなら通る。境界は group_id で切る"
+applicability:
+  - "テナントの境界を group_id で切るときです。"
+  - "1 つの group_id へ複数の取り込みを同時に出すときです。"
+  - "0.32 へ上げる前に、Kuzu（旧保存先）が残っていないか見るときです。"
+decision_criteria:
+  - "使っている既定の文字列を確認しましたか。"
+  - "分離の実体をグラフ名かプロパティか決めましたか。"
+  - "検索と削除に意図した group_id を渡しますか。"
+  - "並行取り込み中、コミュニティ（実体の組）の更新はオフですか。"
+  - "保存先は、公式が並行可と書く Neo4j か FalkorDB ですか。"
+limitations:
+  - "同梱の見本サーバは、呼び出し元を認可しません。"
+  - "バックアップは、グループを選ばず、ボリュームかファイルの単位で取ります。"
+  - "Neo4j で削除と追加が重なり新しい事実が消える報告は、このタグでは未確認です。"
+  - "Neo4j の複数 group 全文検索が、最後の group だけを必須にする点は、このタグでは未確認です。"
+  - "起点が Entity のとき、Neptune の起点探索が別 group へ辿り得る点は、このタグでは未確認です。"
+unknowns:
+  - "Relate に並行取り込みを渡したとき、動くか、翻訳層で commit が落ちるかは未確認です。"
+reviewed: true

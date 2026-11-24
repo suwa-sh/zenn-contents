@@ -1,0 +1,62 @@
+source:
+  title: "Vercel AI GatewayのAudited ZDRとカナリア監査の読み方"
+  url: null
+  path: "notes/zenn/articles/vercel-ai-gateway-vercel-p1_20261124.md"
+  primary:
+    - title: "Introducing Audited ZDR on AI Gateway"
+      url: "https://vercel.com/blog/introducing-audited-zdr-on-ai-gateway"
+    - title: "AI Gateway now runs canary ZDR audits"
+      url: "https://vercel.com/changelog/ai-gateway-now-runs-canary-zdr-audits"
+    - title: "AI Gateway Zero Data Retention (ZDR)"
+      url: "https://vercel.com/docs/ai-gateway/security-and-compliance/zdr"
+  retrieved_at: "2026-11-25"
+archetype:
+  primary: decision
+  secondary: [governance]
+one_liner: "VercelのAudited ZDRは、独立したセキュリティ企業の報告書が出た提供元に付くラベルです。"
+key_points:
+  - claim: "提供元は、依頼の行き先の会社です。2026年11月24日時点では、提供元のBaseten、Modal、Waferの報告書は出ていません。"
+    evidence: "AI GatewayのAudited ZDRとは"
+    status: fact
+  - claim: "対象に入るのは、独立したセキュリティ企業が残さない主張を調べ、報告書を公開したときだけです。"
+    evidence: "AI GatewayのAudited ZDRとは / 監査が確認する範囲"
+    status: fact
+  - claim: "カナリアが見るのは、Vercelが送る依頼に埋めたURLです。アクセスは提供元とモデルと実行つきで記録します。"
+    evidence: "カナリア監査の1回 / 注意点"
+    status: fact
+  - claim: "自己申告のゼロ保持をオンにした依頼は、その先へ寄せます。その先が無ければ、依頼は失敗します。"
+    evidence: "依頼を止める単位"
+    status: fact
+  - claim: "学習の禁止は、ゼロ保持とは別の設定です。片方をオンにしても、もう片方はオンになりません。"
+    evidence: "注意点"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "いま使える止め方は自己申告のゼロ保持です。公開監査は報告書待ち、試験は記録です。"
+    reason_needed: "ラベル、既存の経路絞り、試験の記録を一つの止め方と読むと、いま使える手段を誤る"
+example:
+  description: "ゼロ保持をオンにしたあと、提供元のウェブ検索は依頼が続く。同じ入力を再利用する保存も続き、提供元が表現を持つ期間は最大24時間になりえ、窓口は保持に数えない。一括の依頼は投入時に拒否される。"
+  hypothetical: false
+  evidence: "注意点の表"
+applicability:
+  - "Pro、Enterprise、または購入した残高があるチームです。"
+  - "公開監査ラベルの採用を報告書まで待つ発注です。"
+decision_criteria:
+  - "窓口上の状態は、提供元の既定方針と一致しますか。"
+  - "公開報告書は、その提供元の実装を見ていますか。"
+  - "試験の周期は書面にありますか。"
+  - "どのアクセスを違反にしないかは、書面にありますか。"
+  - "検知後に止める人は書かれていますか。"
+limitations:
+  - "試験は、保存しただけで誰も読まない写しを見つけられません。"
+  - "応答の処理中に同じURLを取っても、処理の外で読まれたことと分けて記録されません。"
+  - "公開監査をオンにしたとき対象が空なら、失敗するのか、監査を通っていない提供元へ落ちるのかは、公開資料にありません。"
+  - "ISO 42001は、提供元のゼロ保持の証明にはなりません。"
+  - "自分の鍵にゼロ保持の印を付けても、契約の確認は利用者側です。"
+unknowns:
+  - "試験の周期、保存先、顧客への通知、検知時の自動停止。"
+  - "公開監査をオンにして対象が空のとき、失敗するのか、監査を通っていない提供元へ落ちるのか。操作できるロール。"
+  - "検知を違反と、来てよい対照に分ける規則。経路内のURL取得を除外するか。"
+  - "独立監査の採点と、例外の残り方。"
+  - "カナリアと公開監査ラベルの追加料金。"
+reviewed: true
