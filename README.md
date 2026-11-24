@@ -11,9 +11,9 @@
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-24 | [⚙️ OpenAIのPerformance Factoryは性能劣化の発見と修正をどこまで機械に渡すか](articles/openai-performance-factory-p2_20261124.md) | OpenAI, ChatGPT, Codex, SRE |
 | 2026-11-24 | [🔒 Vercel AI GatewayのAudited ZDRとカナリア監査の読み方](articles/vercel-ai-gateway-vercel-p1_20261124.md) | Vercel, AI, Security, LLM |
 | 2026-11-23 | [🏭 ソフトウェアファクトリー3か月で1.5倍の中身は起動の外にある](articles/1-5-zenn-dev-z-maruhira-factory-p7_20261123.md) | GitHub, AIAgent, Claude, Scrum |
-| 2026-11-23 | [🗺️ AIによるコード解析を一過性の回答から再利用できる情報資産へ - as-built-atlas](articles/as-built-atlas_20261123.md) | AI, MCP, LegacyCode, CodeAnalysis, OSS |
 | 2026-11-23 | [🧪 LLMとエージェントの評価フレームワークを採点の単位と実行の形で選び分ける](articles/eval-framework-selection_20261123.md) | LLM, Evaluation, AIAgent, RAG, Python |
 | 2026-11-23 | [📊 OpenAIがperplexityをモデル進捗の共有指標として整理した](articles/openai-perplexity-openai-p9_20261123.md) | OpenAI, LLM, Evaluation |
 | 2026-11-23 | [🔁 既存コードからAIエージェント向けの仕様を起こすreverse-spec-flowの構造と使い方](articles/reverse-spec-flow_20261123.md) | AWS, AIAgent, ClaudeCode, SpecDrivenDevelopment, Modernization |
@@ -691,10 +691,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (208)
+## Articles: 公開済み (209)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-11-24 | [🗺️ AIによるコード解析を一過性の回答から再利用できる情報資産へ - as-built-atlas](articles/as-built-atlas_20261123.md) | AI, MCP, LegacyCode, CodeAnalysis, OSS |
 | 2026-11-21 | [🧭 業務語を渡すオントロジーは、定義と計算と操作の置き場が製品で分かれる](articles/atmarkit-itmedia-co-jp-ait-p1_20261119.md) | Ontology, AIAgent, DataGovernance, SemanticLayer |
 | 2026-11-19 | [🧪 Claude Codeチームが並列の前に置く検証と失敗した検査の渡し方](articles/claude-code-e2e-claude-dev-p5_20261118.md) | ClaudeCode, Testing, CodeReview, Anthropic |
 | 2026-11-17 | [🧭 コーディングエージェントに今のWebプラットフォームの書き方を渡すModern Web Guidance](articles/modern-web-guidance_20261115.md) | Chrome, AIAgent, Frontend, CSS, HTML |
