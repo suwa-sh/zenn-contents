@@ -1,0 +1,47 @@
+type: structure
+title: "完成は4段階で残す"
+message: "画面が動くことと、運用担当者が手順で渡せることは、確認する事実が違う別の段階である"
+source: "notes/zenn/articles/ai-zenn-dev-techstudiolab-p7_20261109.md"
+components:
+  - id: screen
+    label: "画面が動く"
+    meaning: "決めた操作を実行できる"
+  - id: result
+    label: "期待した結果になる"
+    meaning: "データが仕様どおりに扱われる"
+  - id: failure
+    label: "失敗したときに扱える"
+    meaning: "データを壊さず、次の行動が分かる"
+  - id: handoff
+    label: "利用者に渡せる"
+    meaning: "運用担当者が決めた手順で利用を開始できる"
+groups:
+  - id: behavior
+    label: "アプリの振る舞い"
+    members: [screen, result, failure]
+  - id: operations
+    label: "運用の開始"
+    members: [handoff]
+relationships:
+  - from: screen
+    to: result
+    label: "次の段階"
+  - from: result
+    to: failure
+    label: "次の段階"
+  - from: failure
+    to: handoff
+    label: "次の段階"
+omitted:
+  - item: "操作IDを付けた保存、通信断、照会、再登録を避けるか再試行するか"
+    reason: "第4段階の判定に使う流れの一例であり、4段階の切り方が伝えたいことだから"
+  - item: "チェックリストの全項目と、承認の引き渡し可・条件付き可・不可"
+    reason: "各段階で残す記録の中身であり、段階の並びそのものではない"
+  - item: "掲載の例が防がない、新しい操作ID・同時登録・プロセス終了"
+    reason: "例の境界であり、段階の構造ではない"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "4つの段階"
+  - "4つの段階の表（通過の判断）"

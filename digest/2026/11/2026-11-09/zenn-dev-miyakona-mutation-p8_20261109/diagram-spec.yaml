@@ -1,0 +1,62 @@
+type: structure
+title: "緑は件数ではなく3分類で判断する"
+message: "緑が残った変異は件数では終わらず、穴、等価、未分類に分ける"
+source: "notes/zenn/articles/zenn-dev-miyakona-mutation-p8_20261109.md"
+components:
+  - id: diff
+    label: "追加行"
+    meaning: "コミット済み差分のうち、追加された行"
+  - id: lexer
+    label: "字句の生成器"
+    meaning: "ソースを切った単位を置換表で入れ替える。最小例は比較演算子だけ"
+  - id: thought
+    label: "構造を見る担当"
+    meaning: "何を集めるか、どの引数を渡すか、どの分岐を通すか（実行させるか、消すか）を考えて変異を作る"
+  - id: json
+    label: "1つの JSON"
+    meaning: "テストコマンドと変異の一覧"
+  - id: harness
+    label: "ハーネス"
+    meaning: "変異を1件ずつテストへ当て、落ちたもの、緑、時間切れや置換失敗を分ける"
+  - id: classify
+    label: "緑の仕分け"
+    meaning: "別担当が緑を穴、等価、未分類のいずれかにし、入力範囲と観測対象を残す"
+groups:
+  - id: makers
+    label: "壊す側"
+    members: [lexer, thought]
+relationships:
+  - from: diff
+    to: lexer
+    label: "比較などを置換"
+  - from: diff
+    to: thought
+    label: "収集、引数、分岐"
+  - from: lexer
+    to: json
+    label: "変異を出す"
+  - from: thought
+    to: json
+    label: "変異を出す"
+  - from: json
+    to: harness
+    label: "1件ずつ当てる"
+  - from: harness
+    to: classify
+    label: "緑だけ渡す"
+omitted:
+  - item: "テストが落ちた検出"
+    reason: "伝えたいことは緑の仕分けであり、検出は完了条件にしない側だから"
+  - item: "タイムアウトと置換失敗"
+    reason: "検出にも緑にも混ぜない、という分岐であり、3分類の関係には不要だから"
+  - item: "出す前の構文検査と一意性の検査"
+    reason: "JSON を出す条件であり、緑をどう判断するかには関係しないから"
+  - item: "PIT と Stryker との比較"
+    reason: "既存ツールへ広げる条件は別の判断であり、この1枚の関係ではないから"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "全体の流れ"
+  - "ハーネスが1件ずつ当てる"
+  - "差分確認で完了とみなす条件"

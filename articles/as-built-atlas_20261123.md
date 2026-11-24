@@ -1,5 +1,5 @@
 ---
-title: "as-built-atlasで、AIによるコード解析を一過性の回答から再利用できる情報資産へ"
+title: "AIによるコード解析を一過性の回答から再利用できる情報資産へ - as-built-atlas"
 emoji: "🗺️"
 type: "tech"
 topics: ["AI", "MCP", "LegacyCode", "CodeAnalysis", "OSS"]
