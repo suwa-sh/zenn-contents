@@ -7,14 +7,16 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (685)
+## Articles: 下書き (687)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-11-25 | [🚢 Claude ShipはPRの指摘と修正とポリシー承認を重ねる](articles/anthropic-claude-ship-pr-p1_20261125.md) | Claude, GitHub, ClaudeCode, AIAgent |
+| 2026-11-25 | [🧩 MCPのSkillsとTasksでエージェント間の作業を調整する](articles/anthropic-mcp-skills-tasks-p6_20261125.md) | MCP, Claude, AIAgent, AgentSkills |
 | 2026-11-25 | [🕒 DeNAのAI社員はトークン使用量を勤務時間、上限を残業上限と呼ぶ](articles/dena-itmedia-co-jp-aiplus-p3_20261125.md) | AIAgent, LLM, Governance, DeNA |
 | 2026-11-25 | [🛡️ Google Workspace MCPとCLIの一般提供とAgent Gatewayの検査](articles/google-workspace-mcp-cli-p2_20261125.md) | GoogleWorkspace, MCP, GoogleCloud, OAuth, AIAgent |
 | 2026-11-25 | [🛡️ OpenAIとCiscoのShirudoは、稼働中のLinuxをどう守り、適用した防御をどう確かめるのか](articles/shirudo_20261125.md) | Linux, eBPF, Security, OpenAI, Cisco |
+| 2026-11-25 | [🧭 日経の公開リードが書く管理機能への期待を契約条件へ分ける](articles/xtech-nikkei-atcl-nxt-mag-p8_20261125.md) | Claude, AIAgent, Governance, ClaudeCode |
 | 2026-11-24 | [🧠 Graphiti 0.32のグループ分離と並行取り込み](articles/graphiti-0-32-github-getzep-p9_20261124.md) | Graphiti, Python, Neo4j, LLM |
 | 2026-11-24 | [🧭 OpenAI OpenWorksの公開条件で見る費用主体と終了後の権限](articles/openai-ai-openworks-openai-p6_20261124.md) | OpenAI, ChatGPT, AI |
 | 2026-11-24 | [⚙️ OpenAIのPerformance Factoryは性能劣化の発見と修正をどこまで機械に渡すか](articles/openai-performance-factory-p2_20261124.md) | OpenAI, ChatGPT, Codex, SRE |
