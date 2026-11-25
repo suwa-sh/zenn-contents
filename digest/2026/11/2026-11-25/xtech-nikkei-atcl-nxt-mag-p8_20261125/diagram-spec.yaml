@@ -1,0 +1,45 @@
+type: structure
+title: "出所ごとに、更新条件へ写せる文が違う"
+message: "公開リードは引用に留め、更新条件には公式名と審査の問いを書く"
+source: "notes/zenn/articles/xtech-nikkei-atcl-nxt-mag-p8_20261125.md"
+components:
+  - id: lead
+    label: "誰でも読める冒頭"
+    meaning: "管理・運用機能の拡充への期待"
+  - id: question
+    label: "契約プランへの問い"
+    meaning: "メルカリが契約プランに尋ねる項目"
+  - id: official
+    label: "公式の機能名"
+    meaning: "監査ログの書き出し、支出上限、組織の設定"
+  - id: clause
+    label: "更新条件"
+    meaning: "自社が必須にする文"
+groups:
+  - id: sources
+    label: "出所"
+    members: [lead, question, official]
+relationships:
+  - from: lead
+    to: clause
+    label: "引用としてだけ"
+  - from: question
+    to: clause
+    label: "問いとして"
+  - from: official
+    to: clause
+    label: "制約として"
+omitted:
+  - item: "ウェブ版の管理・運用基盤"
+    reason: "雑誌版の公開リードと別語である。図の主張はカテゴリ名を条件にしないことなので、同じ矢印を増やさない"
+  - item: "40〜50、約4億円、決算の倍率"
+    reason: "更新条件へ写す出所ではない"
+  - item: "サイバーエージェントの費用補助"
+    reason: "公式の機能名でも、契約プランへの問いでもない"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "公開リードを更新条件にどこまで写せるか（引用として可、審査項目の問いとして可、公式の制約として可）"
+  - "契約更新の条件に先に書く項目（記事のカテゴリ名ではなく、公式名か自社の審査項目）"
+  - "管理・運用機能とは（公開名詞、両社の一次資料、ベンダー公式は別々の層）"

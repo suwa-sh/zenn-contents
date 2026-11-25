@@ -1,0 +1,48 @@
+type: structure
+title: "署名したプログラムの配布と証拠の戻り"
+message: "オペレーターが署名して配り、ターゲットの証拠で適用を確かめる"
+source: "notes/zenn/articles/shirudo_20261125.md"
+components:
+  - id: operator
+    label: "オペレーターホスト"
+    meaning: "署名鍵を保管し、戻った証拠を検証するマシン"
+  - id: registry
+    label: "レジストリ"
+    meaning: "署名済みの一覧とパッケージを置く配布先"
+  - id: target
+    label: "ターゲット"
+    meaning: "防御を読み込む、保護対象の稼働中のLinux"
+  - id: monitor
+    label: "監視基盤"
+    meaning: "ターゲットが状態を定期送信する先"
+groups:
+  - id: signer
+    label: "署名と検証"
+    members: [operator]
+  - id: protected
+    label: "保護対象"
+    members: [target]
+relationships:
+  - from: operator
+    to: registry
+    label: "一覧とパッケージを公開"
+  - from: registry
+    to: target
+    label: "ターゲットが取得"
+  - from: target
+    to: operator
+    label: "TPMが署名した証拠を返す"
+  - from: target
+    to: monitor
+    label: "状態を定期送信"
+omitted:
+  - item: "署名済みの操作一覧（upatch tree）を購読する二つ目の配布経路"
+    reason: "伝えたいことは、署名済み一覧の配布と証拠の戻りに絞るため"
+  - item: "LSM、JVM、UKI、照合表、バックエンド"
+    reason: "信頼の境界と、証拠と状態が別経路で戻ることには不要なため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "構造 / システムコンテキスト図で見る信頼の境界 の mermaid（オペレーターホストからレジストリ、レジストリからターゲット、TPM が署名した証拠をオペレーターホストへ、状態を監視基盤へ）"
+  - "構造 / システムコンテキスト図で見る信頼の境界（オペレーターホストが署名鍵を保管し、ターゲットへ渡すのは検証用の公開側の情報）"

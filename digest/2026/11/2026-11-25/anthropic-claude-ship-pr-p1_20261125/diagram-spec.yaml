@@ -1,0 +1,51 @@
+type: structure
+title: "マージの門は GitHub"
+message: "クラウドの三段は指摘、修正、承認チェックまでです。マージの実行は GitHub です。"
+source: "notes/zenn/articles/anthropic-claude-ship-pr-p1_20261125.md"
+components:
+  - id: pr
+    label: "プルリクエスト"
+    meaning: "GitHub リポジトリ上の変更"
+  - id: review
+    label: "Code Review"
+    meaning: "差分を見て指摘を投稿する"
+  - id: steward
+    label: "PR Steward"
+    meaning: "コミットで直せる失敗や指摘を直す"
+  - id: approvals
+    label: "Claude Approvals"
+    meaning: "既定ブランチのポリシーから席と verdict を出す"
+  - id: github
+    label: "GitHub のブランチルール"
+    meaning: "auto-merge とマージキューを含め、マージを実行する"
+groups:
+  - id: cloud
+    label: "クラウドの三段"
+    members: [review, steward, approvals]
+relationships:
+  - from: pr
+    to: review
+    label: "指摘を投稿"
+  - from: review
+    to: steward
+    label: "次は修正"
+  - from: steward
+    to: approvals
+    label: "次は承認チェック"
+  - from: approvals
+    to: github
+    label: "マージはここ"
+omitted:
+  - item: "ローカルの /ship と、公式の次の手順である自分でマージ"
+    reason: "コミットから最大7日の監視までの別経路。図の主題はクラウドの三段とマージの門"
+  - item: "observe と enforce の分岐"
+    reason: "ポリシーの mode の一方。ダイジェストの具体例と確認項目に残す"
+  - item: "セルフホスト、分類器、findings、保護ファイル、課金、プラン"
+    reason: "門の位置は変えない。限界・注意点に残す"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "Claude Ship とは: 指摘、修正、承認チェックの三段。マージは GitHub のブランチルール、auto-merge、マージキューが決める"
+  - "三段と手元の経路: プルリクエストから Code Review、PR Steward、既定ブランチの approvals.yml を経て GitHub へ進む"
+  - "マージを実行するのは GitHub である"

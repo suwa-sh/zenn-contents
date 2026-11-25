@@ -1,0 +1,61 @@
+source:
+  title: "Google Workspace MCPとCLIの一般提供とAgent Gatewayの検査"
+  url: null
+  path: "notes/zenn/articles/google-workspace-mcp-cli-p2_20261125.md"
+  primary:
+    - title: "Workspace Updates（2026-11-24）"
+      url: "https://workspaceupdates.googleblog.com/2026/11/mcp-servers-cli-standardized-usage-tiers-now-available.html"
+    - title: "MCP サーバーの設定"
+      url: "https://developers.google.com/workspace/guides/configure-mcp-servers"
+    - title: "Workspace AI Tools Addendum"
+      url: "https://workspace.google.com/terms/ai-tools"
+    - title: "Agent Gateway 概要"
+      url: "https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/gateways/agent-gateway-overview"
+  retrieved_at: "2026-11-26"
+archetype:
+  primary: architecture
+  secondary: [governance]
+one_liner: "データへ入るのは製品ごとの規約と公式のコマンドです。Cloudの通信検査は別です。"
+key_points:
+  - claim: "検査ゲートは、Gemini Enterpriseで選ぶときだけ製品別の規約へつなぎます。"
+    evidence: "Google Workspace MCPとは / まとめ"
+    status: fact
+  - claim: "呼び出しのたびに、利用者の権限と既存のユーザー単位のデータ損失防止と分類ラベルを見ます。"
+    evidence: "Google Workspace MCPとは / 特徴"
+    status: fact
+  - claim: "利用者に代わって入るには、エージェント用と宣言した認可クライアントが要ります。"
+    evidence: "特徴"
+    status: fact
+  - claim: "外部エージェントの共有を伴う書き込みは、既定で人の確認が入ります。"
+    evidence: "特徴 / 下書きと共有を伴う書き込み"
+    status: fact
+  - claim: "2027年2月1日から、エージェント等のREST直呼びは、有料でも標準の上限へ制限されます。"
+    evidence: "Google Workspace MCPとは / 利用枠 / 枠と課金の日程"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "検査ゲートから製品別の規約へつなぐのは、Gemini Enterpriseで選ぶときだけです。"
+    reason_needed: "検査ゲートをデータの必須入口と読むと、従来のRESTと任意構成を取り違える"
+example:
+  description: "2027年4月1日からの課金は、2月の上限とは別です。Gmail、Calendar、DriveのRESTは従来アプリも含み、請求先ごとに1日の無料分を超えた分が課金です。同じ3製品を有料にしたMCPは成功の最初から課金です。公式CLIに起動の料金は無く、使用量に数えます。"
+  hypothetical: false
+  evidence: "利用枠 / 枠と課金の日程"
+applicability:
+  - "クラウド上のエージェントからWorkspaceを呼ぶときです。"
+  - "端末、VM、コンテナから公式CLIで入るときです。"
+  - "エージェントと従来アプリの入口を分けて持つときです。"
+decision_criteria:
+  - "確認を断られたら、別の道具で書き直していませんか。"
+  - "呼び出し元は、エージェントかどうか分けましたか。"
+  - "有料にする選択は、プロジェクト全体ですか。"
+limitations:
+  - "公式CLIだけで契約上のMCP要件を満たすかは、契約の読み方です。"
+  - "検査ゲートは、実行環境によって提供段階が違います。"
+  - "サービスアカウントの委任は、管理者の設定で決まります。"
+  - "埋め込みや索引などの技術情報の保存は30日までです。"
+  - "接続を切ったときと失効したときは、利用者のデータと技術情報を残してはなりません。"
+unknowns:
+  - "公式CLIだけで、契約用語のGoogle MCPを満たすか。"
+  - "Keepのサーバー名。時間制限付き承認の日数。"
+  - "検査ゲートのトークン管理と、実行環境ごとの提供段階。"
+reviewed: true

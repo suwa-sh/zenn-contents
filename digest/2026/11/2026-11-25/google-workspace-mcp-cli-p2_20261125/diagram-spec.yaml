@@ -1,0 +1,73 @@
+type: structure
+title: "データへ入る入口"
+message: "データへ入るのは製品別MCPと公式CLIです。検査ゲートからつなぐのは任意です。"
+source: "notes/zenn/articles/google-workspace-mcp-cli-p2_20261125.md"
+components:
+  - id: app
+    label: "従来アプリ"
+    meaning: "人が操作する速さのアプリ。RESTを使い続ける"
+  - id: agent
+    label: "AIエージェント"
+    meaning: "機械の速さでWorkspaceやCloudの道具を呼ぶ主体"
+  - id: mcp
+    label: "製品別MCP"
+    meaning: "Googleがホストする、製品ごとのリモートサーバー"
+  - id: cli
+    label: "公式CLI"
+    meaning: "端末、VM、コンテナから同じ操作を呼ぶ gwscli"
+  - id: gw
+    label: "検査ゲート"
+    meaning: "Cloud上の通信を検査する Agent Gateway"
+  - id: ws
+    label: "Workspaceデータ"
+    meaning: "メールやファイルなど、Workspaceに置いたデータ"
+  - id: cloud
+    label: "Cloudの先"
+    meaning: "Cloud上のツールとAPI"
+groups:
+  - id: entry
+    label: "データへ入る"
+    members: [mcp, cli]
+  - id: inspect
+    label: "Cloudの検査"
+    members: [gw]
+relationships:
+  - from: app
+    to: ws
+    label: "RESTのまま"
+  - from: agent
+    to: mcp
+    label: "呼ぶ"
+  - from: agent
+    to: cli
+    label: "呼ぶ"
+  - from: mcp
+    to: ws
+    label: "入る"
+  - from: cli
+    to: ws
+    label: "入る"
+  - from: agent
+    to: gw
+    label: "通す"
+  - from: gw
+    to: cloud
+    label: "検査して出す"
+  - from: gw
+    to: mcp
+    label: "任意でつなぐ"
+omitted:
+  - item: "管理者、認可のエージェント宣言、データ損失防止、分類ラベル、人の確認"
+    reason: "呼び出しの中身である。図は入口の分かれ方だけを示す"
+  - item: "Model Armor、Workspaceの決定点、Agent Registry、Agent Identity"
+    reason: "検査ゲートの部品である。ゲートを一つの検査面にまとめた"
+  - item: "People、Classroom、横断検索、Keep"
+    reason: "製品の内訳である。入口の種類には使わない"
+  - item: "コミュニティ製の gws"
+    reason: "この記事の対象外である"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "Google Workspace MCPとは: 入口は製品別MCP、公式CLI、Agent Gatewayの3つ。データへ入るのはMCPとCLI。GatewayからMCPへつなぐのはGemini Enterpriseの任意構成。従来アプリはRESTのまま"
+  - "システムコンテキスト図: 従来アプリはRESTへ、エージェントはMCPとCLIとGatewayへ。RESTとMCPとCLIはWorkspaceデータへ。GatewayはCloudのツールとAPIへ。GatewayからMCPは任意"

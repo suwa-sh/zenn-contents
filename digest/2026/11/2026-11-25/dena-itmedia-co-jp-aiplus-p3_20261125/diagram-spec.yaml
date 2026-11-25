@@ -1,0 +1,49 @@
+type: structure
+title: "勤務時間という呼称と削減時間"
+message: "勤務時間はトークン使用量の呼称です。削減時間とは別の数字です。"
+source: "notes/zenn/articles/dena-itmedia-co-jp-aiplus-p3_20261125.md"
+components:
+  - id: token
+    label: "トークン使用量"
+    meaning: "稼働量としてリリースが数える消費"
+  - id: hours
+    label: "勤務時間"
+    meaning: "トークン使用量につけた呼称"
+  - id: cap
+    label: "残業上限"
+    meaning: "使いすぎを防ぐ上限につけた呼称"
+  - id: saved
+    label: "削減時間"
+    meaning: "日報と週報が、人がやらなくて済んだと見積もった時間"
+groups:
+  - id: names
+    label: "リリースの呼称"
+    members: [hours, cap]
+  - id: other
+    label: "自己申告の別数字"
+    members: [saved]
+relationships:
+  - from: token
+    to: hours
+    label: "この名で呼ぶ"
+  - from: hours
+    to: cap
+    label: "上限をこの名で呼ぶ"
+omitted:
+  - item: "上限到達後の破棄、保留、再開"
+    reason: "公開された手順がないため、図に矢印を足すと停止機能があるように読める"
+  - item: "52.6時間、30人、17体、巡回回数"
+    reason: "二つの時間の区別が主題で、個別の数値は本文に残す"
+  - item: "固有アカウント、ドライラン、権限超過の承認、契約・発注・採用"
+    reason: "トークン上限とは別の制御であり、呼称の関係が主題なため"
+  - item: "導入側が手順に書く5項目"
+    reason: "読者がすることであり、図の関係ではないため"
+  - item: "チャットツールの範囲、料金、発行主体の食い違い"
+    reason: "呼称と削減時間の分離が主題なため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "冒頭: 稼働量であるトークン使用量を勤務時間、使いすぎを防ぐ上限を残業の上限として扱う"
+  - "注意点 / 勤務時間と呼ばれるものが二つある: 勤務時間はトークン使用量の呼称。削減時間は日報・週報が見積もった、人がやらなくて済んだ時間"
+  - "まとめ: ニュースリリースが同じ文で結んでいるのは、トークン使用量を勤務時間、使いすぎの上限を残業上限と呼ぶ、まで"

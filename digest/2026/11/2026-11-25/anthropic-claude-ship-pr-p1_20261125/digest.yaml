@@ -1,0 +1,62 @@
+source:
+  title: "Claude ShipはPRの指摘と修正とポリシー承認を重ねる"
+  url: null
+  path: "notes/zenn/articles/anthropic-claude-ship-pr-p1_20261125.md"
+  primary:
+    - title: "Introducing Claude Ship"
+      url: "https://claude.com/resources/articles/introducing-claude-ship"
+    - title: "Claude Ship"
+      url: "https://code.claude.com/docs/en/claude-ship.md"
+    - title: "Approvals policy"
+      url: "https://code.claude.com/docs/en/approvals-policy.md"
+    - title: "/ship"
+      url: "https://code.claude.com/docs/en/ship-command.md"
+  retrieved_at: "2026-11-26"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "Claude Shipは指摘と修正と承認チェックを重ね、マージはGitHubが実行します。"
+key_points:
+  - claim: "Code Review は、差分の指摘をプルリクエストへ投稿します。"
+    evidence: "Code Review"
+    status: fact
+  - claim: "PR Steward は、失敗した自動検査や直せる指摘をコミットで直します。"
+    evidence: "PR Steward"
+    status: fact
+  - claim: "適用される承認条件は、既定ブランチのポリシーだけです。"
+    evidence: "Claude Ship とは"
+    status: fact
+  - claim: "ポリシーが承認を許すとき、GitHub が求める人数に Claude の承認が1人分入りえます。"
+    evidence: "Claude Approvals / マージを実行するのは GitHub である"
+    status: fact
+  - claim: "手元の /ship の公式の完了は、自分でマージすることです。"
+    evidence: "ローカルの /ship / 三段と手元の経路"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "クラウドの三段は指摘、修正、承認チェックまでです。マージの実行は GitHub です。"
+    reason_needed: "三段や手元の監視を、マージの実行と読むと、誰が門を開けるかを誤る"
+example:
+  description: "ドキュメントの例では、レビューが pass なら人数は1人に減り、作者でも足り、Claude も承認しえます。承認ルールの場所では承認せず、人数は2人のままです。止めない設定の行を消すと、必須チェックのときだけマージが止まります。"
+  hypothetical: false
+  evidence: "承認してよい差分はポリシーに先に書く"
+applicability:
+  - "Team か Enterprise の GitHub へ三段を足す前です。"
+  - "既定ブランチへ observe のポリシーを置くときです。"
+decision_criteria:
+  - "observe のままですか。"
+  - "Approvals のチェックを、GitHub の必須にしていますか。"
+  - "作者を外すとき、機械ユーザーのログインも外していますか。"
+  - "人を要しないポリシーと、自動マージかマージキューを同時に足していますか。"
+  - "指摘を閉じた人を承認の根拠にしていますか。"
+limitations:
+  - "ゼロデータ保持、HIPAA、顧客管理鍵では、三段は使えません。"
+  - "2026年10月15日までの「承認は出さない」は、2026年11月23日の製品には当てはまりません。"
+  - "Anthropic 上の修正は承認の操作を拒否します。自分のランナーでは、その場の GitHub 資格情報による承認を必須数に数ええます。"
+  - "ドキュメントの例では、人が指摘を閉じただけでは pass になりません。"
+  - "レート制限の数値と、revert が増えたら承認を締める回路は、参照した文書にありません。"
+unknowns:
+  - "公開のレート制限（RPM や TPM）の数値。"
+  - "revert やインシデントが増えたら承認を締める回路を、11月23日の製品が持つか。"
+  - "Free プランで /ship が使えるか。"
+reviewed: true

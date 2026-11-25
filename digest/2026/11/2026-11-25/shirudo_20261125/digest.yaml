@@ -1,0 +1,61 @@
+source:
+  title: "OpenAIとCiscoのShirudoは、稼働中のLinuxをどう守り、適用した防御をどう確かめるのか"
+  url: null
+  path: "notes/zenn/articles/shirudo_20261125.md"
+  primary:
+    - title: "OpenAI の発表"
+      url: "https://openai.com/index/introducing-shirudo/"
+    - title: "Cisco の発表"
+      url: "https://newsroom.cisco.com/c/r/newsroom/en/us/a/y2026/m11/cisco-and-openai-launch-shirudo-a-new-project-to-safeguard-agentic-ai.html"
+    - title: "動作原理"
+      url: "https://docs.shirudo.dev/start/how-it-works.html"
+    - title: "セキュリティモデル"
+      url: "https://docs.shirudo.dev/security/security-model.html"
+  retrieved_at: "2026-11-26"
+archetype:
+  primary: architecture
+  secondary:
+    - decision
+one_liner: "OpenAIとCiscoのShirudoは、承認した小さなプログラムを稼働中のLinuxへ配り、適用を証拠で確かめます。"
+key_points:
+  - claim: "Shirudoは、署名した小さなプログラムを稼働中のLinuxへ読み込みます。"
+    evidence: "Shirudo とは / 特定の動作を観測したり制限したりする小さなプログラムを署名して、稼働中のシステムに読み込ませます"
+    status: fact
+  - claim: "署名鍵はオペレーターホストに置き、対象マシンへは検証用の公開情報を渡します。"
+    evidence: "システムコンテキスト図で見る信頼の境界 / 署名鍵を保管するオペレーターホスト。ターゲットに渡すのは検証用の公開側の情報"
+    status: fact
+  - claim: "状態報告、TPM（計測用のチップ）の証拠、適用済みと適用待ちと未確定の表は、別々に見ます。"
+    evidence: "概念モデルで区別する三つの記録 / 状態報告、TPM の証拠、機器と所見の照合表。exposure は shielded、shield_pending、unknown"
+    status: fact
+  - claim: "読み込んだかは、そのプログラムの読み込みを含む期待履歴とTPMの証拠の一致で判断します。"
+    evidence: "利用方法を架空の2台で見る / 防御を実際に読み込んだか。期待履歴には承認済みペイロードの読み込みが入り、一致で読み込み成功を判断する"
+    status: fact
+  - claim: "配布の最新まで進んでも、見送りにした機器は適用済みになりません。"
+    evidence: "利用方法を架空の2台で見る / 対象外として見送った機器も同じ番号まで進むため、結果は exposure 列で読み分けます"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "オペレーターが署名して配り、ターゲットの証拠で適用を確かめる"
+    reason_needed: "配布したことと、対象マシンへ載ったことを、別の経路で確かめるため"
+example:
+  description: "記事の架空例では、配られた最新は12です。node-aは12まで適用済みで、node-bは9のまま適用待ちです。"
+  hypothetical: false
+  evidence: "利用方法を架空の2台で見る / node-a は exposure shielded で 12 と 12、node-b は shield_pending で 9 と 12"
+applicability:
+  - "本番の修正を試験している間も、サービスを止めたくないときです。"
+  - "配布後に、対象ホストが追いついたか分けて見たいときです。"
+  - "再起動せず、問題のある入力だけ拒みたいときです。"
+decision_criteria:
+  - "対象カーネルは、署名検証とShirudo用の改修を備えていますか。"
+  - "対象マシンにTPM 2.0はありますか。"
+  - "機器は、計測チップの鍵の識別子で登録していますか。"
+  - "監視は JSON の status と reason を見ますか。"
+  - "外す前に、守っている問題を全部、恒久修正か代替で確かめましたか。"
+limitations:
+  - "2026年11月25日時点で、安定リリースとサポート対象のリリースブランチはまだありません。"
+  - "ある入力を防げるかは、そのプログラムのテスト結果が要ります。"
+  - "稼働中のJavaプロセスへ後から入れた例は、制御下の試験だけです。"
+  - "自社のカーネルと起動構成への適合は、個別の評価が要ります。"
+unknowns:
+  - "自社のカーネルと起動構成への適合は、記事の一般要件からは決まりません。"
+reviewed: true

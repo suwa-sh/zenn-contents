@@ -1,0 +1,63 @@
+type: structure
+title: "手順は検証後に載せ、長い仕事は識別子を先に返す"
+message: "手順は検証と必要な承認のあとに載せ、長い仕事は識別子を先に返す"
+source: "notes/zenn/articles/anthropic-mcp-skills-tasks-p6_20261125.md"
+components:
+  - id: model
+    label: "対話モデル"
+    meaning: "ホストの中で推論し、ツールを使いたい意図を出す。プロトコルサーバーへ直接話さない"
+  - id: verify
+    label: "承認と検証"
+    meaning: "ファイルの所在と指紋を照合し、一致した本文だけをモデルへ渡す"
+  - id: client
+    label: "MCPクライアント"
+    meaning: "ホストからサーバーへ要求を送り、タスクの状態を問い合わせる"
+  - id: catalog
+    label: "スキル目録"
+    meaning: "名前、説明、ファイル目録を渡す。本文そのものは渡さない"
+  - id: store
+    label: "タスク保管"
+    meaning: "taskId を引けるようになってから、作成結果を返す永続状態"
+groups:
+  - id: host
+    label: "ホスト"
+    members: [model, verify, client]
+  - id: server
+    label: "サーバー"
+    members: [catalog, store]
+relationships:
+  - from: catalog
+    to: client
+    label: "目録を渡す"
+  - from: client
+    to: verify
+    label: "本文を照合"
+  - from: verify
+    to: model
+    label: "検証済み手順"
+  - from: model
+    to: client
+    label: "ツール意図"
+  - from: client
+    to: store
+    label: "tools/call"
+  - from: store
+    to: client
+    label: "taskIdを先に返す"
+omitted:
+  - item: "利用者"
+    reason: "承認の主体はホスト内の関門にまとめ、図の要素を7以内に保つため"
+  - item: "外部ジョブ基盤と作業実行"
+    reason: "伝えたいことは検証と識別子の先返しであり、委譲先は必須ではないため"
+  - item: "Elicitation、File Uploads、Events、Prompts"
+    reason: "手順の経路とタスクの経路が中心で、確認やファイル転送は別の拡張のため"
+  - item: "SHA-256、frontmatter、状態名の一覧"
+    reason: "照合の中身は承認と検証に、状態の中身はタスク保管にまとめるため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "構造「システムコンテキスト図」。対話モデルはホストの内側にあり、プロトコルサーバーへ直接話さない"
+  - "構造「コンテナ図」。承認と検証は、一覧に無いファイルを読まず、一致しない内容はモデルへ渡さない。MCP クライアントはサーバーへ要求を送る"
+  - "構造「コンポーネント図」。skills/list か skills/get から承認し、resources/read と SHA-256 を経て検証済み手順になる。tools/call はタスク保管を経由し、CreateTaskResult の taskId を返す"
+  - "構築方法「タスクを返せるサーバーにする」。CreateTaskResult を返す前に、Task Store からその taskId を tasks/get で解決できる状態にする"

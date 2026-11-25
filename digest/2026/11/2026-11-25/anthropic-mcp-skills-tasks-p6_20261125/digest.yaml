@@ -1,0 +1,59 @@
+source:
+  title: "MCPのSkillsとTasksでエージェント間の作業を調整する"
+  url: null
+  path: "notes/zenn/articles/anthropic-mcp-skills-tasks-p6_20261125.md"
+  primary:
+    - title: "MCP servers can now ship skills, run tasks, and more with Claude"
+      url: "https://claude.com/resources/articles/skills-over-mcp-tasks-and-more"
+    - title: "Skills overview"
+      url: "https://modelcontextprotocol.io/extensions/skills/overview"
+    - title: "Tasks specification 2026-07-28"
+      url: "https://tasks.extensions.modelcontextprotocol.io/specification/2026-07-28/tasks"
+    - title: "Claude Code MCP"
+      url: "https://code.claude.com/docs/en/mcp"
+  retrieved_at: "2026-11-26"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "MCP（ホストとサーバーのやり取り）は、手順を配り、長い仕事は識別子を先に返します。"
+key_points:
+  - claim: "スキルの一覧では、名前と説明とファイル目録が先に届きます。本文は、検証と必要な承認のあとに載せます。"
+    evidence: "特徴「一覧で先に届くのは、名前、説明、ファイルの目録です。本文は選択後に読みます。」/ 運用「resources/read で SKILL.md を読むこと自体は起動ではありません。ホストが検証と必要な承認を通してモデルの文脈へ載せて、初めて起動です。」"
+    status: fact
+  - claim: "スキルの身元は、ホストが接続先に付けたラベルと URI の組です。名前は一意ではありません。"
+    evidence: "特徴「skill の識別子は、ホストが接続先に割り当てたラベルと、URI の組です。スキルの name は表示用のラベルで、一意ではありません。」"
+    status: fact
+  - claim: "タスクにするかは、呼び出しごとにサーバーが決めます。対象は 2026-07-28 では tools/call だけです。"
+    evidence: "特徴「タスクを作る判断はサーバーが持ちます。タスク化できるメソッドは、2026-07-28 では tools/call だけです。」"
+    status: fact
+  - claim: "仕事の終わりは、completed、failed、cancelled だけです。状態を聞いた返事の complete は、仕事の終わりではありません。"
+    evidence: "運用「終端は completed、failed、cancelled だけです。」/ 運用「tasks/get 自体の resultType は complete であり、仕事が終わったという意味ではありません。仕事をタスクにした応答だけが resultType: task です。」"
+    status: fact
+  - claim: "短い結果は同期の tools/call です。待ちは Tasks、利用者への確認は別にします。"
+    evidence: "ベストプラクティス「短い結果は同期の tools/call、待ちは Tasks、確認は Elicitation に分けます。」"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "手順は検証と必要な承認のあとに載せ、長い仕事は識別子を先に返す"
+    reason_needed: "手順の経路とタスクの経路が、ホストとサーバーの境界で分かれるため"
+example:
+  description: "公式フローの hello_world は、応答で taskId を返します。完了後の tasks/get は Hello, Luca! を返します。"
+  hypothetical: false
+  evidence: "利用方法「長時間のツール呼び出しをタスクにする」。hello_world の CreateTaskResult と、完了時の tasks/get の result"
+applicability:
+  - "業務手順をツールと同時に配るときです。"
+  - "完了まで時間がかかる仕事を渡すときです。"
+  - "課金、削除、破壊的変更の直前に確認を挟むときです。"
+decision_criteria:
+  - "作成応答のあと、tasks/get で中身を見ますか。"
+  - "入力を送った返事が空でも、tasks/get で見ますか。"
+  - "未回答の入力が残る間、待ちますか。"
+limitations:
+  - "モデルに読ませずにファイルを渡す機能は、まだ草案です。Claude では展開前です。"
+  - "Task ID を失うと、結果をプロトコル上で回収できません。"
+  - "ツール結果の失敗は completed に入ります。failed は実行中のプロトコル誤りです。"
+  - "Claude Code（コーディングエージェント）では、Skills と Tasks の条件が違います。版、ログイン、セッションを別々に見ます。"
+  - "MCP skills では、自分で始めた Desktop のローカルセッションが使えます。コネクタと拡張は使えず、境目は分かっていません。"
+unknowns:
+  - "Claude Code の MCP skills について、自分から始めた Desktop のローカルセッションと、Desktop のコネクタ・拡張との境目は、code.claude.com の記述に説明がない"
+reviewed: true

@@ -1,0 +1,63 @@
+source:
+  title: "日経の公開リードが書く管理機能への期待を契約条件へ分ける"
+  url: null
+  path: "notes/zenn/articles/xtech-nikkei-atcl-nxt-mag-p8_20261125.md"
+  primary:
+    - title: "日経クロステック、雑誌版、2026-11-24"
+      url: "https://xtech.nikkei.com/atcl/nxt/mag/nc/18/111500581/111500003/"
+    - title: "日経クロステック、ウェブ版、2026-10-14"
+      url: "https://xtech.nikkei.com/atcl/nxt/column/18/03757/100600003/"
+    - title: "市原尚久、2026-05-25"
+      url: "https://speakerdeck.com/naoichihara/agentic-aishi-dai-niokeru-merukarinoaigabanansutogadorerushi-zhuang"
+    - title: "Access audit logs"
+      url: "https://support.claude.com/en/articles/9970975-access-audit-logs"
+    - title: "Deploy managed settings"
+      url: "https://code.claude.com/docs/en/managed-settings"
+  retrieved_at: "2026-11-26"
+archetype:
+  primary: governance
+  secondary: [decision]
+one_liner: "日経の誰でも読める冒頭は、Claude の管理機能への期待までです。その文は契約の必須条件にはなりません。"
+key_points:
+  - claim: "2026年11月24日の誰でも読める冒頭の期待は、管理・運用機能の拡充までである"
+    evidence: "管理・運用機能とは / 公開リードの引用"
+    status: fact
+  - claim: "2026年10月14日のウェブ版の語は管理・運用基盤、2026年11月24日の雑誌版の語は管理・運用機能である"
+    evidence: "管理・運用機能とは / リードの動詞は「注目した」である"
+    status: fact
+  - claim: "誰でも読める部分に無い語は、停止、監査、担当の可視性である。これらの語は日経の引用にはできない"
+    evidence: "公開面にある語と、見出しだけの数"
+    status: fact
+  - claim: "先に書くのは、監査ログを書き出せる役割、1回でまとめる範囲、支出の上限と、確認を通さず動かすモードを止める設定である"
+    evidence: "契約更新の条件に先に書く項目"
+    status: fact
+  - claim: "外部への接続先を限れるかと、方針を一斉に配れるかは、契約プランへの問いとして書く"
+    evidence: "契約更新の条件に先に書く項目 / メルカリの審査項目"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "公開リードは引用に留め、更新条件には公式名と審査の問いを書く"
+    reason_needed: "出所が違うと、更新条件へ写せる文の種類が違う"
+example:
+  description: "監査ログを出せるのは Enterprise だけである。Owner と Primary Owner が Export logs で、過去180日分を1回で出す。ダウンロードのリンクは24時間である"
+  hypothetical: false
+  evidence: "公式ドキュメントが書く制約 / 公開リードを更新条件にどこまで写せるか"
+applicability:
+  - "誰でも読める冒頭を、契約更新の引用に使うとき"
+  - "モデルの性能が同点のとき、欠ける機能名で棄却するとき"
+  - "契約プランへの問いを、更新条件へ書くとき"
+decision_criteria:
+  - "日経の引用と、自社の提案を、分けて書いてあるか"
+  - "棄却理由に、欠ける公式の機能名を先に書いてあるか"
+  - "有料本文より前の見出しを、機能の公式名にしていないか"
+limitations:
+  - "有料本文は未読である"
+  - "実行中のセッションを1本止める機能は、開いた公式ページでは未確認である。未開のページにあるかは不明である"
+  - "社内アカウントでのログインは別の問いで、方式は未決定である"
+  - "顧客が管理する暗号鍵を使う組織は、書き出しボタンでは出せない。出す経路は Compliance API である"
+  - "開いた公式ページに、監査ログのファイル形式は無い"
+unknowns:
+  - "有料本文が、停止、監査、担当、40〜50の中身をどう書いているか"
+  - "実行中のセッションを1本止める機能が、未開のページにあるか"
+  - "2026年11月12日以降のメルカリ資料が、コード変更量を再掲するか"
+reviewed: true
