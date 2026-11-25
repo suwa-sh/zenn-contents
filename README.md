@@ -7,12 +7,13 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (687)
+## Articles: 下書き (688)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-26 | [🔔 AnthropicのSirenは弱い箱から出るかを三つの率で測る](articles/anthropic-siren-itmedia-co-p2_20261126.md) | AIAgent, Security, Anthropic, LLM, Claude |
+| 2026-11-26 | [🏭 S/4HANA切替の完了条件を周辺のキーで追えることに置く](articles/s-hana-xtech-nikkei-atcl-p3_20261126.md) | SAP, S4HANA, ERP, SupplyChain |
 | 2026-11-25 | [🚢 Claude ShipはPRの指摘と修正とポリシー承認を重ねる](articles/anthropic-claude-ship-pr-p1_20261125.md) | Claude, GitHub, ClaudeCode, AIAgent |
-| 2026-11-25 | [🧩 MCPのSkillsとTasksでエージェント間の作業を調整する](articles/anthropic-mcp-skills-tasks-p6_20261125.md) | MCP, Claude, AIAgent, AgentSkills |
 | 2026-11-25 | [🕒 DeNAのAI社員はトークン使用量を勤務時間、上限を残業上限と呼ぶ](articles/dena-itmedia-co-jp-aiplus-p3_20261125.md) | AIAgent, LLM, Governance, DeNA |
 | 2026-11-25 | [🛡️ Google Workspace MCPとCLIの一般提供とAgent Gatewayの検査](articles/google-workspace-mcp-cli-p2_20261125.md) | GoogleWorkspace, MCP, GoogleCloud, OAuth, AIAgent |
 | 2026-11-25 | [🛡️ OpenAIとCiscoのShirudoは、稼働中のLinuxをどう守り、適用した防御をどう確かめるのか](articles/shirudo_20261125.md) | Linux, eBPF, Security, OpenAI, Cisco |
@@ -699,10 +700,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (209)
+## Articles: 公開済み (210)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-11-26 | [🧩 MCPのSkillsとTasksでエージェント間の作業を調整する](articles/anthropic-mcp-skills-tasks-p6_20261125.md) | MCP, Claude, AIAgent, AgentSkills |
 | 2026-11-24 | [🗺️ AIによるコード解析を一過性の回答から再利用できる情報資産へ - as-built-atlas](articles/as-built-atlas_20261123.md) | AI, MCP, LegacyCode, CodeAnalysis, OSS |
 | 2026-11-21 | [🧭 業務語を渡すオントロジーは、定義と計算と操作の置き場が製品で分かれる](articles/atmarkit-itmedia-co-jp-ait-p1_20261119.md) | Ontology, AIAgent, DataGovernance, SemanticLayer |
 | 2026-11-19 | [🧪 Claude Codeチームが並列の前に置く検証と失敗した検査の渡し方](articles/claude-code-e2e-claude-dev-p5_20261118.md) | ClaudeCode, Testing, CodeReview, Anthropic |

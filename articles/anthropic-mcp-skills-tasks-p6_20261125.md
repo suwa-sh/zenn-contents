@@ -3,7 +3,8 @@ title: "MCPのSkillsとTasksでエージェント間の作業を調整する"
 emoji: "🧩"
 type: "tech"
 topics: ["MCP", "Claude", "AIAgent", "AgentSkills"]
-published: false
+published: true
+published_at: 2026-11-26
 ---
 
 この記事は、MCP（Model Context Protocol。対話アプリであるホストと、ツールやデータを持つサーバーがやり取りする手順）の Skills 拡張と Tasks 拡張を、発見から状態の見方、障害時の切り分けまで説明します。時点は基底プロトコル 2026-07-28 と、2026-11-24 の Claude および Claude Code への掲載です。Claude は Anthropic の対話製品です。Claude Code は、端末や IDE から使うコーディングエージェントです。この記事の作業調整は、二つの向きに分かれます。Skills over MCP では、サーバーが作業手順を公開し、ホストが必要なときに読みます。Tasks では、ホストが依頼した仕事をサーバーが引き受け、先にタスクの識別子を返します。
