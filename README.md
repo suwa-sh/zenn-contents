@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (688)
+## Articles: 下書き (689)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-26 | [🧭 工程にAIを足しても全体が速くなった実感は薄い](articles/ai-speakerdeck-yuukiyo-building-p7_20261126.md) | AI, Agile, Claude, AIAgent |
 | 2026-11-26 | [🔔 AnthropicのSirenは弱い箱から出るかを三つの率で測る](articles/anthropic-siren-itmedia-co-p2_20261126.md) | AIAgent, Security, Anthropic, LLM, Claude |
 | 2026-11-26 | [🏭 S/4HANA切替の完了条件を周辺のキーで追えることに置く](articles/s-hana-xtech-nikkei-atcl-p3_20261126.md) | SAP, S4HANA, ERP, SupplyChain |
 | 2026-11-25 | [🚢 Claude ShipはPRの指摘と修正とポリシー承認を重ねる](articles/anthropic-claude-ship-pr-p1_20261125.md) | Claude, GitHub, ClaudeCode, AIAgent |
