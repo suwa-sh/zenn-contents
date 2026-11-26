@@ -1,0 +1,42 @@
+type: behavior
+title: "依頼前の仮説と差分"
+message: "AIの出力は、先に置いた仮説との差分として読む"
+source: "notes/zenn/articles/ai-speakerdeck-yuukiyo-building-p7_20261126.md"
+states:
+  - id: hypothesis
+    label: "依頼前の仮説"
+    meaning: "完了条件とトレードオフを、依頼の前に書く"
+  - id: output
+    label: "AIの出力"
+    meaning: "依頼の結果として返った出力"
+  - id: delta
+    label: "差分の確認"
+    meaning: "仮説と出力のずれを見る"
+  - id: split
+    label: "ずれの切り分け"
+    meaning: "ずれたとき、仮説とAIのどちらが違うかを突き止める"
+transitions:
+  - from: hypothesis
+    to: output
+    label: "そのあと依頼する"
+  - from: hypothesis
+    to: delta
+    label: "比較の基準"
+  - from: output
+    to: delta
+    label: "仮説と比べる"
+  - from: delta
+    to: split
+    label: "ずれたとき"
+omitted:
+  - item: "各工程にAIを足す直線と、全体の実感が薄いこと"
+    reason: "伝えたいことは、仮説を先に置いて差分を読む流れに絞るため"
+  - item: "班をまたぐ1日1回の説明"
+    reason: "認知的降伏への別の対策であり、この図の流れではないため"
+  - item: "5段階の名前と、構築の中のボーイスカウトルール"
+    reason: "差分の読み方には不要なため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "依頼の前に置く仮説（完了条件とトレードオフの仮説を立て、確認は仮説との差分に寄せ、ずれたら仮説とAIのどちらが違うかを突き止める）"

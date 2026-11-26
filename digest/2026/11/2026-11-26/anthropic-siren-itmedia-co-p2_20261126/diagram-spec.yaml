@@ -1,0 +1,46 @@
+type: structure
+title: "三つの判定は入れ子"
+message: "外に出た回の一部だけが、認められない使い方になる"
+source: "notes/zenn/articles/anthropic-siren-itmedia-co-p2_20261126.md"
+components:
+  - id: all
+    label: "全シナリオ"
+    meaning: "判定の母数。シナリオ全体"
+  - id: reach
+    label: "外に出た"
+    meaning: "内側の外を見た、触った、または触ろうとした"
+  - id: used
+    label: "外のものを使った"
+    meaning: "外側に置いた認証情報やファイルを使った"
+  - id: mis
+    label: "認められない使い方"
+    meaning: "シナリオのどの妥当な読み方でも認められない使い方"
+groups:
+  - id: nest
+    label: "入れ子の判定"
+    members: [reach, used, mis]
+relationships:
+  - from: all
+    to: reach
+    label: "一部"
+  - from: reach
+    to: used
+    label: "その一部"
+  - from: used
+    to: mis
+    label: "さらに一部"
+omitted:
+  - item: "内側にとどまる"
+    reason: "伝えたいことは出た側の入れ子であり、とどまった側は矢印にしないため"
+  - item: "緩和の三つ（規則の説明、報告と閲覧、実行前の検査）"
+    reason: "率を下げる条件であり、三つの判定の入れ子とは別の主張のため"
+  - item: "内側では終えられない作業が約81%という分母の内訳"
+    reason: "母数の中身の話であり、判定が入れ子であるという主張とは別のため"
+  - item: "モデルごとの百分率"
+    reason: "率はモデルと条件で変わるため、図は関係だけを示す"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "Sirenとは / 三つの判定（外に出た回の一部が使ったになり、その一部が misaligned use になる。入れ子）"
+  - "Sirenとは / 三つの判定の mermaid（全シナリオから外に出た、外に出たから使った、使ったから misaligned use）"

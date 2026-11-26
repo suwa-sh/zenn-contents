@@ -1,0 +1,47 @@
+source:
+  title: "工程にAIを足しても全体が速くなった実感は薄い"
+  url: null
+  path: "notes/zenn/articles/ai-speakerdeck-yuukiyo-building-p7_20261126.md"
+  primary:
+    - title: "吉田祐樹「AI-DLC最前線の Cognitive Surrender に陥らないチーム作り」"
+      url: "https://speakerdeck.com/yuukiyo/building-teams-that-resist-cognitive-surrender-in-ai-dlc"
+  retrieved_at: "2026-11-27"
+archetype:
+  primary: governance
+  secondary: [decision]
+one_liner: "吉田祐樹氏の講演資料は、各工程にAIを足すと少しずつ速くなる体感で、全体が速くなった実感は薄いです。"
+key_points:
+  - claim: "認知的降伏は、AIの出力をほとんど吟味せず自分の答えにすることです。"
+    evidence: "認知的降伏と呼ばれる行動"
+    status: fact
+  - claim: "講演資料は、依頼の前に完了条件とトレードオフの仮説を置きます。出力はその仮説との差分として読みます。"
+    evidence: "依頼の前に置く仮説"
+    status: fact
+  - claim: "講演資料は、各班が最低1日1回、班をまたいで全体へ説明し、フィードバックをもらうことを置きます。"
+    evidence: "人のゲートと、1日1回の説明"
+    status: fact
+mental_models:
+  - type: behavior
+    key_message: "AIの出力は、先に置いた仮説との差分として読む"
+    reason_needed: "依頼の前の仮説、出力、差分、ずれの切り分けの向きが文章だけだと取り違えやすい"
+example:
+  description: "認知的降伏の一例は、AIが書いた文を吟味せず他者へ転送することです。"
+  hypothetical: false
+  evidence: "認知的降伏と呼ばれる行動"
+applicability:
+  - "自動化の範囲を決める前です。"
+  - "依頼の前に完了条件を書いていないときです。"
+decision_criteria:
+  - "人がまだ止めているゲートの直近数件は、結論を変えましたか。"
+  - "結論を変えていないゲートは、AIの文の転送ですか。"
+  - "結論を変えていないゲートは、要約だけの判断ですか。"
+  - "結論を変えていないゲートは、AIが出した設計のそのまま採用ですか。"
+limitations:
+  - "この講演資料に、リードタイムや速度比はありません。"
+  - "説明が1日1回でも、中身がAIの文の転送のままかは別です。"
+  - "日次の説明と依頼前の仮説が、認知的降伏を防いだ率は、測定結果ではありません。"
+  - "仮説を先に置くには、ある程度の経験が要ります。"
+  - "仮説を先に置くことと、やってから考えることの、どちらが既定かは未測定です。"
+unknowns:
+  - "仮説を先に置くことと、やってから考えることの、どちらが現場の既定かは、この講演資料は測っていません。"
+reviewed: true

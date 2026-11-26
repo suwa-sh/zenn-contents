@@ -1,0 +1,59 @@
+type: structure
+title: "渡したキーで、新基幹が一件を指す"
+message: "渡したキーで、新基幹が倉庫の現物と出荷の同一件を指す"
+source: "notes/zenn/articles/s-hana-xtech-nikkei-atcl-p3_20261126.md"
+components:
+  - id: ship_key
+    label: "出荷先キー"
+    meaning: "出荷先を指すために周辺が渡す識別子"
+  - id: carry_key
+    label: "繰越キー"
+    meaning: "月をまたぐ繰越の識別子"
+  - id: core
+    label: "新基幹"
+    meaning: "切り替えた基幹システム"
+  - id: biz
+    label: "業務の一件"
+    meaning: "倉庫の現物と出荷が結び付く単位"
+  - id: warehouse
+    label: "倉庫の現物"
+    meaning: "倉庫にあるその一件の物"
+  - id: shipment
+    label: "出荷"
+    meaning: "同じ一件の出荷"
+groups:
+  - id: peripheral
+    label: "渡す識別子"
+    members: [ship_key, carry_key]
+relationships:
+  - from: ship_key
+    to: core
+    label: "渡す"
+  - from: carry_key
+    to: core
+    label: "渡す"
+  - from: core
+    to: biz
+    label: "指す"
+  - from: biz
+    to: warehouse
+    label: "結び付く"
+  - from: biz
+    to: shipment
+    label: "結び付く"
+omitted:
+  - item: "配送先マスター"
+    reason: "関西ペイントに関する公開報道の項目名であり、この図の2つのキーとは別の出所のため"
+  - item: "42億円、販売指数、通期予想"
+    reason: "金額の取り違え防止であり、キーが一件を指す関係ではないため"
+  - item: "運用が基幹の手順で回る層と、実受注の処理量の層"
+    reason: "キーで追えることとは別の完了条件のため"
+  - item: "引当"
+    reason: "倉庫の現物と出荷を同じ一件に結ぶことの言い換えのため"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "候補として追う関係（出荷先キーと繰越キーが新基幹へ入り、業務オブジェクトから倉庫の現物と出荷へ分かれる図）"
+  - "切替完了の判定とは（キーは周辺が渡す識別子。業務オブジェクトは倉庫の現物と出荷が同じ一件として結び付く単位）"
+  - "完了条件はキーが一件を指すところまで含める（周辺が渡すキーが業務オブジェクトを一意に指す）"
