@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (689)
+## Articles: 下書き (691)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-27 | [🔍 GitHubの生Markdownに残る、エージェント向け隠しテキスト](articles/github-4500-itmedia-co-jp-p2_20261127.md) | GitHub, AIAgent, Security, LLM |
+| 2026-11-27 | [📦 Skills over MCPでサーバーが手順ファイルを配る仕組み](articles/mcp-skills-over-mcp-publickey1-p1_20261127.md) | MCP, AIAgent, AgentSkills, ClaudeCode, FastMCP |
 | 2026-11-26 | [🧭 工程にAIを足しても全体が速くなった実感は薄い](articles/ai-speakerdeck-yuukiyo-building-p7_20261126.md) | AI, Agile, Claude, AIAgent |
 | 2026-11-26 | [🔔 AnthropicのSirenは弱い箱から出るかを三つの率で測る](articles/anthropic-siren-itmedia-co-p2_20261126.md) | AIAgent, Security, Anthropic, LLM, Claude |
 | 2026-11-26 | [🏭 S/4HANA切替の完了条件を周辺のキーで追えることに置く](articles/s-hana-xtech-nikkei-atcl-p3_20261126.md) | SAP, S4HANA, ERP, SupplyChain |
