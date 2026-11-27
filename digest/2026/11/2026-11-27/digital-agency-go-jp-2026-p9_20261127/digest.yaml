@@ -1,0 +1,61 @@
+source:
+  title: "デジタル庁デザインシステムは導入先のローカル仕様を定義してから使う"
+  url: null
+  path: "notes/zenn/articles/digital-agency-go-jp-2026-p9_20261127.md"
+  primary:
+    - title: "ローカルデザインシステム"
+      url: "https://design.digital.go.jp/dads/guidance/local-design-system/"
+    - title: "デジタル庁ニュース（2026-11-26）"
+      url: "https://digital-agency-news.digital.go.jp/articles/2026-11-26"
+    - title: "使い方 PDF（2026-08-06）"
+      url: "https://www.digital.go.jp/assets/contents/node/basic_page/field_ref_resources/79b783f4-5265-4044-a374-f8f6ccd6e5da/d3abed7f/20260806_meeting_How-to-use-DADS_outline_04.pdf"
+    - title: "デザインシステムとは"
+      url: "https://design.digital.go.jp/dads/guidance/design-system/"
+    - title: "試験結果"
+      url: "https://design.digital.go.jp/dads/webaccessibility/result/"
+  retrieved_at: "2026-11-28"
+archetype:
+  primary: governance
+  secondary: [decision]
+one_liner: "デジタル庁デザインシステムは、導入先が自分用の仕様を定義してから使います。"
+key_points:
+  - claim: "ローカル仕様は、初期値と、導入先のブランドの決まりから定義する"
+    evidence: "ローカルデザインシステム / 初期値から画面までの流れ"
+    status: fact
+  - claim: "変更が不要な項目は、配られた初期値のまま使える"
+    evidence: "ローカルデザインシステム / ローカル仕様の範囲"
+    status: fact
+  - claim: "見た目を編集したあとも残すのは、文字と文字以外のコントラスト、意味を持つ色の色相、キーボードで今いる場所の黄と黒である"
+    evidence: "編集後も維持する数値 / 初期値から画面までの流れの表"
+    status: fact
+  - claim: "部品のコードを変えるときも、置き換わった色での境界と状態と、読み上げへ伝える役割と状態は残す"
+    evidence: "作る順と編集できる基本デザイン"
+    status: fact
+  - claim: "文字サイズ、行の高さ、操作領域は、一つの共通の合格値ではない"
+    evidence: "文字サイズと行高 / ボタンとリンクのターゲット / 残る結論と落とす読み"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "導入先は初期値とブランド規定からローカル仕様を定義し、編集後も骨格を残して画面を組む"
+    reason_needed: "何を材料に仕様を定義し、編集の先で何が残るか"
+example:
+  description: "本文と UI の文字は 16px が基準で、難しいときだけ 14px。14px 未満は原則として不可。読み物本文の行高は文字サイズの 1.5 倍以上で、情報量を優先する画面では狭めてよい。ボタンは隣と重ならない少なくとも 44px 四方。ボタン以外のリンクは、44px を確保できないときも少なくとも 24px 四方"
+  hypothetical: false
+  evidence: "文字サイズと行高 / ボタンとリンクのターゲット"
+applicability:
+  - "デジタル庁のデザインシステムを導入先へ入れるとき"
+  - "発注書に残す条件の一覧を書くとき"
+  - "一つの掲載数値を、全ページ共通の合格値にする前"
+decision_criteria:
+  - "納品物は、導入先のブランドとサービスに合わせた仕様ですか。"
+  - "初期値のまま残す項目と、上書きする項目は分かれていますか。"
+limitations:
+  - "骨格を守ることは、ウェブのアクセシビリティ規格への適合証明とは別である"
+  - "中央省庁の調達は、このデザインシステムの採用が原則であり、未改変で納品する義務でも自分用仕様を作れという指示でもない"
+  - "配布パッケージ 2.1.0 の対応表は、Figma のデザインデータ 2.18.1 までである"
+  - "その原則の根拠条文は、未確認"
+unknowns:
+  - "原則採用の根拠条文が、標準ガイドラインの本文にあるか"
+  - "Figma v2.18.2 と v2.18.3 でトークン値が変わったか"
+  - "二つの Figma ファイル ID が同一ライブラリか"
+reviewed: true

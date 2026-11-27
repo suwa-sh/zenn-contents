@@ -1,0 +1,60 @@
+source:
+  title: "GitHubの生Markdownに残る、エージェント向け隠しテキスト"
+  url: null
+  path: "notes/zenn/articles/github-4500-itmedia-co-jp-p2_20261127.md"
+  primary:
+    - title: "Who Is Prompt-Injecting Coding Agents? An Empirical Study of Hidden AI-Directed Text on GitHub."
+      url: "https://arxiv.org/abs/2611.28763"
+    - title: "rdwr-gabin/github-ipi-in-the-wild"
+      url: "https://github.com/rdwr-gabin/github-ipi-in-the-wild"
+    - title: "Risks and mitigations for GitHub Copilot cloud agent"
+      url: "https://docs.github.com/en/copilot/concepts/security-governance-and-network-settings/risks-and-mitigations"
+    - title: "Stanford Security Seminar: A Scan of 86 Million GitHub Items"
+      url: "https://crypto.stanford.edu/seclab/sem-26-27/nakibly.html"
+  retrieved_at: "2026-11-28"
+archetype:
+  primary: research
+  secondary:
+    - governance
+one_liner: "Nakiblyらの論文は、自動の担当へ向けた隠し注記を数えます。隠し注記は、生のMarkdownを渡すと入力に残ります。"
+key_points:
+  - claim: "走査した約1.45億件は、投稿と説明文を調べた数です。"
+    evidence: "注意点 / 調査件数と、隠しテキストの件数（144,716,078件は走査した項目数。内訳は issue・pull request・コメントと README。論文は roughly 145 million と呼ぶ）"
+    status: fact
+  - claim: "投稿で自動の担当向けと検証された注記は2,281件です。他人の自動の担当を、持ち主の不利益へ動かす文は43件です。"
+    evidence: "検証済みの内訳（issue、pull request、コメントで AI向けだと検証されたのは2,281件。攻撃は43件。攻撃は、他者のエージェントを、その当事者の利益に反して動かそうとするテキスト）"
+    status: fact
+  - claim: "検証済みの67%は、自分のエージェント（文面を読む自動の担当）へ残す作業メモです。"
+    evidence: "検証済みの内訳（自前エージェントの調整は1,519件、67%。自前エージェントの調整は、プロジェクトが自分のエージェントへ残す作業の印）"
+    status: fact
+  - claim: "投稿で検証済みの2,281件は、生のMarkdownを渡すと残るHTMLコメント（画面に出ない注記）です。"
+    evidence: "画面の文書と、入力の文書（GitHubはHTMLコメントを描画しない。生のMarkdownを渡すエージェントは、そのコメントを入力として受け取る。検証済み2,281件はすべてHTMLコメント）"
+    status: fact
+  - claim: "2026年6月から9月に、他人の自動の担当を不利益へ動かす文の増加は見えません。"
+    evidence: "2026年6月から9月の出現率（攻撃の件数に、この4カ月で明確な増加は見えない。月ごとの攻撃件数は6月15件、7月5件、8月8件、9月4件）"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "同じ生のMarkdownでも、人の画面にはHTMLコメントが出ず、エージェントの入力には残る"
+    reason_needed: "画面で見た差分と、自動の担当が受け取る文字列を、同じ文書と扱わないため"
+example:
+  description: "43件を各モデルへ1回渡すと、注記どおりに動いたのはgpt-5.6-lunaの8件だけです。注記を除くと、注記どおりに動いたモデルはありません。"
+  hypothetical: false
+  evidence: "オフラインの再生（生のMarkdownで従ったのは gpt-5.6-luna の8件だけ。他の4モデルは0件。HTMLコメントを除くと5モデルとも0件）"
+applicability:
+  - "自動の担当が、部外者のissueを読むときです。"
+  - "画面に出ない注記を、承認の合図にしているときです。"
+decision_criteria:
+  - "自動の担当は、issueの生のMarkdownを読みますか。"
+  - "そのジョブに、秘密はありますか。"
+  - "そのジョブに、コマンド実行はありますか。"
+  - "注記を、投稿者を見ずに状態を変える合図へ使いますか。"
+limitations:
+  - "動いた8件は、本番の仕組みでの被害率ではありません。"
+  - "他人の自動の担当を不利益へ動かす文が稀なのは、隠し注記の範囲だけです。見える本文と、作業前に読ませるファイルは、測定の外です。"
+  - "書いた人を見てから合図を使うのは、予防です。偽の合図で状態が変わった事例は、このデータにありません。"
+  - "HTMLコメントを全部消すと、自分のエージェントへ残す作業メモも消えます。"
+  - "見逃しの倍率は公表されていません。43件を上限とは言えません。"
+unknowns:
+  - "分類器の見逃しが、43件を何倍にするかは、公開データから計算できません。"
+reviewed: true

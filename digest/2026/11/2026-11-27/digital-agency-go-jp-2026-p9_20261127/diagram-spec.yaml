@@ -1,0 +1,57 @@
+type: structure
+title: "自分用の仕様を定義してから画面を組む"
+message: "導入先は初期値とブランド規定からローカル仕様を定義し、編集後も骨格を残して画面を組む"
+source: "notes/zenn/articles/digital-agency-go-jp-2026-p9_20261127.md"
+components:
+  - id: init
+    label: "初期値"
+    meaning: "配る側が渡すトークンと部品の初期値"
+  - id: brand
+    label: "ブランド規定"
+    meaning: "導入先のブランドとコミュニケーション方針"
+  - id: local
+    label: "ローカル仕様"
+    meaning: "導入先がサイト向けに定義するデザイン仕様"
+  - id: edit
+    label: "基本デザインの編集"
+    meaning: "必要な基本デザインだけを編集する作業"
+  - id: floor
+    label: "維持する骨格"
+    meaning: "編集したあとも残す条件"
+  - id: screen
+    label: "画面"
+    meaning: "仕様に沿って組む画面"
+relationships:
+  - from: init
+    to: local
+    label: "定義する"
+  - from: brand
+    to: local
+    label: "定義する"
+  - from: local
+    to: edit
+    label: "必要な項目"
+  - from: edit
+    to: floor
+    label: "編集後も残す"
+  - from: edit
+    to: screen
+    label: "画面を組む"
+omitted:
+  - item: "部品の選定と不足部品"
+    reason: "画面を組む作業の内訳であり、ローカル仕様から画面までの関係には不要なため"
+  - item: "配る側の考え方とコンポーネント単体"
+    reason: "初期値にまとめられ、独立した矢印が記事の図にないため"
+  - item: "配る側と導入先の所有者の枠"
+    reason: "流れの矢印と枠の配置が衝突し、定義してから画面を組む関係がぼやけるため"
+  - item: "文字サイズ、行高、操作領域の数値分岐"
+    reason: "一枚の合格線ではないことは具体例で扱い、この図の関係ではないため"
+  - item: "ライセンス、パッケージの版、調達の条文"
+    reason: "初期値から画面までの関係とは別の注意であるため"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "初期値から画面までの流れ（初期値とブランド規定からローカルデザインシステムを定義し、編集の先に維持する骨格と画面がある図）"
+  - "ローカルデザインシステム（使用にあたってこの仕様を作ることが前提。変更不要な項目は初期値のまま）"
+  - "発注で渡す仕様（配る側は初期値と維持する骨格、導入先はブランド規定と画面の構成）"

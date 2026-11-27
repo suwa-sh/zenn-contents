@@ -1,0 +1,62 @@
+source:
+  title: "Skills over MCPでサーバーが手順ファイルを配る仕組み"
+  url: null
+  path: "notes/zenn/articles/mcp-skills-over-mcp-publickey1-p1_20261127.md"
+  primary:
+    - title: "Skills 拡張の仕様正本"
+      url: "https://github.com/modelcontextprotocol/ext-skills/blob/main/specification/beta/skills.mdx"
+    - title: "Agent Skills 仕様"
+      url: "https://agentskills.io/specification"
+    - title: "SEP-2640"
+      url: "https://modelcontextprotocol.io/seps/2640-skills-extension"
+    - title: "Publickey 2026-11-26"
+      url: "https://www.publickey1.jp/blog/26/mcpskills_over_mcpmcp.html"
+    - title: "Claude Code の MCP スキル"
+      url: "https://code.claude.com/docs/en/mcp"
+  retrieved_at: "2026-11-28"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "Skills over MCP（MCPの拡張）は、サーバーが手順ファイルを配り、承認をファイルの照合値に結びます。"
+key_points:
+  - claim: "手順をモデルが見る文へ載せるのは、受け取る側だけです。"
+    evidence: "Skills over MCPとは「resources/read で SKILL.md を読んだだけではスキルは有効になりません。有効化は、ホストのスキル読み込み経路だけが行います。」/ 同節「モデルのコンテキストは、その応答のときにモデルが見ているテキストです。」"
+    status: fact
+  - claim: "ファイル一覧を持つ手順では、各ファイルの URI とダイジェスト（生バイトの照合値）とバイト長が、一覧に全部載ります。"
+    evidence: "特徴「resources が配列の一覧エントリは、要約ではなく完全なマニフェストです。各ファイルの URI、SHA-256、バイト長を含みます。」/ 同節「ダイジェストは sha256: に続く小文字 64 桁で、対象はファイルの生バイトです。」"
+    status: fact
+  - claim: "手順の区別は、接続先の名前と URI の組です。手順の名前はラベルです。"
+    evidence: "特徴「ホストは、サーバー識別子と URI の組でスキルを区別します。name はラベルで、サーバー内でも一意である保証はありません。」"
+    status: fact
+  - claim: "手順と操作の定義は版番号を共有しません。操作だけ変えると、古い手順で新しい入力の形を呼ぶ窓が残ります。"
+    evidence: "データ「ツール定義は同じサーバーに並びますが、版番号は共有しません。」/ ベストプラクティス「ツールだけ変えたときは、スキル承認は仕様上そのままです。ホストが古い手順で新しいスキーマを呼ぶ窓が残る」"
+    status: fact
+  - claim: "承認をファイル集合に結べるのは、照合値が事前に決まる手順です。"
+    evidence: "特徴「生成内容で安定したダイジェストを出せないスキルは、resources を文字列 dynamic にします。」/ 運用「dynamic のスキルは内容に承認を結べません。」"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "承認はエントリのダイジェスト集合に結び、読み込みは検証と承認のあとだけ"
+    reason_needed: "ファイルを読む経路と、承認を集合に結ぶ経路が分かれるため"
+example:
+  description: "手順の入口は SKILL.md、担当表は routing.md です。入口は skill://issue-triage/SKILL.md、担当表は skill://issue-triage/routing.md で 61 バイトです。"
+  hypothetical: false
+  evidence: "導入「スキルファイルの配置」/ 利用方法「本文の読み取り」の routing.md の size 61"
+applicability:
+  - "手順がサーバーの操作と同時に変わるときです。"
+  - "操作の使い方をサーバー側の手順に置くときです。"
+decision_criteria:
+  - "手順と操作の定義を同じデプロイに入れますか。"
+  - "一覧が空でも既知の URI で単体取得しますか。"
+  - "集合が変わったとき承認を取り直しますか。"
+  - "保存したコピーを、手元の手順探索から外しますか。"
+  - "別のサーバーのファイルは、呼ぶたびに両サーバーを承認しますか。"
+limitations:
+  - "提案は 2026-09-13 に採択済みです。配り方は試験中で、対話製品 Claude での試験公開は 2026-11-24 です。"
+  - "手順 1 件は 512 ファイル、合計 16 MiB までです。超過分を読めるかはホスト次第です。"
+  - "ダイジェストの一致は、エントリの値とバイトが揃うことです。両方を書き換える中継では照合が通ります。"
+  - "実行したダイジェスト集合と操作の一覧を、プロトコルは記録しません。監査が要るときはホストが残します。"
+  - "Claude Code（コーディングエージェント）では v2.1.331 以降が要ります。この手順は、組織、認証、セッションによってはコマンドとして出ません。"
+unknowns:
+  - "適合上限の 512 ファイル、合計 16 MiB を超えるスキルを読めるかは、ホスト次第です。"
+reviewed: true

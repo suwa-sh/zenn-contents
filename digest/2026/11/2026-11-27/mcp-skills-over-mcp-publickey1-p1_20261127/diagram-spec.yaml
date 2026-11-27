@@ -1,0 +1,59 @@
+type: structure
+title: "承認はダイジェスト集合に結ぶ"
+message: "承認はエントリのダイジェスト集合に結び、読み込みは検証と承認のあとだけ"
+source: "notes/zenn/articles/mcp-skills-over-mcp-publickey1-p1_20261127.md"
+components:
+  - id: entry
+    label: "エントリ"
+    meaning: "一覧か単体取得が返す完全なマニフェスト。各ファイルの URI、ダイジェスト、バイト長を含む"
+  - id: files
+    label: "手順ファイル"
+    meaning: "resources/read が返す SKILL.md と補助ファイルのバイト。この読み取りだけではスキルは有効にならない"
+  - id: verifier
+    label: "検証"
+    meaning: "バイト長、ダイジェスト、frontmatter の一致を見る"
+  - id: approval
+    label: "承認"
+    meaning: "永続する承認を、承認時点の全 URI と全ダイジェストの集合に結ぶ"
+  - id: loader
+    label: "読み込み"
+    meaning: "検証と承認のあとで、本文をモデルのコンテキストへ載せるホスト内の経路"
+groups:
+  - id: server
+    label: "サーバー"
+    members: [entry, files]
+  - id: host
+    label: "ホスト"
+    members: [verifier, approval, loader]
+relationships:
+  - from: entry
+    to: approval
+    label: "集合に結ぶ"
+  - from: entry
+    to: verifier
+    label: "照合の基準"
+  - from: files
+    to: verifier
+    label: "バイトを渡す"
+  - from: verifier
+    to: loader
+    label: "一致したとき"
+  - from: approval
+    to: loader
+    label: "通過したとき"
+omitted:
+  - item: "ディレクトリ読み取り"
+    reason: "完全なマニフェストがあれば子の再取得は、承認を集合に結ぶ関係の外にあるため"
+  - item: "ツール定義"
+    reason: "手順と版を共有しない事実は別の判断で、この図のメッセージではないため"
+  - item: "dynamic のエントリ"
+    reason: "図はダイジェスト集合に結べる配列の場合だけを示すため"
+  - item: "利用者、ネストしたスキル、Claude Code の権限モード"
+    reason: "承認の主体と有効化の条件はホスト内の検証・承認・読み込みにまとめるため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "構造「コンポーネント図」。skills/list と skills/get は同じ Skill エントリを返し、resources 配列が content-bound 承認へつながる。resources/read はホスト検証を経てスキルローダへ進む"
+  - "構造「コンポーネント図」の表。スキルローダは、検証と承認のあとで本文をモデルコンテキストへ載せる。resources/read だけではスキルを有効化しない"
+  - "特徴。承認を永続化するホストは、承認時点の resources 集合（全 URI と全ダイジェスト）に承認を結ぶ。ホストは使う前に size と digest を照合する"

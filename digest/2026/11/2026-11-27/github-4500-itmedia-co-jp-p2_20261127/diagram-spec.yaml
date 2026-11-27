@@ -1,0 +1,56 @@
+type: structure
+title: "画面と入力は別の文書"
+message: "同じ生のMarkdownでも、人の画面にはHTMLコメントが出ず、エージェントの入力には残る"
+source: "notes/zenn/articles/github-4500-itmedia-co-jp-p2_20261127.md"
+components:
+  - id: raw
+    label: "生のMarkdown"
+    meaning: "GitHubが画面用に描画する前の原稿"
+  - id: screen
+    label: "人の画面"
+    meaning: "github.comが描画した文書"
+  - id: agent
+    label: "エージェントの入力"
+    meaning: "生のMarkdownを文字列として受け取る入力"
+  - id: body
+    label: "人が読む本文"
+    meaning: "画面に出る本文"
+  - id: comment
+    label: "HTMLコメント"
+    meaning: "画面が描画しない注記"
+groups:
+  - id: human
+    label: "人"
+    members: [screen, body]
+  - id: model
+    label: "エージェント"
+    members: [agent, comment]
+relationships:
+  - from: raw
+    to: screen
+    label: "描画する"
+  - from: raw
+    to: agent
+    label: "そのまま渡す"
+  - from: screen
+    to: body
+    label: "本文だけ出る"
+  - from: agent
+    to: body
+    label: "本文も含まれる"
+  - from: agent
+    to: comment
+    label: "コメントが残る"
+omitted:
+  - item: "READMEの不可視なUnicode、背景と同色の数式、CSSによる非表示"
+    reason: "issue側の検証済みはすべてHTMLコメントで、図の主張は画面と入力の差だから"
+  - item: "投稿者で隠しテキストを残すか落とすかの受付"
+    reason: "伝えたいことは画面と入力が別の文書であること。受付の条件は本文の適用で扱う"
+  - item: "攻撃の件数、用途の内訳、オフライン再生で従った件数"
+    reason: "件数は核心ポイントと具体例に書き、図は関係だけを示す"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "画面の文書と、入力の文書（同じ生のMarkdownが、人の画面とエージェントの入力で別の文書になる。issue、pull request、コメントで検証済みの2,281件は、すべてHTMLコメント）"
+  - "画面の文書と、入力の文書の mermaid（raw から rendered と model に分かれ、model から visible と HTMLコメントの両方へ進む）"
