@@ -7,10 +7,12 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (691)
+## Articles: 下書き (693)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-28 | [🏗️ 価格.comの960万行刷新、半年後の登壇が置いた判断](articles/960-speakerdeck-tkyowa-kakaku-p1_20261128.md) | AIAgent, Architecture, Python, Claude |
+| 2026-11-28 | [🧭 Khononovの三つの境界は業務知識とモデルと実装計画を分ける](articles/khononov-ai-zenn-dev-koga-p2_20261128.md) | DomainDrivenDesign, SoftwareArchitecture, AIAgent |
 | 2026-11-27 | [🔍 GitHubの生Markdownに残る、エージェント向け隠しテキスト](articles/github-4500-itmedia-co-jp-p2_20261127.md) | GitHub, AIAgent, Security, LLM |
 | 2026-11-27 | [📦 Skills over MCPでサーバーが手順ファイルを配る仕組み](articles/mcp-skills-over-mcp-publickey1-p1_20261127.md) | MCP, AIAgent, AgentSkills, ClaudeCode, FastMCP |
 | 2026-11-26 | [🧭 工程にAIを足しても全体が速くなった実感は薄い](articles/ai-speakerdeck-yuukiyo-building-p7_20261126.md) | AI, Agile, Claude, AIAgent |
