@@ -7,13 +7,15 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (697)
+## Articles: 下書き (699)
 
 | create date | title | topics |
 |-------------|-------|--------|
 | 2026-11-28 | [🏗️ 価格.comの960万行刷新、半年後の登壇が置いた判断](articles/960-speakerdeck-tkyowa-kakaku-p1_20261128.md) | AIAgent, Architecture, Python, Claude |
+| 2026-11-28 | [🗺️ AIで初めて何ができるのかを「4つの壁と8つの価値」で考える](articles/ai-only-value-four-walls-eight-k_20261128.md) | AI, 機械学習 |
 | 2026-11-28 | [🏛 コードを書くAIの時代に境界の最終判断を影響範囲で分ける](articles/ai-ryuzee-contents-14629-p4_20261128.md) | SoftwareArchitecture, AIAgent, Architecture, Governance |
 | 2026-11-28 | [📐 モデリングを人の仕事にし、実装はテキストと検査でAIへ渡す](articles/ai-speakerdeck-littlehands-p3_20261128.md) | DomainDrivenDesign, UML, AIAgent, SoftwareArchitecture |
+| 2026-11-28 | [🎭 e2eの操作記録と再生で考える、AIを使うUIテストのCI設計](articles/e2e_20261128.md) | TypeScript, Playwright, E2E, CI |
 | 2026-11-28 | [🧭 Khononovの三つの境界は業務知識とモデルと実装計画を分ける](articles/khononov-ai-zenn-dev-koga-p2_20261128.md) | DomainDrivenDesign, SoftwareArchitecture, AIAgent |
 | 2026-11-28 | [🔌 Tabpassで手元のChromeタブをAIへ渡す接続設計と同意・失効の仕組み](articles/tabpass_20261128.md) | MCP, ChromeExtension, OAuth, Cloudflare |
 | 2026-11-28 | [🧱 コーディングエージェントの開発環境を隔離・コンテキスト・ガードレール・検証に分ける](articles/tech-dentsusoken-entry-2026-p5_20261128.md) | AIAgent, Docker, Security, Git |
