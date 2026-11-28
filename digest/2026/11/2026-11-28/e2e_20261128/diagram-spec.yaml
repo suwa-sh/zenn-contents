@@ -1,0 +1,55 @@
+type: behavior
+title: "検証が通った操作だけを次回再生する"
+message: "検証が通った操作列を記録し、欠落がなく画面と一致すれば次回は再生する。結果の照合は毎回行う。"
+source: "notes/zenn/articles/e2e_20261128.md"
+components:
+  - id: first_act
+    label: "初回の操作"
+    meaning: "モデルが画面を見て操作を選ぶ"
+  - id: confirm
+    label: "結果の検証"
+    meaning: "後続の照合が、選んだ操作の結果を確認する"
+  - id: cache
+    label: "操作記録"
+    meaning: "検証が通った操作列を保存する"
+  - id: replay
+    label: "次回の再生"
+    meaning: "記録が現在の画面と一致すれば、その操作列で進む"
+  - id: recheck
+    label: "毎回の照合"
+    meaning: "最後の照合は、現在の画面に対して改めて評価する"
+groups:
+  - id: first_run
+    label: "初回"
+    members: [first_act, confirm, cache]
+  - id: later
+    label: "次回"
+    members: [replay, recheck]
+relationships:
+  - from: first_act
+    to: confirm
+    label: "操作のあと"
+  - from: confirm
+    to: cache
+    label: "検証が通ると保存"
+  - from: cache
+    to: replay
+    label: "欠落がなく画面と一致すれば"
+  - from: replay
+    to: recheck
+    label: "再生のあと再評価"
+omitted:
+  - item: "意味を読む確認、条件待ち、値の抽出"
+    reason: "記録して再生する操作列の流れではなく、実行のたびにモデルが関わる別経路のため"
+  - item: "ロケータだけのテスト"
+    reason: "モデルも操作記録も使わないため"
+  - item: "画面と合わない記録の失敗、途中までの再生、記録の破損"
+    reason: "伝えたいことは検証が通った操作の保存と次回の再生であり、失敗の分岐は本文の注意に残すため"
+  - item: "Web エンジンとモバイルエンジン、ランナーとパッケージの依存"
+    reason: "画面を駆動する実装の分担であり、記録を再利用する条件ではないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "特徴：操作と合否判定を別々に選べる / agent.act（初回はモデルが画面を観察して操作を選び、後続の検証で裏付けられた操作列は次回から再生できる）"
+  - "利用方法：プラン変更の操作を記録する（後続の expect が変更結果を確認すると操作列を保存する。次回は記録が現在の画面と一致すれば再生し、最後の expect は現在の画面に対して改めて評価する）"

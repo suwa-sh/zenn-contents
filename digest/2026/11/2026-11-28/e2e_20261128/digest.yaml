@@ -1,0 +1,61 @@
+source:
+  title: "e2eの操作記録と再生で考える、AIを使うUIテストのCI設計"
+  url: null
+  path: "notes/zenn/articles/e2e_20261128.md"
+  primary:
+    - title: "ロケータとエージェントの使い分け"
+      url: "https://e2e.com/docs/agentic-vs-deterministic.md"
+    - title: "キャッシュの記録条件と再生"
+      url: "https://e2e.com/docs/cache.md"
+    - title: "CI での実行"
+      url: "https://e2e.com/docs/ci.md"
+    - title: "e2e のリポジトリとテスト例"
+      url: "https://github.com/e2e-inc/e2e"
+  retrieved_at: "2026-11-29"
+archetype:
+  primary: architecture
+  secondary:
+    - decision
+one_liner: "e2e（画面操作のテスト枠組み）0.25.0 は、検証が通った操作を記録して再生し、結果は毎回照合します。"
+key_points:
+  - claim: "ロケータ（要素の指定）の操作と照合は、モデルへ問い合わせません。"
+    evidence: "特徴：操作と合否判定を別々に選べる / 表のロケータ行（e2e が指定した要素を操作・検証する。モデルへの問い合わせはない）"
+    status: fact
+  - claim: "任せた操作の初回は、モデルが画面を見て選びます。記録が欠けておらず今の画面と一致すれば、次回は再生できます。"
+    evidence: "特徴：操作と合否判定を別々に選べる / 表の agent.act 行（初回はモデルが画面を観察して操作を選び、後続の検証で裏付けられた操作列は次回から再生できる）"
+    status: fact
+  - claim: "同じ文言の厳密な確認は、ロケータに置きます。"
+    evidence: "特徴：操作と合否判定を別々に選べる（同じ文言を厳密に確認できる箇所はロケータにすると、モデルを使う費用と、回答で合否が揺れる余地がなくなる）"
+    status: fact
+  - claim: "CI の既定は、操作記録の読み取り専用です。"
+    evidence: "運用：CI に記録を渡す（CI の既定はキャッシュの読み取り専用）"
+    status: fact
+  - claim: "保存した操作が今の画面と違うと、strict-cache（不一致で失敗）では失敗します。"
+    evidence: "運用：CI に記録を渡す（npx e2e run --strict-cache は、記録済みの操作が現在の画面に合わないときに失敗する）"
+    status: fact
+mental_models:
+  - type: behavior
+    key_message: "検証が通った操作列を記録し、欠落がなく画面と一致すれば次回は再生します。結果の照合は毎回行う。"
+    reason_needed: "初回のモデル選択と、次回の再生と、毎回の照合が別の段だと分けるため"
+example:
+  description: "請求設定を開き、Pro への変更は初回だけモデルに任せます。状態欄の文字が Pro であることを照合します。"
+  hypothetical: false
+  evidence: "利用方法：プラン変更の操作を記録する（agent.act で Pro へ変更し、status の文字列を expect で Pro と照合するテスト）"
+applicability:
+  - "途中の画面に複数の正しい経路があるときです。"
+  - "結果の文言を毎回同じ照合で固定したいときです。"
+  - "モデルを呼ばずに各コミットを判定したいときです。"
+decision_criteria:
+  - "共有する前に、記録へ残った入力文字を見ましたか。"
+  - "モデルを呼ばないジョブはロケータだけですか。"
+  - "新しいテストの記録は CI にありますか。"
+  - "料金変更の再実行は、毎回同じ初期プランからですか。"
+limitations:
+  - "strict-cache でも、記録が無い新しいテストはモデルが操作を選びます。"
+  - "文言の意味を読む確認は、実行のたびにモデルへ依頼します。"
+  - "組み込みの、条件まで画面を観察する処理と値の抽出は、記録して再生しません。"
+  - "入力した文字は、記録にそのまま残ります。"
+  - "対象は e2e 0.25.0 です。他の版で記録条件が同じかは、記事にありません。"
+unknowns:
+  - "e2e 0.25.0 以外の版で、記録条件と再生の失敗が同じかは記事にありません。"
+reviewed: true

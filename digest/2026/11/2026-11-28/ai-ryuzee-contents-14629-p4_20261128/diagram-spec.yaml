@@ -1,0 +1,53 @@
+type: structure
+title: "境界の変更は4行のどれかで最終判断が分かれる"
+message: "境界の変更は、影響範囲の4行のどれかで最終判断が分かれる"
+source: "notes/zenn/articles/ai-ryuzee-contents-14629-p4_20261128.md"
+components:
+  - id: change
+    label: "境界の変更"
+    meaning: "どのチームがどの範囲を引き受けるかの切れ目を変えること"
+  - id: local
+    label: "モジュール再構成"
+    meaning: "チーム内のモジュール再構成やリファクタリング"
+  - id: contract
+    label: "チーム間の約束"
+    meaning: "チーム間のAPIと、入出力や互換の契約"
+  - id: ownership
+    label: "分割や担当変更"
+    meaning: "チームの分割・統合と、担当範囲の変更"
+  - id: invest
+    label: "ドメインや基盤"
+    meaning: "ドメイン分割、サービスやプラットフォームの抽出"
+groups:
+  - id: table
+    label: "影響範囲の表"
+    members: [local, contract, ownership, invest]
+relationships:
+  - from: change
+    to: local
+    label: "チーム内で完結"
+  - from: change
+    to: contract
+    label: "関係チームの合意"
+  - from: change
+    to: ownership
+    label: "チームから上へ"
+  - from: change
+    to: invest
+    label: "投資として決める"
+omitted:
+  - item: "主な発案の列"
+    reason: "伝えたいことは最終判断の分かれであり、発案者は図の主張に不要なため"
+  - item: "指示ファイル、落ちる検査、コードを書くAI、判断記録から境界へ戻る矢印"
+    reason: "境界の引き方と生成・検査の循環は別の関係であり、この図の4行の分かれではないため"
+  - item: "プログラミング言語や採用モデルの一覧"
+    reason: "記事が行の外に置く、使う技術の一覧であるため"
+  - item: "分割の軸（ドメイン、法令、変更のリズム、リスク、性能、地理）"
+    reason: "切れ目の軸の例であり、誰が最終判断するかの行ではないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "影響範囲で分かれる判断の表（モジュール再構成はチーム内で完結、API・契約は関係チームの合意、分割・統合はチームからのエスカレーション、ドメイン分割や基盤の抽出は投資判断）"
+  - "判断の所在は影響範囲。下の行ほどコードレベルからシステムレベルへ移る"
+  - "エスカレーションとは、チームだけでは決めず、上位の判断へ上げること"

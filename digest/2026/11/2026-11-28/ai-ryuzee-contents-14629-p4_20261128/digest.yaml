@@ -1,0 +1,59 @@
+source:
+  title: "コードを書くAIの時代に境界の最終判断を影響範囲で分ける"
+  url: null
+  path: "notes/zenn/articles/ai-ryuzee-contents-14629-p4_20261128.md"
+  primary:
+    - title: "吉羽龍太郎「【資料公開】コードを書くAI、アーキテクチャーを決める組織」"
+      url: "https://www.ryuzee.com/contents/blog/14629"
+    - title: "同スライド（45枚）"
+      url: "https://slide.meguro.ryuzee.com/slides/141"
+    - title: "Gloaguen et al. Evaluating AGENTS.md"
+      url: "https://arxiv.org/html/2602.11988v3"
+    - title: "Twilio 再掲 Segment Goodbye Microservices"
+      url: "https://www.twilio.com/en-us/blog/developers/best-practices/goodbye-microservices"
+  retrieved_at: "2026-11-29"
+archetype:
+  primary: architecture
+  secondary: [governance]
+one_liner: "吉羽氏の資料は、境界の最終判断を影響範囲の4行で分けます。"
+key_points:
+  - claim: "コードを書く費用が下がったあとも、システムの切れ目を決めるのはチーム境界である"
+    evidence: "資料が置く結論 / まとめ"
+    status: fact
+  - claim: "最終判断は影響範囲の4行で分かれ、行はチーム内の再構成からドメインや基盤の切り出しまでである"
+    evidence: "影響範囲で分かれる判断（4行の表）"
+    status: fact
+  - claim: "境界を越えた変更は、人とコードを書くAIに同じ検査で落とす。同じ変更なら落ち方も同じである"
+    evidence: "伝えるファイル、落とす検査、残す記録 / 現場で残す切り方"
+    status: fact
+  - claim: "指示ファイルには固有の手順と、表や判断記録（なぜその切れ目か）への参照を置く"
+    evidence: "台帳は指示ファイルの外に置く"
+    status: fact
+  - claim: "可用性の厳しさや基盤の切り出しは、複数チームの運用責任か投資配分が変わるときだけ表のいちばん下の行へ上げる"
+    evidence: "目標の厳しさは、下段の条件で上げる / まとめ"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "境界の変更は、影響範囲の4行のどれかで最終判断が分かれる"
+    reason_needed: "最終判断の所在が役職名ではなく行で分かれる関係"
+example:
+  description: "チーム内のモジュール再構成は、最終判断がチーム内で完結する。依存の規則を破って通す許可は、この行に含まれない"
+  hypothetical: false
+  evidence: "台帳は指示ファイルの外に置く"
+applicability:
+  - "切れ目の最終判断者を表に残すとき"
+  - "指示ファイルへ境界の規則を足す前"
+  - "可用性の目標を、合格か不合格かに置き換える前"
+decision_criteria:
+  - "影響範囲の4行を、判断記録の隣に置いていますか。"
+  - "下の行へ上げた変更は、複数チームの運用責任か投資配分が変わりますか。"
+limitations:
+  - "公開された保守性の数字は、チーム境界が原因だという証拠にはならない"
+  - "境界を守ったかは、指示ファイルの調査では測っていない"
+  - "検査は誤った切れ目も守る"
+  - "毎日の差分を上位の承認へ上げる運用は、表の条件より広い"
+  - "指示ファイルは、複数の境界を同時に守る役にはしない"
+unknowns:
+  - "会議の部屋と時刻"
+  - "GitClear の年の対応、Reuters 原文、DORA の報告書 PDF、ISO 42010、ダイナミックリチーミングの一次文、ArchUnit が誤った境界を固定した一次記録"
+reviewed: true

@@ -1,0 +1,31 @@
+type: behavior
+title: "AI企画で先に書く三つの文"
+message: "壁、新しい判断、確かめる観測の順に書く"
+source: "notes/zenn/articles/ai-only-value-four-walls-eight-k_20261128.md"
+steps:
+  - id: wall
+    label: "壁を一文で書く"
+    meaning: "これまで何が壁だったか"
+  - id: judgment
+    label: "新しい判断を一文で書く"
+    meaning: "誰が何を新しく判断できるか"
+  - id: measure
+    label: "観測を一つ決める"
+    meaning: "判断が役立ったと確かめる観測"
+transitions:
+  - from: wall
+    to: judgment
+    label: "次に書く"
+  - from: judgment
+    to: measure
+    label: "次に決める"
+omitted:
+  - item: "四つの壁の名前と八つの価値の一覧"
+    reason: "伝えたいことは書く順序であり、中身の一覧は本文に残すため"
+  - item: "ダムの企画で決める四つの問いと、サンゴ礁の面積"
+    reason: "具体例と注意点であり、図の順序そのものではないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "まとめ: 「これまで何が壁だったか」「誰がどんな判断を新しくできるか」を一文ずつ書いてみてください。次に、その判断が役立ったと確かめる観測を一つ決めます。"

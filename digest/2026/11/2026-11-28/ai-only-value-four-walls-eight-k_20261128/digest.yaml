@@ -1,0 +1,57 @@
+source:
+  title: "AIで初めて何ができるのかを「4つの壁と8つの価値」で考える"
+  url: null
+  path: "notes/zenn/articles/ai-only-value-four-walls-eight-k_20261128.md"
+  primary:
+    - title: "安宅和人「AIでしか生み出せない価値とは何か」"
+      url: "https://kaz-ataka.hatenablog.com/entry/2026/11/28/085335"
+    - title: "Lyonsらによる浅海サンゴ礁の全球マッピング"
+      url: "https://doi.org/10.1016/j.crsus.2024.100015"
+    - title: "北陸電力・JFEエンジニアリングによるダム運用支援の発表"
+      url: "https://www.rikuden.co.jp/press/attach/22101901.pdf"
+    - title: "国土交通白書2023「暮らしを支える生活サービス提供機能の維持・向上」"
+      url: "https://www.mlit.go.jp/hakusyo/mlit/r04/hakusho/r05/html/n1111000.html"
+  retrieved_at: "2026-11-29"
+archetype:
+  primary: decision
+  secondary: []
+one_liner: "安宅和人さんの枠では、越えた壁と新しい判断と確かめる観測を先に書きます。"
+key_points:
+  - claim: "サンゴ礁の例では、世界中の画像は人手で調べきれません。"
+    evidence: "「4つの壁と8つの価値創造」とは / サンゴ礁の例は量の壁"
+    status: fact
+  - claim: "サンゴ礁の地図では、分類した面積に砂地や海草も入ります。"
+    evidence: "注意点"
+    status: fact
+  - claim: "ダムの1%程度は、検証で見込んだ水系全体の発電量の増分です。"
+    evidence: "注意点"
+    status: fact
+  - claim: "AIが配車を提案できても、予約に合わせて走るバスには車両と運転手が要ります。"
+    evidence: "自分の企画では何を確かめるか"
+    status: fact
+mental_models:
+  - type: behavior
+    key_message: "壁、新しい判断、確かめる観測の順に書く"
+    reason_needed: "企画で先に書く三つの文の順序が、判断の手順になるため"
+example:
+  description: "五つのダムでは、新しい判断は運転員の採否、観測は条件をそろえた発電量の差です。"
+  hypothetical: false
+  evidence: "自分の企画では何を確かめるか / 企画で決めることの表"
+applicability:
+  - "分類した面積を、そのまま成果にする前です。"
+  - "複数の設備をまとめて運用する企画のときです。"
+  - "少ない需要のサービスを続けられるか見るときです。"
+decision_criteria:
+  - "越えた壁を、一文で書けますか。"
+  - "誰の新しい判断かを、一文で書けますか。"
+  - "その判断を確かめる観測は、一つですか。"
+  - "比較する相手を書けますか。"
+  - "費用が壁のとき、残る費用を書き出しましたか。"
+limitations:
+  - "サンゴが今も生きているかは、この地図では分かりません。"
+  - "サンゴの生息場の95%信頼区間は、約4.6万から10.6万平方キロメートルです。"
+  - "濁りの強い場所は、この地図の対象外です。"
+  - "導入後の増分を見るには、運転記録と比較条件が要ります。"
+unknowns:
+  - "導入後の増分を見るには、運転記録と比較条件が要ります。"
+reviewed: true

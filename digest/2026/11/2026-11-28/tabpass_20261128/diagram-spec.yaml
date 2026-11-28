@@ -1,0 +1,57 @@
+type: structure
+title: "タブ本文が通る経路"
+message: "本文は、サイト同意のあとだけ中継を通る"
+source: "notes/zenn/articles/tabpass_20261128.md"
+components:
+  - id: client
+    label: "AIクライアント"
+    meaning: "中継へツール呼び出しを送るアプリ"
+  - id: relay
+    label: "中継サーバー"
+    meaning: "呼び出しのあいだ本文を通す。セッションには残さない"
+  - id: extension
+    label: "Tabpass拡張"
+    meaning: "接続を照合し、タブの読み取りを受ける"
+  - id: consent
+    label: "サイト同意"
+    meaning: "未許可のホストでは本文を止める"
+  - id: tabs
+    label: "開いているタブ"
+    meaning: "本文の出所。Chromeの中にある"
+groups:
+  - id: remote
+    label: "遠隔"
+    members: [client, relay]
+  - id: browser
+    label: "このブラウザ"
+    members: [extension, consent, tabs]
+relationships:
+  - from: client
+    to: relay
+    label: "ツールを呼ぶ"
+  - from: relay
+    to: extension
+    label: "呼び出しを渡す"
+  - from: extension
+    to: consent
+    label: "本文の前に確認"
+  - from: consent
+    to: tabs
+    label: "許可したホストだけ読む"
+  - from: extension
+    to: relay
+    label: "読んだ本文を返す"
+omitted:
+  - item: "中継からAIクライアントへ結果を返す矢印"
+    reason: "本文が中継へ戻る矢印と同じ戻りなので、図の主張（同意のあとだけ通る）には足さない"
+  - item: "接続元のWebサイトとWeb Protocol"
+    reason: "伝えたいことは、遠隔のツール呼び出しで本文が通る経路に絞るため"
+  - item: "OAuth、Durable Object、拡張内部のファイル名"
+    reason: "境界とサイト同意の位置には不要なため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "構造 / システムコンテキスト の mermaid（AIクライアントはMCP over HTTPSでリレーへ、拡張はWebSocketでリレーへ、リレーはツール結果をクライアントへ返す。クライアントは拡張へ直接つながらない）"
+  - "利用 / サイトごとの同意（誰とつなぐかと、どのサイトを見せるかを別々に決める。未許可サイトの本文を読むときに承認窓が開く）"
+  - "データ / 概念モデル（ページ本文と画像は呼び出しのあいだリレーを通過し、リレーのセッション情報としては保存しない）"

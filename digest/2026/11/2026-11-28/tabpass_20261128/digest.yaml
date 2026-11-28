@@ -1,0 +1,61 @@
+source:
+  title: "Tabpassで手元のChromeタブをAIへ渡す接続設計と同意・失効の仕組み"
+  url: null
+  path: "notes/zenn/articles/tabpass_20261128.md"
+  primary:
+    - title: "MigmaAI/tabpass（cdbe95e）"
+      url: "https://github.com/MigmaAI/tabpass/tree/cdbe95ea5c7824b148aee347d454bb7f5b71f69b"
+    - title: "README（cdbe95e）"
+      url: "https://github.com/MigmaAI/tabpass/blob/cdbe95ea5c7824b148aee347d454bb7f5b71f69b/README.md"
+    - title: "同意の実装"
+      url: "https://github.com/MigmaAI/tabpass/blob/cdbe95ea5c7824b148aee347d454bb7f5b71f69b/extension/public/lib/permissions.js"
+    - title: "プライバシーポリシー"
+      url: "https://github.com/MigmaAI/tabpass/blob/cdbe95ea5c7824b148aee347d454bb7f5b71f69b/PRIVACY.md"
+  retrieved_at: "2026-11-29"
+archetype:
+  primary: architecture
+  secondary:
+    - governance
+one_liner: "MigmaのTabpassは、手元のChromeタブを中継サーバー経由でAIに渡します。"
+key_points:
+  - claim: "AIはChromeの拡張へ直接届かず、中継サーバーへツール呼び出しを送ります。拡張は同じ中継へWebSocketでつながります。"
+    evidence: "構造 / システムコンテキスト（AIクライアントは拡張へ直接つながらず、必ずリレーを経由する）"
+    status: fact
+  - claim: "見せるサイトと、フォーム操作やタブの開閉の許可は、別々に決めます。"
+    evidence: "特徴の表（フォーム操作やタブの開閉まで任せるのは Read and act）と、利用 / 操作（open_tab、close_tabs、click、type など）"
+    status: fact
+  - claim: "接続を始めるリンクを持つ相手は、そのリンクで許したことまで、このブラウザに届きます。初めてのサイトは、別に承認が要ります。"
+    evidence: "利用 / 接続の作り方（プライベートリンクはトークンと同じ扱い。持っている相手は選んだ権限でこのブラウザに届く。サイトごとの初回承認は別に残る）"
+    status: fact
+  - claim: "拡張の画面でその接続を外すと、古いトークンでは新しい操作ができません。"
+    evidence: "運用 / 接続の切断（サイドパネルの Disconnect でハッシュ一覧から外れ、旧トークンでは新しい操作を実行できない）"
+    status: fact
+  - claim: "ページ本文は、呼び出しのあいだだけ中継を通ります。中継はその本文を保存しません。"
+    evidence: "データ / 概念モデル（ページ本文と画像は呼び出しのあいだリレーを通過し、リレーのセッション情報としては保存しない）"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "本文は、サイト同意のあとだけ中継を通る"
+    reason_needed: "遠隔からの呼び出しと、サイト同意の位置を一つの経路で見るため"
+example:
+  description: "サイトの確認で常時許可したサイトは、新しい接続でもすぐ読めます。10分だけの許可は、10分後か、Chromeを閉じると切れます。効くのは、その接続だけです。"
+  hypothetical: false
+  evidence: "利用 / サイトごとの同意（常時許可はすべての接続で共有。10分の許可は、その接続だけで、10分後またはChromeの終了で切れる）"
+applicability:
+  - "開いている資料を、クラウドのAIに読ませたいときです。"
+  - "フォーム操作やタブの開閉まで任せるかを、接続ごとに分けたいときです。"
+  - "自分で用意した中継に、本文を通したいときです。"
+decision_criteria:
+  - "調べものだけなら、読むだけの接続にしましたか。"
+  - "常時許可は、繰り返し使うサイトだけですか。"
+  - "接続を始めるリンクを、公開の場に置いていませんか。"
+  - "自分で用意した中継へ移すとき、接続を作り直しましたか。"
+limitations:
+  - "通過中の本文は、中継を動かしている人から見えます。"
+  - "Migmaのチャット製品（Tabpassとは別の画面）で切っても、拡張の接続は残ります。"
+  - "以後見せないと決めたサイトでも、AIが見る一覧にタブは残ります。"
+  - "Migmaのチャット製品は、同社の中継以外へ移せません。"
+  - "Google文書の実アカウントでの読み取りは、記事の対象にした版では未試験です。"
+unknowns:
+  - "Google文書の実アカウントでの読み取りは、記事の対象にした版では未試験です。"
+reviewed: true

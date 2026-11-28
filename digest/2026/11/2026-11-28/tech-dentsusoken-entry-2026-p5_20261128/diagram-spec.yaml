@@ -1,0 +1,48 @@
+type: structure
+title: "資格情報はホストに残す"
+message: "資格情報の値はホストに残り、仮想マシンは目印だけを見る"
+source: "notes/zenn/articles/tech-dentsusoken-entry-2026-p5_20261128.md"
+components:
+  - id: secrets
+    label: "認証情報"
+    meaning: "ホストに残る資格情報の値"
+  - id: proxy
+    label: "注入プロキシ"
+    meaning: "宛先が許可と一致した HTTP にだけ、本当の認証ヘッダーを付けて外へ出す"
+  - id: agent
+    label: "エージェント"
+    meaning: "仮想マシンの中のコーディングエージェント。見るのは sentinel という目印の文字列"
+  - id: outside
+    label: "許可先"
+    meaning: "許可した外部サービス"
+groups:
+  - id: host
+    label: "ホスト"
+    members: [secrets, proxy]
+  - id: vm
+    label: "仮想マシン"
+    members: [agent]
+relationships:
+  - from: agent
+    to: proxy
+    label: "目印付きの要求"
+  - from: secrets
+    to: proxy
+    label: "値はホストに残す"
+  - from: proxy
+    to: outside
+    label: "一致した宛先へ実ヘッダー"
+omitted:
+  - item: "SSH エージェントと署名結果"
+    reason: "伝えたいことは資格情報の値の境界であり、署名の転送は別の注意点のため"
+  - item: "worktree ごとの DB とポート"
+    reason: "並列の衝突回避であり、資格情報がホストに残る関係ではないため"
+  - item: "OAuth の passthrough と CVE-2026-105452"
+    reason: "目印だけになる前提が崩れる例外は、図の正常系ではなく本文の注意点に置くため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "隔離。ホストには認証情報、SSH エージェント、注入プロキシを残す。VM の中のエージェントが見るのは sentinel。注入プロキシは、宛先が許可と一致した HTTP にだけ、本当の認証ヘッダーを付けて外へ出す"
+  - "隔離の図。agent は sentinel 付きの要求を proxy へ送り、secrets は proxy へ入り、proxy は一致ドメインへ実ヘッダーを出す"
+  - "マウントと、VM から見える秘密。プロキシ管理が有効なとき、本当の資格情報はホストに残る。VM が見るのは sentinel"

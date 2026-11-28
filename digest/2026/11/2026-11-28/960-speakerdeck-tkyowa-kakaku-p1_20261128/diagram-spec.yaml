@@ -1,0 +1,62 @@
+type: structure
+title: "切替の合否は隠した入力での新旧比較"
+message: "切替の合否は、隠した入力で動いている新旧を比べて決める"
+source: "notes/zenn/articles/960-speakerdeck-tkyowa-kakaku-p1_20261128.md"
+components:
+  - id: current
+    label: "現行のコードと画面"
+    meaning: "動いている現行。振る舞いの比較で正解にする側"
+  - id: policy
+    label: "許す差の文書"
+    meaning: "許す違いと許さない違いを人が持つ短い文書"
+  - id: hidden
+    label: "作る側から隠した入力"
+    meaning: "採点のとき、作る側に見せない入力"
+  - id: live
+    label: "動いている新旧"
+    meaning: "動いている現行と、動いている新しい実装"
+  - id: cutover
+    label: "切替の合否"
+    meaning: "本番へ切り替えてよいかの判定"
+groups:
+  - id: truth
+    label: "振る舞いのよりどころ"
+    members: [current]
+  - id: outside
+    label: "採点の外"
+    members: [policy]
+  - id: gate
+    label: "隠した入力で比べる"
+    members: [live, cutover]
+relationships:
+  - from: current
+    to: live
+    label: "正解にする"
+  - from: policy
+    to: live
+    label: "許す差を渡す"
+  - from: hidden
+    to: live
+    label: "隠して渡す"
+  - from: live
+    to: cutover
+    label: "比べて決める"
+omitted:
+  - item: "生成した仕様書をテストの親にする経路"
+    reason: "切替の合否の置き場がこの図のメッセージであり、内側のテストが漏れを通す話は核心ポイントに残すため"
+  - item: "ワークフローを流した画面の数と、全面完了の日程"
+    reason: "切替の合否と混ぜないと記事が書くだけで、この図の矢印ではないため"
+  - item: "内側 514/520 と外 32/65 と 65/65"
+    reason: "具体例の表で扱い、この図の関係ではないため"
+  - item: "データベースの表構造の維持と、本番に出たカテゴリ数"
+    reason: "刷新の範囲と進捗であり、3つの置き場の関係ではないため"
+  - item: "目標だけを渡す方式が同じモデルで動かなかったこと"
+    reason: "比較の条件であり、切替の合否をどこに置くかの矢印ではないため"
+layout:
+  direction: top-to-bottom
+  aspect_ratio: "16:9"
+evidence:
+  - "混ぜずに置く3つの層 / 判断支援者として置くのは、3つを同じファイルに書かないことです"
+  - "混ぜずに置く3つの層 / ふるまいのよりどころは、動いている現行のコードと画面に置きます"
+  - "混ぜずに置く3つの層 / 許す差と許さない差は、評価器へ渡す前の、人が持つ短い文書にします"
+  - "混ぜずに置く3つの層 / 作る側から隠した入力で、動いている新旧のふるまいを比べます"

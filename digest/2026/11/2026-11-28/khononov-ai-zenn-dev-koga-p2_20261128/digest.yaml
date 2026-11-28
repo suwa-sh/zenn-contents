@@ -1,0 +1,51 @@
+source:
+  title: "Khononovの三つの境界は業務知識とモデルと実装計画を分ける"
+  url: null
+  path: "notes/zenn/articles/khononov-ai-zenn-dev-koga-p2_20261128.md"
+  primary:
+    - title: "ArchitectureCon 2026 Boundaries Public（公開スライド、101ページ）"
+      url: "https://drive.google.com/uc?export=download&id=1b4IHT5jreUauZ1Ou4Bo9052DlgAoviwy"
+  retrieved_at: "2026-11-29"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "Khononov は、業務の知識と表し方と実装計画を分けます。"
+key_points:
+  - claim: "その業務の表し方は、知識の文書とは別に置く"
+    evidence: "三つの境界とは / 境界づけられたコンテキスト / エージェントに渡す1回の変更はどこに置くか"
+    status: fact
+  - claim: "1つの業務領域は、複数の表し方で書ける"
+    evidence: "三つの境界とは / 境界づけられたコンテキスト"
+    status: fact
+  - claim: "表し方の区切り1つは、複数の業務領域を反映できる"
+    evidence: "三つの境界とは / 境界づけられたコンテキスト / 三つの単位の基数"
+    status: fact
+  - claim: "表し方の区切り1つは、必ず複数の実装計画にまたがる"
+    evidence: "三つの境界とは / Spec"
+    status: fact
+  - claim: "エージェントへ渡す1回の変更は、機能1つ分の実装計画に置く"
+    evidence: "エージェントに渡す1回の変更はどこに置くか"
+    status: interpretation
+mental_models:
+  - type: structure
+    key_message: "1回の変更は機能1つ分の実装計画に置き、業務知識とモデルの境界は別文書に残す"
+    reason_needed: "三つの単位の基数と、1回の変更の置き場"
+example:
+  description: "電子商取引では、商品や注文のような仕事を業務領域へ束ねる"
+  hypothetical: false
+  evidence: "三つの境界とは / 要件の言葉とどこで重なりどこで割れるか / エージェントに渡す1回の変更はどこに置くか"
+applicability:
+  - "エージェントへ実装を1回渡すとき"
+decision_criteria:
+  - "業務の知識は、実装計画とは別の文書にありますか。"
+limitations:
+  - "この分け方でコードの劣化が止まる、とは測定されていない"
+  - "知識、表し方、実装計画を混ぜた方が影響範囲を追えると測られたら、この置き方をやめる"
+  - "実装計画の外へ設計のファイルを必ず出す道具で、そのファイルが表し方の区切りを担うなら、この置き方は向かない"
+  - "表し方を実装計画へ溶かすと、設計の置き場が消える"
+unknowns:
+  - "知識を切る目安より細かい手順は、取り出せた本文に無い"
+  - "Goldratt『The Choice』の当該頁は未照合"
+  - "2026-11-27 の投稿が、プラグインの商用条項を法的に変えるかは未確認"
+  - "参加記録の「必ず1チーム」は、取り出せたスライド本文に無い"
+reviewed: true

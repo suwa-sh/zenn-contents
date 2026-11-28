@@ -1,0 +1,52 @@
+source:
+  title: "モデリングを人の仕事にし、実装はテキストと検査でAIへ渡す"
+  url: null
+  path: "notes/zenn/articles/ai-speakerdeck-littlehands-p3_20261128.md"
+  primary:
+    - title: "松岡幸一郎「AI使って開発するなら、モデリングするんだよ」"
+      url: "https://speakerdeck.com/littlehands/umtp-suraido-20261125"
+  retrieved_at: "2026-11-29"
+archetype:
+  primary: decision
+  secondary: [governance]
+one_liner: "松岡幸一郎氏の資料は、コードの名前を、維持する設計の文書へ合わせます。"
+key_points:
+  - claim: "実装が速くなったあとも、人の仕事は問題の理解と解決策と、確かめることに残ります。"
+    evidence: "冒頭（実装が速くなったあとに人へ残る仕事）"
+    status: fact
+  - claim: "人が先に図で決めるのは、誰がログインしどの外部とつながるか、最初の操作、具体的な値、用語と規則です。"
+    evidence: "4つの図が決めること"
+    status: fact
+  - claim: "AIが出した具体例の採否は、描いた人と業務側が決めます。"
+    evidence: "候補を足してから、人が決める"
+    status: fact
+  - claim: "実装へ渡す文は、採用した具体例、名前、繋がる個数、規則です。"
+    evidence: "まとめ"
+    status: fact
+  - claim: "コードの名前は、維持すると決めた設計の文書へ極力合わせます。"
+    evidence: "維持するモデルを実装の入力にする"
+    status: fact
+mental_models:
+  - type: behavior
+    key_message: "コードの名前を、維持する設計の文書へ合わせます"
+    reason_needed: "候補、採用、文、検査、コードの名前の向きを、文章だけだと取り違えやすい"
+example:
+  description: "採用管理では、不合格の選考に面接を追加できないことが、採用した規則の例です。"
+  hypothetical: false
+  evidence: "候補を足してから、人が決める"
+applicability:
+  - "実装が速くなり、人の残る仕事を決めるときです。"
+  - "設計の文書と、コードの名前がずれているときです。"
+decision_criteria:
+  - "維持すると決めた設計の文書は、最新ですか。"
+  - "コードの依存関係は、機械で照合する検査ですか。"
+  - "名前を合わせる相手は、維持すると決めた設計の文書ですか。"
+limitations:
+  - "図をどの形式で置くかは、資料から特定できません。"
+  - "図の画像そのものは、文書へ写すためのものです。"
+  - "2024年6月の手描きクラス図の実験では、写しに抜けと読み違えがありました。2026年の率は未測定です。"
+  - "望む動きになるかは、検査の成功だけでは決まっていません。"
+  - "今あるコードから設計を起こすやり方も、資料には残っています。"
+unknowns:
+  - "図種ごとのファイル形式、プロンプト全文、手戻り削減の測定、2026年の画像からの脱落率は、公開スライドから特定できていません。"
+reviewed: true

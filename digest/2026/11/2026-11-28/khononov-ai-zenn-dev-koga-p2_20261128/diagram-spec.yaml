@@ -1,0 +1,49 @@
+type: structure
+title: "1回の変更は機能1つ分の計画に置く"
+message: "1回の変更は機能1つ分の実装計画に置き、業務知識とモデルの境界は別文書に残す"
+source: "notes/zenn/articles/khononov-ai-zenn-dev-koga-p2_20261128.md"
+components:
+  - id: domain
+    label: "業務領域"
+    meaning: "業務領域の知識をまとめる単位"
+  - id: model
+    label: "モデルの境界"
+    meaning: "問題ごとのモデルを収める境界"
+  - id: plan
+    label: "実装計画"
+    meaning: "機能1つ分の、何をなぜ作るかの計画"
+  - id: change
+    label: "1回の変更"
+    meaning: "エージェントに渡す1回の変更単位"
+relationships:
+  - from: domain
+    to: model
+    label: "1領域が複数のモデル"
+  - from: model
+    to: domain
+    label: "1境界が複数の領域"
+  - from: model
+    to: plan
+    label: "1境界は複数の計画"
+  - from: change
+    to: plan
+    label: "ここに置く"
+omitted:
+  - item: "core、supporting、generic"
+    reason: "投資判断の類型であり、三つの単位の基数と変更の置き場ではないため"
+  - item: "結合の強さと距離の4マス"
+    reason: "末尾の別軸であり、1回の変更をどこに置くかには不要なため"
+  - item: "Physical、Ownership、Lifecycle"
+    reason: "側面の名前だけで、取り出せた本文に定義文が無いため"
+  - item: "電子商取引の8つの仕事の名前"
+    reason: "具体例の節で扱い、図の関係ではないため"
+  - item: "SlopCodeBench の数値と道具ごとの Spec の形"
+    reason: "効果と名前の安定性の注意であり、図の関係ではないため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "三つの境界とは / サブドメイン（業務領域の知識をまとめる単位）"
+  - "三つの境界とは / 境界づけられたコンテキスト（1つの領域は複数のモデル、1つの境界は複数の領域）"
+  - "三つの単位の基数（1つの境界は複数の Spec）"
+  - "エージェントに渡す1回の変更はどこに置くか（変更単位は機能サイズの Spec。業務知識とモデル境界は別文書）"

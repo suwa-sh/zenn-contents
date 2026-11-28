@@ -1,0 +1,61 @@
+source:
+  title: "コーディングエージェントの開発環境を隔離・コンテキスト・ガードレール・検証に分ける"
+  url: null
+  path: "notes/zenn/articles/tech-dentsusoken-entry-2026-p5_20261128.md"
+  primary:
+    - title: "佐藤太一「さくさく作れる毎日を支える、AI 時代の開発環境 — 隔離・コンテキスト・ガードレール・検証の整理」"
+      url: "https://tech.dentsusoken.com/entry/2026/11/27/133501"
+    - title: "Docker Docs, Security model"
+      url: "https://docs.docker.com/ai/sandboxes/security/"
+    - title: "Docker Docs, Manage credentials"
+      url: "https://docs.docker.com/ai/sandboxes/configuration/credentials/"
+    - title: "NVD, CVE-2026-105452"
+      url: "https://nvd.nist.gov/vuln/detail/CVE-2026-105452"
+  retrieved_at: "2026-11-29"
+archetype:
+  primary: architecture
+  secondary: [decision]
+one_liner: "佐藤氏は、開発環境を隔離・コンテキスト・ガードレール・検証の四層に分けます。"
+key_points:
+  - claim: "隔離はどこで動かすか、コンテキストは何を見せるか、ガードレールは逸脱を止めるか、検証は信じ方と人の判断です。"
+    evidence: "冒頭「問いは、どこで動かすか、何を見せるか、どう逸脱を止めるか、どう信じ、人が何を決めるか、です。」"
+    status: fact
+  - claim: "資格情報の注入が有効なとき、仮想マシンが見るのは目印だけです。"
+    evidence: "マウントと、VM から見える秘密「プロキシ管理が有効なとき、本当の資格情報はホストに残ります。VM が見るのは sentinel です。」"
+    status: fact
+  - claim: "OAuth の通過を許すと、本当のトークンが仮想マシンへ入ります。"
+    evidence: "マウントと、VM から見える秘密「キットが OAuth の passthrough: true を付けると、本当のトークン応答がサンドボックスへ入ります。」"
+    status: fact
+  - claim: "自動で止めるのは、静的検査、型、依存の境界、秘密の検査、版の固定、単体テスト、性質の検査、ビルドです。"
+    evidence: "検証「強制のゲートにするのは、静的検査、型、依存境界、シークレット検査、版ロック、単体テスト、関数のプロパティテスト、ビルドです。」"
+    status: fact
+  - claim: "sbx（操作コマンド）の 0.21.0 以上、0.43.0 未満は、目印以外の資格情報を要求に残します。非許可の宛先へトークンを付ける欠陥ではありません。"
+    evidence: "マウントと、VM から見える秘密「sbx は、Docker Sandboxes を操作するコマンドです。」/ 外向き通信と、既知の不具合「影響バージョンは Docker Sandboxes 0.21.0 以上、0.43.0 未満です。」/ 同節「非許可ドメインへ、利用者のトークンが付く欠陥ではありません。」"
+    status: fact
+mental_models:
+  - type: structure
+    key_message: "資格情報の値はホストに残り、仮想マシンは目印だけを見る"
+    reason_needed: "ホストに残る値と、仮想マシンが見る目印と、許可先へ出る本物のヘッダーが分かれるため"
+example:
+  description: "sbx run は、パスを省くと今のディレクトリを読み書きで載せます。エージェントは、その中の隠しファイルも読み書きできます。"
+  hypothetical: false
+  evidence: "マウントと、VM から見える秘密「sbx run は、パスを省略するとカレントディレクトリを読み書きでマウントします。エージェントは、その中の隠しファイル、設定、Git hooks を読み書きできます。」"
+applicability:
+  - "指示の文を足すだけでは、並べた作業のポートとデータベースがぶつかるときです。"
+  - "四層を一度にそろえず、困った層から足すときです。"
+decision_criteria:
+  - "sbx の版は 0.43.0 以上ですか。"
+  - "秘密は作業ディレクトリの外に置いていますか。"
+  - "失敗出力からトークンと接続文字列を落としますか。"
+  - "本番と共有のデータベースへは、CI からだけ触りますか。"
+limitations:
+  - "効果の数値は、書いた人の自己申告です。事故件数、削減率、遵守率の分母はありません。"
+  - "著者の載せ方と使う版は、本文から決まりません。"
+  - "画面の探索、差分ミューテーション、手元のトレース、別のモデルの見直しは、自動では止めません。"
+  - "検証のコマンドが失敗した出力の末尾は、秘密を含み得ます。末尾で足りないとき開く部分も、そのまま返します。"
+  - "SSH の転送は既定で有効です。秘密鍵はホストに残り、ソケットを受けた処理は認証か署名を要求できます。"
+unknowns:
+  - "著者のチェックアウトが mountless か clone か、使っている sbx の版は、本文から決まりません。"
+  - "署名だけに限る転送の実装が、ブログの外に実在するかは、公開されたページから確認できません。"
+  - "上流が認証ヘッダーを応答へエコーしたとき、プロキシがそれを除くかは、挙げた Docker の各ページには書かれていません。"
+reviewed: true

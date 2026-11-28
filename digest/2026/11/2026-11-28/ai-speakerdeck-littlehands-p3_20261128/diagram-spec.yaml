@@ -1,0 +1,57 @@
+type: behavior
+title: "人が決めた文と検査"
+message: "コードの名前を、維持する設計の文書へ合わせます"
+source: "notes/zenn/articles/ai-speakerdeck-littlehands-p3_20261128.md"
+states:
+  - id: decide_first
+    label: "人が先に決める"
+    meaning: "誰がログインしどの外部とつながるか、最初の操作、具体的な値、用語と規則を、図で先に決める"
+  - id: proposals
+    label: "AIが案を出す"
+    meaning: "具体例の案を足す"
+  - id: adopt
+    label: "人と業務側が決める"
+    meaning: "図を描いた人と、業務を知る人が、案の採否を決める"
+  - id: text
+    label: "設計の文書"
+    meaning: "維持すると決めた現行のモデル文書。採用した具体例、名前、繋がる個数、規則を置く"
+  - id: checks
+    label: "毎回同じ検査"
+    meaning: "依存関係を、機械で毎回同じ結果で確かめる"
+  - id: code
+    label: "コードの名前"
+    meaning: "維持すると決めた設計の文書へ、名前を極力合わせる"
+transitions:
+  - from: decide_first
+    to: proposals
+    label: "具体例を足す"
+  - from: proposals
+    to: adopt
+    label: "採否の材料"
+  - from: adopt
+    to: text
+    label: "具体例と規則"
+  - from: text
+    to: code
+    label: "名前を合わせる"
+  - from: checks
+    to: code
+    label: "依存関係を確かめる"
+omitted:
+  - item: "写真を文書へ変換する経路"
+    reason: "画素そのものは実行する仕様ではなく、文書化の変換だから"
+  - item: "放置した図を動くコードより上にしないこと"
+    reason: "流れの矢印ではなく、同期の対象外という制限だから"
+  - item: "既存コードから設計を起こす経路"
+    reason: "資料は残すが、この図は人が先に決める流れに絞るため"
+  - item: "望む動きが検査の成功だけでは決まらないこと"
+    reason: "検査の限界であり、この図の矢印ではないため"
+  - item: "図の4つの名前"
+    reason: "誰が使うか、最初の操作、具体的な値、用語と規則を1つの要素にまとめたため"
+layout:
+  direction: left-to-right
+  aspect_ratio: "16:9"
+evidence:
+  - "候補を足してから、人が決める（AIの候補は意思決定材料であり、そのまま採用しない。決めたシナリオは受入基準になる）"
+  - "ストックの文書と、ハーネスの検査（依存の向きのテストや lint は毎回同じ結果になる）"
+  - "維持するモデルを実装の入力にする（名前、多重度、ルールをテキストにし、コードの名前を現行のモデルへ極力合わせる）"
