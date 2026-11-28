@@ -7,11 +7,10 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (692)
+## Articles: 下書き (691)
 
 | create date | title | topics |
 |-------------|-------|--------|
-| 2026-11-27 | [🎨 デジタル庁デザインシステムは導入先のローカル仕様を定義してから使う](articles/digital-agency-go-jp-2026-p9_20261127.md) | DesignSystem, Accessibility, Figma, UI |
 | 2026-11-27 | [🔍 GitHubの生Markdownに残る、エージェント向け隠しテキスト](articles/github-4500-itmedia-co-jp-p2_20261127.md) | GitHub, AIAgent, Security, LLM |
 | 2026-11-27 | [📦 Skills over MCPでサーバーが手順ファイルを配る仕組み](articles/mcp-skills-over-mcp-publickey1-p1_20261127.md) | MCP, AIAgent, AgentSkills, ClaudeCode, FastMCP |
 | 2026-11-26 | [🧭 工程にAIを足しても全体が速くなった実感は薄い](articles/ai-speakerdeck-yuukiyo-building-p7_20261126.md) | AI, Agile, Claude, AIAgent |
@@ -704,10 +703,11 @@
 | 2025-05-29 | [🚀 技術調査 - Vercel](articles/vercel_20250529.md) | Vercel, フロントエンド, デプロイ, Next.js, パフォーマンス |
 |  | [🛡️ Gemini 3.5 Flashのコンピュータ操作内蔵化と、企業導入で必要な「委任契約」設計](articles/gemini-flash-computer-use-governance-20260625.md) | Gemini, AIAgent, Security, Governance, ComputerUse |
 
-## Articles: 公開済み (210)
+## Articles: 公開済み (211)
 
 | date | title | topics |
 |------|-------|--------|
+| 2026-11-28 | [🎨 デジタル庁デザインシステムは導入先のローカル仕様を定義してから使う](articles/digital-agency-go-jp-2026-p9_20261127.md) | DesignSystem, Accessibility, Figma, UI |
 | 2026-11-26 | [🧩 MCPのSkillsとTasksでエージェント間の作業を調整する](articles/anthropic-mcp-skills-tasks-p6_20261125.md) | MCP, Claude, AIAgent, AgentSkills |
 | 2026-11-24 | [🗺️ AIによるコード解析を一過性の回答から再利用できる情報資産へ - as-built-atlas](articles/as-built-atlas_20261123.md) | AI, MCP, LegacyCode, CodeAnalysis, OSS |
 | 2026-11-21 | [🧭 業務語を渡すオントロジーは、定義と計算と操作の置き場が製品で分かれる](articles/atmarkit-itmedia-co-jp-ait-p1_20261119.md) | Ontology, AIAgent, DataGovernance, SemanticLayer |
