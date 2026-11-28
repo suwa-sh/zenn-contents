@@ -7,10 +7,11 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (699)
+## Articles: 下書き (700)
 
 | create date | title | topics |
 |-------------|-------|--------|
+| 2026-11-29 | [🍣 ChatGPTで寿司店が2位に挙がったとき、LLMOの効果をどう測るか](articles/oshidori-llmo-yanagioka_20261129.md) | ChatGPT, LLMO, SEO |
 | 2026-11-28 | [🏗️ 価格.comの960万行刷新、半年後の登壇が置いた判断](articles/960-speakerdeck-tkyowa-kakaku-p1_20261128.md) | AIAgent, Architecture, Python, Claude |
 | 2026-11-28 | [🗺️ AIで初めて何ができるのかを「4つの壁と8つの価値」で考える](articles/ai-only-value-four-walls-eight-k_20261128.md) | AI, 機械学習 |
 | 2026-11-28 | [🏛 コードを書くAIの時代に境界の最終判断を影響範囲で分ける](articles/ai-ryuzee-contents-14629-p4_20261128.md) | SoftwareArchitecture, AIAgent, Architecture, Governance |
