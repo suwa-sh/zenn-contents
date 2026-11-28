@@ -7,7 +7,7 @@
 | 2025-05-07 | [n8nガイド](books/n8n-guide_202505/) | n8n, ワークフロー自動化, ローコード, API連携, 業務効率課 |
 | 2025-04-28 | [TBMガイド](books/tbm-guide_202504/) | tbm, costmanagement, データ分析, visualization |
 
-## Articles: 下書き (695)
+## Articles: 下書き (696)
 
 | create date | title | topics |
 |-------------|-------|--------|
@@ -15,6 +15,7 @@
 | 2026-11-28 | [🏛 コードを書くAIの時代に境界の最終判断を影響範囲で分ける](articles/ai-ryuzee-contents-14629-p4_20261128.md) | SoftwareArchitecture, AIAgent, Architecture, Governance |
 | 2026-11-28 | [📐 モデリングを人の仕事にし、実装はテキストと検査でAIへ渡す](articles/ai-speakerdeck-littlehands-p3_20261128.md) | DomainDrivenDesign, UML, AIAgent, SoftwareArchitecture |
 | 2026-11-28 | [🧭 Khononovの三つの境界は業務知識とモデルと実装計画を分ける](articles/khononov-ai-zenn-dev-koga-p2_20261128.md) | DomainDrivenDesign, SoftwareArchitecture, AIAgent |
+| 2026-11-28 | [🧱 コーディングエージェントの開発環境を隔離・コンテキスト・ガードレール・検証に分ける](articles/tech-dentsusoken-entry-2026-p5_20261128.md) | AIAgent, Docker, Security, Git |
 | 2026-11-27 | [🔍 GitHubの生Markdownに残る、エージェント向け隠しテキスト](articles/github-4500-itmedia-co-jp-p2_20261127.md) | GitHub, AIAgent, Security, LLM |
 | 2026-11-27 | [📦 Skills over MCPでサーバーが手順ファイルを配る仕組み](articles/mcp-skills-over-mcp-publickey1-p1_20261127.md) | MCP, AIAgent, AgentSkills, ClaudeCode, FastMCP |
 | 2026-11-26 | [🧭 工程にAIを足しても全体が速くなった実感は薄い](articles/ai-speakerdeck-yuukiyo-building-p7_20261126.md) | AI, Agile, Claude, AIAgent |
